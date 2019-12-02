@@ -5,7 +5,7 @@ Note, this is WIP. Stay tuned!
 ## Add Mintel repository to Helm repos:
 
 ```
-helm repo add mintel https://mintel.github.io
+helm repo add mintel https://mintel.github.io/helm-charts
 ```
 
 ## Install dex-k8s-authenticator
