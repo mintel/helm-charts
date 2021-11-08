@@ -7,7 +7,7 @@ on:
       - master
 
 jobs:
-  lint-test:
+  release:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -19,6 +19,11 @@ jobs:
         uses: azure/setup-helm@v1
         with:
           version: v3.4.0
+
+      - name: Configuer Git
+        run: |
+          git config user.name "$GITHUB_ACTOR"
+          git config user.email "$GITHUB_ACTION@users.noreploy.github.com"
 
       - uses: actions/setup-python@v2
         with:
@@ -44,24 +49,6 @@ jobs:
 
       - name: Run chart-testing (install)
         run: ct install
-
-  release:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-
-      - name: Configuer Git
-        run: |
-          git config user.name "$GITHUB_ACTOR"
-          git config user.email "$GITHUB_ACTION@users.noreploy.github.com"
-
-      - name: Install Helm
-        uses: azure/setup-helm@v1
-        with:
-          version: v3.4.0
 
       - name: Run chart-releaser
         uses: helm/chart-releaser-action@v1.2.1
