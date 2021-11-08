@@ -1,17 +1,23 @@
 # Mintel Helm repository
 
-Note, this is WIP. Stay tuned!
+## Usage
 
-## Add Mintel repository to Helm repos:
+[Helm](https://helm.sh) must be installed to use the charts.  Please refer to
+Helm's [documentation](https://helm.sh/docs) to get started.
 
-```
-helm repo add mintel https://mintel.github.io/helm-charts
-```
+Once Helm has been set up correctly, add the repo as follows:
 
-## Install dex-k8s-authenticator
+  helm repo add mintel https://mintel.github.io/helm-charts
 
-```
-helm upgrade -i dex-k8s-authenticator mintel/dex-k8s-authenticator
-```
+If you had already added this repo earlier, run `helm repo update` to retrieve
+the latest versions of the packages.  You can then run `helm search repo
+mintel` to see the charts.
 
-See [the chart](https://github.com/mintel/dex-k8s-authenticator/tree/master/charts/dex-k8s-authenticator) for more info.
+To install the <chart-name> chart:
+
+    helm install <chart-name> mintel/<chart-name>
+
+To uninstall the chart:
+
+    helm delete <chart-name>
+
