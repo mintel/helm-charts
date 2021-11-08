@@ -3,7 +3,7 @@ entries:
   dex-k8s-authenticator:
   - apiVersion: v1
     appVersion: v1.2.0
-    created: 2019-12-02T19:49:29.094348Z
+    created: "2019-12-02T19:49:29.094348Z"
     description: Authenticator for using Dex with Kubernetes
     digest: f63c9fd75967c9a337aaa406dce65ff7faae514327fe69d0f3ff8aff43680e81
     maintainers:
@@ -17,4 +17,15 @@ entries:
     urls:
     - https://mintel.github.io/helm-charts/dex-k8s-authenticator-1.2.0.tgz
     version: 1.2.0
-generated: 2019-12-02T19:49:29.092748Z
+  testchart:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2021-11-08T13:31:57.079742644Z"
+    description: A Helm chart for Kubernetes
+    digest: e9ccc9d1206e9eef674c7513da476de90b9dd524f470e354dcae67fd4c5379dd
+    name: testchart
+    type: application
+    urls:
+    - https://github.com/mintel/helm-charts/releases/download/testchart-0.1.1/testchart-0.1.1.tgz
+    version: 0.1.1
+generated: "2021-11-08T13:31:57.079749144Z"
