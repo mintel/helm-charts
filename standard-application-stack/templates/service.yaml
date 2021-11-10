@@ -1,0 +1,25 @@
+{{- if .Values.service.enabled }}
+apiVersion: {{ include "common.capabilities.service.apiVersion" . }}
+kind: Service
+metadata:
+  name: {{ include "mintel_common.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels: {{ include "mintel_common.serviceLabels" . | nindent 4 }}
+  {{- if .Values.service.annotations }}
+  nnotations: {{ toYaml .Values.service.annotations | nindent 4 }}
+  {{- end }}
+spec:
+  ports:
+    - name: main-http
+      port: {{ .Values.port }}
+      targetPort: {{ .Values.port }}
+    {{- if (and .Values.filebeatSidecar .Values.filebeatSidecar.enabled) }}
+    {{- if (and .Values.filebeatSidecar.metrics .Values.filebeatSidecar.metrics.enabled) }}
+    - name: beat-exporter-metrics
+      port: 9479
+      targetPort: 9479
+    {{- end }}
+    {{- end }}
+  selector: {{ include "mintel_common.selectorLabels" . | nindent 6 }}
+  type: {{ .Values.service.type }}
+{{- end }}

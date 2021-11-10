@@ -1,0 +1,13 @@
+{{- if (and .Values.filebeatSidecar .Values.filebeatSidecar.enabled) }}
+{{- $data := dict "Release" .Release "Chart" .Chart "Values" .Values "component" "filebeat" }}
+apiVersion: {{ include "common.capabilities.configmap.apiVersion" . }}
+kind: ConfigMap
+metadata:
+  name: {{ include "mintel_common.fullname" $data }}
+  labels: {{ include "mintel_common.labels" $data | nindent 4 }}
+  namespace: {{ .Release.Namespace }}
+data:
+  {{- range (required "Filebeat configmap content required." .Values.filebeatSidecar.configmap) }}
+  {{ .name }}: |{{ .data | nindent 4 }}
+  {{- end }}
+{{- end }}

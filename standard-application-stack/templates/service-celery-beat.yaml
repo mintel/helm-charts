@@ -1,0 +1,22 @@
+{{- if (and .Values.celeryBeat .Values.celeryBeat.enabled) }}
+{{- $data := dict "Release" .Release "Chart" .Chart "Values" .Values "component" "celery-beat" }}
+apiVersion: {{ include "common.capabilities.service.apiVersion" . }}
+kind: Service
+metadata:
+  name: {{ include "mintel_common.fullname" $data }}
+  namespace: {{ .Release.Namespace }}
+  labels: {{ include "mintel_common.labels" $data | nindent 4 }}
+spec:
+  ports:
+    - name: main-http
+      port: {{ .Values.port }}
+      targetPort: {{ .Values.port }}
+    {{- if (and .Values.filebeatSidecar .Values.filebeatSidecar.enabled) }}
+    {{- if (and .Values.filebeatSidecar.metrics .Values.filebeatSidecar.metrics.enabled) }}
+    - name: beat-exporter-metrics
+      port: 9479
+      targetPort: 9479
+    {{- end }}
+    {{- end }}
+  selector: {{ include "mintel_common.selectorLabels" $data | nindent 6 }}
+{{- end }}

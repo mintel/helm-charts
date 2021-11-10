@@ -1,0 +1,16 @@
+{{- if (and .Values.serviceAccount .Values.serviceAccount.create) }}
+apiVersion: {{ include "common.capabilities.rbac.apiVersion" . }}
+kind: RoleBinding
+metadata:
+  name: {{ include "mintel_common.fullname" .  }}
+  namespace: {{ .Release.Namespace }}
+  labels: {{ include "mintel_common.labels" . | nindent 4}}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: {{ include "mintel_common.fullname" . }}
+subjects:
+- kind: ServiceAccount
+  name: {{ include "mintel_common.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+{{- end }}

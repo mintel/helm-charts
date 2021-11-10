@@ -1,0 +1,67 @@
+{{- if (ne .Values.global.clusterEnv "local") }}
+{{- if (and .Values.metrics .Values.metrics.enabled) }}
+---
+apiVersion: {{ include "common.capabilities.servicemonitor.apiVersion" . }}
+kind: ServiceMonitor
+metadata:
+  name: {{ include "mintel_common.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels: {{ include "mintel_common.labels" . | nindent 4 }}
+    k8s-app: {{ include "mintel_common.fullname" . }}
+  annotations:
+    argocd.argoproject.io/sync-options: SkipDryRunOnMissinResource=true
+spec:
+  endpoints:
+    - interval: {{ default "30s" .Values.metrics.interval }}
+      path: {{ default "/metrics" .Values.metrics.path }}
+      port: main-http
+      relabelings:
+        - separator: /
+          sourceLabels:
+            - __meta_kubernetes_namespace
+            - __meta_kubernetes_pod_label_app_kubernetes_io_name
+          targetLabel: job
+      scheme: {{ default "http" .Values.metrics.scheme }}
+      scrapeTimeout: {{ default "10s" .Values.metrics.timeout }}
+      tlsconfig:
+        insecureSkipVerify: true
+  selector:
+    matchLabels: {{ include "mintel_common.selectorLabels" . | nindent 6 }}
+  targetLabels: {{ include "mintel_common.targetLabelNames" . | nindent 4 }}
+  podTargetLabels: {{ include "mintel_common.podTargetLabelNames" . | nindent 4 }}
+{{- end }}
+
+{{- if (and .Values.filebeatSidecar .Values.filebeatSidecar.enabled) }}
+{{- if (and .Values.filebeatSidecar.metrics .Values.filebeatSidecar.metrics.enabled) }}
+{{- $filebeatData := dict "Release" .Release "Chart" .Chart "Values" .Values "component" "filebeat" }}
+---
+apiVersion: {{ include "common.capabilities.servicemonitor.apiVersion" . }}
+kind: ServiceMonitor
+metadata:
+  name: {{ include "mintel_common.fullname" $filebeatData }}
+  namespace: {{ .Release.Namespace }}
+  labels: {{ include "mintel_common.labels" $filebeatData | nindent 4}}
+  annotations:
+    argocd.argoproject.io/sync-options: SkipDryRunOnMissinResource=true
+spec:
+  endpoints:
+    - interval: {{ default "30s" .Values.filebeatSidecar.metrics.interval }}
+      path: {{ default "/metrics" .Values.filebeatSidecar.metrics.path }}
+      port: beat-exporter-metrics
+      relabelings:
+        - separator: /
+          sourceLabels:
+            - __meta_kubernetes_namespace
+            - __meta_kubernetes_pod_label_app_kubernetes_io_name
+          targetLabel: job
+      scheme: {{ default "http" .Values.filebeatSidecar.metrics.scheme }}
+      scrapeTimeout: {{ default "10s" .Values.filebeatSidecar.metrics.timeout }}
+      tlsconfig:
+        insecureSkipVerify: true
+  selector:
+    matchLabels: {{ include "mintel_common.selectorLabels" . | nindent 6 }}
+  targetLabels: {{ include "mintel_common.targetLabelNames" . | nindent 4 }}
+  podTargetLabels: {{ include "mintel_common.podTargetLabelNames" . | nindent 4 }}
+{{- end }}
+{{- end }}
+{{- end }}

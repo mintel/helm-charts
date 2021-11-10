@@ -1,0 +1,294 @@
+{{- if (and .Values.celery .Values.celery.enabled) }}
+{{- $data := dict "Release" .Release "Chart" .Chart "Values" .Values "component" "celery" }}
+apiVersion: {{ include "common.capabilities.deployment.apiVersion" . }}
+kind: Deployment
+metadata:
+  name: {{ include "mintel_common.fullname" $data }}
+  namespace: {{ .Release.Namespace }}
+  annotations:
+    {{- if (and .Values.celery.liveness (not .Values.celery.liveness.enabled)) }}
+    app.mintel.com/opa-skip-liveness-probe-check.main: "true"
+    {{- end }}
+    {{- if (and .Values.celery.readiness (not .Values.celery.readiness.enabled)) }}
+    app.mintel.com/opa-skip-readiness-probe-check.main: "true"
+    {{- end }}
+    {{- if (and .Values.filebeatSidecar .Values.filebeatSidecar) }}
+    app.mintel.com/opa-skip-readiness-probe-check.filebeat: "true"
+    {{- if (and .Values.filebeatSidecar.metrics .Values.filebeatSidecar.metrics.enabled) }}
+    app.mintel.com/opa-skip-readiness-probe-check.beat-exporter: "true"
+    app.mintel.com/opa-skip-liveness-probe-check.beat-exporter: "true"
+    {{- end }}
+    {{- end }}
+    {{- $secretListStr := (include "mintel_common.secretList" .) }}
+    {{- with $secretListStr }}
+    secret.reloader.stakater.com/reload: {{ . }}
+    {{- end }}
+    {{- $configmapListStr := (include "mintel_common.configmapList" .) }}
+    {{- with $configmapListStr }}
+    configmap.reloader.stakater.com/reload: {{ . }}
+    {{- end }}
+  labels: {{ include "mintel_common.labels" $data | nindent 4 }}
+    app.mintel.com/redis-client: "true"
+spec:
+  {{- with .Values.minReadySeconds }}
+  minReadySeconds: {{ . }}
+  {{- end }}
+  replicas: {{ .Values.celery.replicas }}
+  selector:
+    matchLabels: {{ include "mintel_common.selectorLabels" $data | nindent 6 }}
+  strategy:
+    {{- with .Values.strategy }}
+    {{- if (and (eq .type "RollingUpdate") (or .maxSurge .maxUnavailable)) }}
+    rollingUpdate:
+      {{- with .maxSurge }}
+      maxSurge: {{ . }}
+      {{- end }}
+      {{- with .maxUnavailable }}
+      maxUnavailable: {{ . }}
+      {{- end }}
+    {{- end }}
+    type: {{ default "RollingUpdate" .type }}
+    {{- else }}
+    type: RollingUpdate
+    {{- end }}
+  template:
+    metadata:
+      annotations:
+        {{- if (and .Values.filebeatSidecar .Values.filebeatSidecar.enabled) }}
+        {{ include "mintel_common.fullname" . }}-filebeat-hash: {{ include (print $.Template.BasePath "/configmap-filebeat.yaml") . | sha256sum }}
+        {{- end }}
+      labels: {{ include "mintel_common.labels" $data | nindent 8 }}
+        {{- if (and .Values.redis .Values.redis.enabled) }}
+        app.mintel.com/redis-client: "true"
+        {{- end }}
+    spec:
+      {{- include "mintel_common.imagePullSecrets" . | nindent 6 }}
+      {{- with .Values.podSecurityContext }}
+      securityContext: {{ toYaml . | nindent 8 }}
+      {{- end }}
+      {{- if (and .Values.serviceAccount (or .Values.serviceAccount.create .Values.serviceAccount.name)) }}
+      serviceAccountName: {{ default (include "mintel_common.fullname" .) .Values.serviceAccount.name }}
+      {{- end }}
+      {{- with .Values.priorityClassName }}
+      priorityClassName: {{ . | quote }}
+      {{- end }}
+      {{- if (and (gt (.Values.replicas | int) 1) (and .Values.affinity .Values.affinity.enabled)) }}
+      affinity:
+        {{- if (and .Values.affinity .Values.affinity.specificYaml) }}
+        {{- toYaml .Values.affinity.specificYaml | nindent 8 }}
+        {{- else }}
+        podAntiAffinity:
+        {{- if (and .Values.affinity .Values.affinity.podAntiAffinity) }}
+        {{- if .Values.affinity.podAntiAffinity.specificYaml }}
+        {{- toYaml .Values.affinity.podAntiAffinity.specificYaml | nindent 10 }}
+        {{- else }}
+        {{- if (or (eq .Values.affinity.podAntiAffinity.zone "hard") (eq .Values.affinity.podAntiAffinity.node "hard")) }}
+          requiredDuringSchedulingIgnoredDuringExecution:
+            {{- if (eq .Values.affinity.podAntiAffinity.zone "hard") }}
+            - labelSelector:
+                matchLabels: {{ include "mintel_common.selectorLabels" $data | nindent 18 }}
+              topologyKey: failure-domain.beta.kubernetes.io/zone
+            {{- end }}
+            {{- if (eq .Values.affinity.podAntiAffinity.node "hard") }}
+            - labelSelector:
+                matchLabels: {{ include "mintel_common.selectorLabels" $data | nindent 18 }}
+              topologyKey: kubernetes.io/hostname
+            {{- end }}
+        {{- end }}
+        {{- if (or (eq .Values.affinity.podAntiAffinity.zone "soft") (eq .Values.affinity.podAntiAffinity.node "soft")) }}
+          preferredDuringSchedulingIgnoredDuringExecution:
+            {{- if (eq .Values.affinity.podAntiAffinity.zone "soft") }}
+            - podAffinityTerm:
+                labelSelector:
+                  matchLabels: {{ include "mintel_common.selectorLabels" $data | nindent 20 }}
+                topologyKey: failure-domain.beta.kubernetes.io/zone
+              weight: {{ default 100 .Values.affinity.podAntiAffinity.weight }}
+            {{- end }}
+            {{- if (eq .Values.affinity.podAntiAffinity.node "soft") }}
+            - podAffinityTerm:
+                labelSelector:
+                  matchLabels: {{ include "mintel_common.selectorLabels" $data | nindent 20 }}
+                topologyKey: kubernetes.io/hostname
+              weight: {{ default 100 .Values.affinity.podAntiAffinity.weight }}
+            {{- end }}
+        {{- end }}
+        {{- end }}
+        {{- end }}
+        {{- end }}
+      {{- end }}
+      containers:
+        - name: main
+          image: {{ coalesce .Values.celery.image (include "mintel_common.image" .) }}
+          imagePullPolicy: {{ include "mintel_common.imagePullPolicy" . }}
+          {{- with (coalesce .Values.celery.command .Values.command) }}
+          command: {{ toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with (coalesce .Values.celery.args .Values.args) }}
+          args:
+            {{- range $key, $value := . }}
+            {{- if $value }}
+            - {{ $key }}-{{ $value }}
+            {{- else }}
+            - {{ $key }}
+            {{- end }}
+            {{- end }}
+          {{- end }}
+          env:
+            - name: KUBERNETES_POD_NAMESPACE
+              value: metadata.namespace
+            {{- include "mintel_common.localDevEnv" . | nindent 12 }}
+            {{- include "mintel_common.defaultEnv" . | nindent 12 }}
+            {{- include "mintel_common.mailhogEnv" . | nindent 12 }}
+            {{- include "mintel_common.redisEnv" . | nindent 12 }}
+            {{- include "mintel_common.elasticsearchEnv" . | nindent 12 }}
+            {{- include "mintel_common.localstackEnv" . | nindent 12 }}
+            {{- with .Values.env }}
+            {{- toYaml . | nindent 12 }}
+            {{- end }}
+            {{- with .Values.celery.env }}
+            {{- toYaml . | nindent 12 }}
+            {{- end }}
+          envFrom:
+            {{- if (and .Values.externalSecret .Values.externalSecret.enabled) }}
+            {{- if (or (ne .Values.global.clusterEnv "local") (and (eq .Values.global.clusterEnv "local") .Values.externalSecret.localValues)) }}
+            - secretRef:
+                name: {{ default (include "mintel_common.defaultAppSecretName" .) .Values.externalSecret.nameOverride }}
+            {{- end }}
+            {{- end }}
+            {{- if (and .Values.mariadb .Values.mariadb.enabled) }}
+            - secretRef:
+                name: {{ default (include "mintel_common.defaultMariadbSecretName" .) .Values.mariadb.secretNameOverride }}
+            {{- end }}
+            {{- if (and .Values.redis .Values.redis.enabled) }}
+            - secretRef:
+                name: {{ default (include "mintel_common.defaultRedisSecretName" .) .Values.redis.secretNameOverride }}
+            {{- end }}
+            {{- if (and .Values.elasticsearch .Values.elasticsearch.enabled) }}
+            - secretRef:
+                name: {{ default (include "mintel_common.defaultElasticsearchSecretName" .) .Values.elasticsearch.secretNameOverride }}
+            {{- end }}
+            {{- with .Values.envFrom }}
+            {{- toYaml . | nindent 12 }}
+            {{- end }}
+          ports:
+            - containerPort: {{ .Values.port }}
+              name: http
+          {{- if (and .Values.celery.liveness .Values.celery.liveness.enabled) }}
+          livenessProbe:
+            {{- if .Values.celery.liveness.method }}
+            {{- toYaml .Values.celery.liveness.method | nindent 12 }}
+            {{- else }}
+            httpGet:
+              path: /healthz
+              port: http
+              scheme: HTTP
+            {{- end }}
+            initialDelaySeconds: {{ default 0 .Values.celery.liveness.initialDelaySeconds }}
+            timeoutSeconds: {{ default 1 .Values.celery.liveness.timeoutSeconds }}
+          startupProbe:
+            {{- if .Values.celery.liveness.method }}
+            {{- toYaml .Values.celery.liveness.method | nindent 12 }}
+            {{- else }}
+            httpGet:
+              path: /healthz
+              port: http
+              scheme: HTTP
+            {{- end }}
+            {{- if .Values.celery.liveness.startup }}
+            {{- if .Values.celery.liveness.startup.failureThreshold }}
+            failureThreshold: {{ .Values.celery.liveness.startup.failureThreshold }}
+            {{- else }}
+            failureThreshold: 60
+            {{- end }}
+            {{- if .Values.celery.liveness.startup.periodSeconds }}
+            periodSeconds: {{ .Values.celery.liveness.startup.periodSeconds }}
+            {{- else }}
+            periodSeconds: 5
+            {{- end }}
+            {{- else }}
+            failureThresold: 60
+            periodSeconds: 5
+            {{- end }}
+          {{- end }}
+          {{- if (and .Values.celery.readiness .Values.celery.readiness.enabled) }}
+          readinessProbe:
+            {{- if .Values.celery.readiness.method }}
+            {{- toYaml .Values.celery.readiness.method | nindent 12 }}
+            {{- else }}
+            httpGet:
+              path: /readiness
+              port: http
+              scheme: HTTP
+            {{- end }}
+            initialDelaySeconds: {{ default 0 .Values.celery.readiness.initialDelaySeconds }}
+            timeoutSeconds: {{ default 1 .Values.celery.readiness.timeoutSeconds }}
+          {{- end }}
+          {{- with .Values.securityContext }}
+          securityContext: {{ toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.celery.resources }}
+          resources: {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- if (or .Values.volumeMounts .Values.celery.volumeMounts) }}
+          volumeMounts:
+            {{- with .Values.volumeMounts }}
+            {{- toYaml .Values.volumeMounts | nindent 12 }}
+            {{- end }}
+            {{- with .Values.celery.volumeMounts }}
+            {{- toYaml .Values.celery.volumeMounts | nindent 12 }}
+            {{- end }}
+          {{- end }}
+        {{- if (and .Values.filebeatSidecar .Values.filebeatSidecar.enabled) }}
+        - name: filebeat
+          image: docker.elastic.co/beats/filebeat:7.5.2
+          args:
+            - -e
+            - -c
+            - /config/filebeat.yml
+          env:
+          - name: CLUSTER_ENV
+            value: {{ .Values.global.clusterEnv }}
+          - name: CLUSTER_NAME
+            value: ${CLUSTER_NAME}
+          envFrom:
+            {{- if (and .Values.elasticsearch .Values.elasticsearch.enabled) }}
+            - secretRef:
+                name: {{ default (include "mintel_common.defaultElasticsearchSecretName" .) .Values.elasticsearch.secretNameOverride }}
+            {{- end }}
+          livenessProbe:
+            tcpSocket:
+              port: beat-http
+          ports:
+          - containerPort: 5066
+            name: beat-http
+          {{- with .Values.filebeatSidecar.resources }}
+          resources:
+          {{- toYaml . | nindent 14 }}
+          {{- end }}
+          volumeMounts:
+            - mountPath: /config/
+              name: {{ include "mintel_common.fullname" . }}-filebeat
+        {{- if (and .Values.filebeatSidecar.metrics .Values.filebeatSidecar.metrics.enabled) }}
+        - image: index.docker.io/trustpilot/beat-exporter:0.3.0
+          name: beat-exporter
+          ports:
+          - containerPort: 9479
+            name: metrics
+          {{- with .Values.filebeatSidecar.metrics.resources }}
+          resources:
+          {{- toYaml . | nindent 14 }}
+          {{- end }}
+        {{- end }}
+        {{- end }}
+      {{- if (or .Values.volumes (and .Values.filebeatSidecar .Values.filebeatSidecar.enabled)) }}
+      volumes:
+        {{- with .Values.volumes }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+        {{- if (and .Values.filebeatSidecar .Values.filebeatSidecar.enabled) }}
+        - configMap:
+            name: {{ include "mintel_common.fullname" . }}-filebeat
+          name: {{ include "mintel_common.fullname" . }}-filebeat
+        {{- end }}
+      {{- end }}
+{{- end }}

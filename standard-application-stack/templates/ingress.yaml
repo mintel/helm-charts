@@ -1,0 +1,34 @@
+{{- if .Values.ingress.enabled }}
+apiVersion: {{ include "common.capabilities.ingress.apiVersion" . }}
+kind: Ingress
+metadata:
+  name: {{ include "mintel_common.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels: {{ include "mintel_common.labels" . | nindent 4 }}
+  annotations:
+    {{- if (eq .Values.global.clusterEnv "local") }}
+    ingress.kubernetes.io/ssl-redirect: "false"
+    {{- end }}
+    {{- if .Values.className }}
+    kubernetes.io/ingress.class: {{ .Values.ClassName }}
+    {{- else if (eq .Values.global.clusterEnv "local") }}
+    kubernetes.io/ingress.class: traefik
+    {{- else }}
+    kubernetes.io/ingress.class: haproxy
+    {{- end }}
+spec:
+  rules:
+    - host: {{ .Values.ingress.defaultHost }}
+      http:
+        paths:
+          - backend:
+              serviceName: {{ include "mintel_common.fullname" . }}
+              servicePort: {{ .Values.port }}
+            path: /
+  {{- if .Values.ingress.tls }}
+  tls:
+    - hosts:
+        - {{ .Values.ingress.defaultHost }}
+      secretName: ingress-controller/star-letsencrypt-cert
+  {{- end }}
+{{- end }}

@@ -1,0 +1,71 @@
+{{- if (and .Values.celery .Values.celery.enabled) }}
+{{- if (and .Values.redis .Values.redis.enabled) }}
+{{- if (and .Values.celery.metrics .Values.celery.metrics.enabled) }}
+{{- $data := dict "Release" .Release "Chart" .Chart "Values" .Values "component" "celery-exporter" }}
+apiVersion: {{ include "common.capabilities.deployment.apiVersion" . }}
+kind: Deployment
+metadata:
+  name: {{ include "mintel_common.fullname" $data }}
+  namespace: {{ .Release.Namespace }}
+  annotations:
+    app.mintel.com/opa-skip-readiness-probe-check.main: "true"
+    secret.reloader.stakater.com/reload: {{ default (include "mintel_common.defaultMariadbSecretName" .) .Values.mariadb.secretNameOverride }}
+    app.mintel.com/opa-allow-single-replica: "true"
+  labels: {{ include "mintel_common.labels" $data | nindent 4 }}
+    {{- if (and .Values.redis .Values.redis.enabled) }}
+    app.mintel.com/redis-client: "true"
+    {{- end }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels: {{ include "mintel_common.selectorLabels" $data | nindent 6 }}
+  strategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels: {{ include "mintel_common.labels" $data | nindent 8 }}
+    spec:
+      {{- include "mintel_common.imagePullSecrets" . | nindent 6 }}
+      {{- if (and .Values.serviceAccount (or .Values.serviceAccount.create .Values.serviceAccount.name)) }}
+      serviceAccountName: {{ default (include "mintel_common.fullname" .) .Values.serviceAccount.name }}
+      {{- end }}
+      containers:
+        - name: main
+          image: {{ default "index.docker.io/ovalmoney/celery-exporter:1.5.1" .Values.celery.metrics.image }}
+          imagePullPolicy: {{ default "IfNotPresent" .Values.image.pullPolicy }}
+          args:
+            - --transport-options
+            - '{"master_name":"mymaster"}'
+            - --enable-events
+            - --verbose
+          env:
+            {{- include "mintel_common.redisEnv" . | nindent 12 }}
+            - name: KUBERNETES_POD_NAMESPACE
+              value: metadata.namespace
+            - name: CELERY_EXPORTER_BROKER_URL
+              {{- if .Values.redis.tls.enabled }}
+              value: 'rediss://:$(REDIS_AUTH_TOKEN)@$(REDIS_PRIMARY_ENDPOINT):6379/0'
+              {{- else }}
+              value: 'redis://:$(REDIS_AUTH_TOKEN)@$(REDIS_PRIMARY_ENDPOINT):6379/0'
+              {{- end }}
+            - name: CELERY_EXPORTER_NAMESPACE
+              value: {{ .Release.Namespace }}
+          envFrom:
+            - secretRef:
+                name: {{ default (include "mintel_common.defaultRedisSecretName" .) .Values.redis.secretNameOverride }}
+          ports:
+            - containerPort: 9540
+              name: metrics
+          livenessProbe:
+            httpGet:
+              path: /metrics
+              port: metrics
+              scheme: HTTP
+            initialDelaySeconds: 3
+            timeoutSeconds: 1
+          {{- with .Values.celery.metrics.resources }}
+          resources: {{- toYaml . | nindent 12 }}
+          {{- end }}
+{{- end }}
+{{- end }}
+{{- end }}

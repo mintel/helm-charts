@@ -1,0 +1,31 @@
+{{- if (ne .Values.global.clusterEnv "local") }}
+{{- if (and .Values.mariadb .Values.mariadb.enabled) }}
+{{- if (and .Values.mariadb.metrics .Values.mariadb.metrics.enabled) }}
+{{- $data := dict "Release" .Release "Chart" .Chart "Values" .Values "component" "mysqldexporter" }}
+apiVersion: {{ include "common.capabilities.podmonitor.apiVersion" . }}
+kind: PodMonitor
+metadata:
+  name: {{ include "mintel_common.fullname" $data }}
+  namespace: {{ .Release.Namespace }}
+  labels: {{ include "mintel_common.labels" $data | nindent 4 }}
+spec:
+  endpoints:
+    - interval: {{ default "30s" .Values.mariadb.metrics.interval }}
+      path: {{ default "/metrics" .Values.mariadb.metrics.path }}
+      port: main-http
+      relabelings:
+        - separator: /
+          sourceLabels:
+            - __meta_kubernetes_namespace
+            - __meta_kubernetes_pod_label_app_kubernetes_io_name
+          targetLabel: job
+      scheme: {{ default "http" .Values.mariadb.metrics.scheme }}
+      scrapeTimeout: {{ default "10s" .Values.mariadb.metrics.timeout }}
+      tlsconfig:
+        insecureSkipVerify: true
+  selector:
+    matchLabels: {{ include "mintel_common.selectorLabels" $data | nindent 6 }}
+  podTargetLabels: {{ include "mintel_common.podTargetLabelNames" . | nindent 4 }}
+{{- end }}
+{{- end }}
+{{- end }}

@@ -1,0 +1,17 @@
+{{- if (eq .Values.global.clusterEnv "local") }}
+{{- if (and .Values.localstack .Values.localstack.enabled) }}
+{{- if .Values.localstack.configmap }}
+{{- $data := dict "Release" .Release "Chart" .Chart "Values" .Values "component" "localstack" }}
+apiVersion: {{ include "common.capabilities.configmap.apiVersion" . }}
+kind: ConfigMap
+metadata:
+  name: {{ include "mintel_common.fullname" $data }}-init-scripts-config
+  labels: {{ include "mintel_common.labels" $data | nindent 4 }}
+  namespace: {{ .Release.Namespace }}
+data:
+  {{- range (required "Localstack configmap content required." .Values.localstack.configmap) }}
+  {{ .name }}: |{{ .data | nindent 4 }}
+  {{- end }}
+{{- end }}
+{{- end }}
+{{- end }}
