@@ -39,9 +39,11 @@ spec:
             - --enable-events
             - --verbose
           env:
-            {{- include "mintel_common.redisEnv" . | nindent 12 }}
             - name: KUBERNETES_POD_NAMESPACE
-              value: metadata.namespace
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            {{- include "mintel_common.redisEnv" . | nindent 12 }}
             - name: CELERY_EXPORTER_BROKER_URL
               {{- if .Values.redis.tls.enabled }}
               value: 'rediss://:$(REDIS_AUTH_TOKEN)@$(REDIS_PRIMARY_ENDPOINT):6379/0'

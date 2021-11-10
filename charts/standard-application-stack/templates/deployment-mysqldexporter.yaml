@@ -41,7 +41,9 @@ spec:
             - --web.listen-address=:9104
           env:
             - name: KUBERNETES_POD_NAMESPACE
-              value: metadata.namespace
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
           envFrom:
             - secretRef:
                 name: {{ default (include "mintel_common.defaultMariadbSecretName" .) .Values.mariadb.secretNameOverride }}
