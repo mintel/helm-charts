@@ -403,7 +403,6 @@ mariadb:
   enabled: false
   #  secretNameOverride: ""
   #  secretPathOverride: ""
-  #### Local dev auth variables
   #  auth:
   #    database: ""
   #    username: ""
