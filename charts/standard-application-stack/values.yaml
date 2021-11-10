@@ -49,9 +49,9 @@ port: 8000
 
 # -- Optional list of extra container ports to configure
 extraPorts: []
-#extraPorts:
-#  - name: ""
-#    containerPort: 1234
+# extraPorts:
+#   - name: ""
+#     containerPort: 1234
 
 # -- Optional command to the container
 command:
@@ -59,14 +59,14 @@ command:
 
 # -- Optional arguments to the container
 args: {}
-#args:
-#  {'gunicorn'}
+# args:
+#   {'gunicorn'}
 
 # -- Optional environment variables injected into the container
 env: []
-#env:
-#  - name: APP_ENVIRONMENT
-#    value: dev
+# env:
+#   - name: APP_ENVIRONMENT
+#     value: dev
 
 # -- Optional environment variables injected into the container using envFrom (secrets/configmaps)
 envFrom: []
