@@ -3,6 +3,10 @@
 This file documents all notable changes to the Mintel standard-application-stack Helm Chart. The release
 numbering uses [semantic versioning](http://semver.org).
 
+## v0.1.0-rc4
+
+* Fix mariadb external secret
+
 ## v0.1.0-rc3
 
 * Version bump to test CI
