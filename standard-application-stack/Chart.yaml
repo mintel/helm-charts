@@ -1,0 +1,55 @@
+apiVersion: v2
+name: standard-application-stack
+description: A generic chart to support most common application requirements
+
+# A chart can be either an 'application' or a 'library' chart.
+#
+# Application charts are a collection of templates that can be packaged into versioned archives
+# to be deployed.
+#
+# Library charts provide useful utilities or functions for the chart developer. They're included as
+# a dependency of application charts to inject those utilities and functions into the rendering
+# pipeline. Library charts do not define any templates and therefore cannot be deployed.
+type: application
+
+# This is the chart version. This version number should be incremented each time you make changes
+# to the chart and its templates, including the app version.
+# Versions are expected to follow Semantic Versioning (https://semver.org/)
+version: 0.1.0-rc2
+
+dependencies:
+  - name: redis
+    version: 15.4.0
+    repository: https://charts.bitnami.com/bitnami
+    tags:
+      - localRedis
+  - name: mariadb
+    version: 9.5.1
+    repository: https://charts.bitnami.com/bitnami
+    tags:
+      - localMariadb
+  - name: mailhog
+    version: 4.1.0
+    repository: https://codecentric.github.io/helm-charts
+    tags:
+      - localMailhog
+  - name: kibana
+    version: 7.5.2
+    repository: https://helm.elastic.co
+    tags:
+      - localKibana
+  - name: elasticsearch
+    version: 7.5.2
+    repository: https://helm.elastic.co
+    tags:
+      - localElasticsearch
+  - name: opensearch
+    version: 1.2.5
+    repository: https://opensearch-project.github.io/helm-charts
+    tags:
+      - localOpensearch
+  - name: localstack
+    version: 0.3.5
+    repository: https://localstack.github.io/helm-charts
+    tags:
+      - localLocalstack

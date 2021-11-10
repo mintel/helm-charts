@@ -1,0 +1,40 @@
+{{- if (and (gt (.Values.replicas | int) 1) .Values.podDisruptionBudget.enabled) }}
+---
+apiVersion: {{ include "common.capabilities.policy.apiVersion" . }}
+kind: PodDisruptionBudget
+metadata:
+  name: {{ include "mintel_common.fullname" . }}
+  labels: {{ include "mintel_common.labels" . | nindent 4 }}
+  namespace: {{ .Release.Namespace }}
+spec:
+  {{- with .Values.podDisruptionBudget.minAvailable }}
+  minAvailable: {{ . }}
+  {{- end }}
+  {{- with .Values.podDisruptionBudget.maxUnavailable }}
+  maxUnvailable: {{ . }}
+  {{- end }}
+  selector:
+    matchLabels: {{ include "mintel_common.selectorLabels" . | nindent 6 }}
+{{- end }}
+
+{{- if (and .Values.celery .Values.celery.enabled) }}
+{{- if (and (gt (.Values.celery.replicas | int) 1) .Values.celery.podDisruptionBudget.enabled) }}
+{{- $data := dict "Release" .Release "Chart" .Chart "Values" .Values "component" "celery" }}
+---
+apiVersion: {{ include "common.capabilities.policy.apiVersion" . }}
+kind: PodDisruptionBudget
+metadata:
+  name: {{ include "mintel_common.fullname" $data }}
+  labels: {{ include "mintel_common.labels" $data | nindent 4 }}
+  namespace: {{ .Release.Namespace }}
+spec:
+  {{- with .Values.celery.podDisruptionBudget.minAvailable }}
+  minAvailable: {{ . }}
+  {{- end }}
+  {{- with .Values.celery.podDisruptionBudget.maxUnavailable }}
+  maxUnvailable: {{ . }}
+  {{- end }}
+  selector:
+    matchLabels: {{ include "mintel_common.selectorLabels" $data | nindent 6 }}
+{{- end }}
+{{- end }}

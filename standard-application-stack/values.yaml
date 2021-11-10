@@ -1,0 +1,493 @@
+# Default values for standard-application-stack.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# -- Global variables for us in all charts and sub charts
+global:
+  # -- Team which "owns" the application
+  owner: ""
+  # -- Top level application each deployment is a part of
+  partOf: ""
+  # -- Additional labels to apply to all resources
+  additionalLabels: {}
+  # -- Kubernetes cluster domain
+  clusterDomain: "cluster.local"
+  # -- Environment (local, dev, qa, prod)
+  clusterEnv: "local"
+  # -- Kubernetes cluster name
+  clusterName: ""
+  # -- AWS ACcount Id
+  awsAccountId: ""
+
+# -- String to fully override mintel_common.fullname template
+nameOverride: ""
+
+# -- Minimum number of seconds before deployments are ready
+minReadySeconds: 10
+
+# -- Desired number of replicas for main deployment
+replicas: 2
+
+# -- Docker image values
+image:
+  # -- Docker registry used to pul application image
+  registry: ""
+  # -- Docker repository
+  repository: "test"
+  # -- Container image tag
+  tag: "auto-replaced"
+  # -- Optional ImagePullPolicy
+  # ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
+  pullPolicy: IfNotPresent
+
+# -- Optional array of imagePullSecrets
+# ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+imagePullSecrets: []
+
+# -- Main container port for the application
+port: 8000
+
+# -- Optional list of extra container ports to configure
+extraPorts: []
+#extraPorts:
+#  - name: ""
+#    containerPort: 1234
+
+# -- Optional command to the container
+command:
+  - /app/docker-entrypoint.sh
+
+# -- Optional arguments to the container
+args: {}
+#args:
+#  {'gunicorn'}
+
+# -- Optional environment variables injected into the container
+env: []
+#env:
+#  - name: APP_ENVIRONMENT
+#    value: dev
+
+# -- Optional environment variables injected into the container using envFrom (secrets/configmaps)
+envFrom: []
+
+# -- Optional name of PriorityClass to run pods with
+priorityClassName: ""
+
+# -- Additional annotations to apply to the pod
+podAnnotations: {}
+
+# -- Pod Security context for the container
+# ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
+podSecurityContext:
+  runAsUser: 1000
+#  fsGroup: 2000
+
+# -- Pod Disruption Budget
+# ref: https://kubernetes.io/docs/tasks/run-application/configure-pdb/
+podDisruptionBudget:
+  enabled: true
+  minAvailable: 50%
+#  maxUnavailable: 50%
+
+# -- Security context for the container
+# ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
+securityContext: {}
+# securityContext:
+#   allowPrivilegeEscalation: false
+#   readOnlyRootFilesystem: true
+#   capabilities:
+#     drop: ["ALL"]
+#   readOnlyRootFilesystem: true
+#   runAsNonRoot: true
+#   runAsUser: 1000
+
+# -- Kubernetes svc configutarion
+service:
+  # -- Whether to create Service resource or not
+  enabled: true
+  # -- Kubernetes Service type
+  type: ClusterIP
+  # -- Annotations to add to service
+  annotations: {}
+  # -- Provide any additional labels which may be required.
+  labels: {}
+
+# -- ServiceAccount parameters
+# ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
+serviceAccount:
+  # -- Determine whether a Service Account should be created or it should reuse a exiting one.
+  create: true
+  # -- ServiceAccount to use. A name is generated using the mintel_common.fullname template if it is not set
+  name: ""
+  # -- Additional Service Account annotations
+  annotations: {}
+  # -- Configures IRSA for the Service Account
+  irsa:
+    # -- Determines whether servier account is IRSA enabled
+    enabled: false
+  # -- Whether to automount the service account token or not
+  automountServiceAccountToken: true
+
+# -- Configure extra options for liveness probe
+# ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes
+liveness:
+  # -- Enable liveness probe
+  enabled: true
+  #  method:
+  #    httpGet:
+  #      # -- Request path for livenessProbe
+  #      path: /healthz
+  #      # -- Port for livenessProbe
+  #      port: 8000
+  #      # -- Scheme (HTTP or HTTPS)
+  #      scheme: HTTP
+  # -- Initial delay seconds for livenessProbe
+  #  initialDelaySeconds: 25
+  # -- Period seconds for livenessProbe (frequency)
+  #  periodSeconds: 10
+  # -- Timeout seconds for livenessProbe
+  #  timeoutSeconds: 1
+  # -- Failure threshold for livenessProbe
+  #  failureThreshold: 2
+  # -- Success threshold for livenessProbe
+  #  successThreshold: 1
+  # -- Configure startup probe
+  # ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/#define-startup-probes
+  startup:
+    # -- Failure threshold for startupProbe
+    failureThreshold: 60
+    # -- Perios seconds for startupProbe
+    periodSeconds: 5
+
+# -- Configure extra options for readiness probe
+# ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes
+readiness:
+  enabled: true
+  #  method:
+  #    httpGet:
+  #      # -- Request path for readinessProbe
+  #      path: /healthz
+  #      # -- Port for readinessProbe
+  #      port: 8000
+  #      # -- Scheme (HTTP or HTTPS)
+  #      scheme: HTTP
+  # -- Initial delay seconds for readinessProbe
+  #  initialDelaySeconds: 25
+  # -- Period seconds for readinessProbe (frequency)
+  #  periodSeconds: 10
+  # -- Timeout seconds for readinessProbe
+  #  timeoutSeconds: 1
+  # -- Failure threshold for readinessProbe
+  #  failureThreshold: 2
+  # -- Success threshold for readinessProbe
+  #  successThreshold: 1
+
+# -- Container resource requests and limits
+# ref: http://kubernetes.io/docs/user-guide/compute-resources
+resources:
+  # -- The resource limits for the container
+  limits: {}
+  #    cpu: 1000m
+  #    memory: 2Gi
+  # -- The requested resources for the container
+  requests: {}
+  #    cpu: 1000m
+  #    memory: 1Gi
+
+# -- Prometheus Exporter / Metrics
+metrics:
+  # -- Enable Prometheus to access aplpication metrics endpoints
+  enabled: true
+  # -- Interval at which metrics should be scraped
+  # ref: https://github.com/coreos/prometheus-operator/blob/master/Documentation/api.md#endpoint
+  #  interval: 30s
+  # -- URL path to the metrics nedpoint
+  #  path: /metrics
+  # -- Timeout after which the scrape is ended
+  # ref: https://github.com/coreos/prometheus-operator/blob/master/Documentation/api.md#endpoint
+  #  timeout: 10s
+  # -- Scheme (http ot https)
+  #  scheme: http
+
+# -- Define ExternalSecret from AWS
+# ref: https://github.com/external-secrets/kubernetes-external-secrets
+externalSecret:
+  enabled: true
+  #  nameOverride: ""
+  #  pathOverride: ""
+  #  localValues:
+  #    - name: TEST_SECRET
+  #      value: test_value
+
+# -- A list of configuration maps for this application
+configmaps: []
+#    # -- Name of the config map
+#  - name: ""
+#    # -- Whether or not to create the configmap
+#    create: false
+#    # -- List of configs (files) within the configmap
+#    configs:
+#      - name: ""
+#        data: ""
+
+# -- A list of volumes to be added to the pod
+volumes:
+  #  - configMap:
+  #      name: portal-web-something
+  #    name: portal-web-something
+
+# -- A list of volume mounts to be added to the pod
+volumeMounts: []
+
+# -- Configure the ingress resource that allows you to access the application from public-internet
+# ref: http://kubernetes.io/docs/user-guide/ingress/
+ingress:
+  # -- Set to true to enable ingress record generation
+  enabled: false
+  # -- Define the type of ingress
+  className: ""
+  # -- Ingress annotations
+  # For a full list of possible ingress annotations, please see
+  # ref: https://github.com/kubernetes/ingress-nginx/blob/master/docs/user-guide/nginx-configuration/annotations.md
+  annotations: {}
+  # -- Enable TLS configuration for the hostname defined at ingress.hostname parameter
+  tls: false
+
+# -- Define a default NetworkPolicy for allowing apps in the same 'app.kubernetes.io/part-of' group to communicate
+# with eachother.
+# ref: https://kubernetes.io/docs/concepts/services-networking/network-policies/
+networkPolicy:
+  enabled: true
+
+# -- Enable extra init-containers
+extraInitContainers: []
+
+# -- Enable extraContainers (oauth2-proxy is a common example)
+extraContainers: []
+# extraContainers:
+# - name: oauth2-proxy
+#   image: quay.io/oauth2-proxy/oauth2-proxy:v7.1.3
+#   ...
+
+# -- Defines deployment update strategy
+strategy:
+  # -- Type of strategy to use (Recreate or RollingUpdate)
+  type: RollingUpdate
+  # -- Optional argument to define maximum number of pods allowed over defined replicas
+  maxSurge: 15%
+  # -- Optional argument to define maximum number of ppods that can be unavailable during update
+  maxUnavailable: 10%
+
+# -- Configure the deployment affinity/anti-affinity rules
+# ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#affinity-and-anti-affinity
+affinity:
+  # -- Set to true to enable deployment affinity rules
+  enabled: true
+  # -- Configure pod anti-affinity rules
+  podAntiAffinity:
+    # -- Toggle whether zone affinity should be required (hard) or preferred (soft)
+    zone: hard
+    # -- Toggle whether node affinity should be required (hard) or preferred (soft)
+    node: soft
+    # -- Optional weight to apply to soft affinity
+    #    weight: 200
+  # -- Specify custom affinity yaml
+  #  specificYaml:
+  #    podAntiAffinity:
+  #      preferredDuringSchedulingIgnoredDuringExecution:
+  #      - podAffinityTerm:
+  #          labelSelector:
+  #            matchExpressions:
+  #            - key: app.kubernetes.io/name
+  #              operator: In
+  #              values:
+  #              - portal-web
+  #          topologyKey: failure-domain.beta.kubernetes.io/zone
+  #        weight: 100
+
+# -- Configure the use of k8snotify
+# ref: https://github.com/mintel/k8s-notify
+k8snotify:
+  # -- Set to true to enable k8snotify notifications
+  enabled: false
+  # -- Defines the receiver of the notifications (flowdock)
+  receiver: flowdock
+  # -- Defines team (flow) notifications are to be directed at
+  team: portal
+
+# -- Configure celery deployment
+# Defaults to same image as main deployment but with the "celery" argument
+celery:
+  # -- Set to true to enable a celery deployment
+  enabled: false
+  # -- Desired number of replicas for celery deployment
+  replicas: 2
+  # -- Full image name override (registry/repository:tag)
+  #  image: ""
+  # -- Optional command to the celery container
+  #  command: []
+  # -- Arguments to the celery container
+  args:
+    {'celery'}
+  # -- Optional environment variables injected into the container
+  #  env: []
+  # -- Container resource requests and limits
+  # ref: http://kubernetes.io/docs/user-guide/compute-resources
+  resources:
+    # -- The resource limits for the container
+    limits: {}
+    #    cpu: 1000m
+    #    memory: 2Gi
+    # -- The requested resources for the container
+    requests: {}
+    #    cpu: 1000m
+    #    memory: 2Gi
+  # -- Configure extra options for liveness probe
+  # ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes
+  liveness:
+    # -- Enable liveness probe
+    enabled: false
+  # -- Configure extra options for readiness probe
+  # ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes
+  readiness:
+    # -- Enable readiness probe
+    enabled: false
+  # -- Prometheus Exporter / Metrics
+  metrics:
+    # -- Enable Prometheus to access aplpication metrics endpoints
+    enabled: true
+  # -- Pod Disruption Budget
+  # ref: https://kubernetes.io/docs/tasks/run-application/configure-pdb/
+  podDisruptionBudget:
+    enabled: true
+    minAvailable: 50%
+
+# -- Configure celerybeat deployment
+# Defaults to same image as main deployment but with the "celerybeat" argument
+celeryBeat:
+  # -- Set to true to enable a celerybeat deployment
+  enabled: false
+  # -- Full image name override (registry/repository:tag)
+  #  image: ""
+  # -- Optional command to the celery container
+  #  command: []
+  args:
+    {'celerybeat'}
+  # -- Optional environment variables injected into the container
+  #  env: []
+  # -- Container resource requests and limits
+  # ref: http://kubernetes.io/docs/user-guide/compute-resources
+  resources:
+    # -- The resource limits for the container
+    limits: {}
+    #    cpu: 1000m
+    #    memory: 2Gi
+    # -- The requested resources for the container
+    requests: {}
+    #    cpu: 1000m
+    #    memory: 2Gi
+  # -- Configure extra options for liveness probe
+  # ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes
+  liveness:
+    # -- Enable liveness probe
+    enabled: false
+  # -- Configure extra options for readiness probe
+  # ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes
+  readiness:
+    # -- Enable readiness probe
+    enabled: false
+
+
+mariadb:
+  enabled: false
+  #  secretNameOverride: ""
+  #  secretPathOverride: ""
+  #### Local dev auth variables
+  #  auth:
+  #    database: ""
+  #    username: ""
+  #    password: ""
+  client:
+    enabled: true
+    #    image: {}
+    resources:
+      limits:
+        cpu: 300m
+        memory: 128Mi
+      requests:
+        cpu: 100m
+        memory: 64Mi
+  metrics:
+    enabled: true
+    #    image: {}
+    resources:
+      limits:
+        cpu: 300m
+        memory: 128Mi
+      requests:
+        cpu: 100m
+        memory: 64Mi
+
+redis:
+  enabled: false
+  #  secretNameOverride: ""
+  #  secretPathOverride: ""
+  replica:
+    replicaCount: 0
+
+filebeatSidecar:
+  enabled: false
+  resources:
+    limits:
+      cpu: 200m
+      memory: 200Mi
+    requests:
+      cpu: 100m
+      memory: 100Mi
+      #  configmap:
+      #    - name: "filebeat.yml"
+      #      data: |
+      #        http.enabled: true
+      #        http.host: '0.0.0.0'
+      #    - name: "portal-usage-ilm.json"
+      #      data: "json1"
+      #    - name: "portal-usage-template.json"
+      #      data: "json2"
+  metrics:
+    enabled: true
+    resources:
+      limits:
+        cpu: 200m
+        memory: 200Mi
+      requests:
+        cpu: 100m
+        memory: 100Mi
+
+mailhog:
+  enabled: false
+
+kibana:
+  enabled: false
+  elasticsearchHosts: ""
+
+elasticsearch:
+  enabled: false
+  host: ""
+
+opensearch:
+  enabled: false
+
+localstack:
+  enabled: false
+  startServices: 'sns, sqs, s3'
+  enableStartupScripts: true
+  mountDind:
+    enabled: true
+  extraEnvVars:
+    - name: AWS_DEFAULT_REGION
+      value: us-east-1
+    - name: AWS_ACCESS_KEY_ID
+      value: test
+    - name: AWS_SECRET_ACCESS_KEY
+      value: test

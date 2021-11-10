@@ -1,0 +1,63 @@
+{{- if (and .Values.mariadb .Values.mariadb.enabled) }}
+{{- if (and .Values.mariadb.metrics .Values.mariadb.metrics.enabled) }}
+{{- $data := dict "Release" .Release "Chart" .Chart "Values" .Values "component" "mysqldexporter" }}
+apiVersion: {{ include "common.capabilities.deployment.apiVersion" . }}
+kind: Deployment
+metadata:
+  name: {{ include "mintel_common.fullname" $data }}
+  namespace: {{ .Release.Namespace }}
+  annotations:
+    secret.reloader.stakater.com/reload: {{ default (include "mintel_common.defaultMariadbSecretName" .) .Values.mariadb.secretNameOverride }}
+    app.mintel.com/opa-allow-single-replica: "true"
+  labels: {{ include "mintel_common.labels" $data | nindent 4 }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels: {{ include "mintel_common.selectorLabels" $data | nindent 6 }}
+  strategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels: {{ include "mintel_common.labels" $data | nindent 8 }}
+    spec:
+      {{- include "mintel_common.imagePullSecrets" . | nindent 6 }}
+      {{- if (and .Values.serviceAccount (or .Values.serviceAccount.create .Values.serviceAccount.name)) }}
+      serviceAccountName: {{ default (include "mintel_common.fullname" .) .Values.serviceAccount.name }}
+      {{- end }}
+      containers:
+        - name: main
+          image: {{ default "index.docker.io/mintel/k8s-mysqld-exporter:v0.13.0_mintel.0.3.0" .Values.mariadb.metrics.imageOverride }}
+          imagePullPolicy: {{ default "IfNotPresent" .Values.image.pullPolicy }}
+          args:
+            - /bin/mysqld_exporter
+            - --collect.auto_increment.columns
+            - --collect.info_schema.innodb_metrics
+            - --collect.info_schema.processlist
+            - --collect.info_schema.tables
+            - --no-collect.slave_status
+            - --no-collect.slave_hosts
+            - --log.format=json
+            - --log.level=info
+            - --web.listen-address=:9104
+          env:
+            - name: KUBERNETES_POD_NAMESPACE
+              value: metadata.namespace
+          envFrom:
+            - secretRef:
+                name: {{ default (include "mintel_common.defaultMariadbSecretName" .) .Values.mariadb.secretNameOverride }}
+          ports:
+            - containerPort: 9104
+              name: metrics
+          livenessProbe:
+            httpGet:
+              path: /
+              port: metrics
+          readinessProbe:
+            httpGet:
+              path: /
+              port: metrics
+          {{- with .Values.mariadb.metrics.resources }}
+          resources: {{- toYaml . | nindent 12 }}
+          {{- end }}
+{{- end }}
+{{- end }}

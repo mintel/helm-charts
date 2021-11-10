@@ -1,0 +1,17 @@
+{{- if .Values.networkPolicy.enabled }}
+kind: NetworkPolicy
+apiVersion: {{ include "common.capabilities.networkpolicy.apiVersion" . }}
+metadata:
+  name: {{ include "mintel_common.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels: {{ include "mintel_common.labels" . | nindent 4 }}
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/part-of: {{ include "mintel_common.fullname" . }}
+  ingress:
+    - from:
+      - podSelector:
+          matchLabels:
+            app.kubernetes.io/part-of: {{ include "mintel_common.fullname" . }}
+{{- end }}

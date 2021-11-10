@@ -1,25 +1,21 @@
 # Mintel Helm repository
 
-NOTE: PoC...not in active use
+Mintel application Helm Charts for Kubernetes [Helm](https://helm.sh/).
 
 ## Usage
 
-[Helm](https://helm.sh) must be installed to use the charts.  Please refer to
-Helm's [documentation](https://helm.sh/docs) to get started.
+### Adding Mintel Charts Repo
+```
+helm repo add mintel https://mintel.github.io/helm-charts
+```
 
-Once Helm has been set up correctly, add the repo as follows:
+### Searchi Mintel Charts
+```
+helm search repo mintel --devel
+```
+```
+NAME              			CHART VERSION	APP VERSION	DESCRIPTION
+mintel/standard-application-stack	0.1.0-rc1    	     		Mintel Standard Application Stack
+```
 
-    helm repo add mintel https://mintel.github.io/helm-charts
-
-If you had already added this repo earlier, run `helm repo update` to retrieve
-the latest versions of the packages.  You can then run `helm search repo
-mintel` to see the charts.
-
-To install the <chart-name> chart:
-
-    helm install <chart-name> mintel/<chart-name>
-
-To uninstall the chart:
-
-    helm delete <chart-name>
-
+**Note**: At Mintel, we handle consume these using [Tanka](https://tanka.dev/helm) which is our primary means of templating Kubernetes manifests.
