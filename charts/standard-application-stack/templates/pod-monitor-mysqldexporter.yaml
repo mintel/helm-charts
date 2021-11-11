@@ -9,7 +9,7 @@ metadata:
   namespace: {{ .Release.Namespace }}
   labels: {{ include "mintel_common.labels" $data | nindent 4 }}
 spec:
-  endpoints:
+  podMetricsEndpoints:
     - interval: {{ default "30s" .Values.mariadb.metrics.interval }}
       path: {{ default "/metrics" .Values.mariadb.metrics.path }}
       port: main-http
@@ -21,7 +21,7 @@ spec:
           targetLabel: job
       scheme: {{ default "http" .Values.mariadb.metrics.scheme }}
       scrapeTimeout: {{ default "10s" .Values.mariadb.metrics.timeout }}
-      tlsconfig:
+      tlsConfig:
         insecureSkipVerify: true
   selector:
     matchLabels: {{ include "mintel_common.selectorLabels" $data | nindent 6 }}

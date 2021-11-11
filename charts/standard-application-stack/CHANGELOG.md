@@ -3,6 +3,12 @@
 This file documents all notable changes to the Mintel standard-application-stack Helm Chart. The release
 numbering uses [semantic versioning](http://semver.org).
 
+## v0.1.0-rc6
+
+* Fixing typo's in pod/service monitors
+* Adding securityContext for celery-exporter
+* Fixing registry logic for image helper
+
 ## v0.1.0-rc5
 
 * Fixing KUBERNETES_POD_NAMSPACE env var

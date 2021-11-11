@@ -23,7 +23,7 @@ spec:
           targetLabel: job
       scheme: {{ default "http" .Values.metrics.scheme }}
       scrapeTimeout: {{ default "10s" .Values.metrics.timeout }}
-      tlsconfig:
+      tlsConfig:
         insecureSkipVerify: true
   selector:
     matchLabels: {{ include "mintel_common.selectorLabels" . | nindent 6 }}
@@ -56,7 +56,7 @@ spec:
           targetLabel: job
       scheme: {{ default "http" .Values.filebeatSidecar.metrics.scheme }}
       scrapeTimeout: {{ default "10s" .Values.filebeatSidecar.metrics.timeout }}
-      tlsconfig:
+      tlsConfig:
         insecureSkipVerify: true
   selector:
     matchLabels: {{ include "mintel_common.selectorLabels" . | nindent 6 }}
