@@ -112,9 +112,9 @@ Return the proper Application image name
 {{- define "mintel_common.image" -}}
 {{- $registryName := "" }}
 {{- if (eq .Values.global.clusterEnv "local") }}
-{{- $registryName = default "registry.gitlab.com" .Values.image.registry -}}
-{{- else }}
 {{- $registryName = default "k3d-default.localhost:5000" .Values.image.registry -}}
+{{- else }}
+{{- $registryName = default "registry.gitlab.com" .Values.image.registry -}}
 {{- end }}
 {{- $repositoryName := required "Must specify a docker repository." .Values.image.repository -}}
 {{- $tag := default "auto-replaced" .Values.image.tag | toString -}}

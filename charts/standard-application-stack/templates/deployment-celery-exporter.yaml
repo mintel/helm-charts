@@ -65,6 +65,8 @@ spec:
               scheme: HTTP
             initialDelaySeconds: 3
             timeoutSeconds: 1
+          securityContext:
+            runAsUser: 1000
           {{- with .Values.celery.metrics.resources }}
           resources: {{- toYaml . | nindent 12 }}
           {{- end }}
