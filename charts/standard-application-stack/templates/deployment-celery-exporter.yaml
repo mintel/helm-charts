@@ -46,9 +46,9 @@ spec:
             {{- include "mintel_common.redisEnv" . | nindent 12 }}
             - name: CELERY_EXPORTER_BROKER_URL
               {{- if .Values.redis.tls.enabled }}
-              value: 'rediss://:$(REDIS_AUTH_TOKEN)@$(REDIS_PRIMARY_ENDPOINT):6379/0'
+              value: 'rediss://:$(REDIS_AUTH_TOKEN)@$(REDIS_PRIMARY_ENDPOINT)/0'
               {{- else }}
-              value: 'redis://:$(REDIS_AUTH_TOKEN)@$(REDIS_PRIMARY_ENDPOINT):6379/0'
+              value: 'redis://:$(REDIS_AUTH_TOKEN)@$(REDIS_PRIMARY_ENDPOINT)/0'
               {{- end }}
             - name: CELERY_EXPORTER_NAMESPACE
               value: {{ .Release.Namespace }}

@@ -3,6 +3,10 @@
 This file documents all notable changes to the Mintel standard-application-stack Helm Chart. The release
 numbering uses [semantic versioning](http://semver.org).
 
+## v0.1.0-rc7
+
+* Fixing REDIS_PRIMARY_ENDPOINT for celery-exporter and local dev
+
 ## v0.1.0-rc6
 
 * Fixing typo's in pod/service monitors
