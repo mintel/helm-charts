@@ -89,14 +89,14 @@ spec:
             matchLabels: {{ include "mintel_common.selectorLabels" . | nindent 14 }}
           maxSkew: {{ default 1 .Values.topologyConstraints.zone.maxSkew }}
           topologyKey: failure-domain-beta.kubernetes.io/zone
-          whenUnsatisfiable: {{ default "DoNotScehdule" .Values.topologyConstraints.zone.whenUnsatisfiable }}
+          whenUnsatisfiable: {{ default "DoNotSchedule" .Values.topologyConstraints.zone.whenUnsatisfiable }}
         {{- end }}
         {{- if (and .Values.topologyConstraints.node .Values.topologyConstraints.node.enabled) }}
         - labelSelector:
             matchLabels: {{ include "mintel_common.selectorLabels" . | nindent 14 }}
           maxSkew: {{ default 1 .Values.topologyConstraints.node.maxSkew }}
           topologyKey: kubernetes.io/hostname
-          whenUnsatisfiable: {{ default "DoNotScehdule" .Values.topologyConstraints.node.whenUnsatisfiable }}
+          whenUnsatisfiable: {{ default "DoNotSchedule" .Values.topologyConstraints.node.whenUnsatisfiable }}
         {{- end }}
       {{- end }}
       {{- if (and (gt (.Values.replicas | int) 1) (and .Values.affinity .Values.affinity.enabled)) }}
