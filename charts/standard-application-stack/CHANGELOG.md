@@ -3,6 +3,10 @@
 This file documents all notable changes to the Mintel standard-application-stack Helm Chart. The release
 numbering uses [semantic versioning](http://semver.org).
 
+## v0.1.1-rc02
+
+* Disable topologySpreadConstraints for local cluster as nodes don't have right labels for it
+
 ## v0.1.1-rc01
 
 * Bump version and use 2 digit rc versions to work around semver version comparison
