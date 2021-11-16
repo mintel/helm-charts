@@ -79,6 +79,7 @@ spec:
       {{- with .Values.priorityClassName }}
       priorityClassName: {{ . | quote }}
       {{- end }}
+      {{- if (ne .Values.global.clusterEnv "local") }}
       {{- if (and .Values.topologySpreadConstraints .Values.topologySpreadConstraints.enabled) }}
       topologySpreadConstraints:
         {{- if .Values.topologySpreadConstraints.specificYaml }}
@@ -98,6 +99,7 @@ spec:
           topologyKey: kubernetes.io/hostname
           whenUnsatisfiable: {{ default "DoNotSchedule" .Values.topologySpreadConstraints.node.whenUnsatisfiable }}
         {{- end }}
+      {{- end }}
       {{- end }}
       {{- if (and (gt (.Values.replicas | int) 1) (and .Values.affinity .Values.affinity.enabled)) }}
       affinity:
