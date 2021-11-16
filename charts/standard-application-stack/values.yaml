@@ -483,7 +483,6 @@ kibana:
 
 elasticsearch:
   enabled: false
-  host: ""
 
 opensearch:
   enabled: false

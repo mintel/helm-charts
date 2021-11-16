@@ -311,20 +311,21 @@ app.mintel.com/k8s-notify.team: {{ .Values.k8snotify.team }}
 {{- if (and .Values.elasticsearch .Values.elasticsearch.enabled) }}
 - name: ES_NO_SSL
   value: "1"
-- name: ES_HOSTS
-  value: {{ include "mintel_common.fullname" . }}-elasticsearch-master
 {{- end }}
 {{- end }}
 {{- end -}}
 
 {{/* Outputs opensearch env variables if local */}}
 {{- define "mintel_common.opensearchEnv" -}}
-{{- if (eq .Values.global.clusterEnv "local") }}
 {{- if (and .Values.opensearch .Values.opensearch.enabled) }}
+- name: ES_USE_OPENSEARCH
+  value: "1"
+{{- if (eq .Values.global.clusterEnv "local") }}
+- name: ES_NO_SSL
+  value: "1"
 {{- end }}
 {{- end }}
 {{- end -}}
-
 
 {{/* Outputs localstack env variables if local */}}
 {{- define "mintel_common.localstackEnv" -}}

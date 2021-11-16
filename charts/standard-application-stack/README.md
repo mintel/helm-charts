@@ -1,6 +1,6 @@
 # standard-application-stack
 
-![Version: 0.1.1-rc1](https://img.shields.io/badge/Version-0.1.1--rc1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 0.1.1-rc2](https://img.shields.io/badge/Version-0.1.1--rc2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A generic chart to support most common application requirements
 
@@ -51,7 +51,6 @@ A generic chart to support most common application requirements
 | command | list | `["/app/docker-entrypoint.sh"]` | Optional command to the container |
 | configmaps | list | `[]` | A list of configuration maps for this application |
 | elasticsearch.enabled | bool | `false` |  |
-| elasticsearch.host | string | `""` |  |
 | env | list | `[]` | Optional environment variables injected into the container |
 | envFrom | list | `[]` | Optional environment variables injected into the container using envFrom (secrets/configmaps) |
 | externalSecret | object | `{"enabled":true}` | Define ExternalSecret from AWS ref: https://github.com/external-secrets/kubernetes-external-secrets |
