@@ -3,6 +3,10 @@
 This file documents all notable changes to the Mintel standard-application-stack Helm Chart. The release
 numbering uses [semantic versioning](http://semver.org).
 
+## v0.1.0-rc9
+
+* Fixing typo
+
 ## v0.1.0-rc8
 
 * Add support for topologyConstraints (zone and node) on deployment and deployment-celery
