@@ -1,6 +1,6 @@
 # standard-application-stack
 
-![Version: 0.1.0-rc9](https://img.shields.io/badge/Version-0.1.0--rc9-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 0.1.1-rc01](https://img.shields.io/badge/Version-0.1.1--rc01-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A generic chart to support most common application requirements
 
@@ -153,12 +153,12 @@ A generic chart to support most common application requirements
 | strategy.maxSurge | string | `"15%"` | Optional argument to define maximum number of pods allowed over defined replicas |
 | strategy.maxUnavailable | string | `"10%"` | Optional argument to define maximum number of ppods that can be unavailable during update |
 | strategy.type | string | `"RollingUpdate"` | Type of strategy to use (Recreate or RollingUpdate) |
-| topologyConstraints.enabled | bool | `true` |  |
-| topologyConstraints.node.enabled | bool | `false` |  |
-| topologyConstraints.node.maxSkew | int | `1` |  |
-| topologyConstraints.specificYaml | string | `nil` | Specify custom topologyConstraints yaml |
-| topologyConstraints.zone.enabled | bool | `true` |  |
-| topologyConstraints.zone.maxSkew | int | `1` |  |
+| topologySpreadConstraints.enabled | bool | `true` |  |
+| topologySpreadConstraints.node.enabled | bool | `false` |  |
+| topologySpreadConstraints.node.maxSkew | int | `1` |  |
+| topologySpreadConstraints.specificYaml | string | `nil` | Specify custom topologySpreadConstraints yaml |
+| topologySpreadConstraints.zone.enabled | bool | `true` |  |
+| topologySpreadConstraints.zone.maxSkew | int | `1` |  |
 | volumeMounts | list | `[]` | A list of volume mounts to be added to the pod |
 | volumes | string | `nil` | A list of volumes to be added to the pod |
 

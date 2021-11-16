@@ -279,7 +279,7 @@ strategy:
   # -- Optional argument to define maximum number of ppods that can be unavailable during update
   maxUnavailable: 10%
 
-topologyConstraints:
+topologySpreadConstraints:
   enabled: true
   zone:
     enabled: true
@@ -287,7 +287,7 @@ topologyConstraints:
   node:
     enabled: false
     maxSkew: 1
-  # -- Specify custom topologyConstraints yaml
+  # -- Specify custom topologySpreadConstraints yaml
   specificYaml:
 
 # -- Configure the deployment affinity/anti-affinity rules
