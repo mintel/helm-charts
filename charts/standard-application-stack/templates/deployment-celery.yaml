@@ -165,6 +165,7 @@ spec:
             {{- include "mintel_common.mailhogEnv" . | nindent 12 }}
             {{- include "mintel_common.redisEnv" . | nindent 12 }}
             {{- include "mintel_common.elasticsearchEnv" . | nindent 12 }}
+            {{- include "mintel_common.opensearchEnv" . | nindent 12 }}
             {{- include "mintel_common.localstackEnv" . | nindent 12 }}
             {{- with .Values.env }}
             {{- toYaml . | nindent 12 }}
@@ -190,6 +191,10 @@ spec:
             {{- if (and .Values.elasticsearch .Values.elasticsearch.enabled) }}
             - secretRef:
                 name: {{ default (include "mintel_common.defaultElasticsearchSecretName" .) .Values.elasticsearch.secretNameOverride }}
+            {{- end }}
+            {{- if (and .Values.opensearch .Values.opensearch.enabled) }}
+            - secretRef:
+                name: {{ default (include "mintel_common.defaultOpensearchSecretName" .) .Values.opensearch.secretNameOverride }}
             {{- end }}
             {{- with .Values.envFrom }}
             {{- toYaml . | nindent 12 }}
@@ -278,6 +283,10 @@ spec:
             {{- if (and .Values.elasticsearch .Values.elasticsearch.enabled) }}
             - secretRef:
                 name: {{ default (include "mintel_common.defaultElasticsearchSecretName" .) .Values.elasticsearch.secretNameOverride }}
+            {{- end }}
+            {{- if (and .Values.opensearch .Values.opensearch.enabled) }}
+            - secretRef:
+                name: {{ default (include "mintel_common.defaultOpensearchSecretName" .) .Values.opensearch.secretNameOverride }}
             {{- end }}
           livenessProbe:
             tcpSocket:
