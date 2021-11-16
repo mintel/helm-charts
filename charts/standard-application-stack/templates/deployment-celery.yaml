@@ -72,24 +72,24 @@ spec:
       {{- with .Values.priorityClassName }}
       priorityClassName: {{ . | quote }}
       {{- end }}
-      {{- if (and .Values.topologyConstraints .Values.topologyConstraints.enabled) }}
-      topologyConstraints:
-        {{- if .Values.topologyConstraints.specificYaml }}
-        {{- toYaml .Values.topologyConstraints.specificYaml }}
+      {{- if (and .Values.topologySpreadConstraints .Values.topologySpreadConstraints.enabled) }}
+      topologySpreadConstraints:
+        {{- if .Values.topologySpreadConstraints.specificYaml }}
+        {{- toYaml .Values.topologySpreadConstraints.specificYaml }}
         {{- end }}
-        {{- if (and .Values.topologyConstraints.zone .Values.topologyConstraints.zone.enabled) }}
+        {{- if (and .Values.topologySpreadConstraints.zone .Values.topologySpreadConstraints.zone.enabled) }}
         - labelSelector:
             matchLabels: {{ include "mintel_common.selectorLabels" . | nindent 14 }}
-          maxSkew: {{ default 1 .Values.topologyConstraints.zone.maxSkew }}
+          maxSkew: {{ default 1 .Values.topologySpreadConstraints.zone.maxSkew }}
           topologyKey: failure-domain-beta.kubernetes.io/zone
-          whenUnsatisfiable: {{ default "DoNotSchedule" .Values.topologyConstraints.zone.whenUnsatisfiable }}
+          whenUnsatisfiable: {{ default "DoNotSchedule" .Values.topologySpreadConstraints.zone.whenUnsatisfiable }}
         {{- end }}
-        {{- if (and .Values.topologyConstraints.node .Values.topologyConstraints.node.enabled) }}
+        {{- if (and .Values.topologySpreadConstraints.node .Values.topologySpreadConstraints.node.enabled) }}
         - labelSelector:
             matchLabels: {{ include "mintel_common.selectorLabels" . | nindent 14 }}
-          maxSkew: {{ default 1 .Values.topologyConstraints.node.maxSkew }}
+          maxSkew: {{ default 1 .Values.topologySpreadConstraints.node.maxSkew }}
           topologyKey: kubernetes.io/hostname
-          whenUnsatisfiable: {{ default "DoNotSchedule" .Values.topologyConstraints.node.whenUnsatisfiable }}
+          whenUnsatisfiable: {{ default "DoNotSchedule" .Values.topologySpreadConstraints.node.whenUnsatisfiable }}
         {{- end }}
       {{- end }}
       {{- if (and (gt (.Values.replicas | int) 1) (and .Values.affinity .Values.affinity.enabled)) }}
