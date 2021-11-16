@@ -279,11 +279,22 @@ strategy:
   # -- Optional argument to define maximum number of ppods that can be unavailable during update
   maxUnavailable: 10%
 
+topologyConstraints:
+  enabled: true
+  zone:
+    enabled: true
+    maxSkew: 1
+  node:
+    enabled: false
+    maxSkew: 1
+  # -- Specify custom topologyConstraints yaml
+  specificYaml:
+
 # -- Configure the deployment affinity/anti-affinity rules
 # ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#affinity-and-anti-affinity
 affinity:
   # -- Set to true to enable deployment affinity rules
-  enabled: true
+  enabled: false
   # -- Configure pod anti-affinity rules
   podAntiAffinity:
     # -- Toggle whether zone affinity should be required (hard) or preferred (soft)

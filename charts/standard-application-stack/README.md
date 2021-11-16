@@ -1,6 +1,6 @@
 # standard-application-stack
 
-![Version: 0.1.0-rc7](https://img.shields.io/badge/Version-0.1.0--rc7-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 0.1.0-rc8](https://img.shields.io/badge/Version-0.1.0--rc8-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A generic chart to support most common application requirements
 
@@ -20,8 +20,8 @@ A generic chart to support most common application requirements
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| affinity | object | `{"enabled":true,"podAntiAffinity":{"node":"soft","zone":"hard"}}` | Configure the deployment affinity/anti-affinity rules ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#affinity-and-anti-affinity |
-| affinity.enabled | bool | `true` | Set to true to enable deployment affinity rules |
+| affinity | object | `{"enabled":false,"podAntiAffinity":{"node":"soft","zone":"hard"}}` | Configure the deployment affinity/anti-affinity rules ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#affinity-and-anti-affinity |
+| affinity.enabled | bool | `false` | Set to true to enable deployment affinity rules |
 | affinity.podAntiAffinity | object | `{"node":"soft","zone":"hard"}` | Configure pod anti-affinity rules |
 | affinity.podAntiAffinity.node | string | `"soft"` | Toggle whether node affinity should be required (hard) or preferred (soft) |
 | affinity.podAntiAffinity.zone | string | `"hard"` | Toggle whether zone affinity should be required (hard) or preferred (soft) |
@@ -153,6 +153,12 @@ A generic chart to support most common application requirements
 | strategy.maxSurge | string | `"15%"` | Optional argument to define maximum number of pods allowed over defined replicas |
 | strategy.maxUnavailable | string | `"10%"` | Optional argument to define maximum number of ppods that can be unavailable during update |
 | strategy.type | string | `"RollingUpdate"` | Type of strategy to use (Recreate or RollingUpdate) |
+| topologyConstraints.enabled | bool | `true` |  |
+| topologyConstraints.node.enabled | bool | `false` |  |
+| topologyConstraints.node.maxSkew | int | `1` |  |
+| topologyConstraints.specificYaml | string | `nil` | Specify custom topologyConstraints yaml |
+| topologyConstraints.zone.enabled | bool | `true` |  |
+| topologyConstraints.zone.maxSkew | int | `1` |  |
 | volumeMounts | list | `[]` | A list of volume mounts to be added to the pod |
 | volumes | string | `nil` | A list of volumes to be added to the pod |
 
