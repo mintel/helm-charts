@@ -16,9 +16,12 @@ dependencies:
   version: 7.5.2
 - name: opensearch
   repository: https://opensearch-project.github.io/helm-charts
-  version: 1.2.5
+  version: 1.4.2
+- name: opensearch-dashboards
+  repository: https://opensearch-project.github.io/helm-charts
+  version: 1.0.8
 - name: localstack
   repository: https://localstack.github.io/helm-charts
   version: 0.3.5
-digest: sha256:51714c3bbc8e4d277d74b65571251ffce4b01ce537adbfe6531e83231781be29
-generated: "2021-11-10T10:22:53.087946896Z"
+digest: sha256:2eec5ae1f3b14c91576c2b89ad3a503d94c5b28452c002bf14067f4694617a73
+generated: "2021-11-16T14:45:48.801435426Z"

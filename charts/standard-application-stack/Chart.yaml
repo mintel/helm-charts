@@ -44,7 +44,12 @@ dependencies:
     tags:
       - localElasticsearch
   - name: opensearch
-    version: 1.2.5
+    version: 1.4.2
+    repository: https://opensearch-project.github.io/helm-charts
+    tags:
+      - localOpensearch
+  - name: opensearch-dashboards
+    version: 1.0.8
     repository: https://opensearch-project.github.io/helm-charts
     tags:
       - localOpensearch
