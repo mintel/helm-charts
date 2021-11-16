@@ -3,6 +3,10 @@
 This file documents all notable changes to the Mintel standard-application-stack Helm Chart. The release
 numbering uses [semantic versioning](http://semver.org).
 
+## v0.1.1-rc3
+
+* Ficing typo in topologySpreadConstraints topologyKey
+
 ## v0.1.1-rc2
 
 * Adding/fixing opensearch/elasticsearch secrets
