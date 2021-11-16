@@ -19,6 +19,51 @@ entries:
     version: 1.2.0
   standard-application-stack:
   - apiVersion: v2
+    created: "2021-11-16T11:22:01.706796174Z"
+    dependencies:
+    - name: redis
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - localRedis
+      version: 15.4.0
+    - name: mariadb
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - localMariadb
+      version: 9.5.1
+    - name: mailhog
+      repository: https://codecentric.github.io/helm-charts
+      tags:
+      - localMailhog
+      version: 4.1.0
+    - name: kibana
+      repository: https://helm.elastic.co
+      tags:
+      - localKibana
+      version: 7.5.2
+    - name: elasticsearch
+      repository: https://helm.elastic.co
+      tags:
+      - localElasticsearch
+      version: 7.5.2
+    - name: opensearch
+      repository: https://opensearch-project.github.io/helm-charts
+      tags:
+      - localOpensearch
+      version: 1.2.5
+    - name: localstack
+      repository: https://localstack.github.io/helm-charts
+      tags:
+      - localLocalstack
+      version: 0.3.5
+    description: A generic chart to support most common application requirements
+    digest: 1c09b28845ea79b14f315e2c7beebac3f29f40bfd972b81b00d459978973005c
+    name: standard-application-stack
+    type: application
+    urls:
+    - https://github.com/mintel/helm-charts/releases/download/standard-application-stack-0.1.1-rc02/standard-application-stack-0.1.1-rc02.tgz
+    version: 0.1.1-rc02
+  - apiVersion: v2
     created: "2021-11-16T10:58:36.81044125Z"
     dependencies:
     - name: redis
@@ -389,4 +434,4 @@ entries:
     urls:
     - https://github.com/mintel/helm-charts/releases/download/testchart-0.1.1/testchart-0.1.1.tgz
     version: 0.1.1
-generated: "2021-11-16T10:58:36.81050905Z"
+generated: "2021-11-16T11:22:01.706948676Z"
