@@ -126,6 +126,8 @@ serviceAccount:
   irsa:
     # -- Determines whether servier account is IRSA enabled
     enabled: false
+    # -- Override for last component of role-arn, ie: accountid-clusterName-namespace-{nameOverride}
+    nameOverride: ""
   # -- Whether to automount the service account token or not
   automountServiceAccountToken: true
 
