@@ -16,8 +16,10 @@ global:
   clusterEnv: "local"
   # -- Kubernetes cluster name
   clusterName: ""
-  # -- AWS ACcount Id
-  awsAccountId: ""
+  # -- Global variables relating to cloud provider
+  cloudProvider:
+    # -- AWS ACcount Id
+    accountId: ""
 
 # -- String to fully override mintel_common.fullname template
 nameOverride: ""

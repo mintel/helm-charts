@@ -1,6 +1,6 @@
 # standard-application-stack
 
-![Version: 0.1.1-rc5](https://img.shields.io/badge/Version-0.1.1--rc5-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 0.1.1-rc6](https://img.shields.io/badge/Version-0.1.1--rc6-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A generic chart to support most common application requirements
 
@@ -68,9 +68,10 @@ A generic chart to support most common application requirements
 | filebeatSidecar.resources.limits.memory | string | `"200Mi"` |  |
 | filebeatSidecar.resources.requests.cpu | string | `"100m"` |  |
 | filebeatSidecar.resources.requests.memory | string | `"100Mi"` |  |
-| global | object | `{"additionalLabels":{},"awsAccountId":"","clusterDomain":"cluster.local","clusterEnv":"local","clusterName":"","owner":"","partOf":""}` | Global variables for us in all charts and sub charts |
+| global | object | `{"additionalLabels":{},"cloudProvider":{"accountId":""},"clusterDomain":"cluster.local","clusterEnv":"local","clusterName":"","owner":"","partOf":""}` | Global variables for us in all charts and sub charts |
 | global.additionalLabels | object | `{}` | Additional labels to apply to all resources |
-| global.awsAccountId | string | `""` | AWS ACcount Id |
+| global.cloudProvider | object | `{"accountId":""}` | Global variables relating to cloud provider |
+| global.cloudProvider.accountId | string | `""` | AWS ACcount Id |
 | global.clusterDomain | string | `"cluster.local"` | Kubernetes cluster domain |
 | global.clusterEnv | string | `"local"` | Environment (local, dev, qa, prod) |
 | global.clusterName | string | `""` | Kubernetes cluster name |
