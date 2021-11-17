@@ -256,7 +256,7 @@ ingress:
   # ref: https://github.com/kubernetes/ingress-nginx/blob/master/docs/user-guide/nginx-configuration/annotations.md
   annotations: {}
   # -- Enable TLS configuration for the hostname defined at ingress.hostname parameter
-  tls: false
+  tls: true
 
 # -- Define a default NetworkPolicy for allowing apps in the same 'app.kubernetes.io/part-of' group to communicate
 # with eachother.
@@ -449,6 +449,8 @@ redis:
   #  secretPathOverride: ""
   replica:
     replicaCount: 0
+  tls:
+    enabled: false
 
 filebeatSidecar:
   enabled: false
@@ -492,7 +494,7 @@ opensearch:
   enabled: false
 
 localstack:
-  enabled: enabled
+  enabled: false
   startServices: 'sns, sqs, s3'
   enableStartupScripts: true
   mountDind:

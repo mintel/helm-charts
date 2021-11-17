@@ -8,10 +8,10 @@ metadata:
 spec:
   podSelector:
     matchLabels:
-      app.kubernetes.io/part-of: {{ include "mintel_common.fullname" . }}
+      app.kubernetes.io/part-of: {{ .Values.global.partOf }}
   ingress:
     - from:
       - podSelector:
           matchLabels:
-            app.kubernetes.io/part-of: {{ include "mintel_common.fullname" . }}
+            app.kubernetes.io/part-of: {{ .Values.global.partOf }}
 {{- end }}

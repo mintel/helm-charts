@@ -25,7 +25,7 @@ spec:
               serviceName: {{ include "mintel_common.fullname" . }}
               servicePort: {{ .Values.port }}
             path: /
-  {{- if .Values.ingress.tls }}
+  {{- if (and (ne .Values.global.clusterEnv "local") .Values.ingress.tls) }}
   tls:
     - hosts:
         - {{ .Values.ingress.defaultHost }}
