@@ -17,9 +17,9 @@ We truncate at 63 chars because sometimes Kubernetes name fields are limited to 
 {{/* Local DNS base */}}
 {{- define "mintel_common.publicURL" -}}
 {{- if .Values.ingress.tls }}
-{{- printf "https://%s:%s" .Values.ingress.defaultHost (.Values.port | toString) -}}
+{{- printf "https://%s" .Values.ingress.defaultHost -}}
 {{- else }}
-{{- printf "http://%s:%s" .Values.ingress.defaultHost (.Values.port | toString) -}}
+{{- printf "http://%s" .Values.ingress.defaultHost -}}
 {{- end }}
 {{- end -}}
 
@@ -226,7 +226,7 @@ Build comma sperated list of configmaps
 */}}
 {{- define "mintel_common.configmapList" -}}
 {{- $configmapList := list -}}
-{{- if (and .Values.filebeatSidecar .Values.filebeatSidecar) }}
+{{- if (and .Values.filebeatSidecar .Values.filebeatSidecar.enabled) }}
 {{- $configmapList = append $configmapList (printf "%s-filebeat" (include "mintel_common.fullname" .)) }}
 {{- end }}
 {{- range .Values.configmaps }}
@@ -245,7 +245,7 @@ app.mintel.com/k8s-notify.monitoring-url: ""
 app.mintel.com/k8s-notify.public-url: {{ include "mintel_common.publicURL" . }}
 {{- end }}
 app.mintel.com/k8s-notify.receiver: {{ .Values.k8snotify.receiver }}
-app.mintel.com/k8s-notify.team: {{ .Values.k8snotify.team }}
+app.mintel.com/k8s-notify.team: {{ default .Values.global.owner .Values.k8snotify.team }}
 {{- end }}
 {{- end -}}
 
@@ -255,12 +255,18 @@ app.mintel.com/k8s-notify.team: {{ .Values.k8snotify.team }}
   value: {{ .Values.global.clusterEnv }}
 - name: RUNTIME_ENVIRONMENT
   value: kubernetes
+- name: KUBELOCK_NAME
+  value: {{ include "mintel_common.fullname" . }}
+- name: KUBELOCK_NAMESPACE
+  value: {{ .Release.Namespace
+{{- if (and .Values.ingress .Values.ingress.enabled) }}
 {{- if .Values.ingress.tls }}
 - name: USE_SSL
   value: "1"
 {{- else }}
 - name: USE_SSL
   value: "0"
+{{- end }}
 {{- end }}
 {{- end }}
 
@@ -334,7 +340,7 @@ app.mintel.com/k8s-notify.team: {{ .Values.k8snotify.team }}
 {{- $endpoints := list -}}
 {{- $services := (split "," .Values.localstack.startServices) -}}
 {{- range $services -}}
-{{- $endpoints = append $endpoints (printf "%s=http://%s-localstack:4566" (. | trim) (include "mintel_common.fullname" $)) -}}
+{{- $endpoints = append $endpoints (printf "%s=http://%s-localstack:%s" (. | trim) (include "mintel_common.fullname" $) (default 4566 ($.Values.localstack.port | toString))) -}}
 {{- end }}
 - name: AWS_ENDPOINTS
   value: {{ join "," $endpoints }}

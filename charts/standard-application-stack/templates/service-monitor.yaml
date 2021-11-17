@@ -9,7 +9,7 @@ metadata:
   labels: {{ include "mintel_common.labels" . | nindent 4 }}
     k8s-app: {{ include "mintel_common.fullname" . }}
   annotations:
-    argocd.argoproject.io/sync-options: SkipDryRunOnMissinResource=true
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissinResource=true
 spec:
   endpoints:
     - interval: {{ default "30s" .Values.metrics.interval }}
@@ -42,7 +42,7 @@ metadata:
   namespace: {{ .Release.Namespace }}
   labels: {{ include "mintel_common.labels" $filebeatData | nindent 4}}
   annotations:
-    argocd.argoproject.io/sync-options: SkipDryRunOnMissinResource=true
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissinResource=true
 spec:
   endpoints:
     - interval: {{ default "30s" .Values.filebeatSidecar.metrics.interval }}
