@@ -258,7 +258,7 @@ app.mintel.com/k8s-notify.team: {{ default .Values.global.owner .Values.k8snotif
 - name: KUBELOCK_NAME
   value: {{ include "mintel_common.fullname" . }}
 - name: KUBELOCK_NAMESPACE
-  value: {{ .Release.Namespace
+  value: {{ .Release.Namespace }}
 {{- if (and .Values.ingress .Values.ingress.enabled) }}
 {{- if .Values.ingress.tls }}
 - name: USE_SSL
