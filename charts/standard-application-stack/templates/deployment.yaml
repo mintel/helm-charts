@@ -10,7 +10,7 @@ metadata:
     {{- if (and .Values.readiness (not .Values.readiness.enabled)) }}
     app.mintel.com/opa-skip-readiness-probe-check.main: "true"
     {{- end }}
-    {{- if (and .Values.filebeatSidecar .Values.filebeatSidecar) }}
+    {{- if (and .Values.filebeatSidecar .Values.filebeatSidecar.enabled) }}
     app.mintel.com/opa-skip-readiness-probe-check.filebeat: "true"
     {{- if (and .Values.filebeatSidecar.metrics .Values.filebeatSidecar.metrics.enabled) }}
     app.mintel.com/opa-skip-readiness-probe-check.beat-exporter: "true"

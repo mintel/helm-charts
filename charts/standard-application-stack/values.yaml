@@ -329,7 +329,7 @@ k8snotify:
   # -- Defines the receiver of the notifications (flowdock)
   receiver: flowdock
   # -- Defines team (flow) notifications are to be directed at
-  team: portal
+  team: ""
 
 # -- Configure celery deployment
 # Defaults to same image as main deployment but with the "celery" argument
@@ -492,7 +492,7 @@ opensearch:
   enabled: false
 
 localstack:
-  enabled: false
+  enabled: enabled
   startServices: 'sns, sqs, s3'
   enableStartupScripts: true
   mountDind:

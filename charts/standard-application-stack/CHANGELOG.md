@@ -3,6 +3,17 @@
 This file documents all notable changes to the Mintel standard-application-stack Helm Chart. The release
 numbering uses [semantic versioning](http://semver.org).
 
+## v0.1.1-rc7
+
+* Fix inclusion of filebeat reload annotation
+* Remove service port from publicURL annotation
+* Only set USE_SSL env var if ingress enabled
+* Fix typo on service-monitor argocd annotation
+* Make localstack port configurable; .Values.localstack.port
+* Add KUBELOCK_NAME and KUBELOCK_NAMESPACE env vars
+* Add k8snotify to celery and celery-beat deployments
+* Make k8snotify.team default to owner if not set
+
 ## v0.1.1-rc6
 
 * Fix passing of cloudProvider.accountId

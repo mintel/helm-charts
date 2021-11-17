@@ -1,6 +1,6 @@
 # standard-application-stack
 
-![Version: 0.1.1-rc6](https://img.shields.io/badge/Version-0.1.1--rc6-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 0.1.1-rc7](https://img.shields.io/badge/Version-0.1.1--rc7-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A generic chart to support most common application requirements
 
@@ -88,10 +88,10 @@ A generic chart to support most common application requirements
 | ingress.className | string | `""` | Define the type of ingress |
 | ingress.enabled | bool | `false` | Set to true to enable ingress record generation |
 | ingress.tls | bool | `false` | Enable TLS configuration for the hostname defined at ingress.hostname parameter |
-| k8snotify | object | `{"enabled":false,"receiver":"flowdock","team":"portal"}` | Configure the use of k8snotify ref: https://github.com/mintel/k8s-notify |
+| k8snotify | object | `{"enabled":false,"receiver":"flowdock","team":""}` | Configure the use of k8snotify ref: https://github.com/mintel/k8s-notify |
 | k8snotify.enabled | bool | `false` | Set to true to enable k8snotify notifications |
 | k8snotify.receiver | string | `"flowdock"` | Defines the receiver of the notifications (flowdock) |
-| k8snotify.team | string | `"portal"` | Defines team (flow) notifications are to be directed at |
+| k8snotify.team | string | `""` | Defines team (flow) notifications are to be directed at |
 | kibana.elasticsearchHosts | string | `""` |  |
 | kibana.enabled | bool | `false` |  |
 | liveness | object | `{"enabled":true,"startup":{"failureThreshold":60,"periodSeconds":5}}` | Configure extra options for liveness probe ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes |
@@ -99,7 +99,7 @@ A generic chart to support most common application requirements
 | liveness.startup.failureThreshold | int | `60` | Failure threshold for startupProbe |
 | liveness.startup.periodSeconds | int | `5` | Perios seconds for startupProbe |
 | localstack.enableStartupScripts | bool | `true` |  |
-| localstack.enabled | bool | `false` |  |
+| localstack.enabled | string | `"enabled"` |  |
 | localstack.extraEnvVars[0].name | string | `"AWS_DEFAULT_REGION"` |  |
 | localstack.extraEnvVars[0].value | string | `"us-east-1"` |  |
 | localstack.extraEnvVars[1].name | string | `"AWS_ACCESS_KEY_ID"` |  |
