@@ -3,6 +3,10 @@
 This file documents all notable changes to the Mintel standard-application-stack Helm Chart. The release
 numbering uses [semantic versioning](http://semver.org).
 
+## v0.1.1-rc6
+
+* Fix passing of cloudProvider.accountId
+
 ## v0.1.1-rc5
 
 * Fix serviceAccount irsa annotation
