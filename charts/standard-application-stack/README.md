@@ -1,6 +1,6 @@
 # standard-application-stack
 
-![Version: 0.1.1-rc4](https://img.shields.io/badge/Version-0.1.1--rc4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 0.1.1-rc5](https://img.shields.io/badge/Version-0.1.1--rc5-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A generic chart to support most common application requirements
 
@@ -142,12 +142,13 @@ A generic chart to support most common application requirements
 | service.enabled | bool | `true` | Whether to create Service resource or not |
 | service.labels | object | `{}` | Provide any additional labels which may be required. |
 | service.type | string | `"ClusterIP"` | Kubernetes Service type |
-| serviceAccount | object | `{"annotations":{},"automountServiceAccountToken":true,"create":true,"irsa":{"enabled":false},"name":""}` | ServiceAccount parameters ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/ |
+| serviceAccount | object | `{"annotations":{},"automountServiceAccountToken":true,"create":true,"irsa":{"enabled":false,"nameOverride":""},"name":""}` | ServiceAccount parameters ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/ |
 | serviceAccount.annotations | object | `{}` | Additional Service Account annotations |
 | serviceAccount.automountServiceAccountToken | bool | `true` | Whether to automount the service account token or not |
 | serviceAccount.create | bool | `true` | Determine whether a Service Account should be created or it should reuse a exiting one. |
-| serviceAccount.irsa | object | `{"enabled":false}` | Configures IRSA for the Service Account |
+| serviceAccount.irsa | object | `{"enabled":false,"nameOverride":""}` | Configures IRSA for the Service Account |
 | serviceAccount.irsa.enabled | bool | `false` | Determines whether servier account is IRSA enabled |
+| serviceAccount.irsa.nameOverride | string | `""` | Override for last component of role-arn, ie: accountid-clusterName-namespace-{nameOverride} |
 | serviceAccount.name | string | `""` | ServiceAccount to use. A name is generated using the mintel_common.fullname template if it is not set |
 | strategy | object | `{"maxSurge":"15%","maxUnavailable":"10%","type":"RollingUpdate"}` | Defines deployment update strategy |
 | strategy.maxSurge | string | `"15%"` | Optional argument to define maximum number of pods allowed over defined replicas |

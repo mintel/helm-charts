@@ -3,6 +3,11 @@
 This file documents all notable changes to the Mintel standard-application-stack Helm Chart. The release
 numbering uses [semantic versioning](http://semver.org).
 
+## v0.1.1-rc5
+
+* Fix serviceAccount irsa annotation
+* Removing filebeat hash annotation as stakater will handle reloads
+
 ## v0.1.1-rc4
 
 * Fix opensearch filebeat versionn

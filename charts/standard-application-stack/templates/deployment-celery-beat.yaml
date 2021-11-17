@@ -43,10 +43,6 @@ spec:
     type: Recreate
   template:
     metadata:
-      annotations:
-        {{- if (and .Values.filebeatSidecar .Values.filebeatSidecar.enabled) }}
-        {{ include "mintel_common.fullname" . }}-filebeat-hash: {{ include (print $.Template.BasePath "/configmap-filebeat.yaml") . | sha256sum }}
-        {{- end }}
       labels: {{ include "mintel_common.labels" $data | nindent 8 }}
         {{- if (and .Values.redis .Values.redis.enabled) }}
         app.mintel.com/redis-client: "true"
