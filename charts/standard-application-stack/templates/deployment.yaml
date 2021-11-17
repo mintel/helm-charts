@@ -275,7 +275,11 @@ spec:
           {{- end }}
         {{- if (and .Values.filebeatSidecar .Values.filebeatSidecar.enabled) }}
         - name: filebeat
+          {{- if (and .Values.opensearch .Values.opensearch.enabled) }}
+          image: docker.elastic.co/beats/filebeat-oss:7.10.2
+          {{- else }}
           image: docker.elastic.co/beats/filebeat:7.5.2
+          {{- end }}
           args:
             - -e
             - -c

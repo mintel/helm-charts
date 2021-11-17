@@ -1,6 +1,6 @@
 # standard-application-stack
 
-![Version: 0.1.1-rc3](https://img.shields.io/badge/Version-0.1.1--rc3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 0.1.1-rc4](https://img.shields.io/badge/Version-0.1.1--rc4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A generic chart to support most common application requirements
 
@@ -14,7 +14,8 @@ A generic chart to support most common application requirements
 | https://helm.elastic.co | elasticsearch | 7.5.2 |
 | https://helm.elastic.co | kibana | 7.5.2 |
 | https://localstack.github.io/helm-charts | localstack | 0.3.5 |
-| https://opensearch-project.github.io/helm-charts | opensearch | 1.2.5 |
+| https://opensearch-project.github.io/helm-charts | opensearch | 1.4.2 |
+| https://opensearch-project.github.io/helm-charts | opensearch-dashboards | 1.0.8 |
 
 ## Values
 

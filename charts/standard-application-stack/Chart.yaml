@@ -15,7 +15,7 @@ type: application
 # This is the chart version. This version number should be incremented each time you make changes
 # to the chart and its templates, including the app version.
 # Versions are expected to follow Semantic Versioning (https://semver.org/)
-version: 0.1.1-rc3
+version: 0.1.1-rc4
 
 dependencies:
   - name: redis
@@ -44,7 +44,12 @@ dependencies:
     tags:
       - localElasticsearch
   - name: opensearch
-    version: 1.2.5
+    version: 1.4.2
+    repository: https://opensearch-project.github.io/helm-charts
+    tags:
+      - localOpensearch
+  - name: opensearch-dashboards
+    version: 1.0.8
     repository: https://opensearch-project.github.io/helm-charts
     tags:
       - localOpensearch
