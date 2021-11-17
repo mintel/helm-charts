@@ -289,7 +289,7 @@ app.mintel.com/k8s-notify.team: {{ default .Values.global.owner .Values.k8snotif
 - name: REDIS_PRIMARY_ENDPOINT
   value: {{ printf "%s-redis-headless:6379" (include "mintel_common.fullname" .) }}
 {{- end }}
-{{- if (and .Values.redis.tls .Values.redis.tls.enabled) }}
+{{- if (and (ne .Values.global.clusterEnv "local") (and .Values.redis.tls .Values.redis.tls.enabled)) }}
 - name: REDIS_SSL
   value: "1"
 {{- else }}

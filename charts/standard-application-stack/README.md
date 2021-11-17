@@ -1,6 +1,6 @@
 # standard-application-stack
 
-![Version: 0.1.1-rc7](https://img.shields.io/badge/Version-0.1.1--rc7-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 0.1.1-rc8](https://img.shields.io/badge/Version-0.1.1--rc8-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A generic chart to support most common application requirements
 
@@ -83,11 +83,11 @@ A generic chart to support most common application requirements
 | image.repository | string | `"test"` | Docker repository |
 | image.tag | string | `"auto-replaced"` | Container image tag |
 | imagePullSecrets | list | `[]` | Optional array of imagePullSecrets ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/ |
-| ingress | object | `{"annotations":{},"className":"","enabled":false,"tls":false}` | Configure the ingress resource that allows you to access the application from public-internet ref: http://kubernetes.io/docs/user-guide/ingress/ |
+| ingress | object | `{"annotations":{},"className":"","enabled":false,"tls":true}` | Configure the ingress resource that allows you to access the application from public-internet ref: http://kubernetes.io/docs/user-guide/ingress/ |
 | ingress.annotations | object | `{}` | Ingress annotations For a full list of possible ingress annotations, please see ref: https://github.com/kubernetes/ingress-nginx/blob/master/docs/user-guide/nginx-configuration/annotations.md |
 | ingress.className | string | `""` | Define the type of ingress |
 | ingress.enabled | bool | `false` | Set to true to enable ingress record generation |
-| ingress.tls | bool | `false` | Enable TLS configuration for the hostname defined at ingress.hostname parameter |
+| ingress.tls | bool | `true` | Enable TLS configuration for the hostname defined at ingress.hostname parameter |
 | k8snotify | object | `{"enabled":false,"receiver":"flowdock","team":""}` | Configure the use of k8snotify ref: https://github.com/mintel/k8s-notify |
 | k8snotify.enabled | bool | `false` | Set to true to enable k8snotify notifications |
 | k8snotify.receiver | string | `"flowdock"` | Defines the receiver of the notifications (flowdock) |
@@ -99,7 +99,7 @@ A generic chart to support most common application requirements
 | liveness.startup.failureThreshold | int | `60` | Failure threshold for startupProbe |
 | liveness.startup.periodSeconds | int | `5` | Perios seconds for startupProbe |
 | localstack.enableStartupScripts | bool | `true` |  |
-| localstack.enabled | string | `"enabled"` |  |
+| localstack.enabled | bool | `false` |  |
 | localstack.extraEnvVars[0].name | string | `"AWS_DEFAULT_REGION"` |  |
 | localstack.extraEnvVars[0].value | string | `"us-east-1"` |  |
 | localstack.extraEnvVars[1].name | string | `"AWS_ACCESS_KEY_ID"` |  |
@@ -134,6 +134,7 @@ A generic chart to support most common application requirements
 | readiness | object | `{"enabled":true}` | Configure extra options for readiness probe ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes |
 | redis.enabled | bool | `false` |  |
 | redis.replica.replicaCount | int | `0` |  |
+| redis.tls.enabled | bool | `false` |  |
 | replicas | int | `2` | Desired number of replicas for main deployment |
 | resources | object | `{"limits":{},"requests":{}}` | Container resource requests and limits ref: http://kubernetes.io/docs/user-guide/compute-resources |
 | resources.limits | object | `{}` | The resource limits for the container |

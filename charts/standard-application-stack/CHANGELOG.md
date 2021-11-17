@@ -3,6 +3,12 @@
 This file documents all notable changes to the Mintel standard-application-stack Helm Chart. The release
 numbering uses [semantic versioning](http://semver.org).
 
+## v0.1.1-rc8
+
+* Fixing stupid typo
+* Fix part-of label selectors for network-policy
+* Make tls on ingress the default (unless local dev)
+
 ## v0.1.1-rc7
 
 * Fix inclusion of filebeat reload annotation
