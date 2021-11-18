@@ -20,6 +20,8 @@ global:
   cloudProvider:
     # -- AWS ACcount Id
     accountId: ""
+  # -- Global variable definint RUNTIME_ENVIRONMENT
+  runtimeEnvironment: kubernetes
 
 # -- String to fully override mintel_common.fullname template
 nameOverride: ""
@@ -32,7 +34,7 @@ replicas: 2
 
 # -- Docker image values
 image:
-  # -- Docker registry used to pul application image
+  # -- Docker registry used to pull application image
   registry: ""
   # -- Docker repository
   repository: "test"

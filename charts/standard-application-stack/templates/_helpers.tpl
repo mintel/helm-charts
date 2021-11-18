@@ -197,7 +197,7 @@ imagePullSecrets:
 {{- end -}}
 
 {{/*
-Build comma sperated list of secrets
+Build comma separated list of secrets
 (primarily used to generate Stakater reloader annotations)
 */}}
 {{- define "mintel_common.secretList" -}}
@@ -221,7 +221,7 @@ Build comma sperated list of secrets
 {{- end -}}
 
 {{/*
-Build comma sperated list of configmaps
+Build comma separated list of configmaps
 (primarily used to generate Stakater reloader annotations)
 */}}
 {{- define "mintel_common.configmapList" -}}
@@ -254,7 +254,7 @@ app.mintel.com/k8s-notify.team: {{ default .Values.global.owner .Values.k8snotif
 - name: APP_ENVIRONMENT
   value: {{ .Values.global.clusterEnv }}
 - name: RUNTIME_ENVIRONMENT
-  value: kubernetes
+  value: {{ .Values.global.runtimeEnvironment }}
 - name: KUBELOCK
   value: {{ include "mintel_common.fullname" . }}
 - name: KUBELOCK_NAME
