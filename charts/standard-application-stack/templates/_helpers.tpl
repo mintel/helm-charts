@@ -39,10 +39,14 @@ matchExpressions:
       - {{ include "mintel_common.fullname" . }}
 {{- end -}}
 
+{{/* Common Annotations */}}
+{{- define "mintel_common.commonAnnotations" -}}
+helm.sh/chart: {{ include "mintel_common.chart" . }}
+{{- end -}}
+
 {{/* Common labels */}}
 {{- define "mintel_common.labels" -}}
 name: {{ include "mintel_common.fullname" . }}
-helm.sh/chart: {{ include "mintel_common.chart" . }}
 {{ include "mintel_common.selectorLabels" . }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- if .Values.owner }}

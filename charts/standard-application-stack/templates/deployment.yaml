@@ -4,6 +4,7 @@ metadata:
   name: {{ include "mintel_common.fullname" . }}
   namespace: {{ .Release.Namespace }}
   annotations:
+    {{- include "mintel_common.commonAnnotations" . | nindent 4 }}
     {{- if (and .Values.liveness (not .Values.liveness.enabled)) }}
     app.mintel.com/opa-skip-liveness-probe-check.main: "true"
     {{- end }}

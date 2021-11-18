@@ -5,6 +5,7 @@ kind: PodDisruptionBudget
 metadata:
   name: {{ include "mintel_common.fullname" . }}
   labels: {{ include "mintel_common.labels" . | nindent 4 }}
+  annotations: {{ include "mintel_common.commonAnnotations" . | nindent 4 }}
   namespace: {{ .Release.Namespace }}
 spec:
   {{- with .Values.podDisruptionBudget.minAvailable }}
@@ -26,6 +27,7 @@ kind: PodDisruptionBudget
 metadata:
   name: {{ include "mintel_common.fullname" $data }}
   labels: {{ include "mintel_common.labels" $data | nindent 4 }}
+  annotations: {{ include "mintel_common.commonAnnotations" . | nindent 4 }}
   namespace: {{ .Release.Namespace }}
 spec:
   {{- with .Values.celery.podDisruptionBudget.minAvailable }}

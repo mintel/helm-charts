@@ -6,6 +6,7 @@ metadata:
   name: {{ include "mintel_common.fullname" $data }}
   namespace: {{ .Release.Namespace }}
   labels: {{ include "mintel_common.labels" $data | nindent 4 }}
+  annotations: {{ include "mintel_common.commonAnnotations" . | nindent 4 }}
 spec:
   ports:
     - name: main-http
