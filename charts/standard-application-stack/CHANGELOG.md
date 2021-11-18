@@ -3,6 +3,10 @@
 This file documents all notable changes to the Mintel standard-application-stack Helm Chart. The release
 numbering uses [semantic versioning](http://semver.org).
 
+## v0.1.2-rc2
+
+* Fixing topology labels for celery deployment
+
 ## v0.1.1-rc9
 
 * Fixing ingress for local dev and traefik
