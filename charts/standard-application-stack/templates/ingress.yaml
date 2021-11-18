@@ -8,6 +8,7 @@ metadata:
   namespace: {{ .Release.Namespace }}
   labels: {{ include "mintel_common.labels" . | nindent 4 }}
   annotations:
+    {{ include "mintel_common.commonAnnotations" . | nindent 4 }}
     ingress.kubernetes.io/ssl-redirect: "false"
     kubernetes.io/ingress.class: traefik
 spec:
@@ -31,6 +32,7 @@ metadata:
   namespace: {{ .Release.Namespace }}
   labels: {{ include "mintel_common.labels" . | nindent 4 }}
   annotations:
+    {{ include "mintel_common.commonAnnotations" . | nindent 4 }}
     {{- if .Values.className }}
     kubernetes.io/ingress.class: {{ .Values.ClassName }}
     {{- else }}
