@@ -255,6 +255,8 @@ app.mintel.com/k8s-notify.team: {{ default .Values.global.owner .Values.k8snotif
   value: {{ .Values.global.clusterEnv }}
 - name: RUNTIME_ENVIRONMENT
   value: kubernetes
+- name: KUBELOCK
+  value: {{ include "mintel_common.fullname" . }}
 - name: KUBELOCK_NAME
   value: {{ include "mintel_common.fullname" . }}
 - name: KUBELOCK_NAMESPACE
