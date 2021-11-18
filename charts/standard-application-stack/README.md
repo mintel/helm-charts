@@ -1,6 +1,6 @@
 # standard-application-stack
 
-![Version: 0.1.1-rc9](https://img.shields.io/badge/Version-0.1.1--rc9-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 0.1.2-rc1](https://img.shields.io/badge/Version-0.1.2--rc1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A generic chart to support most common application requirements
 
@@ -68,7 +68,7 @@ A generic chart to support most common application requirements
 | filebeatSidecar.resources.limits.memory | string | `"200Mi"` |  |
 | filebeatSidecar.resources.requests.cpu | string | `"100m"` |  |
 | filebeatSidecar.resources.requests.memory | string | `"100Mi"` |  |
-| global | object | `{"additionalLabels":{},"cloudProvider":{"accountId":""},"clusterDomain":"cluster.local","clusterEnv":"local","clusterName":"","owner":"","partOf":""}` | Global variables for us in all charts and sub charts |
+| global | object | `{"additionalLabels":{},"cloudProvider":{"accountId":""},"clusterDomain":"cluster.local","clusterEnv":"local","clusterName":"","owner":"","partOf":"","runtimeEnvironment":"kubernetes"}` | Global variables for us in all charts and sub charts |
 | global.additionalLabels | object | `{}` | Additional labels to apply to all resources |
 | global.cloudProvider | object | `{"accountId":""}` | Global variables relating to cloud provider |
 | global.cloudProvider.accountId | string | `""` | AWS ACcount Id |
@@ -77,9 +77,10 @@ A generic chart to support most common application requirements
 | global.clusterName | string | `""` | Kubernetes cluster name |
 | global.owner | string | `""` | Team which "owns" the application |
 | global.partOf | string | `""` | Top level application each deployment is a part of |
+| global.runtimeEnvironment | string | `"kubernetes"` | Global variable definint RUNTIME_ENVIRONMENT |
 | image | object | `{"pullPolicy":"IfNotPresent","registry":"","repository":"test","tag":"auto-replaced"}` | Docker image values |
 | image.pullPolicy | string | `"IfNotPresent"` | Optional ImagePullPolicy ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images |
-| image.registry | string | `""` | Docker registry used to pul application image |
+| image.registry | string | `""` | Docker registry used to pull application image |
 | image.repository | string | `"test"` | Docker repository |
 | image.tag | string | `"auto-replaced"` | Container image tag |
 | imagePullSecrets | list | `[]` | Optional array of imagePullSecrets ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/ |
