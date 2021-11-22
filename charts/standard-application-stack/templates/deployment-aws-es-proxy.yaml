@@ -26,6 +26,7 @@ spec:
       {{- if (and .Values.serviceAccount (or .Values.serviceAccount.create .Values.serviceAccount.name)) }}
       serviceAccountName: {{ default (include "mintel_common.fullname" .) .Values.serviceAccount.name }}
       {{- end }}
+      {{- include "mintel_common.topologySpreadConstraints" $data | nindent 6 }}
       containers:
         - name: main
           image: index.docker.io/mintel/aws-es-proxy:v1.3.0_mintel.0.1.0

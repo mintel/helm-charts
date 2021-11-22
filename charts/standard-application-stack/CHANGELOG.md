@@ -3,6 +3,11 @@
 This file documents all notable changes to the Mintel standard-application-stack Helm Chart. The release
 numbering uses [semantic versioning](http://semver.org).
 
+## v0.1.2-rc5
+
+* Adding topologySpreadConstraints to aws-es-proxy deployment
+* Moving topologySpreadConstraints into a helper function
+
 ## v0.1.2-rc4
 
 * Adding oauth-proxy sidecar logic
