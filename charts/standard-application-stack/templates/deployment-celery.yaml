@@ -70,28 +70,7 @@ spec:
       {{- with .Values.priorityClassName }}
       priorityClassName: {{ . | quote }}
       {{- end }}
-      {{- if (ne .Values.global.clusterEnv "local") }}
-      {{- if (and .Values.topologySpreadConstraints .Values.topologySpreadConstraints.enabled) }}
-      topologySpreadConstraints:
-        {{- if .Values.topologySpreadConstraints.specificYaml }}
-        {{- toYaml .Values.topologySpreadConstraints.specificYaml }}
-        {{- end }}
-        {{- if (and .Values.topologySpreadConstraints.zone .Values.topologySpreadConstraints.zone.enabled) }}
-        - labelSelector:
-            matchLabels: {{ include "mintel_common.selectorLabels" $data | nindent 14 }}
-          maxSkew: {{ default 1 .Values.topologySpreadConstraints.zone.maxSkew }}
-          topologyKey: failure-domain.beta.kubernetes.io/zone
-          whenUnsatisfiable: {{ default "DoNotSchedule" .Values.topologySpreadConstraints.zone.whenUnsatisfiable }}
-        {{- end }}
-        {{- if (and .Values.topologySpreadConstraints.node .Values.topologySpreadConstraints.node.enabled) }}
-        - labelSelector:
-            matchLabels: {{ include "mintel_common.selectorLabels" $data | nindent 14 }}
-          maxSkew: {{ default 1 .Values.topologySpreadConstraints.node.maxSkew }}
-          topologyKey: kubernetes.io/hostname
-          whenUnsatisfiable: {{ default "DoNotSchedule" .Values.topologySpreadConstraints.node.whenUnsatisfiable }}
-        {{- end }}
-      {{- end }}
-      {{- end }}
+      {{- include "mintel_common.topologySpreadConstraints" $data | nindent 6 }}
       {{- if (and (gt (.Values.replicas | int) 1) (and .Values.affinity .Values.affinity.enabled)) }}
       affinity:
         {{- if (and .Values.affinity .Values.affinity.specificYaml) }}

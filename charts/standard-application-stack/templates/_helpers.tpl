@@ -349,3 +349,29 @@ app.mintel.com/k8s-notify.team: {{ default .Values.global.owner .Values.k8snotif
 {{- end }}
 {{- end }}
 {{- end -}}
+
+{{/* Outputs topologySpreadConstraints block for a deployment */}}
+{{- define "mintel_common.topologySpreadConstraints" -}}
+{{- if (ne .Values.global.clusterEnv "local") }}
+{{- if (and .Values.topologySpreadConstraints .Values.topologySpreadConstraints.enabled) }}
+topologySpreadConstraints:
+  {{- if .Values.topologySpreadConstraints.specificYaml }}
+  {{- toYaml .Values.topologySpreadConstraints.specificYaml }}
+  {{- end }}
+  {{- if (and .Values.topologySpreadConstraints.zone .Values.topologySpreadConstraints.zone.enabled) }}
+  - labelSelector:
+      matchLabels: {{ include "mintel_common.selectorLabels" . | nindent 8 }}
+    maxSkew: {{ default 1 .Values.topologySpreadConstraints.zone.maxSkew }}
+    topologyKey: failure-domain.beta.kubernetes.io/zone
+    whenUnsatisfiable: {{ default "DoNotSchedule" .Values.topologySpreadConstraints.zone.whenUnsatisfiable }}
+  {{- end }}
+  {{- if (and .Values.topologySpreadConstraints.node .Values.topologySpreadConstraints.node.enabled) }}
+  - labelSelector:
+      matchLabels: {{ include "mintel_common.selectorLabels" . | nindent 8 }}
+    maxSkew: {{ default 1 .Values.topologySpreadConstraints.node.maxSkew }}
+    topologyKey: kubernetes.io/hostname
+    whenUnsatisfiable: {{ default "DoNotSchedule" .Values.topologySpreadConstraints.node.whenUnsatisfiable }}
+  {{- end }}
+{{- end }}
+{{- end }}
+{{- end -}}
