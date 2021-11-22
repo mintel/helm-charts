@@ -1,0 +1,18 @@
+{{- if (and .Values.opensearch .Values.opensearch.enabled) }}
+{{- if (and .Values.opensearch.awsEsProxy .Values.opensearch.awsEsProxy.enabled) }}
+{{- $data := dict "Release" .Release "Chart" .Chart "Values" .Values "component" "aws-es-proxy" }}
+apiVersion: {{ include "common.capabilities.service.apiVersion" . }}
+kind: Service
+metadata:
+  name: {{ include "mintel_common.fullname" $data }}
+  namespace: {{ .Release.Namespace }}
+  annotations: {{ include "mintel_common.commonAnnotations" . | nindent 4 }}
+  labels: {{ include "mintel_common.labels" $data | nindent 4 }}
+spec:
+  ports:
+    - name: main-http
+      port: {{ .Values.opensearch.awsEsProxy.port }}
+      targetPort: {{ .Values.opensearch.awsEsProxy.port }}
+  selector: {{ include "mintel_common.selectorLabels" $data | nindent 6 }}
+{{- end }}
+{{- end }}

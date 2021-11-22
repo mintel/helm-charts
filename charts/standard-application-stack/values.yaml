@@ -11,7 +11,7 @@ global:
   # -- Additional labels to apply to all resources
   additionalLabels: {}
   # -- Kubernetes cluster domain
-  clusterDomain: "cluster.local"
+  clusterDomain: "127.0.0.1.nip.io"
   # -- Environment (local, dev, qa, prod)
   clusterEnv: "local"
   # -- Kubernetes cluster name
@@ -492,8 +492,25 @@ kibana:
 elasticsearch:
   enabled: false
 
+# -- Configures AWS Opensearch deployment/connections
 opensearch:
+  # -- Set to true if deployment makes use of AWS opensearch
   enabled: false
+  # -- Configures aws-es-proxy to enable external access to opensearch
+  awsEsProxy:
+    # -- Set to true to add an aws-es-proxy deployment in front of opensearch
+    enabled: false
+    # -- Container resource requests and limits for aws-es-proxy sidecar
+    # ref: http://kubernetes.io/docs/user-guide/compute-resources
+    resources:
+      limits:
+        cpu: 200m
+        memory: 128Mi
+      requests:
+        cpu: 100m
+        memory: 64Mi
+    # -- Port for aws-es-proxy to listen on
+    port: 9200
 
 localstack:
   enabled: false
