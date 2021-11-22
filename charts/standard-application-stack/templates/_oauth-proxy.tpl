@@ -1,6 +1,6 @@
 {{/* Defines oauth proxy sidecar container */}}
 {{- define "mintel_common.oauthProxySidecar" -}}
-{{- if (and .proxiedService.oauthProxy.enabled (ne .Values.global.clusterEnv "local"))}}
+{{- if (and .proxiedService.oauthProxy.enabled (ne .Values.global.clusterEnv "local")) }}
 - name: oauth-proxy
   image: {{ default "quay.io/oauth2-proxy/oauth2-proxy:v7.1.3" .proxiedService.oauthProxy.image }}
   imagePullPolicy: {{ default "IfNotPresent" .Values.image.pullPolicy }}

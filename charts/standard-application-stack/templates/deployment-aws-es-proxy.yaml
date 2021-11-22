@@ -55,7 +55,7 @@ spec:
           resources: {{- toYaml . | nindent 12 }}
           {{- end }}
         {{- $oauthData := dict "Release" .Release "Chart" .Chart "Values" .Values "proxiedService" .Values.opensearch.awsEsProxy }}
-        {{- include "mintel_common.oauthProxySidecar" $oauthData | nindent 6}}
+        {{- include "mintel_common.oauthProxySidecar" $oauthData | nindent 8 }}
 
 {{- if (eq .Values.global.clusterEnv "local") }}
 {{- $data := dict "Release" .Release "Chart" .Chart "Values" .Values "component" "aws-es-proxy-dashboards" }}
