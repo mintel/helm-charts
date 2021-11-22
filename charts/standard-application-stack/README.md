@@ -126,17 +126,9 @@ A generic chart to support most common application requirements
 | minReadySeconds | int | `10` | Minimum number of seconds before deployments are ready |
 | nameOverride | string | `""` | String to fully override mintel_common.fullname template |
 | networkPolicy | object | `{"enabled":true}` | Define a default NetworkPolicy for allowing apps in the same 'app.kubernetes.io/part-of' group to communicate with eachother. ref: https://kubernetes.io/docs/concepts/services-networking/network-policies/ |
-| opensearch | object | `{"awsEsProxy":{"enabled":false,"ingressHost":"","oauthProxy":{"allowedGroups":[],"emailDomain":"","enabled":true,"secretNameOverride":"","secretSuffix":"opensearch-oauth","type":"portal"},"port":9200,"resources":{"limits":{"cpu":"200m","memory":"128Mi"},"requests":{"cpu":"100m","memory":"64Mi"}}},"enabled":false}` | Configures AWS Opensearch deployment/connections |
-| opensearch.awsEsProxy | object | `{"enabled":false,"ingressHost":"","oauthProxy":{"allowedGroups":[],"emailDomain":"","enabled":true,"secretNameOverride":"","secretSuffix":"opensearch-oauth","type":"portal"},"port":9200,"resources":{"limits":{"cpu":"200m","memory":"128Mi"},"requests":{"cpu":"100m","memory":"64Mi"}}}` | Configures aws-es-proxy to enable external access to opensearch |
+| opensearch | object | `{"awsEsProxy":{"enabled":false,"port":9200,"resources":{"limits":{"cpu":"200m","memory":"128Mi"},"requests":{"cpu":"100m","memory":"64Mi"}}},"enabled":false}` | Configures AWS Opensearch deployment/connections |
+| opensearch.awsEsProxy | object | `{"enabled":false,"port":9200,"resources":{"limits":{"cpu":"200m","memory":"128Mi"},"requests":{"cpu":"100m","memory":"64Mi"}}}` | Configures aws-es-proxy to enable external access to opensearch |
 | opensearch.awsEsProxy.enabled | bool | `false` | Set to true to add an aws-es-proxy deployment in front of opensearch |
-| opensearch.awsEsProxy.ingressHost | string | `""` | Hostname for opensearch dashboards ingress |
-| opensearch.awsEsProxy.oauthProxy | object | `{"allowedGroups":[],"emailDomain":"","enabled":true,"secretNameOverride":"","secretSuffix":"opensearch-oauth","type":"portal"}` | Configures OAuth proxy in front of opensearch dashboards |
-| opensearch.awsEsProxy.oauthProxy.allowedGroups | list | `[]` | Optional, list of allowed groups to access service |
-| opensearch.awsEsProxy.oauthProxy.emailDomain | string | `""` | Optional, email domain to limit oauth access to |
-| opensearch.awsEsProxy.oauthProxy.enabled | bool | `true` | Set to true to authentation of opensearch dashboards |
-| opensearch.awsEsProxy.oauthProxy.secretNameOverride | string | `""` | Optional, fullname override for oauth proxy secret |
-| opensearch.awsEsProxy.oauthProxy.secretSuffix | string | `"opensearch-oauth"` | Suffix of secret name used to configure oauth proxy |
-| opensearch.awsEsProxy.oauthProxy.type | string | `"portal"` | Type of oauth-proxy to use (portal|dex) |
 | opensearch.awsEsProxy.port | int | `9200` | Port for aws-es-proxy to listen on |
 | opensearch.awsEsProxy.resources | object | `{"limits":{"cpu":"200m","memory":"128Mi"},"requests":{"cpu":"100m","memory":"64Mi"}}` | Container resource requests and limits for aws-es-proxy sidecar ref: http://kubernetes.io/docs/user-guide/compute-resources |
 | opensearch.enabled | bool | `false` | Set to true if deployment makes use of AWS opensearch |

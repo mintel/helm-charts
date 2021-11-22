@@ -509,24 +509,8 @@ opensearch:
       requests:
         cpu: 100m
         memory: 64Mi
-    # -- Hostname for opensearch dashboards ingress
-    ingressHost: ""
     # -- Port for aws-es-proxy to listen on
     port: 9200
-    # -- Configures OAuth proxy in front of opensearch dashboards
-    oauthProxy:
-      # -- Set to true to authentation of opensearch dashboards
-      enabled: true
-      # -- Suffix of secret name used to configure oauth proxy
-      secretSuffix: "opensearch-oauth"
-      # -- Optional, fullname override for oauth proxy secret
-      secretNameOverride: ""
-      # -- Type of oauth-proxy to use (portal|dex)
-      type: "portal"
-      # -- Optional, list of allowed groups to access service
-      allowedGroups: []
-      # -- Optional, email domain to limit oauth access to
-      emailDomain: ""
 
 localstack:
   enabled: false
