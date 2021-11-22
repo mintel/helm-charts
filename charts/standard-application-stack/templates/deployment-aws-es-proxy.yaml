@@ -1,4 +1,5 @@
 {{- if (and .Values.opensearch .Values.opensearch.enabled) }}
+{{- if (and .Values.opensearch.awsEsProxy .Values.opensearch.awsEsProxy.enabled) }}
 {{- $data := dict "Release" .Release "Chart" .Chart "Values" .Values "component" "aws-es-proxy" }}
 apiVersion: {{ include "common.capabilities.deployment.apiVersion" . }}
 kind: Deployment
@@ -110,5 +111,6 @@ spec:
           {{- with .Values.opensearch.awsEsProxy.resources }}
           resources: {{- toYaml . | nindent 12 }}
           {{- end }}
+{{- end }}
 {{- end }}
 {{- end }}

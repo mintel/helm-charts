@@ -498,6 +498,8 @@ opensearch:
   enabled: false
   # -- Configures aws-es-proxy to enable external access to opensearch
   awsEsProxy:
+    # -- Set to true to add an aws-es-proxy deployment in front of opensearch
+    enabled: false
     # -- Container resource requests and limits for aws-es-proxy sidecar
     # ref: http://kubernetes.io/docs/user-guide/compute-resources
     resources:
