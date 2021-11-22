@@ -1,0 +1,62 @@
+{{- if (and .Values.opensearch .Values.opensearch.enabled) }}
+{{- $data := dict "Release" .Release "Chart" .Chart "Values" .Values "component" "aws-es-proxy-dashboards" }}
+{{- if (eq .Values.global.clusterEnv "local") }}
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ include "mintel_common.fullname" $data }}
+  namespace: {{ .Release.Namespace }}
+  labels: {{ include "mintel_common.labels" $data | nindent 4 }}
+  annotations:
+    {{ include "mintel_common.commonAnnotations" . | nindent 4 }}
+    ingress.kubernetes.io/ssl-redirect: "false"
+    kubernetes.io/ingress.class: traefik
+spec:
+  rules:
+    - host: {{ default (printf "%s-opensearch-dashboards.%s" (include "mintel_common.fullname" .) .Values.global.clusterDomain) .Values.opensearch.awsEsProxy.ingressHost }}
+      http:
+        paths:
+          - backend:
+              service:
+                name: {{ include "mintel_common.fullname" $data }}
+                port:
+                  number: {{ .Values.opensearch.awsEsProxy.port }}
+            path: /
+            pathType: Prefix
+{{- else }}
+---
+apiVersion: {{ include "common.capabilities.ingress.apiVersion" . }}
+kind: Ingress
+metadata:
+  name: {{ include "mintel_common.fullname" $data }}
+  namespace: {{ .Release.Namespace }}
+  labels: {{ include "mintel_common.labels" $data | nindent 4 }}
+  annotations:
+    {{ include "mintel_common.commonAnnotations" . | nindent 4 }}
+    {{- if .Values.className }}
+    kubernetes.io/ingress.class: {{ .Values.ClassName }}
+    {{- else }}
+    kubernetes.io/ingress.class: haproxy
+    {{- end }}
+spec:
+  rules:
+    - host: {{ default (printf "%s-opensearch-dashboards.%s" (include "mintel_common.fullname" .) .Values.global.clusterDomain) .Values.opensearch.awsEsProxy.ingressHost }}
+      http:
+        paths:
+          - backend:
+              serviceName: {{ include "mintel_common.fullname" $data }}
+              {{- if .Values.opensearch.awsEsProxy.oauthProxy.enabled }}
+              servicePort: 4180
+              {{- else }}
+              servicePort: {{ .Values.opensearch.awsEsProxy.port }}
+              {{- end }}
+            path: /_plugin/dashboards
+  {{- if .Values.ingress.tls }}
+  tls:
+    - hosts:
+        - {{ .Values.opensearch.awsEsProxy.ingressHost }}
+      secretName: ingress-controller/star-letsencrypt-cert
+  {{- end }}
+{{- end }}
+{{- end }}

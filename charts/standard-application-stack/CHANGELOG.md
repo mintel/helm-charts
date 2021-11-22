@@ -3,6 +3,15 @@
 This file documents all notable changes to the Mintel standard-application-stack Helm Chart. The release
 numbering uses [semantic versioning](http://semver.org).
 
+## v0.1.2-rc4
+
+* Adding oauth-proxy sidecar logic
+* Adding aws-es-proxy deployment for opensearch access
+
+## v0.1.2-rc3
+
+* Moving helm chart label to an annotation to avoid restarts on version bumps alone
+
 ## v0.1.2-rc2
 
 * Fixing topology labels for celery deployment

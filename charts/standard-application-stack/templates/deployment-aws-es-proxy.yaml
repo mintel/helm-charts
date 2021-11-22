@@ -1,0 +1,114 @@
+{{- if (and .Values.opensearch .Values.opensearch.enabled) }}
+{{- $data := dict "Release" .Release "Chart" .Chart "Values" .Values "component" "aws-es-proxy" }}
+apiVersion: {{ include "common.capabilities.deployment.apiVersion" . }}
+kind: Deployment
+metadata:
+  name: {{ include "mintel_common.fullname" $data }}
+  namespace: {{ .Release.Namespace }}
+  annotations:
+    {{ include "mintel_common.commonAnnotations" . | nindent 4 }}
+    secret.reloader.stakater.com/reload: {{ default (include "mintel_common.defaultOpensearchSecretName" .) .Values.opensearch.secretNameOverride }}
+    app.mintel.com/opa-allow-single-replica: "true"
+    app.mintel.com/opa-skip-readiness-probe-check.main: "true"
+  labels: {{ include "mintel_common.labels" $data | nindent 4 }}
+spec:
+  replicas: 2
+  selector:
+    matchLabels: {{ include "mintel_common.selectorLabels" $data | nindent 6 }}
+  strategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels: {{ include "mintel_common.labels" $data | nindent 8 }}
+    spec:
+      {{- include "mintel_common.imagePullSecrets" . | nindent 6 }}
+      {{- if (and .Values.serviceAccount (or .Values.serviceAccount.create .Values.serviceAccount.name)) }}
+      serviceAccountName: {{ default (include "mintel_common.fullname" .) .Values.serviceAccount.name }}
+      {{- end }}
+      containers:
+        - name: main
+          image: nabadger/aws-es-proxy:latest
+          imagePullPolicy: {{ default "IfNotPresent" .Values.image.pullPolicy }}
+          args:
+            - -listen=0.0.0.0:9200
+            {{- if (eq .Values.global.clusterEnv "local") }}
+            - -endpoint=http://$(OPENSEARCH_HOST):5601
+            - -no-sign-reqs
+            {{- else }}
+            - -endpoint=https://$(OPENSEARCH_HOST)
+            {{- end }}
+          env:
+            - name: KUBERNETES_POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+          envFrom:
+            - secretRef:
+                name: {{ default (include "mintel_common.defaultOpensearchSecretName" .) .Values.opensearch.secretNameOverride }}
+          ports:
+            - containerPort: 9200
+              name: http
+          livenessProbe:
+            tcpSocket:
+              port: http
+          {{- with .Values.opensearch.awsEsProxy.resources }}
+          resources: {{- toYaml . | nindent 12 }}
+          {{- end }}
+        {{- $oauthData := dict "Release" .Release "Chart" .Chart "Values" .Values "proxiedService" .Values.opensearch.awsEsProxy }}
+        {{- include "mintel_common.oauthProxySidecar" $oauthData | nindent 6}}
+
+{{- if (eq .Values.global.clusterEnv "local") }}
+{{- $data := dict "Release" .Release "Chart" .Chart "Values" .Values "component" "aws-es-proxy-dashboards" }}
+---
+apiVersion: {{ include "common.capabilities.deployment.apiVersion" . }}
+kind: Deployment
+metadata:
+  name: {{ include "mintel_common.fullname" $data }}
+  namespace: {{ .Release.Namespace }}
+  annotations:
+    {{ include "mintel_common.commonAnnotations" . | nindent 4 }}
+    secret.reloader.stakater.com/reload: {{ default (include "mintel_common.defaultOpensearchSecretName" .) .Values.opensearch.secretNameOverride }}
+    app.mintel.com/opa-allow-single-replica: "true"
+    app.mintel.com/opa-skip-readiness-probe-check.main: "true"
+  labels: {{ include "mintel_common.labels" $data | nindent 4 }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels: {{ include "mintel_common.selectorLabels" $data | nindent 6 }}
+  strategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels: {{ include "mintel_common.labels" $data | nindent 8 }}
+    spec:
+      {{- include "mintel_common.imagePullSecrets" . | nindent 6 }}
+      {{- if (and .Values.serviceAccount (or .Values.serviceAccount.create .Values.serviceAccount.name)) }}
+      serviceAccountName: {{ default (include "mintel_common.fullname" .) .Values.serviceAccount.name }}
+      {{- end }}
+      containers:
+        - name: main
+          image: nabadger/aws-es-proxy:latest
+          imagePullPolicy: {{ default "IfNotPresent" .Values.image.pullPolicy }}
+          args:
+            - -listen=0.0.0.0:9200
+            - -endpoint=http://$(OPENSEARCH_DASHBOARD_HOST):5601
+            - -no-sign-reqs
+          env:
+            - name: KUBERNETES_POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+          envFrom:
+            - secretRef:
+                name: {{ default (include "mintel_common.defaultOpensearchSecretName" .) .Values.opensearch.secretNameOverride }}
+          ports:
+            - containerPort: 9200
+              name: http
+          livenessProbe:
+            tcpSocket:
+              port: http
+          {{- with .Values.opensearch.awsEsProxy.resources }}
+          resources: {{- toYaml . | nindent 12 }}
+          {{- end }}
+{{- end }}
+{{- end }}

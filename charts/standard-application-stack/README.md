@@ -1,6 +1,6 @@
 # standard-application-stack
 
-![Version: 0.1.2-rc3](https://img.shields.io/badge/Version-0.1.2--rc3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 0.1.2-rc4](https://img.shields.io/badge/Version-0.1.2--rc4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A generic chart to support most common application requirements
 
@@ -68,11 +68,11 @@ A generic chart to support most common application requirements
 | filebeatSidecar.resources.limits.memory | string | `"200Mi"` |  |
 | filebeatSidecar.resources.requests.cpu | string | `"100m"` |  |
 | filebeatSidecar.resources.requests.memory | string | `"100Mi"` |  |
-| global | object | `{"additionalLabels":{},"cloudProvider":{"accountId":""},"clusterDomain":"cluster.local","clusterEnv":"local","clusterName":"","owner":"","partOf":"","runtimeEnvironment":"kubernetes"}` | Global variables for us in all charts and sub charts |
+| global | object | `{"additionalLabels":{},"cloudProvider":{"accountId":""},"clusterDomain":"127.0.0.1.nip.io","clusterEnv":"local","clusterName":"","owner":"","partOf":"","runtimeEnvironment":"kubernetes"}` | Global variables for us in all charts and sub charts |
 | global.additionalLabels | object | `{}` | Additional labels to apply to all resources |
 | global.cloudProvider | object | `{"accountId":""}` | Global variables relating to cloud provider |
 | global.cloudProvider.accountId | string | `""` | AWS ACcount Id |
-| global.clusterDomain | string | `"cluster.local"` | Kubernetes cluster domain |
+| global.clusterDomain | string | `"127.0.0.1.nip.io"` | Kubernetes cluster domain |
 | global.clusterEnv | string | `"local"` | Environment (local, dev, qa, prod) |
 | global.clusterName | string | `""` | Kubernetes cluster name |
 | global.owner | string | `""` | Team which "owns" the application |
@@ -126,7 +126,19 @@ A generic chart to support most common application requirements
 | minReadySeconds | int | `10` | Minimum number of seconds before deployments are ready |
 | nameOverride | string | `""` | String to fully override mintel_common.fullname template |
 | networkPolicy | object | `{"enabled":true}` | Define a default NetworkPolicy for allowing apps in the same 'app.kubernetes.io/part-of' group to communicate with eachother. ref: https://kubernetes.io/docs/concepts/services-networking/network-policies/ |
-| opensearch.enabled | bool | `false` |  |
+| opensearch | object | `{"awsEsProxy":{"ingressHost":"","oauthProxy":{"allowedGroups":[],"emailDomain":"","enabled":true,"secretNameOverride":"","secretSuffix":"opensearch-oauth","type":"portal"},"port":9200,"resources":{"limits":{"cpu":"200m","memory":"128Mi"},"requests":{"cpu":"100m","memory":"64Mi"}}},"enabled":false}` | Configures AWS Opensearch deployment/connections |
+| opensearch.awsEsProxy | object | `{"ingressHost":"","oauthProxy":{"allowedGroups":[],"emailDomain":"","enabled":true,"secretNameOverride":"","secretSuffix":"opensearch-oauth","type":"portal"},"port":9200,"resources":{"limits":{"cpu":"200m","memory":"128Mi"},"requests":{"cpu":"100m","memory":"64Mi"}}}` | Configures aws-es-proxy to enable external access to opensearch |
+| opensearch.awsEsProxy.ingressHost | string | `""` | Hostname for opensearch dashboards ingress |
+| opensearch.awsEsProxy.oauthProxy | object | `{"allowedGroups":[],"emailDomain":"","enabled":true,"secretNameOverride":"","secretSuffix":"opensearch-oauth","type":"portal"}` | Configures OAuth proxy in front of opensearch dashboards |
+| opensearch.awsEsProxy.oauthProxy.allowedGroups | list | `[]` | Optional, list of allowed groups to access service |
+| opensearch.awsEsProxy.oauthProxy.emailDomain | string | `""` | Optional, email domain to limit oauth access to |
+| opensearch.awsEsProxy.oauthProxy.enabled | bool | `true` | Set to true to authentation of opensearch dashboards |
+| opensearch.awsEsProxy.oauthProxy.secretNameOverride | string | `""` | Optional, fullname override for oauth proxy secret |
+| opensearch.awsEsProxy.oauthProxy.secretSuffix | string | `"opensearch-oauth"` | Suffix of secret name used to configure oauth proxy |
+| opensearch.awsEsProxy.oauthProxy.type | string | `"portal"` | Type of oauth-proxy to use (portal|dex) |
+| opensearch.awsEsProxy.port | int | `9200` | Port for aws-es-proxy to listen on |
+| opensearch.awsEsProxy.resources | object | `{"limits":{"cpu":"200m","memory":"128Mi"},"requests":{"cpu":"100m","memory":"64Mi"}}` | Container resource requests and limits for aws-es-proxy sidecar ref: http://kubernetes.io/docs/user-guide/compute-resources |
+| opensearch.enabled | bool | `false` | Set to true if deployment makes use of AWS opensearch |
 | podAnnotations | object | `{}` | Additional annotations to apply to the pod |
 | podDisruptionBudget | object | `{"enabled":true,"minAvailable":"50%"}` | Pod Disruption Budget ref: https://kubernetes.io/docs/tasks/run-application/configure-pdb/ |
 | podSecurityContext | object | `{"runAsUser":1000}` | Pod Security context for the container ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/ |
