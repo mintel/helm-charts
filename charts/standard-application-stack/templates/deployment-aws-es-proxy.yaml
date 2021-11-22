@@ -28,7 +28,7 @@ spec:
       {{- end }}
       containers:
         - name: main
-          image: nabadger/aws-es-proxy:latest
+          image: index.docker.io/mintel/aws-es-proxy:v1.3.0_mintel.0.1.0
           imagePullPolicy: {{ default "IfNotPresent" .Values.image.pullPolicy }}
           args:
             - -listen=0.0.0.0:9200
@@ -88,7 +88,7 @@ spec:
       {{- end }}
       containers:
         - name: main
-          image: nabadger/aws-es-proxy:latest
+          image: index.docker.io/mintel/aws-es-proxy:v1.3.0_mintel.0.1.0
           imagePullPolicy: {{ default "IfNotPresent" .Values.image.pullPolicy }}
           args:
             - -listen=0.0.0.0:9200
