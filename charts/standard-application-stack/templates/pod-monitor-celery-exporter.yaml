@@ -8,8 +8,10 @@ kind: PodMonitor
 metadata:
   name: {{ include "mintel_common.fullname" $data }}
   namespace: {{ .Release.Namespace }}
-  annotations: {{ include "mintel_common.commonAnnotations" . | nindent 4 }}
   labels: {{ include "mintel_common.labels" $data | nindent 4 }}
+  annotations:
+    {{ include "mintel_common.commonAnnotations" . | nindent 4 }}
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissinResource=true
 spec:
   podMetricsEndpoints:
     - interval: {{ default "30s" .Values.celery.metrics.interval }}

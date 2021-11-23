@@ -3,6 +3,14 @@
 This file documents all notable changes to the Mintel standard-application-stack Helm Chart. The release
 numbering uses [semantic versioning](http://semver.org).
 
+## v0.1.2-rc8
+
+* Removing filebeat sidecar from celery-beat
+* Removing service and service-monitor from celery-beat
+* Removing service from celery
+* Convert celery service-monitor to a pod-monitor
+* Add opa-allow-single-replica annotation to celery-beat deployment
+
 ## v0.1.2-rc7
 
 * Fix typo (runAsuser -> runAsUser)
