@@ -53,6 +53,8 @@ spec:
           livenessProbe:
             tcpSocket:
               port: http
+          securityContext:
+            runAsuser: 65534
           {{- with .Values.opensearch.awsEsProxy.resources }}
           resources: {{- toYaml . | nindent 12 }}
           {{- end }}
