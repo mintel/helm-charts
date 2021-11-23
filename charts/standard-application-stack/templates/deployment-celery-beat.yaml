@@ -14,13 +14,6 @@ metadata:
     {{- if (and .Values.celeryBeat.readiness (not .Values.celeryBeat.readiness.enabled)) }}
     app.mintel.com/opa-skip-readiness-probe-check.main: "true"
     {{- end }}
-    {{- if (and .Values.filebeatSidecar .Values.filebeatSidecar.enabled) }}
-    app.mintel.com/opa-skip-readiness-probe-check.filebeat: "true"
-    {{- if (and .Values.filebeatSidecar.metrics .Values.filebeatSidecar.metrics.enabled) }}
-    app.mintel.com/opa-skip-readiness-probe-check.beat-exporter: "true"
-    app.mintel.com/opa-skip-liveness-probe-check.beat-exporter: "true"
-    {{- end }}
-    {{- end }}
     {{- include "mintel_common.k8snotify" . | nindent 4 }}
     {{- $secretListStr := (include "mintel_common.secretList" .) }}
     {{- with $secretListStr }}
@@ -30,6 +23,7 @@ metadata:
     {{- with $configmapListStr }}
     configmap.reloader.stakater.com/reload: {{ . }}
     {{- end }}
+    app.mintel.com/opa-allow-single-replica: "true"
   labels: {{ include "mintel_common.labels" $data | nindent 4 }}
     {{- if (and .Values.redis .Values.redis.enabled) }}
     app.mintel.com/redis-client: "true"
@@ -186,65 +180,10 @@ spec:
             {{- toYaml . | nindent 12 }}
             {{- end }}
           {{- end }}
-        {{- if (and .Values.filebeatSidecar .Values.filebeatSidecar.enabled) }}
-        - name: filebeat
-          {{- if (and .Values.opensearch .Values.opensearch.enabled) }}
-          image: docker.elastic.co/beats/filebeat-oss:7.10.2
-          {{- else }}
-          image: docker.elastic.co/beats/filebeat:7.5.2
-          {{- end }}
-          args:
-            - -e
-            - -c
-            - /config/filebeat.yml
-          env:
-          - name: CLUSTER_ENV
-            value: {{ .Values.global.clusterEnv }}
-          - name: CLUSTER_NAME
-            value: ${CLUSTER_NAME}
-          envFrom:
-            {{- if (and .Values.elasticsearch .Values.elasticsearch.enabled) }}
-            - secretRef:
-                name: {{ default (include "mintel_common.defaultElasticsearchSecretName" .) .Values.elasticsearch.secretNameOverride }}
-            {{- end }}
-            {{- if (and .Values.opensearch .Values.opensearch.enabled) }}
-            - secretRef:
-                name: {{ default (include "mintel_common.defaultOpensearchSecretName" .) .Values.opensearch.secretNameOverride }}
-            {{- end }}
-          livenessProbe:
-            tcpSocket:
-              port: beat-http
-          ports:
-          - containerPort: 5066
-            name: beat-http
-          {{- with .Values.filebeatSidecar.resources }}
-          resources:
-          {{- toYaml . | nindent 14 }}
-          {{- end }}
-          volumeMounts:
-            - mountPath: /config/
-              name: {{ include "mintel_common.fullname" . }}-filebeat
-        {{- if (and .Values.filebeatSidecar.metrics .Values.filebeatSidecar.metrics.enabled) }}
-        - image: index.docker.io/trustpilot/beat-exporter:0.3.0
-          name: beat-exporter
-          ports:
-          - containerPort: 9479
-            name: metrics
-          {{- with .Values.filebeatSidecar.metrics.resources }}
-          resources:
-          {{- toYaml . | nindent 14 }}
-          {{- end }}
-        {{- end }}
-        {{- end }}
-      {{- if (or .Values.volumes (and .Values.filebeatSidecar .Values.filebeatSidecar.enabled)) }}
+      {{- if .Values.volumes }}
       volumes:
         {{- with .Values.volumes }}
         {{- toYaml . | nindent 8 }}
-        {{- end }}
-        {{- if (and .Values.filebeatSidecar .Values.filebeatSidecar.enabled) }}
-        - configMap:
-            name: {{ include "mintel_common.fullname" . }}-filebeat
-          name: {{ include "mintel_common.fullname" . }}-filebeat
         {{- end }}
       {{- end }}
 {{- end }}

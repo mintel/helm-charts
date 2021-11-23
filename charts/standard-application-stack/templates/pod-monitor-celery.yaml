@@ -1,12 +1,12 @@
 {{- if (ne .Values.global.clusterEnv "local") }}
-{{- if (and .Values.celeryBeat .Values.celeryBeat.enabled) }}
-{{- $targetData := dict "Release" .Release "Chart" .Chart "Values" .Values "component" "celery-beat" }}
+{{- if (and .Values.celery .Values.celery.enabled) }}
+{{- $targetData := dict "Release" .Release "Chart" .Chart "Values" .Values "component" "celery" }}
 {{- if (and .Values.filebeatSidecar .Values.filebeatSidecar.enabled) }}
 {{- if (and .Values.filebeatSidecar.metrics .Values.filebeatSidecar.metrics.enabled) }}
-{{- $filebeatData := dict "Release" .Release "Chart" .Chart "Values" .Values "component" "celery-beat-filebeat" }}
+{{- $filebeatData := dict "Release" .Release "Chart" .Chart "Values" .Values "component" "celery-filebeat" }}
 ---
 apiVersion: {{ include "common.capabilities.servicemonitor.apiVersion" . }}
-kind: ServiceMonitor
+kind: PodMonitor
 metadata:
   name: {{ include "mintel_common.fullname" $filebeatData }}
   namespace: {{ .Release.Namespace }}
@@ -15,7 +15,7 @@ metadata:
     {{ include "mintel_common.commonAnnotations" . | nindent 4 }}
     argocd.argoproj.io/sync-options: SkipDryRunOnMissinResource=true
 spec:
-  endpoints:
+  podMetricsEndpoints:
     - interval: {{ default "30s" .Values.filebeatSidecar.metrics.interval }}
       path: {{ default "/metrics" .Values.filebeatSidecar.metrics.path }}
       port: beat-exporter-metrics
@@ -31,7 +31,6 @@ spec:
         insecureSkipVerify: true
   selector:
     matchLabels: {{ include "mintel_common.selectorLabels" $targetData | nindent 6 }}
-  targetLabels: {{ include "mintel_common.targetLabelNames" . | nindent 4 }}
   podTargetLabels: {{ include "mintel_common.podTargetLabelNames" . | nindent 4 }}
 {{- end }}
 {{- end }}
