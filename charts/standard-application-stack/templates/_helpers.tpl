@@ -243,8 +243,10 @@ Build comma separated list of configmaps
 {{- define "mintel_common.k8snotify" -}}
 {{- if (and .Values.k8snotify .Values.k8snotify.enabled) }}
 app.mintel.com/k8s-notify.enabled: "true"
-app.mintel.com/k8s-notify.logs-url: ""
-app.mintel.com/k8s-notify.monitoring-url: ""
+app.mintel.com/k8s-notify.logs-url: "https://grafana.svc.monitoring.gke.mintelcloud.io/explore?orgId=1&left=%5B%22now-24h%22,%22now%22,%22loki-eks-{{.Values.global.clusterEnv}}%22,%7B%22expr%22:%22%7Bjob%3D%5C%22{{.Release.Namespace}}%2F{{include "mintel_common.fullname" .}}%5C%22%7D%22,%22maxLines%22:null%7D%5D"
+{{- if .Values.k8snotify.dashbordUrl }}
+app.mintel.com/k8s-notify.monitoring-url: {{ .Values.k8snotify.dashboardUrl }}
+{{- end }}
 {{- if .Values.ingress.enabled }}
 app.mintel.com/k8s-notify.public-url: {{ include "mintel_common.publicURL" . }}
 {{- end }}

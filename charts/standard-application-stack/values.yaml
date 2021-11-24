@@ -350,6 +350,8 @@ k8snotify:
   receiver: flowdock
   # -- Defines team (flow) notifications are to be directed at
   team: ""
+  # -- Defines dashboard URL to be set for k8s-notify.monitoring-url annotation
+  dashboardUrl: ""
 
 # -- Configure celery deployment
 # Defaults to same image as main deployment but with the "celery" argument

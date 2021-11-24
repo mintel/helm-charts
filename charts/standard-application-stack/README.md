@@ -89,7 +89,8 @@ A generic chart to support most common application requirements
 | ingress.className | string | `""` | Define the type of ingress |
 | ingress.enabled | bool | `false` | Set to true to enable ingress record generation |
 | ingress.tls | bool | `true` | Enable TLS configuration for the hostname defined at ingress.hostname parameter |
-| k8snotify | object | `{"enabled":false,"receiver":"flowdock","team":""}` | Configure the use of k8snotify ref: https://github.com/mintel/k8s-notify |
+| k8snotify | object | `{"dashboardUrl":"","enabled":false,"receiver":"flowdock","team":""}` | Configure the use of k8snotify ref: https://github.com/mintel/k8s-notify |
+| k8snotify.dashboardUrl | string | `""` | Defines dashboard URL to be set for k8s-notify.monitoring-url annotation |
 | k8snotify.enabled | bool | `false` | Set to true to enable k8snotify notifications |
 | k8snotify.receiver | string | `"flowdock"` | Defines the receiver of the notifications (flowdock) |
 | k8snotify.team | string | `""` | Defines team (flow) notifications are to be directed at |

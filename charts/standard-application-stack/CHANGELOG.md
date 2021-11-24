@@ -10,6 +10,7 @@ The release numbering uses [semantic versioning](http://semver.org).
 * Auto create EXTRA_ALLOWED_HOSTS env var from ingress defaultHost and extraHosts
 * Adding ingress annotations for blackbox's and monitoring endpoints
 * Refactor liveness/readiness probes to be more adjustable
+* Adding k8snotify logs-url and monitoring-url annotations
 
 ## v0.1.2-rc8
 
