@@ -142,7 +142,7 @@ serviceAccount:
 liveness:
   # -- Enable liveness probe
   enabled: true
-  #  method:
+  #  methodOverride:
   #    httpGet:
   #      # -- Request path for livenessProbe
   #      path: /healthz
@@ -150,6 +150,8 @@ liveness:
   #      port: 8000
   #      # -- Scheme (HTTP or HTTPS)
   #      scheme: HTTP
+  # -- Path to hit for liveness checks
+  #  path: /healthz
   # -- Initial delay seconds for livenessProbe
   #  initialDelaySeconds: 25
   # -- Period seconds for livenessProbe (frequency)
@@ -172,14 +174,16 @@ liveness:
 # ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes
 readiness:
   enabled: true
-  #  method:
+  #  methodOverride:
   #    httpGet:
   #      # -- Request path for readinessProbe
-  #      path: /healthz
+  #      path: /readiness
   #      # -- Port for readinessProbe
   #      port: 8000
   #      # -- Scheme (HTTP or HTTPS)
   #      scheme: HTTP
+  # -- Path to hit for readiness checks
+  #  path: /readiness
   # -- Initial delay seconds for readinessProbe
   #  initialDelaySeconds: 25
   # -- Period seconds for readinessProbe (frequency)
@@ -270,6 +274,9 @@ ingress:
   #      servicePort: ""
   specificRulesHostsYaml: {}
   specificTlsHostsYaml: {}
+  blackbox: true
+  livenessPathOverride: ""
+  readinessPathOverride: ""
 
 # -- Define a default NetworkPolicy for allowing apps in the same 'app.kubernetes.io/part-of' group to communicate
 # with eachother.

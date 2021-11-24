@@ -1,12 +1,15 @@
 # Change Log
 
-This file documents all notable changes to the Mintel standard-application-stack Helm Chart. The release
-numbering uses [semantic versioning](http://semver.org).
+This file documents all notable changes to the Mintel standard-application-stack Helm Chart.
+The release numbering uses [semantic versioning](http://semver.org).
 
 ## v0.1.3-rc1
 
 * Adding .Values.ingress.extraHosts
 * Adding .Values.global.ingressTLSSecrets
+* Auto create EXTRA_ALLOWED_HOSTS env var from ingress defaultHost and extraHosts
+* Adding ingress annotations for blackbox's and monitoring endpoints
+* Refactor liveness/readiness probes to be more adjustable
 
 ## v0.1.2-rc8
 

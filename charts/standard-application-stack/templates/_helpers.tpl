@@ -274,7 +274,7 @@ app.mintel.com/k8s-notify.team: {{ default .Values.global.owner .Values.k8snotif
   value: "0"
 {{- end }}
 {{- end }}
-{{- end }}
+{{- end -}}
 
 {{/* Outputs common local dev env variables if local */}}
 {{- define "mintel_common.localDevEnv" -}}

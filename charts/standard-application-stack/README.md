@@ -84,7 +84,7 @@ A generic chart to support most common application requirements
 | image.repository | string | `"test"` | Docker repository |
 | image.tag | string | `"auto-replaced"` | Container image tag |
 | imagePullSecrets | list | `[]` | Optional array of imagePullSecrets ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/ |
-| ingress | object | `{"annotations":{},"className":"","enabled":true,"extraHosts":[],"specificRulesHostsYaml":{},"specificTlsHostsYaml":{},"tls":true}` | Configure the ingress resource that allows you to access the application from public-internet ref: http://kubernetes.io/docs/user-guide/ingress/ |
+| ingress | object | `{"annotations":{},"blackbox":true,"className":"","enabled":true,"extraHosts":[],"livenessPathOverride":"","readinessPathOverride":"","specificRulesHostsYaml":{},"specificTlsHostsYaml":{},"tls":true}` | Configure the ingress resource that allows you to access the application from public-internet ref: http://kubernetes.io/docs/user-guide/ingress/ |
 | ingress.annotations | object | `{}` | Ingress annotations For a full list of possible ingress annotations, please see ref: https://github.com/kubernetes/ingress-nginx/blob/master/docs/user-guide/nginx-configuration/annotations.md |
 | ingress.className | string | `""` | Define the type of ingress |
 | ingress.enabled | bool | `true` | Set to true to enable ingress record generation |

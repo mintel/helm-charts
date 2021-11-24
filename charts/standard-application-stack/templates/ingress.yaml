@@ -38,6 +38,16 @@ metadata:
     {{- else }}
     kubernetes.io/ingress.class: haproxy
     {{- end }}
+    ingress.kubernetes.io/rewrite-target: /
+    {{- if (and .Values.metrics .Values.metrics.enabled) }}
+    ingress.kubernetes.io/config-backend: |
+      acl k8s-monitoring-endpoints path {{ default "/metrics" .Values.metrics.path }} {{ default "/readiness" .Values.readiness.path .Values.ingress.readinessPathOverride }}
+      http-request deny if k8s-monitoring-endpoints
+    {{- if .Values.ingress.blackbox }}
+    prometheus.io/probe: "true"
+    prometheus.io/probepath: {{ default "/healthz" .Values.liveness.path .Values.ingress.livenessPathOverride }}
+    {{- end }}
+    {{- end }}
 spec:
   rules:
     - host: {{ .Values.ingress.defaultHost }}
