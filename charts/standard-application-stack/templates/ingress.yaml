@@ -47,11 +47,42 @@ spec:
               serviceName: {{ include "mintel_common.fullname" . }}
               servicePort: {{ .Values.port }}
             path: /
+    {{- range .Values.ingress.extraHosts }}
+    - host: {{ .name }}
+      http:
+        paths:
+          - backend:
+              serviceName: {{ default (include "mintel_common.fullname" $) .serviceName }}
+              servicePort: {{ default $.Values.port .servicePort }}
+            path: {{ default "/" .path }}
+    {{- end }}
+    {{- with .Values.ingress.specificRulesHostsYaml }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
   {{- if .Values.ingress.tls }}
   tls:
+    {{- range $key, $val := .Values.global.ingressTLSSecrets }}
+    {{- $domainUsed := false -}}
+    {{- $domainHosts := list -}}
+    {{- if hasSuffix ($key | replace "_" ".") $.Values.ingress.defaultHost -}}
+    {{- $domainUsed = true -}}
+    {{- $domainHosts = append $domainHosts $.Values.ingress.defaultHost -}}
+    {{- end -}}
+    {{- range $.Values.ingress.extraHosts -}}
+    {{- if hasSuffix ($key | replace "_" ".") .name -}}
+    {{- $domainUsed = true -}}
+    {{- $domainHosts = append $domainHosts .name -}}
+    {{- end -}}
+    {{- end -}}
+    {{- if $domainUsed }}
     - hosts:
-        - {{ .Values.ingress.defaultHost }}
-      secretName: ingress-controller/star-letsencrypt-cert
+        {{- toYaml $domainHosts | nindent 8 }}
+      secretName: {{ $val }}
+    {{- end }}
+    {{- end }}
+    {{- with .Values.ingress.specificTlsHostsYaml }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
   {{- end }}
 {{- end }}
 {{- end }}

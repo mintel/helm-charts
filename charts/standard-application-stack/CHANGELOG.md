@@ -3,6 +3,11 @@
 This file documents all notable changes to the Mintel standard-application-stack Helm Chart. The release
 numbering uses [semantic versioning](http://semver.org).
 
+## v0.1.3-rc1
+
+* Adding .Values.ingress.extraHosts
+* Adding .Values.global.ingressTLSSecrets
+
 ## v0.1.2-rc8
 
 * Removing filebeat sidecar from celery-beat

@@ -68,12 +68,12 @@ A generic chart to support most common application requirements
 | filebeatSidecar.resources.limits.memory | string | `"200Mi"` |  |
 | filebeatSidecar.resources.requests.cpu | string | `"100m"` |  |
 | filebeatSidecar.resources.requests.memory | string | `"100Mi"` |  |
-| global | object | `{"additionalLabels":{},"cloudProvider":{"accountId":""},"clusterDomain":"127.0.0.1.nip.io","clusterEnv":"local","clusterName":"","owner":"","partOf":"","runtimeEnvironment":"kubernetes"}` | Global variables for us in all charts and sub charts |
+| global | object | `{"additionalLabels":{},"cloudProvider":{"accountId":""},"clusterDomain":"127.0.0.1.nip.io","clusterEnv":"qa","clusterName":"","ingressTLSSecrets":{},"owner":"","partOf":"","runtimeEnvironment":"kubernetes"}` | Global variables for us in all charts and sub charts |
 | global.additionalLabels | object | `{}` | Additional labels to apply to all resources |
 | global.cloudProvider | object | `{"accountId":""}` | Global variables relating to cloud provider |
 | global.cloudProvider.accountId | string | `""` | AWS ACcount Id |
 | global.clusterDomain | string | `"127.0.0.1.nip.io"` | Kubernetes cluster domain |
-| global.clusterEnv | string | `"local"` | Environment (local, dev, qa, prod) |
+| global.clusterEnv | string | `"qa"` | Environment (local, dev, qa, prod) |
 | global.clusterName | string | `""` | Kubernetes cluster name |
 | global.owner | string | `""` | Team which "owns" the application |
 | global.partOf | string | `""` | Top level application each deployment is a part of |
@@ -84,10 +84,10 @@ A generic chart to support most common application requirements
 | image.repository | string | `"test"` | Docker repository |
 | image.tag | string | `"auto-replaced"` | Container image tag |
 | imagePullSecrets | list | `[]` | Optional array of imagePullSecrets ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/ |
-| ingress | object | `{"annotations":{},"className":"","enabled":false,"tls":true}` | Configure the ingress resource that allows you to access the application from public-internet ref: http://kubernetes.io/docs/user-guide/ingress/ |
+| ingress | object | `{"annotations":{},"className":"","enabled":true,"extraHosts":[],"specificRulesHostsYaml":{},"specificTlsHostsYaml":{},"tls":true}` | Configure the ingress resource that allows you to access the application from public-internet ref: http://kubernetes.io/docs/user-guide/ingress/ |
 | ingress.annotations | object | `{}` | Ingress annotations For a full list of possible ingress annotations, please see ref: https://github.com/kubernetes/ingress-nginx/blob/master/docs/user-guide/nginx-configuration/annotations.md |
 | ingress.className | string | `""` | Define the type of ingress |
-| ingress.enabled | bool | `false` | Set to true to enable ingress record generation |
+| ingress.enabled | bool | `true` | Set to true to enable ingress record generation |
 | ingress.tls | bool | `true` | Enable TLS configuration for the hostname defined at ingress.hostname parameter |
 | k8snotify | object | `{"enabled":false,"receiver":"flowdock","team":""}` | Configure the use of k8snotify ref: https://github.com/mintel/k8s-notify |
 | k8snotify.enabled | bool | `false` | Set to true to enable k8snotify notifications |

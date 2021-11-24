@@ -13,7 +13,7 @@ global:
   # -- Kubernetes cluster domain
   clusterDomain: "127.0.0.1.nip.io"
   # -- Environment (local, dev, qa, prod)
-  clusterEnv: "local"
+  clusterEnv: "qa"
   # -- Kubernetes cluster name
   clusterName: ""
   # -- Global variables relating to cloud provider
@@ -22,6 +22,8 @@ global:
     accountId: ""
   # -- Global variable definint RUNTIME_ENVIRONMENT
   runtimeEnvironment: kubernetes
+  # == Global dictionary of TLS secrets
+  ingressTLSSecrets: {}
 
 # -- String to fully override mintel_common.fullname template
 nameOverride: ""
@@ -250,7 +252,7 @@ volumeMounts: []
 # ref: http://kubernetes.io/docs/user-guide/ingress/
 ingress:
   # -- Set to true to enable ingress record generation
-  enabled: false
+  enabled: true
   # -- Define the type of ingress
   className: ""
   # -- Ingress annotations
@@ -259,6 +261,15 @@ ingress:
   annotations: {}
   # -- Enable TLS configuration for the hostname defined at ingress.hostname parameter
   tls: true
+  # --
+  extraHosts: []
+  #  extraHosts:
+  #    - name: ""
+  #      path: ""
+  #      serviceName: ""
+  #      servicePort: ""
+  specificRulesHostsYaml: {}
+  specificTlsHostsYaml: {}
 
 # -- Define a default NetworkPolicy for allowing apps in the same 'app.kubernetes.io/part-of' group to communicate
 # with eachother.
