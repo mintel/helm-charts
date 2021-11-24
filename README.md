@@ -9,7 +9,7 @@ Mintel application Helm Charts for Kubernetes [Helm](https://helm.sh/).
 helm repo add mintel https://mintel.github.io/helm-charts
 ```
 
-### Searchi Mintel Charts
+### Searching Mintel Charts
 ```
 helm search repo mintel --devel
 ```
