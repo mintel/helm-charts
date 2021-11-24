@@ -13,7 +13,7 @@ global:
   # -- Kubernetes cluster domain
   clusterDomain: "127.0.0.1.nip.io"
   # -- Environment (local, dev, qa, prod)
-  clusterEnv: "qa"
+  clusterEnv: "local"
   # -- Kubernetes cluster name
   clusterName: ""
   # -- Global variables relating to cloud provider
@@ -256,7 +256,7 @@ volumeMounts: []
 # ref: http://kubernetes.io/docs/user-guide/ingress/
 ingress:
   # -- Set to true to enable ingress record generation
-  enabled: true
+  enabled: false
   # -- Define the type of ingress
   className: ""
   # -- Ingress annotations
