@@ -350,6 +350,16 @@ app.mintel.com/k8s-notify.team: {{ default .Values.global.owner .Values.k8snotif
 {{- end }}
 {{- end -}}
 
+{{/* Outputs EXTRA_ALLOWED_HOSTS env variable */}}
+{{- define "mintel_common.extraHostsEnv" -}}
+- name: EXTRA_ALLOWED_HOSTS
+  {{- $hosts := list .Values.ingress.defaultHost -}}
+  {{- range .Values.ingress.extraHosts }}
+  {{- $hosts = append $hosts .name -}}
+  {{- end }}
+  value: {{ join "," $hosts }}
+{{- end -}}
+
 {{/* Outputs topologySpreadConstraints block for a deployment */}}
 {{- define "mintel_common.topologySpreadConstraints" -}}
 {{- if (ne .Values.global.clusterEnv "local") }}

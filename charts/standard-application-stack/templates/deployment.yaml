@@ -154,12 +154,7 @@ spec:
             {{- include "mintel_common.elasticsearchEnv" . | nindent 12 }}
             {{- include "mintel_common.opensearchEnv" . | nindent 12 }}
             {{- include "mintel_common.localstackEnv" . | nindent 12 }}
-            - name: EXTRA_ALLOWED_HOSTS
-              {{- $hosts := list .Values.ingress.defaultHost -}}
-              {{- range .Values.ingress.extraHosts }}
-              {{- $hosts = append $hosts .name -}}
-              {{- end }}
-              value: {{ join "," $hosts }}
+            {{- include "mintel_common.extraHostsEnv" . | nindent 12 }}
             {{- with .Values.env }}
             {{- toYaml . | nindent 12 }}
             {{- end }}
