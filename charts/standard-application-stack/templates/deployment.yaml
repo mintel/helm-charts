@@ -154,6 +154,7 @@ spec:
             {{- include "mintel_common.elasticsearchEnv" . | nindent 12 }}
             {{- include "mintel_common.opensearchEnv" . | nindent 12 }}
             {{- include "mintel_common.localstackEnv" . | nindent 12 }}
+            {{- include "mintel_common.extraHostsEnv" . | nindent 12 }}
             {{- with .Values.env }}
             {{- toYaml . | nindent 12 }}
             {{- end }}
@@ -191,22 +192,22 @@ spec:
             {{- end }}
           {{- if (and .Values.liveness .Values.liveness.enabled) }}
           livenessProbe:
-            {{- if .Values.liveness.method }}
-            {{- toYaml .Values.liveness.method | nindent 12 }}
+            {{- if .Values.liveness.methodOverride }}
+            {{- toYaml .Values.liveness.methodOverride | nindent 12 }}
             {{- else }}
             httpGet:
-              path: /healthz
+              path: {{ default "/healthz" .Values.liveness.path }}
               port: http
               scheme: HTTP
             {{- end }}
             initialDelaySeconds: {{ default 0 .Values.liveness.initialDelaySeconds }}
             timeoutSeconds: {{ default 1 .Values.liveness.timeoutSeconds }}
           startupProbe:
-            {{- if .Values.liveness.method }}
-            {{- toYaml .Values.liveness.method | nindent 12 }}
+            {{- if .Values.liveness.methodOverride }}
+            {{- toYaml .Values.liveness.methodOverride | nindent 12 }}
             {{- else }}
             httpGet:
-              path: /healthz
+              path: {{ default "/healthz" .Values.liveness.path }}
               port: http
               scheme: HTTP
             {{- end }}
@@ -228,11 +229,11 @@ spec:
           {{- end }}
           {{- if (and .Values.readiness .Values.readiness.enabled) }}
           readinessProbe:
-            {{- if .Values.readiness.method }}
-            {{- toYaml .Values.readiness.method | nindent 12 }}
+            {{- if .Values.readiness.methodOverride }}
+            {{- toYaml .Values.readiness.methodOverride | nindent 12 }}
             {{- else }}
             httpGet:
-              path: /readiness
+              path: {{ default "/readiness" .Values.readiness.path }}
               port: http
               scheme: HTTP
             {{- end }}

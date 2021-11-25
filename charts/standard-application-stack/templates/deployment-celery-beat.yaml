@@ -14,7 +14,7 @@ metadata:
     {{- if (and .Values.celeryBeat.readiness (not .Values.celeryBeat.readiness.enabled)) }}
     app.mintel.com/opa-skip-readiness-probe-check.main: "true"
     {{- end }}
-    {{- include "mintel_common.k8snotify" . | nindent 4 }}
+    {{- include "mintel_common.k8snotify" $data | nindent 4 }}
     {{- $secretListStr := (include "mintel_common.secretList" .) }}
     {{- with $secretListStr }}
     secret.reloader.stakater.com/reload: {{ . }}
@@ -117,22 +117,22 @@ spec:
               name: http
           {{- if (and .Values.celeryBeat.liveness .Values.celeryBeat.liveness.enabled) }}
           livenessProbe:
-            {{- if .Values.celeryBeat.liveness.method }}
-            {{- toYaml .Values.celeryBeat.liveness.method | nindent 12 }}
+            {{- if .Values.celeryBeat.liveness.methodOverride }}
+            {{- toYaml .Values.celeryBeat.liveness.methodOverride | nindent 12 }}
             {{- else }}
             httpGet:
-              path: /healthz
+              path: {{ default "/healthz" .Values.liveness.path }}
               port: http
               scheme: HTTP
             {{- end }}
             initialDelaySeconds: {{ default 0 .Values.celeryBeat.liveness.initialDelaySeconds }}
             timeoutSeconds: {{ default 1 .Values.celeryBeat.liveness.timeoutSeconds }}
           startupProbe:
-            {{- if .Values.celeryBeat.liveness.method }}
-            {{- toYaml .Values.celeryBeat.liveness.method | nindent 12 }}
+            {{- if .Values.celeryBeat.liveness.methodOverride }}
+            {{- toYaml .Values.celeryBeat.liveness.methodOverride | nindent 12 }}
             {{- else }}
             httpGet:
-              path: /healthz
+              path: {{ default "/healthz" .Values.liveness.path }}
               port: http
               scheme: HTTP
             {{- end }}
@@ -154,11 +154,11 @@ spec:
           {{- end }}
           {{- if (and .Values.celeryBeat.readiness .Values.celeryBeat.readiness.enabled) }}
           readinessProbe:
-            {{- if .Values.celeryBeat.readiness.method }}
-            {{- toYaml .Values.celeryBeat.readiness.method | nindent 12 }}
+            {{- if .Values.celeryBeat.readiness.methodOverride }}
+            {{- toYaml .Values.celeryBeat.readiness.methodOverride | nindent 12 }}
             {{- else }}
             httpGet:
-              path: /readiness
+              path: {{ default "/readiness" .Values.readiness.path }}
               port: http
               scheme: HTTP
             {{- end }}

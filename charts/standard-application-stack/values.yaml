@@ -22,6 +22,8 @@ global:
     accountId: ""
   # -- Global variable definint RUNTIME_ENVIRONMENT
   runtimeEnvironment: kubernetes
+  # == Global dictionary of TLS secrets
+  ingressTLSSecrets: {}
 
 # -- String to fully override mintel_common.fullname template
 nameOverride: ""
@@ -140,7 +142,7 @@ serviceAccount:
 liveness:
   # -- Enable liveness probe
   enabled: true
-  #  method:
+  #  methodOverride:
   #    httpGet:
   #      # -- Request path for livenessProbe
   #      path: /healthz
@@ -148,6 +150,8 @@ liveness:
   #      port: 8000
   #      # -- Scheme (HTTP or HTTPS)
   #      scheme: HTTP
+  # -- Path to hit for liveness checks
+  #  path: /healthz
   # -- Initial delay seconds for livenessProbe
   #  initialDelaySeconds: 25
   # -- Period seconds for livenessProbe (frequency)
@@ -170,14 +174,16 @@ liveness:
 # ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes
 readiness:
   enabled: true
-  #  method:
+  #  methodOverride:
   #    httpGet:
   #      # -- Request path for readinessProbe
-  #      path: /healthz
+  #      path: /readiness
   #      # -- Port for readinessProbe
   #      port: 8000
   #      # -- Scheme (HTTP or HTTPS)
   #      scheme: HTTP
+  # -- Path to hit for readiness checks
+  #  path: /readiness
   # -- Initial delay seconds for readinessProbe
   #  initialDelaySeconds: 25
   # -- Period seconds for readinessProbe (frequency)
@@ -259,6 +265,18 @@ ingress:
   annotations: {}
   # -- Enable TLS configuration for the hostname defined at ingress.hostname parameter
   tls: true
+  # --
+  extraHosts: []
+  #  extraHosts:
+  #    - name: ""
+  #      path: ""
+  #      serviceName: ""
+  #      servicePort: ""
+  specificRulesHostsYaml: {}
+  specificTlsHostsYaml: {}
+  blackbox: true
+  livenessPathOverride: ""
+  readinessPathOverride: ""
 
 # -- Define a default NetworkPolicy for allowing apps in the same 'app.kubernetes.io/part-of' group to communicate
 # with eachother.
@@ -332,6 +350,8 @@ k8snotify:
   receiver: flowdock
   # -- Defines team (flow) notifications are to be directed at
   team: ""
+  # -- Defines dashboard URL to be set for k8s-notify.monitoring-url annotation
+  dashboardUrl: ""
 
 # -- Configure celery deployment
 # Defaults to same image as main deployment but with the "celery" argument
