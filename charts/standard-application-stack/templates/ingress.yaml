@@ -38,14 +38,15 @@ metadata:
     {{- else }}
     kubernetes.io/ingress.class: haproxy
     {{- end }}
+    ingress.kubernetes.io/timeout-server: {{ .Values.ingress.serverTimeoutSeconds }}s
     ingress.kubernetes.io/rewrite-target: /
     {{- if (and .Values.metrics .Values.metrics.enabled) }}
     ingress.kubernetes.io/config-backend: |
-      acl k8s-monitoring-endpoints path {{ default "/metrics" .Values.metrics.path }} {{ default "/readiness" .Values.readiness.path .Values.ingress.readinessPathOverride }}
+      acl k8s-monitoring-endpoints path {{ include "mintel_common.ingressDenyEndpoints" . }}
       http-request deny if k8s-monitoring-endpoints
-    {{- if .Values.ingress.blackbox }}
+    {{- if (and .Values.ingress.blackbox .Values.ingress.blackbox.enabled) }}
     prometheus.io/probe: "true"
-    prometheus.io/probepath: {{ default "/healthz" .Values.liveness.path .Values.ingress.livenessPathOverride }}
+    prometheus.io/probepath: {{ .Values.ingress.blackbox.probePath }}
     {{- end }}
     {{- end }}
 spec:

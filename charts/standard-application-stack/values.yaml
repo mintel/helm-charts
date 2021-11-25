@@ -265,18 +265,25 @@ ingress:
   annotations: {}
   # -- Enable TLS configuration for the hostname defined at ingress.hostname parameter
   tls: true
-  # --
+  # -- List of extra ingress hosts to setup
   extraHosts: []
   #  extraHosts:
   #    - name: ""
   #      path: ""
   #      serviceName: ""
   #      servicePort: ""
+  # -- Defines number of seconds to set server-timeout to
+  serverTimeoutSeconds: 120
+  # -- Configures annotations defining blackbox endpoints
+  blackbox:
+    # -- Set to true to tell blackboxes to hit endpoint
+    enabled: true
+    # -- Endpoint for blackboxes to hit
+    probePath: /external-health-check
+  # -- Optional ingress Rules Hosts Yaml that doesn't fit standard pattern
   specificRulesHostsYaml: {}
+  # -- Optional ingress Tls Hosts Yaml that doesn't fit standard pattern
   specificTlsHostsYaml: {}
-  blackbox: true
-  livenessPathOverride: ""
-  readinessPathOverride: ""
 
 # -- Define a default NetworkPolicy for allowing apps in the same 'app.kubernetes.io/part-of' group to communicate
 # with eachother.
