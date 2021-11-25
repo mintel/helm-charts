@@ -38,7 +38,9 @@ metadata:
     {{- else }}
     kubernetes.io/ingress.class: haproxy
     {{- end }}
-    ingress.kubernetes.io/timeout-server: {{ .Values.ingress.serverTimeoutSeconds }}s
+    {{- with .Values.ingress.serverTimeoutSeconds }}
+    ingress.kubernetes.io/timeout-server: {{ . }}s
+    {{- end }}
     ingress.kubernetes.io/rewrite-target: /
     {{- if (and .Values.metrics .Values.metrics.enabled) }}
     ingress.kubernetes.io/config-backend: |

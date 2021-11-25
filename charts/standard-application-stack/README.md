@@ -84,9 +84,8 @@ A generic chart to support most common application requirements
 | image.repository | string | `"test"` | Docker repository |
 | image.tag | string | `"auto-replaced"` | Container image tag |
 | imagePullSecrets | list | `[]` | Optional array of imagePullSecrets ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/ |
-| ingress | object | `{"annotations":{},"blackbox":{"enabled":true,"probePath":"/external-health-check"},"className":"","enabled":false,"extraHosts":[],"serverTimeoutSeconds":120,"specificRulesHostsYaml":{},"specificTlsHostsYaml":{},"tls":true}` | Configure the ingress resource that allows you to access the application from public-internet ref: http://kubernetes.io/docs/user-guide/ingress/ |
+| ingress | object | `{"annotations":{},"blackbox":{"enabled":true,"probePath":"/external-health-check"},"className":"","enabled":false,"extraHosts":[],"specificRulesHostsYaml":{},"specificTlsHostsYaml":{},"tls":true}` | Configure the ingress resource that allows you to access the application from public-internet ref: http://kubernetes.io/docs/user-guide/ingress/ |
 | ingress.annotations | object | `{}` | Ingress annotations For a full list of possible ingress annotations, please see ref: https://github.com/kubernetes/ingress-nginx/blob/master/docs/user-guide/nginx-configuration/annotations.md |
-| ingress.blackbox | object | `{"enabled":true,"probePath":"/external-health-check"}` | Configures annotations defining blackbox endpoints |
 | ingress.blackbox.enabled | bool | `true` | Set to true to tell blackboxes to hit endpoint |
 | ingress.blackbox.probePath | string | `"/external-health-check"` | Endpoint for blackboxes to hit |
 | ingress.className | string | `""` | Define the type of ingress |
