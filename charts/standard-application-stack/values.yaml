@@ -273,7 +273,7 @@ ingress:
   #      serviceName: ""
   #      servicePort: ""
   # -- Optional, defines number of seconds to set server-timeout to
-  #  serverTimeoutSeconds: 120
+  #  serverTimeoutSeconds: 10
   # -- Configures annotations defining blackbox endpoints
   blackbox:
     # -- Set to true to tell blackboxes to hit endpoint
