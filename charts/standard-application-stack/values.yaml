@@ -538,6 +538,10 @@ opensearch:
         memory: 64Mi
     # -- Port for aws-es-proxy to listen on
     port: 9200
+  # -- Configure opensearch secrets
+  secrets:
+    # -- Set to true to populate application environment with opensearch secrets
+    enabled: true
 
 localstack:
   enabled: false
