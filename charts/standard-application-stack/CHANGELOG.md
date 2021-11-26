@@ -3,6 +3,10 @@
 This file documents all notable changes to the Mintel standard-application-stack Helm Chart.
 The release numbering uses [semantic versioning](http://semver.org).
 
+## v0.1.4-rc0
+
+* Update opensearch `ES_HOSTS` to assume http scheme is provided in non-local environments
+
 ## v0.1.3-rc2
 
 * Fixing logic for ingress annotations

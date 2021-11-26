@@ -37,7 +37,7 @@ spec:
             - -endpoint=http://$(OPENSEARCH_HOST):5601
             - -no-sign-reqs
             {{- else }}
-            - -endpoint=https://$(OPENSEARCH_HOST)
+            - -endpoint=$(OPENSEARCH_HOST)
             {{- end }}
           env:
             - name: KUBERNETES_POD_NAMESPACE
