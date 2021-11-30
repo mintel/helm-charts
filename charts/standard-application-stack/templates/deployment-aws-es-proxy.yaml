@@ -33,11 +33,9 @@ spec:
           imagePullPolicy: {{ default "IfNotPresent" .Values.image.pullPolicy }}
           args:
             - -listen=0.0.0.0:9200
+            - -endpoint=$(OPENSEARCH_HOST)
             {{- if (eq .Values.global.clusterEnv "local") }}
-            - -endpoint=http://$(OPENSEARCH_HOST):5601
             - -no-sign-reqs
-            {{- else }}
-            - -endpoint=https://$(OPENSEARCH_HOST)
             {{- end }}
           env:
             - name: KUBERNETES_POD_NAMESPACE
