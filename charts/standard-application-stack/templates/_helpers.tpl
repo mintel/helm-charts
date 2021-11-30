@@ -334,6 +334,10 @@ app.mintel.com/k8s-notify.team: {{ default .Values.global.owner .Values.k8snotif
 - name: ES_NO_SSL
   value: "1"
 {{- end }}
+{{- if (and .Values.opensearch.awsEsProxy .Values.opensearch.awsEsProxy.enabled) }}
+- name: ES_HOSTS
+  value: {{ printf "http://%s-aws-es-proxy:9200" (include "mintel_common.fullname" .) }}
+{{- end }}
 {{- end }}
 {{- end -}}
 
