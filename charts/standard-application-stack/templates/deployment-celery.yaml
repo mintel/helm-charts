@@ -256,10 +256,11 @@ spec:
             - -c
             - /config/filebeat.yml
           env:
-          - name: CLUSTER_ENV
-            value: {{ .Values.global.clusterEnv }}
-          - name: CLUSTER_NAME
-            value: ${CLUSTER_NAME}
+            - name: CLUSTER_ENV
+              value: {{ .Values.global.clusterEnv }}
+            - name: CLUSTER_NAME
+              value: ${CLUSTER_NAME}
+            {{- include "mintel_common.opensearchEnv" . | nindent 12 }}
           envFrom:
             {{- if (and .Values.elasticsearch .Values.elasticsearch.enabled) }}
             - secretRef:
