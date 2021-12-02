@@ -16,7 +16,7 @@ spec:
   podMetricsEndpoints:
     - interval: {{ default "30s" .Values.celery.metrics.interval }}
       path: {{ default "/metrics" .Values.celery.metrics.path }}
-      port: main-http
+      port: metrics
       relabelings:
         - separator: /
           sourceLabels:

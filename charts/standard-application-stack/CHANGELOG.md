@@ -3,6 +3,10 @@
 This file documents all notable changes to the Mintel standard-application-stack Helm Chart.
 The release numbering uses [semantic versioning](http://semver.org).
 
+## v0.1.3-rc5
+
+* Fix the port name in the Celery PodMonitor resource
+
 ## v0.1.3-rc4
 
 * Adding opensearch env vars to filebeat containers
