@@ -1,7 +1,7 @@
 {{- if (ne .Values.global.clusterEnv "local") }}
-{{- if (and .Values.mariadb .Values.mariadb.enabled) }}
-{{- if (and .Values.mariadb.metrics .Values.mariadb.metrics.enabled) }}
-{{- $data := dict "Release" .Release "Chart" .Chart "Values" .Values "component" "mysqldexporter" }}
+{{- if (and .Values.postgresql .Values.postgresql.enabled) }}
+{{- if (and .Values.postgresql.metrics .Values.postgresql.metrics.enabled) }}
+{{- $data := dict "Release" .Release "Chart" .Chart "Values" .Values "component" "postgresqlexporter" }}
 apiVersion: {{ include "common.capabilities.podmonitor.apiVersion" . }}
 kind: PodMonitor
 metadata:
@@ -13,8 +13,8 @@ metadata:
     argocd.argoproj.io/sync-options: SkipDryRunOnMissinResource=true
 spec:
   podMetricsEndpoints:
-    - interval: {{ default "30s" .Values.mariadb.metrics.interval }}
-      path: {{ default "/metrics" .Values.mariadb.metrics.path }}
+    - interval: {{ default "30s" .Values.postgresql.metrics.interval }}
+      path: {{ default "/metrics" .Values.postgresql.metrics.path }}
       port: main-metrics
       relabelings:
         - separator: /
@@ -22,8 +22,8 @@ spec:
             - __meta_kubernetes_namespace
             - __meta_kubernetes_pod_label_app_kubernetes_io_name
           targetLabel: job
-      scheme: {{ default "http" .Values.mariadb.metrics.scheme }}
-      scrapeTimeout: {{ default "10s" .Values.mariadb.metrics.timeout }}
+      scheme: {{ default "http" .Values.postgresql.metrics.scheme }}
+      scrapeTimeout: {{ default "10s" .Values.postgresql.metrics.timeout }}
       tlsConfig:
         insecureSkipVerify: true
   selector:

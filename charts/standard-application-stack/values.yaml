@@ -472,6 +472,37 @@ mariadb:
         cpu: 100m
         memory: 64Mi
 
+postgresql:
+  enabled: true
+  #  secretNameOverride: ""
+  #  secretPathOverride: ""
+  #  auth:
+  #    database: ""
+  #    username: ""
+  #    password: ""
+  image:
+    tag: '13.5.0-debian-10-r52'
+  client:
+    enabled: true
+    #    image: {}
+    resources:
+      limits:
+        cpu: 300m
+        memory: 128Mi
+      requests:
+        cpu: 100m
+        memory: 64Mi
+  metrics:
+    enabled: true
+    #    image: {}
+    resources:
+      limits:
+        cpu: 300m
+        memory: 128Mi
+      requests:
+        cpu: 100m
+        memory: 64Mi
+
 redis:
   enabled: false
   #  secretNameOverride: ""
