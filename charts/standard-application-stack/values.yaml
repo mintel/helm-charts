@@ -473,7 +473,7 @@ mariadb:
         memory: 64Mi
 
 postgresql:
-  enabled: true
+  enabled: false
   #  secretNameOverride: ""
   #  secretPathOverride: ""
   #  auth:

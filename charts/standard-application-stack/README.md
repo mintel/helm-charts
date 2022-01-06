@@ -148,7 +148,7 @@ A generic chart to support most common application requirements
 | postgresql.client.resources.limits.memory | string | `"128Mi"` |  |
 | postgresql.client.resources.requests.cpu | string | `"100m"` |  |
 | postgresql.client.resources.requests.memory | string | `"64Mi"` |  |
-| postgresql.enabled | bool | `true` |  |
+| postgresql.enabled | bool | `false` |  |
 | postgresql.image.tag | string | `"13.5.0-debian-10-r52"` |  |
 | postgresql.metrics.enabled | bool | `true` |  |
 | postgresql.metrics.resources.limits.cpu | string | `"300m"` |  |
