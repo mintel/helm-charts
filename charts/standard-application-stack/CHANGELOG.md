@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v1.1.0] - 2022-01-06
+
+### Added
+- Adding support for postgresql databases
+
 ## [v1.0.0] - 2021-12-13
 
 ### Added

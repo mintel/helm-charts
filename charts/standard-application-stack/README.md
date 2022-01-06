@@ -1,6 +1,6 @@
 # standard-application-stack
 
-![Version: 1.0.0](https://img.shields.io/badge/Version-1.0.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 1.1.0](https://img.shields.io/badge/Version-1.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A generic chart to support most common application requirements
 
@@ -9,6 +9,7 @@ A generic chart to support most common application requirements
 | Repository | Name | Version |
 |------------|------|---------|
 | https://charts.bitnami.com/bitnami | mariadb | 9.5.1 |
+| https://charts.bitnami.com/bitnami | postgresql | 10.13.14 |
 | https://charts.bitnami.com/bitnami | redis | 15.4.0 |
 | https://codecentric.github.io/helm-charts | mailhog | 4.1.0 |
 | https://helm.elastic.co | elasticsearch | 7.5.2 |
@@ -142,6 +143,18 @@ A generic chart to support most common application requirements
 | podDisruptionBudget | object | `{"enabled":true,"minAvailable":"50%"}` | Pod Disruption Budget ref: https://kubernetes.io/docs/tasks/run-application/configure-pdb/ |
 | podSecurityContext | object | `{"runAsUser":1000}` | Pod Security context for the container ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/ |
 | port | int | `8000` | Main container port for the application |
+| postgresql.client.enabled | bool | `true` |  |
+| postgresql.client.resources.limits.cpu | string | `"300m"` |  |
+| postgresql.client.resources.limits.memory | string | `"128Mi"` |  |
+| postgresql.client.resources.requests.cpu | string | `"100m"` |  |
+| postgresql.client.resources.requests.memory | string | `"64Mi"` |  |
+| postgresql.enabled | bool | `false` |  |
+| postgresql.image.tag | string | `"13.5.0-debian-10-r52"` |  |
+| postgresql.metrics.enabled | bool | `true` |  |
+| postgresql.metrics.resources.limits.cpu | string | `"300m"` |  |
+| postgresql.metrics.resources.limits.memory | string | `"128Mi"` |  |
+| postgresql.metrics.resources.requests.cpu | string | `"100m"` |  |
+| postgresql.metrics.resources.requests.memory | string | `"64Mi"` |  |
 | priorityClassName | string | `""` | Optional name of PriorityClass to run pods with |
 | readiness | object | `{"enabled":true}` | Configure extra options for readiness probe ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes |
 | redis.enabled | bool | `false` |  |

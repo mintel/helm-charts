@@ -10,7 +10,6 @@ metadata:
   annotations:
     {{ include "mintel_common.commonAnnotations" . | nindent 4 }}
     app.mintel.com/opa-skip-readiness-probe-check.main: "true"
-    secret.reloader.stakater.com/reload: {{ default (include "mintel_common.defaultMariadbSecretName" .) .Values.mariadb.secretNameOverride }}
     app.mintel.com/opa-allow-single-replica: "true"
   labels: {{ include "mintel_common.labels" $data | nindent 4 }}
     {{- if (and .Values.redis .Values.redis.enabled) }}

@@ -1,0 +1,59 @@
+{{- if (and .Values.postgresql .Values.postgresql.enabled) }}
+{{- if (and .Values.postgresql.client .Values.postgresql.client.enabled) }}
+{{- $data := dict "Release" .Release "Chart" .Chart "Values" .Values "component" "postgresqlclient" }}
+apiVersion: {{ include "common.capabilities.deployment.apiVersion" . }}
+kind: Deployment
+metadata:
+  name: {{ include "mintel_common.fullname" $data }}
+  namespace: {{ .Release.Namespace }}
+  annotations:
+    {{ include "mintel_common.commonAnnotations" . | nindent 4 }}
+    secret.reloader.stakater.com/reload: {{ default (include "mintel_common.defaultPostgresqlSecretName" .) .Values.postgresql.secretNameOverride }}
+    app.mintel.com/opa-allow-single-replica: "true"
+    app.mintel.com/opa-skip-liveness-probe-check.main: "true"
+    app.mintel.com/opa-skip-readiness-probe-check.main: "true"
+  labels: {{ include "mintel_common.labels" $data | nindent 4 }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels: {{ include "mintel_common.selectorLabels" $data | nindent 6 }}
+  strategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels: {{ include "mintel_common.labels" $data | nindent 8 }}
+    spec:
+      {{- include "mintel_common.imagePullSecrets" . | nindent 6 }}
+      securityContext:
+        runAsUser: 1000
+      {{- if (and .Values.serviceAccount (or .Values.serviceAccount.create .Values.serviceAccount.name)) }}
+      serviceAccountName: {{ default (include "mintel_common.fullname" .) .Values.serviceAccount.name }}
+      {{- end }}
+      containers:
+        - name: main
+          image: {{ default "index.docker.io/mintel/k8s-postgresclient:0.1.1" .Values.postgresql.client.image }}
+          imagePullPolicy: {{ default "IfNotPresent" .Values.image.pullPolicy }}
+          env:
+            - name: KUBERNETES_POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: PGHOST
+              value: "$(DB_HOST)"
+            - name: PGDATABASE
+              value: "$(DB_NAME)"
+            - name: PGUSER
+              value: "$(DB_USER)"
+            - name: PGPASSWORD
+              value: "$(DB_PASSWORD)"
+          envFrom:
+            - secretRef:
+                name: {{ default (include "mintel_common.defaultPostgresqlSecretName" .) .Values.postgresql.secretNameOverride }}
+          ports:
+            - containerPort: 5432
+              name: postgresql
+          {{- with .Values.postgresql.client.resources }}
+          resources: {{- toYaml . | nindent 12 }}
+          {{- end }}
+{{- end }}
+{{- end }}
