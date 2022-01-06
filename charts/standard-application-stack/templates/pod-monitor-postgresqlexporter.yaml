@@ -15,7 +15,7 @@ spec:
   podMetricsEndpoints:
     - interval: {{ default "30s" .Values.postgresql.metrics.interval }}
       path: {{ default "/metrics" .Values.postgresql.metrics.path }}
-      port: main-metrics
+      port: metrics
       relabelings:
         - separator: /
           sourceLabels:

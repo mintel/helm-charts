@@ -15,7 +15,7 @@ spec:
   podMetricsEndpoints:
     - interval: {{ default "30s" .Values.mariadb.metrics.interval }}
       path: {{ default "/metrics" .Values.mariadb.metrics.path }}
-      port: main-metrics
+      port: metrics
       relabelings:
         - separator: /
           sourceLabels:
