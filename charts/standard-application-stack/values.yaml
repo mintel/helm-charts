@@ -442,6 +442,44 @@ celeryBeat:
     # -- Enable readiness probe
     enabled: false
 
+# -- Define and Configure CronJob's
+# Defaults to same image as main deployment but with defined arguments
+cronjobs:
+  # -- Defaults for all CronJob's
+  defaults:
+    # -- Tells controller to suspend future executions
+    # ref: https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/cron-job-v1/#CronJobSpec
+    suspend: false
+    # -- Tells controller how to handle concurrent executions of a CronJob
+    # ref: https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/cron-job-v1/#CronJobSpec
+    concurrencyPolicy: Forbid
+    # -- Configure CronJob pod restart Policy
+    # ref: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#restart-policy
+    restartPolicy: Never
+  # -- List of Cronjob configurations to be defined
+  jobs: []
+    # - name: 'daily'
+    #   concurrencyPolicy: Forbid
+    #   suspend: false
+    #   restartPolicy: Never
+    #   schedule: "0 0 * * *"
+    #   image: ''
+    #   command:
+    #     - '/bin/sh'
+    #   args:
+    #     {'-c', 'NO_MIGRATE=1 /app/docker-entrypoint.sh manage daily'}
+    #   env: []
+    #   envFrom: {}
+    #   podSecurityContext:
+    #     runAsUser: 1000
+    #   extraInitContainers: {}
+    #   resources:
+    #     limits:
+    #       cpu: 1000m
+    #       memory: 2Gi
+    #     requests:
+    #       cpu: 1000m
+    #       memory: 2Gi
 
 mariadb:
   enabled: false
