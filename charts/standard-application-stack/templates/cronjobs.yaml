@@ -9,7 +9,7 @@ metadata:
   annotations: {{ include "mintel_common.commonAnnotations" $ | nindent 4 }}
   namespace: {{ $.Release.Namespace }}
 spec:
-  concurrencyPolicy: {{ coalesce .concurrencyPolocy $.Values.cronjobs.defaults.concurrencyPolicy }}
+  concurrencyPolicy: {{ coalesce .concurrencyPolicy $.Values.cronjobs.defaults.concurrencyPolicy }}
   {{- if (coalesce .suspend $.Values.cronjobs.defaults.suspend) }}
   suspend: true
   {{- else }}
