@@ -1,6 +1,6 @@
 # standard-application-stack
 
-![Version: 1.2.0](https://img.shields.io/badge/Version-1.2.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 1.2.1](https://img.shields.io/badge/Version-1.2.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A generic chart to support most common application requirements
 
@@ -121,6 +121,7 @@ A generic chart to support most common application requirements
 | localstack.extraEnvVars[2].name | string | `"AWS_SECRET_ACCESS_KEY"` |  |
 | localstack.extraEnvVars[2].value | string | `"test"` |  |
 | localstack.mountDind.enabled | bool | `true` |  |
+| localstack.service.type | string | `"ClusterIP"` |  |
 | localstack.startServices | string | `"sns, sqs, s3"` |  |
 | mailhog.enabled | bool | `false` |  |
 | mariadb.client.enabled | bool | `true` |  |
