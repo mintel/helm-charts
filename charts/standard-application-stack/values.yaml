@@ -612,6 +612,8 @@ localstack:
   enabled: false
   startServices: 'sns, sqs, s3'
   enableStartupScripts: true
+  service:
+    type: ClusterIP
   mountDind:
     enabled: true
   extraEnvVars:

@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v1.2.1] - 2022-01-11
+
+## Added
+- PriorityClass manifests for local development
+
+### Fixed
+- Changed Localstack serviceType to ClusterIP instead of NodePort
+
 ## [v1.2.0] - 2022-01-10
 
 ### Added
