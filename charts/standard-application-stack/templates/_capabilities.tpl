@@ -59,27 +59,32 @@ Return the appropriate apiVersion for statefulset.
 {{- end -}}
 {{- end -}}
 
-{{/*
-Return the appropriate apiVersion for ingress.
-*/}}
+{{/* Get Ingress API Version */}}
 {{- define "common.capabilities.ingress.apiVersion" -}}
-{{- if .Values.ingress -}}
-{{- if .Values.ingress.apiVersion -}}
-{{- .Values.ingress.apiVersion -}}
-{{- else if semverCompare "<1.14-0" (include "common.capabilities.kubeVersion" .) -}}
-{{- print "extensions/v1beta1" -}}
-{{- else if semverCompare "<=1.20-0" (include "common.capabilities.kubeVersion" .) -}}
-{{- print "networking.k8s.io/v1beta1" -}}
-{{- else -}}
-{{- print "networking.k8s.io/v1" -}}
-{{- end }}
-{{- else if semverCompare "<1.14-0" (include "common.capabilities.kubeVersion" .) -}}
-{{- print "extensions/v1beta1" -}}
-{{- else if semverCompare "<=1.20-0" (include "common.capabilities.kubeVersion" .) -}}
-{{- print "networking.k8s.io/v1beta1" -}}
-{{- else -}}
-{{- print "networking.k8s.io/v1" -}}
+  {{- if and (.Capabilities.APIVersions.Has "networking.k8s.io/v1") (semverCompare ">= 1.19-0" (include "common.capabilities.kubeVersion" .)) -}}
+      {{- print "networking.k8s.io/v1" -}}
+  {{- else if .Capabilities.APIVersions.Has "networking.k8s.io/v1beta1" -}}
+    {{- print "networking.k8s.io/v1beta1" -}}
+  {{- else -}}
+    {{- print "extensions/v1beta1" -}}
+  {{- end -}}
 {{- end -}}
+
+{{/* Check Ingress stability */}}
+{{- define "common.capabilities.ingress.isStable" -}}
+  {{- eq (include "common.capabilities.ingress.apiVersion" .) "networking.k8s.io/v1" -}}
+{{- end -}}
+
+{{/* Check Ingress supports pathType */}}
+{{/* pathType was added to networking.k8s.io/v1beta1 in Kubernetes 1.18 */}}
+{{- define "common.capabilities.ingress.supportsPathType" -}}
+  {{- or (eq (include "common.capabilities.ingress.isStable" .) "true") (and (eq (include "common.capabilities.ingress.apiVersion" .) "networking.k8s.io/v1beta1") (semverCompare ">= 1.18-0" (include "common.capabilities.kubeVersion" .))) -}}
+{{- end -}}
+
+{{/* Check Ingress supports ingressClassName */}}
+{{/* ingressClassName was added to networking.k8s.io/v1beta1 in Kubernetes 1.18 */}}
+{{- define "common.capabilities.ingress.supportsIngressClassName" -}}
+  {{- or (eq (include "common.capabilities.ingress.isStable" .) "true") (and (eq (include "common.capabilities.ingress.apiVersion" .) "networking.k8s.io/v1beta1") (semverCompare ">= 1.18-0" (include "common.capabilities.kubeVersion" .))) -}}
 {{- end -}}
 
 {{/*
