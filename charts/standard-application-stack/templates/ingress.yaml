@@ -1,6 +1,4 @@
 {{- if .Values.ingress.enabled }}
-{{- $apiIsStable := eq (include "common.capabilities.ingress.isStable" .) "true" -}}
-{{- $ingressSupportsPathType := eq (include "common.capabilities.ingress.supportsPathType" .) "true" -}}
 {{- if (eq .Values.global.clusterEnv "local") }}
 ---
 apiVersion: {{ include "common.capabilities.ingress.apiVersion" . }}
@@ -12,31 +10,19 @@ metadata:
   annotations:
     {{ include "mintel_common.commonAnnotations" . | nindent 4 }}
     ingress.kubernetes.io/ssl-redirect: "false"
-    {{- if not (include "common.capabilities.ingress.supportsIngressClassName" .) }}
-    kubernetes.io/ingress.class: traefik
-    {{- end }}
 spec:
-  {{- if (include "common.capabilities.ingress.supportsIngressClassName" .) }}
   ingressClassName: traefik
-  {{- end }}
   rules:
     - host: {{ .Values.ingress.defaultHost }}
       http:
         paths:
           - path: /
-            {{- if $ingressSupportsPathType }}
             pathType: Prefix
-            {{- end }}
             backend:
-              {{- if $apiIsStable }}
               service:
                 name: {{ include "mintel_common.fullname" . }}
                 port:
                   number: {{ .Values.port }}
-              {{- else }}
-              serviceName: {{ include "mintel_common.fullname" . }}
-              servicePort: {{ .Values.port }}
-              {{- end }}
 {{- else }}
 ---
 apiVersion: {{ include "common.capabilities.ingress.apiVersion" . }}
@@ -47,9 +33,6 @@ metadata:
   labels: {{ include "mintel_common.labels" . | nindent 4 }}
   annotations:
     {{ include "mintel_common.commonAnnotations" . | nindent 4 }}
-    {{- if and .Values.ingress.className (not (include "common.capabilities.ingress.supportsIngressClassName" .)) }}
-    kubernetes.io/ingress.class: {{ .Values.ingress.className }}
-    {{- end }}
     {{- with .Values.ingress.serverTimeoutSeconds }}
     ingress.kubernetes.io/timeout-server: {{ . }}s
     {{- end }}
@@ -64,45 +47,29 @@ metadata:
     {{- end }}
     {{- end }}
 spec:
-  {{- if and .Values.ingress.className (include "common.capabilities.ingress.supportsIngressClassName" .) }}
-  ingressClassName: .Values.ingress.className
-  {{- end }}
+  ingressClassName: {{ .Values.ingress.className }}
   rules:
     - host: {{ .Values.ingress.defaultHost }}
       http:
         paths:
           - path: /
-            {{- if $ingressSupportsPathType }}
             pathType: Prefix
-            {{- end }}
             backend:
-              {{- if $apiIsStable }}
               service:
                 name: {{ include "mintel_common.fullname" . }}
                 port:
                   number: {{ .Values.port }}
-              {{- else }}
-              serviceName: {{ include "mintel_common.fullname" . }}
-              servicePort: {{ .Values.port }}
-              {{- end }}
     {{- range .Values.ingress.extraHosts }}
     - host: {{ .name }}
       http:
         paths:
           - path: {{ default "/" .path }}
-            {{- if $ingressSupportsPathType }}
             pathType: {{ default "Prefix" .pathType }}
-            {{- end }}
             backend:
-              {{- if $apiIsStable }}
               service:
                 name: {{ default (include "mintel_common.fullname" $) .serviceName }}
                 port:
                   number: {{ default $.Values.port .servicePort }}
-              {{- else }}
-              serviceName: {{ default (include "mintel_common.fullname" $) .serviceName }}
-              servicePort: {{ default $.Values.port .servicePort }}
-              {{- end }}
     {{- end }}
     {{- with .Values.ingress.specificRulesHostsYaml }}
     {{- toYaml . | nindent 4 }}

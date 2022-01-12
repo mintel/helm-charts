@@ -15,152 +15,77 @@ Return the target Kubernetes version
 {{- end -}}
 {{- end -}}
 
-{{/*
-Return the appropriate apiVersion for policy.
-*/}}
+{{/* Return the appropriate apiVersion for policy. */}}
 {{- define "common.capabilities.policy.apiVersion" -}}
-{{- if semverCompare "<1.21-0" (include "common.capabilities.kubeVersion" .) -}}
-{{- print "policy/v1beta1" -}}
-{{- else -}}
 {{- print "policy/v1" -}}
 {{- end -}}
-{{- end -}}
 
-{{/*
-Return the appropriate apiVersion for cronjob.
-*/}}
+{{/* Return the appropriate apiVersion for cronjob. */}}
 {{- define "common.capabilities.cronjob.apiVersion" -}}
-{{- if semverCompare "<1.21-0" (include "common.capabilities.kubeVersion" .) -}}
-{{- print "batch/v1beta1" -}}
-{{- else -}}
 {{- print "batch/v1" -}}
 {{- end -}}
-{{- end -}}
 
-{{/*
-Return the appropriate apiVersion for deployment.
-*/}}
+{{/* Return the appropriate apiVersion for deployment. */}}
 {{- define "common.capabilities.deployment.apiVersion" -}}
-{{- if semverCompare "<1.14-0" (include "common.capabilities.kubeVersion" .) -}}
-{{- print "extensions/v1beta1" -}}
-{{- else -}}
 {{- print "apps/v1" -}}
 {{- end -}}
-{{- end -}}
 
-{{/*
-Return the appropriate apiVersion for statefulset.
-*/}}
+{{/* Return the appropriate apiVersion for statefulset. */}}
 {{- define "common.capabilities.statefulset.apiVersion" -}}
-{{- if semverCompare "<1.14-0" (include "common.capabilities.kubeVersion" .) -}}
-{{- print "apps/v1beta1" -}}
-{{- else -}}
 {{- print "apps/v1" -}}
 {{- end -}}
-{{- end -}}
 
-{{/* Get Ingress API Version */}}
+{{/* Return the appropriate apiVersion for ingress */}}
 {{- define "common.capabilities.ingress.apiVersion" -}}
-  {{- if and (.Capabilities.APIVersions.Has "networking.k8s.io/v1") (semverCompare ">= 1.19-0" (include "common.capabilities.kubeVersion" .)) -}}
-      {{- print "networking.k8s.io/v1" -}}
-  {{- else if .Capabilities.APIVersions.Has "networking.k8s.io/v1beta1" -}}
-    {{- print "networking.k8s.io/v1beta1" -}}
-  {{- else -}}
-    {{- print "extensions/v1beta1" -}}
-  {{- end -}}
+{{- print "networking.k8s.io/v1" -}}
 {{- end -}}
 
-{{/* Check Ingress stability */}}
-{{- define "common.capabilities.ingress.isStable" -}}
-  {{- eq (include "common.capabilities.ingress.apiVersion" .) "networking.k8s.io/v1" -}}
-{{- end -}}
-
-{{/* Check Ingress supports pathType */}}
-{{/* pathType was added to networking.k8s.io/v1beta1 in Kubernetes 1.18 */}}
-{{- define "common.capabilities.ingress.supportsPathType" -}}
-  {{- or (eq (include "common.capabilities.ingress.isStable" .) "true") (and (eq (include "common.capabilities.ingress.apiVersion" .) "networking.k8s.io/v1beta1") (semverCompare ">= 1.18-0" (include "common.capabilities.kubeVersion" .))) -}}
-{{- end -}}
-
-{{/* Check Ingress supports ingressClassName */}}
-{{/* ingressClassName was added to networking.k8s.io/v1beta1 in Kubernetes 1.18 */}}
-{{- define "common.capabilities.ingress.supportsIngressClassName" -}}
-  {{- or (eq (include "common.capabilities.ingress.isStable" .) "true") (and (eq (include "common.capabilities.ingress.apiVersion" .) "networking.k8s.io/v1beta1") (semverCompare ">= 1.18-0" (include "common.capabilities.kubeVersion" .))) -}}
-{{- end -}}
-
-{{/*
-Return the appropriate apiVersion for RBAC resources.
-*/}}
+{{/* Return the appropriate apiVersion for RBAC resources. */}}
 {{- define "common.capabilities.rbac.apiVersion" -}}
-{{- if semverCompare "<1.17-0" (include "common.capabilities.kubeVersion" .) -}}
-{{- print "rbac.authorization.k8s.io/v1beta1" -}}
-{{- else -}}
 {{- print "rbac.authorization.k8s.io/v1" -}}
 {{- end -}}
-{{- end -}}
 
-{{/*
-Return the appropriate apiVersion for CRDs.
-*/}}
+{{/* Return the appropriate apiVersion for CRDs. */}}
 {{- define "common.capabilities.crd.apiVersion" -}}
-{{- if semverCompare "<1.19-0" (include "common.capabilities.kubeVersion" .) -}}
-{{- print "apiextensions.k8s.io/v1beta1" -}}
-{{- else -}}
 {{- print "apiextensions.k8s.io/v1" -}}
 {{- end -}}
-{{- end -}}
 
-{{/*
-Return the appropriate apiVersion for Pod Monitors.
-*/}}
+{{/* Return the appropriate apiVersion for Pod Monitors. */}}
 {{- define "common.capabilities.podmonitor.apiVersion" -}}
 {{- print "monitoring.coreos.com/v1" -}}
 {{- end -}}
 
-{{/*
-Return the appropriate apiVersion for Service Monitors.
-*/}}
+{{/* Return the appropriate apiVersion for Service Monitors. */}}
 {{- define "common.capabilities.servicemonitor.apiVersion" -}}
 {{- print "monitoring.coreos.com/v1" -}}
 {{- end -}}
 
-{{/*
-Return the appropriate apiVersion for External Secrets.
-*/}}
+{{/* Return the appropriate apiVersion for External Secrets. */}}
 {{- define "common.capabilities.externalsecret.apiVersion" -}}
 {{- print "kubernetes-client.io/v1" -}}
 {{- end -}}
 
-{{/*
-Return the appropriate apiVersion for Secrets.
-*/}}
+{{/* Return the appropriate apiVersion for Secrets. */}}
 {{- define "common.capabilities.secret.apiVersion" -}}
 {{- print "v1" -}}
 {{- end -}}
 
-{{/*
-Return the appropriate apiVersion for Configmaps
-*/}}
+{{/* Return the appropriate apiVersion for Configmaps */}}
 {{- define "common.capabilities.configmap.apiVersion" -}}
 {{- print "v1" -}}
 {{- end -}}
 
-{{/*
-Return the appropriate apiVersion for Service Accounts.
-*/}}
+{{/* Return the appropriate apiVersion for Service Accounts. */}}
 {{- define "common.capabilities.serviceaccount.apiVersion" -}}
 {{- print "v1" -}}
 {{- end -}}
 
-{{/*
-Return the appropriate apiVersion for Services.
-*/}}
+{{/* Return the appropriate apiVersion for Services. */}}
 {{- define "common.capabilities.service.apiVersion" -}}
 {{- print "v1" -}}
 {{- end -}}
 
-{{/*
-Return the appropriate apiVersion for NetworkPolicy.
-*/}}
+{{/* Return the appropriate apiVersion for NetworkPolicy. */}}
 {{- define "common.capabilities.networkpolicy.apiVersion" -}}
 {{- print "networking.k8s.io/v1" -}}
 {{- end -}}
