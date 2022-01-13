@@ -270,6 +270,7 @@ ingress:
   #  extraHosts:
   #    - name: ""
   #      path: ""
+  #      pathType: "Prefix"
   #      serviceName: ""
   #      servicePort: ""
   # -- Optional, defines number of seconds to set server-timeout to

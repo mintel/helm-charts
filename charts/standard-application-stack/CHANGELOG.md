@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v2.0.0] - 2022-01-12
+
+### Changed
+- Drop support for Kubernetes < v1.21
+- Leave Ingress class blank by default instead of setting it to `haproxy`
+
+### Added
+- Use Ingress PathType where possible, defaulting to `Prefix`
+
+### Fixed
+- Render Ingress service name and port correctly for `networking.k8s.io/v1`
+- Use the `ingressClass` field instead of the `kubernetes.io/ingress.class` annotation where possible
+
 ## [v1.2.1] - 2022-01-11
 
 ## Added

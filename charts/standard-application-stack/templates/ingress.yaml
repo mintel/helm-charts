@@ -1,7 +1,7 @@
 {{- if .Values.ingress.enabled }}
 {{- if (eq .Values.global.clusterEnv "local") }}
 ---
-apiVersion: networking.k8s.io/v1
+apiVersion: {{ include "common.capabilities.ingress.apiVersion" . }}
 kind: Ingress
 metadata:
   name: {{ include "mintel_common.fullname" . }}
@@ -10,19 +10,19 @@ metadata:
   annotations:
     {{ include "mintel_common.commonAnnotations" . | nindent 4 }}
     ingress.kubernetes.io/ssl-redirect: "false"
-    kubernetes.io/ingress.class: traefik
 spec:
+  ingressClassName: traefik
   rules:
     - host: {{ .Values.ingress.defaultHost }}
       http:
         paths:
-          - backend:
+          - path: /
+            pathType: Prefix
+            backend:
               service:
                 name: {{ include "mintel_common.fullname" . }}
                 port:
                   number: {{ .Values.port }}
-            path: /
-            pathType: Prefix
 {{- else }}
 ---
 apiVersion: {{ include "common.capabilities.ingress.apiVersion" . }}
@@ -33,11 +33,6 @@ metadata:
   labels: {{ include "mintel_common.labels" . | nindent 4 }}
   annotations:
     {{ include "mintel_common.commonAnnotations" . | nindent 4 }}
-    {{- if .Values.className }}
-    kubernetes.io/ingress.class: {{ .Values.ClassName }}
-    {{- else }}
-    kubernetes.io/ingress.class: haproxy
-    {{- end }}
     {{- with .Values.ingress.serverTimeoutSeconds }}
     ingress.kubernetes.io/timeout-server: {{ . }}s
     {{- end }}
@@ -52,22 +47,29 @@ metadata:
     {{- end }}
     {{- end }}
 spec:
+  ingressClassName: {{ .Values.ingress.className }}
   rules:
     - host: {{ .Values.ingress.defaultHost }}
       http:
         paths:
-          - backend:
-              serviceName: {{ include "mintel_common.fullname" . }}
-              servicePort: {{ .Values.port }}
-            path: /
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ include "mintel_common.fullname" . }}
+                port:
+                  number: {{ .Values.port }}
     {{- range .Values.ingress.extraHosts }}
     - host: {{ .name }}
       http:
         paths:
-          - backend:
-              serviceName: {{ default (include "mintel_common.fullname" $) .serviceName }}
-              servicePort: {{ default $.Values.port .servicePort }}
-            path: {{ default "/" .path }}
+          - path: {{ default "/" .path }}
+            pathType: {{ default "Prefix" .pathType }}
+            backend:
+              service:
+                name: {{ default (include "mintel_common.fullname" $) .serviceName }}
+                port:
+                  number: {{ default $.Values.port .servicePort }}
     {{- end }}
     {{- with .Values.ingress.specificRulesHostsYaml }}
     {{- toYaml . | nindent 4 }}
