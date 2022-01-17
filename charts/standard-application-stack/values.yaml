@@ -4,6 +4,8 @@
 
 # -- Global variables for us in all charts and sub charts
 global:
+  # -- Name of the application
+  name: ""
   # -- Team which "owns" the application
   owner: ""
   # -- Top level application each deployment is a part of
@@ -586,6 +588,7 @@ mariadb:
 
 postgresql:
   enabled: false
+  postgresqlDatabase: "postgres"
   #  secretNameOverride: ""
   #  secretPathOverride: ""
   #  auth:
