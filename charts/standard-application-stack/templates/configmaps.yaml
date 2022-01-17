@@ -1,4 +1,4 @@
-{{- range .Values.configmaps }}
+{{- range .Values.configMaps }}
 {{- if .create }}
 ---
 {{- $data := dict "Release" $.Release "Chart" $.Chart "Values" $.Values "component" .name }}
@@ -7,7 +7,7 @@ kind: ConfigMap
 metadata:
   name: {{ include "mintel_common.fullname" $data }}
   labels: {{ include "mintel_common.labels" $data | nindent 4 }}
-  annotations: {{ include "mintel_common.commonAnnotations" . | nindent 4 }}
+  annotations: {{ include "mintel_common.commonAnnotations" $data | nindent 4 }}
   namespace: {{ $.Release.Namespace }}
 data:
   {{- range (required "Configmap content required." .configs) }}

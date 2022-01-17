@@ -1,0 +1,17 @@
+{{- range .Values.persistentVolumes }}
+{{- $pvcData := dict "Release" $.Release "Chart" $.Chart "Values" $.Values "component" .name }}
+---
+apiVersion: {{ include "common.capabilities.pvc.apiVersion" $ }}
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ include "mintel_common.fullname" $pvcData  }}
+  namespace: {{ $.Release.Namespace }}
+  labels: {{ include "mintel_common.labels" $pvcData | nindent 4}}
+  annotations: {{ include "mintel_common.commonAnnotations" $ | nindent 4 }}
+spec:
+  accessModes:
+    - {{ default "ReadWriteOnce" .mode }}
+  resources:
+    requests:
+      storage: {{ .size }}
+{{- end }}

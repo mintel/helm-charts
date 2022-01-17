@@ -7,6 +7,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v2.1.0] - 2022-01-18
+
+### Added
+- Added back in support for Ingress v1beta1 via .Values.ingress.apiVersion
+- Added support for PersistentVolumeClaim's
+- Added support for additional custom secrets
+- Fully implement oauth-proxy throughout chart
+- Added support for StatefulSet's (.Values.stateful)
+- Added argument to explicitly define single replica apps (.Values.singleReplicaOnly)
+- Added support for network policies allowing access from other apps
+- Added support for basic auth on service monitor endpoints
+- Added support for defining additional service monitors
+- Added support for extraPorts on a deployment
+
+### Changed
+- Enable liveness/readiness ports to be configurable
+
+### Fixed
+- Generate fullname from more reliable variable .Values.global.name
+- Fixed generation of configmap list for stakater reloader
+- Fixed generation of configmap manifests
+
 ## [v2.0.2] - 2022-01-17
 
 ### Fixed

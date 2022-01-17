@@ -1,5 +1,10 @@
+{{- if .Values.stateful }}
+apiVersion: {{ include "common.capabilities.statefulset.apiVersion" . }}
+kind: StatefulSet
+{{- else }}
 apiVersion: {{ include "common.capabilities.deployment.apiVersion" . }}
 kind: Deployment
+{{- end }}
 metadata:
   name: {{ include "mintel_common.fullname" . }}
   namespace: {{ .Release.Namespace }}
@@ -33,6 +38,9 @@ metadata:
     {{- end }}
     {{- if (and .Values.ingress .Values.ingress.enabled) }}
     tier: frontend
+    {{- end }}
+    {{- if .Values.singleReplicaOnly }}
+    app.mintel.com/opa-allow-single-replica: "true"
     {{- end }}
 spec:
   {{- with .Values.minReadySeconds }}
@@ -187,6 +195,10 @@ spec:
             - secretRef:
                 name: {{ default (include "mintel_common.defaultOpensearchSecretName" .) .Values.opensearch.secretNameOverride }}
             {{- end }}
+            {{- range .extraSecrets }}
+            - secretRef:
+                name: {{ default (printf "%s-%s" (include "mintel_common.fullname" $) .name) .nameOverride }}
+            {{- end }}
             {{- with .Values.envFrom }}
             {{- toYaml . | nindent 12 }}
             {{- end }}
@@ -203,7 +215,7 @@ spec:
             {{- else }}
             httpGet:
               path: {{ default "/healthz" .Values.liveness.path }}
-              port: http
+              port: {{ default "http" .Values.liveness.port }}
               scheme: HTTP
             {{- end }}
             initialDelaySeconds: {{ default 0 .Values.liveness.initialDelaySeconds }}
@@ -214,7 +226,7 @@ spec:
             {{- else }}
             httpGet:
               path: {{ default "/healthz" .Values.liveness.path }}
-              port: http
+              port: {{ default "http" .Values.liveness.port }}
               scheme: HTTP
             {{- end }}
             {{- if .Values.liveness.startup }}
@@ -310,14 +322,23 @@ spec:
         {{- with .Values.extraContainers }}
         {{- toYaml . | nindent 8 }}
         {{- end }}
-      {{- if (or .Values.volumes (and .Values.filebeatSidecar .Values.filebeatSidecar.enabled)) }}
+        {{- if (and .Values.oauthProxy .Values.oauthProxy.enabled) }}
+        {{- $oauthProxyData := dict "Release" .Release "Chart" .Chart "Values" .Values "proxiedService" .Values }}
+        {{- include "mintel_common.oauthProxySidecar" $oauthProxyData | nindent 8}}
+        {{- end }}
+      {{- if (or (or .Values.volumes .Values.persistentVolumes) (and .Values.filebeatSidecar .Values.filebeatSidecar.enabled)) }}
       volumes:
+        {{- range .Values.persistentVolumes }}
+        - name: {{ printf "%s-%s" (include "mintel_common.fullname" $ ) .name }}
+          persistentVolumeClaim:
+            claimName: {{ printf "%s-%s" (include "mintel_common.fullname" $ ) .name }}
+        {{- end }}
         {{- with .Values.volumes }}
         {{- toYaml . | nindent 8 }}
         {{- end }}
         {{- if (and .Values.filebeatSidecar .Values.filebeatSidecar.enabled) }}
-        - configMap:
+        - name: {{ include "mintel_common.fullname" . }}-filebeat
+          configMap:
             name: {{ include "mintel_common.fullname" . }}-filebeat
-          name: {{ include "mintel_common.fullname" . }}-filebeat
         {{- end }}
       {{- end }}

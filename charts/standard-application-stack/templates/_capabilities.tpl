@@ -37,7 +37,11 @@ Return the target Kubernetes version
 
 {{/* Return the appropriate apiVersion for ingress */}}
 {{- define "common.capabilities.ingress.apiVersion" -}}
+{{- if .Values.ingress.apiVersion -}}
+{{- .Values.ingress.apiVersion -}}
+{{- else }}
 {{- print "networking.k8s.io/v1" -}}
+{{- end }}
 {{- end -}}
 
 {{/* Return the appropriate apiVersion for RBAC resources. */}}
@@ -82,6 +86,11 @@ Return the target Kubernetes version
 
 {{/* Return the appropriate apiVersion for Services. */}}
 {{- define "common.capabilities.service.apiVersion" -}}
+{{- print "v1" -}}
+{{- end -}}
+
+{{/* Return the appropriate apiVersion for PersistentVolumeClaim. */}}
+{{- define "common.capabilities.pvc.apiVersion" -}}
 {{- print "v1" -}}
 {{- end -}}
 

@@ -1,11 +1,11 @@
 {{/* Defines oauth proxy sidecar container */}}
 {{- define "mintel_common.oauthProxySidecar" -}}
 {{- if (and .proxiedService.oauthProxy.enabled (ne .Values.global.clusterEnv "local")) }}
-- name: oauth-proxy
+- name: auth-proxy
   image: {{ default "quay.io/oauth2-proxy/oauth2-proxy:v7.1.3" .proxiedService.oauthProxy.image }}
   imagePullPolicy: {{ default "IfNotPresent" .Values.image.pullPolicy }}
   args:
-    - -redirect-url=https://{{ .proxiedService.ingressHost }}/oauth2/callback
+    - -redirect-url=https://{{ .proxiedService.oauthProxy.ingressHost }}/oauth2/callback
     - -upstream=http://localhost:{{ .proxiedService.port }}
     - -http-address=http://0.0.0.0:4180
     - -provider=oidc
@@ -29,10 +29,16 @@
     {{- end }}
   envFrom:
     - secretRef:
-        name: {{ default (printf "%s-%s" (include "mintel_common.fullname" .) .proxiedService.oauthProxy.secretSuffix) .proxiedService.oauthProxy.secretNameOverride }}
+        {{- if .proxiedService.oauthProxy.secretNameOverride }}
+        name: {{ .proxiedService.oauthProxy.secretNameOverride }}
+        {{- else if .proxiedService.oauthProxy.secretSuffix }}
+        name: {{ printf "%s-%s" (include "mintel_common.fullname" .) .proxiedService.oauthProxy.secretSuffix }}
+        {{- else }}
+        name: {{ printf "%s-oauth" (include "mintel_common.fullname" .) }}
+        {{- end }}
   ports:
     - containerPort: 4180
-      name: oauth-proxy
+      name: auth-proxy
     - containerPort: 9090
       name: metrics
   livenessProbe:

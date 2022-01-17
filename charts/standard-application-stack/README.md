@@ -1,6 +1,6 @@
 # standard-application-stack
 
-![Version: 2.0.2](https://img.shields.io/badge/Version-2.0.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 2.1.0](https://img.shields.io/badge/Version-2.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A generic chart to support most common application requirements
 
@@ -65,6 +65,7 @@ A generic chart to support most common application requirements
 | extraContainers | list | `[]` | Enable extraContainers (oauth2-proxy is a common example) |
 | extraInitContainers | list | `[]` | Enable extra init-containers |
 | extraPorts | list | `[]` | Optional list of extra container ports to configure |
+| extraSecrets | list | `[]` |  |
 | filebeatSidecar.enabled | bool | `false` |  |
 | filebeatSidecar.metrics.enabled | bool | `true` |  |
 | filebeatSidecar.metrics.resources.limits.cpu | string | `"200m"` |  |
@@ -82,6 +83,7 @@ A generic chart to support most common application requirements
 | global.clusterDomain | string | `"127.0.0.1.nip.io"` | Kubernetes cluster domain |
 | global.clusterEnv | string | `"local"` | Environment (local, dev, qa, prod) |
 | global.clusterName | string | `""` | Kubernetes cluster name |
+| global.ingressTLSSecrets | object | `{}` | Global dictionary of TLS secrets |
 | global.owner | string | `""` | Team which "owns" the application |
 | global.partOf | string | `""` | Top level application each deployment is a part of |
 | global.runtimeEnvironment | string | `"kubernetes"` | Global variable definint RUNTIME_ENVIRONMENT |
@@ -91,11 +93,11 @@ A generic chart to support most common application requirements
 | image.repository | string | `"test"` | Docker repository |
 | image.tag | string | `"auto-replaced"` | Container image tag |
 | imagePullSecrets | list | `[]` | Optional array of imagePullSecrets ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/ |
-| ingress | object | `{"annotations":{},"blackbox":{"enabled":true,"probePath":"/external-health-check"},"className":"","enabled":false,"extraHosts":[],"specificRulesHostsYaml":{},"specificTlsHostsYaml":{},"tls":true}` | Configure the ingress resource that allows you to access the application from public-internet ref: http://kubernetes.io/docs/user-guide/ingress/ |
+| ingress | object | `{"annotations":{},"blackbox":{"enabled":true,"probePath":"/external-health-check"},"className":"haproxy","enabled":false,"extraHosts":[],"specificRulesHostsYaml":{},"specificTlsHostsYaml":{},"tls":true}` | Configure the ingress resource that allows you to access the application from public-internet ref: http://kubernetes.io/docs/user-guide/ingress/ |
 | ingress.annotations | object | `{}` | Ingress annotations For a full list of possible ingress annotations, please see ref: https://github.com/kubernetes/ingress-nginx/blob/master/docs/user-guide/nginx-configuration/annotations.md |
 | ingress.blackbox.enabled | bool | `true` | Set to true to tell blackboxes to hit endpoint |
 | ingress.blackbox.probePath | string | `"/external-health-check"` | Endpoint for blackboxes to hit |
-| ingress.className | string | `""` | Define the type of ingress |
+| ingress.className | string | `"haproxy"` | Define the type of ingress |
 | ingress.enabled | bool | `false` | Set to true to enable ingress record generation |
 | ingress.extraHosts | list | `[]` | List of extra ingress hosts to setup |
 | ingress.specificRulesHostsYaml | object | `{}` | Optional ingress Rules Hosts Yaml that doesn't fit standard pattern |
@@ -135,17 +137,29 @@ A generic chart to support most common application requirements
 | mariadb.metrics.resources.limits.memory | string | `"128Mi"` |  |
 | mariadb.metrics.resources.requests.cpu | string | `"100m"` |  |
 | mariadb.metrics.resources.requests.memory | string | `"64Mi"` |  |
-| metrics | object | `{"enabled":true}` | Prometheus Exporter / Metrics |
+| metrics | object | `{"additionalMonitors":[],"basicAuth":{"enabled":false,"passwordKey":"","secretName":"","usernameKey":""},"enabled":true}` | Prometheus Exporter / Metrics |
+| metrics.basicAuth | object | `{"enabled":false,"passwordKey":"","secretName":"","usernameKey":""}` | Interval at which metrics should be scraped ref: https://github.com/coreos/prometheus-operator/blob/master/Documentation/api.md#endpoint  interval: 30s -- URL path to the metrics endpoint  path: /metrics -- Name of the port to use for metrics endpoint  port: http -- Timeout after which the scrape is ended ref: https://github.com/coreos/prometheus-operator/blob/master/Documentation/api.md#endpoint  timeout: 10s -- Scheme (http ot https)  scheme: http |
 | metrics.enabled | bool | `true` | Enable Prometheus to access aplpication metrics endpoints |
 | minReadySeconds | int | `10` | Minimum number of seconds before deployments are ready |
 | nameOverride | string | `""` | String to fully override mintel_common.fullname template |
-| networkPolicy | object | `{"enabled":true}` | Define a default NetworkPolicy for allowing apps in the same 'app.kubernetes.io/part-of' group to communicate with eachother. ref: https://kubernetes.io/docs/concepts/services-networking/network-policies/ |
+| networkPolicy | object | `{"additionalAllowFrom":[],"enabled":true}` | Define a default NetworkPolicy for allowing apps in the same 'app.kubernetes.io/part-of' group to communicate with eachother. ref: https://kubernetes.io/docs/concepts/services-networking/network-policies/ |
+| oauthProxy | object | `{"allowedGroups":[],"emailDomain":"","enabled":false,"image":"","ingressHost":"","localSecretValues":[],"secretNameOverride":"","secretSuffix":"","type":"portal"}` | Configure oauth-proxy sidecar for main deployment |
+| oauthProxy.allowedGroups | list | `[]` | Optional: list of group ids to restrict access to |
+| oauthProxy.emailDomain | string | `""` | Optional: email domain to restrict access to |
+| oauthProxy.enabled | bool | `false` | Set to true to enable oauth-proxy sidecar |
+| oauthProxy.image | string | `""` | Full image name override |
+| oauthProxy.ingressHost | string | `""` | Optional: hostname for proxy redirect url (defaults to service defaultHost) |
+| oauthProxy.localSecretValues | list | `[]` | Container resource requests and limits ref: http://kubernetes.io/docs/user-guide/compute-resources  resources: -- The resource limits for the container    limits: {}    cpu: 200m    memory: 128Mi -- The requested resources for the container    requests: {}    cpu: 100m    memory: 64Mi |
+| oauthProxy.secretNameOverride | string | `""` | Optional: full name override for oauth secret |
+| oauthProxy.secretSuffix | string | `""` | Optional: oauth secret suffix, eg '-oauth' |
+| oauthProxy.type | string | `"portal"` | Identifies oauth-proxy as auth'ing with a mintel portal instance |
 | opensearch | object | `{"awsEsProxy":{"enabled":false,"port":9200,"resources":{"limits":{"cpu":"200m","memory":"128Mi"},"requests":{"cpu":"100m","memory":"64Mi"}}},"enabled":false}` | Configures AWS Opensearch deployment/connections |
 | opensearch.awsEsProxy | object | `{"enabled":false,"port":9200,"resources":{"limits":{"cpu":"200m","memory":"128Mi"},"requests":{"cpu":"100m","memory":"64Mi"}}}` | Configures aws-es-proxy to enable external access to opensearch |
 | opensearch.awsEsProxy.enabled | bool | `false` | Set to true to add an aws-es-proxy deployment in front of opensearch |
 | opensearch.awsEsProxy.port | int | `9200` | Port for aws-es-proxy to listen on |
 | opensearch.awsEsProxy.resources | object | `{"limits":{"cpu":"200m","memory":"128Mi"},"requests":{"cpu":"100m","memory":"64Mi"}}` | Container resource requests and limits for aws-es-proxy sidecar ref: http://kubernetes.io/docs/user-guide/compute-resources |
 | opensearch.enabled | bool | `false` | Set to true if deployment makes use of AWS opensearch |
+| persistentVolumes | string | `nil` | A list of persistent volume claims to be added to the pod |
 | podAnnotations | object | `{}` | Additional annotations to apply to the pod |
 | podDisruptionBudget | object | `{"enabled":true,"minAvailable":"50%"}` | Pod Disruption Budget ref: https://kubernetes.io/docs/tasks/run-application/configure-pdb/ |
 | podSecurityContext | object | `{"runAsUser":1000}` | Pod Security context for the container ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/ |
@@ -184,6 +198,8 @@ A generic chart to support most common application requirements
 | serviceAccount.irsa.enabled | bool | `false` | Determines whether servier account is IRSA enabled |
 | serviceAccount.irsa.nameOverride | string | `""` | Override for last component of role-arn, ie: accountid-clusterName-namespace-{nameOverride} |
 | serviceAccount.name | string | `""` | ServiceAccount to use. A name is generated using the mintel_common.fullname template if it is not set |
+| singleReplicaOnly | bool | `false` | Explicitly stating that a single replica is required Should only be used if the image truly can't be run multiple times usually involving third party apps or prometheus exporters, etc |
+| stateful | bool | `false` | Defines whether the deployment should be a statefulset or not |
 | strategy | object | `{"maxSurge":"15%","maxUnavailable":"10%","type":"RollingUpdate"}` | Defines deployment update strategy |
 | strategy.maxSurge | string | `"15%"` | Optional argument to define maximum number of pods allowed over defined replicas |
 | strategy.maxUnavailable | string | `"10%"` | Optional argument to define maximum number of ppods that can be unavailable during update |

@@ -22,6 +22,11 @@ spec:
       targetPort: 9479
     {{- end }}
     {{- end }}
+    {{- range .Values.extraPorts }}
+    - name: {{ default "main" .containerName }}-{{ .name }}
+      port: {{ .containerPort }}
+      targetPort: {{ .containerPort }}
+    {{- end }}
   selector: {{ include "mintel_common.selectorLabels" . | nindent 6 }}
   type: {{ .Values.service.type }}
 {{- end }}

@@ -22,7 +22,7 @@ global:
     accountId: ""
   # -- Global variable definint RUNTIME_ENVIRONMENT
   runtimeEnvironment: kubernetes
-  # == Global dictionary of TLS secrets
+  # -- Global dictionary of TLS secrets
   ingressTLSSecrets: {}
 
 # -- String to fully override mintel_common.fullname template
@@ -33,6 +33,14 @@ minReadySeconds: 10
 
 # -- Desired number of replicas for main deployment
 replicas: 2
+
+# -- Defines whether the deployment should be a statefulset or not
+stateful: false
+
+# -- Explicitly stating that a single replica is required
+# Should only be used if the image truly can't be run multiple times
+# usually involving third party apps or prometheus exporters, etc
+singleReplicaOnly: false
 
 # -- Docker image values
 image:
@@ -152,6 +160,8 @@ liveness:
   #      scheme: HTTP
   # -- Path to hit for liveness checks
   #  path: /healthz
+  # -- Name of the port to use for liveness checks
+  #  port: http
   # -- Initial delay seconds for livenessProbe
   #  initialDelaySeconds: 25
   # -- Period seconds for livenessProbe (frequency)
@@ -214,13 +224,21 @@ metrics:
   # -- Interval at which metrics should be scraped
   # ref: https://github.com/coreos/prometheus-operator/blob/master/Documentation/api.md#endpoint
   #  interval: 30s
-  # -- URL path to the metrics nedpoint
+  # -- URL path to the metrics endpoint
   #  path: /metrics
+  # -- Name of the port to use for metrics endpoint
+  #  port: http
   # -- Timeout after which the scrape is ended
   # ref: https://github.com/coreos/prometheus-operator/blob/master/Documentation/api.md#endpoint
   #  timeout: 10s
   # -- Scheme (http ot https)
   #  scheme: http
+  basicAuth:
+    enabled: false
+    secretName: ""
+    usernameKey: ""
+    passwordKey: ""
+  additionalMonitors: []
 
 # -- Define ExternalSecret from AWS
 # ref: https://github.com/external-secrets/kubernetes-external-secrets
@@ -231,6 +249,11 @@ externalSecret:
   #  localValues:
   #    - name: TEST_SECRET
   #      value: test_value
+extraSecrets: []
+#  - name: ""
+#    pathOverride: ""
+#    pathSuffix: ""
+#    localValues: []
 
 # -- A list of configuration maps for this application
 configmaps: []
@@ -249,6 +272,12 @@ volumes:
   #      name: portal-web-something
   #    name: portal-web-something
 
+# -- A list of persistent volume claims to be added to the pod
+persistentVolumes:
+  #  - name: brms-drools-workbench-niogit
+    #    mode: ReadWriteOnce
+    #    size: 100Mi
+
 # -- A list of volume mounts to be added to the pod
 volumeMounts: []
 
@@ -258,7 +287,7 @@ ingress:
   # -- Set to true to enable ingress record generation
   enabled: false
   # -- Define the type of ingress
-  className: ""
+  className: haproxy
   # -- Ingress annotations
   # For a full list of possible ingress annotations, please see
   # ref: https://github.com/kubernetes/ingress-nginx/blob/master/docs/user-guide/nginx-configuration/annotations.md
@@ -291,6 +320,12 @@ ingress:
 # ref: https://kubernetes.io/docs/concepts/services-networking/network-policies/
 networkPolicy:
   enabled: true
+  additionalAllowFrom: []
+  #    - fromName: 'brms-bridge'
+  #      toName: ''
+  #      toPorts: []
+  #        - port: 8080
+  #          protocol: TCP
 
 # -- Enable extra init-containers
 extraInitContainers: []
@@ -348,6 +383,44 @@ affinity:
   #              - portal-web
   #          topologyKey: failure-domain.beta.kubernetes.io/zone
   #        weight: 100
+
+# -- Configure oauth-proxy sidecar for main deployment
+oauthProxy:
+  # -- Set to true to enable oauth-proxy sidecar
+  enabled: false
+  # -- Full image name override
+  image: ""
+  # -- Optional: hostname for proxy redirect url (defaults to service defaultHost)
+  ingressHost: ""
+  # -- Optional: email domain to restrict access to
+  emailDomain: ""
+  # -- Optional: list of group ids to restrict access to
+  allowedGroups: []
+  # -- Identifies oauth-proxy as auth'ing with a mintel portal instance
+  type: portal
+  # -- Optional: oauth secret suffix, eg '-oauth'
+  secretSuffix: ""
+  # -- Optional: full name override for oauth secret
+  secretNameOverride: ""
+  # -- Container resource requests and limits
+  # ref: http://kubernetes.io/docs/user-guide/compute-resources
+  #  resources:
+    # -- The resource limits for the container
+    #    limits: {}
+    #    cpu: 200m
+    #    memory: 128Mi
+    # -- The requested resources for the container
+    #    requests: {}
+    #    cpu: 100m
+    #    memory: 64Mi
+    #
+  localSecretValues: []
+  #    - name: OAUTH_PROXY_CLIENT_ID
+  #      value: test_value
+  #    - name: OAUTH_PROXY_CLIENT_SECRET
+  #      value: test_value
+  #    - name: OAUTH_PROXY_COOKIE_SECRET
+  #      value: test_value
 
 # -- Configure the use of k8snotify
 # ref: https://github.com/mintel/k8s-notify
