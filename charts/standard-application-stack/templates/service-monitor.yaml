@@ -10,7 +10,7 @@ metadata:
     k8s-app: {{ include "mintel_common.fullname" . }}
   annotations:
     {{ include "mintel_common.commonAnnotations" . | nindent 4 }}
-    argocd.argoproj.io/sync-options: SkipDryRunOnMissinResource=true
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
   endpoints:
     - interval: {{ default "30s" .Values.metrics.interval }}
@@ -53,7 +53,7 @@ metadata:
     k8s-app: {{ include "mintel_common.fullname" $monitorData }}
   annotations:
     {{ include "mintel_common.commonAnnotations" $monitorData | nindent 4 }}
-    argocd.argoproj.io/sync-options: SkipDryRunOnMissinResource=true
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
   endpoints:
     - interval: {{ default "30s" $.Values.metrics.interval .interval }}
@@ -98,7 +98,7 @@ metadata:
     k8s-app: {{ include "mintel_common.fullname" $monitorData }}
   annotations:
     {{ include "mintel_common.commonAnnotations" $monitorData | nindent 4 }}
-    argocd.argoproj.io/sync-options: SkipDryRunOnMissinResource=true
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
   endpoints:
     - interval: {{ default "30s" .Values.metrics.interval }}
@@ -132,7 +132,7 @@ metadata:
   labels: {{ include "mintel_common.labels" $filebeatData | nindent 4}}
   annotations:
     {{ include "mintel_common.commonAnnotations" . | nindent 4 }}
-    argocd.argoproj.io/sync-options: SkipDryRunOnMissinResource=true
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
   endpoints:
     - interval: {{ default "30s" .Values.filebeatSidecar.metrics.interval }}
