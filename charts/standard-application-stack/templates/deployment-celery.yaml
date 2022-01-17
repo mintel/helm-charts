@@ -67,8 +67,10 @@ spec:
       {{- if (and .Values.serviceAccount (or .Values.serviceAccount.create .Values.serviceAccount.name)) }}
       serviceAccountName: {{ default (include "mintel_common.fullname" .) .Values.serviceAccount.name }}
       {{- end }}
+      {{- if (ne .Values.global.clusterEnv "local") }}
       {{- with .Values.priorityClassName }}
       priorityClassName: {{ . | quote }}
+      {{- end }}
       {{- end }}
       {{- include "mintel_common.topologySpreadConstraints" $data | nindent 6 }}
       {{- if (and (gt (.Values.replicas | int) 1) (and .Values.affinity .Values.affinity.enabled)) }}
