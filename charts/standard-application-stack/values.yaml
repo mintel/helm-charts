@@ -5,7 +5,7 @@
 # -- Global variables for us in all charts and sub charts
 global:
   # -- Name of the application
-  name: ""
+  name: "example-app"
   # -- Team which "owns" the application
   owner: ""
   # -- Top level application each deployment is a part of
