@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v2.0.1] - 2022-01-17
+
+### Removed
+- Priority class definitions for local development (they are global definitions so block multiple deployments)
+
 ## [v2.0.0] - 2022-01-12
 
 ### Changed
