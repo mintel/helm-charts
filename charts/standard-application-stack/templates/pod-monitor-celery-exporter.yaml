@@ -11,7 +11,7 @@ metadata:
   labels: {{ include "mintel_common.labels" $data | nindent 4 }}
   annotations:
     {{ include "mintel_common.commonAnnotations" . | nindent 4 }}
-    argocd.argoproj.io/sync-options: SkipDryRunOnMissinResource=true
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
   podMetricsEndpoints:
     - interval: {{ default "30s" .Values.celery.metrics.interval }}

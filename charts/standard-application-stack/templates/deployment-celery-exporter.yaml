@@ -12,9 +12,6 @@ metadata:
     app.mintel.com/opa-skip-readiness-probe-check.main: "true"
     app.mintel.com/opa-allow-single-replica: "true"
   labels: {{ include "mintel_common.labels" $data | nindent 4 }}
-    {{- if (and .Values.redis .Values.redis.enabled) }}
-    app.mintel.com/redis-client: "true"
-    {{- end }}
 spec:
   replicas: 1
   selector:

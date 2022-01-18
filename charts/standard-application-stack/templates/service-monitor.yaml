@@ -10,12 +10,22 @@ metadata:
     k8s-app: {{ include "mintel_common.fullname" . }}
   annotations:
     {{ include "mintel_common.commonAnnotations" . | nindent 4 }}
-    argocd.argoproj.io/sync-options: SkipDryRunOnMissinResource=true
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
   endpoints:
     - interval: {{ default "30s" .Values.metrics.interval }}
       path: {{ default "/metrics" .Values.metrics.path }}
       port: main-http
+      {{- if .Values.metrics.basicAuth }}
+      {{- if .Values.metrics.basicAuth.enabled }}
+      username:
+        key: {{ .Values.metrics.basicAuth.usernameKey }}
+        name: {{ include "mintel_common.defaultAppSecretName" . }}
+      password:
+        key: {{ .Values.metrics.basicAuth.passwordKey }}
+        name: {{ include "mintel_common.defaultAppSecretName" . }}
+      {{- end }}
+      {{- end }}
       relabelings:
         - separator: /
           sourceLabels:
@@ -24,6 +34,84 @@ spec:
           targetLabel: job
       scheme: {{ default "http" .Values.metrics.scheme }}
       scrapeTimeout: {{ default "10s" .Values.metrics.timeout }}
+      tlsConfig:
+        insecureSkipVerify: true
+  selector:
+    matchLabels: {{ include "mintel_common.selectorLabels" . | nindent 6 }}
+  targetLabels: {{ include "mintel_common.targetLabelNames" . | nindent 4 }}
+  podTargetLabels: {{ include "mintel_common.podTargetLabelNames" . | nindent 4 }}
+
+{{- range .Values.metrics.additionalMonitors }}
+{{- $monitorData := dict "Release" $.Release "Chart" $.Chart "Values" $.Values "component" .name }}
+---
+apiVersion: {{ include "common.capabilities.servicemonitor.apiVersion" $ }}
+kind: ServiceMonitor
+metadata:
+  name: {{ include "mintel_common.fullname" $monitorData }}
+  namespace: {{ $.Release.Namespace }}
+  labels: {{ include "mintel_common.labels" $monitorData | nindent 4 }}
+    k8s-app: {{ include "mintel_common.fullname" $monitorData }}
+  annotations:
+    {{ include "mintel_common.commonAnnotations" $monitorData | nindent 4 }}
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+spec:
+  endpoints:
+    - interval: {{ default "30s" $.Values.metrics.interval .interval }}
+      path: {{ default "/metrics" $.Values.metrics.path .path }}
+      port: main-http
+      {{- if .basicAuth }}
+      {{- if .basicAuth.enabled }}
+      username:
+        key: {{ .basicAuth.usernameKey }}
+        name: {{ include "mintel_common.defaultAppSecretName" $ }}
+      password:
+        key: {{ .basicAuth.passwordKey }}
+        name: {{ include "mintel_common.defaultAppSecretName" $ }}
+      {{- end }}
+      {{- end }}
+      relabelings:
+        - separator: /
+          sourceLabels:
+            - __meta_kubernetes_namespace
+            - __meta_kubernetes_pod_label_app_kubernetes_io_name
+          targetLabel: job
+      scheme: {{ default "http" $.Values.metrics.scheme .scheme }}
+      scrapeTimeout: {{ default "10s" $.Values.metrics.timeout .timeout}}
+      tlsConfig:
+        insecureSkipVerify: true
+  selector:
+    matchLabels: {{ include "mintel_common.selectorLabels" $ | nindent 6 }}
+  targetLabels: {{ include "mintel_common.targetLabelNames" $ | nindent 4 }}
+  podTargetLabels: {{ include "mintel_common.podTargetLabelNames" $ | nindent 4 }}
+{{- end }}
+{{- end }}
+
+{{- if (and .Values.oauthProxy .Values.oauthProxy.enabled) }}
+{{- $monitorData := dict "Release" $.Release "Chart" $.Chart "Values" $.Values "component" "oauth-metrics" }}
+---
+apiVersion: {{ include "common.capabilities.servicemonitor.apiVersion" . }}
+kind: ServiceMonitor
+metadata:
+  name: {{ include "mintel_common.fullname" $monitorData }}
+  namespace: {{ .Release.Namespace }}
+  labels: {{ include "mintel_common.labels" $monitorData | nindent 4 }}
+    k8s-app: {{ include "mintel_common.fullname" $monitorData }}
+  annotations:
+    {{ include "mintel_common.commonAnnotations" $monitorData | nindent 4 }}
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+spec:
+  endpoints:
+    - interval: {{ default "30s" .Values.metrics.interval }}
+      path: /metrics
+      port: auth-proxy-metrics
+      relabelings:
+        - separator: /
+          sourceLabels:
+            - __meta_kubernetes_namespace
+            - __meta_kubernetes_pod_label_app_kubernetes_io_name
+          targetLabel: job
+      scheme: http
+      scrapeTimeout: 10s
       tlsConfig:
         insecureSkipVerify: true
   selector:
@@ -44,7 +132,7 @@ metadata:
   labels: {{ include "mintel_common.labels" $filebeatData | nindent 4}}
   annotations:
     {{ include "mintel_common.commonAnnotations" . | nindent 4 }}
-    argocd.argoproj.io/sync-options: SkipDryRunOnMissinResource=true
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
   endpoints:
     - interval: {{ default "30s" .Values.filebeatSidecar.metrics.interval }}

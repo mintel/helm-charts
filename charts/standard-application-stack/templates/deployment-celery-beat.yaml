@@ -25,9 +25,6 @@ metadata:
     {{- end }}
     app.mintel.com/opa-allow-single-replica: "true"
   labels: {{ include "mintel_common.labels" $data | nindent 4 }}
-    {{- if (and .Values.redis .Values.redis.enabled) }}
-    app.mintel.com/redis-client: "true"
-    {{- end }}
 spec:
   {{- with .Values.minReadySeconds }}
   minReadySeconds: {{ . }}
@@ -40,9 +37,6 @@ spec:
   template:
     metadata:
       labels: {{ include "mintel_common.labels" $data | nindent 8 }}
-        {{- if (and .Values.redis .Values.redis.enabled) }}
-        app.mintel.com/redis-client: "true"
-        {{- end }}
     spec:
       {{- include "mintel_common.imagePullSecrets" . | nindent 6 }}
       {{- with .Values.podSecurityContext }}
@@ -126,8 +120,8 @@ spec:
             {{- else }}
             httpGet:
               path: {{ default "/healthz" .Values.liveness.path }}
-              port: http
-              scheme: HTTP
+              port: {{ default "http" .Values.liveness.port }}
+              scheme: {{ default "HTTP" .Values.liveness.scheme }}
             {{- end }}
             initialDelaySeconds: {{ default 0 .Values.celeryBeat.liveness.initialDelaySeconds }}
             timeoutSeconds: {{ default 1 .Values.celeryBeat.liveness.timeoutSeconds }}
@@ -137,8 +131,8 @@ spec:
             {{- else }}
             httpGet:
               path: {{ default "/healthz" .Values.liveness.path }}
-              port: http
-              scheme: HTTP
+              port: {{ default "http" .Values.liveness.port }}
+              scheme: {{ default "HTTP" .Values.liveness.scheme }}
             {{- end }}
             {{- if .Values.celeryBeat.liveness.startup }}
             {{- if .Values.celeryBeat.liveness.startup.failureThreshold }}
@@ -163,8 +157,8 @@ spec:
             {{- else }}
             httpGet:
               path: {{ default "/readiness" .Values.readiness.path }}
-              port: http
-              scheme: HTTP
+              port: {{ default "http" .Values.readiness.port }}
+              scheme: {{ default "HTTP" .Values.readiness.scheme }}
             {{- end }}
             initialDelaySeconds: {{ default 0 .Values.celeryBeat.readiness.initialDelaySeconds }}
             timeoutSeconds: {{ default 1 .Values.celeryBeat.readiness.timeoutSeconds }}

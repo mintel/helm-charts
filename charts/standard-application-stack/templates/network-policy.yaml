@@ -1,4 +1,5 @@
 {{- if .Values.networkPolicy.enabled }}
+---
 kind: NetworkPolicy
 apiVersion: {{ include "common.capabilities.networkpolicy.apiVersion" . }}
 metadata:
@@ -15,4 +16,29 @@ spec:
       - podSelector:
           matchLabels:
             app.kubernetes.io/part-of: {{ .Values.global.partOf }}
+
+{{- range .Values.networkPolicy.additionalAllowFroms }}
+---
+kind: NetworkPolicy
+apiVersion: {{ include "common.capabilities.networkpolicy.apiVersion" . }}
+metadata:
+  name: {{ printf "%s-to-%s" .fromName (default $.Values.global.name .toName) }}
+  namespace: {{ $.Release.Namespace }}
+  annotations: {{ include "mintel_common.commonAnnotations" $ | nindent 4 }}
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: {{ default $.Values.global.name .toName }}
+  ingress:
+    - from:
+      - podSelector:
+          matchLabels:
+            app.kubernetes.io/name: {{ .fromName }}
+      ports:
+        {{- range .toPorts }}
+        - port: {{ .port }}
+          protocol: {{ .protocol }}
+        {{- end }}
+{{- end }}
+
 {{- end }}

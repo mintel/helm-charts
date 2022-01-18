@@ -8,9 +8,9 @@ We truncate at 63 chars because sometimes Kubernetes name fields are limited to 
 {{- if .Values.nameOverride -}}
 {{- .Values.nameOverride | trunc 63 | trimSuffix "-" -}}
 {{- else if .component }}
-{{- printf "%s-%s" .Release.Name .component | trimSuffix .Chart.Name | trunc 63 | trimSuffix "-" -}}
+{{- printf "%s-%s" .Values.global.name .component | trimSuffix .Chart.Name | trunc 63 | trimSuffix "-" -}}
 {{- else -}}
-{{- printf "%s" .Release.Name | trunc 63 | trimSuffix "-" -}}
+{{- printf "%s" .Values.global.name | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 {{- end -}}
 
@@ -232,6 +232,9 @@ Build comma separated list of secrets
 {{- if (and .Values.opensearch .Values.opensearch.enabled) }}
 {{- $secretList = append $secretList (default (include "mintel_common.defaultOpensearchSecretName" .) .Values.opensearch.secretNameOverride) -}}
 {{- end }}
+{{- range .Values.extraSecrets }}
+{{- $secretList = append $secretList (default (printf "%s-%s" (include "mintel_common.fullname" $) .name) .nameOverride) -}}
+{{- end }}
 {{- join "," $secretList -}}
 {{- end -}}
 
@@ -244,8 +247,8 @@ Build comma separated list of configmaps
 {{- if (and .Values.filebeatSidecar .Values.filebeatSidecar.enabled) }}
 {{- $configmapList = append $configmapList (printf "%s-filebeat" (include "mintel_common.fullname" .)) }}
 {{- end }}
-{{- range .Values.configmaps }}
-{{- $configmapList = append $configmapList .name }}
+{{- range .Values.configMaps }}
+{{- $configmapList = append $configmapList (printf "%s-%s" (include "mintel_common.fullname" $) .name) }}
 {{- end }}
 {{- join "," $configmapList -}}
 {{- end -}}

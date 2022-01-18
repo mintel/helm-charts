@@ -1,5 +1,10 @@
+{{- if .Values.statefulset }}
+apiVersion: {{ include "common.capabilities.statefulset.apiVersion" . }}
+kind: StatefulSet
+{{- else }}
 apiVersion: {{ include "common.capabilities.deployment.apiVersion" . }}
 kind: Deployment
+{{- end }}
 metadata:
   name: {{ include "mintel_common.fullname" . }}
   namespace: {{ .Release.Namespace }}
@@ -27,20 +32,27 @@ metadata:
     {{- with $configmapListStr }}
     configmap.reloader.stakater.com/reload: {{ . }}
     {{- end }}
-  labels: {{ include "mintel_common.labels" . | nindent 4 }}
-    {{- if (and .Values.redis .Values.redis.enabled) }}
-    app.mintel.com/redis-client: "true"
+    {{- if .Values.singleReplicaOnly }}
+    app.mintel.com/opa-allow-single-replica: "true"
     {{- end }}
+  labels: {{ include "mintel_common.labels" . | nindent 4 }}
     {{- if (and .Values.ingress .Values.ingress.enabled) }}
     tier: frontend
     {{- end }}
 spec:
+  {{- if (eq .Values.statefulset false) }}
   {{- with .Values.minReadySeconds }}
   minReadySeconds: {{ . }}
+  {{- end }}
   {{- end }}
   replicas: {{ .Values.replicas }}
   selector:
     matchLabels: {{ include "mintel_common.selectorLabels" . | nindent 6 }}
+  {{- if .Values.statefulset }}
+  updateStrategy:
+    type: RollingUpdate
+  serviceName: {{ include "mintel_common.fullname" . }}
+  {{- else }}
   strategy:
     {{- with .Values.strategy }}
     {{- if (and (eq .type "RollingUpdate") (or .maxSurge .maxUnavailable)) }}
@@ -56,12 +68,10 @@ spec:
     {{- else }}
     type: RollingUpdate
     {{- end }}
+  {{- end }}
   template:
     metadata:
       labels: {{ include "mintel_common.labels" . | nindent 8 }}
-        {{- if (and .Values.redis .Values.redis.enabled) }}
-        app.mintel.com/redis-client: "true"
-        {{- end }}
         {{- if (and .Values.ingress .Values.ingress.enabled) }}
         tier: frontend
         {{- end }}
@@ -187,6 +197,10 @@ spec:
             - secretRef:
                 name: {{ default (include "mintel_common.defaultOpensearchSecretName" .) .Values.opensearch.secretNameOverride }}
             {{- end }}
+            {{- range .extraSecrets }}
+            - secretRef:
+                name: {{ default (printf "%s-%s" (include "mintel_common.fullname" $) .name) .nameOverride }}
+            {{- end }}
             {{- with .Values.envFrom }}
             {{- toYaml . | nindent 12 }}
             {{- end }}
@@ -203,8 +217,8 @@ spec:
             {{- else }}
             httpGet:
               path: {{ default "/healthz" .Values.liveness.path }}
-              port: http
-              scheme: HTTP
+              port: {{ default "http" .Values.liveness.port }}
+              scheme: {{ default "HTTP" .Values.liveness.scheme }}
             {{- end }}
             initialDelaySeconds: {{ default 0 .Values.liveness.initialDelaySeconds }}
             timeoutSeconds: {{ default 1 .Values.liveness.timeoutSeconds }}
@@ -214,8 +228,8 @@ spec:
             {{- else }}
             httpGet:
               path: {{ default "/healthz" .Values.liveness.path }}
-              port: http
-              scheme: HTTP
+              port: {{ default "http" .Values.liveness.port }}
+              scheme: {{ default "HTTP" .Values.liveness.scheme }}
             {{- end }}
             {{- if .Values.liveness.startup }}
             {{- if .Values.liveness.startup.failureThreshold }}
@@ -240,8 +254,8 @@ spec:
             {{- else }}
             httpGet:
               path: {{ default "/readiness" .Values.readiness.path }}
-              port: http
-              scheme: HTTP
+              port: {{ default "http" .Values.readiness.port }}
+              scheme: {{ default "HTTP" .Values.readiness.scheme }}
             {{- end }}
             initialDelaySeconds: {{ default 0 .Values.readiness.initialDelaySeconds }}
             timeoutSeconds: {{ default 1 .Values.readiness.timeoutSeconds }}
@@ -310,14 +324,23 @@ spec:
         {{- with .Values.extraContainers }}
         {{- toYaml . | nindent 8 }}
         {{- end }}
-      {{- if (or .Values.volumes (and .Values.filebeatSidecar .Values.filebeatSidecar.enabled)) }}
+        {{- if (and .Values.oauthProxy .Values.oauthProxy.enabled) }}
+        {{- $oauthProxyData := dict "Release" .Release "Chart" .Chart "Values" .Values "proxiedService" .Values }}
+        {{- include "mintel_common.oauthProxySidecar" $oauthProxyData | nindent 8}}
+        {{- end }}
+      {{- if (or (or .Values.volumes .Values.persistentVolumes) (and .Values.filebeatSidecar .Values.filebeatSidecar.enabled)) }}
       volumes:
+        {{- range .Values.persistentVolumes }}
+        - name: {{ printf "%s-%s" (include "mintel_common.fullname" $ ) .name }}
+          persistentVolumeClaim:
+            claimName: {{ printf "%s-%s" (include "mintel_common.fullname" $ ) .name }}
+        {{- end }}
         {{- with .Values.volumes }}
         {{- toYaml . | nindent 8 }}
         {{- end }}
         {{- if (and .Values.filebeatSidecar .Values.filebeatSidecar.enabled) }}
-        - configMap:
+        - name: {{ include "mintel_common.fullname" . }}-filebeat
+          configMap:
             name: {{ include "mintel_common.fullname" . }}-filebeat
-          name: {{ include "mintel_common.fullname" . }}-filebeat
         {{- end }}
       {{- end }}
