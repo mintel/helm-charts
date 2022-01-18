@@ -328,7 +328,7 @@ ingress:
 # ref: https://kubernetes.io/docs/concepts/services-networking/network-policies/
 networkPolicy:
   enabled: true
-  additionalAllowFrom: []
+  additionalAllowFroms: []
   #    - fromName: 'brms-bridge'
   #      toName: ''
   #      toPorts: []
