@@ -239,8 +239,8 @@ metrics:
   # -- Timeout after which the scrape is ended
   # ref: https://github.com/coreos/prometheus-operator/blob/master/Documentation/api.md#endpoint
   #  timeout: 10s
-  # -- Scheme (http ot https)
-  #  scheme: http
+  # -- Scheme (HTTP ot HTTPS)
+  #  scheme: HTTP
   basicAuth:
     enabled: false
     secretName: ""
