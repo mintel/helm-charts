@@ -76,7 +76,7 @@ A generic chart to support most common application requirements
 | filebeatSidecar.resources.limits.memory | string | `"200Mi"` |  |
 | filebeatSidecar.resources.requests.cpu | string | `"100m"` |  |
 | filebeatSidecar.resources.requests.memory | string | `"100Mi"` |  |
-| global | object | `{"additionalLabels":{},"cloudProvider":{"accountId":""},"clusterDomain":"127.0.0.1.nip.io","clusterEnv":"local","clusterName":"","ingressTLSSecrets":{},"owner":"","partOf":"","runtimeEnvironment":"kubernetes"}` | Global variables for us in all charts and sub charts |
+| global | object | `{"additionalLabels":{},"cloudProvider":{"accountId":""},"clusterDomain":"127.0.0.1.nip.io","clusterEnv":"local","clusterName":"","ingressTLSSecrets":{},"name":"example-app","owner":"","partOf":"","runtimeEnvironment":"kubernetes"}` | Global variables for us in all charts and sub charts |
 | global.additionalLabels | object | `{}` | Additional labels to apply to all resources |
 | global.cloudProvider | object | `{"accountId":""}` | Global variables relating to cloud provider |
 | global.cloudProvider.accountId | string | `""` | AWS ACcount Id |
@@ -84,6 +84,7 @@ A generic chart to support most common application requirements
 | global.clusterEnv | string | `"local"` | Environment (local, dev, qa, prod) |
 | global.clusterName | string | `""` | Kubernetes cluster name |
 | global.ingressTLSSecrets | object | `{}` | Global dictionary of TLS secrets |
+| global.name | string | `"example-app"` | Name of the application |
 | global.owner | string | `""` | Team which "owns" the application |
 | global.partOf | string | `""` | Top level application each deployment is a part of |
 | global.runtimeEnvironment | string | `"kubernetes"` | Global variable definint RUNTIME_ENVIRONMENT |
@@ -176,6 +177,7 @@ A generic chart to support most common application requirements
 | postgresql.metrics.resources.limits.memory | string | `"128Mi"` |  |
 | postgresql.metrics.resources.requests.cpu | string | `"100m"` |  |
 | postgresql.metrics.resources.requests.memory | string | `"64Mi"` |  |
+| postgresql.postgresqlDatabase | string | `"postgres"` |  |
 | priorityClassName | string | `""` | Optional name of PriorityClass to run pods with |
 | readiness | object | `{"enabled":true}` | Configure extra options for readiness probe ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes |
 | redis.enabled | bool | `false` |  |
@@ -199,7 +201,7 @@ A generic chart to support most common application requirements
 | serviceAccount.irsa.nameOverride | string | `""` | Override for last component of role-arn, ie: accountid-clusterName-namespace-{nameOverride} |
 | serviceAccount.name | string | `""` | ServiceAccount to use. A name is generated using the mintel_common.fullname template if it is not set |
 | singleReplicaOnly | bool | `false` | Explicitly stating that a single replica is required Should only be used if the image truly can't be run multiple times usually involving third party apps or prometheus exporters, etc |
-| stateful | bool | `false` | Defines whether the deployment should be a statefulset or not |
+| statefulset | bool | `false` | Defines whether the deployment should be a statefulset or not |
 | strategy | object | `{"maxSurge":"15%","maxUnavailable":"10%","type":"RollingUpdate"}` | Defines deployment update strategy |
 | strategy.maxSurge | string | `"15%"` | Optional argument to define maximum number of pods allowed over defined replicas |
 | strategy.maxUnavailable | string | `"10%"` | Optional argument to define maximum number of ppods that can be unavailable during update |

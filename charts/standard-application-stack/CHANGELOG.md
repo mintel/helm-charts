@@ -14,7 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added support for PersistentVolumeClaim's
 - Added support for additional custom secrets
 - Fully implement oauth-proxy throughout chart
-- Added support for StatefulSet's (.Values.stateful)
+- Added support for StatefulSet's (.Values.statefulset)
 - Added argument to explicitly define single replica apps (.Values.singleReplicaOnly)
 - Added support for network policies allowing access from other apps
 - Added support for basic auth on service monitor endpoints

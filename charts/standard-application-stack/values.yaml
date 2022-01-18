@@ -37,7 +37,7 @@ minReadySeconds: 10
 replicas: 2
 
 # -- Defines whether the deployment should be a statefulset or not
-stateful: false
+statefulset: false
 
 # -- Explicitly stating that a single replica is required
 # Should only be used if the image truly can't be run multiple times
