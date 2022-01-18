@@ -164,6 +164,8 @@ liveness:
   #  path: /healthz
   # -- Name of the port to use for liveness checks
   #  port: http
+  # -- Scheme (HTTP or HTTPS)
+  #  scheme: HTTP
   # -- Initial delay seconds for livenessProbe
   #  initialDelaySeconds: 25
   # -- Period seconds for livenessProbe (frequency)
@@ -196,6 +198,10 @@ readiness:
   #      scheme: HTTP
   # -- Path to hit for readiness checks
   #  path: /readiness
+  # -- Name of the port to use for readiness checks
+  #  port: http
+  # -- Scheme (HTTP or HTTPS)
+  #  scheme: HTTP
   # -- Initial delay seconds for readinessProbe
   #  initialDelaySeconds: 25
   # -- Period seconds for readinessProbe (frequency)
@@ -391,7 +397,7 @@ oauthProxy:
   # -- Set to true to enable oauth-proxy sidecar
   enabled: false
   # -- Full image name override
-  image: ""
+  image: "quay.io/oauth2-proxy/oauth2-proxy:v7.1.3"
   # -- Optional: hostname for proxy redirect url (defaults to service defaultHost)
   ingressHost: ""
   # -- Optional: email domain to restrict access to

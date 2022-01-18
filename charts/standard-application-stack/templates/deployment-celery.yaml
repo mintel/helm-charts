@@ -188,8 +188,8 @@ spec:
             {{- else }}
             httpGet:
               path: {{ default "/healthz" .Values.liveness.path }}
-              port: http
-              scheme: HTTP
+              port: {{ default "http" .Values.liveness.port }}
+              scheme: {{ default "HTTP" .Values.liveness.scheme }}
             {{- end }}
             initialDelaySeconds: {{ default 0 .Values.celery.liveness.initialDelaySeconds }}
             timeoutSeconds: {{ default 1 .Values.celery.liveness.timeoutSeconds }}
@@ -199,8 +199,8 @@ spec:
             {{- else }}
             httpGet:
               path: {{ default "/healthz" .Values.liveness.path }}
-              port: http
-              scheme: HTTP
+              port: {{ default "http" .Values.liveness.port }}
+              scheme: {{ default "HTTP" .Values.liveness.scheme }}
             {{- end }}
             {{- if .Values.celery.liveness.startup }}
             {{- if .Values.celery.liveness.startup.failureThreshold }}
@@ -225,8 +225,8 @@ spec:
             {{- else }}
             httpGet:
               path: {{ default "/readiness" .Values.readiness.path }}
-              port: http
-              scheme: HTTP
+              port: {{ default "http" .Values.readiness.port }}
+              scheme: {{ default "HTTP" .Values.readiness.scheme }}
             {{- end }}
             initialDelaySeconds: {{ default 0 .Values.celery.readiness.initialDelaySeconds }}
             timeoutSeconds: {{ default 1 .Values.celery.readiness.timeoutSeconds }}

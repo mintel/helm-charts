@@ -218,7 +218,7 @@ spec:
             httpGet:
               path: {{ default "/healthz" .Values.liveness.path }}
               port: {{ default "http" .Values.liveness.port }}
-              scheme: HTTP
+              scheme: {{ default "HTTP" .Values.liveness.scheme }}
             {{- end }}
             initialDelaySeconds: {{ default 0 .Values.liveness.initialDelaySeconds }}
             timeoutSeconds: {{ default 1 .Values.liveness.timeoutSeconds }}
@@ -229,7 +229,7 @@ spec:
             httpGet:
               path: {{ default "/healthz" .Values.liveness.path }}
               port: {{ default "http" .Values.liveness.port }}
-              scheme: HTTP
+              scheme: {{ default "HTTP" .Values.liveness.scheme }}
             {{- end }}
             {{- if .Values.liveness.startup }}
             {{- if .Values.liveness.startup.failureThreshold }}
@@ -254,8 +254,8 @@ spec:
             {{- else }}
             httpGet:
               path: {{ default "/readiness" .Values.readiness.path }}
-              port: http
-              scheme: HTTP
+              port: {{ default "http" .Values.readiness.port }}
+              scheme: {{ default "HTTP" .Values.readiness.scheme }}
             {{- end }}
             initialDelaySeconds: {{ default 0 .Values.readiness.initialDelaySeconds }}
             timeoutSeconds: {{ default 1 .Values.readiness.timeoutSeconds }}

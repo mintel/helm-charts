@@ -144,11 +144,11 @@ A generic chart to support most common application requirements
 | minReadySeconds | int | `10` | Minimum number of seconds before deployments are ready |
 | nameOverride | string | `""` | String to fully override mintel_common.fullname template |
 | networkPolicy | object | `{"additionalAllowFrom":[],"enabled":true}` | Define a default NetworkPolicy for allowing apps in the same 'app.kubernetes.io/part-of' group to communicate with eachother. ref: https://kubernetes.io/docs/concepts/services-networking/network-policies/ |
-| oauthProxy | object | `{"allowedGroups":[],"emailDomain":"","enabled":false,"image":"","ingressHost":"","localSecretValues":[],"secretNameOverride":"","secretSuffix":"","type":"portal"}` | Configure oauth-proxy sidecar for main deployment |
+| oauthProxy | object | `{"allowedGroups":[],"emailDomain":"","enabled":false,"image":"quay.io/oauth2-proxy/oauth2-proxy:v7.1.3","ingressHost":"","localSecretValues":[],"secretNameOverride":"","secretSuffix":"","type":"portal"}` | Configure oauth-proxy sidecar for main deployment |
 | oauthProxy.allowedGroups | list | `[]` | Optional: list of group ids to restrict access to |
 | oauthProxy.emailDomain | string | `""` | Optional: email domain to restrict access to |
 | oauthProxy.enabled | bool | `false` | Set to true to enable oauth-proxy sidecar |
-| oauthProxy.image | string | `""` | Full image name override |
+| oauthProxy.image | string | `"quay.io/oauth2-proxy/oauth2-proxy:v7.1.3"` | Full image name override |
 | oauthProxy.ingressHost | string | `""` | Optional: hostname for proxy redirect url (defaults to service defaultHost) |
 | oauthProxy.localSecretValues | list | `[]` | Container resource requests and limits ref: http://kubernetes.io/docs/user-guide/compute-resources  resources: -- The resource limits for the container    limits: {}    cpu: 200m    memory: 128Mi -- The requested resources for the container    requests: {}    cpu: 100m    memory: 64Mi |
 | oauthProxy.secretNameOverride | string | `""` | Optional: full name override for oauth secret |
