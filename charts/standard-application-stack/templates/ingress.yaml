@@ -16,6 +16,16 @@ spec:
     - host: {{ .Values.ingress.defaultHost }}
       http:
         paths:
+          {{- if (eq (include "common.capabilities.ingress.apiVersion" .) "networking.k8s.io/v1beta1") }}
+          - path: /
+            backend:
+              serviceName: {{ include "mintel_common.fullname" . }}
+              {{- if (and .Values.oauthProxy .Values.oauthProxy.enabled) }}
+              servicePort: 4180
+              {{- else }}
+              servicePort: {{ .Values.port }}
+              {{- end }}
+          {{- else }}
           - path: /
             pathType: Prefix
             backend:
@@ -27,6 +37,7 @@ spec:
                   {{- else }}
                   number: {{ .Values.port }}
                   {{- end }}
+          {{- end }}
 {{- else }}
 ---
 apiVersion: {{ include "common.capabilities.ingress.apiVersion" . }}

@@ -30,7 +30,6 @@ metadata:
     configmap.reloader.stakater.com/reload: {{ . }}
     {{- end }}
   labels: {{ include "mintel_common.labels" $data | nindent 4 }}
-    app.mintel.com/redis-client: "true"
 spec:
   {{- with .Values.minReadySeconds }}
   minReadySeconds: {{ . }}
@@ -56,9 +55,6 @@ spec:
   template:
     metadata:
       labels: {{ include "mintel_common.labels" $data | nindent 8 }}
-        {{- if (and .Values.redis .Values.redis.enabled) }}
-        app.mintel.com/redis-client: "true"
-        {{- end }}
     spec:
       {{- include "mintel_common.imagePullSecrets" . | nindent 6 }}
       {{- with .Values.podSecurityContext }}
