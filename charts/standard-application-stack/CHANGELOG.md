@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v2.1.2] - 2022-01-19
+
+### Fixed
+- Fixed setting of periodSeconds on liveness and readiness probes
+
 ## [v2.1.1] - 2022-01-18
 
 ### Fixed

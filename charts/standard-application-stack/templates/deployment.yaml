@@ -222,6 +222,7 @@ spec:
             {{- end }}
             initialDelaySeconds: {{ default 0 .Values.liveness.initialDelaySeconds }}
             timeoutSeconds: {{ default 1 .Values.liveness.timeoutSeconds }}
+            periodSeconds: {{ default 10 .Values.liveness.periodSeconds }}
           startupProbe:
             {{- if .Values.liveness.methodOverride }}
             {{- toYaml .Values.liveness.methodOverride | nindent 12 }}
@@ -259,6 +260,7 @@ spec:
             {{- end }}
             initialDelaySeconds: {{ default 0 .Values.readiness.initialDelaySeconds }}
             timeoutSeconds: {{ default 1 .Values.readiness.timeoutSeconds }}
+            periodSeconds: {{ default 10 .Values.readiness.periodSeconds }}
           {{- end }}
           {{- with .Values.securityContext }}
           securityContext: {{ toYaml . | nindent 12 }}
