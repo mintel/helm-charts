@@ -125,6 +125,7 @@ spec:
             {{- end }}
             initialDelaySeconds: {{ default 0 .Values.celeryBeat.liveness.initialDelaySeconds }}
             timeoutSeconds: {{ default 1 .Values.celeryBeat.liveness.timeoutSeconds }}
+            periodSeconds: {{ default 10 .Values.celeryBeat.liveness.periodSeconds }}
           startupProbe:
             {{- if .Values.celeryBeat.liveness.methodOverride }}
             {{- toYaml .Values.celeryBeat.liveness.methodOverride | nindent 12 }}
@@ -162,6 +163,7 @@ spec:
             {{- end }}
             initialDelaySeconds: {{ default 0 .Values.celeryBeat.readiness.initialDelaySeconds }}
             timeoutSeconds: {{ default 1 .Values.celeryBeat.readiness.timeoutSeconds }}
+            periodSeconds: {{ default 10 .Values.celeryBeat.readiness.periodSeconds }}
           {{- end }}
           {{- with .Values.securityContext }}
           securityContext: {{ toYaml . | nindent 12 }}
