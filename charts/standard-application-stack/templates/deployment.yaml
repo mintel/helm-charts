@@ -197,7 +197,7 @@ spec:
             - secretRef:
                 name: {{ default (include "mintel_common.defaultOpensearchSecretName" .) .Values.opensearch.secretNameOverride }}
             {{- end }}
-            {{- range .extraSecrets }}
+            {{- range .Values.extraSecrets }}
             - secretRef:
                 name: {{ default (printf "%s-%s" (include "mintel_common.fullname" $) .name) .nameOverride }}
             {{- end }}
