@@ -7,6 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v2.1.4] - 2022-01-19
+
+### Added
+- Added kubelock.enabled value (default: false)
+
+### Changed
+- Only set KUBELOCK env var's if kubelock enabled
+- Only create role/rolebinding if kubelock enabled
+- Set strategy type to Recreate for single replica deployments
+- Create pod-monitors instead of service-monitors if service not enabled
+
+### Fixed
+- Only populate `EXTRA_ALLOWED_HOSTS` if ingress enabled
+
+### Removed
+- Removed topologySpreadConstraints on single replica deployments
+
 ## [v2.1.3] - 2022-01-19
 
 ### Fixed

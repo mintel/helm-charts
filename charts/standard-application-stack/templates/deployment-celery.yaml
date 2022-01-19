@@ -37,6 +37,7 @@ spec:
   replicas: {{ .Values.celery.replicas }}
   selector:
     matchLabels: {{ include "mintel_common.selectorLabels" $data | nindent 6 }}
+  {{- if (gt ( .Values.replicas | int) 1) }}
   strategy:
     {{- with .Values.strategy }}
     {{- if (and (eq .type "RollingUpdate") (or .maxSurge .maxUnavailable)) }}
@@ -52,6 +53,10 @@ spec:
     {{- else }}
     type: RollingUpdate
     {{- end }}
+  {{- else }}
+  strategy:
+    type: Recreate
+  {{- end }}
   template:
     metadata:
       labels: {{ include "mintel_common.labels" $data | nindent 8 }}

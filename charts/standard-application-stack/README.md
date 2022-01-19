@@ -1,6 +1,6 @@
 # standard-application-stack
 
-![Version: 2.1.3](https://img.shields.io/badge/Version-2.1.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 2.1.4](https://img.shields.io/badge/Version-2.1.4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A generic chart to support most common application requirements
 
@@ -111,6 +111,8 @@ A generic chart to support most common application requirements
 | k8snotify.team | string | `""` | Defines team (flow) notifications are to be directed at |
 | kibana.elasticsearchHosts | string | `""` |  |
 | kibana.enabled | bool | `false` |  |
+| kubelock | object | `{"enable":false}` | Configure the use of kubelock ref: https://github.com/mintel/kubelock |
+| kubelock.enable | bool | `false` | Set to true to enable kubelock |
 | liveness | object | `{"enabled":true,"startup":{"failureThreshold":60,"periodSeconds":5}}` | Configure extra options for liveness probe ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes |
 | liveness.enabled | bool | `true` | Enable liveness probe |
 | liveness.startup.failureThreshold | int | `60` | Failure threshold for startupProbe |

@@ -5,7 +5,7 @@
 {{- if (and .Values.filebeatSidecar.metrics .Values.filebeatSidecar.metrics.enabled) }}
 {{- $filebeatData := dict "Release" .Release "Chart" .Chart "Values" .Values "component" "celery-filebeat" }}
 ---
-apiVersion: {{ include "common.capabilities.servicemonitor.apiVersion" . }}
+apiVersion: {{ include "common.capabilities.podmonitor.apiVersion" . }}
 kind: PodMonitor
 metadata:
   name: {{ include "mintel_common.fullname" $filebeatData }}

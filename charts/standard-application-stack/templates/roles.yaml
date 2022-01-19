@@ -1,4 +1,6 @@
 {{- if (and .Values.serviceAccount .Values.serviceAccount.create) }}
+
+{{- if (and .Values.kubelock .Values.kubelock.enabled) }}
 apiVersion: {{ include "common.capabilities.rbac.apiVersion" . }}
 kind: Role
 metadata:
@@ -25,4 +27,6 @@ rules:
   - list
   - create
   - update
+{{- end }}
+
 {{- end }}

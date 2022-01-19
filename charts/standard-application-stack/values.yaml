@@ -430,6 +430,12 @@ oauthProxy:
   #    - name: OAUTH_PROXY_COOKIE_SECRET
   #      value: test_value
 
+# -- Configure the use of kubelock
+# ref: https://github.com/mintel/kubelock
+kubelock:
+  # -- Set to true to enable kubelock
+  enable: false
+
 # -- Configure the use of k8snotify
 # ref: https://github.com/mintel/k8s-notify
 k8snotify:
