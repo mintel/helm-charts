@@ -53,6 +53,7 @@ spec:
     type: RollingUpdate
   serviceName: {{ include "mintel_common.fullname" . }}
   {{- else }}
+  {{- if (gt (.Values.replicas | int) 1) }}
   strategy:
     {{- with .Values.strategy }}
     {{- if (and (eq .type "RollingUpdate") (or .maxSurge .maxUnavailable)) }}
@@ -68,6 +69,10 @@ spec:
     {{- else }}
     type: RollingUpdate
     {{- end }}
+  {{- else }}
+  strategy:
+    type: Recreate
+  {{- end }}
   {{- end }}
   template:
     metadata:

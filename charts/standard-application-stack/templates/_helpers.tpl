@@ -275,12 +275,14 @@ app.mintel.com/k8s-notify.team: {{ default .Values.global.owner .Values.k8snotif
   value: {{ .Values.global.clusterEnv }}
 - name: RUNTIME_ENVIRONMENT
   value: {{ .Values.global.runtimeEnvironment }}
+{{- if .Values.kubelock.enabled }}
 - name: KUBELOCK
   value: {{ include "mintel_common.fullname" . }}
 - name: KUBELOCK_NAME
   value: {{ include "mintel_common.fullname" . }}
 - name: KUBELOCK_NAMESPACE
   value: {{ .Release.Namespace }}
+{{- end }}
 {{- if (and .Values.ingress .Values.ingress.enabled) }}
 {{- if .Values.ingress.tls }}
 - name: USE_SSL
@@ -372,17 +374,20 @@ app.mintel.com/k8s-notify.team: {{ default .Values.global.owner .Values.k8snotif
 
 {{/* Outputs EXTRA_ALLOWED_HOSTS env variable */}}
 {{- define "mintel_common.extraHostsEnv" -}}
+{{- if (and .Values.ingress .Values.ingress.enabled) }}
 - name: EXTRA_ALLOWED_HOSTS
   {{- $hosts := list .Values.ingress.defaultHost -}}
   {{- range .Values.ingress.extraHosts }}
   {{- $hosts = append $hosts .name -}}
   {{- end }}
   value: {{ join "," $hosts }}
+{{- end }}
 {{- end -}}
 
 {{/* Outputs topologySpreadConstraints block for a deployment */}}
 {{- define "mintel_common.topologySpreadConstraints" -}}
 {{- if (ne .Values.global.clusterEnv "local") }}
+{{- if (gt (.Values.replicas | int) 1) }}
 {{- if (and .Values.topologySpreadConstraints .Values.topologySpreadConstraints.enabled) }}
 topologySpreadConstraints:
   {{- if .Values.topologySpreadConstraints.specificYaml }}
@@ -402,6 +407,7 @@ topologySpreadConstraints:
     topologyKey: kubernetes.io/hostname
     whenUnsatisfiable: {{ default "DoNotSchedule" .Values.topologySpreadConstraints.node.whenUnsatisfiable }}
   {{- end }}
+{{- end }}
 {{- end }}
 {{- end }}
 {{- end -}}

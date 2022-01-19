@@ -1,9 +1,9 @@
-{{- if (and .Values.service .Values.service.enabled) }}
+{{- if (eq .Values.service.enabled false) }}
 {{- if (ne .Values.global.clusterEnv "local") }}
 {{- if (and .Values.metrics .Values.metrics.enabled) }}
 ---
-apiVersion: {{ include "common.capabilities.servicemonitor.apiVersion" . }}
-kind: ServiceMonitor
+apiVersion: {{ include "common.capabilities.podmonitor.apiVersion" . }}
+kind: PodMonitor
 metadata:
   name: {{ include "mintel_common.fullname" . }}
   namespace: {{ .Release.Namespace }}
@@ -13,7 +13,7 @@ metadata:
     {{ include "mintel_common.commonAnnotations" . | nindent 4 }}
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
-  endpoints:
+  podMetricsEndpoints:
     - interval: {{ default "30s" .Values.metrics.interval }}
       path: {{ default "/metrics" .Values.metrics.path }}
       port: main-http
@@ -39,14 +39,13 @@ spec:
         insecureSkipVerify: true
   selector:
     matchLabels: {{ include "mintel_common.selectorLabels" . | nindent 6 }}
-  targetLabels: {{ include "mintel_common.targetLabelNames" . | nindent 4 }}
   podTargetLabels: {{ include "mintel_common.podTargetLabelNames" . | nindent 4 }}
 
 {{- range .Values.metrics.additionalMonitors }}
 {{- $monitorData := dict "Release" $.Release "Chart" $.Chart "Values" $.Values "component" .name }}
 ---
-apiVersion: {{ include "common.capabilities.servicemonitor.apiVersion" $ }}
-kind: ServiceMonitor
+apiVersion: {{ include "common.capabilities.podmonitor.apiVersion" $ }}
+kind: PodMonitor
 metadata:
   name: {{ include "mintel_common.fullname" $monitorData }}
   namespace: {{ $.Release.Namespace }}
@@ -56,7 +55,7 @@ metadata:
     {{ include "mintel_common.commonAnnotations" $monitorData | nindent 4 }}
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
-  endpoints:
+  podMetricsEndpoints:
     - interval: {{ default "30s" $.Values.metrics.interval .interval }}
       path: {{ default "/metrics" $.Values.metrics.path .path }}
       port: main-http
@@ -82,7 +81,6 @@ spec:
         insecureSkipVerify: true
   selector:
     matchLabels: {{ include "mintel_common.selectorLabels" $ | nindent 6 }}
-  targetLabels: {{ include "mintel_common.targetLabelNames" $ | nindent 4 }}
   podTargetLabels: {{ include "mintel_common.podTargetLabelNames" $ | nindent 4 }}
 {{- end }}
 {{- end }}
@@ -90,8 +88,8 @@ spec:
 {{- if (and .Values.oauthProxy .Values.oauthProxy.enabled) }}
 {{- $monitorData := dict "Release" $.Release "Chart" $.Chart "Values" $.Values "component" "oauth-metrics" }}
 ---
-apiVersion: {{ include "common.capabilities.servicemonitor.apiVersion" . }}
-kind: ServiceMonitor
+apiVersion: {{ include "common.capabilities.podmonitor.apiVersion" . }}
+kind: PodMonitor
 metadata:
   name: {{ include "mintel_common.fullname" $monitorData }}
   namespace: {{ .Release.Namespace }}
@@ -101,7 +99,7 @@ metadata:
     {{ include "mintel_common.commonAnnotations" $monitorData | nindent 4 }}
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
-  endpoints:
+  podMetricsEndpoints:
     - interval: {{ default "30s" .Values.metrics.interval }}
       path: /metrics
       port: auth-proxy-metrics
@@ -117,7 +115,6 @@ spec:
         insecureSkipVerify: true
   selector:
     matchLabels: {{ include "mintel_common.selectorLabels" . | nindent 6 }}
-  targetLabels: {{ include "mintel_common.targetLabelNames" . | nindent 4 }}
   podTargetLabels: {{ include "mintel_common.podTargetLabelNames" . | nindent 4 }}
 {{- end }}
 
@@ -125,8 +122,8 @@ spec:
 {{- if (and .Values.filebeatSidecar.metrics .Values.filebeatSidecar.metrics.enabled) }}
 {{- $filebeatData := dict "Release" .Release "Chart" .Chart "Values" .Values "component" "filebeat" }}
 ---
-apiVersion: {{ include "common.capabilities.servicemonitor.apiVersion" . }}
-kind: ServiceMonitor
+apiVersion: {{ include "common.capabilities.podmonitor.apiVersion" . }}
+kind: PodMonitor
 metadata:
   name: {{ include "mintel_common.fullname" $filebeatData }}
   namespace: {{ .Release.Namespace }}
@@ -135,7 +132,7 @@ metadata:
     {{ include "mintel_common.commonAnnotations" . | nindent 4 }}
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
-  endpoints:
+  podMetricsEndpoints:
     - interval: {{ default "30s" .Values.filebeatSidecar.metrics.interval }}
       path: {{ default "/metrics" .Values.filebeatSidecar.metrics.path }}
       port: beat-exporter-metrics
@@ -151,7 +148,6 @@ spec:
         insecureSkipVerify: true
   selector:
     matchLabels: {{ include "mintel_common.selectorLabels" . | nindent 6 }}
-  targetLabels: {{ include "mintel_common.targetLabelNames" . | nindent 4 }}
   podTargetLabels: {{ include "mintel_common.podTargetLabelNames" . | nindent 4 }}
 {{- end }}
 {{- end }}
