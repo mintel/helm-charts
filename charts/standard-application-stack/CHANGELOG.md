@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v2.2.0] - 2022-01-20
+
+### Changed
+- Allow setting port to null to skip adding containerPorts to deployment
+
 ## [v2.1.4] - 2022-01-19
 
 ### Added
