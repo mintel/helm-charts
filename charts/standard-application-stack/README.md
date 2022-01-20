@@ -166,7 +166,7 @@ A generic chart to support most common application requirements
 | podAnnotations | object | `{}` | Additional annotations to apply to the pod |
 | podDisruptionBudget | object | `{"enabled":true,"minAvailable":"50%"}` | Pod Disruption Budget ref: https://kubernetes.io/docs/tasks/run-application/configure-pdb/ |
 | podSecurityContext | object | `{"runAsUser":1000}` | Pod Security context for the container ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/ |
-| port | int | `8000` | Main container port for the application |
+| port | int | `8000` | Main container port for the application -- Set port to null to skip adding container Ports |
 | postgresql.client.enabled | bool | `true` |  |
 | postgresql.client.resources.limits.cpu | string | `"300m"` |  |
 | postgresql.client.resources.limits.memory | string | `"128Mi"` |  |
