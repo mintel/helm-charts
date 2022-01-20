@@ -61,6 +61,7 @@ image:
 imagePullSecrets: []
 
 # -- Main container port for the application
+# -- Set port to null to skip adding container Ports
 port: 8000
 
 # -- Optional list of extra container ports to configure
