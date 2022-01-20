@@ -148,6 +148,24 @@ serviceAccount:
   # -- Whether to automount the service account token or not
   automountServiceAccountToken: true
 
+  # -- Define list of Role's to create and bind to the service account
+  # ref: https://kubernetes.io/docs/reference/access-authn-authz/rbac/
+  roles: []
+  #  - name: 'main'
+  #    rules:
+  #    - apiGroups: []
+  #      resources: []
+  #      verbs: []
+
+  # -- Define list of ClusterRole's to create and bind to the service account
+  # ref: https://kubernetes.io/docs/reference/access-authn-authz/rbac/
+  clusterRoles: []
+  #  - name: 'main'
+  #    rules:
+  #    - apiGroups: []
+  #      resources: []
+  #      verbs: []
+
 # -- Configure extra options for liveness probe
 # ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes
 liveness:
