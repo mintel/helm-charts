@@ -5,27 +5,27 @@
   image: {{ default "quay.io/oauth2-proxy/oauth2-proxy:v7.1.3" .proxiedService.oauthProxy.image }}
   imagePullPolicy: {{ default "IfNotPresent" .Values.image.pullPolicy }}
   args:
-    - -redirect-url=https://{{ .proxiedService.oauthProxy.ingressHost }}/oauth2/callback
-    - -upstream=http://localhost:{{ .proxiedService.port }}
-    - -http-address=http://0.0.0.0:4180
-    - -provider=oidc
-    - -skip-auth-regex=/ping
-    - -skip-provider-button=true
-    - -skip-jwt-bearer-tokens=true
-    - -ssl-insecure-skip-verify=true
-    - -ssl-upstream-insecure-skip-verify=true
-    - -oidc-groups-claim=groups
-    - -metrics-address=http://0.0.0.0:9090
-    - -email-domain={{ default "*" .proxiedService.oauthProxy.emailDomain }}
+    - --redirect-url=https://{{ .proxiedService.oauthProxy.ingressHost }}/oauth2/callback
+    - --upstream=http://localhost:{{ .proxiedService.port }}
+    - --http-address=http://0.0.0.0:4180
+    - --provider=oidc
+    - --skip-auth-regex=/ping
+    - --skip-provider-button=true
+    - --skip-jwt-bearer-tokens=true
+    - --ssl-insecure-skip-verify=true
+    - --ssl-upstream-insecure-skip-verify=true
+    - --oidc-groups-claim=groups
+    - --metrics-address=http://0.0.0.0:9090
+    - --email-domain={{ default "*" .proxiedService.oauthProxy.emailDomain }}
     {{- with .proxiedService.oauthProxy.allowedGroups }}
-    - -allowed-group={{ join "," . }}
+    - --allowed-group={{ join "," . }}
     {{- end }}
-    - -oidc-issuer-url=$(OIDC_ISSUER_URL)
+    - --oidc-issuer-url=$(OIDC_ISSUER_URL)
     {{- if (eq .proxiedService.oauthProxy.type "portal") }}
-    - -insecure-oidc-allow-unverified-email=true
-    - -cookie-secure=false
-    - -user-id-claim=sub
-    - -scope=openid profile email
+    - --insecure-oidc-allow-unverified-email=true
+    - --cookie-secure=false
+    - --user-id-claim=sub
+    - --scope=openid profile email
     {{- end }}
   envFrom:
     - secretRef:
