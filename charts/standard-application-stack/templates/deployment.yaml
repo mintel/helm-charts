@@ -209,7 +209,7 @@ spec:
             {{- with .Values.envFrom }}
             {{- toYaml . | nindent 12 }}
             {{- end }}
-          {{- if ne .Values.port null}}
+          {{- if .Values.port}}
           ports:
             - containerPort: {{ .Values.port }}
               name: http
