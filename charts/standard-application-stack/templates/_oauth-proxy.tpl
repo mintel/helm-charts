@@ -20,7 +20,7 @@
     {{- with .proxiedService.oauthProxy.allowedGroups }}
     - --allowed-group={{ join "," . }}
     {{- end }}
-    - --oidc-issuer-url=$(OIDC_ISSUER_URL)
+    - --oidc-issuer-url={{ default "https://oauth.mintel.com" .proxiedService.oauthProxy.issuerUrl }}
     {{- if (eq .proxiedService.oauthProxy.type "portal") }}
     - --insecure-oidc-allow-unverified-email=true
     - --cookie-secure=false
