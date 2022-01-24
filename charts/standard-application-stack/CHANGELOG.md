@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v2.2.4] - 2022-01-24
+
+### Fixed
+- Expose oauth-proxy port through service
+
 ## [v2.2.3] - 2022-01-20
 
 ### Changed

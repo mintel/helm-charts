@@ -15,6 +15,11 @@ spec:
     - name: main-http
       port: {{ .Values.port }}
       targetPort: {{ .Values.port }}
+    {{- if (and .Values.oauthProxy .Values.oauthProxy.enabled) }}
+    - name: auth-proxy-auth-proxy
+      port: 4180
+      targetPort: 4180
+    {{- end }}
     {{- if (and .Values.filebeatSidecar .Values.filebeatSidecar.enabled) }}
     {{- if (and .Values.filebeatSidecar.metrics .Values.filebeatSidecar.metrics.enabled) }}
     - name: beat-exporter-metrics
