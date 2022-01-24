@@ -431,6 +431,8 @@ oauthProxy:
   secretSuffix: ""
   # -- Optional: full name override for oauth secret
   secretNameOverride: ""
+  # -- Optional: list of URL endpoints to bypass oauth-proxy for
+  skipAuthRegexes: []
   # -- Container resource requests and limits
   # ref: http://kubernetes.io/docs/user-guide/compute-resources
   #  resources:

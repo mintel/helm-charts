@@ -15,6 +15,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Fixed ability to override serviceAccountName
 
+## [v2.2.6] - 2022-01-24
+
+### Changed
+- Enable skipping auth for specific URLs through oauth-proxy
+
+## [v2.2.5] - 2022-01-24
+
+### Fixed
+- Expose auth-proxy-metrics port through service
+
 ## [v2.2.4] - 2022-01-24
 
 ### Fixed
