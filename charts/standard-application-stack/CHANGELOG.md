@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v2.3.1] - 2022-01-24
+
+### Added
+- Added ability to exclude specific extraSecrets from main deployment
+
 ## [v2.3.0] - 2022-01-24
 
 ### Added
