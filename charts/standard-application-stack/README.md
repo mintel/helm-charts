@@ -1,6 +1,6 @@
 # standard-application-stack
 
-![Version: 2.2.6](https://img.shields.io/badge/Version-2.2.6-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 2.3.0](https://img.shields.io/badge/Version-2.3.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A generic chart to support most common application requirements
 
@@ -196,14 +196,16 @@ A generic chart to support most common application requirements
 | service.enabled | bool | `true` | Whether to create Service resource or not |
 | service.labels | object | `{}` | Provide any additional labels which may be required. |
 | service.type | string | `"ClusterIP"` | Kubernetes Service type |
-| serviceAccount | object | `{"annotations":{},"automountServiceAccountToken":true,"create":true,"irsa":{"enabled":false,"nameOverride":""},"name":""}` | ServiceAccount parameters ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/ |
+| serviceAccount | object | `{"annotations":{},"automountServiceAccountToken":true,"clusterRoles":[],"create":true,"irsa":{"enabled":false,"nameOverride":""},"name":"","roles":[]}` | ServiceAccount parameters ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/ |
 | serviceAccount.annotations | object | `{}` | Additional Service Account annotations |
 | serviceAccount.automountServiceAccountToken | bool | `true` | Whether to automount the service account token or not |
+| serviceAccount.clusterRoles | list | `[]` | Define list of ClusterRole's to create and bind to the service account ref: https://kubernetes.io/docs/reference/access-authn-authz/rbac/ |
 | serviceAccount.create | bool | `true` | Determine whether a Service Account should be created or it should reuse a exiting one. |
 | serviceAccount.irsa | object | `{"enabled":false,"nameOverride":""}` | Configures IRSA for the Service Account |
 | serviceAccount.irsa.enabled | bool | `false` | Determines whether servier account is IRSA enabled |
 | serviceAccount.irsa.nameOverride | string | `""` | Override for last component of role-arn, ie: accountid-clusterName-namespace-{nameOverride} |
 | serviceAccount.name | string | `""` | ServiceAccount to use. A name is generated using the mintel_common.fullname template if it is not set |
+| serviceAccount.roles | list | `[]` | Define list of Role's to create and bind to the service account ref: https://kubernetes.io/docs/reference/access-authn-authz/rbac/ |
 | singleReplicaOnly | bool | `false` | Explicitly stating that a single replica is required Should only be used if the image truly can't be run multiple times usually involving third party apps or prometheus exporters, etc |
 | statefulset | bool | `false` | Defines whether the deployment should be a statefulset or not |
 | strategy | object | `{"maxSurge":"15%","maxUnavailable":"10%","type":"RollingUpdate"}` | Defines deployment update strategy |
