@@ -203,8 +203,10 @@ spec:
                 name: {{ default (include "mintel_common.defaultOpensearchSecretName" .) .Values.opensearch.secretNameOverride }}
             {{- end }}
             {{- range .Values.extraSecrets }}
+            {{- if (or (ne (hasKey . "includeInMain") true) .includeInMain) }}
             - secretRef:
                 name: {{ default (printf "%s-%s" (include "mintel_common.fullname" $) .name) .nameOverride }}
+            {{- end }}
             {{- end }}
             {{- with .Values.envFrom }}
             {{- toYaml . | nindent 12 }}

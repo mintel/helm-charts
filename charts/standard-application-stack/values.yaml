@@ -280,6 +280,7 @@ extraSecrets: []
 #  - name: ""
 #    pathOverride: ""
 #    pathSuffix: ""
+#    includeInMain: true # defaults to true if not set
 #    localValues: []
 
 # -- A list of configuration maps for this application
