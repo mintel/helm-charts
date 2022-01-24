@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v2.3.5] - 2022-01-26
+
+### Fixed
+- Pass through postgresql port from generated instance information (rather than assuming `5432`)
+
 ## [v2.3.4] - 2022-01-25
 
 ### Fixed
