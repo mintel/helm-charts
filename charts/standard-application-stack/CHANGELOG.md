@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v2.2.6] - 2022-01-24
+
+### Changed
+- Enable skipping auth for specific URLs through oauth-proxy
+
 ## [v2.2.5] - 2022-01-24
 
 ### Fixed
