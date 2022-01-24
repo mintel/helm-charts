@@ -10,6 +10,9 @@
     - --http-address=http://0.0.0.0:4180
     - --provider=oidc
     - --skip-auth-regex=/ping
+    {{- range .proxiedService.oauthProxy.skipAuthRegexes }}
+    - --skip-auth-regex={{ . }}
+    {{- end }}
     - --skip-provider-button=true
     - --skip-jwt-bearer-tokens=true
     - --ssl-insecure-skip-verify=true
