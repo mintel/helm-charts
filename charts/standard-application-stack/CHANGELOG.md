@@ -7,11 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [v2.3.2] - 2022-01-25
+## [v2.3.3] - 2022-01-25
 
 ### Fixed
 - Fixed port names for additional service monitors
 - Fixed basicAuth for service monitors and pod monitors
+
+## [v2.3.2] - 2022-01-25
+
+### Fixed
+- Fixed auth-proxy secret not being added to stakater secret reload list
 
 ## [v2.3.1] - 2022-01-24
 
