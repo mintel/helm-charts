@@ -217,6 +217,9 @@ Build comma separated list of secrets
 {{- if (and .Values.externalSecret .Values.externalSecret.enabled) }}
 {{- $secretList = append $secretList (default (include "mintel_common.defaultAppSecretName" .) .Values.externalSecret.nameOverride) -}}
 {{- end }}
+{{- if (and .Values.oauthProxy .Values.oauthProxy.enabled) }}
+{{- $secretList = append $secretList (default (include "mintel_common.fullname" .) .proxiedService.oauthProxy.secretSuffix) -}}
+{{- end }}
 {{- if (and .Values.mariadb .Values.mariadb.enabled) }}
 {{- $secretList = append $secretList (default (include "mintel_common.defaultMariadbSecretName" .) .Values.mariadb.secretNameOverride) -}}
 {{- end }}
