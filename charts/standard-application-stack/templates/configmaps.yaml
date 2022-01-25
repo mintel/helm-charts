@@ -11,7 +11,7 @@ metadata:
   namespace: {{ $.Release.Namespace }}
 data:
   {{- range (required "Configmap content required." .configs) }}
-  {{ .name }}: |{{ .data | nindent 4 }}
+  {{ .name }}: {{ .data }}
   {{- end }}
 {{- end }}
 {{- end }}
