@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Fixed port names for additional service monitors
 - Fixed basicAuth for service monitors and pod monitors
+- Fixed adding of oauth proxy secret to secretList
 
 ## [v2.3.2] - 2022-01-25
 
