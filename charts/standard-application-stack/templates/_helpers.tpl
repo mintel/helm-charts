@@ -148,6 +148,14 @@ Create a default app external secret name.
 {{- end -}}
 
 {{/*
+Create a default oauth external secret name.
+*/}}
+{{- define "mintel_common.defaultOauthSecretName" -}}
+{{- $fullname := include "mintel_common.fullname" . }}
+{{- printf "%s-%s" $fullname (default "oauth" .Values.oauthProxy.secretSuffix) }}
+{{- end -}}
+
+{{/*
 Create a default mariadb external secret name.
 */}}
 {{- define "mintel_common.defaultMariadbSecretName" -}}
@@ -218,7 +226,7 @@ Build comma separated list of secrets
 {{- $secretList = append $secretList (default (include "mintel_common.defaultAppSecretName" .) .Values.externalSecret.nameOverride) -}}
 {{- end }}
 {{- if (and .Values.oauthProxy .Values.oauthProxy.enabled) }}
-{{- $secretList = append $secretList (default (include "mintel_common.fullname" .) .proxiedService.oauthProxy.secretSuffix) -}}
+{{- $secretList = append $secretList (default (include "mintel_common.defaultOauthSecretName" .) .proxiedService.oauthProxy.secretNameOverride) -}}
 {{- end }}
 {{- if (and .Values.mariadb .Values.mariadb.enabled) }}
 {{- $secretList = append $secretList (default (include "mintel_common.defaultMariadbSecretName" .) .Values.mariadb.secretNameOverride) -}}
