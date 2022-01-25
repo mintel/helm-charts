@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v2.3.4] - 2022-01-25
+
+### Fixed
+- Fixed creating configmaps to avoid unwanted newlines
+
 ## [v2.3.3] - 2022-01-25
 
 ### Fixed
