@@ -19,12 +19,13 @@ spec:
       port: {{ default "http" .Values.metrics.port }}
       {{- if .Values.metrics.basicAuth }}
       {{- if .Values.metrics.basicAuth.enabled }}
-      username:
-        key: {{ .Values.metrics.basicAuth.usernameKey }}
-        name: {{ include "mintel_common.defaultAppSecretName" . }}
-      password:
-        key: {{ .Values.metrics.basicAuth.passwordKey }}
-        name: {{ include "mintel_common.defaultAppSecretName" . }}
+      basicAuth:
+        username:
+          key: {{ .Values.metrics.basicAuth.usernameKey }}
+          name: {{ include "mintel_common.defaultAppSecretName" . }}
+        password:
+          key: {{ .Values.metrics.basicAuth.passwordKey }}
+          name: {{ include "mintel_common.defaultAppSecretName" . }}
       {{- end }}
       {{- end }}
       relabelings:
@@ -61,12 +62,13 @@ spec:
       port: {{ default "http" $.Values.metrics.port .port }}
       {{- if .basicAuth }}
       {{- if .basicAuth.enabled }}
-      username:
-        key: {{ .basicAuth.usernameKey }}
-        name: {{ include "mintel_common.defaultAppSecretName" $ }}
-      password:
-        key: {{ .basicAuth.passwordKey }}
-        name: {{ include "mintel_common.defaultAppSecretName" $ }}
+      basicAuth:
+        username:
+          key: {{ .basicAuth.usernameKey }}
+          name: {{ include "mintel_common.defaultAppSecretName" $ }}
+        password:
+          key: {{ .basicAuth.passwordKey }}
+          name: {{ include "mintel_common.defaultAppSecretName" $ }}
       {{- end }}
       {{- end }}
       relabelings:
