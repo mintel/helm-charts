@@ -1,5 +1,4 @@
 # Default values for standard-application-stack.
-# This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
 # -- Global variables for us in all charts and sub charts
@@ -141,7 +140,7 @@ serviceAccount:
   annotations: {}
   # -- Configures IRSA for the Service Account
   irsa:
-    # -- Determines whether servier account is IRSA enabled
+    # -- Determines whether service account is IRSA enabled
     enabled: false
     # -- Override for last component of role-arn, ie: accountid-clusterName-namespace-{nameOverride}
     nameOverride: ""
@@ -371,7 +370,7 @@ strategy:
   type: RollingUpdate
   # -- Optional argument to define maximum number of pods allowed over defined replicas
   maxSurge: 15%
-  # -- Optional argument to define maximum number of ppods that can be unavailable during update
+  # -- Optional argument to define maximum number of pods that can be unavailable during update
   maxUnavailable: 10%
 
 topologySpreadConstraints:
@@ -511,7 +510,7 @@ celery:
     enabled: false
   # -- Prometheus Exporter / Metrics
   metrics:
-    # -- Enable Prometheus to access aplpication metrics endpoints
+    # -- Enable Prometheus to access application metrics endpoints
     enabled: true
   # -- Pod Disruption Budget
   # ref: https://kubernetes.io/docs/tasks/run-application/configure-pdb/
@@ -612,7 +611,7 @@ mariadb:
         cpu: 100m
         memory: 64Mi
   metrics:
-    enabled: true
+    enabled: false
     #    image: {}
     resources:
       limits:
@@ -645,7 +644,7 @@ postgresql:
         cpu: 100m
         memory: 64Mi
   metrics:
-    enabled: true
+    enabled: false
     #    image: {}
     resources:
       limits:
