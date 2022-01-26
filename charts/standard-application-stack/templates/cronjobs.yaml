@@ -42,14 +42,7 @@ spec:
               command: {{ toYaml . | nindent 16 }}
               {{- end }}
               {{- with .args }}
-              args:
-                {{- range $key, $value := . }}
-                {{- if $value }}
-                - {{ $key }}-{{ $value }}
-                {{- else }}
-                - {{ $key }}
-                {{- end }}
-                {{- end }}
+              args: {{ toYaml . | nindent 16 }}
               {{- end }}
               env:
                 - name: KUBERNETES_POD_NAMESPACE

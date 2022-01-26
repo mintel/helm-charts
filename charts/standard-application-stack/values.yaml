@@ -74,9 +74,10 @@ command:
   - /app/docker-entrypoint.sh
 
 # -- Optional arguments to the container
-args: {}
+args:
 # args:
-#   {'gunicorn'}
+#   - 'gunicorn'
+#   - '--port=1234'
 
 # -- Optional environment variables injected into the container
 env: []
@@ -484,7 +485,7 @@ celery:
   #  command: []
   # -- Arguments to the celery container
   args:
-    {'celery'}
+    - 'celery'
   # -- Optional environment variables injected into the container
   #  env: []
   # -- Container resource requests and limits
@@ -528,7 +529,7 @@ celeryBeat:
   # -- Optional command to the celery container
   #  command: []
   args:
-    {'celerybeat'}
+    - 'celerybeat'
   # -- Optional environment variables injected into the container
   #  env: []
   # -- Container resource requests and limits
@@ -578,7 +579,11 @@ cronjobs:
     #   command:
     #     - '/bin/sh'
     #   args:
-    #     {'-c', 'NO_MIGRATE=1 /app/docker-entrypoint.sh manage daily'}
+    #     - '-c'
+    #     - 'NO_MIGRATE=1
+    #     - '/app/docker-entrypoint.sh'
+    #     - 'manage'
+    #     - 'daily'
     #   env: []
     #   envFrom: {}
     #   podSecurityContext:

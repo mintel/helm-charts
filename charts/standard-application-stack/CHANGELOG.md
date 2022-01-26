@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v3.0.0] - 2022-01-27
+
+### Changed
+- Changed how 'args' are handled, from a dict to a list, so that their order is determinisitic
+
 ## [v2.4.1] - 2022-01-26
 
 ### Fixed
