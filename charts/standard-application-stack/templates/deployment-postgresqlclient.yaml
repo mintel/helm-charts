@@ -46,6 +46,8 @@ spec:
               value: "$(DB_USER)"
             - name: PGPASSWORD
               value: "$(DB_PASSWORD)"
+            - name: PGPORT
+              value: "$(DB_PORT)"
           envFrom:
             - secretRef:
                 name: {{ default (include "mintel_common.defaultPostgresqlSecretName" .) .Values.postgresql.secretNameOverride }}

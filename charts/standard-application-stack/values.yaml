@@ -631,6 +631,7 @@ postgresql:
   #    database: ""
   #    username: ""
   #    password: ""
+  #    port: "5432"
   image:
     tag: '13.5.0-debian-10-r52'
   client:
