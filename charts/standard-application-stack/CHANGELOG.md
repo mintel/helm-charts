@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v2.4.0] - 2022-01-26
+
+### Changed
+- Disable database exporters by default since we capture RDS metrics using cloudwatch
+
+### Fixed
+- A few typos in the `values.yaml` file (comments only)
+
 ## [v2.3.5] - 2022-01-26
 
 ### Fixed
