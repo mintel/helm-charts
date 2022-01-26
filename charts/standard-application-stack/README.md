@@ -1,6 +1,6 @@
 # standard-application-stack
 
-![Version: 2.3.4](https://img.shields.io/badge/Version-2.3.4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 2.4.1](https://img.shields.io/badge/Version-2.4.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A generic chart to support most common application requirements
 
@@ -34,7 +34,7 @@ A generic chart to support most common application requirements
 | celery.liveness | object | `{"enabled":false}` | Configure extra options for liveness probe ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes |
 | celery.liveness.enabled | bool | `false` | Enable liveness probe |
 | celery.metrics | object | `{"enabled":true}` | Prometheus Exporter / Metrics |
-| celery.metrics.enabled | bool | `true` | Enable Prometheus to access aplpication metrics endpoints |
+| celery.metrics.enabled | bool | `true` | Enable Prometheus to access application metrics endpoints |
 | celery.podDisruptionBudget | object | `{"enabled":true,"minAvailable":"50%"}` | Pod Disruption Budget ref: https://kubernetes.io/docs/tasks/run-application/configure-pdb/ |
 | celery.readiness | object | `{"enabled":false}` | Configure extra options for readiness probe ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes |
 | celery.readiness.enabled | bool | `false` | Enable readiness probe |
@@ -135,7 +135,7 @@ A generic chart to support most common application requirements
 | mariadb.client.resources.requests.cpu | string | `"100m"` |  |
 | mariadb.client.resources.requests.memory | string | `"64Mi"` |  |
 | mariadb.enabled | bool | `false` |  |
-| mariadb.metrics.enabled | bool | `true` |  |
+| mariadb.metrics.enabled | bool | `false` |  |
 | mariadb.metrics.resources.limits.cpu | string | `"300m"` |  |
 | mariadb.metrics.resources.limits.memory | string | `"128Mi"` |  |
 | mariadb.metrics.resources.requests.cpu | string | `"100m"` |  |
@@ -176,7 +176,7 @@ A generic chart to support most common application requirements
 | postgresql.client.resources.requests.memory | string | `"64Mi"` |  |
 | postgresql.enabled | bool | `false` |  |
 | postgresql.image.tag | string | `"13.5.0-debian-10-r52"` |  |
-| postgresql.metrics.enabled | bool | `true` |  |
+| postgresql.metrics.enabled | bool | `false` |  |
 | postgresql.metrics.resources.limits.cpu | string | `"300m"` |  |
 | postgresql.metrics.resources.limits.memory | string | `"128Mi"` |  |
 | postgresql.metrics.resources.requests.cpu | string | `"100m"` |  |
@@ -202,7 +202,7 @@ A generic chart to support most common application requirements
 | serviceAccount.clusterRoles | list | `[]` | Define list of ClusterRole's to create and bind to the service account ref: https://kubernetes.io/docs/reference/access-authn-authz/rbac/ |
 | serviceAccount.create | bool | `true` | Determine whether a Service Account should be created or it should reuse a exiting one. |
 | serviceAccount.irsa | object | `{"enabled":false,"nameOverride":""}` | Configures IRSA for the Service Account |
-| serviceAccount.irsa.enabled | bool | `false` | Determines whether servier account is IRSA enabled |
+| serviceAccount.irsa.enabled | bool | `false` | Determines whether service account is IRSA enabled |
 | serviceAccount.irsa.nameOverride | string | `""` | Override for last component of role-arn, ie: accountid-clusterName-namespace-{nameOverride} |
 | serviceAccount.name | string | `""` | ServiceAccount to use. A name is generated using the mintel_common.fullname template if it is not set |
 | serviceAccount.roles | list | `[]` | Define list of Role's to create and bind to the service account ref: https://kubernetes.io/docs/reference/access-authn-authz/rbac/ |
@@ -210,7 +210,7 @@ A generic chart to support most common application requirements
 | statefulset | bool | `false` | Defines whether the deployment should be a statefulset or not |
 | strategy | object | `{"maxSurge":"15%","maxUnavailable":"10%","type":"RollingUpdate"}` | Defines deployment update strategy |
 | strategy.maxSurge | string | `"15%"` | Optional argument to define maximum number of pods allowed over defined replicas |
-| strategy.maxUnavailable | string | `"10%"` | Optional argument to define maximum number of ppods that can be unavailable during update |
+| strategy.maxUnavailable | string | `"10%"` | Optional argument to define maximum number of pods that can be unavailable during update |
 | strategy.type | string | `"RollingUpdate"` | Type of strategy to use (Recreate or RollingUpdate) |
 | topologySpreadConstraints.enabled | bool | `true` |  |
 | topologySpreadConstraints.node.enabled | bool | `false` |  |
