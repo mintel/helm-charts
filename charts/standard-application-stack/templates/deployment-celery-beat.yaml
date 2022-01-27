@@ -53,14 +53,7 @@ spec:
           command: {{ toYaml . | nindent 12 }}
           {{- end }}
           {{- with (coalesce .Values.celeryBeat.args .Values.args) }}
-          args:
-            {{- range $key, $value := . }}
-            {{- if $value }}
-            - {{ $key }}-{{ $value }}
-            {{- else }}
-            - {{ $key }}
-            {{- end }}
-            {{- end }}
+          args: {{ toYaml . | nindent 12 }}
           {{- end }}
           env:
             - name: KUBERNETES_POD_NAMESPACE
