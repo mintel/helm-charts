@@ -316,10 +316,10 @@ ingress:
   enabled: false
   # -- Define the type of ingress
   className: haproxy
-  # -- Ingress annotations
+  # -- Additional Ingress annotations
   # For a full list of possible ingress annotations, please see
   # ref: https://github.com/kubernetes/ingress-nginx/blob/master/docs/user-guide/nginx-configuration/annotations.md
-  annotations: {}
+  extraAnnotations: {}
   # -- Enable TLS configuration for the hostname defined at ingress.hostname parameter
   tls: true
   # -- List of extra ingress hosts to setup
