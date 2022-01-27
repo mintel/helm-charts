@@ -9,6 +9,9 @@ metadata:
   labels: {{ include "mintel_common.labels" . | nindent 4 }}
   annotations:
     {{ include "mintel_common.commonAnnotations" . | nindent 4 }}
+    {{- if .Values.ingress.annotations }}
+    {{- toYaml .Values.ingress.annotations | nindent 4 }}
+    {{- end}}
     ingress.kubernetes.io/ssl-redirect: "false"
 spec:
   ingressClassName: traefik

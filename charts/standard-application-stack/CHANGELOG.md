@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v3.0.2] - 2022-01-27
+
+### Fixed
+- Allow extra annotations from values to be populated in ingress manifest
+
 ## [v3.0.1] - 2022-01-27
 
 ### Changed
