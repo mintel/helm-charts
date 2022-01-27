@@ -9,6 +9,9 @@ metadata:
   labels: {{ include "mintel_common.labels" . | nindent 4 }}
   annotations:
     {{ include "mintel_common.commonAnnotations" . | nindent 4 }}
+    {{- if .Values.ingress.extraAnnotations }}
+    {{- toYaml .Values.ingress.extraAnnotations | nindent 4 }}
+    {{- end}}
     ingress.kubernetes.io/ssl-redirect: "false"
 spec:
   ingressClassName: traefik
@@ -48,6 +51,9 @@ metadata:
   labels: {{ include "mintel_common.labels" . | nindent 4 }}
   annotations:
     {{ include "mintel_common.commonAnnotations" . | nindent 4 }}
+    {{- if .Values.ingress.extraAnnotations }}
+    {{- toYaml .Values.ingress.extraAnnotations | nindent 4 }}
+    {{- end}}
     {{- with .Values.ingress.serverTimeoutSeconds }}
     ingress.kubernetes.io/timeout-server: {{ . }}s
     {{- end }}
