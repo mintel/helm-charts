@@ -51,13 +51,25 @@ spec:
                       fieldPath: metadata.namespace
                 {{- include "mintel_common.localDevEnv" $ | nindent 16 }}
                 {{- include "mintel_common.defaultEnv" $ | nindent 16 }}
+                {{- if .includeMailhogEnv }}
                 {{- include "mintel_common.mailhogEnv" $ | nindent 16 }}
+                {{- end }}
+                {{- if .includeRedisEnv }}
                 {{- include "mintel_common.redisEnv" $ | nindent 16 }}
+                {{- end }}
+                {{- if .includeElasticsearchEnv }}
                 {{- include "mintel_common.elasticsearchEnv" $ | nindent 16 }}
+                {{- end }}
+                {{- if .includeOpensearchEnv }}
                 {{- include "mintel_common.opensearchEnv" $ | nindent 16 }}
+                {{- end }}
+                {{- if .includeLocalstackEnv }}
                 {{- include "mintel_common.localstackEnv" $ | nindent 16 }}
+                {{- end }}
+                {{- if .includeBaseEnv }}
                 {{- with $.Values.env }}
                 {{- toYaml . | nindent 16 }}
+                {{- end }}
                 {{- end }}
                 {{- with .env }}
                 {{- toYaml . | nindent 16 }}
@@ -65,32 +77,46 @@ spec:
               envFrom:
                 {{- if (and $.Values.externalSecret $.Values.externalSecret.enabled) }}
                 {{- if (or (ne $.Values.global.clusterEnv "local") (and (eq $.Values.global.clusterEnv "local") $.Values.externalSecret.localValues)) }}
+                {{- if .includeAppSecret }}
                 - secretRef:
                     name: {{ default (include "mintel_common.defaultAppSecretName" $) $.Values.externalSecret.nameOverride }}
                 {{- end }}
                 {{- end }}
+                {{- end }}
                 {{- if (and $.Values.mariadb $.Values.mariadb.enabled) }}
+                {{- if .includeMariadbSecret }}
                 - secretRef:
                     name: {{ default (include "mintel_common.defaultMariadbSecretName" $) $.Values.mariadb.secretNameOverride }}
                 {{- end }}
+                {{- end }}
                 {{- if (and $.Values.postgresql $.Values.postgresql.enabled) }}
+                {{- if .includePostgesqlSecret }}
                 - secretRef:
                     name: {{ default (include "mintel_common.defaultPostgresqlSecretName" $) $.Values.postgresql.secretNameOverride }}
                 {{- end }}
+                {{- end }}
                 {{- if (and $.Values.redis $.Values.redis.enabled) }}
+                {{- if .includeRedisSecret }}
                 - secretRef:
                     name: {{ default (include "mintel_common.defaultRedisSecretName" $) $.Values.redis.secretNameOverride }}
                 {{- end }}
+                {{- end }}
                 {{- if (and $.Values.elasticsearch $.Values.elasticsearch.enabled) }}
+                {{- if .includeElasticsearchSecret }}
                 - secretRef:
                     name: {{ default (include "mintel_common.defaultElasticsearchSecretName" $) $.Values.elasticsearch.secretNameOverride }}
                 {{- end }}
+                {{- end }}
                 {{- if (and $.Values.opensearch $.Values.opensearch.enabled) }}
+                {{- if .includeOpensearchSecret }}
                 - secretRef:
                     name: {{ default (include "mintel_common.defaultOpensearchSecretName" $) $.Values.opensearch.secretNameOverride }}
                 {{- end }}
+                {{- end }}
+                {{- if .includeBaseEnv }}
                 {{- with $.Values.envFrom }}
                 {{- toYaml . | nindent 16 }}
+                {{- end }}
                 {{- end }}
                 {{- with .envFrom }}
                 {{- toYaml . | nindent 16 }}

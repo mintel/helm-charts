@@ -596,6 +596,17 @@ cronjobs:
     #     requests:
     #       cpu: 1000m
     #       memory: 2Gi
+    #   includeBaseEnv: false
+    #   includeMailhogEnv: false
+    #   includeRedisEnv: false
+    #   includeElasticsearchEnv: false
+    #   includeOpensearchEnv: false
+    #   includeLocalstackEnv: false
+    #   includeAppSecret: false
+    #   includeMariadbSecret: false
+    #   includePostgresqlSecret: false
+    #   includeElasticsearchSecret: false
+    #   includeOpensearchSecret: false
 
 mariadb:
   enabled: false

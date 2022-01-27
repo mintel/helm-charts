@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v3.0.1] - 2022-01-27
+
+### Changed
+- Added feature toggles for including env and secrets into cronjobs
+
+### Fixed
+- Remove extraSecrets from stakater when not included in deployment
+
 ## [v3.0.0] - 2022-01-27
 
 ### Changed

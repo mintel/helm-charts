@@ -244,7 +244,9 @@ Build comma separated list of secrets
 {{- $secretList = append $secretList (default (include "mintel_common.defaultOpensearchSecretName" .) .Values.opensearch.secretNameOverride) -}}
 {{- end }}
 {{- range .Values.extraSecrets }}
+{{- if (or (ne (hasKey . "includeInMain") true) .includeInMain) }}
 {{- $secretList = append $secretList (default (printf "%s-%s" (include "mintel_common.fullname" $) .name) .nameOverride) -}}
+{{- end }}
 {{- end }}
 {{- join "," $secretList -}}
 {{- end -}}
