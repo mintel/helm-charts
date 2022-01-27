@@ -74,7 +74,7 @@ command:
   - /app/docker-entrypoint.sh
 
 # -- Optional arguments to the container
-args:
+args: []
 # args:
 #   - 'gunicorn'
 #   - '--port=1234'

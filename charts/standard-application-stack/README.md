@@ -27,7 +27,7 @@ A generic chart to support most common application requirements
 | affinity.podAntiAffinity | object | `{"node":"soft","zone":"hard"}` | Configure pod anti-affinity rules |
 | affinity.podAntiAffinity.node | string | `"soft"` | Toggle whether node affinity should be required (hard) or preferred (soft) |
 | affinity.podAntiAffinity.zone | string | `"hard"` | Toggle whether zone affinity should be required (hard) or preferred (soft) |
-| args | string | `nil` | Optional arguments to the container |
+| args | list | `[]` | Optional arguments to the container |
 | celery | object | `{"args":["celery"],"enabled":false,"liveness":{"enabled":false},"metrics":{"enabled":true},"podDisruptionBudget":{"enabled":true,"minAvailable":"50%"},"readiness":{"enabled":false},"replicas":2,"resources":{"limits":{},"requests":{}}}` | Configure celery deployment Defaults to same image as main deployment but with the "celery" argument |
 | celery.args | list | `["celery"]` | Full image name override (registry/repository:tag)  image: "" -- Optional command to the celery container  command: [] -- Arguments to the celery container |
 | celery.enabled | bool | `false` | Set to true to enable a celery deployment |
