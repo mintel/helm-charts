@@ -332,6 +332,10 @@ ingress:
   #      servicePort: ""
   # -- Optional, defines number of seconds to set server-timeout to
   #  serverTimeoutSeconds: 10
+  # -- Set to true to allow the liveness URL through the ingress
+  allowLivenessUrl: false
+  # -- Set to true to allow the readiness URL through the ingress
+  allowReadinessUrl: false
   # -- Configures annotations defining blackbox endpoints
   blackbox:
     # -- Set to true to tell blackboxes to hit endpoint

@@ -429,13 +429,17 @@ topologySpreadConstraints:
 {{- define "mintel_common.ingressDenyEndpoints" -}}
 {{- $endpoints := list }}
 {{- $endpoints = append $endpoints (default "/metrics" .Values.metrics.path) }}
+{{- if (ne .Values.ingress.allowLivenessUrl true) }}
 {{- $livenessEndpoint := (coalesce .Values.liveness.path "/healthz") }}
-{{- $readinessEndpoint := (coalesce .Values.readiness.path "/readiness") }}
 {{- if (ne $livenessEndpoint .Values.ingress.blackbox.probePath) }}
 {{- $endpoints = append $endpoints $livenessEndpoint }}
 {{- end }}
+{{- end }}
+{{- if (ne .Values.ingress.allowReadinessUrl true) }}
+{{- $readinessEndpoint := (coalesce .Values.readiness.path "/readiness") }}
 {{- if (ne $readinessEndpoint .Values.ingress.blackbox.probePath) }}
 {{- $endpoints = append $endpoints $readinessEndpoint }}
+{{- end }}
 {{- end }}
 {{- print (join " " $endpoints) }}
 {{- end -}}
