@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v3.2.0] - 2022-01-28
+
+## Added
+- Added ability to explicitly allow readiness/liveness URLs through ingress
+
+### Fixed
+- Removed incorrect `apiGroups` element from `subjects` in role-bindings
+
 ## [v3.1.0] - 2022-01-27
 
 ### Changed
