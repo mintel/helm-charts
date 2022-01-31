@@ -1,0 +1,43 @@
+suite: Test Service
+templates:
+  - service.yaml
+release:
+  namespace: test-namespace
+tests:
+  - it: Sets name
+    set:
+      global.name: test-app
+    asserts:
+      - isKind:
+          of: Service
+      - equal:
+          path: metadata.namespace
+          value: test-namespace
+      - equal:
+          path: metadata.name
+          value: test-app
+      - equal:
+          path: metadata.labels.[app.kubernetes.io/name]
+          value: test-app
+      - equal:
+          path: metadata.labels.[name]
+          value: test-app
+  - it: Sets name and component
+    set:
+      global.name: test-app
+      component: exporter
+    asserts:
+      - isKind:
+          of: Service
+      - equal:
+          path: metadata.namespace
+          value: test-namespace
+      - equal:
+          path: metadata.name
+          value: test-app
+      - equal:
+          path: metadata.labels.[app.kubernetes.io/name]
+          value: test-app
+      - equal:
+          path: metadata.labels.[name]
+          value: test-app
