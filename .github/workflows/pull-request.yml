@@ -65,4 +65,4 @@ jobs:
         with:
           exec: "unit-tests"
           charts: "${{ steps.list-changed.outputs.changed_charts }}"
-        if: staps.list-changed.outputs.changed == 'true'
+        if: steps.list-changed.outputs.changed == 'true'
