@@ -51,12 +51,6 @@ jobs:
             echo "::set-output name=changed_charts::$charts"
           fi
 
-      - name: Run docs-testing (helm-docs)
-        uses: buttahtoast/helm-release-action@master
-        with:
-          charts: "${{ steps.list-changed.outputs.changed_charts }}"
-        if: steps.list-changed.outputs.changed == 'true'
-
       - name: Run chart-testing (lint)
         run: ct lint --target-branch main --validate-maintainers=false
 
