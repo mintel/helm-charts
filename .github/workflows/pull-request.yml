@@ -52,7 +52,7 @@ jobs:
           fi
 
       - name: Run chart-testing (lint)
-        run: ct lint --target-branch main --validate-maintainers=false --check-version-increment=false
+        run: ct lint --target-branch main --validate-maintainers=false
 
       - name: Run unit tests
         uses: buttahtoast/helm-release-action@master
