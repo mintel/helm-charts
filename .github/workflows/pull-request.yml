@@ -44,7 +44,7 @@ jobs:
         id: list-changed
         run: |
           ## If executed with debug this won't work anymore.
-          changed=$(ct list-changed)
+          changed=$(ct list-changed --target-branch main)
           charts=$(echo "$changed" | tr '\n' ' ' | xargs)
           if [[ -n "$changed" ]]; then
             echo "::set-output name=changed::true"
