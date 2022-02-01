@@ -19,6 +19,61 @@ entries:
     version: 1.2.0
   standard-application-stack:
   - apiVersion: v2
+    created: "2022-02-01T12:11:53.956359338Z"
+    dependencies:
+    - name: redis
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - localRedis
+      version: 15.4.0
+    - name: mariadb
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - localMariadb
+      version: 9.5.1
+    - name: postgresql
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - localPostgresql
+      version: 10.13.14
+    - name: mailhog
+      repository: https://codecentric.github.io/helm-charts
+      tags:
+      - localMailhog
+      version: 4.1.0
+    - name: kibana
+      repository: https://helm.elastic.co
+      tags:
+      - localKibana
+      version: 7.5.2
+    - name: elasticsearch
+      repository: https://helm.elastic.co
+      tags:
+      - localElasticsearch
+      version: 7.5.2
+    - name: opensearch
+      repository: https://opensearch-project.github.io/helm-charts
+      tags:
+      - localOpensearch
+      version: 1.4.2
+    - name: opensearch-dashboards
+      repository: https://opensearch-project.github.io/helm-charts
+      tags:
+      - localOpensearch
+      version: 1.0.8
+    - name: localstack
+      repository: https://localstack.github.io/helm-charts
+      tags:
+      - localLocalstack
+      version: 0.3.5
+    description: A generic chart to support most common application requirements
+    digest: fb866e5348213c5eedafde06d63109267aaed6ba3eeeff298350dc7860d7e8fd
+    name: standard-application-stack
+    type: application
+    urls:
+    - https://github.com/mintel/helm-charts/releases/download/standard-application-stack-3.2.2/standard-application-stack-3.2.2.tgz
+    version: 3.2.2
+  - apiVersion: v2
     created: "2022-01-31T14:36:43.930660315Z"
     dependencies:
     - name: redis
@@ -3274,4 +3329,4 @@ entries:
     urls:
     - https://github.com/mintel/helm-charts/releases/download/testchart-0.1.1/testchart-0.1.1.tgz
     version: 0.1.1
-generated: "2022-01-31T14:36:43.931974432Z"
+generated: "2022-02-01T12:11:53.957254461Z"
