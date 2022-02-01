@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v3.2.2] - 2022-02-01
+
+### Fixed
+- Corrected enable to enabled under kubelock in values.yaml
+
 ## [v3.2.1] - 2022-01-31
 
 ## Added
