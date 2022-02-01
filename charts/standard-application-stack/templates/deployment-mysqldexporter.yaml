@@ -19,6 +19,8 @@ spec:
     type: RollingUpdate
   template:
     metadata:
+      annotations:
+        app.mintel.com/opa-skip-security-context-check: "true"
       labels: {{ include "mintel_common.labels" $data | nindent 8 }}
     spec:
       {{- include "mintel_common.imagePullSecrets" . | nindent 6 }}

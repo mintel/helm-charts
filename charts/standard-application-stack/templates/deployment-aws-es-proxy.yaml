@@ -11,6 +11,7 @@ metadata:
     secret.reloader.stakater.com/reload: {{ default (include "mintel_common.defaultOpensearchSecretName" .) .Values.opensearch.secretNameOverride }}
     app.mintel.com/opa-allow-single-replica: "true"
     app.mintel.com/opa-skip-readiness-probe-check.main: "true"
+    app.mintel.com/opa-skip-security-context-check: "true"
   labels: {{ include "mintel_common.labels" $data | nindent 4 }}
 spec:
   replicas: {{ default 2 .Values.opensearch.awsEsProxy.replicas }}

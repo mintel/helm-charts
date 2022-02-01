@@ -18,6 +18,8 @@ spec:
   strategy:
     type: RollingUpdate
   template:
+    annotations:
+      app.mintel.com/opa-skip-security-context-check: "true"
     metadata:
       labels: {{ include "mintel_common.labels" $data | nindent 8 }}
     spec:
