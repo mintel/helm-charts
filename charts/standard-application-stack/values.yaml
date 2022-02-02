@@ -26,6 +26,9 @@ global:
   # -- Global dictionary of TLS secrets
   ingressTLSSecrets: {}
 
+# -- Enable the main deploment workload
+deploymentEnabled: true
+
 # -- String to fully override mintel_common.fullname template
 nameOverride: ""
 
@@ -557,6 +560,9 @@ celeryBeat:
   readiness:
     # -- Enable readiness probe
     enabled: false
+
+# -- Only show cronjobs and relevent resources (i.e. if set to `true`, hide the main deployment resource)
+cronjobsOnly: false
 
 # -- Define and Configure CronJob's
 # Defaults to same image as main deployment but with defined arguments

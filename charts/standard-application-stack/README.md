@@ -1,6 +1,6 @@
 # standard-application-stack
 
-![Version: 3.2.1](https://img.shields.io/badge/Version-3.2.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 3.3.0](https://img.shields.io/badge/Version-3.3.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A generic chart to support most common application requirements
 
@@ -58,6 +58,8 @@ A generic chart to support most common application requirements
 | cronjobs.defaults.restartPolicy | string | `"Never"` | Configure CronJob pod restart Policy ref: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#restart-policy |
 | cronjobs.defaults.suspend | bool | `false` | Tells controller to suspend future executions ref: https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/cron-job-v1/#CronJobSpec |
 | cronjobs.jobs | list | `[]` | List of Cronjob configurations to be defined |
+| cronjobsOnly | bool | `false` | Only show cronjobs and relevent resources (i.e. if set to `true`, hide the main deployment resource) |
+| deploymentEnabled | bool | `true` | Enable the main deploment workload |
 | elasticsearch.enabled | bool | `false` |  |
 | env | list | `[]` | Optional environment variables injected into the container |
 | envFrom | list | `[]` | Optional environment variables injected into the container using envFrom (secrets/configmaps) |
@@ -113,8 +115,8 @@ A generic chart to support most common application requirements
 | k8snotify.team | string | `""` | Defines team (flow) notifications are to be directed at |
 | kibana.elasticsearchHosts | string | `""` |  |
 | kibana.enabled | bool | `false` |  |
-| kubelock | object | `{"enable":false}` | Configure the use of kubelock ref: https://github.com/mintel/kubelock |
-| kubelock.enable | bool | `false` | Set to true to enable kubelock |
+| kubelock | object | `{"enabled":false}` | Configure the use of kubelock ref: https://github.com/mintel/kubelock |
+| kubelock.enabled | bool | `false` | Set to true to enable kubelock |
 | liveness | object | `{"enabled":true,"startup":{"failureThreshold":60,"periodSeconds":5}}` | Configure extra options for liveness probe ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes |
 | liveness.enabled | bool | `true` | Enable liveness probe |
 | liveness.startup.failureThreshold | int | `60` | Failure threshold for startupProbe |

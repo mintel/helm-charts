@@ -1,4 +1,5 @@
 {{- if (and .Values.service .Values.service.enabled) }}
+{{- if (eq .Values.cronjobsOnly false) }}
 {{- if (ne .Values.global.clusterEnv "local") }}
 {{- if (and .Values.metrics .Values.metrics.enabled) }}
 ---
@@ -155,6 +156,7 @@ spec:
     matchLabels: {{ include "mintel_common.selectorLabels" . | nindent 6 }}
   targetLabels: {{ include "mintel_common.targetLabelNames" . | nindent 4 }}
   podTargetLabels: {{ include "mintel_common.podTargetLabelNames" . | nindent 4 }}
+{{- end }}
 {{- end }}
 {{- end }}
 {{- end }}
