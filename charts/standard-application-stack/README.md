@@ -58,7 +58,7 @@ A generic chart to support most common application requirements
 | cronjobs.defaults.restartPolicy | string | `"Never"` | Configure CronJob pod restart Policy ref: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#restart-policy |
 | cronjobs.defaults.suspend | bool | `false` | Tells controller to suspend future executions ref: https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/cron-job-v1/#CronJobSpec |
 | cronjobs.jobs | list | `[]` | List of Cronjob configurations to be defined |
-| cronjobsOnly | bool | `false` | Only show cronjobs and relevent resources (i.e. if set to `true`, hide the main deployment resource) |
+| cronjobsOnly | bool | `false` | Only show cronjobs and relevant resources (i.e. if set to `true`, hide the main deployment resource) |
 | deploymentEnabled | bool | `true` | Enable the main deploment workload |
 | elasticsearch.enabled | bool | `false` |  |
 | env | list | `[]` | Optional environment variables injected into the container |

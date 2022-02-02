@@ -561,7 +561,7 @@ celeryBeat:
     # -- Enable readiness probe
     enabled: false
 
-# -- Only show cronjobs and relevent resources (i.e. if set to `true`, hide the main deployment resource)
+# -- Only show cronjobs and relevant resources (i.e. if set to `true`, hide the main deployment resource)
 cronjobsOnly: false
 
 # -- Define and Configure CronJob's
