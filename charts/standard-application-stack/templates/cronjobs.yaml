@@ -23,6 +23,11 @@ spec:
           labels: {{ include "mintel_common.labels" $data | nindent 12 }}
         spec:
           {{- include "mintel_common.imagePullSecrets" $ | nindent 10 }}
+          {{- if .includeBasePodSecurityContext }}
+          {{- with $.Values.podSecurityContext }}
+          securityContext: {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- end }}
           {{- with .podSecurityContext }}
           securityContext: {{ toYaml . | nindent 12 }}
           {{- end }}
