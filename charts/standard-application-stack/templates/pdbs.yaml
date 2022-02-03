@@ -1,4 +1,5 @@
 {{- if (and (gt (.Values.replicas | int) 1) .Values.podDisruptionBudget.enabled) }}
+{{- if eq .Values.cronjobsOnly false }}
 ---
 apiVersion: {{ include "common.capabilities.policy.apiVersion" . }}
 kind: PodDisruptionBudget
@@ -38,5 +39,6 @@ spec:
   {{- end }}
   selector:
     matchLabels: {{ include "mintel_common.selectorLabels" $data | nindent 6 }}
+{{- end }}
 {{- end }}
 {{- end }}

@@ -1,6 +1,6 @@
 # standard-application-stack
 
-![Version: 3.2.1](https://img.shields.io/badge/Version-3.2.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 3.4.0](https://img.shields.io/badge/Version-3.4.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A generic chart to support most common application requirements
 
@@ -29,7 +29,7 @@ A generic chart to support most common application requirements
 | affinity.podAntiAffinity.zone | string | `"hard"` | Toggle whether zone affinity should be required (hard) or preferred (soft) |
 | args | list | `[]` | Optional arguments to the container |
 | celery | object | `{"args":["celery"],"enabled":false,"liveness":{"enabled":false},"metrics":{"enabled":true},"podDisruptionBudget":{"enabled":true,"minAvailable":"50%"},"readiness":{"enabled":false},"replicas":2,"resources":{"limits":{},"requests":{}}}` | Configure celery deployment Defaults to same image as main deployment but with the "celery" argument |
-| celery.args | list | `["celery"]` | Full image name override (registry/repository:tag)  image: "" -- Optional command to the celery container  command: [] -- Arguments to the celery container |
+| celery.args | list | `["celery"]` | Arguments to the celery container |
 | celery.enabled | bool | `false` | Set to true to enable a celery deployment |
 | celery.liveness | object | `{"enabled":false}` | Configure extra options for liveness probe ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes |
 | celery.liveness.enabled | bool | `false` | Enable liveness probe |
@@ -39,17 +39,19 @@ A generic chart to support most common application requirements
 | celery.readiness | object | `{"enabled":false}` | Configure extra options for readiness probe ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes |
 | celery.readiness.enabled | bool | `false` | Enable readiness probe |
 | celery.replicas | int | `2` | Desired number of replicas for celery deployment |
-| celery.resources | object | `{"limits":{},"requests":{}}` | Optional environment variables injected into the container  env: [] -- Container resource requests and limits ref: http://kubernetes.io/docs/user-guide/compute-resources |
+| celery.resources | object | `{"limits":{},"requests":{}}` | Container resource requests and limits ref: http://kubernetes.io/docs/user-guide/compute-resources |
 | celery.resources.limits | object | `{}` | The resource limits for the container |
+| celery.resources.requests | object | `{}` | The requested resources for the container |
 | celeryBeat | object | `{"args":["celerybeat"],"enabled":false,"liveness":{"enabled":false},"readiness":{"enabled":false},"resources":{"limits":{},"requests":{}}}` | Configure celerybeat deployment Defaults to same image as main deployment but with the "celerybeat" argument |
-| celeryBeat.args | list | `["celerybeat"]` | Full image name override (registry/repository:tag)  image: "" -- Optional command to the celery container  command: [] |
+| celeryBeat.args | list | `["celerybeat"]` | Optional command to the celery container  command: [] |
 | celeryBeat.enabled | bool | `false` | Set to true to enable a celerybeat deployment |
 | celeryBeat.liveness | object | `{"enabled":false}` | Configure extra options for liveness probe ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes |
 | celeryBeat.liveness.enabled | bool | `false` | Enable liveness probe |
 | celeryBeat.readiness | object | `{"enabled":false}` | Configure extra options for readiness probe ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes |
 | celeryBeat.readiness.enabled | bool | `false` | Enable readiness probe |
-| celeryBeat.resources | object | `{"limits":{},"requests":{}}` | Optional environment variables injected into the container  env: [] -- Container resource requests and limits ref: http://kubernetes.io/docs/user-guide/compute-resources |
+| celeryBeat.resources | object | `{"limits":{},"requests":{}}` | Container resource requests and limits ref: http://kubernetes.io/docs/user-guide/compute-resources |
 | celeryBeat.resources.limits | object | `{}` | The resource limits for the container |
+| celeryBeat.resources.requests | object | `{}` | The requested resources for the container |
 | command | list | `["/app/docker-entrypoint.sh"]` | Optional command to the container |
 | configmaps | list | `[]` | A list of configuration maps for this application |
 | cronjobs | object | `{"defaults":{"concurrencyPolicy":"Forbid","restartPolicy":"Never","suspend":false},"jobs":[]}` | Define and Configure CronJob's Defaults to same image as main deployment but with defined arguments |
@@ -58,6 +60,7 @@ A generic chart to support most common application requirements
 | cronjobs.defaults.restartPolicy | string | `"Never"` | Configure CronJob pod restart Policy ref: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#restart-policy |
 | cronjobs.defaults.suspend | bool | `false` | Tells controller to suspend future executions ref: https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/cron-job-v1/#CronJobSpec |
 | cronjobs.jobs | list | `[]` | List of Cronjob configurations to be defined |
+| cronjobsOnly | bool | `false` | Only show cronjobs and relevant resources (i.e. if set to `true`, hide the main deployment resource) |
 | elasticsearch.enabled | bool | `false` |  |
 | env | list | `[]` | Optional environment variables injected into the container |
 | envFrom | list | `[]` | Optional environment variables injected into the container using envFrom (secrets/configmaps) |
@@ -95,6 +98,7 @@ A generic chart to support most common application requirements
 | image.tag | string | `"auto-replaced"` | Container image tag |
 | imagePullSecrets | list | `[]` | Optional array of imagePullSecrets ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/ |
 | ingress | object | `{"allowLivenessUrl":false,"allowReadinessUrl":false,"blackbox":{"enabled":true,"probePath":"/external-health-check"},"className":"haproxy","enabled":false,"extraAnnotations":{},"extraHosts":[],"specificRulesHostsYaml":{},"specificTlsHostsYaml":{},"tls":true}` | Configure the ingress resource that allows you to access the application from public-internet ref: http://kubernetes.io/docs/user-guide/ingress/ |
+| ingress.allowLivenessUrl | bool | `false` | Set to true to allow the liveness URL through the ingress |
 | ingress.allowReadinessUrl | bool | `false` | Set to true to allow the readiness URL through the ingress |
 | ingress.blackbox | object | `{"enabled":true,"probePath":"/external-health-check"}` | Configures annotations defining blackbox endpoints |
 | ingress.blackbox.enabled | bool | `true` | Set to true to tell blackboxes to hit endpoint |
@@ -113,10 +117,11 @@ A generic chart to support most common application requirements
 | k8snotify.team | string | `""` | Defines team (flow) notifications are to be directed at |
 | kibana.elasticsearchHosts | string | `""` |  |
 | kibana.enabled | bool | `false` |  |
-| kubelock | object | `{"enable":false}` | Configure the use of kubelock ref: https://github.com/mintel/kubelock |
-| kubelock.enable | bool | `false` | Set to true to enable kubelock |
+| kubelock | object | `{"enabled":false}` | Configure the use of kubelock ref: https://github.com/mintel/kubelock |
+| kubelock.enabled | bool | `false` | Set to true to enable kubelock |
 | liveness | object | `{"enabled":true,"startup":{"failureThreshold":60,"periodSeconds":5}}` | Configure extra options for liveness probe ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes |
 | liveness.enabled | bool | `true` | Enable liveness probe |
+| liveness.startup | object | `{"failureThreshold":60,"periodSeconds":5}` | Configure startup probe ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/#define-startup-probes |
 | liveness.startup.failureThreshold | int | `60` | Failure threshold for startupProbe |
 | liveness.startup.periodSeconds | int | `5` | Perios seconds for startupProbe |
 | localstack.enableStartupScripts | bool | `true` |  |
@@ -143,7 +148,7 @@ A generic chart to support most common application requirements
 | mariadb.metrics.resources.requests.cpu | string | `"100m"` |  |
 | mariadb.metrics.resources.requests.memory | string | `"64Mi"` |  |
 | metrics | object | `{"additionalMonitors":[],"basicAuth":{"enabled":false,"passwordKey":"","secretName":"","usernameKey":""},"enabled":true}` | Prometheus Exporter / Metrics |
-| metrics.basicAuth | object | `{"enabled":false,"passwordKey":"","secretName":"","usernameKey":""}` | Interval at which metrics should be scraped ref: https://github.com/coreos/prometheus-operator/blob/master/Documentation/api.md#endpoint  interval: 30s -- URL path to the metrics endpoint  path: /metrics -- Name of the port to use for metrics endpoint  port: http -- Timeout after which the scrape is ended ref: https://github.com/coreos/prometheus-operator/blob/master/Documentation/api.md#endpoint  timeout: 10s -- Scheme (HTTP ot HTTPS)  scheme: HTTP |
+| metrics.basicAuth | object | `{"enabled":false,"passwordKey":"","secretName":"","usernameKey":""}` | Scheme (HTTP ot HTTPS)  scheme: HTTP |
 | metrics.enabled | bool | `true` | Enable Prometheus to access aplpication metrics endpoints |
 | minReadySeconds | int | `10` | Minimum number of seconds before deployments are ready |
 | nameOverride | string | `""` | String to fully override mintel_common.fullname template |
@@ -155,7 +160,7 @@ A generic chart to support most common application requirements
 | oauthProxy.image | string | `"quay.io/oauth2-proxy/oauth2-proxy:v7.1.3"` | Full image name override |
 | oauthProxy.ingressHost | string | `""` | Optional: hostname for proxy redirect url (defaults to service defaultHost) |
 | oauthProxy.issuerUrl | string | `"https://oauth.mintel.com"` | Optional: URL of the OIDC issuer |
-| oauthProxy.localSecretValues | list | `[]` | Container resource requests and limits ref: http://kubernetes.io/docs/user-guide/compute-resources  resources: -- The resource limits for the container    limits: {}    cpu: 200m    memory: 128Mi -- The requested resources for the container    requests: {}    cpu: 100m    memory: 64Mi |
+| oauthProxy.localSecretValues | list | `[]` | The requested resources for the container    requests: {}    cpu: 100m    memory: 64Mi |
 | oauthProxy.secretNameOverride | string | `""` | Optional: full name override for oauth secret |
 | oauthProxy.secretSuffix | string | `""` | Optional: oauth secret suffix, eg '-oauth' |
 | oauthProxy.skipAuthRegexes | list | `[]` | Optional: list of URL endpoints to bypass oauth-proxy for |
@@ -170,7 +175,7 @@ A generic chart to support most common application requirements
 | podAnnotations | object | `{}` | Additional annotations to apply to the pod |
 | podDisruptionBudget | object | `{"enabled":true,"minAvailable":"50%"}` | Pod Disruption Budget ref: https://kubernetes.io/docs/tasks/run-application/configure-pdb/ |
 | podSecurityContext | object | `{"runAsUser":1000}` | Pod Security context for the container ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/ |
-| port | int | `8000` | Main container port for the application -- Set port to null to skip adding container Ports |
+| port | int | `8000` | Set port to null to skip adding container Ports |
 | postgresql.client.enabled | bool | `true` |  |
 | postgresql.client.resources.limits.cpu | string | `"300m"` |  |
 | postgresql.client.resources.limits.memory | string | `"128Mi"` |  |
@@ -192,6 +197,7 @@ A generic chart to support most common application requirements
 | replicas | int | `2` | Desired number of replicas for main deployment |
 | resources | object | `{"limits":{},"requests":{}}` | Container resource requests and limits ref: http://kubernetes.io/docs/user-guide/compute-resources |
 | resources.limits | object | `{}` | The resource limits for the container |
+| resources.requests | object | `{}` | The requested resources for the container |
 | securityContext | object | `{}` | Security context for the container ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/ |
 | service | object | `{"annotations":{},"enabled":true,"labels":{},"type":"ClusterIP"}` | Kubernetes svc configutarion |
 | service.annotations | object | `{}` | Annotations to add to service |
@@ -224,4 +230,4 @@ A generic chart to support most common application requirements
 | volumes | string | `nil` | A list of volumes to be added to the pod |
 
 ----------------------------------------------
-Autogenerated from chart metadata using [helm-docs v1.5.0](https://github.com/norwoodj/helm-docs/releases/v1.5.0)
+Autogenerated from chart metadata using [helm-docs v1.7.0](https://github.com/norwoodj/helm-docs/releases/v1.7.0)
