@@ -284,7 +284,7 @@ extraSecrets: []
 #    localValues: []
 
 # -- A list of configuration maps for this application
-configmaps: []
+configMaps: []
 #    # -- Name of the config map
 #  - name: ""
 #    # -- Whether or not to create the configmap
