@@ -7,12 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v3.4.0] - 2022-02-03
+
+## Added
+- Added `cronjobsOnly` flag to only show cronjobs and relevant resources (i.e. skip deployment / service etc)
+
 ## [v3.3.0] - 2022-02-01
 
 ## Added
 - Added annotation to skip opa check for security context to deployment-aws-es-proxy.yaml,
   deployment-celery-exporter.yaml, deployment-mysqldexporter.yaml and deployment-postgresqlexporter.yaml
-
 
 ## [v3.2.2] - 2022-02-01
 
