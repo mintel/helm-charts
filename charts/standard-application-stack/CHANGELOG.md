@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Added
 - Added `cronjobsOnly` flag to only show cronjobs and relevant resources (i.e. skip deployment / service etc)
+- Added `helm-docs` and `helm` to asdf `.tool-versions`
 
 ## [v3.3.0] - 2022-02-01
 
