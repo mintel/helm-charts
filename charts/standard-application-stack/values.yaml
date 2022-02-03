@@ -26,9 +26,6 @@ global:
   # -- Global dictionary of TLS secrets
   ingressTLSSecrets: {}
 
-# -- Enable the main deploment workload
-deploymentEnabled: true
-
 # -- String to fully override mintel_common.fullname template
 nameOverride: ""
 

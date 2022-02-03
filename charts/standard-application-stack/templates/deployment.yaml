@@ -1,4 +1,4 @@
-{{- if and .Values.deploymentEnabled (eq .Values.cronjobsOnly false)  }}
+{{- if (eq .Values.cronjobsOnly false) }}
 ---
 {{- if .Values.statefulset }}
 apiVersion: {{ include "common.capabilities.statefulset.apiVersion" . }}
