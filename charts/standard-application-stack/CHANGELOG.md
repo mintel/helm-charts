@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v3.5.1] - 2022-02-03
+
+## Fixed
+- Fixed handling of singleline/multiline configmap data strings
+
 ## [v3.5.0] - 2022-02-03
 
 ## Added
