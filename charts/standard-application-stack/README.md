@@ -1,6 +1,6 @@
 # standard-application-stack
 
-![Version: 3.5.1](https://img.shields.io/badge/Version-3.5.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 3.6.0](https://img.shields.io/badge/Version-3.6.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A generic chart to support most common application requirements
 
@@ -221,7 +221,7 @@ A generic chart to support most common application requirements
 | strategy.maxUnavailable | string | `"10%"` | Optional argument to define maximum number of pods that can be unavailable during update |
 | strategy.type | string | `"RollingUpdate"` | Type of strategy to use (Recreate or RollingUpdate) |
 | topologySpreadConstraints.enabled | bool | `true` |  |
-| topologySpreadConstraints.node.enabled | bool | `false` |  |
+| topologySpreadConstraints.node.enabled | bool | `true` |  |
 | topologySpreadConstraints.node.maxSkew | int | `1` |  |
 | topologySpreadConstraints.specificYaml | string | `nil` | Specify custom topologySpreadConstraints yaml |
 | topologySpreadConstraints.zone.enabled | bool | `true` |  |

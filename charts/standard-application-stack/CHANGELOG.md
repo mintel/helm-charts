@@ -7,24 +7,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v3.6.0] - 2022-02-21
+
+### Changed
+- [CPT-679](https://mintel.atlassian.net/browse/CPT-679): Changed `topologySpreadConstraints.node.enabled` default to `true`.
+
+### Fixed
+- Changelog formatting
+
 ## [v3.5.1] - 2022-02-03
 
-## Fixed
+### Fixed
 - Fixed handling of singleline/multiline configmap data strings
 
 ## [v3.5.0] - 2022-02-03
 
-## Added
+### Added
 - Added `includeBasePodSecurityContext` flag for cronjobs
 
 ## [v3.4.0] - 2022-02-03
 
-## Added
+### Added
 - Added `cronjobsOnly` flag to only show cronjobs and relevant resources (i.e. skip deployment / service etc)
 
 ## [v3.3.0] - 2022-02-01
 
-## Added
+### Added
 - Added annotation to skip opa check for security context to deployment-aws-es-proxy.yaml,
   deployment-celery-exporter.yaml, deployment-mysqldexporter.yaml and deployment-postgresqlexporter.yaml
 
@@ -35,12 +43,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [v3.2.1] - 2022-01-31
 
-## Added
+### Added
 - Added Unit tests
 
 ## [v3.2.0] - 2022-01-28
 
-## Added
+### Added
 - Added ability to explicitly allow readiness/liveness URLs through ingress
 
 ### Fixed
@@ -233,7 +241,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [v1.2.1] - 2022-01-11
 
-## Added
+### Added
 - PriorityClass manifests for local development
 
 ### Fixed
