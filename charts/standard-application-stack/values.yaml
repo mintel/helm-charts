@@ -384,7 +384,7 @@ topologySpreadConstraints:
     enabled: true
     maxSkew: 1
   node:
-    enabled: false
+    enabled: true
     maxSkew: 1
   # -- Specify custom topologySpreadConstraints yaml
   specificYaml:
