@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v3.6.1] - 2022-02-22
+
+### Fixed
+- [CPT-679](https://mintel.atlassian.net/browse/CPT-679): Include logic to change defaults based on environment.
+
 ## [v3.6.0] - 2022-02-21
 
 ### Changed
