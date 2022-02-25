@@ -687,6 +687,31 @@ redis:
   tls:
     enabled: false
 
+# -- Helper to sync a local directory with Git
+# ref: https://github.com/kubernetes/git-sync
+gitSyncSidecar:
+  enabled: false
+
+  # -- The git repository to clone
+  # repo: <your-git-repo>
+
+  # -- The git branch to check out
+  branch: main
+
+  # -- The root directory for git-sync operations, under which --dest will be created
+  root: /data/git-sync
+
+  # -- The name of (a symlink to) a directory in which to check-out files under --root
+  #  dest: <your-dest>
+
+  resources:
+    limits:
+      cpu: 200m
+      memory: 200Mi
+    requests:
+      cpu: 50m
+      memory: 50Mi
+
 filebeatSidecar:
   enabled: false
   resources:

@@ -25,6 +25,9 @@ metadata:
     app.mintel.com/opa-skip-liveness-probe-check.beat-exporter: "true"
     {{- end }}
     {{- end }}
+    {{- if (and .Values.gitSyncSidecar .Values.gitSyncSidecar.enabled) }}
+    app.mintel.com/opa-skip-readiness-probe-check.git-sync: "true"
+    {{- end }}
     {{- include "mintel_common.k8snotify" . | nindent 4 }}
     {{- $secretListStr := (include "mintel_common.secretList" .) }}
     {{- with $secretListStr }}
@@ -334,12 +337,47 @@ spec:
         {{- $oauthProxyData := dict "Release" .Release "Chart" .Chart "Values" .Values "proxiedService" .Values }}
         {{- include "mintel_common.oauthProxySidecar" $oauthProxyData | nindent 8}}
         {{- end }}
-      {{- if (or (or .Values.volumes .Values.persistentVolumes) (and .Values.filebeatSidecar .Values.filebeatSidecar.enabled)) }}
+
+        {{- if (and .Values.gitSyncSidecar .Values.gitSyncSidecar.enabled) }}
+        - name: git-sync
+          image: k8s.gcr.io/git-sync/git-sync:v3.4.0
+          args:
+            - --depth=1
+            - --add-user
+            - --http-bind=0.0.0.0:7000
+            - --wait=5
+            - --max-sync-failures=-1
+            - --repo={{ .Values.gitSyncSidecar.repo }}
+            - --branch={{ .Values.gitSyncSidecar.branch }}
+            - --root={{ .Values.gitSyncSidecar.root }}
+            - --dest={{ .Values.gitSyncSidecar.dest }}
+          envFrom:
+            - secretRef:
+                name: {{ include "mintel_common.fullname" . }}-git-sync
+          livenessProbe:
+            httpGet:
+              path: /
+              port: git-sync-http
+            periodSeconds: 30
+            successThreshold: 1
+            timeoutSeconds: 120
+          ports:
+          - containerPort: 7000
+            name: git-sync-http
+          {{- with .Values.resources }}
+          resources: {{- toYaml . | nindent 12 }}
+          {{- end }}
+          volumeMounts:
+            - mountPath: {{ .Values.gitSyncSidecar.root }}
+              name: {{ include "mintel_common.fullname" . }}-git-sync
+      {{- end }}
       volumes:
+        {{- if .Values.persistentVolumes }}
         {{- range .Values.persistentVolumes }}
         - name: {{ printf "%s-%s" (include "mintel_common.fullname" $ ) .name }}
           persistentVolumeClaim:
             claimName: {{ printf "%s-%s" (include "mintel_common.fullname" $ ) .name }}
+        {{- end }}
         {{- end }}
         {{- with .Values.volumes }}
         {{- toYaml . | nindent 8 }}
@@ -349,5 +387,8 @@ spec:
           configMap:
             name: {{ include "mintel_common.fullname" . }}-filebeat
         {{- end }}
-      {{- end }}
+        {{- if (and .Values.gitSyncSidecar .Values.gitSyncSidecar.enabled) }}
+        - name: {{ include "mintel_common.fullname" . }}-git-sync
+          emptyDir: {}
+        {{- end }}
 {{- end }}

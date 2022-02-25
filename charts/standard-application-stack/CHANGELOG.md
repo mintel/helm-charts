@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v3.7.0] - 2022-02-25
+
+### Added
+- Added `gitSyncSidecar` helper for syncing a git repository into a local directory
+
 ## [v3.6.1] - 2022-02-22
 
 ### Fixed
