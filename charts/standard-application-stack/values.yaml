@@ -687,6 +687,21 @@ redis:
   tls:
     enabled: false
 
+gitSyncSidecar:
+  enabled: false
+  extraArgs:
+    - --repo=https://repo-to-sync
+    - --branch=main
+    - --dest=checkout-dir-under-dest
+    - --dest=/git-sync
+  resources:
+    limits:
+      cpu: 200m
+      memory: 200Mi
+    requests:
+      cpu: 50m
+      memory: 50Mi
+
 filebeatSidecar:
   enabled: false
   resources:

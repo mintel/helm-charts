@@ -79,6 +79,15 @@ A generic chart to support most common application requirements
 | filebeatSidecar.resources.limits.memory | string | `"200Mi"` |  |
 | filebeatSidecar.resources.requests.cpu | string | `"100m"` |  |
 | filebeatSidecar.resources.requests.memory | string | `"100Mi"` |  |
+| gitSyncSidecar.enabled | bool | `false` |  |
+| gitSyncSidecar.extraArgs[0] | string | `"--repo=https://repo-to-sync"` |  |
+| gitSyncSidecar.extraArgs[1] | string | `"--branch=main"` |  |
+| gitSyncSidecar.extraArgs[2] | string | `"--dest=checkout-dir-under-dest"` |  |
+| gitSyncSidecar.extraArgs[3] | string | `"--dest=/git-sync"` |  |
+| gitSyncSidecar.resources.limits.cpu | string | `"200m"` |  |
+| gitSyncSidecar.resources.limits.memory | string | `"200Mi"` |  |
+| gitSyncSidecar.resources.requests.cpu | string | `"50m"` |  |
+| gitSyncSidecar.resources.requests.memory | string | `"50Mi"` |  |
 | global | object | `{"additionalLabels":{},"cloudProvider":{"accountId":""},"clusterDomain":"127.0.0.1.nip.io","clusterEnv":"local","clusterName":"","ingressTLSSecrets":{},"name":"example-app","owner":"","partOf":"","runtimeEnvironment":"kubernetes"}` | Global variables for us in all charts and sub charts |
 | global.additionalLabels | object | `{}` | Additional labels to apply to all resources |
 | global.cloudProvider | object | `{"accountId":""}` | Global variables relating to cloud provider |
