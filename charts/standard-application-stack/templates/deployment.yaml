@@ -357,7 +357,7 @@ spec:
           livenessProbe:
             httpGet:
               path: /
-              port: http-git-sync
+              port: git-sync-http
             periodSeconds: 30
             successThreshold: 1
             timeoutSeconds: 120
