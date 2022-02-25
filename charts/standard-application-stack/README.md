@@ -128,7 +128,7 @@ A generic chart to support most common application requirements
 | liveness.startup.periodSeconds | int | `5` | Perios seconds for startupProbe |
 | localstack.enableStartupScripts | bool | `true` |  |
 | localstack.enabled | bool | `false` |  |
-| localstack.extraEnvVars[0].name | string | `"AWS_DEFALT_REGION"` |  |
+| localstack.extraEnvVars[0].name | string | `"AWS_DEFAULT_REGION"` |  |
 | localstack.extraEnvVars[0].value | string | `"us-east-1"` |  |
 | localstack.extraEnvVars[1].name | string | `"AWS_ACCESS_KEY_ID"` |  |
 | localstack.extraEnvVars[1].value | string | `"test"` |  |

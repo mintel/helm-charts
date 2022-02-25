@@ -779,7 +779,7 @@ localstack:
   mountDind:
     enabled: true
   extraEnvVars:
-    - name: AWS_DEFALT_REGION
+    - name: AWS_DEFAULT_REGION
       value: us-east-1
     - name: AWS_ACCESS_KEY_ID
       value: test
