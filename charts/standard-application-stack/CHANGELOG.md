@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v3.8.0] - 2022-03-01
+
+### Added
+- Added support to set `env`, `scope` and `userIdClaim`  values for the oauth proxy sidecar
+
 ## [v3.7.0] - 2022-02-25
 
 ### Added
