@@ -433,7 +433,7 @@ oauthProxy:
   allowedGroups: []
   # -- Identifies oauth-proxy as auth'ing with a mintel portal instance
   type: portal
-  # -- Optiona: OAuth scope specification
+  # -- Optional: OAuth scope specification
   scope: "openid profile email"
   # -- Optional: oauth secret suffix, eg '-oauth'
   secretSuffix: ""
@@ -454,7 +454,7 @@ oauthProxy:
     #    memory: 64Mi
     #
     #
-  # -- Optiona: Claim contains the user ID
+  # -- Optional: Claim contains the user ID
   userIdClaim: "sub" 
   # -- Optional environment variables injected into the container
   env: []
