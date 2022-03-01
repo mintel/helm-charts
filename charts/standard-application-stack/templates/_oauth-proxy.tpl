@@ -27,8 +27,13 @@
     {{- if (eq .proxiedService.oauthProxy.type "portal") }}
     - --insecure-oidc-allow-unverified-email=true
     - --cookie-secure=false
-    - --user-id-claim=sub
-    - --scope=openid profile email
+    - --user-id-claim={{ default "sub" .proxiedService.oauthProxy.userIdClaim }}
+    - --scope={{ default "openid profile email" .proxiedService.oauthProxy.scope }}
+    {{- end }}
+
+  env:
+    {{- with .proxiedService.oauthProxy.env }}
+    {{- toYaml . | nindent 12 }}
     {{- end }}
   envFrom:
     - secretRef:
