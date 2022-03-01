@@ -455,7 +455,7 @@ oauthProxy:
     #
     #
   # -- Optional: Claim contains the user ID
-  userIdClaim: "sub" 
+  userIdClaim: "sub"
   # -- Optional environment variables injected into the container
   env: []
   #    - name: OAUTH_PROXY_SKIP_AUTH_PREFLIGHT
