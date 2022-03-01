@@ -30,7 +30,6 @@
     - --user-id-claim={{ default "sub" .proxiedService.oauthProxy.userIdClaim }}
     - --scope={{ default "openid profile email" .proxiedService.oauthProxy.scope }}
     {{- end }}
-
   env:
     {{- with .proxiedService.oauthProxy.env }}
     {{- toYaml . | nindent 12 }}
