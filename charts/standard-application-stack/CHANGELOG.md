@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v3.8.2] - 2022-03-02
+
+### Changed
+- Updated monitoring cluster URL for k8s-notify from GKE to EKS
+
 ## [v3.8.1] - 2022-03-01
 
 ### Fixed
