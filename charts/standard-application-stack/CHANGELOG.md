@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v3.8.1] - 2022-03-01
+
+### Fixed
+- Don't render the `tls:` key of the Ingress when `ingress.specificTlsHostsYaml` and `global.ingressTLSSecrets` are both empty
+
 ## [v3.8.0] - 2022-03-01
 
 ### Added
