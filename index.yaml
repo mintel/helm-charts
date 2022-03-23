@@ -17,6 +17,16 @@ entries:
     urls:
     - https://mintel.github.io/helm-charts/dex-k8s-authenticator-1.2.0.tgz
     version: 1.2.0
+  hybrid-consul-config-crds:
+  - apiVersion: v2
+    created: "2022-03-23T11:52:49.997222642Z"
+    description: A Helm chart for defining Consul CRDs
+    digest: 5a9b56d0735cd37101ec4c4c8c0a54fc2e377a41370cd185b72edcd7b1f56898
+    name: hybrid-consul-config-crds
+    type: application
+    urls:
+    - https://github.com/mintel/helm-charts/releases/download/hybrid-consul-config-crds-0.0.1/hybrid-consul-config-crds-0.0.1.tgz
+    version: 0.0.1
   standard-application-stack:
   - apiVersion: v2
     created: "2022-03-02T22:05:03.525630143Z"
@@ -3879,4 +3889,4 @@ entries:
     urls:
     - https://github.com/mintel/helm-charts/releases/download/testchart-0.1.1/testchart-0.1.1.tgz
     version: 0.1.1
-generated: "2022-03-02T22:05:03.526505153Z"
+generated: "2022-03-23T11:52:49.997995045Z"
