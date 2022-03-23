@@ -1,0 +1,23 @@
+{{- range .Values.intentions }}
+---
+apiVersion: consul.hashicorp.com/v1alpha1
+kind: ServiceIntentions
+metadata:
+  name: {{ .name }}
+  namespace: {{ $.Release.Namespace }}
+spec:
+  destination:
+    name: {{ .destination.name | quote }}
+  sources:
+    {{- range .sources }}
+    - name: {{ .name | quote }}
+      {{- if .permissions }}
+      permissions:
+        {{- range .permissions }}
+        - action: {{ .action }}
+        {{- end }}
+      {{- else }}
+      action: {{ default "allow" .action }}
+      {{- end }}
+    {{- end }}
+{{- end }}
