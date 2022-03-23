@@ -7,6 +7,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v3.8.2] - 2022-03-02
+
+### Changed
+- Updated monitoring cluster URL for k8s-notify from GKE to EKS
+
+## [v3.8.1] - 2022-03-01
+
+### Fixed
+- Don't render the `tls:` key of the Ingress when `ingress.specificTlsHostsYaml` and `global.ingressTLSSecrets` are both empty
+
+## [v3.8.0] - 2022-03-01
+
+### Added
+- Added support to set `env`, `scope` and `userIdClaim`  values for the oauth proxy sidecar
+
+## [v3.7.0] - 2022-02-25
+
+### Added
+- Added `gitSyncSidecar` helper for syncing a git repository into a local directory
+
 ## [v3.6.1] - 2022-02-22
 
 ### Fixed

@@ -130,7 +130,7 @@ spec:
     {{- with .Values.ingress.specificRulesHostsYaml }}
     {{- toYaml . | nindent 4 }}
     {{- end }}
-  {{- if .Values.ingress.tls }}
+  {{- if and .Values.ingress.tls ( or .Values.global.ingressTLSSecrets .Values.ingress.specificTlsHostsYaml ) }}
   tls:
     {{- range $key, $val := .Values.global.ingressTLSSecrets }}
     {{- $domainUsed := false -}}

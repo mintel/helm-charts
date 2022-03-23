@@ -1,0 +1,29 @@
+suite: Test Ingress
+templates:
+  - ingress.yaml
+release:
+  namespace: test-namespace
+tests:
+  - it: Doesn't create tls if ingressTLSSecrets and specificTlsHostsYaml is empty
+    set:
+      global.clusterEnv: qa
+      global.ingressTLSSecrets: null
+      ingress.enabled: true
+      ingress.defaultHost: test-app.example.org
+      ingress.tls: true
+      ingress.specificTlsHostsYaml: null
+    asserts:
+      - isEmpty:
+          path: spec.tls
+
+  - it: Creates tls if ingressTLSSecrets is not empty
+    set:
+      global.clusterEnv: qa
+      global.ingressTLSSecrets.example_org: star-example-org
+      ingress.enabled: true
+      ingress.defaultHost: test-app.example.org
+      ingress.tls: true
+      ingress.specificTlsHostsYaml: null
+    asserts:
+      - isNotEmpty:
+          path: spec.tls
