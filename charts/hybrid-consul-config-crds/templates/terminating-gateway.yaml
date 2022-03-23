@@ -1,0 +1,13 @@
+{{- if .Values.externalServices }}
+---
+apiVersion: consul.hashicorp.com/v1alpha1
+kind: TerminatingGateway
+metadata:
+  name: {{ default "terminating-gateway" .terminatingGatewayNameOverride }}
+  namespace: {{ $.Release.Namespace }}
+spec:
+  services:
+    {{- range .Values.externalServices }}
+    - name: {{ . }}
+    {{- end }}
+{{- end }}
