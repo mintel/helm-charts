@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v3.9.1] - 2022-03-25
+
+### Added
+- Added support for setting Consul (hybrid-cloud) annotations
+
 ## [v3.8.2] - 2022-03-02
 
 ### Changed

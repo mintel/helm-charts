@@ -81,13 +81,13 @@ spec:
   {{- end }}
   template:
     metadata:
+      {{- if (and .Values.hybridCloud .Values.hybridCloud.enabled) }}
       annotations:
-        {{- if (and .Values.hybridCloud .Values.hybridCloud.enabled) }}
         'consul.hashicorp.com/connect-inject': 'true'
         {{- if .Values.hybridCloud.upstreamServices }}
-        'consul.hashicorp.com/connect-service-upstreams': {{ join "," .Values.hybridCloud.upstreamServices | quote }}
+        'consul.hashicorp.com/connect-service-upstreams': {{ join "," .Values.hybridCloud.upstreamServices }}
         {{- end }}
-        {{- end }}
+      {{- end }}
       labels: {{ include "mintel_common.labels" . | nindent 8 }}
         {{- if (and .Values.ingress .Values.ingress.enabled) }}
         tier: frontend

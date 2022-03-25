@@ -486,8 +486,14 @@ k8snotify:
   # -- Defines dashboard URL to be set for k8s-notify.monitoring-url annotation
   dashboardUrl: ""
 
+# -- Configure Consul annotations to the main deployment for hybrid cloud integration
 hybridCloud:
+  # -- Set to true to integrate with hybrid cloud (Consul)
   enabled: false
+  # -- Defines list of upstream services to connect to
+  #  upstreamServices:
+  #    - 'service1:1234'
+  #    - 'service2:2345'
   upstreamServices: []
 
 # -- Configure celery deployment
