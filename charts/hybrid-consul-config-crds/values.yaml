@@ -1,0 +1,34 @@
+# Default values for hybrid-consul-config-crds.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# Ref: https://www.consul.io/docs/connect/config-entries
+
+# List of configs defining ServiceIntention CRDs
+# Ref: https://www.consul.io/docs/connect/config-entries/service-intentions
+intentions:
+  - name: deny-all
+    destination:
+      # Name of the destination service
+      name: "*"
+    sources:
+      # Name of the source service (wildcards can't be used for L7 intentions)
+      - name: "*"
+        # Whether to allow or deny traffic between services (L4 intentions only)
+        action: deny
+        # L7 path based permissions
+        #        permissions:
+        #          - action: allow
+        #            http:
+        #              pathExact: ""
+        #              pathPrefix: ""
+        #              pathRegex: ""
+        #              methods: []
+        #              header: {}
+
+# Optional: override for name of terminating gateway deployment to use
+terminatingGatewayNameOverride: ""
+
+# List of service names to link to the TerminatingGateway
+# Ref: https://www.consul.io/docs/connect/config-entries/terminating-gateway
+externalServices: []

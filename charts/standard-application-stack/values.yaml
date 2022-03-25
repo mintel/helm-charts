@@ -433,6 +433,8 @@ oauthProxy:
   allowedGroups: []
   # -- Identifies oauth-proxy as auth'ing with a mintel portal instance
   type: portal
+  # -- Optional: OAuth scope specification
+  scope: "openid profile email"
   # -- Optional: oauth secret suffix, eg '-oauth'
   secretSuffix: ""
   # -- Optional: full name override for oauth secret
@@ -451,6 +453,13 @@ oauthProxy:
     #    cpu: 100m
     #    memory: 64Mi
     #
+    #
+  # -- Optional: Claim contains the user ID
+  userIdClaim: "sub"
+  # -- Optional environment variables injected into the container
+  env: []
+  #    - name: OAUTH_PROXY_SKIP_AUTH_PREFLIGHT
+  #      value: true
   localSecretValues: []
   #    - name: OAUTH_PROXY_CLIENT_ID
   #      value: test_value
@@ -690,6 +699,31 @@ redis:
     replicaCount: 0
   tls:
     enabled: false
+
+# -- Helper to sync a local directory with Git
+# ref: https://github.com/kubernetes/git-sync
+gitSyncSidecar:
+  enabled: false
+
+  # -- The git repository to clone
+  # repo: <your-git-repo>
+
+  # -- The git branch to check out
+  branch: main
+
+  # -- The root directory for git-sync operations, under which --dest will be created
+  root: /data/git-sync
+
+  # -- The name of (a symlink to) a directory in which to check-out files under --root
+  #  dest: <your-dest>
+
+  resources:
+    limits:
+      cpu: 200m
+      memory: 200Mi
+    requests:
+      cpu: 50m
+      memory: 50Mi
 
 filebeatSidecar:
   enabled: false

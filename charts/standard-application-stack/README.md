@@ -1,6 +1,6 @@
 # standard-application-stack
 
-![Version: 3.6.1](https://img.shields.io/badge/Version-3.6.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 3.8.0](https://img.shields.io/badge/Version-3.8.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A generic chart to support most common application requirements
 
@@ -79,6 +79,8 @@ A generic chart to support most common application requirements
 | filebeatSidecar.resources.limits.memory | string | `"200Mi"` |  |
 | filebeatSidecar.resources.requests.cpu | string | `"100m"` |  |
 | filebeatSidecar.resources.requests.memory | string | `"100Mi"` |  |
+| gitSyncSidecar | object | `{"branch":"main","enabled":false,"resources":{"limits":{"cpu":"200m","memory":"200Mi"},"requests":{"cpu":"50m","memory":"50Mi"}},"root":"/data/git-sync"}` | Helper to sync a local directory with Git ref: https://github.com/kubernetes/git-sync |
+| gitSyncSidecar.branch | string | `"main"` | The git branch to check out |
 | global | object | `{"additionalLabels":{},"cloudProvider":{"accountId":""},"clusterDomain":"127.0.0.1.nip.io","clusterEnv":"local","clusterName":"","ingressTLSSecrets":{},"name":"example-app","owner":"","partOf":"","runtimeEnvironment":"kubernetes"}` | Global variables for us in all charts and sub charts |
 | global.additionalLabels | object | `{}` | Additional labels to apply to all resources |
 | global.cloudProvider | object | `{"accountId":""}` | Global variables relating to cloud provider |
@@ -153,18 +155,20 @@ A generic chart to support most common application requirements
 | minReadySeconds | int | `10` | Minimum number of seconds before deployments are ready |
 | nameOverride | string | `""` | String to fully override mintel_common.fullname template |
 | networkPolicy | object | `{"additionalAllowFroms":[],"enabled":true}` | Define a default NetworkPolicy for allowing apps in the same 'app.kubernetes.io/part-of' group to communicate with eachother. ref: https://kubernetes.io/docs/concepts/services-networking/network-policies/ |
-| oauthProxy | object | `{"allowedGroups":[],"emailDomain":"","enabled":false,"image":"quay.io/oauth2-proxy/oauth2-proxy:v7.1.3","ingressHost":"","issuerUrl":"https://oauth.mintel.com","localSecretValues":[],"secretNameOverride":"","secretSuffix":"","skipAuthRegexes":[],"type":"portal"}` | Configure oauth-proxy sidecar for main deployment |
+| oauthProxy | object | `{"allowedGroups":[],"emailDomain":"","enabled":false,"env":[],"image":"quay.io/oauth2-proxy/oauth2-proxy:v7.1.3","ingressHost":"","issuerUrl":"https://oauth.mintel.com","localSecretValues":[],"scope":"openid profile email","secretNameOverride":"","secretSuffix":"","skipAuthRegexes":[],"type":"portal","userIdClaim":"sub"}` | Configure oauth-proxy sidecar for main deployment |
 | oauthProxy.allowedGroups | list | `[]` | Optional: list of group ids to restrict access to |
 | oauthProxy.emailDomain | string | `""` | Optional: email domain to restrict access to |
 | oauthProxy.enabled | bool | `false` | Set to true to enable oauth-proxy sidecar |
+| oauthProxy.env | list | `[]` | Optional environment variables injected into the container |
 | oauthProxy.image | string | `"quay.io/oauth2-proxy/oauth2-proxy:v7.1.3"` | Full image name override |
 | oauthProxy.ingressHost | string | `""` | Optional: hostname for proxy redirect url (defaults to service defaultHost) |
 | oauthProxy.issuerUrl | string | `"https://oauth.mintel.com"` | Optional: URL of the OIDC issuer |
-| oauthProxy.localSecretValues | list | `[]` | The requested resources for the container    requests: {}    cpu: 100m    memory: 64Mi |
+| oauthProxy.scope | string | `"openid profile email"` | Optiona: OAuth scope specification |
 | oauthProxy.secretNameOverride | string | `""` | Optional: full name override for oauth secret |
 | oauthProxy.secretSuffix | string | `""` | Optional: oauth secret suffix, eg '-oauth' |
 | oauthProxy.skipAuthRegexes | list | `[]` | Optional: list of URL endpoints to bypass oauth-proxy for |
 | oauthProxy.type | string | `"portal"` | Identifies oauth-proxy as auth'ing with a mintel portal instance |
+| oauthProxy.userIdClaim | string | `"sub"` | Optiona: Claim contains the user ID |
 | opensearch | object | `{"awsEsProxy":{"enabled":false,"port":9200,"resources":{"limits":{"cpu":"200m","memory":"128Mi"},"requests":{"cpu":"100m","memory":"64Mi"}}},"enabled":false}` | Configures AWS Opensearch deployment/connections |
 | opensearch.awsEsProxy | object | `{"enabled":false,"port":9200,"resources":{"limits":{"cpu":"200m","memory":"128Mi"},"requests":{"cpu":"100m","memory":"64Mi"}}}` | Configures aws-es-proxy to enable external access to opensearch |
 | opensearch.awsEsProxy.enabled | bool | `false` | Set to true to add an aws-es-proxy deployment in front of opensearch |
