@@ -1,6 +1,6 @@
 # standard-application-stack
 
-![Version: 3.8.0](https://img.shields.io/badge/Version-3.8.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 3.9.1](https://img.shields.io/badge/Version-3.9.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A generic chart to support most common application requirements
 
@@ -93,6 +93,9 @@ A generic chart to support most common application requirements
 | global.owner | string | `""` | Team which "owns" the application |
 | global.partOf | string | `""` | Top level application each deployment is a part of |
 | global.runtimeEnvironment | string | `"kubernetes"` | Global variable definint RUNTIME_ENVIRONMENT |
+| hybridCloud | object | `{"enabled":false,"upstreamServices":[]}` | Configure Consul annotations to the main deployment for hybrid cloud integration |
+| hybridCloud.enabled | bool | `false` | Set to true to integrate with hybrid cloud (Consul) |
+| hybridCloud.upstreamServices | list | `[]` | Defines list of upstream services to connect to  upstreamServices:    - 'service1:1234'    - 'service2:2345' |
 | image | object | `{"pullPolicy":"IfNotPresent","registry":"","repository":"test","tag":"auto-replaced"}` | Docker image values |
 | image.pullPolicy | string | `"IfNotPresent"` | Optional ImagePullPolicy ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images |
 | image.registry | string | `""` | Docker registry used to pull application image |
@@ -163,12 +166,12 @@ A generic chart to support most common application requirements
 | oauthProxy.image | string | `"quay.io/oauth2-proxy/oauth2-proxy:v7.1.3"` | Full image name override |
 | oauthProxy.ingressHost | string | `""` | Optional: hostname for proxy redirect url (defaults to service defaultHost) |
 | oauthProxy.issuerUrl | string | `"https://oauth.mintel.com"` | Optional: URL of the OIDC issuer |
-| oauthProxy.scope | string | `"openid profile email"` | Optiona: OAuth scope specification |
+| oauthProxy.scope | string | `"openid profile email"` | Optional: OAuth scope specification |
 | oauthProxy.secretNameOverride | string | `""` | Optional: full name override for oauth secret |
 | oauthProxy.secretSuffix | string | `""` | Optional: oauth secret suffix, eg '-oauth' |
 | oauthProxy.skipAuthRegexes | list | `[]` | Optional: list of URL endpoints to bypass oauth-proxy for |
 | oauthProxy.type | string | `"portal"` | Identifies oauth-proxy as auth'ing with a mintel portal instance |
-| oauthProxy.userIdClaim | string | `"sub"` | Optiona: Claim contains the user ID |
+| oauthProxy.userIdClaim | string | `"sub"` | Optional: Claim contains the user ID |
 | opensearch | object | `{"awsEsProxy":{"enabled":false,"port":9200,"resources":{"limits":{"cpu":"200m","memory":"128Mi"},"requests":{"cpu":"100m","memory":"64Mi"}}},"enabled":false}` | Configures AWS Opensearch deployment/connections |
 | opensearch.awsEsProxy | object | `{"enabled":false,"port":9200,"resources":{"limits":{"cpu":"200m","memory":"128Mi"},"requests":{"cpu":"100m","memory":"64Mi"}}}` | Configures aws-es-proxy to enable external access to opensearch |
 | opensearch.awsEsProxy.enabled | bool | `false` | Set to true to add an aws-es-proxy deployment in front of opensearch |
