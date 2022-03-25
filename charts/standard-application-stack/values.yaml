@@ -477,6 +477,10 @@ k8snotify:
   # -- Defines dashboard URL to be set for k8s-notify.monitoring-url annotation
   dashboardUrl: ""
 
+hybridCloud:
+  enabled: false
+  upstreamServices: []
+
 # -- Configure celery deployment
 # Defaults to same image as main deployment but with the "celery" argument
 celery:
