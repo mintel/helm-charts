@@ -273,6 +273,7 @@ externalSecret:
   enabled: true
   #  nameOverride: ""
   #  pathOverride: ""
+  #  secretStoreRefOverride: ""
   #  localValues:
   #    - name: TEST_SECRET
   #      value: test_value
@@ -280,6 +281,7 @@ extraSecrets: []
 #  - name: ""
 #    pathOverride: ""
 #    pathSuffix: ""
+#    secretStoreRefOverride: ""
 #    includeInMain: true # defaults to true if not set
 #    localValues: []
 
