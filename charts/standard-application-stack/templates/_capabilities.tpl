@@ -66,7 +66,7 @@ Return the target Kubernetes version
 
 {{/* Return the appropriate apiVersion for External Secrets. */}}
 {{- define "common.capabilities.externalsecret.apiVersion" -}}
-{{- print "kubernetes-client.io/v1" -}}
+{{- print "external-secrets.io/v1alpha1" -}}
 {{- end -}}
 
 {{/* Return the appropriate apiVersion for Secrets. */}}
