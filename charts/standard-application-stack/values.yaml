@@ -441,6 +441,8 @@ oauthProxy:
   secretSuffix: ""
   # -- Optional: full name override for oauth secret
   secretNameOverride: ""
+  # -- Optional: full SecretStoreRef override for oauth ExternalSecret
+  secretStoreRefOverride: ""
   # -- Optional: list of URL endpoints to bypass oauth-proxy for
   skipAuthRegexes: []
   # -- Container resource requests and limits
@@ -641,6 +643,7 @@ mariadb:
   enabled: false
   #  secretNameOverride: ""
   #  secretPathOverride: ""
+  #  secretStoreRefOverride: ""
   #  auth:
   #    database: ""
   #    username: ""
@@ -671,6 +674,7 @@ postgresql:
   postgresqlDatabase: "postgres"
   #  secretNameOverride: ""
   #  secretPathOverride: ""
+  #  secretStoreRefOverride: ""
   #  auth:
   #    database: ""
   #    username: ""
@@ -703,6 +707,7 @@ redis:
   enabled: false
   #  secretNameOverride: ""
   #  secretPathOverride: ""
+  #  secretStoreRefOverride: ""
   replica:
     replicaCount: 0
   tls:
@@ -770,6 +775,8 @@ kibana:
 
 elasticsearch:
   enabled: false
+  # -- Optional: override the SecretStoreRef of the ExternalSecret
+  secretStoreRefOverride: ""
 
 # -- Configures AWS Opensearch deployment/connections
 opensearch:
@@ -790,6 +797,8 @@ opensearch:
         memory: 64Mi
     # -- Port for aws-es-proxy to listen on
     port: 9200
+  # -- Optional: override the SecretStoreRef of the ExternalSecret
+  secretStoreRefOverride: ""
 
 localstack:
   enabled: false
