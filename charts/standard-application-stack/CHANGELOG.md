@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [v3.10.0] - 2022-03-29
 
 ### Changed
-- Replace Kubenetes External Secrets objects with External Secrets Operator objects
+- Replace Kubernetes External Secrets objects with External Secrets Operator objects
 
 ## [v3.9.1] - 2022-03-25
 
