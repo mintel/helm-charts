@@ -95,8 +95,12 @@ A generic chart to support most common application requirements
 | global.owner | string | `""` | Team which "owns" the application |
 | global.partOf | string | `""` | Top level application each deployment is a part of |
 | global.runtimeEnvironment | string | `"kubernetes"` | Global variable definint RUNTIME_ENVIRONMENT |
-| hybridCloud | object | `{"enabled":false,"upstreamServices":[]}` | Configure Consul annotations to the main deployment for hybrid cloud integration |
+| hybridCloud | object | `{"consulNamespace":"hynrid-consul","enabled":false,"metrics":{"enabled":true},"proxyPort":20000,"upstreamServices":[]}` | Configure Consul annotations to the main deployment for hybrid cloud integration |
+| hybridCloud.consulNamespace | string | `"hynrid-consul"` | Define namespace that Consul is runnign in |
 | hybridCloud.enabled | bool | `false` | Set to true to integrate with hybrid cloud (Consul) |
+| hybridCloud.metrics | object | `{"enabled":true}` | Configure metrics scraping of Consul Proxy |
+| hybridCloud.metrics.enabled | bool | `true` | Enable Prometheus to scrape consul proxy metrics |
+| hybridCloud.proxyPort | int | `20000` | Set port for Envoy proxy public listener (the port consul talks back to envoy on) |
 | hybridCloud.upstreamServices | list | `[]` | Defines list of upstream services to connect to  upstreamServices:    - 'service1:1234'    - 'service2:2345' |
 | image | object | `{"pullPolicy":"IfNotPresent","registry":"","repository":"test","tag":"auto-replaced"}` | Docker image values |
 | image.pullPolicy | string | `"IfNotPresent"` | Optional ImagePullPolicy ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images |

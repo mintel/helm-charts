@@ -220,6 +220,12 @@ spec:
           ports:
             - containerPort: {{ .Values.port }}
               name: http
+            {{- if .Values.hybridCloud.enabled }}
+            - containerPort: {{ default "20200" .Values.hybridCloud.metrics.port }}
+              name: consul-metrics
+            - containerPort: {{ default "20000" .Values.hybridCloud.proxyPort }}
+              name: consul-proxy
+            {{- end }}
             {{- with .Values.extraPorts }}
             {{- toYaml . | nindent 12 }}
             {{- end }}
