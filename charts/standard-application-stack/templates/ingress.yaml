@@ -54,18 +54,37 @@ metadata:
     {{- if .Values.ingress.extraAnnotations }}
     {{- toYaml .Values.ingress.extraAnnotations | nindent 4 }}
     {{- end}}
+    {{- if (eq .Values.ingress.className "haproxy" ) }}
     {{- with .Values.ingress.serverTimeoutSeconds }}
-    ingress.kubernetes.io/timeout-server: {{ . }}s
+    ingress.kubernetes.io/timeout-server: {{ . }}
     {{- end }}
     ingress.kubernetes.io/rewrite-target: /
     {{- if (and .Values.metrics .Values.metrics.enabled) }}
     ingress.kubernetes.io/config-backend: |
       acl k8s-monitoring-endpoints path {{ include "mintel_common.ingressDenyEndpoints" . }}
       http-request deny if k8s-monitoring-endpoints
+    {{- end }}
+    {{- else }}
+    {{- if (and .Values.ingress.alb .Values.ingress.alb.enabled) }}
+    {{- with .Values.ingress.alb.healthcheck }}
+    alb.ingress.kubernetes.io/healthcheck-interval-seconds: "{{ default .15 .intervalSeconds }}"
+    alb.ingress.kubernetes.io/healthcheck-path: {{ default "/readiness" .path }}
+    alb.ingress.kubernetes.io/healthcheck-port: "{{ default $.Values.port .port }}"
+    alb.ingress.kubernetes.io/healthcheck-protocol: {{ default "HTTP" .protocol }}
+    alb.ingress.kubernetes.io/healthcheck-timeout-seconds: "{{ default 5 .timeoutSeconds }}"
+    alb.ingress.kubernetes.io/healthy-threshold-count: "{{ default 2 .healthyThresholdCount }}"
+    alb.ingress.kubernetes.io/unhealthy-threshold-count: "{{ default 2 .unhealthyThresholdCount }}"
+    {{- end }}
+    alb.ingress.kubernetes.io/backend-protocol: {{ default "HTTP" .Values.ingress.alb.backendProtocol }}
+    alb.ingress.kubernetes.io/backend-protocol-version: {{ default "HTTP2" .Values.ingress.alb.backendProtocolVersion }}
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS": 443}]'
+    alb.ingress.kubernetes.io/target-group-attributes: "deregistration_delay.timeout_seconds={{ default 10 .Values.ingress.alb.deregistrationDelay.timeoutSeconds }}"
+    alb.ingress.kubernetes.io/target-type: ip
+    {{- end }}
+    {{- end }}
     {{- if (and .Values.ingress.blackbox .Values.ingress.blackbox.enabled) }}
     prometheus.io/probe: "true"
     prometheus.io/probepath: {{ .Values.ingress.blackbox.probePath }}
-    {{- end }}
     {{- end }}
     {{- if (eq (include "common.capabilities.ingress.apiVersion" .) "networking.k8s.io/v1beta1") }}
     kubernetes.io/ingress.class: {{ .Values.ingress.className }}
