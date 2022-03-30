@@ -503,6 +503,28 @@ hybridCloud:
   #    - 'service1:1234'
   #    - 'service2:2345'
   upstreamServices: []
+  # -- Configure metrics scraping of Consul Proxy
+  metrics:
+    # -- Enable Prometheus to scrape consul proxy metrics
+    enabled: true
+    # -- Interval at which metrics should be scraped
+    # ref: https://github.com/coreos/prometheus-operator/blob/master/Documentation/api.md#endpoint
+    #  interval: 30s
+    # -- URL path to the metrics endpoint
+    #  path: /metrics
+    # -- Name of the port to use for metrics endpoint
+    #  port: consul-metrics
+    # -- Timeout after which the scrape is ended
+    # ref: https://github.com/coreos/prometheus-operator/blob/master/Documentation/api.md#endpoint
+    #  timeout: 10s
+    # -- Scheme (HTTP ot HTTPS)
+    #  scheme: HTTP
+
+  # -- Set port for Envoy proxy public listener
+  # (the port consul talks back to envoy on)
+  proxyPort: 20000
+  # -- Define namespace that Consul is runnign in
+  consulNamespace: hybrid-consul
 
 # -- Configure celery deployment
 # Defaults to same image as main deployment but with the "celery" argument
