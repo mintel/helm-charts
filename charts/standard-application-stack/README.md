@@ -95,8 +95,8 @@ A generic chart to support most common application requirements
 | global.owner | string | `""` | Team which "owns" the application |
 | global.partOf | string | `""` | Top level application each deployment is a part of |
 | global.runtimeEnvironment | string | `"kubernetes"` | Global variable definint RUNTIME_ENVIRONMENT |
-| hybridCloud | object | `{"consulNamespace":"hynrid-consul","enabled":false,"metrics":{"enabled":true},"proxyPort":20000,"upstreamServices":[]}` | Configure Consul annotations to the main deployment for hybrid cloud integration |
-| hybridCloud.consulNamespace | string | `"hynrid-consul"` | Define namespace that Consul is runnign in |
+| hybridCloud | object | `{"consulNamespace":"hybrid-consul","enabled":false,"metrics":{"enabled":true},"proxyPort":20000,"upstreamServices":[]}` | Configure Consul annotations to the main deployment for hybrid cloud integration |
+| hybridCloud.consulNamespace | string | `"hybrid-consul"` | Define namespace that Consul is runnign in |
 | hybridCloud.enabled | bool | `false` | Set to true to integrate with hybrid cloud (Consul) |
 | hybridCloud.metrics | object | `{"enabled":true}` | Configure metrics scraping of Consul Proxy |
 | hybridCloud.metrics.enabled | bool | `true` | Enable Prometheus to scrape consul proxy metrics |
