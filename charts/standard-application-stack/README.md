@@ -1,6 +1,6 @@
 # standard-application-stack
 
-![Version: 3.11.0](https://img.shields.io/badge/Version-3.11.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 3.12.0](https://img.shields.io/badge/Version-3.12.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A generic chart to support most common application requirements
 
@@ -28,7 +28,7 @@ A generic chart to support most common application requirements
 | affinity.podAntiAffinity.node | string | `"soft"` | Toggle whether node affinity should be required (hard) or preferred (soft) |
 | affinity.podAntiAffinity.zone | string | `"hard"` | Toggle whether zone affinity should be required (hard) or preferred (soft) |
 | args | list | `[]` | Optional arguments to the container |
-| celery | object | `{"args":["celery"],"enabled":false,"liveness":{"enabled":false},"metrics":{"enabled":true},"podDisruptionBudget":{"enabled":true,"minAvailable":"50%"},"readiness":{"enabled":false},"replicas":2,"resources":{"limits":{},"requests":{}}}` | Configure celery deployment Defaults to same image as main deployment but with the "celery" argument |
+| celery | object | `{"args":["celery"],"enabled":false,"liveness":{"enabled":false},"metrics":{"enabled":true},"podDisruptionBudget":{"enabled":true,"minAvailable":"50%"},"readiness":{"enabled":false},"replicas":2,"resources":{"limits":{},"requests":{}},"startup":{"failureThreshold":60,"methodOverride":{},"periodSeconds":5}}` | Configure celery deployment Defaults to same image as main deployment but with the "celery" argument |
 | celery.args | list | `["celery"]` | Arguments to the celery container |
 | celery.enabled | bool | `false` | Set to true to enable a celery deployment |
 | celery.liveness | object | `{"enabled":false}` | Configure extra options for liveness probe ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes |
@@ -42,6 +42,10 @@ A generic chart to support most common application requirements
 | celery.resources | object | `{"limits":{},"requests":{}}` | Container resource requests and limits ref: http://kubernetes.io/docs/user-guide/compute-resources |
 | celery.resources.limits | object | `{}` | The resource limits for the container |
 | celery.resources.requests | object | `{}` | The requested resources for the container |
+| celery.startup | object | `{"failureThreshold":60,"methodOverride":{},"periodSeconds":5}` | Configure extra options for the start-up probe that is enabled when celery.liveness.enabled is set to true |
+| celery.startup.failureThreshold | int | `60` | The number of times the start-up probe is allowed to fail before the pod is deemed to have failed to start. |
+| celery.startup.methodOverride | object | `{}` | Allows a non-default startup probe implementation |
+| celery.startup.periodSeconds | int | `5` | The period of time to wait for an individual run of the start-up check to complete. |
 | celeryBeat | object | `{"args":["celerybeat"],"enabled":false,"liveness":{"enabled":false},"readiness":{"enabled":false},"resources":{"limits":{},"requests":{}}}` | Configure celerybeat deployment Defaults to same image as main deployment but with the "celerybeat" argument |
 | celeryBeat.args | list | `["celerybeat"]` | Optional command to the celery container  command: [] |
 | celeryBeat.enabled | bool | `false` | Set to true to enable a celerybeat deployment |

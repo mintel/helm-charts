@@ -184,38 +184,27 @@ spec:
             {{- if .Values.celery.liveness.methodOverride }}
             {{- toYaml .Values.celery.liveness.methodOverride | nindent 12 }}
             {{- else }}
-            httpGet:
-              path: {{ default "/healthz" .Values.liveness.path }}
-              port: {{ default "http" .Values.liveness.port }}
-              scheme: {{ default "HTTP" .Values.liveness.scheme }}
+            exec:
+              command:
+              - 'sh'
+              - '-c'
+              - 'celery inspect ping -d celery@$(hostname)'
             {{- end }}
             initialDelaySeconds: {{ default 0 .Values.celery.liveness.initialDelaySeconds }}
             timeoutSeconds: {{ default 1 .Values.celery.liveness.timeoutSeconds }}
             periodSeconds: {{ default 10 .Values.celery.liveness.periodSeconds }}
           startupProbe:
-            {{- if .Values.celery.liveness.methodOverride }}
-            {{- toYaml .Values.celery.liveness.methodOverride | nindent 12 }}
+            {{- if (and .Values.celery.startup .Values.celery.startup.methodOverride) }}
+            {{- toYaml .Values.celery.startup.methodOverride | nindent 12 }}
             {{- else }}
-            httpGet:
-              path: {{ default "/healthz" .Values.liveness.path }}
-              port: {{ default "http" .Values.liveness.port }}
-              scheme: {{ default "HTTP" .Values.liveness.scheme }}
+            exec:
+              command:
+              - 'sh'
+              - '-c'
+              - 'celery inspect ping -d celery@$(hostname)'
             {{- end }}
-            {{- if .Values.celery.liveness.startup }}
-            {{- if .Values.celery.liveness.startup.failureThreshold }}
-            failureThreshold: {{ .Values.celery.liveness.startup.failureThreshold }}
-            {{- else }}
-            failureThreshold: 60
-            {{- end }}
-            {{- if .Values.celery.liveness.startup.periodSeconds }}
-            periodSeconds: {{ .Values.celery.liveness.startup.periodSeconds }}
-            {{- else }}
-            periodSeconds: 5
-            {{- end }}
-            {{- else }}
-            failureThresold: 60
-            periodSeconds: 5
-            {{- end }}
+            failureThreshold: {{ default 60 .Values.celery.startup.failureThreshold }}
+            periodSeconds: {{ default 5 .Values.celery.liveness.periodSeconds .Values.celery.startup.periodSeconds }}
           {{- end }}
           {{- if (and .Values.celery.readiness .Values.celery.readiness.enabled) }}
           readinessProbe:
