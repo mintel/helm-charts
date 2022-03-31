@@ -558,6 +558,15 @@ celery:
   liveness:
     # -- Enable liveness probe
     enabled: false
+
+  # -- Configure extra options for the start-up probe that is enabled when celery.liveness.enabled is set to true
+  startup:
+    # -- Allows a non-default startup probe implementation
+    methodOverride: {}
+    # -- The number of times the start-up probe is allowed to fail before the pod is deemed to have failed to start.
+    failureThreshold: 60
+    # -- The period of time to wait for an individual run of the start-up check to complete.
+    periodSeconds: 5
   # -- Configure extra options for readiness probe
   # ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes
   readiness:
