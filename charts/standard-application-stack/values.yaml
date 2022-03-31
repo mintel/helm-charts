@@ -350,25 +350,25 @@ ingress:
     enabled: false
     # -- Application Version (HTTP / HTTPS)
     backendProtocol: HTTP
-    # -- Application Protocol Version (HTTP2 / GRPC)
-    backendProtocolVersion: HTTP2
+    # -- Application Protocol Version (HTTP1 / HTTP2 / GRPC)
+    backendProtocolVersion: HTTP1
     deregistrationDelay: 
       timeoutSeconds: 5
     healthcheck:
-    # -- Healthcheck Protocol
-    #  protocol: HTTP | HTTPS
-    # -- Period seconds
-    # intervalSeconds: 15
-    # -- Request path
-    # path: /readiness
-    # -- Port
-    # port: "8000"
-    # -- Timeout seconds
-    # timeoutSeconds: 5
-    # -- Failure threshold
-    # unhealthyThresholdCount: 2
-    # -- Success threshold
-    # healthyThresholdCount: 2
+      # -- Healthcheck Protocol
+      protocol: HTTP
+      # -- Period seconds
+      intervalSeconds: 15
+      # -- Request path
+      path: /readiness
+      # -- Port (defaults to port specified in Ingress used to direct traffic to service)
+      # port: "8000"
+      # -- Timeout seconds
+      timeoutSeconds: 5
+      # -- Failure threshold
+      unhealthyThresholdCount: 2
+      # -- Success threshold
+      healthyThresholdCount: 2
 
 # -- Define a default NetworkPolicy for allowing apps in the same 'app.kubernetes.io/part-of' group to communicate
 # with eachother.

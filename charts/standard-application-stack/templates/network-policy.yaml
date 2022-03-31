@@ -42,3 +42,31 @@ spec:
 {{- end }}
 
 {{- end }}
+
+{{- if and .Values.ingress.enabled .Values.ingress.alb.enabled }}
+# We always generate this network policy if routing through the ALB
+# to allow the health-checks on the registered targets to pass
+---
+kind: NetworkPolicy
+apiVersion: {{ include "common.capabilities.networkpolicy.apiVersion" . }}
+metadata:
+  name: {{ printf "allow-aws-alb-to-%s" .Values.global.name }}
+  namespace: {{ .Release.Namespace }}
+  labels: {{ include "mintel_common.labels" . | nindent 4 }}
+  annotations: {{ include "mintel_common.commonAnnotations" . | nindent 4 }}
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/part-of: {{ .Values.global.partOf }}
+  ingress:
+    - from:
+      - ipBlock:
+          cidr: "${AWS_PUBLIC_SUBNET_CIDR_BLOCKS_0}"
+      - ipBlock:
+          cidr: "${AWS_PUBLIC_SUBNET_CIDR_BLOCKS_1}"
+      - ipBlock:
+          cidr: "${AWS_PUBLIC_SUBNET_CIDR_BLOCKS_2}"
+      ports:
+      - port: {{ default .Values.ingress.alb.healthcheck.port .Values.port }}
+        protocol: TCP
+{{- end }}
