@@ -66,7 +66,7 @@ metadata:
     {{- else }}
     {{- if (and .Values.ingress.alb .Values.ingress.alb.enabled) }}
     {{- with .Values.ingress.alb.healthcheck }}
-    alb.ingress.kubernetes.io/healthcheck-interval-seconds: "{{ default .15 .intervalSeconds }}"
+    alb.ingress.kubernetes.io/healthcheck-interval-seconds: "{{ default 15 .intervalSeconds }}"
     alb.ingress.kubernetes.io/healthcheck-path: {{ default "/readiness" .path }}
     alb.ingress.kubernetes.io/healthcheck-port: "{{ default $.Values.port .port }}"
     alb.ingress.kubernetes.io/healthcheck-protocol: {{ default "HTTP" .protocol }}
@@ -75,7 +75,7 @@ metadata:
     alb.ingress.kubernetes.io/unhealthy-threshold-count: "{{ default 2 .unhealthyThresholdCount }}"
     {{- end }}
     alb.ingress.kubernetes.io/backend-protocol: {{ default "HTTP" .Values.ingress.alb.backendProtocol }}
-    alb.ingress.kubernetes.io/backend-protocol-version: {{ default "HTTP2" .Values.ingress.alb.backendProtocolVersion }}
+    alb.ingress.kubernetes.io/backend-protocol-version: {{ default "HTTP1" .Values.ingress.alb.backendProtocolVersion }}
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS": 443}]'
     alb.ingress.kubernetes.io/target-group-attributes: "deregistration_delay.timeout_seconds={{ default 10 .Values.ingress.alb.deregistrationDelay.timeoutSeconds }}"
     alb.ingress.kubernetes.io/target-type: ip
