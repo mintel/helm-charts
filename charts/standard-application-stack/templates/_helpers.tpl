@@ -425,6 +425,16 @@ topologySpreadConstraints:
 {{- end }}
 {{- end -}}
 
+{{/* Output ingressClassName */}}
+{{- define "mintel_common.ingressClassName" -}}
+{{- if (and .Values.ingress.alb .Values.ingress.alb.enabled) }}
+{{- printf "alb-default" -}}
+{{- else }}
+{{- .Values.ingress.className -}}
+{{- end }}
+{{- end -}}
+
+
 {{/* Outputs space separated list of endpoints to deny at ingress */}}
 {{- define "mintel_common.ingressDenyEndpoints" -}}
 {{- $endpoints := list }}
