@@ -74,6 +74,7 @@ metadata:
     alb.ingress.kubernetes.io/healthcheck-timeout-seconds: "{{ default 5 .timeoutSeconds }}"
     alb.ingress.kubernetes.io/healthy-threshold-count: "{{ default 2 .healthyThresholdCount }}"
     alb.ingress.kubernetes.io/unhealthy-threshold-count: "{{ default 2 .unhealthyThresholdCount }}"
+    alb.ingress.kubernetes.io/success-codes: "{{ default 200 .successCodes }}"
     {{- end }}
     alb.ingress.kubernetes.io/backend-protocol: {{ default "HTTP" .Values.ingress.alb.backendProtocol }}
     alb.ingress.kubernetes.io/backend-protocol-version: {{ default "HTTP1" .Values.ingress.alb.backendProtocolVersion }}
