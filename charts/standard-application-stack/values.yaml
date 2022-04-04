@@ -359,8 +359,10 @@ ingress:
     deregistrationDelay: 
       timeoutSeconds: 5
     healthcheck:
-      # -- Healthcheck Protocol
+      # -- Healthcheck protocol
       protocol: HTTP
+      # -- Healthcheck success codes
+      successCodes: "200"
       # -- Period seconds
       intervalSeconds: 15
       # -- Request path
