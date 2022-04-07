@@ -6,12 +6,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [v3.12.1] - 2022-04-07
+### Fixed
+- Remove ingress class from 'local' ingress so traefik works correctly
+
 ## [v3.12.0] - 2022-03-31
-###
+### Added
 - Adding a default celery liveness and startup probes
 
 ## [v3.11.0] - 2022-03-30
-###
+### Added
 - Adding support for hybrid-consul ports, networkPolicy and podMonitor
 
 ## [v3.10.0] - 2022-03-29
