@@ -14,7 +14,6 @@ metadata:
     {{- end}}
     ingress.kubernetes.io/ssl-redirect: "false"
 spec:
-  ingressClassName: traefik
   rules:
     - host: {{ .Values.ingress.defaultHost }}
       http:
