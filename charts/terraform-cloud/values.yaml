@@ -1,0 +1,62 @@
+# Default values for terraform-cloud.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# -- Global variables for us in all charts and sub charts
+global:
+  # -- Name of the application
+  name: "example-app"
+  # -- Team which "owns" the application
+  owner: ""
+  # -- Top level application each deployment is a part of
+  partOf: ""
+  # -- Additional labels to apply to all resources
+  additionalLabels: {}
+  # -- Kubernetes cluster domain
+  clusterDomain: "127.0.0.1.nip.io"
+  # -- Environment (local, dev, qa, prod)
+  clusterEnv: "local"
+  # -- Kubernetes cluster name
+  clusterName: ""
+  # -- Global variables relating to cloud provider
+  cloudProvider:
+    # -- AWS ACcount Id
+    accountId: ""
+  # -- Global variable definint RUNTIME_ENVIRONMENT
+  runtimeEnvironment: kubernetes
+  # -- Global dictionary of TLS secrets
+  ingressTLSSecrets: {}
+  terraform:
+    organization: mintel-poc
+    secretsMountPath: /tmp/secrets
+    terraformVersion: 1.1.8
+
+postgresql:
+  enabled: false
+  terraform:
+    module:
+      source: app.terraform.io/mintel-poc/rds/aws
+      version: 1.6.2
+    defaultVars:
+      engine: "postgres"
+      engine_version: "13"
+      port: 5432
+      instance_type: "db.t3.micro"
+      master_username: "admin"
+      allocated_storage: 5
+      max_allocated_storage: 100
+      auto_minor_version_upgrade: true
+      multi_az: true
+      backup_retention_period: 14
+      enable_deletion_protection: true
+      apply_immediately: true
+    ## Workload resources are generated from the 'instances' map below. If postgresql.enabled is true and
+    ## postgresql.terraform.instances is undefined then a default instance will be created with all the values from 
+    ## postgresql.terraform.defaultVars; "name" and "db_name" will be auto-generated as explained below. Any items added
+    ## to an instance will be sent to Terraform Cloud as-is so consult the Terraform module for valid inputs. 
+    # instances:
+    #   "my-instance":
+    #     name: if not provided, name will match global.name
+    #     db_name: if not provided, db_name will match a slugified version of global.name (dots (.) and dashes (-) will be
+    #            converted to underscores)
+    #     any_other_var: will be sent to terraform
