@@ -56,7 +56,7 @@ metadata:
     
     {{- if (eq (include "mintel_common.ingressClassName" .) "haproxy" ) }}
     {{- with .Values.ingress.serverTimeoutSeconds }}
-    ingress.kubernetes.io/timeout-server: {{ . }}
+    ingress.kubernetes.io/timeout-server: {{ . }}s
     {{- end }}
     ingress.kubernetes.io/rewrite-target: /
     {{- if (and .Values.metrics .Values.metrics.enabled) }}
