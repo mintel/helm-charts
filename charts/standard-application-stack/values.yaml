@@ -318,8 +318,6 @@ volumeMounts: []
 ingress:
   # -- Set to true to enable ingress record generation
   enabled: false
-  # -- Define the type of ingress
-  className: alb-public-apps-default
   # -- Additional Ingress annotations
   # For a full list of possible ingress annotations, please see
   # ref: https://github.com/kubernetes/ingress-nginx/blob/master/docs/user-guide/nginx-configuration/annotations.md
@@ -357,7 +355,7 @@ ingress:
     # -- Application Protocol Version (HTTP1 / HTTP2 / GRPC)
     backendProtocolVersion: HTTP1
 
-    deregistrationDelay: 
+    deregistrationDelay:
       timeoutSeconds: 5
     healthcheck:
       # -- Healthcheck protocol

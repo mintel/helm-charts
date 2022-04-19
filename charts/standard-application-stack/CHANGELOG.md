@@ -13,6 +13,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added NetworkPolicy `allow-aws-alb-to...` to allow ALB healthchecks to reach Pods
 - Added new `helpers` directory (enable splitting of functions to aid maintainability)
 
+# Removed
+- Removed `ingress.className` as this is determined from a helper function instead
+
 ## [v3.12.1] - 2022-04-07
 ### Fixed
 - Remove ingress class from 'local' ingress so traefik works correctly

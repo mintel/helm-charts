@@ -53,7 +53,7 @@ metadata:
     {{- if .Values.ingress.extraAnnotations }}
     {{- toYaml .Values.ingress.extraAnnotations | nindent 4 }}
     {{- end}}
-    
+
     {{- if (eq (include "mintel_common.ingressClassName" .) "haproxy" ) }}
     {{- with .Values.ingress.serverTimeoutSeconds }}
     ingress.kubernetes.io/timeout-server: {{ . }}s
