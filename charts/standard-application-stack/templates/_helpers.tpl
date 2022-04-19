@@ -454,7 +454,7 @@ topologySpreadConstraints:
 {{- end }}
 {{- end }}
 {{- if (ne .Values.ingress.allowReadinessUrl true) }}
-  {{- $readinessEndpoint := (coalesce .Values.readiness.path "/readiness") }}
+{{- $readinessEndpoint := (coalesce .Values.readiness.path "/readiness") }}
 {{- if (ne $readinessEndpoint .Values.ingress.blackbox.probePath) }}
 {{- $endpoints = append $endpoints $readinessEndpoint }}
 {{- end }}
