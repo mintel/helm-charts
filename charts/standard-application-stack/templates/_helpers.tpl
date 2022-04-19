@@ -428,11 +428,21 @@ topologySpreadConstraints:
 {{/* Output ingressClassName */}}
 {{- define "mintel_common.ingressClassName" -}}
 {{- if (and .Values.ingress.alb .Values.ingress.alb.enabled) }}
-{{- printf "alb-default" -}}
+{{- print "alb-public-apps-default" -}}
 {{- else }}
-{{- .Values.ingress.className -}}
+{{- print "haproxy" -}}
 {{- end }}
 {{- end -}}
+
+
+{{/* Set default ALB healthcheck protocol */}}
+{{- define "mintel_common.ingress.alb.healthcheck.protocol" -}}
+{{- if has .healthcheck.protocol (list "HTTP" "HTTPS" ) }}
+{{- .healthcheck.protocol}}
+{{- else }}
+{{- "HTTP" }}
+{{- end }}
+{{- end }}
 
 
 {{/* Outputs space separated list of endpoints to deny at ingress */}}
@@ -440,15 +450,15 @@ topologySpreadConstraints:
 {{- $endpoints := list }}
 {{- $endpoints = append $endpoints (default "/metrics" .Values.metrics.path) }}
 {{- if (ne .Values.ingress.allowLivenessUrl true) }}
-{{- $livenessEndpoint := (coalesce .Values.liveness.path "/healthz") }}
+  {{- $livenessEndpoint := (coalesce .Values.liveness.path "/healthz") }}
 {{- if (ne $livenessEndpoint .Values.ingress.blackbox.probePath) }}
-{{- $endpoints = append $endpoints $livenessEndpoint }}
+  {{- $endpoints = append $endpoints $livenessEndpoint }}
 {{- end }}
 {{- end }}
 {{- if (ne .Values.ingress.allowReadinessUrl true) }}
-{{- $readinessEndpoint := (coalesce .Values.readiness.path "/readiness") }}
+  {{- $readinessEndpoint := (coalesce .Values.readiness.path "/readiness") }}
 {{- if (ne $readinessEndpoint .Values.ingress.blackbox.probePath) }}
-{{- $endpoints = append $endpoints $readinessEndpoint }}
+  {{- $endpoints = append $endpoints $readinessEndpoint }}
 {{- end }}
 {{- end }}
 {{- print (join " " $endpoints) }}

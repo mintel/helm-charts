@@ -54,6 +54,7 @@ metadata:
     {{- if .Values.ingress.extraAnnotations }}
     {{- toYaml .Values.ingress.extraAnnotations | nindent 4 }}
     {{- end}}
+    
     {{- if (eq (include "mintel_common.ingressClassName" .) "haproxy" ) }}
     {{- with .Values.ingress.serverTimeoutSeconds }}
     ingress.kubernetes.io/timeout-server: {{ . }}
@@ -65,23 +66,27 @@ metadata:
       http-request deny if k8s-monitoring-endpoints
     {{- end }}
     {{- else }}
+
     {{- if (and .Values.ingress.alb .Values.ingress.alb.enabled) }}
-    {{- with .Values.ingress.alb.healthcheck }}
-    alb.ingress.kubernetes.io/healthcheck-interval-seconds: "{{ default 15 .intervalSeconds }}"
-    alb.ingress.kubernetes.io/healthcheck-path: {{ default "/readiness" .path }}
-    alb.ingress.kubernetes.io/healthcheck-port: "{{ default $.Values.port .port }}"
-    alb.ingress.kubernetes.io/healthcheck-protocol: {{ default "HTTP" .protocol }}
-    alb.ingress.kubernetes.io/healthcheck-timeout-seconds: "{{ default 5 .timeoutSeconds }}"
-    alb.ingress.kubernetes.io/healthy-threshold-count: "{{ default 2 .healthyThresholdCount }}"
-    alb.ingress.kubernetes.io/unhealthy-threshold-count: "{{ default 2 .unhealthyThresholdCount }}"
-    alb.ingress.kubernetes.io/success-codes: "{{ default 200 .successCodes }}"
-    {{- end }}
-    alb.ingress.kubernetes.io/backend-protocol: {{ default "HTTP" .Values.ingress.alb.backendProtocol }}
-    alb.ingress.kubernetes.io/backend-protocol-version: {{ default "HTTP1" .Values.ingress.alb.backendProtocolVersion }}
+    {{- with .Values.ingress.alb }}
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS": 443}]'
-    alb.ingress.kubernetes.io/target-group-attributes: "deregistration_delay.timeout_seconds={{ default 10 .Values.ingress.alb.deregistrationDelay.timeoutSeconds }}"
-    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/target-group-attributes: "deregistration_delay.timeout_seconds={{ default 10 .deregistrationDelay.timeoutSeconds }}"
+    alb.ingress.kubernetes.io/target-type: "ip"
+    external-dns.alpha.kubernetes.io/ttl: "60"
+    external-dns.alpha.kubernetes.io/hostname: {{ $.Values.ingress.defaultHost }}
+    alb.ingress.kubernetes.io/backend-protocol: {{ include "mintel_common.ingress.alb.backendProtocol" . }}
+    alb.ingress.kubernetes.io/backend-protocol-version: {{ include "mintel_common.ingress.alb.backendProtocolVersion" . }}
+    alb.ingress.kubernetes.io/success-codes: "{{ include "mintel_common.ingress.alb.healthcheck.successCodes" . }}"
+    alb.ingress.kubernetes.io/healthcheck-path: {{ include "mintel_common.ingress.alb.healthcheck.path" . }}
+    alb.ingress.kubernetes.io/healthcheck-interval-seconds: "{{ default 15 .healthcheck.intervalSeconds }}"
+    alb.ingress.kubernetes.io/healthcheck-port: "{{ default $.Values.port .healthcheck.port }}"
+    alb.ingress.kubernetes.io/healthcheck-protocol: {{ include "mintel_common.ingress.alb.healthcheck.protocol" . }}
+    alb.ingress.kubernetes.io/healthcheck-timeout-seconds: "{{ default 5 .healthcheck.timeoutSeconds }}"
+    alb.ingress.kubernetes.io/healthy-threshold-count: "{{ default 2 .healthcheck.healthyThresholdCount }}"
+    alb.ingress.kubernetes.io/unhealthy-threshold-count: "{{ default 2 .healthcheck.unhealthyThresholdCount }}"
     {{- end }}
+    {{- end }}
+
     {{- end }}
     {{- if (and .Values.ingress.blackbox .Values.ingress.blackbox.enabled) }}
     prometheus.io/probe: "true"

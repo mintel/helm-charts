@@ -315,7 +315,7 @@ ingress:
   # -- Set to true to enable ingress record generation
   enabled: false
   # -- Define the type of ingress
-  className: haproxy
+  className: alb-public-apps-default
   # -- Additional Ingress annotations
   # For a full list of possible ingress annotations, please see
   # ref: https://github.com/kubernetes/ingress-nginx/blob/master/docs/user-guide/nginx-configuration/annotations.md
@@ -352,17 +352,18 @@ ingress:
     backendProtocol: HTTP
     # -- Application Protocol Version (HTTP1 / HTTP2 / GRPC)
     backendProtocolVersion: HTTP1
+
     deregistrationDelay: 
       timeoutSeconds: 5
     healthcheck:
       # -- Healthcheck protocol
       protocol: HTTP
       # -- Healthcheck success codes
-      successCodes: "200"
+      # successCodes: "200"
       # -- Period seconds
       intervalSeconds: 15
-      # -- Request path
-      path: /readiness
+      # -- Healthcheck Request path
+      # path: /external-health-check
       # -- Port (defaults to port specified in Ingress used to direct traffic to service)
       # port: "8000"
       # -- Timeout seconds
