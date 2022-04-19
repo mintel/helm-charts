@@ -1,0 +1,10 @@
+{{/* vim: set filetype=mustache: */}}
+
+{{/* Validate ALB BackendProtocol and default to HTTP */}}
+{{- define "mintel_common.ingress.alb.backendProtocol" -}}
+{{- if has .Values.ingress.alb.backendProtocol (list "HTTP" "HTTPS" ) }}
+{{- .Values.ingress.alb.backendProtocol }}
+{{- else }}
+{{- "HTTP" }}
+{{- end }}
+{{- end }}
