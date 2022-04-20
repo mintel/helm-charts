@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added support for AWS ALB ingress (under `.Values.ingress.alb`)  and relevant configuration options
 - Added NetworkPolicy `allow-aws-alb-to...` to allow ALB healthchecks to reach Pods
 - Added new `helpers` directory (enable splitting of functions to aid maintainability)
+- Added new ingress-tests for ALB
 
 # Removed
 - Removed `ingress.className` as this is determined from a helper function instead
