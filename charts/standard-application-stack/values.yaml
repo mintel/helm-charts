@@ -318,8 +318,6 @@ volumeMounts: []
 ingress:
   # -- Set to true to enable ingress record generation
   enabled: false
-  # -- Define the type of ingress
-  className: haproxy
   # -- Additional Ingress annotations
   # For a full list of possible ingress annotations, please see
   # ref: https://github.com/kubernetes/ingress-nginx/blob/master/docs/user-guide/nginx-configuration/annotations.md
@@ -350,6 +348,33 @@ ingress:
   specificRulesHostsYaml: {}
   # -- Optional ingress Tls Hosts Yaml that doesn't fit standard pattern
   specificTlsHostsYaml: {}
+  alb:
+    enabled: false
+    # -- Application Version (HTTP / HTTPS)
+    backendProtocol: HTTP
+    # -- Application Protocol Version (HTTP1 / HTTP2 / GRPC)
+    backendProtocolVersion: HTTP1
+
+    deregistrationDelay:
+      timeoutSeconds: 5
+
+    healthcheck:
+      # -- Healthcheck protocol
+      protocol: HTTP
+      # -- Healthcheck success codes
+      # successCodes: "200"
+      # -- Period seconds
+      intervalSeconds: 15
+      # -- Healthcheck Request path
+      # path: /external-health-check
+      # -- Port (defaults to port specified in Ingress used to direct traffic to service)
+      # port: "8000"
+      # -- Timeout seconds
+      timeoutSeconds: 5
+      # -- Failure threshold
+      unhealthyThresholdCount: 2
+      # -- Success threshold
+      healthyThresholdCount: 2
 
 # -- Define a default NetworkPolicy for allowing apps in the same 'app.kubernetes.io/part-of' group to communicate
 # with eachother.
