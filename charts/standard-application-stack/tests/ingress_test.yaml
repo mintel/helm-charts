@@ -4,7 +4,102 @@ templates:
 release:
   namespace: test-namespace
 tests:
-  - it: Doesn't create tls if ingressTLSSecrets and specificTlsHostsYaml is empty
+  - it: Set HAProxy className by default
+    set:
+      global.clusterEnv: qa
+      ingress.enabled: true
+    asserts:
+      - equal:
+          path: spec.ingressClassName
+          value: haproxy
+ 
+  - it: Set ALB className if enabled
+    set:
+      global.clusterEnv: qa
+      ingress.enabled: true
+      ingress.alb.enabled: true
+    asserts:
+      - equal:
+          path: spec.ingressClassName
+          value: alb-public-apps-default
+
+  - it: Check ALB default health-check port
+    set:
+      global.clusterEnv: qa
+      ingress.enabled: true
+      ingress.alb.enabled: true
+      port: 8080
+    asserts:
+      - equal:
+          path: metadata.annotations.[alb.ingress.kubernetes.io/healthcheck-port]
+          value: "8080"
+
+  - it: Check ALB custom health-check port
+    set:
+      global.clusterEnv: qa
+      ingress.enabled: true
+      ingress.alb.enabled: true
+      ingress.alb.healthcheck.port: 9999
+      port: 8080 
+    asserts:
+      - equal:
+          path: metadata.annotations.[alb.ingress.kubernetes.io/healthcheck-port]
+          value: "9999"
+ 
+  - it: Check ALB gRPC default settings
+    set:
+      global.clusterEnv: qa
+      ingress.enabled: true
+      ingress.alb.enabled: true
+      ingress.alb.backendProtocolVersion: GRPC
+    asserts:
+      - equal:
+          path: metadata.annotations.[alb.ingress.kubernetes.io/backend-protocol-version]
+          value: GRPC
+      - equal:
+          path: metadata.annotations.[alb.ingress.kubernetes.io/success-codes]
+          value: "0,12"
+      - equal:
+          path: metadata.annotations.[alb.ingress.kubernetes.io/healthcheck-path]
+          value: /grpc.health.v1.Health/Check
+
+  - it: Check ALB gRPC custom settings
+    set:
+      global.clusterEnv: qa
+      ingress.enabled: true
+      ingress.alb.enabled: true
+      ingress.alb.backendProtocolVersion: GRPC
+      ingress.alb.healthcheck.successCodes: "0"
+      ingress.alb.healthcheck.path: /grpc.health.v1.Readiness/Check
+    asserts:
+      - equal:
+          path: metadata.annotations.[alb.ingress.kubernetes.io/backend-protocol-version]
+          value: GRPC
+      - equal:
+          path: metadata.annotations.[alb.ingress.kubernetes.io/success-codes]
+          value: "0"
+      - equal:
+          path: metadata.annotations.[alb.ingress.kubernetes.io/healthcheck-path]
+          value: /grpc.health.v1.Readiness/Check
+
+  - it: Check ALB HTTP2 default settings
+    set:
+      global.clusterEnv: qa
+      ingress.enabled: true
+      ingress.alb.enabled: true
+      ingress.alb.backendProtocolVersion: HTTP2
+    asserts:
+      - equal:
+          path: metadata.annotations.[alb.ingress.kubernetes.io/backend-protocol-version]
+          value: HTTP2 
+      - equal:
+          path: metadata.annotations.[alb.ingress.kubernetes.io/success-codes]
+          value: "200"
+      - equal:
+          path: metadata.annotations.[alb.ingress.kubernetes.io/healthcheck-path]
+          value: /external-health-check
+
+  - it: Check no TLS set if ingressTLSSecrets and specificTlsHostsYaml is empty
     set:
       global.clusterEnv: qa
       global.ingressTLSSecrets: null
@@ -16,7 +111,7 @@ tests:
       - isEmpty:
           path: spec.tls
 
-  - it: Creates tls if ingressTLSSecrets is not empty
+  - it: Check TLS set if ingressTLSSecrets is not empty
     set:
       global.clusterEnv: qa
       global.ingressTLSSecrets.example_org: star-example-org

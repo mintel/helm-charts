@@ -357,6 +357,7 @@ ingress:
 
     deregistrationDelay:
       timeoutSeconds: 5
+
     healthcheck:
       # -- Healthcheck protocol
       protocol: HTTP
