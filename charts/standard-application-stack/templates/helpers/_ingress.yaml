@@ -1,5 +1,14 @@
 {{/* vim: set filetype=mustache: */}}
 
+{{/* Output ingressClassName */}}
+{{- define "mintel_common.ingress.className" -}}
+{{- if (and .Values.ingress.alb .Values.ingress.alb.enabled) }}
+{{- print "alb-public-apps-default" -}}
+{{- else }}
+{{- print "haproxy" -}}
+{{- end }}
+{{- end -}}
+
 {{/* Validate ALB BackendProtocol and default to HTTP */}}
 {{- define "mintel_common.ingress.alb.backendProtocol" -}}
 {{- if has .backendProtocol (list "HTTP" "HTTPS" ) }}

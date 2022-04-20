@@ -54,7 +54,7 @@ metadata:
     {{- toYaml .Values.ingress.extraAnnotations | nindent 4 }}
     {{- end}}
 
-    {{- if (eq (include "mintel_common.ingressClassName" .) "haproxy" ) }}
+    {{- if (eq (include "mintel_common.ingress.className" .) "haproxy" ) }}
     {{- with .Values.ingress.serverTimeoutSeconds }}
     ingress.kubernetes.io/timeout-server: {{ . }}s
     {{- end }}
@@ -92,11 +92,11 @@ metadata:
     prometheus.io/probepath: {{ .Values.ingress.blackbox.probePath }}
     {{- end }}
     {{- if (eq (include "common.capabilities.ingress.apiVersion" .) "networking.k8s.io/v1beta1") }}
-    kubernetes.io/ingress.class: {{ include "mintel_common.ingressClassName" . }}
+    kubernetes.io/ingress.class: {{ include "mintel_common.ingress.className" . }}
     {{- end }}
 spec:
   {{- if (ne (include "common.capabilities.ingress.apiVersion" .) "networking.k8s.io/v1beta1") }}
-  ingressClassName: {{ include "mintel_common.ingressClassName" . }}
+  ingressClassName: {{ include "mintel_common.ingress.className" . }}
   {{- end }}
   rules:
     - host: {{ .Values.ingress.defaultHost }}
