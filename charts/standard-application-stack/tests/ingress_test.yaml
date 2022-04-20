@@ -4,7 +4,7 @@ templates:
 release:
   namespace: test-namespace
 tests:
-  - it: Set HAProxy className by default
+  - it: Check HAProxy className set by default
     set:
       global.clusterEnv: qa
       ingress.enabled: true
@@ -13,7 +13,7 @@ tests:
           path: spec.ingressClassName
           value: haproxy
  
-  - it: Set ALB className if enabled
+  - it: Check ALB className set if enabled
     set:
       global.clusterEnv: qa
       ingress.enabled: true
