@@ -410,7 +410,7 @@ topologySpreadConstraints:
   - labelSelector:
       matchLabels: {{ include "mintel_common.selectorLabels" . | nindent 8 }}
     maxSkew: {{ default 1 .Values.topologySpreadConstraints.zone.maxSkew }}
-    topologyKey: failure-domain.beta.kubernetes.io/zone
+    topologyKey: topology.kubernetes.io/zone
     whenUnsatisfiable: {{ default "DoNotSchedule" .Values.topologySpreadConstraints.zone.whenUnsatisfiable }}
   {{- end }}
   {{- if or (and (not (kindIs "bool" .Values.topologySpreadConstraints.node.enabled)) (eq .Values.global.clusterEnv "prod")) (and .Values.topologySpreadConstraints.node .Values.topologySpreadConstraints.node.enabled) }}

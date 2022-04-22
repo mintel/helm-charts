@@ -89,7 +89,7 @@ spec:
             {{- if (eq .Values.affinity.podAntiAffinity.zone "hard") }}
             - labelSelector:
                 matchLabels: {{ include "mintel_common.selectorLabels" $data | nindent 18 }}
-              topologyKey: failure-domain.beta.kubernetes.io/zone
+              topologyKey: topology.kubernetes.io/zone
             {{- end }}
             {{- if (eq .Values.affinity.podAntiAffinity.node "hard") }}
             - labelSelector:
@@ -103,7 +103,7 @@ spec:
             - podAffinityTerm:
                 labelSelector:
                   matchLabels: {{ include "mintel_common.selectorLabels" $data | nindent 20 }}
-                topologyKey: failure-domain.beta.kubernetes.io/zone
+                topologyKey: topology.kubernetes.io/zone
               weight: {{ default 100 .Values.affinity.podAntiAffinity.weight }}
             {{- end }}
             {{- if (eq .Values.affinity.podAntiAffinity.node "soft") }}
