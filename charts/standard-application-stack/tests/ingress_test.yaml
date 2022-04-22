@@ -1,4 +1,4 @@
-suite: Test Ingress
+suite: Test Ingresses
 templates:
   - ingress.yaml
 release:
@@ -12,7 +12,7 @@ tests:
       - equal:
           path: spec.ingressClassName
           value: haproxy
- 
+
   - it: Check ALB className set if enabled
     set:
       global.clusterEnv: qa
@@ -40,12 +40,12 @@ tests:
       ingress.enabled: true
       ingress.alb.enabled: true
       ingress.alb.healthcheck.port: 9999
-      port: 8080 
+      port: 8080
     asserts:
       - equal:
           path: metadata.annotations.[alb.ingress.kubernetes.io/healthcheck-port]
           value: "9999"
- 
+
   - it: Check ALB gRPC default settings
     set:
       global.clusterEnv: qa
@@ -91,7 +91,7 @@ tests:
     asserts:
       - equal:
           path: metadata.annotations.[alb.ingress.kubernetes.io/backend-protocol-version]
-          value: HTTP2 
+          value: HTTP2
       - equal:
           path: metadata.annotations.[alb.ingress.kubernetes.io/success-codes]
           value: "200"
