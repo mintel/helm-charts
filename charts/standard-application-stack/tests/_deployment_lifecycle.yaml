@@ -29,14 +29,14 @@ tests:
     set:
       global.clusterEnv: qa
       ingress.enabled: true
-      ingress.alb.enabled: false 
+      ingress.alb.enabled: false
     asserts:
       - isNull:
           path: spec.template.spec.containers[0].lifecycle
   - it: Check lifecycle rules
     set:
       global.clusterEnv: qa
-      lifecycle: 
+      lifecycle:
         preStop:
           exec:
             command: ['hello world']
@@ -44,4 +44,3 @@ tests:
       - matchRegex:
           path: spec.template.spec.containers[0].lifecycle.preStop.exec.command[0]
           pattern: .*hello world.*
-

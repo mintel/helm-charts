@@ -1,12 +1,12 @@
 {{/* vim: set filetype=mustache: */}}
 
-{{/* 
+{{/*
 Output lifecycle hook
 
 If the AWS ALB preStopDelay flag is enabled, we add an additional sleep to
 delay the container shutdown.
 
-This allows the AWS ALB to fully de-register the pod before the container is 
+This allows the AWS ALB to fully de-register the pod before the container is
 shutdown and helps achieve zero downtime rollouts.
 
 Note, this cannot be used in conjunction with a custom lifecycle rule.
@@ -15,9 +15,9 @@ Note, this cannot be used in conjunction with a custom lifecycle rule.
 {{- with .Values.ingress.alb }}
 {{- if (and .enabled .preStopDelay.enabled ) }}
 lifecycle:
-  preStop: 
-    exec: 
-      command: 
+  preStop:
+    exec:
+      command:
         - '/bin/sh'
         - '-c'
         - {{ printf "echo 'Called preStop hook with %ds delay' > /proc/1/fd/1 ; sleep %d ; Completed preStop hook" (.preStopDelay.delaySeconds|int) (.preStopDelay.delaySeconds|int) }}
@@ -30,5 +30,3 @@ lifecycle:
 {{- end }}
 {{- end }}
 {{- end -}}
-
-
