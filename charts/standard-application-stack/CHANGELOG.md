@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v3.14.1] - 2022-04-22
+### Fixed
+- Fix perpetual ArgoCD diff caused by default ExternalSecret refreshInterval
+
 ## [v3.14.0] - 2022-04-22
 ### Added
 - Added support for pod `lifecycle` hooks
