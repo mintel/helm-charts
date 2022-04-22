@@ -1,4 +1,4 @@
-suite: Test Ingress
+suite: Test Network Policies
 templates:
   - network-policy.yaml
 release:

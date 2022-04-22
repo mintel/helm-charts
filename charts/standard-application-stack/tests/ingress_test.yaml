@@ -1,4 +1,4 @@
-suite: Test Ingress
+suite: Test Ingresses
 templates:
   - ingress.yaml
 release:

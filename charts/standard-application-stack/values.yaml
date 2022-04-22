@@ -379,7 +379,7 @@ ingress:
       enabled: true
       # -- The delay (sleep) to wait for.
       # IMPORTANT: The terminationGracePeriodSeconds must be greater than this.
-      delaySeconds: 12
+      delaySeconds: 15
 
     healthcheck:
       # -- Healthcheck protocol

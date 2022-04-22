@@ -13,18 +13,18 @@ tests:
     asserts:
       - matchRegex:
           path: spec.template.spec.containers[0].lifecycle.preStop.exec.command[2]
-          pattern: .*sleep 10.*
+          pattern: .*sleep 15.*
   - it: Check AWS ALB lifecycle rules applied with custom delay
     set:
       global.clusterEnv: qa
       ingress.enabled: true
       ingress.alb.enabled: true
       ingress.alb.preStopDelay.enabled: true
-      ingress.alb.preStopDelay.delaySeconds: 15
+      ingress.alb.preStopDelay.delaySeconds: 20
     asserts:
       - matchRegex:
           path: spec.template.spec.containers[0].lifecycle.preStop.exec.command[2]
-          pattern: .*sleep 15.*
+          pattern: .*sleep 20.*
   - it: Check AWS ALB lifecycle rules are not applied when ALB disabled
     set:
       global.clusterEnv: qa
