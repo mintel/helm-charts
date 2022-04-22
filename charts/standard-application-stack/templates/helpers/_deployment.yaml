@@ -7,7 +7,7 @@ If the AWS ALB preStopDelay flag is enabled, we add an additional sleep to
 delay the container shutdown.
 
 This allows the AWS ALB to fully de-register the pod before the container is 
-shutdown, and helps to achieve zero downtime rollouts.
+shutdown and helps achieve zero downtime rollouts.
 
 Note, this cannot be used in conjunction with a custom lifecycle rule.
 */}}
