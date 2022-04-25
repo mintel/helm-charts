@@ -15,7 +15,7 @@ spec:
   {{- else }}
   suspend: false
   {{- end }}
-  schedule: {{ .schedule }}
+  schedule: {{ quote .schedule }}
   jobTemplate:
     spec:
       template:
