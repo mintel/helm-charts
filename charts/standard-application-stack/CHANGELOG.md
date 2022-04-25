@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v3.14.3] - 2022-04-25
+### Fixed
+- Fixed service account irsa ARN annotation when service account name is overriden
+
 ## [v3.14.2] - 2022-04-25
 ### Fixed
 - Fixed quoting of cronjob 'schedule' field so it will accept '/' in value, ie: '*/15 * * * *'
