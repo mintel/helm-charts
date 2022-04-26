@@ -31,7 +31,7 @@ spec:
   organization: {{ $.Values.global.terraform.organization | quote }}
   secretsMountPath: {{ $.Values.global.terraform.secretsMountPath | quote }}
   sshKeyID: "mintel-ssh"
-  terraformVersion: "string"
+  terraformVersion: {{ $.Values.global.terraform.version | quote }}
   variables:
   {{- range $varKey, $varVal := $instanceCfg }}
   - key: {{ $varKey }}
