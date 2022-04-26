@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v3.14.4] - 2022-04-26
+### Changed
+- Change deprecated topologyKey from `failure-domain.beta.kubernetes.io/zone` to `topology.kubernetes.io/zone`
+
 ## [v3.14.3] - 2022-04-25
 ### Fixed
 - Fixed service account irsa ARN annotation when service account name is overriden
