@@ -35,24 +35,20 @@ postgresql:
   enabled: false
   terraform:
     module:
-      source: app.terraform.io/mintel-poc/rds/aws
-      version: 1.6.2
+      source: app.terraform.io/Mintel/rds/aws
+      version: "0.0.1-alpha.1"
     defaultVars:
       engine: "postgres"
       engine_version: "13"
       port: 5432
       instance_type: "db.t3.micro"
       master_username: "admin"
-      # db_config_secrets_manager_prefix: "TODO: Should standardise this. Could the logic go in the module?"
       allocated_storage: 5
       max_allocated_storage: 100
       auto_minor_version_upgrade: true
       multi_az: true
       backup_retention_period: 14
       enable_deletion_protection: true
-      # vpc_id: "TODO: Must get this from somewhere else"
-      # subnet_ids: "TODO: Must get this from somewhere else"
-      # allow_connections_from_cidr_blocks: "TODO: Must get this from somewhere else"
       apply_immediately: true
     ## Workload resources are generated from the 'instances' map below. If postgresql.enabled is true and
     ## postgresql.terraform.instances is undefined then a default instance will be created with all the values from 
@@ -65,15 +61,35 @@ postgresql:
     #              to underscores)
     #     any_other_var: will be sent to terraform
 
+redis:
+  enabled: false
+  terraform:
+    module:
+      source: app.terraform.io/Mintel/redis/aws"
+      version: "0.0.1-alpha.1"
+    defaultVars:
+      instance_type: "cache.t2.micro"
+      replication_group_size: 2
+      enable_automatic_failover: true
+      enable_multi_az: true
+      parameter_group_name: "omni-web"
+      custom_parameters: |-
+        [
+          {
+            name  = "maxmemory-policy"
+            value = "allkeys-lfu"
+          }
+        ]
+      apply_immediately: true
+
 s3:
   enabled: false
   terraform: 
     module:
-      source: app.terraform.io/mintel-poc/private-s3-bucket/aws
-      version: 0.0.1
+      source: app.terraform.io/Mintel/private-s3-bucket/aws
+      version: "0.0.1-alpha.1"
     defaultVars:
         access_logging_enabled: true
-        # access_logging_bucket: "TODO: Must get this from somewhere else"
         enable_versioning: true
         enable_request_metrics: true
 
