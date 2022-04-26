@@ -1,0 +1,30 @@
+{{- range .Values.supported }}
+  {{- $resourceType := . }}
+  {{- $resourceConfig := (get $.Values .) }}
+  {{- if $resourceConfig.enabled }}
+    {{- range $instanceName, $instanceConfig := default ( dict "default" dict ) $resourceConfig.terraform.instances }}
+      {{- $moduleSource := $resourceConfig.terraform.module.source }}
+      {{- $moduleVersion := $resourceConfig.terraform.module.version }}
+      # Set name if not provided
+      {{- if not ( hasKey $instanceConfig "name" ) }}
+        {{- if eq $instanceName "default" }}
+          {{- $_ := set $instanceConfig "name" $.Values.global.name }}
+        {{- else }}
+          {{- $_ := set $instanceConfig "name" $instanceName }}
+        {{- end }}
+      {{- end }}
+      # Set db_name for postgresql
+      {{- if ( and ( eq $resourceType "postgresql" ) ( not ( hasKey $instanceConfig "db_name" ) ) ) }}
+        {{- $_ := set $instanceConfig "db_name" ( $instanceConfig.name | snakecase ) }}
+      {{- end }}
+      # Add default values to each instance if keys not set already
+      {{- range $defaultKey, $defaultVal := $resourceConfig.terraform.defaultVars }}
+        {{- if not ( hasKey $instanceConfig $defaultKey ) }}
+          {{- $_ := set $instanceConfig $defaultKey $defaultVal }}
+        {{- end }}
+      {{- end }}
+---
+      {{- include "mintel_common.workspace" (list $ . $instanceConfig $resourceType $moduleSource $moduleVersion) }}
+    {{- end }}
+  {{- end }}
+{{- end }}

@@ -1,14 +1,14 @@
 {{- define "mintel_common.workspace" }}
 {{- $ := index . 0 }}
 {{- $instanceCfg := index . 2 }}
-{{- $resource := index . 3 }}
+{{- $resourceType := index . 3 }}
 {{- $moduleSource := index . 4 }}
 {{- $moduleVersion := index . 5 }}
 {{- with index . 1 }}
 apiVersion: app.terraform.io/v1alpha1
 kind: Workspace
 metadata:
-  name: "{{ $resource }}-{{ .name }}"
+  name: "{{ $resourceType }}-{{ .name }}"
   namespace: {{ $.Release.Namespace | quote }}
 spec:
   agentPoolID: "aws_{{ $.Values.global.clusterEnv }}"
