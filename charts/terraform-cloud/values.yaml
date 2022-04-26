@@ -27,9 +27,9 @@ global:
   # -- Global dictionary of TLS secrets
   ingressTLSSecrets: {}
   terraform:
-    organization: mintel-poc
+    organization: Mintel
     secretsMountPath: /tmp/secrets
-    terraformVersion: 1.1.8
+    terraformVersion: 1.0.7
 
 postgresql:
   enabled: false
@@ -60,3 +60,20 @@ postgresql:
     #     db_name: if not provided, db_name will match a slugified version of global.name (dots (.) and dashes (-) will be
     #            converted to underscores)
     #     any_other_var: will be sent to terraform
+
+s3:
+  enabled: false
+  terraform: 
+    module:
+      source: app.terraform.io/mintel-poc/private-s3-bucket/aws
+      version: 0.0.1
+    defaultVars:
+        access_logging_enabled: true
+        access_logging_bucket: dependency.logging_bucket.outputs.name
+        enable_versioning: true
+        enable_request_metrics: true
+        tags: local.tags
+
+supported:
+- postgresql
+- s3
