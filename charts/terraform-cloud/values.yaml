@@ -57,8 +57,8 @@ postgresql:
     # instances:
     #   "my-instance":
     #     name: if not provided, name will match global.name
-    #     db_name: if not provided, db_name will match a slugified version of global.name (dots (.) and dashes (-) will be
-    #            converted to underscores)
+    #     db_name: if not provided, db_name will match a snakecase version of global.name (dashes (-) will be converted
+    #              to underscores)
     #     any_other_var: will be sent to terraform
 
 s3:

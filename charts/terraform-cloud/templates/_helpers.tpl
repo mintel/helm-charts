@@ -21,17 +21,22 @@ spec:
   terraformVersion: {{ $.Values.global.terraform.terraformVersion | quote }}
   variables:
   {{- range $varKey, $varVal := $instanceCfg }}
-  {{- include "mintel_common.terraformVariable" (list $varKey $varVal) | indent 2 }}
+  {{- include "mintel_common.terraformVariable" (dict "key" $varKey "value" $varVal) | indent 2 }}
   {{- end }}
+  {{- include "mintel_common.tagsTerraformVariable" $.Values.global | indent 2 }}
 {{- end }}
 {{- end }}
 
 {{- define "mintel_common.terraformVariable" }}
-{{ $varKey := index . 0 }}
-{{ $varVal := index . 1 }}
-- key: {{ $varKey }}
-  environmentVariable: false
-  hcl: false
-  sensitive: false
-  value: {{ $varVal | quote }}
+- key: {{ .key | quote }}
+  value: {{ .value | quote }}
+  environmentVariable: {{ .environmentVariable | default false}}
+  hcl: {{ .hcl | default false }}
+  sensitive: {{ .sensitive | default false}}
+{{- end }}
+
+{{- define "mintel_common.tagsTerraformVariable" }}
+{{- $varKey := "tags" }}
+{{- $varVal := (printf "{\n  Owner       = \"%s\"\n  Project     = \"%s\"\n  Application = \"%s\"\n}" .owner .partOf .name ) }}
+{{- include "mintel_common.terraformVariable" (dict "key" $varKey "value" $varVal "hcl" true) }}
 {{- end }}
