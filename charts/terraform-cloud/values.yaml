@@ -20,7 +20,7 @@ global:
   clusterName: ""
   # -- Global variables relating to cloud provider
   cloudProvider:
-    # -- AWS ACcount Id
+    # -- AWS account ID
     accountId: ""
   # -- Global variable definint RUNTIME_ENVIRONMENT
   runtimeEnvironment: kubernetes
