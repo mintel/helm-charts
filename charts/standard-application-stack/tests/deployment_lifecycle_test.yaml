@@ -1,0 +1,46 @@
+suite: Test Deployment Lifecycle Hooks
+templates:
+  - deployment.yaml
+release:
+  namespace: test-namespace
+tests:
+  - it: Check AWS ALB lifecycle rule applied
+    set:
+      global.clusterEnv: qa
+      ingress.enabled: true
+      ingress.alb.enabled: true
+      ingress.alb.preStopDelay.enabled: true
+    asserts:
+      - matchRegex:
+          path: spec.template.spec.containers[0].lifecycle.preStop.exec.command[2]
+          pattern: .*sleep 15.*
+  - it: Check AWS ALB lifecycle rules applied with custom delay
+    set:
+      global.clusterEnv: qa
+      ingress.enabled: true
+      ingress.alb.enabled: true
+      ingress.alb.preStopDelay.enabled: true
+      ingress.alb.preStopDelay.delaySeconds: 20
+    asserts:
+      - matchRegex:
+          path: spec.template.spec.containers[0].lifecycle.preStop.exec.command[2]
+          pattern: .*sleep 20.*
+  - it: Check AWS ALB lifecycle rules are not applied when ALB disabled
+    set:
+      global.clusterEnv: qa
+      ingress.enabled: true
+      ingress.alb.enabled: false
+    asserts:
+      - isNull:
+          path: spec.template.spec.containers[0].lifecycle
+  - it: Check lifecycle rules
+    set:
+      global.clusterEnv: qa
+      lifecycle:
+        preStop:
+          exec:
+            command: ['hello world']
+    asserts:
+      - matchRegex:
+          path: spec.template.spec.containers[0].lifecycle.preStop.exec.command[0]
+          pattern: .*hello world.*

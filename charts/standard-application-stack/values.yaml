@@ -203,6 +203,21 @@ liveness:
     # -- Perios seconds for startupProbe
     periodSeconds: 5
 
+# -- Configure terminationGracePeriodSeconds
+# ref: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/
+terminationGracePeriodSeconds: 30
+
+# -- Configure lifecycle hooks
+# ref: https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/
+# lifecycle:
+#  postStart:
+#    exec:
+#      command: ['/bin/sh', '-c', 'echo Called postStart hook > /proc/1/fd/1'],
+#  preStop:
+#    exec:
+#      command: ['/bin/sh', '-c', 'echo Called preStop hook > /proc/1/fd/1'],
+
+
 # -- Configure extra options for readiness probe
 # ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes
 readiness:
@@ -357,6 +372,14 @@ ingress:
 
     deregistrationDelay:
       timeoutSeconds: 5
+
+    preStopDelay:
+      # -- Enable an additional delay when the container is shutdown of delaySeconds.
+      # This allows ALB to fully de-register the pod (allows zero-downtime rollouts)
+      enabled: true
+      # -- The delay (sleep) to wait for.
+      # IMPORTANT: The terminationGracePeriodSeconds must be greater than this.
+      delaySeconds: 15
 
     healthcheck:
       # -- Healthcheck protocol

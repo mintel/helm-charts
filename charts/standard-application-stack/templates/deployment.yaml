@@ -106,6 +106,7 @@ spec:
       {{- end }}
       {{- end }}
       {{- include "mintel_common.topologySpreadConstraints" . | nindent 6 }}
+      terminationGracePeriodSeconds: {{ default 30 .Values.terminationGracePeriodSeconds }}
       {{- if (and (gt (.Values.replicas | int) 1) (and .Values.affinity .Values.affinity.enabled)) }}
       affinity:
         {{- if (and .Values.affinity .Values.affinity.specificYaml) }}
@@ -288,6 +289,7 @@ spec:
           {{- with .Values.resources }}
           resources: {{- toYaml . | nindent 12 }}
           {{- end }}
+          {{- include "mintel_common.deployment.lifecycle" . | nindent 10 }}
           {{- if .Values.volumeMounts }}
           volumeMounts:
             {{- toYaml .Values.volumeMounts | nindent 12 }}

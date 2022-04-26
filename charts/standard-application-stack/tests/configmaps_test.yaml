@@ -1,4 +1,4 @@
-suite: Test configmaps
+suite: Test ConfigMaps
 templates:
   - configmaps.yaml
 release:

@@ -7,6 +7,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v3.14.3] - 2022-04-25
+### Fixed
+- Fixed service account irsa ARN annotation when service account name is overriden
+
+## [v3.14.2] - 2022-04-25
+### Fixed
+- Fixed quoting of cronjob 'schedule' field so it will accept '/' in value, ie: '*/15 * * * *'
+
+## [v3.14.1] - 2022-04-22
+### Fixed
+- Fix perpetual ArgoCD diff caused by default ExternalSecret refreshInterval
+
+## [v3.14.0] - 2022-04-22
+### Added
+- Added support for pod `lifecycle` hooks
+- Added AWS ALB helper for zero-downtime rollouts (using a `lifecycle.preStop`)
+- Added support for pod `terminationGracePeriodSeconds`
+
 ## [v3.13.0] - 2022-04-19
 ### Added
 - Added support for AWS ALB ingress (under `.Values.ingress.alb`)  and relevant configuration options
