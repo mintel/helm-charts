@@ -43,12 +43,16 @@ postgresql:
       port: 5432
       instance_type: "db.t3.micro"
       master_username: "admin"
+      # db_config_secrets_manager_prefix: "TODO: Should standardise this. Could the logic go in the module?"
       allocated_storage: 5
       max_allocated_storage: 100
       auto_minor_version_upgrade: true
       multi_az: true
       backup_retention_period: 14
       enable_deletion_protection: true
+      # vpc_id: "TODO: Must get this from somewhere else"
+      # subnet_ids: "TODO: Must get this from somewhere else"
+      # allow_connections_from_cidr_blocks: "TODO: Must get this from somewhere else"
       apply_immediately: true
     ## Workload resources are generated from the 'instances' map below. If postgresql.enabled is true and
     ## postgresql.terraform.instances is undefined then a default instance will be created with all the values from 
@@ -69,10 +73,9 @@ s3:
       version: 0.0.1
     defaultVars:
         access_logging_enabled: true
-        access_logging_bucket: dependency.logging_bucket.outputs.name
+        # access_logging_bucket: "TODO: Must get this from somewhere else"
         enable_versioning: true
         enable_request_metrics: true
-        tags: local.tags
 
 supported:
 - postgresql
