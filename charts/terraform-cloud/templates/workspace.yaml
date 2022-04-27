@@ -1,4 +1,4 @@
-{{- range (list "postgresql" "redis" "s3") }}
+{{- range (list "opensearch" "postgresql" "redis" "s3") }}
   {{- $resourceType := . }}
   {{- $resourceConfig := (get $.Values .) }}
   {{- if $resourceConfig.enabled }}
