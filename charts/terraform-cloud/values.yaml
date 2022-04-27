@@ -31,6 +31,16 @@ global:
     secretsMountPath: /tmp/secrets
     terraformVersion: 1.0.7
 
+memcached:
+  enabled: false
+  terraform:
+    module:
+      source: app.terraform.io/Mintel/memcached/aws
+      version: "0.0.1-alpha.1"
+    defaultVars:
+      instance_type: cache.t4g.micro
+      num_cache_nodes: 1
+
 opensearch: 
   enabled: false
   terraform:
