@@ -18,6 +18,8 @@ global:
   clusterEnv: "local"
   # -- Kubernetes cluster name
   clusterName: ""
+  # -- Kubernetes cluster region
+  clusterRegion: ""
   # -- Global variables relating to cloud provider
   cloudProvider:
     # -- AWS account ID
