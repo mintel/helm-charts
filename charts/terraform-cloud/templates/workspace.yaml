@@ -1,4 +1,4 @@
-{{- range .Values.supported }}
+{{- range (list "postgresql" "redis" "s3") }}
   {{- $resourceType := . }}
   {{- $resourceConfig := (get $.Values .) }}
   {{- if $resourceConfig.enabled }}

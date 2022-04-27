@@ -21,7 +21,11 @@ spec:
   terraformVersion: {{ $.Values.global.terraform.terraformVersion | quote }}
   variables:
   {{- range $varKey, $varVal := $instanceCfg }}
-  {{- include "mintel_common.terraformVariable" (dict "key" $varKey "value" $varVal) | indent 2 }}
+    {{- if kindIs "map" $varVal}}
+      {{- include "mintel_common.terraformVariable" (merge (dict "key" $varKey) $varVal) | indent 2 }}
+    {{- else }}
+      {{- include "mintel_common.terraformVariable" (dict "key" $varKey "value" $varVal) | indent 2 }}
+    {{- end }}
   {{- end }}
   {{- include "mintel_common.tagsTerraformVariable" $.Values.global | indent 2 }}
 {{- end }}

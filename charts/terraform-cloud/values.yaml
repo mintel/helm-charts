@@ -73,13 +73,15 @@ redis:
       enable_automatic_failover: true
       enable_multi_az: true
       parameter_group_name: "omni-web"
-      custom_parameters: |-
-        [
-          {
-            name  = "maxmemory-policy"
-            value = "allkeys-lfu"
-          }
-        ]
+      custom_parameters:
+        hcl: true
+        value: |-
+          [
+            {
+              name  = "maxmemory-policy"
+              value = "allkeys-lfu"
+            }
+          ]
       apply_immediately: true
 
 s3:
@@ -92,7 +94,3 @@ s3:
         access_logging_enabled: true
         enable_versioning: true
         enable_request_metrics: true
-
-supported:
-- postgresql
-- s3
