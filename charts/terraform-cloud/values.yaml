@@ -31,6 +31,26 @@ global:
     secretsMountPath: /tmp/secrets
     terraformVersion: 1.0.7
 
+opensearch: 
+  enabled: false
+  terraform:
+    module:
+      source: app.terraform.io/Mintel/opensearch/aws
+      version: "0.0.1-alpha.1"
+    defaultVars:
+      instance_count: 3
+      instance_type: "t3.medium.elasticsearch"
+      zone_awareness_enabled: true
+      availability_zone_count: 3
+      ebs_volume_size: 30
+      enable_encrypt_at_rest: true
+      advanced_security_options_enable: "true"
+      advanced_security_options_internal_user_database_enabled: "true"
+      create_iam_service_linked_role: true
+      kibana_hostname_enabled: false
+      domain_hostname_enabled: false
+      create_custom_snapshot_repo: true
+
 postgresql:
   enabled: false
   terraform:
@@ -72,7 +92,6 @@ redis:
       replication_group_size: 2
       enable_automatic_failover: true
       enable_multi_az: true
-      parameter_group_name: "omni-web"
       custom_parameters:
         hcl: true
         value: |-
