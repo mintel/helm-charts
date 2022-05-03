@@ -3,7 +3,12 @@
 {{/* Output ingressClassName */}}
 {{- define "mintel_common.ingress.className" -}}
 {{- if (and .Values.ingress.alb .Values.ingress.alb.enabled) }}
+{{- if eq .Values.ingress.alb.scheme "internet-facing" }}
 {{- print "alb-public-apps-default" -}}
+{{- end }}
+{{- if eq .Values.ingress.alb.scheme "internal" }}
+{{- print "alb-internal-apps-default" -}}
+{{- end }}
 {{- else }}
 {{- print "haproxy" -}}
 {{- end }}

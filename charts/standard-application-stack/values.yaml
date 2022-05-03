@@ -365,6 +365,8 @@ ingress:
   specificTlsHostsYaml: {}
   alb:
     enabled: false
+    # -- Public or private alb (internet-facing / internal)
+    scheme: internet-facing
     # -- Application Version (HTTP / HTTPS)
     backendProtocol: HTTP
     # -- Application Protocol Version (HTTP1 / HTTP2 / GRPC)
