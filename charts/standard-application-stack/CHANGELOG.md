@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v3.14.5] - 2022-05-03
+### Fixed
+- Fixed img.shields.io badge version (as a result of running `helm-docs`)
+
 ## [v3.14.4] - 2022-04-26
 ### Changed
 - Change deprecated topologyKey from `failure-domain.beta.kubernetes.io/zone` to `topology.kubernetes.io/zone`
