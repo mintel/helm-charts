@@ -1,6 +1,6 @@
 # standard-application-stack
 
-![Version: 3.13.0](https://img.shields.io/badge/Version-3.13.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 3.14.0](https://img.shields.io/badge/Version-3.14.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A generic chart to support most common application requirements
 
@@ -112,7 +112,7 @@ A generic chart to support most common application requirements
 | image.repository | string | `"test"` | Docker repository |
 | image.tag | string | `"auto-replaced"` | Container image tag |
 | imagePullSecrets | list | `[]` | Optional array of imagePullSecrets ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/ |
-| ingress | object | `{"alb":{"backendProtocol":"HTTP","backendProtocolVersion":"HTTP1","deregistrationDelay":{"timeoutSeconds":5},"enabled":false,"healthcheck":{"healthyThresholdCount":2,"intervalSeconds":15,"protocol":"HTTP","timeoutSeconds":5,"unhealthyThresholdCount":2}},"allowLivenessUrl":false,"allowReadinessUrl":false,"blackbox":{"enabled":true,"probePath":"/external-health-check"},"enabled":false,"extraAnnotations":{},"extraHosts":[],"specificRulesHostsYaml":{},"specificTlsHostsYaml":{},"tls":true}` | Configure the ingress resource that allows you to access the application from public-internet ref: http://kubernetes.io/docs/user-guide/ingress/ |
+| ingress | object | `{"alb":{"backendProtocol":"HTTP","backendProtocolVersion":"HTTP1","deregistrationDelay":{"timeoutSeconds":5},"enabled":false,"healthcheck":{"healthyThresholdCount":2,"intervalSeconds":15,"protocol":"HTTP","timeoutSeconds":5,"unhealthyThresholdCount":2},"preStopDelay":{"delaySeconds":15,"enabled":true}},"allowLivenessUrl":false,"allowReadinessUrl":false,"blackbox":{"enabled":true,"probePath":"/external-health-check"},"enabled":false,"extraAnnotations":{},"extraHosts":[],"specificRulesHostsYaml":{},"specificTlsHostsYaml":{},"tls":true}` | Configure the ingress resource that allows you to access the application from public-internet ref: http://kubernetes.io/docs/user-guide/ingress/ |
 | ingress.alb.backendProtocol | string | `"HTTP"` | Application Version (HTTP / HTTPS) |
 | ingress.alb.backendProtocolVersion | string | `"HTTP1"` | Application Protocol Version (HTTP1 / HTTP2 / GRPC) |
 | ingress.alb.healthcheck.healthyThresholdCount | int | `2` | Success threshold |
@@ -120,6 +120,8 @@ A generic chart to support most common application requirements
 | ingress.alb.healthcheck.protocol | string | `"HTTP"` | Healthcheck protocol |
 | ingress.alb.healthcheck.timeoutSeconds | int | `5` | Timeout seconds |
 | ingress.alb.healthcheck.unhealthyThresholdCount | int | `2` | Failure threshold |
+| ingress.alb.preStopDelay.delaySeconds | int | `15` | The delay (sleep) to wait for. IMPORTANT: The terminationGracePeriodSeconds must be greater than this. |
+| ingress.alb.preStopDelay.enabled | bool | `true` | Enable an additional delay when the container is shutdown of delaySeconds. This allows ALB to fully de-register the pod (allows zero-downtime rollouts) |
 | ingress.allowLivenessUrl | bool | `false` | Set to true to allow the liveness URL through the ingress |
 | ingress.allowReadinessUrl | bool | `false` | Set to true to allow the readiness URL through the ingress |
 | ingress.blackbox | object | `{"enabled":true,"probePath":"/external-health-check"}` | Configures annotations defining blackbox endpoints |
@@ -247,6 +249,7 @@ A generic chart to support most common application requirements
 | strategy.maxSurge | string | `"15%"` | Optional argument to define maximum number of pods allowed over defined replicas |
 | strategy.maxUnavailable | string | `"10%"` | Optional argument to define maximum number of pods that can be unavailable during update |
 | strategy.type | string | `"RollingUpdate"` | Type of strategy to use (Recreate or RollingUpdate) |
+| terminationGracePeriodSeconds | int | `30` | Configure terminationGracePeriodSeconds ref: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/ |
 | topologySpreadConstraints.enabled | bool | `true` |  |
 | topologySpreadConstraints.node.enabled | string | `nil` | Set this to true/false to override the default behaviour (enabled for prod only) |
 | topologySpreadConstraints.node.maxSkew | int | `1` |  |
