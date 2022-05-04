@@ -17,3 +17,17 @@ tests:
       - equal:
           path: metadata.name
           value: allow-aws-alb-to-example-app
+  - it: Check ALB NetworkPolicy created if internal alb selected
+    set:
+      global.clusterEnv: qa
+      ingress.enabled: true
+      # Disable default app networkpolicy
+      networkPolicy.enabled: false
+      ingress.alb.enabled: healthyThresholdCount
+      ingress.alb.scheme: internal
+    asserts:
+      - isKind:
+          of: NetworkPolicy
+      - equal:
+          path: metadata.name
+          value: allow-aws-alb-internal-to-example-app
