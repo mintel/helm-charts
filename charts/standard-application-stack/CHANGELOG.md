@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [v3.16.0] - 2022-05-03
+## [v3.15.1] - 2022-05-03
 ### Added
 - Added `allow-aws-alb-internal-to-APP-NAME` NetworkPolicy for apps with an internal alb
 
