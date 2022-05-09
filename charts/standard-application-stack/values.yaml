@@ -531,6 +531,7 @@ oauthProxy:
 kubelock:
   # -- Set to true to enable kubelock
   enabled: false
+  #  nameOverride: ""
 
 # -- Configure the use of k8snotify
 # ref: https://github.com/mintel/k8s-notify
