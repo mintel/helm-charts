@@ -46,7 +46,7 @@
 {{- if eq .backendProtocolVersion "GRPC"}}
 {{- default "/grpc.health.v1.Health/Check" .healthcheck.path }}
 {{- else }}
-{{- default "/external-health-check" .healthcheck.path }}
+{{- default "/readiness" .healthcheck.path }}
 {{- end }}
 {{- end }}
 
