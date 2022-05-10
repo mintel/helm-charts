@@ -725,6 +725,13 @@ cronjobs:
     #   includeElasticsearchSecret: false
     #   includeOpensearchSecret: false
 
+dynamodb:
+  enabled: false
+  #  secretNameOverride: ""
+  #  secretPathOverride: ""
+  #  secretRefreshIntervalOverride: ""
+  #  secretStoreRefOverride: ""
+
 mariadb:
   enabled: false
   #  secretNameOverride: ""

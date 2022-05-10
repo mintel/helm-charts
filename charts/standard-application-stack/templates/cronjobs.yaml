@@ -94,6 +94,12 @@ spec:
                     name: {{ default (include "mintel_common.defaultMariadbSecretName" $) $.Values.mariadb.secretNameOverride }}
                 {{- end }}
                 {{- end }}
+                {{- if (and $.Values.dynamodb $.Values.dynamodb.enabled) }}
+                {{- if .includeDynamodbSecret }}
+                - secretRef:
+                    name: {{ default (include "mintel_common.defaultDynamodbSecretName" $) $.Values.dynamodb.secretNameOverride }}
+                {{- end }}
+                {{- end }}
                 {{- if (and $.Values.postgresql $.Values.postgresql.enabled) }}
                 {{- if .includePostgesqlSecret }}
                 - secretRef:

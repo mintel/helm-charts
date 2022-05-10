@@ -172,6 +172,14 @@ Create a default postgresql external secret name.
 {{- end -}}
 
 {{/*
+Create a default dynamodb external secret name.
+*/}}
+{{- define "mintel_common.defaultDynamodbSecretName" -}}
+{{- $fullname := include "mintel_common.fullname" . }}
+{{- printf "%s-dynamodb" $fullname }}
+{{- end -}}
+
+{{/*
 Create a default redis external secret name.
 */}}
 {{- define "mintel_common.defaultRedisSecretName" -}}
@@ -230,6 +238,9 @@ Build comma separated list of secrets
 {{- end }}
 {{- if (and .Values.mariadb .Values.mariadb.enabled) }}
 {{- $secretList = append $secretList (default (include "mintel_common.defaultMariadbSecretName" .) .Values.mariadb.secretNameOverride) -}}
+{{- end }}
+{{- if (and .Values.dynamodb .Values.dynamodb.enabled) }}
+{{- $secretList = append $secretList (default (include "mintel_common.defaultDynamodbSecretName" .) .Values.dynamodb.secretNameOverride) -}}
 {{- end }}
 {{- if (and .Values.postgresql .Values.postgresql.enabled) }}
 {{- $secretList = append $secretList (default (include "mintel_common.defaultPostgresqlSecretName" .) .Values.postgresql.secretNameOverride) -}}
