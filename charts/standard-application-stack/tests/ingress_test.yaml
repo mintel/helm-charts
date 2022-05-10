@@ -97,7 +97,7 @@ tests:
           value: "200"
       - equal:
           path: metadata.annotations.[alb.ingress.kubernetes.io/healthcheck-path]
-          value: /external-health-check
+          value: /readiness
 
   - it: Check no TLS set if ingressTLSSecrets and specificTlsHostsYaml is empty
     set:
