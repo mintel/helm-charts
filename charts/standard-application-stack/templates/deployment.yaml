@@ -196,6 +196,10 @@ spec:
             - secretRef:
                 name: {{ default (include "mintel_common.defaultPostgresqlSecretName" .) .Values.postgresql.secretNameOverride }}
             {{- end }}
+            {{- if (and .Values.dynamodb .Values.dynamodb.enabled) }}
+            - secretRef:
+                name: {{ default (include "mintel_common.defaultDynamodbSecretName" .) .Values.dynamodb.secretNameOverride }}
+            {{- end }}
             {{- if (and .Values.redis .Values.redis.enabled) }}
             - secretRef:
                 name: {{ default (include "mintel_common.defaultRedisSecretName" .) .Values.redis.secretNameOverride }}
