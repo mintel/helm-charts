@@ -7,9 +7,45 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [v3.16.0] - 2022-05-10
+## [v3.20.1] - 2022-05-12
+### Fixed
+- Disable network policies for local development
+
+## [v3.20.0] - 2022-05-12
 ### Added
 - Added DynamoDB support
+
+## [v3.19.1] - 2022-05-12
+### Fixed
+- Set ALB healthcheck-port to use the oauthProxy port if enabled
+
+## [v3.19.0] - 2022-05-12
+### Changed
+- Refactored logic around ingress extraHosts and oauthProxy.ingressHost to reduce duplication
+
+## [v3.18.0] - 2022-05-12
+### Changed
+- Update oauthProxy to skip-auth for `/healthz`, `/readiness` and `/external-health-check` urls
+
+## [v3.17.3] - 2022-05-11
+### Fixed
+- Fixed logic for setting port of alb network-policy if oauthProxy enabled
+
+## [v3.17.2] - 2022-05-10
+### Fixed
+- Removed default value for oauthProxy.userIdClaim as the default is dependent on other values
+
+## [v3.17.1] - 2022-05-10
+### Fixed
+- Fixed oauth2-proxy logic around using --email-domain to restrict access
+
+## [v3.17.0] - 2022-05-10
+### Added
+- Added DynamoDB support
+
+## [v3.16.0] - 2022-05-10
+### Changed
+- Change the default ALB healthcheck path from `/external-health-check` to `/readiness`
 
 ## [v3.15.1] - 2022-05-03
 ### Added
