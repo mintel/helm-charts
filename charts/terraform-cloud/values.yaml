@@ -49,39 +49,18 @@ opensearch:
     module:
       source: app.terraform.io/Mintel/opensearch/aws
       version: "0.0.1-alpha.1"
-    defaultVars:
-      instance_count: 3
-      instance_type: "t3.medium.elasticsearch"
-      zone_awareness_enabled: true
-      availability_zone_count: 3
-      ebs_volume_size: 30
-      enable_encrypt_at_rest: true
-      advanced_security_options_enable: "true"
-      advanced_security_options_internal_user_database_enabled: "true"
-      create_iam_service_linked_role: true
-      kibana_hostname_enabled: false
-      domain_hostname_enabled: false
-      create_custom_snapshot_repo: true
+    defaultVars: {}
 
 postgresql:
   enabled: false
   terraform:
     module:
       source: app.terraform.io/Mintel/rds/aws
-      version: "0.0.1-alpha.1"
+      version: "0.0.1-alpha.6"
     defaultVars:
       engine: "postgres"
       engine_version: "13"
       port: 5432
-      instance_type: "db.t3.micro"
-      master_username: "admin"
-      allocated_storage: 5
-      max_allocated_storage: 100
-      auto_minor_version_upgrade: true
-      multi_az: true
-      backup_retention_period: 14
-      enable_deletion_protection: true
-      apply_immediately: true
     ## Workload resources are generated from the 'instances' map below. If postgresql.enabled is true and
     ## postgresql.terraform.instances is undefined then a default instance will be created with all the values from 
     ## postgresql.terraform.defaultVars; "name" and "db_name" will be auto-generated as explained below. Any items added
@@ -99,21 +78,7 @@ redis:
     module:
       source: app.terraform.io/Mintel/redis/aws"
       version: "0.0.1-alpha.1"
-    defaultVars:
-      instance_type: "cache.t2.micro"
-      replication_group_size: 2
-      enable_automatic_failover: true
-      enable_multi_az: true
-      custom_parameters:
-        hcl: true
-        value: |-
-          [
-            {
-              name  = "maxmemory-policy"
-              value = "allkeys-lfu"
-            }
-          ]
-      apply_immediately: true
+    defaultVars: {}
 
 s3:
   enabled: false
@@ -121,7 +86,4 @@ s3:
     module:
       source: app.terraform.io/Mintel/private-s3-bucket/aws
       version: "0.0.1-alpha.1"
-    defaultVars:
-        access_logging_enabled: true
-        enable_versioning: true
-        enable_request_metrics: true
+    defaultVars: {}
