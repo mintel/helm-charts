@@ -20,6 +20,9 @@
     - --oidc-groups-claim=groups
     - --metrics-address=http://0.0.0.0:9090
     - --email-domain={{ default "*" .proxiedService.oauthProxy.emailDomain }}
+    {{- if .proxiedService.oauthProxy.emailDomain }}
+    - --profile-url={{ default "https://oauth.mintel.com/userinfo/" (printf "%s/userinfo/" .proxiedService.oauthProxy.issuerUrl) .proxiedService.oauthProxy.profileUrl }}
+    {{- end }}
     {{- with .proxiedService.oauthProxy.allowedGroups }}
     - --allowed-group={{ join "," . }}
     {{- end }}
@@ -27,7 +30,11 @@
     {{- if (eq .proxiedService.oauthProxy.type "portal") }}
     - --insecure-oidc-allow-unverified-email=true
     - --cookie-secure=false
+    {{- if .proxiedService.oauthProxy.emailDomain }}
+    - --user-id-claim={{ default "email" .proxiedService.oauthProxy.userIdClaim }}
+    {{- else }}
     - --user-id-claim={{ default "sub" .proxiedService.oauthProxy.userIdClaim }}
+    {{- end }}
     - --scope={{ default "openid profile email" .proxiedService.oauthProxy.scope }}
     {{- end }}
   env:
