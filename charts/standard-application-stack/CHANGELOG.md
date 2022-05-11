@@ -6,10 +6,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
-
 ## [v3.16.0] - 2022-05-10
 ### Added
 - Added DynamoDB support
+
+## [v3.16.0] - 2022-05-10
+### Changed
+- Change the default ALB healthcheck path from `/external-health-check` to `/readiness`
 
 ## [v3.15.1] - 2022-05-03
 ### Added

@@ -391,7 +391,7 @@ ingress:
       # -- Period seconds
       intervalSeconds: 15
       # -- Healthcheck Request path
-      # path: /external-health-check
+      # path: /readiness
       # -- Port (defaults to port specified in Ingress used to direct traffic to service)
       # port: "8000"
       # -- Timeout seconds
