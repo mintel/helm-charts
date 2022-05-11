@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v3.17.2] - 2022-05-10
+### Fixed
+- Removed default value for oauthProxy.userIdClaim as the default is dependent on other values
+
 ## [v3.17.1] - 2022-05-10
 ### Fixed
 - Fixed oauth2-proxy logic around using --email-domain to restrict access
