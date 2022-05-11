@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+<<<<<<< HEAD
 ## [v3.20.1] - 2022-05-12
 ### Fixed
 - Disable network policies for local development
@@ -27,6 +28,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Update oauthProxy to skip-auth for `/healthz`, `/readiness` and `/external-health-check` urls
 
+=======
+>>>>>>> Fix alb network policy if oauthProxy enabled
 ## [v3.17.3] - 2022-05-11
 ### Fixed
 - Fixed logic for setting port of alb network-policy if oauthProxy enabled
