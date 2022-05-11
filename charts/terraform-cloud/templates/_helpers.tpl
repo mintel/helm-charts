@@ -9,10 +9,10 @@
 apiVersion: app.terraform.io/v1alpha1
 kind: Workspace
 metadata:
-  name: "{{ $resourceType }}-{{ .name }}"
+  name: "{{ $global.clusterEnv }}-{{ $global.clusterRegion }}-{{ $global.clusterName }}-{{ .name }}-{{ $resourceType }}"
   namespace: {{ $.Release.Namespace | quote }}
 spec:
-  agentPoolID: "aws_{{ $global.clusterEnv }}"
+  agentPoolID: {{ has $global.clusterEnv (list "prod" "logs") | ternary "apool-RhENdyZD1fV8Kdde" "apool-ARFKgcQQcY3T91bk" | quote }}
   module:
     source: {{ $moduleSource | quote }}
     version: {{ $moduleVersion | quote }}
@@ -29,6 +29,8 @@ spec:
     {{- end }}
   {{- end }}
   {{- include "mintel_common.tfVar" (dict "key" "tags" "value" (printf "{\n  Owner       = \"%s\"\n  Project     = \"%s\"\n  Application = \"%s\"\n}" $global.owner $global.partOf $global.name ) "hcl" true) | indent 2}}
+  {{- include "mintel_common.tfVar" (dict "key" "aws_account_name" "value" $global.clusterEnv) | indent 2 }}
+  {{- include "mintel_common.tfVar" (dict "key" "eks_cluster_name" "value" $global.clusterName) | indent 2 }}
   {{- include "mintel_common.tfVar" (dict "key" "region" "value" $global.clusterRegion) | indent 2 }}
 {{- end }}
 {{- end }}
