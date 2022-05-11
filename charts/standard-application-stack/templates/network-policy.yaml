@@ -68,8 +68,13 @@ spec:
       - ipBlock:
           cidr: "${AWS_PUBLIC_SUBNET_CIDR_BLOCKS_2}"
       ports:
-      - port: {{ default .Values.ingress.alb.healthcheck.port .Values.port }}
+      {{- if .Values.oauthProxy.enabled }}
+      - port: {{ default "4180" .Values.ingress.alb.healthcheck.port }}
         protocol: TCP
+      {{- else }}
+      - port: {{ default .Values.port .Values.ingress.alb.healthcheck.port }}
+        protocol: TCP
+      {{- end }}
 {{- end }}
 {{- if eq .Values.ingress.alb.scheme "internal" }}
 # On an internal alb, use the private-app subnet CIDR blocks
@@ -94,7 +99,12 @@ spec:
       - ipBlock:
           cidr: "${AWS_PRIVATE_APP_SUBNET_CIDR_BLOCKS_2}"
       ports:
-      - port: {{ default .Values.ingress.alb.healthcheck.port .Values.port }}
+      {{- if .Values.oauthProxy.enabled }}
+      - port: {{ default "4180" .Values.ingress.alb.healthcheck.port }}
         protocol: TCP
+      {{- else }}
+      - port: {{ default .Values.port .Values.ingress.alb.healthcheck.port }}
+        protocol: TCP
+      {{- end }}
 {{- end }}
 {{- end }}
