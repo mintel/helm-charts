@@ -46,6 +46,17 @@ tests:
           path: metadata.annotations.[alb.ingress.kubernetes.io/healthcheck-port]
           value: "9999"
 
+  - it: Check ALB health-check port with oauthProxy enabled
+    set:
+      global.clusterEnv: qa
+      ingress.enabled: true
+      ingress.alb.enabled: true
+      oauthProxy.enabled: true
+    asserts:
+      - equal:
+          path: metadata.annotations.[alb.ingress.kubernetes.io/healthcheck-port]
+          value: "4180"
+
   - it: Check ALB gRPC default settings
     set:
       global.clusterEnv: qa
