@@ -5,7 +5,7 @@
   image: {{ default "quay.io/oauth2-proxy/oauth2-proxy:v7.1.3" .proxiedService.oauthProxy.image }}
   imagePullPolicy: {{ default "IfNotPresent" .Values.image.pullPolicy }}
   args:
-    - --redirect-url=https://{{ .proxiedService.oauthProxy.ingressHost }}/oauth2/callback
+    - --redirect-url=https://{{ default .Values.ingress.defaultHost .proxiedService.oauthProxy.ingressHost }}/oauth2/callback
     - --upstream=http://localhost:{{ .proxiedService.port }}
     - --http-address=http://0.0.0.0:4180
     - --provider=oidc
