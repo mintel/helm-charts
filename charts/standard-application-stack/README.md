@@ -1,6 +1,6 @@
 # standard-application-stack
 
-![Version: 3.19.1](https://img.shields.io/badge/Version-3.19.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 3.20.0](https://img.shields.io/badge/Version-3.20.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A generic chart to support most common application requirements
 
@@ -229,6 +229,7 @@ A generic chart to support most common application requirements
 | resources | object | `{"limits":{},"requests":{}}` | Container resource requests and limits ref: http://kubernetes.io/docs/user-guide/compute-resources |
 | resources.limits | object | `{}` | The resource limits for the container |
 | resources.requests | object | `{}` | The requested resources for the container |
+| s3.enabled | bool | `false` |  |
 | securityContext | object | `{}` | Security context for the container ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/ |
 | service | object | `{"annotations":{},"enabled":true,"labels":{},"type":"ClusterIP"}` | Kubernetes svc configutarion |
 | service.annotations | object | `{}` | Annotations to add to service |
