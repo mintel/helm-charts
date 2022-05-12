@@ -10,6 +10,9 @@
     - --http-address=http://0.0.0.0:4180
     - --provider=oidc
     - --skip-auth-regex=/ping
+    - --skip-auth-regex=/healthz
+    - --skip-auth-regex=/readiness
+    - --skip-auth-regex=/external-health-check
     {{- range .proxiedService.oauthProxy.skipAuthRegexes }}
     - --skip-auth-regex={{ . }}
     {{- end }}
