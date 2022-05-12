@@ -122,3 +122,113 @@ tests:
     asserts:
       - isNotEmpty:
           path: spec.tls
+
+  - it: Check extraHosts
+    set:
+      global.clusterEnv: qa
+      ingress.enabled: true
+      ingress.defaultHost: test.default.com
+      ingress.extraHosts:
+        - name: extra.default.com
+    asserts:
+      - equal:
+          path: spec.rules[0].host
+          value: test.default.com
+      - equal:
+          path: spec.rules[1].host
+          value: extra.default.com
+
+  - it: Check extraHosts with oauthProxy.ingressHost (different)
+    set:
+      global.clusterEnv: qa
+      ingress.enabled: true
+      ingress.defaultHost: test.default.com
+      ingress.extraHosts:
+        - name: extra.default.com
+      oauthProxy.enabled: true
+      oauthProxy.ingressHost: auth.default.com
+    asserts:
+      - equal:
+          path: spec.rules[0].host
+          value: test.default.com
+      - equal:
+          path: spec.rules[1].host
+          value: extra.default.com
+      - equal:
+          path: spec.rules[2].host
+          value: auth.default.com
+
+  - it: Check extraHosts with oauthProxy.ingressHost (same as extra host)
+    set:
+      global.clusterEnv: qa
+      ingress.enabled: true
+      ingress.defaultHost: test.default.com
+      ingress.extraHosts:
+        - name: auth.default.com
+      oauthProxy.enabled: true
+      oauthProxy.ingressHost: auth.default.com
+    asserts:
+      - equal:
+          path: spec.rules[0].host
+          value: test.default.com
+      - equal:
+          path: spec.rules[1].host
+          value: auth.default.com
+
+  - it: Check extraHosts with TLS
+    set:
+      global.clusterEnv: qa
+      ingress.enabled: true
+      ingress.tls: true
+      global.ingressTLSSecrets.default_com: star-default-com
+      ingress.defaultHost: test.default.com
+      ingress.extraHosts:
+        - name: extra.default.com
+    asserts:
+      - equal:
+          path: spec.tls[0].hosts[0]
+          value: test.default.com
+      - equal:
+          path: spec.tls[0].hosts[1]
+          value: extra.default.com
+
+  - it: Check extraHosts with TLS and oauthProxy.ingressHost (different)
+    set:
+      global.clusterEnv: qa
+      ingress.enabled: true
+      ingress.tls: true
+      global.ingressTLSSecrets.default_com: star-default-com
+      ingress.defaultHost: test.default.com
+      ingress.extraHosts:
+        - name: extra.default.com
+      oauthProxy.enabled: true
+      oauthProxy.ingressHost: auth.default.com
+    asserts:
+      - equal:
+          path: spec.tls[0].hosts[0]
+          value: test.default.com
+      - equal:
+          path: spec.tls[0].hosts[1]
+          value: extra.default.com
+      - equal:
+          path: spec.tls[0].hosts[2]
+          value: auth.default.com
+
+  - it: Check extraHosts with TLS and oauthProxy.ingressHost (same as extra host)
+    set:
+      global.clusterEnv: qa
+      ingress.enabled: true
+      ingress.tls: true
+      global.ingressTLSSecrets.default_com: star-default-com
+      ingress.defaultHost: test.default.com
+      ingress.extraHosts:
+        - name: auth.default.com
+      oauthProxy.enabled: true
+      oauthProxy.ingressHost: auth.default.com
+    asserts:
+      - equal:
+          path: spec.tls[0].hosts[0]
+          value: test.default.com
+      - equal:
+          path: spec.tls[0].hosts[1]
+          value: auth.default.com
