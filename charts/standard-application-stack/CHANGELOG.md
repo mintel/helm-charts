@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v3.18.0] - 2022-05-12
+### Changed
+- Update oauthProxy to skip-auth for `/healthz`, `/readiness` and `/external-health-check` urls
+
 ## [v3.17.3] - 2022-05-11
 ### Fixed
 - Fixed logic for setting port of alb network-policy if oauthProxy enabled
