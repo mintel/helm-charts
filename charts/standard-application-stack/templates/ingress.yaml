@@ -78,7 +78,7 @@ metadata:
     alb.ingress.kubernetes.io/success-codes: "{{ include "mintel_common.ingress.alb.healthcheck.successCodes" . }}"
     alb.ingress.kubernetes.io/healthcheck-path: {{ include "mintel_common.ingress.alb.healthcheck.path" . }}
     alb.ingress.kubernetes.io/healthcheck-interval-seconds: "{{ default 15 .healthcheck.intervalSeconds }}"
-    alb.ingress.kubernetes.io/healthcheck-port: "{{ default $.Values.port .healthcheck.port }}"
+    alb.ingress.kubernetes.io/healthcheck-port: "{{ include "mintel_common.ingress.alb.healthcheck.port" $ }}"
     alb.ingress.kubernetes.io/healthcheck-protocol: {{ include "mintel_common.ingress.alb.healthcheck.protocol" . }}
     alb.ingress.kubernetes.io/healthcheck-timeout-seconds: "{{ default 5 .healthcheck.timeoutSeconds }}"
     alb.ingress.kubernetes.io/healthy-threshold-count: "{{ default 2 .healthcheck.healthyThresholdCount }}"

@@ -50,6 +50,15 @@
 {{- end }}
 {{- end }}
 
+{{/* Set default ALB healthcheck port */}}
+{{- define "mintel_common.ingress.alb.healthcheck.port" -}}
+{{- if .Values.oauthProxy.enabled }}
+{{- default 4180 .Values.ingress.alb.healthcheck.port }}
+{{- else }}
+{{- default .Values.port .Values.ingress.alb.healthcheck.port }}
+{{- end }}
+{{- end }}
+
 {{/* Set default ALB healthcheck protocol */}}
 {{- define "mintel_common.ingress.alb.healthcheck.protocol" -}}
 {{- if has .healthcheck.protocol (list "HTTP" "HTTPS" ) }}
