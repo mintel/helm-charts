@@ -125,6 +125,7 @@ spec:
                   {{- end }}
           {{- end }}
     {{- range .Values.ingress.extraHosts }}
+    {{- if (or (not $.Values.oauthProxy.enabled) (ne $.Values.oauthProxy.ingressHost .name)) }}
     - host: {{ .name }}
       http:
         paths:
@@ -150,6 +151,7 @@ spec:
                   number: {{ default $.Values.port .servicePort }}
                   {{- end }}
           {{- end }}
+    {{- end }}
     {{- end }}
     {{- if (and .Values.oauthProxy.enabled .Values.oauthProxy.ingressHost) }}
     - host: {{ .Values.oauthProxy.ingressHost }}
@@ -188,8 +190,8 @@ spec:
     {{- $domainHosts = append $domainHosts .name -}}
     {{- end -}}
     {{- end -}}
-    {{- if (and .Values.oauthProxy.enabled .Values.oauthProxy.ingressHost) -}}
-    {{- $domainHosts = append $domainHosts .Values.oauthProxy.ingressHost }}
+    {{- if (and $.Values.oauthProxy $.Values.oauthProxy.ingressHost) }}
+    {{- $domainHosts = append $domainHosts $.Values.oauthProxy.ingressHost }}
     {{- end }}
     {{- if $domainUsed }}
     - hosts:
