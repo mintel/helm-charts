@@ -204,6 +204,14 @@ Create a default opensearch external secret name.
 {{- end -}}
 
 {{/*
+Create a default s3 external secret name.
+*/}}
+{{- define "mintel_common.defaultS3SecretName" -}}
+{{- $fullname := include "mintel_common.fullname" . }}
+{{- printf "%s-s3" $fullname }}
+{{- end -}}
+
+{{/*
 Return the proper Docker Image Registry Secret Names
 */}}
 {{- define "mintel_common.imagePullSecrets" -}}
@@ -247,6 +255,9 @@ Build comma separated list of secrets
 {{- end }}
 {{- if (and .Values.redis .Values.redis.enabled) }}
 {{- $secretList = append $secretList (default (include "mintel_common.defaultRedisSecretName" .) .Values.redis.secretNameOverride) -}}
+{{- end }}
+{{- if (and .Values.s3 .Values.s3.enabled) }}
+{{- $secretList = append $secretList (default (include "mintel_common.defaultS3SecretName" .) .Values.s3.secretNameOverride) -}}
 {{- end }}
 {{- if (and .Values.elasticsearch .Values.elasticsearch.enabled) }}
 {{- $secretList = append $secretList (default (include "mintel_common.defaultElasticsearchSecretName" .) .Values.elasticsearch.secretNameOverride) -}}

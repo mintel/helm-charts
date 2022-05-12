@@ -810,6 +810,13 @@ redis:
   tls:
     enabled: false
 
+s3:
+  enabled: false
+  #  secretNameOverride: ""
+  #  secretPathOverride: ""
+  #  secretRefreshIntervalOverride: ""
+  #  secretStoreRefOverride: ""
+
 # -- Helper to sync a local directory with Git
 # ref: https://github.com/kubernetes/git-sync
 gitSyncSidecar:
