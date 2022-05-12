@@ -7,8 +7,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 ## [v3.20.1] - 2022-05-12
 ### Fixed
 - Disable network policies for local development
@@ -25,17 +23,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Refactored logic around ingress extraHosts and oauthProxy.ingressHost to reduce duplication
 
-=======
->>>>>>> Update oauth2proxy to skip healthcheck endpoints (#106)
 ## [v3.18.0] - 2022-05-12
 ### Changed
 - Update oauthProxy to skip-auth for `/healthz`, `/readiness` and `/external-health-check` urls
 
-<<<<<<< HEAD
-=======
->>>>>>> Fix alb network policy if oauthProxy enabled
-=======
->>>>>>> Update oauth2proxy to skip healthcheck endpoints (#106)
 ## [v3.17.3] - 2022-05-11
 ### Fixed
 - Fixed logic for setting port of alb network-policy if oauthProxy enabled
@@ -55,6 +46,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [v3.16.0] - 2022-05-10
 ### Changed
 - Change the default ALB healthcheck path from `/external-health-check` to `/readiness`
+
 
 ## [v3.15.1] - 2022-05-03
 ### Added
