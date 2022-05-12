@@ -1,0 +1,114 @@
+suite: Test OAuth2Proxy Sidecar
+templates:
+  - deployment.yaml
+release:
+  namespace: test-namespace
+tests:
+  - it: Check sidecar present if enabled
+    set:
+      global.clusterEnv: qa
+      global.name: test-app
+      oauthProxy.enabled: true
+    asserts:
+      - isKind:
+          of: Deployment
+      - equal:
+          path: metadata.namespace
+          value: test-namespace
+      - hasDocuments:
+          count: 1
+      - equal:
+          path: spec.template.spec.containers[1].name
+          value: auth-proxy
+  - it: Check default container args
+    set:
+      global.clusterEnv: qa
+      global.name: test-app
+      oauthProxy.enabled: true
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[1].args
+          value:
+            - --redirect-url=https:///oauth2/callback
+            - --upstream=http://localhost:8000
+            - --http-address=http://0.0.0.0:4180
+            - --provider=oidc
+            - --skip-auth-regex=/ping
+            - --skip-auth-regex=/healthz
+            - --skip-auth-regex=/readiness
+            - --skip-auth-regex=/external-health-check
+            - --skip-provider-button=true
+            - --skip-jwt-bearer-tokens=true
+            - --ssl-insecure-skip-verify=true
+            - --ssl-upstream-insecure-skip-verify=true
+            - --oidc-groups-claim=groups
+            - --metrics-address=http://0.0.0.0:9090
+            - --email-domain=*
+            - --oidc-issuer-url=https://oauth.mintel.com
+            - --insecure-oidc-allow-unverified-email=true
+            - --cookie-secure=false
+            - --user-id-claim=sub
+            - --scope=openid profile email
+  - it: Check setting skip-auth-regex from extra passed in values
+    set:
+      global.clusterEnv: qa
+      global.name: test-app
+      oauthProxy.enabled: true
+      oauthProxy.skipAuthRegexes: ['/readyz']
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[1].args
+          value:
+            - --redirect-url=https:///oauth2/callback
+            - --upstream=http://localhost:8000
+            - --http-address=http://0.0.0.0:4180
+            - --provider=oidc
+            - --skip-auth-regex=/ping
+            - --skip-auth-regex=/healthz
+            - --skip-auth-regex=/readiness
+            - --skip-auth-regex=/external-health-check
+            - --skip-auth-regex=/readyz
+            - --skip-provider-button=true
+            - --skip-jwt-bearer-tokens=true
+            - --ssl-insecure-skip-verify=true
+            - --ssl-upstream-insecure-skip-verify=true
+            - --oidc-groups-claim=groups
+            - --metrics-address=http://0.0.0.0:9090
+            - --email-domain=*
+            - --oidc-issuer-url=https://oauth.mintel.com
+            - --insecure-oidc-allow-unverified-email=true
+            - --cookie-secure=false
+            - --user-id-claim=sub
+            - --scope=openid profile email
+  - it: Check setting skip-auth-regex from overridden health-check values
+    set:
+      global.clusterEnv: qa
+      global.name: test-app
+      oauthProxy.enabled: true
+      liveness.path: /healthz-overridden
+      readiness.path: /readiness-overridden
+      ingress.blackbox.probePath: /external-health-check-overridden
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[1].args
+          value:
+            - --redirect-url=https:///oauth2/callback
+            - --upstream=http://localhost:8000
+            - --http-address=http://0.0.0.0:4180
+            - --provider=oidc
+            - --skip-auth-regex=/ping
+            - --skip-auth-regex=/healthz-overridden
+            - --skip-auth-regex=/readiness-overridden
+            - --skip-auth-regex=/external-health-check-overridden
+            - --skip-provider-button=true
+            - --skip-jwt-bearer-tokens=true
+            - --ssl-insecure-skip-verify=true
+            - --ssl-upstream-insecure-skip-verify=true
+            - --oidc-groups-claim=groups
+            - --metrics-address=http://0.0.0.0:9090
+            - --email-domain=*
+            - --oidc-issuer-url=https://oauth.mintel.com
+            - --insecure-oidc-allow-unverified-email=true
+            - --cookie-secure=false
+            - --user-id-claim=sub
+            - --scope=openid profile email
