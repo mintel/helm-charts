@@ -151,6 +151,25 @@ spec:
                   {{- end }}
           {{- end }}
     {{- end }}
+    {{- if (and .Values.oauthProxy.enabled .Values.oauthProxy.ingressHost) }}
+    - host: {{ .Values.oauthProxy.ingressHost }}
+      http:
+        paths:
+          {{- if (eq (include "common.capabilities.ingress.apiVersion" .) "networking.k8s.io/v1beta1") }}
+          - path: /
+            backend:
+              serviceName: {{ include "mintel_common.fullname" . }}
+              servicePort: 4180
+          {{- else }}
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ include "mintel_common.fullname" . }}
+                port:
+                  number: 4180
+          {{- end }}
+    {{- end }}
     {{- with .Values.ingress.specificRulesHostsYaml }}
     {{- toYaml . | nindent 4 }}
     {{- end }}
@@ -169,6 +188,9 @@ spec:
     {{- $domainHosts = append $domainHosts .name -}}
     {{- end -}}
     {{- end -}}
+    {{- if (and .Values.oauthProxy.enabled .Values.oauthProxy.ingressHost) -}}
+    {{- $domainHosts = append $domainHosts .Values.oauthProxy.ingressHost }}
+    {{- end }}
     {{- if $domainUsed }}
     - hosts:
         {{- toYaml $domainHosts | nindent 8 }}

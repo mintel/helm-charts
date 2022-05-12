@@ -402,6 +402,9 @@ app.mintel.com/k8s-notify.team: {{ default .Values.global.owner .Values.k8snotif
   {{- range .Values.ingress.extraHosts }}
   {{- $hosts = append $hosts .name -}}
   {{- end }}
+  {{- if (and .Values.oauthProxy.enabled .Values.oauthProxy.ingressHost) -}}
+  {{- $hosts = append $hosts .Values.oauthProxy.ingressHost }}
+  {{- end }}
   value: {{ join "," $hosts }}
 {{- end }}
 {{- end -}}
