@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Fix indenting issue in standard deployment
 
-## [v3.21.0] - 2022-05-12
+## [v3.21.0] - 2022-05-13
 ### Fixed
 - extraSecrets pathOverride was not referenced correctly
 
