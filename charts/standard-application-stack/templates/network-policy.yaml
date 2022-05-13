@@ -41,18 +41,26 @@ spec:
           protocol: {{ .protocol }}
         {{- end }}
 {{- end }}
-
 {{- end }}
 
 {{- if and .Values.ingress.enabled .Values.ingress.alb.enabled }}
-{{- if eq .Values.ingress.alb.scheme "internet-facing" }}
-# We generate this network policy if routing through the public ALB
-# to allow the health-checks on the registered targets to pass
+# We generate this network policy if routing through the public or
+# internal ALB to allow Ingress traffic and healthchecks
+#
+# If oauthProxy is enabled, by default we assume that traffic is allowed
+# to the oauthProxy port 4180, otherwise the main container port.
+# Healthchecks can be on a different port to the main application port, so
+# we allow this to be specified as well.
 ---
 kind: NetworkPolicy
 apiVersion: {{ include "common.capabilities.networkpolicy.apiVersion" . }}
 metadata:
+  {{- if eq .Values.ingress.alb.scheme "internet-facing" }}
   name: {{ printf "allow-aws-alb-to-%s" .Values.global.name }}
+  {{- else }}
+  # Assume internal facing
+  name: {{ printf "allow-aws-alb-internal-to-%s" .Values.global.name }}
+  {{- end }}
   namespace: {{ .Release.Namespace }}
   labels: {{ include "mintel_common.labels" . | nindent 4 }}
   annotations: {{ include "mintel_common.commonAnnotations" . | nindent 4 }}
@@ -62,51 +70,36 @@ spec:
       app.kubernetes.io/part-of: {{ .Values.global.partOf }}
   ingress:
     - from:
+      {{- if eq .Values.ingress.alb.scheme "internet-facing" }}
       - ipBlock:
           cidr: "${AWS_PUBLIC_SUBNET_CIDR_BLOCKS_0}"
       - ipBlock:
           cidr: "${AWS_PUBLIC_SUBNET_CIDR_BLOCKS_1}"
       - ipBlock:
           cidr: "${AWS_PUBLIC_SUBNET_CIDR_BLOCKS_2}"
-      ports:
-      {{- if .Values.oauthProxy.enabled }}
-      - port: {{ default "4180" .Values.ingress.alb.healthcheck.port }}
-        protocol: TCP
       {{- else }}
-      - port: {{ default .Values.port .Values.ingress.alb.healthcheck.port }}
-        protocol: TCP
-      {{- end }}
-{{- end }}
-{{- if eq .Values.ingress.alb.scheme "internal" }}
-# On an internal alb, use the private-app subnet CIDR blocks
----
-kind: NetworkPolicy
-apiVersion: {{ include "common.capabilities.networkpolicy.apiVersion" . }}
-metadata:
-  name: {{ printf "allow-aws-alb-internal-to-%s" .Values.global.name }}
-  namespace: {{ .Release.Namespace }}
-  labels: {{ include "mintel_common.labels" . | nindent 4 }}
-  annotations: {{ include "mintel_common.commonAnnotations" . | nindent 4 }}
-spec:
-  podSelector:
-    matchLabels:
-      app.kubernetes.io/part-of: {{ .Values.global.partOf }}
-  ingress:
-    - from:
+      # Assume internal facing
       - ipBlock:
           cidr: "${AWS_PRIVATE_APP_SUBNET_CIDR_BLOCKS_0}"
       - ipBlock:
           cidr: "${AWS_PRIVATE_APP_SUBNET_CIDR_BLOCKS_1}"
       - ipBlock:
           cidr: "${AWS_PRIVATE_APP_SUBNET_CIDR_BLOCKS_2}"
-      ports:
-      {{- if .Values.oauthProxy.enabled }}
-      - port: {{ default "4180" .Values.ingress.alb.healthcheck.port }}
-        protocol: TCP
-      {{- else }}
-      - port: {{ default .Values.port .Values.ingress.alb.healthcheck.port }}
-        protocol: TCP
       {{- end }}
-{{- end }}
+      ports:
+      {{ $ports := list }}
+      {{- if .Values.oauthProxy.enabled }}
+      {{ $ports = append $ports 4180 }}
+      {{- else }}
+      {{ $ports = append $ports .Values.port}}
+      {{- end }}
+      {{ if .Values.ingress.alb.healthcheck.port }}
+      {{ $ports = append $ports .Values.ingress.alb.healthcheck.port }}
+      {{- end }}
+      {{ $ports := sortAlpha $ports | uniq }}
+      {{- range $ports }}
+        - port: {{ . }}
+          protocol: TCP
+      {{- end }}
 {{- end }}
 {{- end }}

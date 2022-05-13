@@ -17,13 +17,23 @@ tests:
       - equal:
           path: metadata.name
           value: allow-aws-alb-to-example-app
+      - equal:
+          path: spec.ingress[0].from
+          value:
+            - ipBlock:
+                cidr: ${AWS_PUBLIC_SUBNET_CIDR_BLOCKS_0}
+            - ipBlock:
+                cidr: ${AWS_PUBLIC_SUBNET_CIDR_BLOCKS_1}
+            - ipBlock:
+                cidr: ${AWS_PUBLIC_SUBNET_CIDR_BLOCKS_2}
+
   - it: Check ALB NetworkPolicy created if internal alb selected
     set:
       global.clusterEnv: qa
       ingress.enabled: true
       # Disable default app networkpolicy
       networkPolicy.enabled: false
-      ingress.alb.enabled: healthyThresholdCount
+      ingress.alb.enabled: true
       ingress.alb.scheme: internal
     asserts:
       - isKind:
@@ -31,3 +41,99 @@ tests:
       - equal:
           path: metadata.name
           value: allow-aws-alb-internal-to-example-app
+      - equal:
+          path: spec.ingress[0].from
+          value:
+            - ipBlock:
+                cidr: ${AWS_PRIVATE_APP_SUBNET_CIDR_BLOCKS_0}
+            - ipBlock:
+                cidr: ${AWS_PRIVATE_APP_SUBNET_CIDR_BLOCKS_1}
+            - ipBlock:
+                cidr: ${AWS_PRIVATE_APP_SUBNET_CIDR_BLOCKS_2}
+
+  - it: Check ALB NetworkPolicy ports set for default conatiner
+    set:
+      global.clusterEnv: qa
+      ingress.enabled: true
+      # Disable default app networkpolicy
+      networkPolicy.enabled: false
+      ingress.alb.enabled: true
+      port: 8080
+    asserts:
+      - isKind:
+          of: NetworkPolicy
+      - equal:
+          path: metadata.name
+          value: allow-aws-alb-to-example-app
+      - equal:
+          path: spec.ingress[0].ports
+          value:
+            - port: 8080
+              protocol: TCP
+
+  - it: Check ALB NetworkPolicy ports set with oauth2proxy
+    set:
+      global.clusterEnv: qa
+      ingress.enabled: true
+      # Disable default app networkpolicy
+      networkPolicy.enabled: false
+      ingress.alb.enabled: true
+      port: 8080
+      oauthProxy.enabled: true
+    asserts:
+      - isKind:
+          of: NetworkPolicy
+      - equal:
+          path: metadata.name
+          value: allow-aws-alb-to-example-app
+      - equal:
+          path: spec.ingress[0].ports
+          value:
+            - port: 4180
+              protocol: TCP
+
+  - it: Check ALB NetworkPolicy ports set with oauth2proxy and healthcheck
+    set:
+      global.clusterEnv: qa
+      ingress.enabled: true
+      # Disable default app networkpolicy
+      networkPolicy.enabled: false
+      ingress.alb.enabled: true
+      port: 8080
+      oauthProxy.enabled: true
+      ingress.alb.healthcheck.port: 9999
+    asserts:
+      - isKind:
+          of: NetworkPolicy
+      - equal:
+          path: metadata.name
+          value: allow-aws-alb-to-example-app
+      - equal:
+          path: spec.ingress[0].ports
+          value:
+            - port: 4180
+              protocol: TCP
+            - port: 9999
+              protocol: TCP
+
+  - it: Check ALB NetworkPolicy ports are unique
+    set:
+      global.clusterEnv: qa
+      ingress.enabled: true
+      # Disable default app networkpolicy
+      networkPolicy.enabled: false
+      ingress.alb.enabled: true
+      port: 4180
+      oauthProxy.enabled: true
+      ingress.alb.healthcheck.port: 4180
+    asserts:
+      - isKind:
+          of: NetworkPolicy
+      - equal:
+          path: metadata.name
+          value: allow-aws-alb-to-example-app
+      - equal:
+          path: spec.ingress[0].ports
+          value:
+            - port: 4180
+              protocol: TCP
