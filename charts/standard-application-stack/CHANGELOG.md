@@ -7,17 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v3.21.2] - 2022-05-13
+### Fixed
+- Fix logic around ALB NetworkPolicy and increase test coverage
+
 ## [v3.21.1] - 2022-05-13
 ### Fixed
 - Fixing changelog
-
 
 ## [v3.21.0] - 2022-05-13
 ### Fixed
 - extraSecrets pathOverride was not referenced correctly
 
 ### Added
-- add nameOverride option to kubelock
+- Add nameOverride option to kubelock
 
 ## [v3.20.2] - 2022-05-13
 ### Fixed
