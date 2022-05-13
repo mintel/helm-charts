@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v3.21.0] - 2022-05-12
+### Fixed
+- extraSecrets pathOverride was not referenced correctly
+
+### Added
+- add nameOverride option to kubelock
+
 ## [v3.20.1] - 2022-05-12
 ### Fixed
 - Disable network policies for local development

@@ -311,10 +311,8 @@ app.mintel.com/k8s-notify.team: {{ default .Values.global.owner .Values.k8snotif
 - name: RUNTIME_ENVIRONMENT
   value: {{ .Values.global.runtimeEnvironment }}
 {{- if .Values.kubelock.enabled }}
-- name: KUBELOCK
-  value: {{ include "mintel_common.fullname" . }}
 - name: KUBELOCK_NAME
-  value: {{ include "mintel_common.fullname" . }}
+  value: {{ default (include "mintel_common.fullname" .) .Values.kubelock.nameOverride }}
 - name: KUBELOCK_NAMESPACE
   value: {{ .Release.Namespace }}
 {{- end }}
