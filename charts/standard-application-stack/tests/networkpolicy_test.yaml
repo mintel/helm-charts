@@ -90,7 +90,7 @@ tests:
           value:
             - port: 4180
               protocol: TCP
-  - it: Check ALB NetworkPolicy ports set with oauth2proxy
+  - it: Check ALB NetworkPolicy ports set with oauth2proxy and healthcheck
     set:
       global.clusterEnv: qa
       ingress.enabled: true
@@ -121,7 +121,7 @@ tests:
       # Disable default app networkpolicy
       networkPolicy.enabled: false
       ingress.alb.enabled: true
-      port: 8080
+      port: 4180
       oauthProxy.enabled: true
       ingress.alb.healthcheck.port: 4180
     asserts:
