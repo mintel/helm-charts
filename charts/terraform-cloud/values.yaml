@@ -33,38 +33,31 @@ global:
     secretsMountPath: /tmp/secrets
     terraformVersion: 1.0.7
 
-memcached:
+dynamodb:
   enabled: false
   terraform:
     module:
-      source: app.terraform.io/Mintel/memcached/aws
-      version: "0.0.1-alpha.1"
-    defaultVars:
-      instance_type: cache.t4g.micro
-      num_cache_nodes: 1
+      source: app.terraform.io/Mintel/dynamodb/aws
+      version: "0.0.1-alpha.17"
 
-opensearch: 
-  enabled: false
-  terraform:
-    module:
-      source: app.terraform.io/Mintel/opensearch/aws
-      version: "0.0.1-alpha.1"
-    defaultVars: {}
+eventBus:
+sqs:
+sns:
 
-postgresql:
+mariadb:
   enabled: false
   terraform:
     module:
       source: app.terraform.io/Mintel/rds/aws
-      version: "0.0.1-alpha.6"
+      version: "0.0.1-alpha.17"
     defaultVars:
-      engine: "postgres"
-      engine_version: "13"
-      port: 5432
+      engine: "mariadb"
+      engine_version: "10.5"
+      port: 3306
     ## Workload resources are generated from the 'instances' map below. If postgresql.enabled is true and
-    ## postgresql.terraform.instances is undefined then a default instance will be created with all the values from 
+    ## postgresql.terraform.instances is undefined then a default instance will be created with all the values from
     ## postgresql.terraform.defaultVars; "name" and "db_name" will be auto-generated as explained below. Any items added
-    ## to an instance will be sent to Terraform Cloud as-is so consult the Terraform module for valid inputs. 
+    ## to an instance will be sent to Terraform Cloud as-is so consult the Terraform module for valid inputs.
     # instances:
     #   "my-instance":
     #     name: if not provided, name will match global.name
@@ -72,18 +65,59 @@ postgresql:
     #              to underscores)
     #     any_other_var: will be sent to terraform
 
+memcached:
+  enabled: false
+  terraform:
+    module:
+      source: app.terraform.io/Mintel/memcached/aws
+      version: "0.0.1-alpha.17"
+    defaultVars:
+      instance_type: cache.t4g.micro
+      num_cache_nodes: 1
+
+opensearch:
+  enabled: false
+  terraform:
+    module:
+      source: app.terraform.io/Mintel/opensearch/aws
+      version: "0.0.1-alpha.17"
+    defaultVars: {}
+
+postgresql:
+  enabled: false
+  terraform:
+    module:
+      source: app.terraform.io/Mintel/rds/aws
+      version: "0.0.1-alpha.17"
+    defaultVars:
+      engine: "postgres"
+      engine_version: "13"
+      port: 5432
+    ## Workload resources are generated from the 'instances' map below. If postgresql.enabled is true and
+    ## postgresql.terraform.instances is undefined then a default instance will be created with all the values from
+    ## postgresql.terraform.defaultVars; "name" and "db_name" will be auto-generated as explained below. Any items added
+    ## to an instance will be sent to Terraform Cloud as-is so consult the Terraform module for valid inputs.
+    # instances:
+    #   "my-instance":
+    #     name: if not provided, name will match global.name
+    #     db_name: if not provided, db_name will match a snakecase version of global.name (dashes (-) will be converted
+    #              to underscores)
+    #     any_other_var: will be sent to terraform
+
+# TESTED AND WORKING!
 redis:
   enabled: false
   terraform:
     module:
-      source: app.terraform.io/Mintel/redis/aws"
-      version: "0.0.1-alpha.1"
+      source: app.terraform.io/Mintel/redis/aws
+      version: "0.0.1-alpha.17"
     defaultVars: {}
 
+# TESTED AND WORKING!
 s3:
   enabled: false
-  terraform: 
+  terraform:
     module:
       source: app.terraform.io/Mintel/private-s3-bucket/aws
-      version: "0.0.1-alpha.1"
+      version: "0.0.1-alpha.17"
     defaultVars: {}
