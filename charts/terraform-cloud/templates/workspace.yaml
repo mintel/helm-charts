@@ -1,4 +1,5 @@
-{{- range (list "memcached" "opensearch" "postgresql" "redis" "s3") }}
+{{- range (list "memcached" "opensearch" "postgresql" "redis" "s3" "mariadb" "dynamodb" "publicStaticWebsite" ) }}
+  {{- $global := $.Values.global }}
   {{- $resourceType := . }}
   {{- $resourceConfig := (get $.Values .) }}
   {{- if $resourceConfig.enabled }}
@@ -13,9 +14,13 @@
           {{- $_ := set $instanceConfig "name" $instanceName }}
         {{- end }}
       {{- end }}
-      # Set db_name for postgresql
-      {{- if ( and ( eq $resourceType "postgresql" ) ( not ( hasKey $instanceConfig "db_name" ) ) ) }}
+      # Set db_name for postgresql and mariadb
+      {{- if ( and ( has $resourceType (list "postgresql" "mariadb") ) ( not ( hasKey $instanceConfig "db_name" ) ) ) }}
         {{- $_ := set $instanceConfig "db_name" ( $instanceConfig.name | snakecase ) }}
+      {{- end }}
+      # set delete protection to true only in prod, logs and qa for postgresql and mariadb
+      {{- if ( and ( has $resourceType (list "postgresql" "mariadb") ) ( not ( has $global.clusterEnv (list "prod" "logs" "qa")) ) ) }}
+        {{- $_ := set $instanceConfig "enable_deletion_protection" false }}
       {{- end }}
       # Add default values to each instance if keys not set already
       {{- range $defaultKey, $defaultVal := $resourceConfig.terraform.defaultVars }}
