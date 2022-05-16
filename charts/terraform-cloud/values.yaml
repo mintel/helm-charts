@@ -39,12 +39,43 @@ dynamodb:
     module:
       source: app.terraform.io/Mintel/dynamodb/aws
       version: "0.0.1-alpha.17"
+    defaultVars: {}
+    # Vars to consider:
+    # hash_key
+    # range_key
+    # attributes
+
 
 eventBus:
 sqs:
+  # https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/sqs/aws/
+  enabled: false
+  terraform:
+    module:
+      source: app.terraform.io/Mintel/sqs/aws
+      version: "0.0.1-alpha.17"
+    defaultVars: {}
+
 sns:
+  # https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/sns/aws/
+  enabled: false
+  terraform:
+      module:
+        source: app.terraform.io/Mintel/sns/aws
+        version: "0.0.1-alpha.17"
+      defaultVars: {}
+
+publicStaticWebsite:
+  # https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/public-static-website/aws/
+  enabled: false
+  terraform:
+      module:
+        source: app.terraform.io/Mintel/public-static-website/aws
+        version: "0.0.1-alpha.17"
+      defaultVars: {}
 
 mariadb:
+  # https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/rds/aws/
   enabled: false
   terraform:
     module:
@@ -66,6 +97,7 @@ mariadb:
     #     any_other_var: will be sent to terraform
 
 memcached:
+  # https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/memcached/aws/
   enabled: false
   terraform:
     module:
@@ -75,15 +107,19 @@ memcached:
       instance_type: cache.t4g.micro
       num_cache_nodes: 1
 
+# TESTED AND WORKING! Requires manual intervention to destroy snapshot bucket if not empty
 opensearch:
+  # https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/opensearch/aws/
   enabled: false
   terraform:
     module:
       source: app.terraform.io/Mintel/opensearch/aws
-      version: "0.0.1-alpha.17"
+      version: "0.0.1-alpha.30"
     defaultVars: {}
 
+# TESTED AND WORKING!
 postgresql:
+  # https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/rds/aws/
   enabled: false
   terraform:
     module:
@@ -106,6 +142,7 @@ postgresql:
 
 # TESTED AND WORKING!
 redis:
+  # https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/redis/aws/
   enabled: false
   terraform:
     module:
@@ -115,6 +152,7 @@ redis:
 
 # TESTED AND WORKING!
 s3:
+  # https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/private-s3-bucket/aws/
   enabled: false
   terraform:
     module:
