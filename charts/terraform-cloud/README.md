@@ -12,7 +12,7 @@ A Helm chart for provisioning resources using Terraform Cloud
 | dynamodb.terraform.defaultVars | object | `{}` |  |
 | dynamodb.terraform.module.source | string | `"app.terraform.io/Mintel/dynamodb/aws"` |  |
 | dynamodb.terraform.module.version | string | `"0.0.1-alpha.17"` |  |
-| global | object | `{"additionalLabels":{},"cloudProvider":{"accountId":""},"clusterDomain":"127.0.0.1.nip.io","clusterEnv":"local","clusterName":"","clusterRegion":"","ingressTLSSecrets":{},"name":"example-app","owner":"","partOf":"","runtimeEnvironment":"kubernetes","terraform":{"organization":"Mintel","secretsMountPath":"/tmp/secrets","terraformVersion":"1.0.7"}}` | Global variables for us in all charts and sub charts |
+| global | object | `{"additionalLabels":{},"cloudProvider":{"accountId":""},"clusterDomain":"127.0.0.1.nip.io","clusterEnv":"local","clusterName":"","clusterRegion":"","ingressTLSSecrets":{},"name":"example-app","owner":"","partOf":"","runtimeEnvironment":"kubernetes","terraform":{"externalSecrets":false,"organization":"Mintel","secretsMountPath":"/tmp/secrets","terraformVersion":"1.0.7"}}` | Global variables for us in all charts and sub charts |
 | global.additionalLabels | object | `{}` | Additional labels to apply to all resources |
 | global.cloudProvider | object | `{"accountId":""}` | Global variables relating to cloud provider |
 | global.cloudProvider.accountId | string | `""` | AWS account ID |
