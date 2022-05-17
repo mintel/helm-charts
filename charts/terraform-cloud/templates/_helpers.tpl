@@ -35,7 +35,7 @@ spec:
   {{- include "mintel_common.tfVar" (dict "key" "eks_cluster_name" "value" $global.clusterName) | indent 2 }}
   {{- include "mintel_common.tfVar" (dict "key" "tfcloud_agent" "value" "true") | indent 2 }}
   {{- include "mintel_common.tfVar" (dict "key" "output_secret_name" "value" (printf "%s/%s/%s" $global.namespace $global.name $resourceType )) | indent 2 }}
-  {{- include "mintel_common.tfVar" (dict "key" "secret_tags" "value" (printf "{\n  access-project       = \"%s-ops\"}" $global.namespace ) "hcl" true) | indent 2}}
+  {{- include "mintel_common.tfVar" (dict "key" "secret_tags" "value" (printf "{access-project = \"%s-ops\"}" $global.namespace ) "hcl" true) | indent 2}}
 {{- end }}
 {{- end }}
 
