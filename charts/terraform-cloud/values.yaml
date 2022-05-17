@@ -32,6 +32,7 @@ global:
     organization: Mintel
     secretsMountPath: /tmp/secrets
     terraformVersion: 1.0.7
+    externalSecrets: false # set to true as part of tf cloud migrations. Stops standard-application-stack from creating AWS related external secrets
 
 # TESTED AND WORKING!
 dynamodb:
