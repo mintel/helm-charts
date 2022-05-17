@@ -25,6 +25,9 @@ global:
   runtimeEnvironment: kubernetes
   # -- Global dictionary of TLS secrets
   ingressTLSSecrets: {}
+  terraform:
+    externalSecrets: false # set to true as part of tf cloud migrations. Stops standard-application-stack from creating AWS related external secrets
+
 
 # -- String to fully override mintel_common.fullname template
 nameOverride: ""
