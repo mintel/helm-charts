@@ -18,16 +18,6 @@ spec:
     - host: {{ .Values.ingress.defaultHost }}
       http:
         paths:
-          {{- if (eq (include "common.capabilities.ingress.apiVersion" .) "networking.k8s.io/v1beta1") }}
-          - path: /
-            backend:
-              serviceName: {{ include "mintel_common.fullname" . }}
-              {{- if (and .Values.oauthProxy .Values.oauthProxy.enabled) }}
-              servicePort: 4180
-              {{- else }}
-              servicePort: {{ .Values.port }}
-              {{- end }}
-          {{- else }}
           - path: /
             pathType: Prefix
             backend:
@@ -39,7 +29,6 @@ spec:
                   {{- else }}
                   number: {{ .Values.port }}
                   {{- end }}
-          {{- end }}
 {{- else }}
 ---
 apiVersion: {{ include "common.capabilities.ingress.apiVersion" . }}
@@ -91,27 +80,12 @@ metadata:
     prometheus.io/probe: "true"
     prometheus.io/probepath: {{ .Values.ingress.blackbox.probePath }}
     {{- end }}
-    {{- if (eq (include "common.capabilities.ingress.apiVersion" .) "networking.k8s.io/v1beta1") }}
-    kubernetes.io/ingress.class: {{ include "mintel_common.ingress.className" . }}
-    {{- end }}
 spec:
-  {{- if (ne (include "common.capabilities.ingress.apiVersion" .) "networking.k8s.io/v1beta1") }}
   ingressClassName: {{ include "mintel_common.ingress.className" . }}
-  {{- end }}
   rules:
     - host: {{ .Values.ingress.defaultHost }}
       http:
         paths:
-          {{- if (eq (include "common.capabilities.ingress.apiVersion" .) "networking.k8s.io/v1beta1") }}
-          - path: /
-            backend:
-              serviceName: {{ include "mintel_common.fullname" . }}
-              {{- if (and .Values.oauthProxy .Values.oauthProxy.enabled) }}
-              servicePort: 4180
-              {{- else }}
-              servicePort: {{ .Values.port }}
-              {{- end }}
-          {{- else }}
           - path: /
             pathType: Prefix
             backend:
@@ -123,22 +97,11 @@ spec:
                   {{- else }}
                   number: {{ .Values.port }}
                   {{- end }}
-          {{- end }}
     {{- range .Values.ingress.extraHosts }}
     {{- if (or (not $.Values.oauthProxy.enabled) (ne $.Values.oauthProxy.ingressHost .name)) }}
     - host: {{ .name }}
       http:
         paths:
-          {{- if (eq (include "common.capabilities.ingress.apiVersion" $) "networking.k8s.io/v1beta1") }}
-          - path: /
-            backend:
-              serviceName: {{ default (include "mintel_common.fullname" $) .serviceName }}
-              {{- if (and $.Values.oauthProxy $.Values.oauthProxy.enabled) }}
-              servicePort: 4180
-              {{- else }}
-              servicePort: {{ default $.Values.port .servicePort }}
-              {{- end }}
-          {{- else }}
           - path: {{ default "/" .path }}
             pathType: {{ default "Prefix" .pathType }}
             backend:
@@ -150,19 +113,12 @@ spec:
                   {{- else }}
                   number: {{ default $.Values.port .servicePort }}
                   {{- end }}
-          {{- end }}
     {{- end }}
     {{- end }}
     {{- if (and .Values.oauthProxy.enabled .Values.oauthProxy.ingressHost) }}
     - host: {{ .Values.oauthProxy.ingressHost }}
       http:
         paths:
-          {{- if (eq (include "common.capabilities.ingress.apiVersion" .) "networking.k8s.io/v1beta1") }}
-          - path: /
-            backend:
-              serviceName: {{ include "mintel_common.fullname" . }}
-              servicePort: 4180
-          {{- else }}
           - path: /
             pathType: Prefix
             backend:
@@ -170,7 +126,6 @@ spec:
                 name: {{ include "mintel_common.fullname" . }}
                 port:
                   number: 4180
-          {{- end }}
     {{- end }}
     {{- with .Values.ingress.specificRulesHostsYaml }}
     {{- toYaml . | nindent 4 }}
