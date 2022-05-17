@@ -9,7 +9,7 @@
 apiVersion: app.terraform.io/v1alpha1
 kind: Workspace
 metadata:
-  name: "{{ $global.clusterEnv }}-{{ $global.clusterRegion }}-{{ $global.clusterName }}-{{ $global.namespace }}-{{ .name }}-{{ $resourceType }}"
+  name: "{{ $global.clusterEnv }}-{{ $global.clusterRegion }}-{{ $global.clusterName }}-{{ $global.namespace }}-{{ .name }}-{{ $resourceType | kebabcase }}"
   namespace: {{ $.Release.Namespace | quote }}
 spec:
   agentPoolID: {{ has $global.clusterEnv (list "prod" "logs") | ternary "apool-RhENdyZD1fV8Kdde" "apool-ARFKgcQQcY3T91bk" | quote }}

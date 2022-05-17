@@ -33,6 +33,7 @@ global:
     secretsMountPath: /tmp/secrets
     terraformVersion: 1.0.7
 
+# TESTED AND WORKING!
 dynamodb:
   enabled: false
   terraform:
@@ -46,41 +47,48 @@ dynamodb:
     # attributes
 
 
-eventBus:
+# TESTED AND WORKING!
 sqs:
   # https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/sqs/aws/
   enabled: false
   terraform:
     module:
       source: app.terraform.io/Mintel/sqs/aws
-      version: "0.0.1-alpha.17"
+      version: "0.0.1-alpha.22"
     defaultVars: {}
 
+# TESTED AND WORKING!
 sns:
   # https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/sns/aws/
   enabled: false
   terraform:
       module:
         source: app.terraform.io/Mintel/sns/aws
-        version: "0.0.1-alpha.17"
+        version: "0.0.1-alpha.18"
       defaultVars: {}
 
-publicStaticWebsite:
+# TESTED AND WORKING!
+staticWebsite:
   # https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/public-static-website/aws/
   enabled: false
   terraform:
       module:
         source: app.terraform.io/Mintel/public-static-website/aws
-        version: "0.0.1-alpha.17"
+        version: "0.0.1-alpha.22"
       defaultVars: {}
+      # Vars to consider:
+      # cloudfront_index_document
+      # cloudfront_error_responses
+      # create_route53_entry
 
+# TESTED AND WORKING!
 mariadb:
   # https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/rds/aws/
   enabled: false
   terraform:
     module:
       source: app.terraform.io/Mintel/rds/aws
-      version: "0.0.1-alpha.17"
+      version: "0.0.1-alpha.21"
     defaultVars:
       engine: "mariadb"
       engine_version: "10.5"
@@ -96,13 +104,14 @@ mariadb:
     #              to underscores)
     #     any_other_var: will be sent to terraform
 
+# TESTED AND WORKING!
 memcached:
   # https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/memcached/aws/
   enabled: false
   terraform:
     module:
       source: app.terraform.io/Mintel/memcached/aws
-      version: "0.0.1-alpha.17"
+      version: "0.0.1-alpha.18"
     defaultVars:
       instance_type: cache.t4g.micro
       num_cache_nodes: 1
@@ -114,7 +123,7 @@ opensearch:
   terraform:
     module:
       source: app.terraform.io/Mintel/opensearch/aws
-      version: "0.0.1-alpha.30"
+      version: "0.0.1-alpha.33"
     defaultVars: {}
 
 # TESTED AND WORKING!
@@ -124,7 +133,7 @@ postgresql:
   terraform:
     module:
       source: app.terraform.io/Mintel/rds/aws
-      version: "0.0.1-alpha.17"
+      version: "0.0.1-alpha.21"
     defaultVars:
       engine: "postgres"
       engine_version: "13"
@@ -147,7 +156,7 @@ redis:
   terraform:
     module:
       source: app.terraform.io/Mintel/redis/aws
-      version: "0.0.1-alpha.17"
+      version: "0.0.1-alpha.19"
     defaultVars: {}
 
 # TESTED AND WORKING!
@@ -157,5 +166,5 @@ s3:
   terraform:
     module:
       source: app.terraform.io/Mintel/private-s3-bucket/aws
-      version: "0.0.1-alpha.17"
+      version: "0.0.1-alpha.19"
     defaultVars: {}

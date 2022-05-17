@@ -1,4 +1,4 @@
-{{- range (list "memcached" "opensearch" "postgresql" "redis" "s3" "mariadb" "dynamodb" "publicStaticWebsite" ) }}
+{{- range (list "memcached" "opensearch" "postgresql" "redis" "s3" "mariadb" "dynamodb" "sns" "sqs" "staticWebsite") }}
   {{- $global := $.Values.global }}
   {{- $resourceType := . }}
   {{- $resourceConfig := (get $.Values .) }}
