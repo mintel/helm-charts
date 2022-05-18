@@ -9,12 +9,12 @@
     - --upstream=http://localhost:{{ .proxiedService.port }}
     - --http-address=http://0.0.0.0:4180
     - --provider=oidc
-    - --skip-auth-regex=/ping
-    - --skip-auth-regex={{ default "/healthz" .Values.liveness.path }}
-    - --skip-auth-regex={{ default "/readiness" .Values.readiness.path }}
-    - --skip-auth-regex={{ default "/external-health-check" .Values.ingress.blackbox.probePath }}
+    - --skip-auth-regex=^/ping$
+    - --skip-auth-regex=^{{ default "/healthz" .Values.liveness.path }}$
+    - --skip-auth-regex=^{{ default "/readiness" .Values.readiness.path }}$
+    - --skip-auth-regex=^{{ default "/external-health-check" .Values.ingress.blackbox.probePath }}$
     {{- range .proxiedService.oauthProxy.skipAuthRegexes }}
-    - --skip-auth-regex={{ . }}
+    - --skip-auth-regex={{ if not (hasPrefix "^" . )}}^{{ end }}{{ . }}{{ if not (hasSuffix "$" . )}}${{ end }}
     {{- end }}
     - --skip-provider-button=true
     - --skip-jwt-bearer-tokens=true
