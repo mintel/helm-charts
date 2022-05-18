@@ -1,6 +1,6 @@
 # standard-application-stack
 
-![Version: 3.22.0](https://img.shields.io/badge/Version-3.22.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 3.22.1](https://img.shields.io/badge/Version-3.22.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A generic chart to support most common application requirements
 
@@ -191,7 +191,7 @@ A generic chart to support most common application requirements
 | oauthProxy.secretRefreshIntervalOverride | string | `""` | Optional: ExternalSecret refreshInterval override |
 | oauthProxy.secretStoreRefOverride | string | `""` | Optional: full SecretStoreRef override for oauth ExternalSecret |
 | oauthProxy.secretSuffix | string | `""` | Optional: oauth secret suffix, eg '-oauth' |
-| oauthProxy.skipAuthRegexes | list | `[]` | Optional: list of URL endpoints to bypass oauth-proxy for Note that default health check and readiness urls are already skipped |
+| oauthProxy.skipAuthRegexes | list | `[]` | Optional: list of URL endpoints to bypass oauth-proxy for Health check and readiness urls are skipped automatically |
 | oauthProxy.type | string | `"portal"` | Identifies oauth-proxy as auth'ing with a mintel portal instance |
 | oauthProxy.userIdClaim | string | `""` | Optional: Claim contains the user ID |
 | opensearch | object | `{"awsEsProxy":{"enabled":false,"port":9200,"resources":{"limits":{"cpu":"200m","memory":"128Mi"},"requests":{"cpu":"100m","memory":"64Mi"}}},"enabled":false,"secretRefreshIntervalOverride":"","secretStoreRefOverride":""}` | Configures AWS Opensearch deployment/connections |
