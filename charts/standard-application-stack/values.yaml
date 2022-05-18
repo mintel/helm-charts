@@ -26,8 +26,8 @@ global:
   # -- Global dictionary of TLS secrets
   ingressTLSSecrets: {}
   terraform:
-    externalSecrets: false # set to true as part of tf cloud migrations. Stops standard-application-stack from creating AWS related external secrets
-
+    # set to true as part of tf cloud migrations. When true, it stops standard-application-stack from creating AWS related external secrets and passes that responsibility to the terraform-cloud chart
+    externalSecrets: false
 
 # -- String to fully override mintel_common.fullname template
 nameOverride: ""
