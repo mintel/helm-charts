@@ -35,11 +35,11 @@ global:
     # set to true as part of tf cloud migrations. When true, it stops standard-application-stack from creating AWS related external secrets and passes that responsibility to the terraform-cloud chart
     externalSecrets: false
 
-# TESTED AND WORKING!
 dynamodb:
   enabled: false
   terraform:
     module:
+      # https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/dynamodb/aws
       source: app.terraform.io/Mintel/dynamodb/aws
       version: "0.1.0-beta.1"
     defaultVars: {}
@@ -48,33 +48,29 @@ dynamodb:
     # range_key
     # attributes
 
-
-# TESTED AND WORKING!
 sqs:
-  # https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/sqs/aws/
   enabled: false
   terraform:
     module:
+      # https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/sqs/aws
       source: app.terraform.io/Mintel/sqs/aws
       version: "0.1.0-beta.1"
     defaultVars: {}
 
-# TESTED AND WORKING!
 sns:
-  # https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/sns/aws/
   enabled: false
   terraform:
       module:
+        # https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/sns/aws
         source: app.terraform.io/Mintel/sns/aws
         version: "0.1.0-beta.1"
       defaultVars: {}
 
-# TESTED AND WORKING!
 staticWebsite:
-  # https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/public-static-website/aws/
   enabled: false
   terraform:
       module:
+        # https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/public-static-website/aws
         source: app.terraform.io/Mintel/public-static-website/aws
         version: "0.1.0-beta.1"
       defaultVars: {}
@@ -83,12 +79,11 @@ staticWebsite:
       # cloudfront_error_responses
       # create_route53_entry
 
-# TESTED AND WORKING!
 mariadb:
-  # https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/rds/aws/
   enabled: false
   terraform:
     module:
+      # https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/rds/aws
       source: app.terraform.io/Mintel/rds/aws
       version: "0.1.0-beta.2"
     defaultVars:
@@ -106,34 +101,31 @@ mariadb:
     #              to underscores)
     #     any_other_var: will be sent to terraform
 
-# TESTED AND WORKING!
 memcached:
-  # https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/memcached/aws/
   enabled: false
   terraform:
     module:
+      # https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/memcached/aws
       source: app.terraform.io/Mintel/memcached/aws
       version: "0.1.0-beta.2"
     defaultVars:
       instance_type: cache.t4g.micro
       num_cache_nodes: 1
 
-# TESTED AND WORKING! Requires manual intervention to destroy snapshot bucket if not empty
 opensearch:
-  # https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/opensearch/aws/
   enabled: false
   terraform:
     module:
+      # https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/opensearch/aws
       source: app.terraform.io/Mintel/opensearch/aws
       version: "0.1.0-beta.2"
     defaultVars: {}
 
-# TESTED AND WORKING!
 postgresql:
-  # https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/rds/aws/
   enabled: false
   terraform:
     module:
+      # https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/rds/aws
       source: app.terraform.io/Mintel/rds/aws
       version: "0.1.0-beta.2"
     defaultVars:
@@ -151,22 +143,20 @@ postgresql:
     #              to underscores)
     #     any_other_var: will be sent to terraform
 
-# TESTED AND WORKING!
 redis:
-  # https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/redis/aws/
   enabled: false
   terraform:
     module:
+      # https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/redis/aws
       source: app.terraform.io/Mintel/redis/aws
       version: "0.1.0-beta.2"
     defaultVars: {}
 
-# TESTED AND WORKING!
 s3:
-  # https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/private-s3-bucket/aws/
   enabled: false
   terraform:
     module:
+      # https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/private-s3-bucket/aws
       source: app.terraform.io/Mintel/private-s3-bucket/aws
       version: "0.1.0-beta.1"
     defaultVars: {}
