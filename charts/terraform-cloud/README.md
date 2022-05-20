@@ -13,15 +13,17 @@ A Helm chart for provisioning resources using Terraform Cloud
 | dynamodb.terraform.instances | string | `nil` | A map of instance names => variable key/value pairs to be sent to the terraform module. The values in `defaultVars` will be applied to every instance if not explicitly defined here. |
 | dynamodb.terraform.module.source | string | `"app.terraform.io/Mintel/dynamodb/aws"` | Registry path of the Terraform module used to create the resource (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/dynamodb/aws) |
 | dynamodb.terraform.module.version | string | `"0.1.0-beta.1"` | Module version |
-| global.additionalLabels | object | `{}` | Additional labels to apply to all resources |
-| global.clusterDomain | string | `"127.0.0.1.nip.io"` | Kubernetes cluster domain |
+| global.clusterDomain | string | `"127.0.0.1.nip.io"` | Additional labels to apply to all resources |
 | global.clusterEnv | string | `"local"` | Environment (local, dev, qa, prod) |
 | global.clusterName | string | `""` | Kubernetes cluster name |
 | global.clusterRegion | string | `""` | Kubernetes cluster region |
 | global.name | string | `"example-app"` | Name of the application |
 | global.owner | string | `""` | Team which "owns" the application |
 | global.partOf | string | `""` | Top level application each deployment is a part of |
-| global.terraform | object | `{"externalSecrets":true,"organization":"Mintel","secretsMountPath":"/tmp/secrets","terraformVersion":"1.0.7"}` | Global variables relating to cloud provider |
+| global.terraform.externalSecrets | bool | `true` | Set to true as part of tf cloud migrations. When true, it stops standard-application-stack from creating AWS related external secrets and passes that responsibility to the terraform-cloud chart |
+| global.terraform.organization | string | `"Mintel"` | Name of our Terraform Cloud org |
+| global.terraform.secretsMountPath | string | `"/tmp/secrets"` | Where secrets are mounted inside the Terraform Operator container |
+| global.terraform.terraformVersion | string | `"1.0.7"` | Global Terraform version for all modules |
 | mariadb.enabled | bool | `false` | Set to true to create a MariaDB RDS instance |
 | mariadb.terraform.defaultVars | object | `{"engine":"mariadb","engine_version":"10.5","port":3306}` | Vars to be applied to all instances defined below |
 | mariadb.terraform.instances | object | `{}` | A map of instance names => variable key/value pairs to be sent to the terraform module. The values in `defaultVars` will be applied to every instance if not explicitly defined here. |

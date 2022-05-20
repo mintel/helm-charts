@@ -10,8 +10,6 @@ global:
   # -- Top level application each deployment is a part of
   partOf: ""
   # -- Additional labels to apply to all resources
-  additionalLabels: {}
-  # -- Kubernetes cluster domain
   clusterDomain: "127.0.0.1.nip.io"
   # -- Environment (local, dev, qa, prod)
   clusterEnv: "local"
@@ -19,12 +17,15 @@ global:
   clusterName: ""
   # -- Kubernetes cluster region
   clusterRegion: ""
-  # -- Global variables relating to cloud provider
   terraform:
+    # -- Name of our Terraform Cloud org
     organization: Mintel
+    # -- Where secrets are mounted inside the Terraform Operator container
     secretsMountPath: /tmp/secrets
+    # -- Global Terraform version for all modules
     terraformVersion: 1.0.7
-    # set to true as part of tf cloud migrations. When true, it stops standard-application-stack from creating AWS related external secrets and passes that responsibility to the terraform-cloud chart
+    # -- Set to true as part of tf cloud migrations. When true, it stops standard-application-stack from creating AWS
+    # related external secrets and passes that responsibility to the terraform-cloud chart
     externalSecrets: true
 
 dynamodb:
