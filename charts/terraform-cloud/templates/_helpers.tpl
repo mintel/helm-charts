@@ -15,4 +15,7 @@ helm.sh/chart: {{ include "mintel_common.chart" . }}
 app.mintel.com/owner: {{ .Values.global.owner }}
 app.mintel.com/env: {{ .Values.global.clusterEnv }}
 app.mintel.com/region: {{ .Values.global.clusterRegion }}
+{{- with .Values.global.additionalLabels }}
+{{- toYaml . }}
+{{- end }}
 {{- end -}}
