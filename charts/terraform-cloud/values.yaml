@@ -2,7 +2,6 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-# -- Global variables for us in all charts and sub charts
 global:
   # -- Name of the application
   name: "example-app"
@@ -53,6 +52,7 @@ dynamodb:
     # attributes
 
 sqs:
+  # -- Set to true to create an SQS resource
   enabled: false
   terraform:
     module:
@@ -65,6 +65,7 @@ sqs:
     defaultVars: {}
 
 sns:
+  # -- Set to true to create an SNS resource
   enabled: false
   terraform:
     module:
@@ -77,6 +78,7 @@ sns:
     defaultVars: {}
 
 staticWebsite:
+  # -- Set to true to create static website (a public bucket and associated resources)
   enabled: false
   terraform:
     module:
@@ -93,6 +95,7 @@ staticWebsite:
     # create_route53_entry
 
 mariadb:
+  # -- Set to true to create a MariaDB RDS instance
   enabled: false
   terraform:
     module:
@@ -118,6 +121,7 @@ mariadb:
     #     any_other_var: will be sent to terraform
 
 memcached:
+  # -- Set to true to create a memcached Elasticache resource
   enabled: false
   terraform:
     module:
@@ -132,6 +136,7 @@ memcached:
       num_cache_nodes: 1
 
 opensearch:
+  # -- Set to true to create an Opensearch cluster
   enabled: false
   terraform:
     module:
@@ -144,6 +149,7 @@ opensearch:
     defaultVars: {}
 
 postgresql:
+  # -- Set to true to create a PostgreSQL RDS instance
   enabled: false
   terraform:
     module:
@@ -169,6 +175,7 @@ postgresql:
     #     any_other_var: will be sent to terraform
 
 redis:
+  # -- Set to true to create a Redis Elasticache resource
   enabled: false
   terraform:
     module:
@@ -181,6 +188,7 @@ redis:
     defaultVars: {}
 
 s3:
+  # -- Set to true to create an S3 bucket
   enabled: false
   terraform:
     module:
