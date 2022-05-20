@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Added toggle of AWS related external secret creation via .Values.global.terraform.externalSecret
 
+## [v3.22.2] - 2022-05-20
+### Fixed
+- ALB Ingress should listen on port 80 as well (redirect rule to 443 is in place)
+
 ## [v3.22.1] - 2022-05-18
 ### Fixed
 - Fixed oauthProxy regex for healthchecks (requires exact match)
