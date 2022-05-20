@@ -37,12 +37,16 @@ dynamodb:
       source: app.terraform.io/Mintel/dynamodb/aws
       # -- Module version
       version: "0.1.0-beta.1"
-    # -- Vars to be applied to all instances defined
+    # -- Vars to be applied to all instances defined below
     defaultVars: {}
-    # Vars to consider:
-    # hash_key
-    # range_key
-    # attributes
+    # -- A map of instance names => variable key/value pairs to be sent to the terraform module. The values in
+    # `defaultVars` will be applied to every instance if not explicitly defined here.
+    instances:
+    # Example:
+    # instances:
+    #   "my-instance-1":
+    #     db_name: "my_db"
+    #
 
 sqs:
   # -- Set to true to create an SQS resource
@@ -54,8 +58,11 @@ sqs:
       source: app.terraform.io/Mintel/sqs/aws
       # -- Module version
       version: "0.1.0-beta.1"
-    # -- Vars to be applied to all instances defined
+    # -- Vars to be applied to all instances defined below
     defaultVars: {}
+    # -- A map of instance names => variable key/value pairs to be sent to the terraform module. The values in
+    # `defaultVars` will be applied to every instance if not explicitly defined here.
+    instances: {}
 
 sns:
   # -- Set to true to create an SNS resource
@@ -67,8 +74,11 @@ sns:
       source: app.terraform.io/Mintel/sns/aws
       # -- Module version
       version: "0.1.0-beta.1"
-    # -- Vars to be applied to all instances defined
+    # -- Vars to be applied to all instances defined below
     defaultVars: {}
+    # -- A map of instance names => variable key/value pairs to be sent to the terraform module. The values in
+    # `defaultVars` will be applied to every instance if not explicitly defined here.
+    instances: {}
 
 staticWebsite:
   # -- Set to true to create static website (a public bucket and associated resources)
@@ -80,12 +90,11 @@ staticWebsite:
       source: app.terraform.io/Mintel/public-static-website/aws
       # -- Module version
       version: "0.1.0-beta.1"
-    # -- Vars to be applied to all instances defined
+    # -- Vars to be applied to all instances defined below
     defaultVars: {}
-    # Vars to consider:
-    # cloudfront_index_document
-    # cloudfront_error_responses
-    # create_route53_entry
+    # -- A map of instance names => variable key/value pairs to be sent to the terraform module. The values in
+    # `defaultVars` will be applied to every instance if not explicitly defined here.
+    instances: {}
 
 mariadb:
   # -- Set to true to create a MariaDB RDS instance
@@ -97,21 +106,14 @@ mariadb:
       source: app.terraform.io/Mintel/rds/aws
       # -- Module version
       version: "0.1.0-beta.2"
-    # -- Vars to be applied to all instances defined
+    # -- Vars to be applied to all instances defined below
     defaultVars:
       engine: "mariadb"
       engine_version: "10.5"
       port: 3306
-    ## Workload resources are generated from the 'instances' map below. If postgresql.enabled is true and
-    ## postgresql.terraform.instances is undefined then a default instance will be created with all the values from
-    ## postgresql.terraform.defaultVars; "name" and "db_name" will be auto-generated as explained below. Any items added
-    ## to an instance will be sent to Terraform Cloud as-is so consult the Terraform module for valid inputs.
-    # instances:
-    #   "my-instance":
-    #     name: if not provided, name will match global.name
-    #     db_name: if not provided, db_name will match a snakecase version of global.name (dashes (-) will be converted
-    #              to underscores)
-    #     any_other_var: will be sent to terraform
+    # -- A map of instance names => variable key/value pairs to be sent to the terraform module. The values in
+    # `defaultVars` will be applied to every instance if not explicitly defined here.
+    instances: {}
 
 memcached:
   # -- Set to true to create a memcached Elasticache resource
@@ -123,10 +125,13 @@ memcached:
       source: app.terraform.io/Mintel/memcached/aws
       # -- Module version
       version: "0.1.0-beta.2"
-    # -- Vars to be applied to all instances defined
+    # -- Vars to be applied to all instances defined below
     defaultVars:
       instance_type: cache.t4g.micro
       num_cache_nodes: 1
+    # -- A map of instance names => variable key/value pairs to be sent to the terraform module. The values in
+    # `defaultVars` will be applied to every instance if not explicitly defined here.
+    instances: {}
 
 opensearch:
   # -- Set to true to create an Opensearch cluster
@@ -138,8 +143,11 @@ opensearch:
       source: app.terraform.io/Mintel/opensearch/aws
       # -- Module version
       version: "0.1.0-beta.2"
-    # -- Vars to be applied to all instances defined
+    # -- Vars to be applied to all instances defined below
     defaultVars: {}
+    # -- A map of instance names => variable key/value pairs to be sent to the terraform module. The values in
+    # `defaultVars` will be applied to every instance if not explicitly defined here.
+    instances: {}
 
 postgresql:
   # -- Set to true to create a PostgreSQL RDS instance
@@ -151,21 +159,14 @@ postgresql:
       source: app.terraform.io/Mintel/rds/aws
       # -- Module version
       version: "0.1.0-beta.2"
-    # -- Vars to be applied to all instances defined
+    # -- Vars to be applied to all instances defined below
     defaultVars:
       engine: "postgres"
       engine_version: "13"
       port: 5432
-    ## Workload resources are generated from the 'instances' map below. If postgresql.enabled is true and
-    ## postgresql.terraform.instances is undefined then a default instance will be created with all the values from
-    ## postgresql.terraform.defaultVars; "name" and "db_name" will be auto-generated as explained below. Any items added
-    ## to an instance will be sent to Terraform Cloud as-is so consult the Terraform module for valid inputs.
-    # instances:
-    #   "my-instance":
-    #     name: if not provided, name will match global.name
-    #     db_name: if not provided, db_name will match a snakecase version of global.name (dashes (-) will be converted
-    #              to underscores)
-    #     any_other_var: will be sent to terraform
+    # -- A map of instance names => variable key/value pairs to be sent to the terraform module. The values in
+    # `defaultVars` will be applied to every instance if not explicitly defined here.
+    instances: {}
 
 redis:
   # -- Set to true to create a Redis Elasticache resource
@@ -177,12 +178,15 @@ redis:
       source: app.terraform.io/Mintel/redis/aws
       # -- Module version
       version: "0.1.0-beta.2"
-    # -- Vars to be applied to all instances defined
+    # -- Vars to be applied to all instances defined below
     defaultVars: {}
+    # -- A map of instance names => variable key/value pairs to be sent to the terraform module. The values in
+    # `defaultVars` will be applied to every instance if not explicitly defined here.
+    instances: {}
 
 s3:
   # -- Set to true to create an S3 bucket
-  enabled: true
+  enabled: false
   terraform:
     module:
       # -- Registry path of the Terraform module used to create the resource
@@ -190,5 +194,8 @@ s3:
       source: app.terraform.io/Mintel/private-s3-bucket/aws
       # -- Module version
       version: "0.1.0-beta.1"
-    # -- Vars to be applied to all instances defined
+    # -- Vars to be applied to all instances defined below
     defaultVars: {}
+    # -- A map of instance names => variable key/value pairs to be sent to the terraform module. The values in
+    # `defaultVars` will be applied to every instance if not explicitly defined here.
+    instances: {}

@@ -1,12 +1,19 @@
+# List the supported resource types here. These should map directly to the top-level fields of the same name in the
+# values.yaml file.
 {{- range (list "memcached" "opensearch" "postgresql" "redis" "s3" "mariadb" "dynamodb" "sns" "sqs" "staticWebsite") }}
   {{- $global := $.Values.global }}
+  # Get the config for the current resource in the loop (e.g. resourceType = "memcached", resourceConfig = everything
+  # inside the memcached dict in values.yaml)
   {{- $resourceType := . }}
   {{- $resourceConfig := (get $.Values .) }}
+  # Create the Workspace CRD only if the enabled field is set to true
   {{- if $resourceConfig.enabled }}
+    # Loop through the instances configured in memcached.terraform.instances (create an empty dict with a "default"
+    # instance if it hasn't been specified)
     {{- range $instanceName, $instanceConfig := default ( dict "default" dict ) $resourceConfig.terraform.instances }}
       {{- $moduleSource := $resourceConfig.terraform.module.source }}
       {{- $moduleVersion := $resourceConfig.terraform.module.version }}
-      # Set name if not provided
+      # Set instance.name if not provided
       {{- if not ( hasKey $instanceConfig "name" ) }}
         {{- if eq $instanceName "default" }}
           {{- $_ := set $instanceConfig "name" $.Values.global.name }}
@@ -14,11 +21,11 @@
           {{- $_ := set $instanceConfig "name" $instanceName }}
         {{- end }}
       {{- end }}
-      # Set db_name for postgresql and mariadb
+      # Set instance.db_name for postgresql and mariadb if not provided
       {{- if ( and ( has $resourceType (list "postgresql" "mariadb") ) ( not ( hasKey $instanceConfig "db_name" ) ) ) }}
         {{- $_ := set $instanceConfig "db_name" ( $instanceConfig.name | snakecase ) }}
       {{- end }}
-      # set delete protection to true only in prod, logs and qa for postgresql and mariadb
+      # Set delete protection to true only in prod, logs and qa for postgresql and mariadb
       {{- if ( and ( has $resourceType (list "postgresql" "mariadb") ) ( not ( has $global.clusterEnv (list "prod" "logs" "qa")) ) ) }}
         {{- $_ := set $instanceConfig "enable_deletion_protection" false }}
       {{- end }}
@@ -28,6 +35,7 @@
           {{- $_ := set $instanceConfig $defaultKey $defaultVal }}
         {{- end }}
       {{- end }}
+      # Create the CRD
 ---
       {{- include "mintel_common.workspace" (list $ . $instanceConfig $resourceType $moduleSource $moduleVersion) }}
     {{- end }}
