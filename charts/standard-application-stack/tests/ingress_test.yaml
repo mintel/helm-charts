@@ -109,6 +109,9 @@ tests:
       - equal:
           path: metadata.annotations.[alb.ingress.kubernetes.io/healthcheck-path]
           value: /readiness
+      - equal:
+          path: metadata.annotations.[alb.ingress.kubernetes.io/listen-ports]
+          value: '[{"HTTP": 80}, {"HTTPS": 443}]'
 
   - it: Check no TLS set if ingressTLSSecrets and specificTlsHostsYaml is empty
     set:
