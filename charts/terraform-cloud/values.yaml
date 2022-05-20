@@ -108,9 +108,13 @@ mariadb:
       # -- Module version
       version: "0.1.0-beta.2"
     # -- Vars to be applied to all instances defined below
+    # @default See below
     defaultVars:
+      # -- Database engine to use (should always be "mariadb")
       engine: "mariadb"
+      # -- MariaDB version
       engine_version: "10.5"
+      # -- MariaDB port
       port: 3306
     # -- A map of instance names => variable key/value pairs to be sent to the terraform module. The values in
     # `defaultVars` will be applied to every instance if not explicitly defined here.
@@ -127,8 +131,11 @@ memcached:
       # -- Module version
       version: "0.1.0-beta.2"
     # -- Vars to be applied to all instances defined below
+    # @default See below
     defaultVars:
+      # -- EC2 instance type to use (https://aws.amazon.com/elasticache/pricing)
       instance_type: cache.t4g.micro
+      # -- Number of nodes to create in the cluster
       num_cache_nodes: 1
     # -- A map of instance names => variable key/value pairs to be sent to the terraform module. The values in
     # `defaultVars` will be applied to every instance if not explicitly defined here.
@@ -162,8 +169,11 @@ postgresql:
       version: "0.1.0-beta.2"
     # -- Vars to be applied to all instances defined below
     defaultVars:
+      # -- Database engine to use (should always be "postgres")
       engine: "postgres"
+      # -- PostgreSQL version
       engine_version: "13"
+      # -- PostgreSQL port
       port: 5432
     # -- A map of instance names => variable key/value pairs to be sent to the terraform module. The values in
     # `defaultVars` will be applied to every instance if not explicitly defined here.
