@@ -12,8 +12,7 @@ tests:
       global.region: eu-west-1
       global.owner: sre
       global.partOf: test-project
-      s3:
-        enabled: true
+      s3.enabled: true
     asserts:
       - isKind:
           of: Workspace
