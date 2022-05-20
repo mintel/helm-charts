@@ -13,21 +13,14 @@ A Helm chart for provisioning resources using Terraform Cloud
 | dynamodb.terraform.module.source | string | `"app.terraform.io/Mintel/dynamodb/aws"` | Registry path of the Terraform module used to create the resource (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/dynamodb/aws) |
 | dynamodb.terraform.module.version | string | `"0.1.0-beta.1"` | Module version |
 | global.additionalLabels | object | `{}` | Additional labels to apply to all resources |
-| global.cloudProvider | object | `{"accountId":""}` | Global variables relating to cloud provider |
-| global.cloudProvider.accountId | string | `""` | AWS account ID |
 | global.clusterDomain | string | `"127.0.0.1.nip.io"` | Kubernetes cluster domain |
 | global.clusterEnv | string | `"local"` | Environment (local, dev, qa, prod) |
 | global.clusterName | string | `""` | Kubernetes cluster name |
 | global.clusterRegion | string | `""` | Kubernetes cluster region |
-| global.ingressTLSSecrets | object | `{}` | Global dictionary of TLS secrets |
 | global.name | string | `"example-app"` | Name of the application |
 | global.owner | string | `""` | Team which "owns" the application |
 | global.partOf | string | `""` | Top level application each deployment is a part of |
-| global.runtimeEnvironment | string | `"kubernetes"` | Global variable definint RUNTIME_ENVIRONMENT |
-| global.terraform.externalSecrets | bool | `false` |  |
-| global.terraform.organization | string | `"Mintel"` |  |
-| global.terraform.secretsMountPath | string | `"/tmp/secrets"` |  |
-| global.terraform.terraformVersion | string | `"1.0.7"` |  |
+| global.terraform | object | `{"externalSecrets":false,"organization":"Mintel","secretsMountPath":"/tmp/secrets","terraformVersion":"1.0.7"}` | Global variables relating to cloud provider |
 | mariadb.enabled | bool | `false` | Set to true to create a MariaDB RDS instance |
 | mariadb.terraform.defaultVars | object | `{"engine":"mariadb","engine_version":"10.5","port":3306}` | Vars to be applied to all instances defined |
 | mariadb.terraform.module.source | string | `"app.terraform.io/Mintel/rds/aws"` | Registry path of the Terraform module used to create the resource (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/rds/aws) |
