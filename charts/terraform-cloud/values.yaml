@@ -60,20 +60,20 @@ sqs:
 sns:
   enabled: false
   terraform:
-      module:
-        # https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/sns/aws
-        source: app.terraform.io/Mintel/sns/aws
-        version: "0.1.0-beta.1"
-      defaultVars: {}
+    module:
+      # https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/sns/aws
+      source: app.terraform.io/Mintel/sns/aws
+      version: "0.1.0-beta.1"
+    defaultVars: {}
 
 staticWebsite:
   enabled: false
   terraform:
-      module:
-        # https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/public-static-website/aws
-        source: app.terraform.io/Mintel/public-static-website/aws
-        version: "0.1.0-beta.1"
-      defaultVars: {}
+    module:
+      # https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/public-static-website/aws
+      source: app.terraform.io/Mintel/public-static-website/aws
+      version: "0.1.0-beta.1"
+    defaultVars: {}
       # Vars to consider:
       # cloudfront_index_document
       # cloudfront_error_responses
