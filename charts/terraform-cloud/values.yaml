@@ -36,12 +36,16 @@ global:
     externalSecrets: false
 
 dynamodb:
+  # -- Set to true to create a DynamoDB instance
   enabled: false
   terraform:
     module:
-      # https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/dynamodb/aws
+      # -- Registry path of the Terraform module used to create the resource
+      # (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/dynamodb/aws)
       source: app.terraform.io/Mintel/dynamodb/aws
+      # -- Module version
       version: "0.1.0-beta.1"
+    # -- Vars to be applied to all instances defined
     defaultVars: {}
     # Vars to consider:
     # hash_key
@@ -52,27 +56,36 @@ sqs:
   enabled: false
   terraform:
     module:
-      # https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/sqs/aws
+      # -- Registry path of the Terraform module used to create the resource
+      # (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/sqs/aws)
       source: app.terraform.io/Mintel/sqs/aws
+      # -- Module version
       version: "0.1.0-beta.1"
+    # -- Vars to be applied to all instances defined
     defaultVars: {}
 
 sns:
   enabled: false
   terraform:
       module:
-        # https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/sns/aws
+        # -- Registry path of the Terraform module used to create the resource
+        # (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/sns/aws)
         source: app.terraform.io/Mintel/sns/aws
+        # -- Module version
         version: "0.1.0-beta.1"
+      # -- Vars to be applied to all instances defined
       defaultVars: {}
 
 staticWebsite:
   enabled: false
   terraform:
       module:
-        # https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/public-static-website/aws
+        # -- Registry path of the Terraform module used to create the resource
+        # (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/public-static-website/aws)
         source: app.terraform.io/Mintel/public-static-website/aws
+        # -- Module version
         version: "0.1.0-beta.1"
+      # -- Vars to be applied to all instances defined
       defaultVars: {}
       # Vars to consider:
       # cloudfront_index_document
@@ -83,9 +96,12 @@ mariadb:
   enabled: false
   terraform:
     module:
-      # https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/rds/aws
+      # -- Registry path of the Terraform module used to create the resource
+      # (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/rds/aws)
       source: app.terraform.io/Mintel/rds/aws
+      # -- Module version
       version: "0.1.0-beta.2"
+    # -- Vars to be applied to all instances defined
     defaultVars:
       engine: "mariadb"
       engine_version: "10.5"
@@ -105,9 +121,12 @@ memcached:
   enabled: false
   terraform:
     module:
-      # https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/memcached/aws
+      # -- Registry path of the Terraform module used to create the resource
+      # (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/memcached/aws)
       source: app.terraform.io/Mintel/memcached/aws
+      # -- Module version
       version: "0.1.0-beta.2"
+    # -- Vars to be applied to all instances defined
     defaultVars:
       instance_type: cache.t4g.micro
       num_cache_nodes: 1
@@ -116,18 +135,24 @@ opensearch:
   enabled: false
   terraform:
     module:
-      # https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/opensearch/aws
+      # -- Registry path of the Terraform module used to create the resource
+      # (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/opensearch/aws)
       source: app.terraform.io/Mintel/opensearch/aws
+      # -- Module version
       version: "0.1.0-beta.2"
+    # -- Vars to be applied to all instances defined
     defaultVars: {}
 
 postgresql:
   enabled: false
   terraform:
     module:
-      # https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/rds/aws
+      # -- Registry path of the Terraform module used to create the resource
+      # (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/rds/aws)
       source: app.terraform.io/Mintel/rds/aws
+      # -- Module version
       version: "0.1.0-beta.2"
+    # -- Vars to be applied to all instances defined
     defaultVars:
       engine: "postgres"
       engine_version: "13"
@@ -147,16 +172,22 @@ redis:
   enabled: false
   terraform:
     module:
-      # https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/redis/aws
+      # -- Registry path of the Terraform module used to create the resource
+      # (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/redis/aws)
       source: app.terraform.io/Mintel/redis/aws
+      # -- Module version
       version: "0.1.0-beta.2"
+    # -- Vars to be applied to all instances defined
     defaultVars: {}
 
 s3:
   enabled: false
   terraform:
     module:
-      # https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/private-s3-bucket/aws
+      # -- Registry path of the Terraform module used to create the resource
+      # (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/private-s3-bucket/aws)
       source: app.terraform.io/Mintel/private-s3-bucket/aws
+      # -- Module version
       version: "0.1.0-beta.1"
+    # -- Vars to be applied to all instances defined
     defaultVars: {}
