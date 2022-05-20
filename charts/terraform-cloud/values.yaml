@@ -67,30 +67,30 @@ sqs:
 sns:
   enabled: false
   terraform:
-      module:
-        # -- Registry path of the Terraform module used to create the resource
-        # (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/sns/aws)
-        source: app.terraform.io/Mintel/sns/aws
-        # -- Module version
-        version: "0.1.0-beta.1"
-      # -- Vars to be applied to all instances defined
-      defaultVars: {}
+    module:
+      # -- Registry path of the Terraform module used to create the resource
+      # (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/sns/aws)
+      source: app.terraform.io/Mintel/sns/aws
+      # -- Module version
+      version: "0.1.0-beta.1"
+    # -- Vars to be applied to all instances defined
+    defaultVars: {}
 
 staticWebsite:
   enabled: false
   terraform:
-      module:
-        # -- Registry path of the Terraform module used to create the resource
-        # (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/public-static-website/aws)
-        source: app.terraform.io/Mintel/public-static-website/aws
-        # -- Module version
-        version: "0.1.0-beta.1"
-      # -- Vars to be applied to all instances defined
-      defaultVars: {}
-      # Vars to consider:
-      # cloudfront_index_document
-      # cloudfront_error_responses
-      # create_route53_entry
+    module:
+      # -- Registry path of the Terraform module used to create the resource
+      # (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/public-static-website/aws)
+      source: app.terraform.io/Mintel/public-static-website/aws
+      # -- Module version
+      version: "0.1.0-beta.1"
+    # -- Vars to be applied to all instances defined
+    defaultVars: {}
+    # Vars to consider:
+    # cloudfront_index_document
+    # cloudfront_error_responses
+    # create_route53_entry
 
 mariadb:
   enabled: false
