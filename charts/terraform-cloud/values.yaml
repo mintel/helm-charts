@@ -108,7 +108,7 @@ mariadb:
       # -- Module version
       version: "0.1.0-beta.2"
     # -- Vars to be applied to all instances defined below
-    # @default See below
+    # @default -- See below
     defaultVars:
       # -- Database engine to use (should always be "mariadb")
       engine: "mariadb"
@@ -131,7 +131,7 @@ memcached:
       # -- Module version
       version: "0.1.0-beta.2"
     # -- Vars to be applied to all instances defined below
-    # @default See below
+    # @default -- See below
     defaultVars:
       # -- EC2 instance type to use (https://aws.amazon.com/elasticache/pricing)
       instance_type: cache.t4g.micro
@@ -168,6 +168,7 @@ postgresql:
       # -- Module version
       version: "0.1.0-beta.2"
     # -- Vars to be applied to all instances defined below
+    # @default -- See below
     defaultVars:
       # -- Database engine to use (should always be "postgres")
       engine: "postgres"

@@ -25,7 +25,7 @@ A Helm chart for provisioning resources using Terraform Cloud
 | global.terraform.secretsMountPath | string | `"/tmp/secrets"` | Where secrets are mounted inside the Terraform Operator container |
 | global.terraform.terraformVersion | string | `"1.0.7"` | Global Terraform version for all modules |
 | mariadb.enabled | bool | `false` | Set to true to create a MariaDB RDS instance |
-| mariadb.terraform.defaultVars | object | `{"engine":"mariadb","engine_version":"10.5","port":3306}` | Vars to be applied to all instances defined below @default See below |
+| mariadb.terraform.defaultVars | object | See below | Vars to be applied to all instances defined below |
 | mariadb.terraform.defaultVars.engine | string | `"mariadb"` | Database engine to use (should always be "mariadb") |
 | mariadb.terraform.defaultVars.engine_version | string | `"10.5"` | MariaDB version |
 | mariadb.terraform.defaultVars.port | int | `3306` | MariaDB port |
@@ -33,7 +33,7 @@ A Helm chart for provisioning resources using Terraform Cloud
 | mariadb.terraform.module.source | string | `"app.terraform.io/Mintel/rds/aws"` | Registry path of the Terraform module used to create the resource (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/rds/aws) |
 | mariadb.terraform.module.version | string | `"0.1.0-beta.2"` | Module version |
 | memcached.enabled | bool | `false` | Set to true to create a memcached Elasticache resource |
-| memcached.terraform.defaultVars | object | `{"instance_type":"cache.t4g.micro","num_cache_nodes":1}` | Vars to be applied to all instances defined below @default See below |
+| memcached.terraform.defaultVars | object | See below | Vars to be applied to all instances defined below |
 | memcached.terraform.defaultVars.instance_type | string | `"cache.t4g.micro"` | EC2 instance type to use (https://aws.amazon.com/elasticache/pricing) |
 | memcached.terraform.defaultVars.num_cache_nodes | int | `1` | Number of nodes to create in the cluster |
 | memcached.terraform.instances | object | `{}` | A map of instance names => variable key/value pairs to be sent to the terraform module. The values in `defaultVars` will be applied to every instance if not explicitly defined here. |
@@ -45,7 +45,7 @@ A Helm chart for provisioning resources using Terraform Cloud
 | opensearch.terraform.module.source | string | `"app.terraform.io/Mintel/opensearch/aws"` | Registry path of the Terraform module used to create the resource (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/opensearch/aws) |
 | opensearch.terraform.module.version | string | `"0.1.0-beta.2"` | Module version |
 | postgresql.enabled | bool | `false` | Set to true to create a PostgreSQL RDS instance |
-| postgresql.terraform.defaultVars | object | `{"engine":"postgres","engine_version":"13","port":5432}` | Vars to be applied to all instances defined below |
+| postgresql.terraform.defaultVars | object | See below | Vars to be applied to all instances defined below |
 | postgresql.terraform.defaultVars.engine | string | `"postgres"` | Database engine to use (should always be "postgres") |
 | postgresql.terraform.defaultVars.engine_version | string | `"13"` | PostgreSQL version |
 | postgresql.terraform.defaultVars.port | int | `5432` | PostgreSQL port |
