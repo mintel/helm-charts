@@ -9,7 +9,7 @@ tests:
       global.name: test-app
       global.clusterEnv: dev
       global.clusterName: cluster1
-      global.region: eu-west-1
+      global.clusterRegion: eu-west-1
       global.owner: sre
       global.partOf: test-project
       s3.enabled: true
@@ -28,43 +28,16 @@ tests:
       - equal:
           path: spec.agentPoolID
           value: apool-ARFKgcQQcY3T91bk
+      - hasDocuments:
+          count: 1
       - contains:
           path: spec.variables
           content:
-            environmentVariable: false
-            hcl: false
-            key: name
-            sensitive: false
-            value: test-app
-      - contains:
-          path: spec.variables
-          content:
-            environmentVariable: false
-            hcl: true
-            key: tags
-            sensitive: false
-            value: |-
-              {
-                  Owner       = "sre"
-                  Project     = "test-project"
-                  Application = "test-app"
-              }
-      - contains:
-          path: spec.variables
-          content:
-            environmentVariable: false
-            hcl: true
-            key: secret_tags
-            sensitive: false
-            value: '{access-project = "test-namespace-ops"}'
-      - contains:
-          path: spec.variables
-          content:
-            environmentVariable: false
-            hcl: false
-            key: output_secret_name
-            sensitive: false
-            value: test-namespace/test-app/s3
+              environmentVariable: false
+              hcl: false
+              key: name
+              sensitive: false
+              value: test-app
       - contains:
           path: spec.variables
           content:
@@ -80,7 +53,7 @@ tests:
             hcl: false
             key: eks_cluster_name
             sensitive: false
-            value: cluster-1
+            value: cluster1
       - contains:
           path: spec.variables
           content:
@@ -89,3 +62,27 @@ tests:
             key: aws_region
             sensitive: false
             value: eu-west-1
+      - contains:
+          path: spec.variables
+          content:
+            environmentVariable: false
+            hcl: false
+            key: aws_account_name
+            sensitive: false
+            value: dev
+      - contains:
+          path: spec.variables
+          content:
+            environmentVariable: false
+            hcl: false
+            key: output_secret_name
+            sensitive: false
+            value: test-namespace/test-app/s3
+      - contains:
+          path: spec.variables
+          content:
+            environmentVariable: false
+            hcl: true
+            key: secret_tags
+            sensitive: false
+            value: '{access-project = "test-namespace-ops"}'

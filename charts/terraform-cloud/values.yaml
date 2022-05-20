@@ -25,7 +25,7 @@ global:
     secretsMountPath: /tmp/secrets
     terraformVersion: 1.0.7
     # set to true as part of tf cloud migrations. When true, it stops standard-application-stack from creating AWS related external secrets and passes that responsibility to the terraform-cloud chart
-    externalSecrets: false
+    externalSecrets: true
 
 dynamodb:
   # -- Set to true to create a DynamoDB instance
@@ -182,7 +182,7 @@ redis:
 
 s3:
   # -- Set to true to create an S3 bucket
-  enabled: false
+  enabled: true
   terraform:
     module:
       # -- Registry path of the Terraform module used to create the resource

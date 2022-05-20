@@ -20,7 +20,7 @@ A Helm chart for provisioning resources using Terraform Cloud
 | global.name | string | `"example-app"` | Name of the application |
 | global.owner | string | `""` | Team which "owns" the application |
 | global.partOf | string | `""` | Top level application each deployment is a part of |
-| global.terraform | object | `{"externalSecrets":false,"organization":"Mintel","secretsMountPath":"/tmp/secrets","terraformVersion":"1.0.7"}` | Global variables relating to cloud provider |
+| global.terraform | object | `{"externalSecrets":true,"organization":"Mintel","secretsMountPath":"/tmp/secrets","terraformVersion":"1.0.7"}` | Global variables relating to cloud provider |
 | mariadb.enabled | bool | `false` | Set to true to create a MariaDB RDS instance |
 | mariadb.terraform.defaultVars | object | `{"engine":"mariadb","engine_version":"10.5","port":3306}` | Vars to be applied to all instances defined |
 | mariadb.terraform.module.source | string | `"app.terraform.io/Mintel/rds/aws"` | Registry path of the Terraform module used to create the resource (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/rds/aws) |
@@ -41,7 +41,7 @@ A Helm chart for provisioning resources using Terraform Cloud
 | redis.terraform.defaultVars | object | `{}` | Vars to be applied to all instances defined |
 | redis.terraform.module.source | string | `"app.terraform.io/Mintel/redis/aws"` | Registry path of the Terraform module used to create the resource (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/redis/aws) |
 | redis.terraform.module.version | string | `"0.1.0-beta.2"` | Module version |
-| s3.enabled | bool | `false` | Set to true to create an S3 bucket |
+| s3.enabled | bool | `true` | Set to true to create an S3 bucket |
 | s3.terraform.defaultVars | object | `{}` | Vars to be applied to all instances defined |
 | s3.terraform.module.source | string | `"app.terraform.io/Mintel/private-s3-bucket/aws"` | Registry path of the Terraform module used to create the resource (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/private-s3-bucket/aws) |
 | s3.terraform.module.version | string | `"0.1.0-beta.1"` | Module version |
