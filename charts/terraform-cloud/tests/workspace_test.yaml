@@ -25,9 +25,6 @@ tests:
       - equal:
           path: spec.module.source
           value: app.terraform.io/Mintel/private-s3-bucket/aws
-      - equal:
-          path: spec.agentPoolID
-          value: apool-ARFKgcQQcY3T91bk
       - hasDocuments:
           count: 1
       - contains:

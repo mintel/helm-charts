@@ -16,7 +16,7 @@ metadata:
     {{ include "mintel_common.commonAnnotations" $ | nindent 4 }}
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
-  agentPoolID: {{ has $global.clusterEnv (list "prod" "logs") | ternary "apool-RhENdyZD1fV8Kdde" "apool-ARFKgcQQcY3T91bk" | quote }}
+  agentPoolID: {{ $global.terraform.agentPoolID | quote }}
   module:
     source: {{ $moduleSource | quote }}
     version: {{ $moduleVersion | quote }}
