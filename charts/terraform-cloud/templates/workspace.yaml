@@ -1,6 +1,6 @@
 # List the supported resource types here. These should map directly to the top-level fields of the same name in the
 # values.yaml file.
-{{- range (list "memcached" "opensearch" "postgresql" "redis" "s3" "mariadb" "dynamodb" "sns" "sqs" "staticWebsite") }}
+{{- range include "mintel_common.terraformCloudResources" $ | split "," }}
   {{- $global := $.Values.global }}
   # Get the config for the current resource in the loop (e.g. resourceType = "memcached", resourceConfig = everything
   # inside the memcached dict in values.yaml)

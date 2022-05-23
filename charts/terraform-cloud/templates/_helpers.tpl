@@ -1,3 +1,9 @@
+{{/* Supported resources */}}
+{{- define "mintel_common.terraformCloudResources" -}}
+{{- $terraformCloudResources := (list "memcached" "opensearch" "postgresql" "redis" "s3" "mariadb" "dynamodb" "sns" "sqs" "staticWebsite") -}}
+{{ join "," $terraformCloudResources }}
+{{- end -}}
+
 {{/*
 Create chart name and version as used by the chart label.
 */}}
