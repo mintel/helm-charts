@@ -27,6 +27,8 @@ global:
     # -- Set to true as part of tf cloud migrations. When true, it stops standard-application-stack from creating AWS
     # related external secrets and passes that responsibility to the terraform-cloud chart
     externalSecrets: true
+    # -- ID of the Terraform Cloud Agent Pool to use for the run. Passed in from cluster-env-jsonnet
+    agentPoolID: ""
 
 dynamodb:
   # -- Set to true to create a DynamoDB instance
