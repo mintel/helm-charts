@@ -1,0 +1,213 @@
+# Default values for terraform-cloud.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+global:
+  # -- Name of the application
+  name: "example-app"
+  # -- Team which "owns" the application
+  owner: ""
+  # -- Top level application each deployment is a part of
+  partOf: ""
+  # -- Additional labels to apply to all resources
+  clusterDomain: "127.0.0.1.nip.io"
+  # -- Environment (local, dev, qa, prod)
+  clusterEnv: "local"
+  # -- Kubernetes cluster name
+  clusterName: ""
+  # -- Kubernetes cluster region
+  clusterRegion: ""
+  terraform:
+    # -- Name of our Terraform Cloud org
+    organization: Mintel
+    # -- Where secrets are mounted inside the Terraform Operator container
+    secretsMountPath: /tmp/secrets
+    # -- Global Terraform version for all modules
+    terraformVersion: 1.0.7
+    # -- Set to true as part of tf cloud migrations. When true, it stops standard-application-stack from creating AWS
+    # related external secrets and passes that responsibility to the terraform-cloud chart
+    externalSecrets: true
+
+dynamodb:
+  # -- Set to true to create a DynamoDB instance
+  enabled: false
+  terraform:
+    module:
+      # -- Registry path of the Terraform module used to create the resource
+      # (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/dynamodb/aws)
+      source: app.terraform.io/Mintel/dynamodb/aws
+      # -- Module version
+      version: "0.1.0-beta.1"
+    # -- Vars to be applied to all instances defined below
+    defaultVars: {}
+    # -- A map of instance names => variable key/value pairs to be sent to the terraform module. The values in
+    # `defaultVars` will be applied to every instance if not explicitly defined here.
+    instances:
+    # Example:
+    # instances:
+    #   "my-instance-1":
+    #     db_name: "my_db"
+    #
+
+sqs:
+  # -- Set to true to create an SQS resource
+  enabled: false
+  terraform:
+    module:
+      # -- Registry path of the Terraform module used to create the resource
+      # (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/sqs/aws)
+      source: app.terraform.io/Mintel/sqs/aws
+      # -- Module version
+      version: "0.1.0-beta.1"
+    # -- Vars to be applied to all instances defined below
+    defaultVars: {}
+    # -- A map of instance names => variable key/value pairs to be sent to the terraform module. The values in
+    # `defaultVars` will be applied to every instance if not explicitly defined here.
+    instances: {}
+
+sns:
+  # -- Set to true to create an SNS resource
+  enabled: false
+  terraform:
+    module:
+      # -- Registry path of the Terraform module used to create the resource
+      # (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/sns/aws)
+      source: app.terraform.io/Mintel/sns/aws
+      # -- Module version
+      version: "0.1.0-beta.1"
+    # -- Vars to be applied to all instances defined below
+    defaultVars: {}
+    # -- A map of instance names => variable key/value pairs to be sent to the terraform module. The values in
+    # `defaultVars` will be applied to every instance if not explicitly defined here.
+    instances: {}
+
+staticWebsite:
+  # -- Set to true to create static website (a public bucket and associated resources)
+  enabled: false
+  terraform:
+    module:
+      # -- Registry path of the Terraform module used to create the resource
+      # (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/public-static-website/aws)
+      source: app.terraform.io/Mintel/public-static-website/aws
+      # -- Module version
+      version: "0.1.0-beta.1"
+    # -- Vars to be applied to all instances defined below
+    defaultVars: {}
+    # -- A map of instance names => variable key/value pairs to be sent to the terraform module. The values in
+    # `defaultVars` will be applied to every instance if not explicitly defined here.
+    instances: {}
+
+mariadb:
+  # -- Set to true to create a MariaDB RDS instance
+  enabled: false
+  terraform:
+    module:
+      # -- Registry path of the Terraform module used to create the resource
+      # (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/rds/aws)
+      source: app.terraform.io/Mintel/rds/aws
+      # -- Module version
+      version: "0.1.0-beta.2"
+    # -- Vars to be applied to all instances defined below
+    # @default -- See below
+    defaultVars:
+      # -- Database engine to use (should always be "mariadb")
+      engine: "mariadb"
+      # -- MariaDB version
+      engine_version: "10.5"
+      # -- MariaDB port
+      port: 3306
+    # -- A map of instance names => variable key/value pairs to be sent to the terraform module. The values in
+    # `defaultVars` will be applied to every instance if not explicitly defined here.
+    instances: {}
+
+memcached:
+  # -- Set to true to create a memcached Elasticache resource
+  enabled: false
+  terraform:
+    module:
+      # -- Registry path of the Terraform module used to create the resource
+      # (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/memcached/aws)
+      source: app.terraform.io/Mintel/memcached/aws
+      # -- Module version
+      version: "0.1.0-beta.2"
+    # -- Vars to be applied to all instances defined below
+    # @default -- See below
+    defaultVars:
+      # -- EC2 instance type to use (https://aws.amazon.com/elasticache/pricing)
+      instance_type: cache.t4g.micro
+      # -- Number of nodes to create in the cluster
+      num_cache_nodes: 1
+    # -- A map of instance names => variable key/value pairs to be sent to the terraform module. The values in
+    # `defaultVars` will be applied to every instance if not explicitly defined here.
+    instances: {}
+
+opensearch:
+  # -- Set to true to create an Opensearch cluster
+  enabled: false
+  terraform:
+    module:
+      # -- Registry path of the Terraform module used to create the resource
+      # (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/opensearch/aws)
+      source: app.terraform.io/Mintel/opensearch/aws
+      # -- Module version
+      version: "0.1.0-beta.2"
+    # -- Vars to be applied to all instances defined below
+    defaultVars: {}
+    # -- A map of instance names => variable key/value pairs to be sent to the terraform module. The values in
+    # `defaultVars` will be applied to every instance if not explicitly defined here.
+    instances: {}
+
+postgresql:
+  # -- Set to true to create a PostgreSQL RDS instance
+  enabled: false
+  terraform:
+    module:
+      # -- Registry path of the Terraform module used to create the resource
+      # (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/rds/aws)
+      source: app.terraform.io/Mintel/rds/aws
+      # -- Module version
+      version: "0.1.0-beta.2"
+    # -- Vars to be applied to all instances defined below
+    # @default -- See below
+    defaultVars:
+      # -- Database engine to use (should always be "postgres")
+      engine: "postgres"
+      # -- PostgreSQL version
+      engine_version: "13"
+      # -- PostgreSQL port
+      port: 5432
+    # -- A map of instance names => variable key/value pairs to be sent to the terraform module. The values in
+    # `defaultVars` will be applied to every instance if not explicitly defined here.
+    instances: {}
+
+redis:
+  # -- Set to true to create a Redis Elasticache resource
+  enabled: false
+  terraform:
+    module:
+      # -- Registry path of the Terraform module used to create the resource
+      # (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/redis/aws)
+      source: app.terraform.io/Mintel/redis/aws
+      # -- Module version
+      version: "0.1.0-beta.2"
+    # -- Vars to be applied to all instances defined below
+    defaultVars: {}
+    # -- A map of instance names => variable key/value pairs to be sent to the terraform module. The values in
+    # `defaultVars` will be applied to every instance if not explicitly defined here.
+    instances: {}
+
+s3:
+  # -- Set to true to create an S3 bucket
+  enabled: false
+  terraform:
+    module:
+      # -- Registry path of the Terraform module used to create the resource
+      # (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/private-s3-bucket/aws)
+      source: app.terraform.io/Mintel/private-s3-bucket/aws
+      # -- Module version
+      version: "0.1.0-beta.1"
+    # -- Vars to be applied to all instances defined below
+    defaultVars: {}
+    # -- A map of instance names => variable key/value pairs to be sent to the terraform module. The values in
+    # `defaultVars` will be applied to every instance if not explicitly defined here.
+    instances: {}

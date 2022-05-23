@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v3.23.0] - 2022-05-18
+### Added
+- Added toggle of AWS related external secret creation via .Values.global.terraform.externalSecret
+
 ## [v3.22.2] - 2022-05-20
 ### Fixed
 - ALB Ingress should listen on port 80 as well (redirect rule to 443 is in place)
