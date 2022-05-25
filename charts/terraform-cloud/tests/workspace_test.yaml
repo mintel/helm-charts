@@ -29,7 +29,7 @@ tests:
           count: 1
       - equal:
           path: metadata.annotations.[app.mintel.com/altManifestFileSuffix]
-          value: test-namespace-test-app-s3
+          value: test-app-s3
       - contains:
           path: spec.variables
           content:
