@@ -14,6 +14,7 @@ metadata:
   labels: {{ include "mintel_common.labels" $ | nindent 4 }}
   annotations:
     {{ include "mintel_common.commonAnnotations" $ | nindent 4 }}
+    app.mintel.com/altName: "{{ $.Release.Namespace }}-{{ .name }}-{{ $resourceType | kebabcase }}"
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
   agentPoolID: {{ $global.terraform.agentPoolID | quote }}
