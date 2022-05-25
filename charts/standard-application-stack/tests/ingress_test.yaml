@@ -112,6 +112,9 @@ tests:
       - equal:
           path: metadata.annotations.[alb.ingress.kubernetes.io/listen-ports]
           value: '[{"HTTP": 80}, {"HTTPS": 443}]'
+      - equal:
+          path: metadata.annotations.[alb.ingress.kubernetes.io/ssl-redirect]
+          value: "443"
 
   - it: Check no TLS set if ingressTLSSecrets and specificTlsHostsYaml is empty
     set:
