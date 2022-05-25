@@ -58,6 +58,7 @@ metadata:
     {{- if (and .Values.ingress.alb .Values.ingress.alb.enabled) }}
     {{- with .Values.ingress.alb }}
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
+    alb.ingress.kubernetes.io/ssl-redirect: "443"
     alb.ingress.kubernetes.io/target-group-attributes: "deregistration_delay.timeout_seconds={{ default 10 .deregistrationDelay.timeoutSeconds }}"
     alb.ingress.kubernetes.io/target-type: "ip"
     external-dns.alpha.kubernetes.io/ttl: "60"

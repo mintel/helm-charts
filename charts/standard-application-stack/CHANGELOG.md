@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v3.24.0] - 2022-05-25
+### Changed
+- ALB Ingress annotation now redirects to port 443 (from port 80)
+
 ## [v3.23.1] - 2022-05-24
 ### Fixed
 - Fixed date on previous changelog entry
