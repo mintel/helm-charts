@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [v0.3.0] - 2022-05-25
 ### Added
-- Added app.mintel.com/altName to workspace spec to be used in manifest generation
+- Added app.mintel.com/altManifestFileSuffix to workspace spec to be used in manifest generation
 
 ### Changed
 - Changed workspace-output-secret secret store to aws-secrets-manager-local

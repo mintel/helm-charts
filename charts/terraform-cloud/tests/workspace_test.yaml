@@ -28,7 +28,7 @@ tests:
       - hasDocuments:
           count: 1
       - equal:
-          path: metadata.annotations.[app.mintel.com/altName]
+          path: metadata.annotations.[app.mintel.com/altManifestFileSuffix]
           value: test-namespace-test-app-s3
       - contains:
           path: spec.variables
