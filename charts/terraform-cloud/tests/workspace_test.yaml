@@ -27,6 +27,9 @@ tests:
           value: app.terraform.io/Mintel/private-s3-bucket/aws
       - hasDocuments:
           count: 1
+      - equal:
+          path: metadata.annotations.[app.mintel.com/altManifestFileSuffix]
+          value: test-app-s3
       - contains:
           path: spec.variables
           content:
