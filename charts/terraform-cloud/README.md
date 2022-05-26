@@ -1,6 +1,6 @@
 # terraform-cloud
 
-![Version: 0.3.0](https://img.shields.io/badge/Version-0.3.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.1.0](https://img.shields.io/badge/AppVersion-1.1.0-informational?style=flat-square)
+![Version: 0.4.0](https://img.shields.io/badge/Version-0.4.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.1.0](https://img.shields.io/badge/AppVersion-1.1.0-informational?style=flat-square)
 
 A Helm chart for provisioning resources using Terraform Cloud
 
@@ -57,12 +57,12 @@ A Helm chart for provisioning resources using Terraform Cloud
 | redis.terraform.defaultVars | object | `{}` | Vars to be applied to all instances defined below |
 | redis.terraform.instances | object | `{}` | A map of instance names => variable key/value pairs to be sent to the terraform module. The values in `defaultVars` will be applied to every instance if not explicitly defined here. |
 | redis.terraform.module.source | string | `"app.terraform.io/Mintel/redis/aws"` | Registry path of the Terraform module used to create the resource (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/redis/aws) |
-| redis.terraform.module.version | string | `"0.1.0-beta.2"` | Module version |
+| redis.terraform.module.version | string | `"0.1.0-beta.3"` | Module version |
 | s3.enabled | bool | `false` | Set to true to create an S3 bucket |
 | s3.terraform.defaultVars | object | `{}` | Vars to be applied to all instances defined below |
 | s3.terraform.instances | object | `{}` | A map of instance names => variable key/value pairs to be sent to the terraform module. The values in `defaultVars` will be applied to every instance if not explicitly defined here. |
 | s3.terraform.module.source | string | `"app.terraform.io/Mintel/private-s3-bucket/aws"` | Registry path of the Terraform module used to create the resource (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/private-s3-bucket/aws) |
-| s3.terraform.module.version | string | `"0.1.0-beta.1"` | Module version |
+| s3.terraform.module.version | string | `"0.1.0-beta.2"` | Module version |
 | sns.enabled | bool | `false` | Set to true to create an SNS resource |
 | sns.terraform.defaultVars | object | `{}` | Vars to be applied to all instances defined below |
 | sns.terraform.instances | object | `{}` | A map of instance names => variable key/value pairs to be sent to the terraform module. The values in `defaultVars` will be applied to every instance if not explicitly defined here. |

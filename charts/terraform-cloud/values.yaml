@@ -191,7 +191,7 @@ redis:
       # (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/redis/aws)
       source: app.terraform.io/Mintel/redis/aws
       # -- Module version
-      version: "0.1.0-beta.2"
+      version: "0.1.0-beta.3"
     # -- Vars to be applied to all instances defined below
     defaultVars: {}
     # -- A map of instance names => variable key/value pairs to be sent to the terraform module. The values in
@@ -207,7 +207,7 @@ s3:
       # (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/private-s3-bucket/aws)
       source: app.terraform.io/Mintel/private-s3-bucket/aws
       # -- Module version
-      version: "0.1.0-beta.1"
+      version: "0.1.0-beta.2"
     # -- Vars to be applied to all instances defined below
     defaultVars: {}
     # -- A map of instance names => variable key/value pairs to be sent to the terraform module. The values in
