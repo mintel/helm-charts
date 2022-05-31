@@ -30,6 +30,17 @@ global:
     # -- ID of the Terraform Cloud Agent Pool to use for the run. Passed in from cluster-env-jsonnet
     agentPoolID: ""
 
+irsa:
+  terraform:
+    module:
+      # -- Registry path of the Terraform module used to create the resource
+      # (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/app-iam/aws)
+      source: app.terraform.io/Mintel/app-iam/aws
+      # -- Module version
+      version: "0.0.1-alpha.1"
+      # -- Vars to be applied to all instances defined below
+    vars: {}
+
 dynamodb:
   # -- Set to true to create a DynamoDB instance
   enabled: false
@@ -44,7 +55,7 @@ dynamodb:
     defaultVars: {}
     # -- A map of instance names => variable key/value pairs to be sent to the terraform module. The values in
     # `defaultVars` will be applied to every instance if not explicitly defined here.
-    instances:
+    instances: {}
     # Example:
     # instances:
     #   "my-instance-1":

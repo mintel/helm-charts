@@ -9,12 +9,16 @@
 apiVersion: app.terraform.io/v1alpha1
 kind: Workspace
 metadata:
-  name: "{{ $global.clusterEnv }}-{{ $global.clusterRegion }}-{{ $global.clusterName }}-{{ $.Release.Namespace }}-{{ .name }}-{{ $resourceType | kebabcase }}"
+  name: "{{ $global.clusterEnv }}-{{ $global.clusterRegion }}-{{ $global.clusterName }}-{{ $.Release.Namespace }}-{{ $instanceCfg.name }}-{{ $resourceType | kebabcase }}"
   namespace: {{ $.Release.Namespace | quote }}
   labels: {{ include "mintel_common.labels" $ | nindent 4 }}
   annotations:
     {{ include "mintel_common.commonAnnotations" $ | nindent 4 }}
-    app.mintel.com/altManifestFileSuffix: "{{ .name }}-{{ $resourceType | kebabcase }}"
+    {{- if (eq $resourceType "irsa") }}
+    app.mintel.com/altManifestFileSuffix: "{{ $global.name }}-{{ $resourceType | kebabcase }}"
+    {{- else }}
+    app.mintel.com/altManifestFileSuffix: "{{ $instanceCfg.name }}-{{ $resourceType | kebabcase }}"
+    {{- end}}
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
   agentPoolID: {{ $global.terraform.agentPoolID | quote }}
