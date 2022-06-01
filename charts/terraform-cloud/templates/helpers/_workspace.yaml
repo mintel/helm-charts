@@ -61,16 +61,16 @@ spec:
   {{- $resourceType := . }}
   {{- $resourceConfig := (get $.Values .) }}
   {{- if (and $resourceConfig.enabled (has $resourceType (list "opensearch" "s3" "dynamodb" "sns" "sqs")))}}
-  {{- range $instanceName, $instanceConfig := default ( dict "default" dict ) $resourceConfig.terraform.instances }}
+  {{- range $instanceName, $instanceCfg := default ( dict "default" dict ) $resourceConfig.terraform.instances }}
       # Set instance.name if not provided
-      {{- if not ( hasKey $instanceConfig "name" ) }}
+      {{- if not ( hasKey $instanceCfg "name" ) }}
         {{- if eq $instanceName "default" }}
-          {{- $_ := set $instanceConfig "name" $.Values.global.name }}
+          {{- $_ := set $instanceCfg "name" $.Values.global.name }}
         {{- else }}
-          {{- $_ := set $instanceConfig "name" $instanceName }}
+          {{- $_ := set $instanceCfg "name" $instanceName }}
         {{- end }}
       {{- end }}
-- sourceableName: "{{ $global.clusterEnv }}-{{ $global.clusterRegion }}-{{ $global.clusterName }}-{{ $.Release.Namespace }}-{{ $instanceConfig.name }}-{{ $resourceType | kebabcase }}"
+- sourceableName: "{{ $global.clusterEnv }}-{{ $global.clusterRegion }}-{{ $global.clusterName }}-{{ $.Release.Namespace }}-{{ $instanceCfg.name }}-{{ $resourceType | kebabcase }}"
   {{- end }}
   {{- end }}
 {{- end}}
