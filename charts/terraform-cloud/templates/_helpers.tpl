@@ -4,6 +4,12 @@
 {{ join "," $terraformCloudResources }}
 {{- end -}}
 
+{{/* Supported resources that require IRSA */}}
+{{- define "mintel_common.terraformCloudIRSAResources" -}}
+{{- $terraformCloudIRSAResources := (list "opensearch" "s3" "dynamodb" "sns" "sqs") -}}
+{{ join "," $terraformCloudIRSAResources }}
+{{- end -}}
+
 {{/*
 Create chart name and version as used by the chart label.
 */}}
