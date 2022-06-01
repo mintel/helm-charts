@@ -6,6 +6,7 @@
   {{- $irsaConfig := $.Values.irsa }}
   {{- $moduleSource := $irsaConfig.terraform.module.source }}
   {{- $moduleVersion := $irsaConfig.terraform.module.version }}
+  {{- $tfVersion := $irsaConfig.terraform.terraformVersion }}
   {{- if not (hasKey $irsaConfig "name") }}
     {{- $_ := set $irsaConfig "name" (printf "%s-%s-%s" $global.clusterName $.Release.Namespace $global.name ) }}
   {{- end }}
@@ -34,5 +35,5 @@
     {{- $_ := set $irsaConfig "k8s_namespace" $.Release.Namespace }}
   {{- end }}
   # Create the CRD
-  {{- include "mintel_common.workspace" (list $ . $irsaConfig "irsa" $moduleSource $moduleVersion) }}
+  {{- include "mintel_common.workspace" (list $ . $irsaConfig "irsa" $moduleSource $moduleVersion $tfVersion) }}
 {{- end }}

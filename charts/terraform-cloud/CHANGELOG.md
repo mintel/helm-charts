@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [v0.5.0] - 2022-05-30
 ### Added
 - Add ability to create IRSA using app-iam module when
+- Add ability to override terraform version at the module level
 
 ## [v0.4.1] - 2022-05-27
 ### Fixed

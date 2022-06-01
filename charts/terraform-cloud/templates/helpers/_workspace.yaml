@@ -4,6 +4,7 @@
 {{- $resourceType := index . 3 }}
 {{- $moduleSource := index . 4 }}
 {{- $moduleVersion := index . 5 }}
+{{- $tfVersion := index . 6}}
 {{- $global := $.Values.global }}
 {{- with index . 1 }}
 apiVersion: app.terraform.io/v1alpha1
@@ -31,7 +32,7 @@ spec:
   organization: {{ $global.terraform.organization | quote }}
   secretsMountPath: {{ $global.terraform.secretsMountPath | quote }}
   sshKeyID: "mintel-ssh"
-  terraformVersion: {{ $global.terraform.terraformVersion | quote }}
+  terraformVersion: {{ (default $global.terraform.terraformVersion $tfVersion) | quote }}
   {{- if (eq $resourceType "irsa") }}
   runTriggers:
   {{include "mintel_common.irsaRunTriggers" .| indent 4}}
