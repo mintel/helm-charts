@@ -26,9 +26,9 @@ A Helm chart for provisioning resources using Terraform Cloud
 | global.terraform.organization | string | `"Mintel"` | Name of our Terraform Cloud org |
 | global.terraform.secretsMountPath | string | `"/tmp/secrets"` | Where secrets are mounted inside the Terraform Operator container |
 | global.terraform.terraformVersion | string | `"1.0.7"` | Global Terraform version for all modules |
-| irsa.terraform.module | object | `{"source":"app.terraform.io/Mintel/app-iam/aws","version":"0.0.1-alpha.1"}` | Set Terraform version for this module to overwrite global.TerraformVersion terraformVersion: |
+| irsa.terraform.module | object | `{"source":"app.terraform.io/Mintel/app-iam/aws","version":"0.0.1-alpha.3"}` | Set Terraform version for this module to overwrite global.TerraformVersion terraformVersion: |
 | irsa.terraform.module.source | string | `"app.terraform.io/Mintel/app-iam/aws"` | Registry path of the Terraform module used to create the resource (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/app-iam/aws) |
-| irsa.terraform.module.version | string | `"0.0.1-alpha.1"` | Module version |
+| irsa.terraform.module.version | string | `"0.0.1-alpha.3"` | Module version |
 | irsa.terraform.vars | object | `{}` |  |
 | mariadb.enabled | bool | `false` | Set to true to create a MariaDB RDS instance |
 | mariadb.terraform.defaultVars | object | See below | Vars to be applied to all instances defined below |
