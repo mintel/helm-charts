@@ -30,10 +30,25 @@ global:
     # -- ID of the Terraform Cloud Agent Pool to use for the run. Passed in from cluster-env-jsonnet
     agentPoolID: ""
 
+irsa:
+  terraform:
+    # -- Set Terraform version for this module to overwrite global.TerraformVersion
+    # terraformVersion:
+    module:
+      # -- Registry path of the Terraform module used to create the resource
+      # (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/app-iam/aws)
+      source: app.terraform.io/Mintel/app-iam/aws
+      # -- Module version
+      version: "0.0.1-alpha.3"
+      # -- Vars to be applied to all instances defined below
+    vars: {}
+
 dynamodb:
   # -- Set to true to create a DynamoDB instance
   enabled: false
   terraform:
+    # -- Set Terraform version for this module to overwrite global.TerraformVersion
+    # terraformVersion:
     module:
       # -- Registry path of the Terraform module used to create the resource
       # (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/dynamodb/aws)
@@ -44,7 +59,7 @@ dynamodb:
     defaultVars: {}
     # -- A map of instance names => variable key/value pairs to be sent to the terraform module. The values in
     # `defaultVars` will be applied to every instance if not explicitly defined here.
-    instances:
+    instances: {}
     # Example:
     # instances:
     #   "my-instance-1":
@@ -55,6 +70,8 @@ sqs:
   # -- Set to true to create an SQS resource
   enabled: false
   terraform:
+    # -- Set Terraform version for this module to overwrite global.TerraformVersion
+    # terraformVersion:
     module:
       # -- Registry path of the Terraform module used to create the resource
       # (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/sqs/aws)
@@ -71,6 +88,8 @@ sns:
   # -- Set to true to create an SNS resource
   enabled: false
   terraform:
+    # -- Set Terraform version for this module to overwrite global.TerraformVersion
+    # terraformVersion:
     module:
       # -- Registry path of the Terraform module used to create the resource
       # (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/sns/aws)
@@ -87,6 +106,8 @@ staticWebsite:
   # -- Set to true to create static website (a public bucket and associated resources)
   enabled: false
   terraform:
+    # -- Set Terraform version for this module to overwrite global.TerraformVersion
+    # terraformVersion:
     module:
       # -- Registry path of the Terraform module used to create the resource
       # (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/public-static-website/aws)
@@ -103,6 +124,8 @@ mariadb:
   # -- Set to true to create a MariaDB RDS instance
   enabled: false
   terraform:
+    # -- Set Terraform version for this module to overwrite global.TerraformVersion
+    # terraformVersion:
     module:
       # -- Registry path of the Terraform module used to create the resource
       # (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/rds/aws)
@@ -126,6 +149,8 @@ memcached:
   # -- Set to true to create a memcached Elasticache resource
   enabled: false
   terraform:
+    # -- Set Terraform version for this module to overwrite global.TerraformVersion
+    # terraformVersion:
     module:
       # -- Registry path of the Terraform module used to create the resource
       # (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/memcached/aws)
@@ -147,6 +172,8 @@ opensearch:
   # -- Set to true to create an Opensearch cluster
   enabled: false
   terraform:
+    # -- Set Terraform version for this module to overwrite global.TerraformVersion
+    # terraformVersion:
     module:
       # -- Registry path of the Terraform module used to create the resource
       # (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/opensearch/aws)
@@ -163,6 +190,8 @@ postgresql:
   # -- Set to true to create a PostgreSQL RDS instance
   enabled: false
   terraform:
+    # -- Set Terraform version for this module to overwrite global.TerraformVersion
+    # terraformVersion:
     module:
       # -- Registry path of the Terraform module used to create the resource
       # (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/rds/aws)
@@ -186,6 +215,8 @@ redis:
   # -- Set to true to create a Redis Elasticache resource
   enabled: false
   terraform:
+    # -- Set Terraform version for this module to overwrite global.TerraformVersion
+    # terraformVersion:
     module:
       # -- Registry path of the Terraform module used to create the resource
       # (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/redis/aws)
@@ -202,6 +233,8 @@ s3:
   # -- Set to true to create an S3 bucket
   enabled: false
   terraform:
+    # -- Set Terraform version for this module to overwrite global.TerraformVersion
+    # terraformVersion:
     module:
       # -- Registry path of the Terraform module used to create the resource
       # (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/private-s3-bucket/aws)

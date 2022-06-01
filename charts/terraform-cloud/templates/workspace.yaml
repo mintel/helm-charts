@@ -13,6 +13,7 @@
     {{- range $instanceName, $instanceConfig := default ( dict "default" dict ) $resourceConfig.terraform.instances }}
       {{- $moduleSource := $resourceConfig.terraform.module.source }}
       {{- $moduleVersion := $resourceConfig.terraform.module.version }}
+      {{- $tfVersion := $resourceConfig.terraform.terraformVersion}}
       # Set instance.name if not provided
       {{- if not ( hasKey $instanceConfig "name" ) }}
         {{- if eq $instanceName "default" }}
@@ -58,7 +59,7 @@
       {{- end }}
       # Create the CRD
 ---
-      {{- include "mintel_common.workspace" (list $ . $instanceConfig $resourceType $moduleSource $moduleVersion) }}
+      {{- include "mintel_common.workspace" (list $ . $instanceConfig $resourceType $moduleSource $moduleVersion $tfVersion) }}
     {{- end }}
   {{- end }}
 {{- end }}
