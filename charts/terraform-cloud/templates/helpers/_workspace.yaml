@@ -6,11 +6,12 @@
 {{- $moduleVersion := index . 5 }}
 {{- $tfVersion := index . 6}}
 {{- $global := $.Values.global }}
+{{- $workspaceDict := dict "Global" $global "Release" $.Release "InstanceCfg" $instanceCfg "ResourceType" $resourceType }}
 {{- with index . 1 }}
 apiVersion: app.terraform.io/v1alpha1
 kind: Workspace
 metadata:
-  name: "{{ $global.clusterEnv }}-{{ $global.clusterRegion }}-{{ $global.clusterName }}-{{ $.Release.Namespace }}-{{ $instanceCfg.name }}-{{ $resourceType | kebabcase }}"
+  name: {{ include "mintel_common.workspaceName" $workspaceDict | trim | quote }}
   namespace: {{ $.Release.Namespace | quote }}
   labels: {{ include "mintel_common.labels" $ | nindent 4 }}
   annotations:
@@ -55,6 +56,11 @@ spec:
   hcl: {{ .hcl | default false }}
   sensitive: {{ .sensitive | default false}}
 {{- end }}
+
+{{- define "mintel_common.workspaceName"}}
+{{printf "%s-%s-%s-%s-%s-%s" .Global.clusterEnv .Global.clusterRegion .Global.clusterName .Release.Namespace .InstanceCfg.name (.ResourceType | kebabcase) }}
+{{- end -}}
+
 
 {{- define "mintel_common.irsaRequired"}}
 {{- $irsaRequired := false}}
