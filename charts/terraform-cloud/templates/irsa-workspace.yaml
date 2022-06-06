@@ -3,10 +3,11 @@
 {{- $global := $.Values.global }}
 # check if any of the irsa dependent resources are enabled
 {{- if include "mintel_common.irsaRequired" . }}
-  {{- $irsaConfig := $.Values.irsa }}
-  {{- $moduleSource := $irsaConfig.terraform.module.source }}
-  {{- $moduleVersion := $irsaConfig.terraform.module.version }}
-  {{- $tfVersion := $irsaConfig.terraform.terraformVersion }}
+  {{- $irsa := $.Values.irsa }}
+  {{- $moduleSource := $irsa.terraform.module.source }}
+  {{- $moduleVersion := $irsa.terraform.module.version }}
+  {{- $tfVersion := $irsa.terraform.terraformVersion }}
+  {{- $irsaConfig := $irsa.terraform.vars}}
   {{- if not (hasKey $irsaConfig "name") }}
     {{- $_ := set $irsaConfig "name" (printf "app-iam-%s-%s-%s" $global.clusterName $.Release.Namespace (coalesce .Values.irsa.nameOverride $global.name)) }}
   {{- end }}
