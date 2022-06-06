@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v3.25.0] - 2022-06-06
+### Changed
+- Update local dev stack charts to latest version and remove chart.lock file to combat [this issue](https://github.com/bitnami/charts/issues/10539)
+- Add logic to use tf cloud generated IAM role for IRSA
+
 ## [v3.24.0] - 2022-05-25
 ### Changed
 - ALB Ingress annotation now redirects to port 443 (from port 80)

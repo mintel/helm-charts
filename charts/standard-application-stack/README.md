@@ -1,6 +1,6 @@
 # standard-application-stack
 
-![Version: 3.24.0](https://img.shields.io/badge/Version-3.24.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 3.25.0](https://img.shields.io/badge/Version-3.25.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A generic chart to support most common application requirements
 
@@ -8,9 +8,9 @@ A generic chart to support most common application requirements
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://charts.bitnami.com/bitnami | mariadb | 9.5.1 |
-| https://charts.bitnami.com/bitnami | postgresql | 10.13.14 |
-| https://charts.bitnami.com/bitnami | redis | 15.4.0 |
+| https://charts.bitnami.com/bitnami | mariadb | 11.0.10 |
+| https://charts.bitnami.com/bitnami | postgresql | 11.6.3 |
+| https://charts.bitnami.com/bitnami | redis | 16.11.2 |
 | https://codecentric.github.io/helm-charts | mailhog | 4.1.0 |
 | https://helm.elastic.co | elasticsearch | 7.5.2 |
 | https://helm.elastic.co | kibana | 7.5.2 |
@@ -88,7 +88,7 @@ A generic chart to support most common application requirements
 | filebeatSidecar.resources.requests.memory | string | `"100Mi"` |  |
 | gitSyncSidecar | object | `{"branch":"main","enabled":false,"resources":{"limits":{"cpu":"200m","memory":"200Mi"},"requests":{"cpu":"50m","memory":"50Mi"}},"root":"/data/git-sync"}` | Helper to sync a local directory with Git ref: https://github.com/kubernetes/git-sync |
 | gitSyncSidecar.branch | string | `"main"` | The git branch to check out |
-| global | object | `{"additionalLabels":{},"cloudProvider":{"accountId":""},"clusterDomain":"127.0.0.1.nip.io","clusterEnv":"local","clusterName":"","ingressTLSSecrets":{},"name":"example-app","owner":"","partOf":"","runtimeEnvironment":"kubernetes","terraform":{"externalSecrets":false}}` | Global variables for us in all charts and sub charts |
+| global | object | `{"additionalLabels":{},"cloudProvider":{"accountId":""},"clusterDomain":"127.0.0.1.nip.io","clusterEnv":"local","clusterName":"","ingressTLSSecrets":{},"name":"example-app","owner":"","partOf":"","runtimeEnvironment":"kubernetes","terraform":{"externalSecrets":false,"irsa":false}}` | Global variables for us in all charts and sub charts |
 | global.additionalLabels | object | `{}` | Additional labels to apply to all resources |
 | global.cloudProvider | object | `{"accountId":""}` | Global variables relating to cloud provider |
 | global.cloudProvider.accountId | string | `""` | AWS ACcount Id |
