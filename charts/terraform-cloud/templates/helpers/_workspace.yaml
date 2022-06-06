@@ -62,18 +62,6 @@ spec:
 {{- end -}}
 
 
-{{- define "mintel_common.irsaRequired"}}
-{{- $irsaRequired := false}}
-{{- range include "mintel_common.terraformCloudIRSAResources" $ | split "," }}
-  {{- $resourceConfig := (get $.Values .) }}
-  {{- if $resourceConfig.enabled }}
-    {{- $irsaRequired = true }}
-  {{- end }}
-{{- end }}
-{{ $irsaRequired }}
-{{- end -}}
-
-
 {{- define "mintel_common.irsaRunTriggers"}}
 {{- range include "mintel_common.terraformCloudResources" $ | split "," }}
   {{- $global := $.Values.global }}
@@ -89,7 +77,8 @@ spec:
           {{- $_ := set $instanceCfg "name" $instanceName }}
         {{- end }}
       {{- end }}
-- sourceableName: "{{ $global.clusterEnv }}-{{ $global.clusterRegion }}-{{ $global.clusterName }}-{{ $.Release.Namespace }}-{{ $instanceCfg.name }}-{{ $resourceType | kebabcase }}"
+{{- $workspaceDict := dict "Global" $global "Release" $.Release "InstanceCfg" $instanceCfg "ResourceType" $resourceType }}
+- sourceableName: {{ include "mintel_common.workspaceName" $workspaceDict | trim | quote }}
   {{- end }}
   {{- end }}
 {{- end}}

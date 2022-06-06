@@ -10,6 +10,17 @@
 {{ join "," $terraformCloudIRSAResources }}
 {{- end -}}
 
+{{- define "mintel_common.irsaRequired"}}
+{{- $irsaRequired := false}}
+{{- range include "mintel_common.terraformCloudIRSAResources" $ | split "," }}
+  {{- $resourceConfig := (get $.Values .) }}
+  {{- if $resourceConfig.enabled }}
+    {{- $irsaRequired = true }}
+  {{- end }}
+{{- end }}
+{{ $irsaRequired }}
+{{- end -}}
+
 {{/*
 Create chart name and version as used by the chart label.
 */}}
