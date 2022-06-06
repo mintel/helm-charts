@@ -29,6 +29,61 @@ entries:
     version: 0.0.1
   standard-application-stack:
   - apiVersion: v2
+    created: "2022-06-06T11:46:30.438523247Z"
+    dependencies:
+    - name: redis
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - localRedis
+      version: 16.11.2
+    - name: mariadb
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - localMariadb
+      version: 11.0.10
+    - name: postgresql
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - localPostgresql
+      version: 11.6.3
+    - name: mailhog
+      repository: https://codecentric.github.io/helm-charts
+      tags:
+      - localMailhog
+      version: 4.1.0
+    - name: kibana
+      repository: https://helm.elastic.co
+      tags:
+      - localKibana
+      version: 7.5.2
+    - name: elasticsearch
+      repository: https://helm.elastic.co
+      tags:
+      - localElasticsearch
+      version: 7.5.2
+    - name: opensearch
+      repository: https://opensearch-project.github.io/helm-charts
+      tags:
+      - localOpensearch
+      version: 1.4.2
+    - name: opensearch-dashboards
+      repository: https://opensearch-project.github.io/helm-charts
+      tags:
+      - localOpensearch
+      version: 1.0.8
+    - name: localstack
+      repository: https://localstack.github.io/helm-charts
+      tags:
+      - localLocalstack
+      version: 0.3.5
+    description: A generic chart to support most common application requirements
+    digest: eb84bdf067eeb957219c0db6b7e71d20d7ec6d17aab9e2c56c82e21f49d7cdfa
+    name: standard-application-stack
+    type: application
+    urls:
+    - https://github.com/mintel/helm-charts/releases/download/standard-application-stack-3.25.0/standard-application-stack-3.25.0.tgz
+    version: 3.25.0
+  - apiVersion: v2
     created: "2022-05-25T10:00:21.287087066Z"
     dependencies:
     - name: redis
@@ -5751,6 +5806,16 @@ entries:
   terraform-cloud:
   - apiVersion: v2
     appVersion: 1.1.0
+    created: "2022-06-06T11:46:30.566084088Z"
+    description: A Helm chart for provisioning resources using Terraform Cloud
+    digest: 1263987f4cb1446da4deef161f3da30e8cf858fdc9f4c445eaadc8393d32c80c
+    name: terraform-cloud
+    type: application
+    urls:
+    - https://github.com/mintel/helm-charts/releases/download/terraform-cloud-0.6.0/terraform-cloud-0.6.0.tgz
+    version: 0.6.0
+  - apiVersion: v2
+    appVersion: 1.1.0
     created: "2022-06-01T14:52:16.83644075Z"
     description: A Helm chart for provisioning resources using Terraform Cloud
     digest: 7656511c86a0e69e8c2a1e9ccc22ea1c0df941aa9b11432db4e5879cbda740b0
@@ -5830,4 +5895,4 @@ entries:
     urls:
     - https://github.com/mintel/helm-charts/releases/download/testchart-0.1.1/testchart-0.1.1.tgz
     version: 0.1.1
-generated: "2022-06-01T14:52:16.83764579Z"
+generated: "2022-06-06T11:46:30.56768558Z"
