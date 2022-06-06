@@ -27,6 +27,9 @@ global:
     # -- Set to true as part of tf cloud migrations. When true, it stops standard-application-stack from creating AWS
     # related external secrets and passes that responsibility to the terraform-cloud chart
     externalSecrets: true
+    # -- Set to true as part of tf cloud migrations. When true, standard-application-stack sets the service account
+    # eks annotation to match the new IAM roles created by the app-iam module
+    irsa: true
     # -- ID of the Terraform Cloud Agent Pool to use for the run. Passed in from cluster-env-jsonnet
     agentPoolID: ""
 
@@ -34,12 +37,14 @@ irsa:
   terraform:
     # -- Set Terraform version for this module to overwrite global.TerraformVersion
     # terraformVersion:
+    # -- Set override to stop IRSA from ending in global.name
+    # nameOverride:
     module:
       # -- Registry path of the Terraform module used to create the resource
       # (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/app-iam/aws)
       source: app.terraform.io/Mintel/app-iam/aws
       # -- Module version
-      version: "0.0.1-alpha.3"
+      version: "0.1.0.beta.1"
       # -- Vars to be applied to all instances defined below
     vars: {}
 

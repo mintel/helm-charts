@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v3.25.0] - 2022-06-06
+### Changed
+- Add logic to use tf cloud generated IAM role for IRSA
+
 ## [v3.24.0] - 2022-05-25
 ### Changed
 - ALB Ingress annotation now redirects to port 443 (from port 80)

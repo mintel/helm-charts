@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [v0.6.0] - 2022-06-06
 ### Added
 - Refactor workspace logic to use more helpers
-- Add option to tf cloud config for it to control IRSA and allow blue-green deploy
+- Add option to tf cloud config for it to control IRSA and allow blue-green deploy with IAM role having app-iam prefix
 
 
 ## [v0.5.0] - 2022-06-01
