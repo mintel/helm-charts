@@ -8,9 +8,9 @@ A generic chart to support most common application requirements
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://charts.bitnami.com/bitnami | mariadb | 9.5.1 |
-| https://charts.bitnami.com/bitnami | postgresql | 10.13.14 |
-| https://charts.bitnami.com/bitnami | redis | 15.4.0 |
+| https://charts.bitnami.com/bitnami | mariadb | 11.0.10 |
+| https://charts.bitnami.com/bitnami | postgresql | 11.6.3 |
+| https://charts.bitnami.com/bitnami | redis | 16.11.2 |
 | https://codecentric.github.io/helm-charts | mailhog | 4.1.0 |
 | https://helm.elastic.co | elasticsearch | 7.5.2 |
 | https://helm.elastic.co | kibana | 7.5.2 |
