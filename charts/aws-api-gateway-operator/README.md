@@ -4,12 +4,6 @@
 
 AWS API Gateway Operator Helm chart for Kubernetes
 
-## Maintainers
-
-| Name | Email | Url |
-| ---- | ------ | --- |
-| Mintel Cloud Platform Team (CPT) | cloud-platform-team@groups.mintel.com | https://github.com/orgs/mintel/teams/satoshi |
-
 ## Values
 
 | Key | Type | Default | Description |
