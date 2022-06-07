@@ -69,14 +69,9 @@ spec:
   {{- $resourceConfig := (get $.Values .) }}
   {{- if (and $resourceConfig.enabled (has $resourceType (list "opensearch" "s3" "dynamodb" "sns" "sqs")))}}
   {{- range $instanceName, $instanceCfg := default ( dict "default" dict ) $resourceConfig.terraform.instances }}
-      # Set instance.name if not provided
-      {{- if not ( hasKey $instanceCfg "name" ) }}
-        {{- if eq $instanceName "default" }}
-          {{- $_ := set $instanceCfg "name" $.Values.global.name }}
-        {{- else }}
-          {{- $_ := set $instanceCfg "name" $instanceName }}
-        {{- end }}
-      {{- end }}
+      # Set instance.name via helper
+      {{- $instanceDict := dict "Global" $global "InstanceCfg" $instanceCfg "InstanceName" $instanceName "ResourceType" $resourceType }}
+      {{- $_ := set $instanceCfg "name" (include "mintel_common.instanceConfigName" $instanceDict | trim)}}
 {{- $workspaceDict := dict "Global" $global "Release" $.Release "InstanceCfg" $instanceCfg "ResourceType" $resourceType }}
 - sourceableName: {{ include "mintel_common.workspaceName" $workspaceDict | trim | quote }}
   {{- end }}
