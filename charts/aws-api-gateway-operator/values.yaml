@@ -5,32 +5,13 @@
 # -- Global variables for us in all charts and sub charts
 global:
   # -- Name of the application
-  name: "example-app"
+  name: "aws-load-balancer-controller"
   # -- Team which "owns" the application
-  owner: ""
-  # -- Top level application each deployment is a part of
-  partOf: ""
+  owner: "SRE"
   # -- Additional labels to apply to all resources
   additionalLabels: {}
-  # -- Kubernetes cluster domain
-  clusterDomain: "127.0.0.1.nip.io"
   # -- Environment (local, dev, qa, prod)
   clusterEnv: "local"
-  # -- Kubernetes cluster name
-  clusterName: ""
-  # -- Global variables relating to cloud provider
-  cloudProvider:
-    # -- AWS ACcount Id
-    accountId: ""
-  # -- Global variable definint RUNTIME_ENVIRONMENT
-  runtimeEnvironment: kubernetes
-  # -- Global dictionary of TLS secrets
-  ingressTLSSecrets: {}
-  terraform:
-    # set to true as part of tf cloud migrations. When true, it stops standard-application-stack from creating AWS related external secrets and passes that responsibility to the terraform-cloud chart
-    externalSecrets: false
-    # set to true as part of tf cloud migrations. When true, standard-application-stack sets the service account eks annotation to match the new IAM roles created by the terraform-cloud chart
-    irsa: false
 
 replicaCount: 2
 
@@ -126,16 +107,13 @@ podLabels: {}
 # additionalLabels -- Labels to add to each object of the chart.
 additionalLabels: {}
 
-# The address the metric endpoint binds to. (default ":8080")
-metricsAddr: ""
-
 # The address the probe endpoint binds to (default ":8081")
 probeAddr: ""
 
 # Enable leader election for controller manager, ensuring there is only one active controller manager. (default "false")
 enableLeaderElection:
 
-# Enable Zap Development mode (WARN logging) (default "false").
+# Enable Zap Development mode (adds WARN logging) (default "false").
 zapDevelopmentConfig:
 
 # Liveness probe configuration for the operator
@@ -165,12 +143,24 @@ defaultTags: {}
 podDisruptionBudget: {}
 #  maxUnavailable: 1
 
-serviceMonitor:
-  # Specifies whether a service monitor should be created
-  enabled: false
-  # Labels to add to the service account
-  additionalLabels: {}
-  # Prometheus scrape interval
-  interval: 1m
-  # Namespace to create the service monitor in
-  namespace:
+# -- Prometheus Exporter / Metrics
+metrics:
+  # -- Enable Prometheus to access aplpication metrics endpoints
+  enabled: true
+  # -- Interval at which metrics should be scraped
+  # ref: https://github.com/coreos/prometheus-operator/blob/master/Documentation/api.md#endpoint
+  #  interval: 30s
+  # -- URL path to the metrics endpoint
+  #  path: /metrics
+  # -- Name of the port to use for metrics endpoint
+  #  port: http
+  # -- Timeout after which the scrape is ended
+  # ref: https://github.com/coreos/prometheus-operator/blob/master/Documentation/api.md#endpoint
+  #  timeout: 10s
+  # -- Scheme (HTTP ot HTTPS)
+  #  scheme: HTTP
+  basicAuth:
+    enabled: false
+    secretName: ""
+    usernameKey: ""
+    passwordKey: ""

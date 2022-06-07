@@ -27,14 +27,6 @@ spec:
         {{- if .Values.podLabels }}
         {{- toYaml .Values.podLabels | nindent 8 }}
         {{- end }}
-      annotations:
-        {{- if not .Values.serviceMonitor.enabled }}
-        prometheus.io/scrape: "true"
-        prometheus.io/port: "{{ (split ":" .Values.metricsAddr)._1 | default 8080 }}"
-        {{- end}}
-        {{- if .Values.podAnnotations }}
-        {{- toYaml .Values.podAnnotations | nindent 8 }}
-        {{- end }}
     spec:
     {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
@@ -46,9 +38,6 @@ spec:
       containers:
       - name: {{ .Chart.Name }}
         args:
-        {{- if .Values.metricsAddr }}
-        - --metrics-bind-address={{ .Values.metricsAddr }}
-        {{- end }}
         {{- if kindIs "bool" .Values.enableLeaderElection }}
         - --leader-elect={{ .Values.enableLeaderElection }}
         {{- end }}
@@ -73,7 +62,7 @@ spec:
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         ports:
         - name: metrics-server
-          containerPort: {{ (split ":" .Values.metricsAddr)._1 | default 8080 }}
+          containerPort: 8080
           protocol: TCP
         resources:
           {{- toYaml .Values.resources | nindent 10 }}

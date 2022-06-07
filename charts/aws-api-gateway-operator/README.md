@@ -15,18 +15,11 @@ AWS API Gateway Operator Helm chart for Kubernetes
 | enableLeaderElection | string | `nil` |  |
 | env | string | `nil` |  |
 | fullnameOverride | string | `""` |  |
-| global | object | `{"additionalLabels":{},"cloudProvider":{"accountId":""},"clusterDomain":"127.0.0.1.nip.io","clusterEnv":"local","clusterName":"","ingressTLSSecrets":{},"name":"example-app","owner":"","partOf":"","runtimeEnvironment":"kubernetes","terraform":{"externalSecrets":false,"irsa":false}}` | Global variables for us in all charts and sub charts |
+| global | object | `{"additionalLabels":{},"clusterEnv":"local","name":"aws-load-balancer-controller","owner":"SRE"}` | Global variables for us in all charts and sub charts |
 | global.additionalLabels | object | `{}` | Additional labels to apply to all resources |
-| global.cloudProvider | object | `{"accountId":""}` | Global variables relating to cloud provider |
-| global.cloudProvider.accountId | string | `""` | AWS ACcount Id |
-| global.clusterDomain | string | `"127.0.0.1.nip.io"` | Kubernetes cluster domain |
 | global.clusterEnv | string | `"local"` | Environment (local, dev, qa, prod) |
-| global.clusterName | string | `""` | Kubernetes cluster name |
-| global.ingressTLSSecrets | object | `{}` | Global dictionary of TLS secrets |
-| global.name | string | `"example-app"` | Name of the application |
-| global.owner | string | `""` | Team which "owns" the application |
-| global.partOf | string | `""` | Top level application each deployment is a part of |
-| global.runtimeEnvironment | string | `"kubernetes"` | Global variable definint RUNTIME_ENVIRONMENT |
+| global.name | string | `"aws-load-balancer-controller"` | Name of the application |
+| global.owner | string | `"SRE"` | Team which "owns" the application |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"registry.gitlab.com/mintel/satoshi/tools/aws-api-gateway-operator"` |  |
 | image.tag | string | `"v1.0.0"` |  |
@@ -37,7 +30,9 @@ AWS API Gateway Operator Helm chart for Kubernetes
 | livenessProbe.httpGet.scheme | string | `"HTTP"` |  |
 | livenessProbe.initialDelaySeconds | int | `30` |  |
 | livenessProbe.timeoutSeconds | int | `10` |  |
-| metricsAddr | string | `""` |  |
+| metrics | object | `{"basicAuth":{"enabled":false,"passwordKey":"","secretName":"","usernameKey":""},"enabled":true}` | Prometheus Exporter / Metrics |
+| metrics.basicAuth | object | `{"enabled":false,"passwordKey":"","secretName":"","usernameKey":""}` | Scheme (HTTP ot HTTPS)  scheme: HTTP |
+| metrics.enabled | bool | `true` | Enable Prometheus to access aplpication metrics endpoints |
 | nameOverride | string | `""` |  |
 | nodeSelector | object | `{}` |  |
 | podAnnotations | object | `{}` |  |
@@ -55,10 +50,6 @@ AWS API Gateway Operator Helm chart for Kubernetes
 | serviceAccount.imagePullSecrets | string | `nil` |  |
 | serviceAccount.name | string | `""` |  |
 | serviceAnnotations | object | `{}` |  |
-| serviceMonitor.additionalLabels | object | `{}` |  |
-| serviceMonitor.enabled | bool | `false` |  |
-| serviceMonitor.interval | string | `"1m"` |  |
-| serviceMonitor.namespace | string | `nil` |  |
 | terminationGracePeriodSeconds | int | `10` |  |
 | tolerations | list | `[]` |  |
 | topologySpreadConstraints | object | `{}` |  |
