@@ -121,8 +121,6 @@ serviceAnnotations: {}
 # deploymentAnnotations contains annotations for the operator deployment
 deploymentAnnotations: {}
 
-podAnnotations: {}
-
 podLabels: {}
 
 # additionalLabels -- Labels to add to each object of the chart.

@@ -47,7 +47,6 @@ AWS API Gateway Operator Helm chart for Kubernetes
 | nameOverride | string | `""` |  |
 | nodeSelector | object | `{}` |  |
 | podAnnotations | object | `{}` |  |
-| podAnnotations | object | `{}` |  |
 | podDisruptionBudget | object | `{}` |  |
 | podLabels | object | `{}` |  |
 | podSecurityContext.fsGroup | int | `65534` |  |
