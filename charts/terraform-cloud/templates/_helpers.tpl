@@ -46,7 +46,9 @@ app.mintel.com/region: {{ .Values.global.clusterRegion }}
 {{/* Set instanceConfig.Name */}}
 {{- define "mintel_common.instanceConfigName" -}}
 {{- $name := ""}}
-{{- if not ( hasKey .InstanceCfg "name" ) }}
+{{- if ( hasKey .InstanceCfg "name" ) }}
+  {{- $name = .InstanceCfg.name }}
+{{- else }}
   {{- if eq .InstanceName "default" }}
     {{- $name = .Global.name }}
   {{- else }}
