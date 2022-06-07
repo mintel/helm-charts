@@ -1,0 +1,22 @@
+{{- $data := dict "Release" $.Release "Chart" $.Chart "Values" $.Values "component" .name }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "aws-api-gateway-operator.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  annotations:
+  {{- include "mintel_common.commonAnnotations" . | nindent 4 }}
+  {{- with .Values.serviceAnnotations }}
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  labels: {{ include "mintel_common.labels" $data | nindent 4 }}
+
+spec:
+  {{- if.Values.serviceMonitor.enabled }}
+  ports:
+    - port: 8080
+      name: metrics-server
+      targetPort: metrics-server
+  {{- end }}
+  selector:
+    {{- include "aws-api-gateway-operator.selectorLabels" . | nindent 4 }}

@@ -1,0 +1,178 @@
+# Default values for aws-api-gateway-operator.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# -- Global variables for us in all charts and sub charts
+global:
+  # -- Name of the application
+  name: "example-app"
+  # -- Team which "owns" the application
+  owner: ""
+  # -- Top level application each deployment is a part of
+  partOf: ""
+  # -- Additional labels to apply to all resources
+  additionalLabels: {}
+  # -- Kubernetes cluster domain
+  clusterDomain: "127.0.0.1.nip.io"
+  # -- Environment (local, dev, qa, prod)
+  clusterEnv: "local"
+  # -- Kubernetes cluster name
+  clusterName: ""
+  # -- Global variables relating to cloud provider
+  cloudProvider:
+    # -- AWS ACcount Id
+    accountId: ""
+  # -- Global variable definint RUNTIME_ENVIRONMENT
+  runtimeEnvironment: kubernetes
+  # -- Global dictionary of TLS secrets
+  ingressTLSSecrets: {}
+  terraform:
+    # set to true as part of tf cloud migrations. When true, it stops standard-application-stack from creating AWS related external secrets and passes that responsibility to the terraform-cloud chart
+    externalSecrets: false
+    # set to true as part of tf cloud migrations. When true, standard-application-stack sets the service account eks annotation to match the new IAM roles created by the terraform-cloud chart
+    irsa: false
+
+replicaCount: 2
+
+image:
+  repository: registry.gitlab.com/mintel/satoshi/tools/aws-api-gateway-operator
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: v1.0.0
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+  # Automount API credentials for a Service Account.
+  automountServiceAccountToken: true
+  # List of image pull secrets to add to the Service Account.
+  imagePullSecrets:
+    # - name: docker
+
+rbac:
+  # Specifies whether rbac resources should be created
+  create: true
+
+podAnnotations: {}
+
+podSecurityContext:
+  fsGroup: 65534
+
+# Time period for the operator pod to do a graceful shutdown
+terminationGracePeriodSeconds: 10
+
+resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+# priorityClassName specifies the PriorityClass to indicate the importance of operator pods
+# ref: https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/#priorityclass
+# note: infra is Mintel specific, if we make this open-source in the future change this
+# default to system-cluster-critical
+priorityClassName: infra
+
+nodeSelector: {}
+
+tolerations: []
+
+# affinity can be either a string or map.
+#
+# if affinity is a string, and if that string is "default", set an antiAffinity policy on
+# the podSpec to prevent colocation on the same node.
+#
+# if affinity is a map, set the affinity attribute on the podSpec with this exact value (do NOT
+# use the default, as described above).
+# affinity: {}
+affinity: default
+
+# topologySpreadConstraints is a stable feature of k8s v1.19 which provides the ability to
+# control how Pods are spread across your cluster among failure-domains such as regions, zones,
+# nodes, and other user-defined topology domains.
+#
+# more details here: https://kubernetes.io/docs/concepts/workloads/pods/pod-topology-spread-constraints/
+topologySpreadConstraints: {}
+
+updateStrategy: {}
+  # type: RollingUpdate
+  # rollingUpdate:
+  #   maxSurge: 1
+  #   maxUnavailable: 1
+
+# serviceAnnotations contains annotations to be added to the provisioned webhook service resource
+serviceAnnotations: {}
+
+# deploymentAnnotations contains annotations for the operator deployment
+deploymentAnnotations: {}
+
+podAnnotations: {}
+
+podLabels: {}
+
+# additionalLabels -- Labels to add to each object of the chart.
+additionalLabels: {}
+
+# The address the metric endpoint binds to. (default ":8080")
+metricsAddr: ""
+
+# The address the probe endpoint binds to (default ":8081")
+probeAddr: ""
+
+# Enable leader election for controller manager, ensuring there is only one active controller manager. (default "false")
+enableLeaderElection:
+
+# Enable Zap Development mode (WARN logging) (default "false").
+zapDevelopmentConfig:
+
+# Liveness probe configuration for the operator
+livenessProbe:
+  failureThreshold: 2
+  httpGet:
+    path: /healthz
+    port: 61779
+    scheme: HTTP
+  initialDelaySeconds: 30
+  timeoutSeconds: 10
+
+# Environment variables to set for aws-api-gateway-operator pod.
+# We strongly discourage programming access credentials in the operator environment. You should setup IRSA or
+# comparable solutions like kube2iam, kiam etc instead.
+env:
+  # ENV_1: ""
+  # ENV_2: ""
+
+# defaultTags are the tags to apply to all AWS resources managed by this operator
+defaultTags: {}
+  # default_tag1: value1
+  # default_tag2: value2
+
+# podDisruptionBudget specifies the disruption budget for the operator pods.
+# Disruption budget will be configured only when the replicaCount is greater than 1
+podDisruptionBudget: {}
+#  maxUnavailable: 1
+
+serviceMonitor:
+  # Specifies whether a service monitor should be created
+  enabled: false
+  # Labels to add to the service account
+  additionalLabels: {}
+  # Prometheus scrape interval
+  interval: 1m
+  # Namespace to create the service monitor in
+  namespace:

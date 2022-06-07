@@ -1,0 +1,73 @@
+{{- if .Values.rbac.create }}
+{{- $data := dict "Release" $.Release "Chart" $.Chart "Values" $.Values "component" .name }}
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: {{ template "aws-api-gateway-operator.fullname" . }}-leader-election-role
+  namespace: {{ .Release.Namespace }}
+  annotations: {{ include "mintel_common.commonAnnotations" . | nindent 4 }}
+  labels: {{ include "mintel_common.labels" $data | nindent 4 }}
+
+rules:
+- apiGroups: [""]
+  resources: [configmaps]
+  verbs: [create]
+- apiGroups: [""]
+  resources: [configmaps]
+  resourceNames: [aws-api-gateway-operator-leader]
+  verbs: [get, patch, update]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: {{ template "aws-api-gateway-operator.fullname" . }}-leader-election-rolebinding
+  namespace: {{ .Release.Namespace }}
+  annotations: {{ include "mintel_common.commonAnnotations" . | nindent 4 }}
+  labels: {{ include "mintel_common.labels" $data | nindent 4 }}
+
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: {{ template "aws-api-gateway-operator.fullname" . }}-leader-election-role
+subjects:
+- kind: ServiceAccount
+  name: {{ template "aws-api-gateway-operator.serviceAccountName" . }}
+  namespace: {{ .Release.Namespace }}
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: {{ template "aws-api-gateway-operator.fullname" . }}-role
+  annotations: {{ include "mintel_common.commonAnnotations" . | nindent 4 }}
+  labels: {{ include "mintel_common.labels" $data | nindent 4 }}
+
+rules:
+- apiGroups: ["mintel.cloud"]
+  resources: [awsapigateways]
+  verbs: [create, delete, get, list, patch, update, watch]
+- apiGroups: [""]
+  resources: [events]
+  verbs: [create, patch]
+- apiGroups: [""]
+  resources: [pods]
+  verbs: [get, list, watch]
+- apiGroups: [""]
+  resources: [nodes, namespaces, endpoints]
+  verbs: [get, list, watch]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: {{ template "aws-api-gateway-operator.fullname" . }}-rolebinding
+  annotations: {{ include "mintel_common.commonAnnotations" . | nindent 4 }}
+  labels: {{ include "mintel_common.labels" $data | nindent 4 }}
+
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: {{ template "aws-api-gateway-operator.fullname" . }}-role
+subjects:
+- kind: ServiceAccount
+  name: {{ template "aws-api-gateway-operator.serviceAccountName" . }}
+  namespace: {{ .Release.Namespace }}
+{{- end }}
