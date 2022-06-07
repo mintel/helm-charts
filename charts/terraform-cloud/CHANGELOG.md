@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Auto add mntl- prefix to S3 bucket name if not added explicitly
 - Shorten IRSA workspace names
 - Remove hash trigger for IRSA as not needed with run triggers
+- Add sync wave for Output secret
 
 ## [v0.6.1] - 2022-06-07
 ### Fixed
