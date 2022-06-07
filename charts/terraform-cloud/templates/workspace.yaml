@@ -22,6 +22,10 @@
           {{- $_ := set $instanceConfig "name" $instanceName }}
         {{- end }}
       {{- end }}
+      # For S3 add 'mntl-' prefix to name
+      {{- if ( and ( eq $resourceType "s3") ( not (hasPrefix "mntl" $instanceConfig.name)))}}
+        {{- $_ := set $instanceConfig "name" (printf "mntl-%s" $instanceConfig.name) }}
+      {{- end }}
       # Set instance.db_name for postgresql and mariadb if not provided
       {{- if ( and ( has $resourceType (list "postgresql" "mariadb") ) ( not ( hasKey $instanceConfig "db_name" ) ) ) }}
         {{- $_ := set $instanceConfig "db_name" ( $instanceConfig.name | snakecase ) }}
