@@ -9,7 +9,7 @@
   {{- $tfVersion := $irsa.terraform.terraformVersion }}
   {{- $irsaConfig := $irsa.terraform.vars}}
   {{- if not (hasKey $irsaConfig "name") }}
-    {{- $_ := set $irsaConfig "name" (printf "app-iam-%s-%s-%s" $global.clusterName $.Release.Namespace (coalesce .Values.irsa.nameOverride $global.name)) }}
+    {{- $_ := set $irsaConfig "name" (printf "%s" (coalesce .Values.irsa.nameOverride $global.name)) }}
   {{- end }}
   {{- if not (hasKey $irsaConfig "aws_account_name") }}
     {{- $_ := set $irsaConfig "aws_account_name" $global.clusterEnv }}
@@ -26,9 +26,6 @@
   {{- if not (hasKey $irsaConfig "tfcloud_agent") }}
     {{- $_ := set $irsaConfig "tfcloud_agent" "true" }}
   {{ end }}
-  {{- if (not (hasKey $irsaConfig "trigger")) }}
-    {{- $_ := set $irsaConfig "trigger" ($.Values | toString | sha256sum) }}
-  {{- end }}
   {{- if (not (hasKey $irsaConfig "k8s_service_account_name")) }}
     {{- $_ := set $irsaConfig "k8s_service_account_name" $global.name }}
   {{- end }}
