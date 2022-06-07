@@ -11,14 +11,14 @@
 {{- end -}}
 
 {{- define "mintel_common.irsaRequired"}}
-{{- $irsaRequired := false}}
+{{- $irsaRequired := "false"}}
 {{- range include "mintel_common.terraformCloudIRSAResources" $ | split "," }}
   {{- $resourceConfig := (get $.Values .) }}
   {{- if $resourceConfig.enabled }}
-    {{- $irsaRequired = true }}
+    {{- $irsaRequired = "true" }}
   {{- end }}
 {{- end }}
-{{ $irsaRequired }}
+{{$irsaRequired}}
 {{- end -}}
 
 {{/*
@@ -41,4 +41,20 @@ app.mintel.com/region: {{ .Values.global.clusterRegion }}
 {{- with .Values.global.additionalLabels }}
 {{- toYaml . }}
 {{- end }}
+{{- end -}}
+
+{{/* Set instanceConfig.Name */}}
+{{- define "mintel_common.instanceConfigName" -}}
+{{- $name := false}}
+{{- if not ( hasKey .InstanceCfg "name" ) }}
+  {{- if eq .InstanceName "default" }}
+    {{- $name = .Global.name }}
+  {{- else }}
+    {{- $name = .InstanceName }}
+  {{- end }}
+{{- end }}
+{{- if ( and ( eq .ResourceType "s3") ( not (hasPrefix "mntl" $name)))}}
+  {{- $name = (printf "mntl-%s" $name) }}
+{{- end }}
+{{ $name }}
 {{- end -}}

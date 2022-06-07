@@ -14,18 +14,9 @@
       {{- $moduleSource := $resourceConfig.terraform.module.source }}
       {{- $moduleVersion := $resourceConfig.terraform.module.version }}
       {{- $tfVersion := $resourceConfig.terraform.terraformVersion}}
-      # Set instance.name if not provided
-      {{- if not ( hasKey $instanceConfig "name" ) }}
-        {{- if eq $instanceName "default" }}
-          {{- $_ := set $instanceConfig "name" $.Values.global.name }}
-        {{- else }}
-          {{- $_ := set $instanceConfig "name" $instanceName }}
-        {{- end }}
-      {{- end }}
-      # For S3 add 'mntl-' prefix to name
-      {{- if ( and ( eq $resourceType "s3") ( not (hasPrefix "mntl" $instanceConfig.name)))}}
-        {{- $_ := set $instanceConfig "name" (printf "mntl-%s" $instanceConfig.name) }}
-      {{- end }}
+      # Set instance.name via helper
+      {{- $instanceDict := dict "Global" $global "InstanceCfg" $instanceConfig "InstanceName" $instanceName "ResourceType" $resourceType }}
+      {{- $_ := set $instanceConfig "name" (include "mintel_common.instanceConfigName" $instanceDict | trim)}}
       # Set instance.db_name for postgresql and mariadb if not provided
       {{- if ( and ( has $resourceType (list "postgresql" "mariadb") ) ( not ( hasKey $instanceConfig "db_name" ) ) ) }}
         {{- $_ := set $instanceConfig "db_name" ( $instanceConfig.name | snakecase ) }}
