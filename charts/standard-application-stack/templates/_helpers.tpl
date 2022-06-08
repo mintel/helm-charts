@@ -208,7 +208,11 @@ Create a default s3 external secret name.
 */}}
 {{- define "mintel_common.defaultS3SecretName" -}}
 {{- $fullname := include "mintel_common.fullname" . }}
+{{- if .Values.global.terraform.externalSecrets }}
+{{- printf "mntl-%s-s3" $fullname }}
+{{- else }}
 {{- printf "%s-s3" $fullname }}
+{{- end }}
 {{- end -}}
 
 {{/*

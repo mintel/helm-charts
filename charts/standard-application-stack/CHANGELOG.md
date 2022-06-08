@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v3.26.0] - 2022-06-08
+### Changed
+- updated defaultS3SecretName helper logic to handle mntl- prefix when terraform cloud helm is used
+
 ## [v3.25.0] - 2022-06-06
 ### Changed
 - Update local dev stack charts to latest version and remove chart.lock file to combat [this issue](https://github.com/bitnami/charts/issues/10539)
