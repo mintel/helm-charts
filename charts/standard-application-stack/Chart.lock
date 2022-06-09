@@ -1,0 +1,30 @@
+dependencies:
+- name: redis
+  repository: https://charts.bitnami.com/bitnami
+  version: 16.11.2
+- name: mariadb
+  repository: https://charts.bitnami.com/bitnami
+  version: 11.0.10
+- name: postgresql
+  repository: https://charts.bitnami.com/bitnami
+  version: 11.6.3
+- name: mailhog
+  repository: https://codecentric.github.io/helm-charts
+  version: 4.1.0
+- name: kibana
+  repository: https://helm.elastic.co
+  version: 7.5.2
+- name: elasticsearch
+  repository: https://helm.elastic.co
+  version: 7.5.2
+- name: opensearch
+  repository: https://opensearch-project.github.io/helm-charts
+  version: 1.4.2
+- name: opensearch-dashboards
+  repository: https://opensearch-project.github.io/helm-charts
+  version: 1.0.8
+- name: localstack
+  repository: https://localstack.github.io/helm-charts
+  version: 0.3.5
+digest: sha256:07a63d93152ba33a4ee2436671171722f3359463a79f45bab7d72fba487c08d2
+generated: "2022-06-09T15:18:05.992019949-05:00"
