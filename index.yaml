@@ -29,6 +29,70 @@ entries:
     version: 0.0.1
   standard-application-stack:
   - apiVersion: v2
+    created: "2022-06-09T22:54:50.511508848Z"
+    dependencies:
+    - condition: redis.enabled
+      name: redis
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - localRedis
+      version: 16.11.2
+    - condition: mariadb.enabled
+      name: mariadb
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - localMariadb
+      version: 11.0.10
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - localPostgresql
+      version: 11.6.3
+    - condition: mailhog.enabled
+      name: mailhog
+      repository: https://codecentric.github.io/helm-charts
+      tags:
+      - localMailhog
+      version: 4.1.0
+    - condition: kibana.enabled
+      name: kibana
+      repository: https://helm.elastic.co
+      tags:
+      - localKibana
+      version: 7.5.2
+    - condition: elasticsearch.enabled
+      name: elasticsearch
+      repository: https://helm.elastic.co
+      tags:
+      - localElasticsearch
+      version: 7.5.2
+    - condition: opensearch.enabled
+      name: opensearch
+      repository: https://opensearch-project.github.io/helm-charts
+      tags:
+      - localOpensearch
+      version: 1.4.2
+    - condition: opensearch.enabled
+      name: opensearch-dashboards
+      repository: https://opensearch-project.github.io/helm-charts
+      tags:
+      - localOpensearch
+      version: 1.0.8
+    - condition: localstack.enabled
+      name: localstack
+      repository: https://localstack.github.io/helm-charts
+      tags:
+      - localLocalstack
+      version: 0.3.5
+    description: A generic chart to support most common application requirements
+    digest: 067e2bb940a0b07d273c1503647825773037a246f9ad5f06d50f962bcc2a0277
+    name: standard-application-stack
+    type: application
+    urls:
+    - https://github.com/mintel/helm-charts/releases/download/standard-application-stack-3.27.0/standard-application-stack-3.27.0.tgz
+    version: 3.27.0
+  - apiVersion: v2
     created: "2022-06-08T10:47:13.687773437Z"
     dependencies:
     - name: redis
@@ -6020,4 +6084,4 @@ entries:
     urls:
     - https://github.com/mintel/helm-charts/releases/download/testchart-0.1.1/testchart-0.1.1.tgz
     version: 0.1.1
-generated: "2022-06-09T12:39:51.87143901Z"
+generated: "2022-06-09T22:54:50.513078059Z"
