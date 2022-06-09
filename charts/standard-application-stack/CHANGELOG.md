@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v3.26.1] - 2022-06-09
+### Changed
+- allow celery and celery beat deployments consume s3 secret via envFrom. Deals with portal issue
+
 ## [v3.26.0] - 2022-06-08
 ### Changed
 - updated defaultS3SecretName helper logic to handle mntl- prefix when terraform cloud helm is used
