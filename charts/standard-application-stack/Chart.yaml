@@ -15,59 +15,59 @@ type: application
 # This is the chart version. This version number should be incremented each time you make changes
 # to the chart and its templates, including the app version.
 # Versions are expected to follow Semantic Versioning (https://semver.org/)
-version: 3.27.1
+version: 3.28.0
 
 dependencies:
   - name: redis
-    condition: redis.enabled
+    condition: (and redis.enabled (eq global.clusterEnv "local"))
     version: 16.11.2
     repository: https://charts.bitnami.com/bitnami
     tags:
       - localRedis
   - name: mariadb
-    condition: mariadb.enabled
+    condition: (and mariadb.enabled (eq global.clusterEnv "local"))
     version: 11.0.10
     repository: https://charts.bitnami.com/bitnami
     tags:
       - localMariadb
   - name: postgresql
-    condition: postgresql.enabled
+    condition: (and postgresql.enabled (eq global.clusterEnv "local"))
     version: 11.6.3
     repository: https://charts.bitnami.com/bitnami
     tags:
       - localPostgresql
   - name: mailhog
-    condition: mailhog.enabled
+    condition: (and mailhog.enabled (eq global.clusterEnv "local"))
     version: 4.1.0
     repository: https://codecentric.github.io/helm-charts
     tags:
       - localMailhog
   - name: kibana
-    condition: kibana.enabled
+    condition: (and kibana.enabled (eq global.clusterEnv "local"))
     version: 7.5.2
     repository: https://helm.elastic.co
     tags:
       - localKibana
   - name: elasticsearch
-    condition: elasticsearch.enabled
+    condition: (and elasticsearch.enabled (eq global.clusterEnv "local"))
     version: 7.5.2
     repository: https://helm.elastic.co
     tags:
       - localElasticsearch
   - name: opensearch
-    condition: opensearch.enabled
+    condition: (and opensearch.enabled (eq global.clusterEnv "local"))
     version: 1.4.2
     repository: https://opensearch-project.github.io/helm-charts
     tags:
       - localOpensearch
   - name: opensearch-dashboards
-    condition: opensearch.enabled
+    condition: (and opensearch.enabled (eq global.clusterEnv "local"))
     version: 1.0.8
     repository: https://opensearch-project.github.io/helm-charts
     tags:
       - localOpensearch
   - name: localstack
-    condition: localstack.enabled
+    condition: (and localstack.enabled (eq global.clusterEnv "local"))
     version: 0.3.5
     repository: https://localstack.github.io/helm-charts
     tags:

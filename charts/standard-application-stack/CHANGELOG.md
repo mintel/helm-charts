@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v3.28.0] - 2022-06-10
+### Changed
+- update subchart `chart.enabled` conditions to check env is local
+
 ## [v3.27.1] - 2022-06-09
 ### Changed
 - allow celery and celery beat deployments consume s3 secret via envFrom. Deals with portal issue
