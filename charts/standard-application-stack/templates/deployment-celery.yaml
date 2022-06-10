@@ -173,6 +173,10 @@ spec:
             - secretRef:
                 name: {{ default (include "mintel_common.defaultOpensearchSecretName" .) .Values.opensearch.secretNameOverride }}
             {{- end }}
+            {{- if (and .Values.s3 .Values.s3.enabled) }}
+            - secretRef:
+                name: {{ default (include "mintel_common.defaultS3SecretName" .) .Values.s3.secretNameOverride }}
+            {{- end }}
             {{- with .Values.envFrom }}
             {{- toYaml . | nindent 12 }}
             {{- end }}
