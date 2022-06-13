@@ -1,0 +1,18 @@
+suite: test rbac
+templates:
+  - rbac.yaml
+tests:
+  - it: role can access awsapigateway objects
+    set:
+      image.tag: latest
+    documentIndex: 2
+    asserts:
+      - isKind:
+          of: ClusterRole
+      - equal:
+          path: rules[0].resources
+          value:
+            - awsapigateways
+      - equal:
+          path: rules[0].verbs
+          value: [create, delete, get, list, patch, update, watch]
