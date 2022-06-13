@@ -1,5 +1,25 @@
 apiVersion: v1
 entries:
+  aws-api-gateway-operator:
+  - apiVersion: v2
+    appVersion: v1.0.2
+    created: "2022-06-13T19:42:14.066222683Z"
+    dependencies:
+    - condition: standard-application-stack.enabled
+      name: standard-application-stack
+      repository: https://mintel.github.io/helm-charts
+      version: 3.27.0
+    description: AWS API Gateway Operator Helm chart for Kubernetes
+    digest: 72661d48c108ecc571cb20c72909f44c9737ec9d664f4d4c7eaa0586d508779c
+    keywords:
+    - eks
+    - aws
+    - api gateway
+    name: aws-api-gateway-operator
+    type: application
+    urls:
+    - https://github.com/mintel/helm-charts/releases/download/aws-api-gateway-operator-0.1.0/aws-api-gateway-operator-0.1.0.tgz
+    version: 0.1.0
   dex-k8s-authenticator:
   - apiVersion: v1
     appVersion: v1.2.0
@@ -6296,4 +6316,4 @@ entries:
     urls:
     - https://github.com/mintel/helm-charts/releases/download/testchart-0.1.1/testchart-0.1.1.tgz
     version: 0.1.1
-generated: "2022-06-13T16:49:12.086988951Z"
+generated: "2022-06-13T19:42:14.067502802Z"
