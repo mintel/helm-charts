@@ -34,6 +34,8 @@ global:
     agentPoolID: ""
 
 irsa:
+  # -- Set to true to explicitly instantiate this module if there's need to access resources created elsewhere
+  # enabled: false
   terraform:
     # -- Set Terraform version for this module to overwrite global.TerraformVersion
     # terraformVersion:
@@ -45,7 +47,8 @@ irsa:
       source: app.terraform.io/Mintel/app-iam/aws
       # -- Module version
       version: "0.1.0-beta.7"
-      # -- Vars to be applied to all instances defined below
+    # -- Vars to be applied to all instances defined below
+    # @default -- See below
     vars: {}
 
 dynamodb:
