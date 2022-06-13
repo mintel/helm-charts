@@ -27,7 +27,7 @@ A Helm chart for provisioning resources using Terraform Cloud
 | global.terraform.organization | string | `"Mintel"` | Name of our Terraform Cloud org |
 | global.terraform.secretsMountPath | string | `"/tmp/secrets"` | Where secrets are mounted inside the Terraform Operator container |
 | global.terraform.terraformVersion | string | `"1.0.7"` | Global Terraform version for all modules |
-| irsa.terraform | object | See below | Set to true to explicitly instantiate this module if there's need to access resources created elsewhere |
+| irsa.terraform | object | `{"module":{"source":"app.terraform.io/Mintel/app-iam/aws","version":"0.1.0-beta.7"},"vars":{}}` | Set to true to explicitly instantiate this module if there's need to access resources created elsewhere |
 | irsa.terraform.module | object | `{"source":"app.terraform.io/Mintel/app-iam/aws","version":"0.1.0-beta.7"}` | Set override to stop IRSA from ending in global.name nameOverride: |
 | irsa.terraform.module.source | string | `"app.terraform.io/Mintel/app-iam/aws"` | Registry path of the Terraform module used to create the resource (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/app-iam/aws) |
 | irsa.terraform.module.version | string | `"0.1.0-beta.7"` | Module version |
