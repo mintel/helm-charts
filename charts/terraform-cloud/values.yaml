@@ -34,6 +34,8 @@ global:
     agentPoolID: ""
 
 irsa:
+  # -- Set to true to explicitly instantiate this module if there's need to access resources created elsewhere
+  # enabled: true
   terraform:
     # -- Set Terraform version for this module to overwrite global.TerraformVersion
     # terraformVersion:

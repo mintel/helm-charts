@@ -2,7 +2,7 @@
 # values.yaml file.
 {{- $global := $.Values.global }}
 # check if any of the irsa dependent resources are enabled
-{{- if (eq "true" (include "mintel_common.irsaRequired" . | trim)) }}
+{{- if (or $.Values.irsa.enabled (eq "true" (include "mintel_common.irsaRequired" . | trim))) }}
   {{- $irsa := $.Values.irsa }}
   {{- $moduleSource := $irsa.terraform.module.source }}
   {{- $moduleVersion := $irsa.terraform.module.version }}
