@@ -110,3 +110,8 @@ This check is introduced as a regexMatch instead of {{ if .Capabilities.HelmVers
   {{- true -}}
 {{- end -}}
 {{- end -}}
+
+{{/* Return the appropriate apiVersion for VerticalPodAutoscaler. */}}
+{{- define "common.capabilities.verticalPodAutoscaler.apiVersion" -}}
+{{- print "autoscaling.k8s.io/v1" -}}
+{{- end -}}
