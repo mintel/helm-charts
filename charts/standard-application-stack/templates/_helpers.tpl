@@ -204,6 +204,14 @@ Create a default opensearch external secret name.
 {{- end -}}
 
 {{/*
+Create a default sqs external secret name.
+*/}}
+{{- define "mintel_common.defaultSqsSecretName" -}}
+{{- $fullname := include "mintel_common.fullname" . }}
+{{- printf "%s-sqs" $fullname }}
+{{- end -}}
+
+{{/*
 Create a default s3 external secret name.
 */}}
 {{- define "mintel_common.defaultS3SecretName" -}}
@@ -268,6 +276,9 @@ Build comma separated list of secrets
 {{- end }}
 {{- if (and .Values.opensearch .Values.opensearch.enabled) }}
 {{- $secretList = append $secretList (default (include "mintel_common.defaultOpensearchSecretName" .) .Values.opensearch.secretNameOverride) -}}
+{{- end }}
+{{- if (and .Values.sqs .Values.sqs.enabled) }}
+{{- $secretList = append $secretList (default (include "mintel_common.defaultSqsSecretName" .) .Values.sqs.secretNameOverride) -}}
 {{- end }}
 {{- range .Values.extraSecrets }}
 {{- if (or (ne (hasKey . "includeInMain") true) .includeInMain) }}

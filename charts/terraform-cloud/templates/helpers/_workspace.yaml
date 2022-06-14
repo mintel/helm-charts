@@ -58,7 +58,7 @@ spec:
 {{- end }}
 
 {{- define "mintel_common.workspaceName"}}
-{{printf "%s-%s-%s-%s-%s-%s" .Global.clusterEnv .Global.clusterRegion .Global.clusterName .Release.Namespace .InstanceCfg.name (.ResourceType | kebabcase) }}
+{{printf "%s-%s-%s-%s-%s-%s" .Global.clusterEnv .Global.clusterRegion .Global.clusterName .Release.Namespace (.InstanceCfg.name | kebabcase) (.ResourceType | kebabcase) }}
 {{- end -}}
 
 
