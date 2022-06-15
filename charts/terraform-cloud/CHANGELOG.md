@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [v0.12.0] - 2022-06-15
 ### Added
 - Setting environment based defaults for resources via helpers
+- refactor helpers to have `mintel_common.terraform_cloud` prefix rather than just `mintel_common.`
 
 
 ## [v0.11.0] - 2022-06-13

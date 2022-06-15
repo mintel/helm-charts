@@ -10,7 +10,7 @@
 {{ join "," $terraformCloudIRSAResources }}
 {{- end -}}
 
-{{- define "mintel_common.irsaRequired"}}
+{{- define "mintel_common.terraform_cloud.irsaRequired"}}
 {{- $irsaRequired := "false"}}
 {{- range include "mintel_common.terraformCloudIRSAResources" $ | split "," }}
   {{- $resourceConfig := (get $.Values .) }}
@@ -44,7 +44,7 @@ app.mintel.com/region: {{ .Values.global.clusterRegion }}
 {{- end -}}
 
 {{/* Set instanceConfig.Name */}}
-{{- define "mintel_common.instanceConfigName" -}}
+{{- define "mintel_common.terraform_cloud.instanceConfigName" -}}
 {{- $name := ""}}
 {{- if ( hasKey .InstanceCfg "name" ) }}
   {{- $name = .InstanceCfg.name }}
@@ -62,7 +62,7 @@ app.mintel.com/region: {{ .Values.global.clusterRegion }}
 {{- end -}}
 
 {{/* Set variable values depending on environment */}}
-{{- define "mintel_common.defaultVarValues" -}}
+{{- define "mintel_common.terraform_cloud.defaultVarValues" -}}
 {{- $defaults := dict}}
 {{/* rds */}}
 {{- if ( has .ResourceType (list "postgresql" "mariadb"))}}

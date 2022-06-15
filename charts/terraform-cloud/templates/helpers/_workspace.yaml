@@ -1,4 +1,4 @@
-{{- define "mintel_common.workspace" }}
+{{- define "mintel_common.terraform_cloud.workspace" }}
 {{- $ := index . 0 }}
 {{- $instanceCfg := index . 2 }}
 {{- $resourceType := index . 3 }}
@@ -11,7 +11,7 @@
 apiVersion: app.terraform.io/v1alpha1
 kind: Workspace
 metadata:
-  name: {{ include "mintel_common.workspaceName" $workspaceDict | trim | quote }}
+  name: {{ include "mintel_common.terraform_cloud.workspaceName" $workspaceDict | trim | quote }}
   namespace: {{ $.Release.Namespace | quote }}
   labels: {{ include "mintel_common.labels" $ | nindent 4 }}
   annotations:
@@ -36,20 +36,20 @@ spec:
   terraformVersion: {{ (default $global.terraform.terraformVersion $tfVersion) | quote }}
   {{- if (eq $resourceType "irsa") }}
   runTriggers:
-  {{include "mintel_common.irsaRunTriggers" .| indent 4}}
+  {{include "mintel_common.terraform_cloud.irsaRunTriggers" .| indent 4}}
   {{- end}}
   variables:
   {{- range $varKey, $varVal := $instanceCfg }}
     {{- if kindIs "map" $varVal}}
-      {{- include "mintel_common.tfVar" (merge (dict "key" $varKey) $varVal) | indent 2 }}
+      {{- include "mintel_common.terraform_cloud.tfVar" (merge (dict "key" $varKey) $varVal) | indent 2 }}
     {{- else }}
-      {{- include "mintel_common.tfVar" (dict "key" $varKey "value" $varVal) | indent 2 }}
+      {{- include "mintel_common.terraform_cloud.tfVar" (dict "key" $varKey "value" $varVal) | indent 2 }}
     {{- end }}
   {{- end }}
 {{- end }}
 {{- end }}
 
-{{- define "mintel_common.tfVar" }}
+{{- define "mintel_common.terraform_cloud.tfVar" }}
 - key: {{ .key | quote }}
   value: {{ .value | quote }}
   environmentVariable: {{ .environmentVariable | default false}}
@@ -57,12 +57,12 @@ spec:
   sensitive: {{ .sensitive | default false}}
 {{- end }}
 
-{{- define "mintel_common.workspaceName"}}
+{{- define "mintel_common.terraform_cloud.workspaceName"}}
 {{printf "%s-%s-%s-%s-%s-%s" .Global.clusterEnv .Global.clusterRegion .Global.clusterName .Release.Namespace (.InstanceCfg.name | kebabcase) (.ResourceType | kebabcase) }}
 {{- end -}}
 
 
-{{- define "mintel_common.irsaRunTriggers"}}
+{{- define "mintel_common.terraform_cloud.irsaRunTriggers"}}
 {{- range include "mintel_common.terraformCloudResources" $ | split "," }}
   {{- $global := $.Values.global }}
   {{- $resourceType := . }}
@@ -71,9 +71,9 @@ spec:
   {{- range $instanceName, $instanceCfg := default ( dict "default" dict ) $resourceConfig.terraform.instances }}
       # Set instance.name via helper
       {{- $instanceDict := dict "Global" $global "InstanceCfg" $instanceCfg "InstanceName" $instanceName "ResourceType" $resourceType }}
-      {{- $_ := set $instanceCfg "name" (include "mintel_common.instanceConfigName" $instanceDict | trim)}}
+      {{- $_ := set $instanceCfg "name" (include "mintel_common.terraform_cloud.instanceConfigName" $instanceDict | trim)}}
 {{- $workspaceDict := dict "Global" $global "Release" $.Release "InstanceCfg" $instanceCfg "ResourceType" $resourceType }}
-- sourceableName: {{ include "mintel_common.workspaceName" $workspaceDict | trim | quote }}
+- sourceableName: {{ include "mintel_common.terraform_cloud.workspaceName" $workspaceDict | trim | quote }}
   {{- end }}
   {{- end }}
 {{- end}}
