@@ -35,12 +35,13 @@ global:
 
 irsa:
   # -- Set to true to explicitly instantiate this module if there's need to access resources created elsewhere
-  # enabled: false
+  enabled: false
   terraform:
-    # -- Set Terraform version for this module to overwrite global.TerraformVersion
+    ### Set Terraform version for this module to overwrite global.TerraformVersion
     # terraformVersion:
-    # -- Set override to stop IRSA from ending in global.name
+    ### Set override to stop IRSA from ending in global.name
     # nameOverride:
+    # @default -- -
     module:
       # -- Registry path of the Terraform module used to create the resource
       # (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/app-iam/aws)
@@ -55,7 +56,7 @@ dynamodb:
   # -- Set to true to create a DynamoDB instance
   enabled: false
   terraform:
-    # -- Set Terraform version for this module to overwrite global.TerraformVersion
+    ### Set Terraform version for this module to overwrite global.TerraformVersion
     # terraformVersion:
     module:
       # -- Registry path of the Terraform module used to create the resource
@@ -65,7 +66,7 @@ dynamodb:
       version: "0.1.0-beta.1"
     # -- Vars to be applied to all instances defined below
     defaultVars:
-      # -- Automatically set to true in prod and qa but false in non-prod. Override this only if you know what you're doing.
+      ### Automatically set to true in prod and qa but false in non-prod. Override this only if you know what you're doing.
       # point_in_time_recovery_enabled: bool
     # -- A map of instance names => variable key/value pairs to be sent to the terraform module. The values in
     # `defaultVars` will be applied to every instance if not explicitly defined here.
@@ -80,7 +81,7 @@ sqs:
   # -- Set to true to create an SQS resource
   enabled: false
   terraform:
-    # -- Set Terraform version for this module to overwrite global.TerraformVersion
+    ### Set Terraform version for this module to overwrite global.TerraformVersion
     # terraformVersion:
     module:
       # -- Registry path of the Terraform module used to create the resource
@@ -98,7 +99,7 @@ sns:
   # -- Set to true to create an SNS resource
   enabled: false
   terraform:
-    # -- Set Terraform version for this module to overwrite global.TerraformVersion
+    ### Set Terraform version for this module to overwrite global.TerraformVersion
     # terraformVersion:
     module:
       # -- Registry path of the Terraform module used to create the resource
@@ -116,7 +117,7 @@ staticWebsite:
   # -- Set to true to create static website (a public bucket and associated resources)
   enabled: false
   terraform:
-    # -- Set Terraform version for this module to overwrite global.TerraformVersion
+    ### Set Terraform version for this module to overwrite global.TerraformVersion
     # terraformVersion:
     module:
       # -- Registry path of the Terraform module used to create the resource
@@ -134,7 +135,7 @@ mariadb:
   # -- Set to true to create a MariaDB RDS instance
   enabled: false
   terraform:
-    # -- Set Terraform version for this module to overwrite global.TerraformVersion
+    ### Set Terraform version for this module to overwrite global.TerraformVersion
     # terraformVersion:
     module:
       # -- Registry path of the Terraform module used to create the resource
@@ -151,12 +152,12 @@ mariadb:
       engine_version: "10.5"
       # -- MariaDB port
       port: 3306
-      # -- Automatically set to true if prod and false if non-prod. Override this only if you know what you're doing.
+      ### Automatically set to true if prod and false if non-prod. Override this only if you know what you're doing.
       # multi_az: bool
-      # -- Automatically set to 14 in prod, 7 in qa and 0 in dev. Override this only if you know what you're doing.
+      ### Automatically set to 14 in prod, 7 in qa and 0 in dev. Override this only if you know what you're doing.
       # backup_retention_period: number
-      # -- Automatically set to true in prod and qa but false in dev. Override this only if you know what you're doing.
-      # enable_deletion_protection
+      ### Automatically set to true in prod and qa but false in dev. Override this only if you know what you're doing.
+      # enable_deletion_protection: bool
     # -- A map of instance names => variable key/value pairs to be sent to the terraform module. The values in
     # `defaultVars` will be applied to every instance if not explicitly defined here.
     instances: {}
@@ -165,7 +166,7 @@ memcached:
   # -- Set to true to create a memcached Elasticache resource
   enabled: false
   terraform:
-    # -- Set Terraform version for this module to overwrite global.TerraformVersion
+    ### Set Terraform version for this module to overwrite global.TerraformVersion
     # terraformVersion:
     module:
       # -- Registry path of the Terraform module used to create the resource
@@ -188,7 +189,7 @@ opensearch:
   # -- Set to true to create an Opensearch cluster
   enabled: false
   terraform:
-    # -- Set Terraform version for this module to overwrite global.TerraformVersion
+    ### Set Terraform version for this module to overwrite global.TerraformVersion
     # terraformVersion:
     module:
       # -- Registry path of the Terraform module used to create the resource
@@ -197,13 +198,13 @@ opensearch:
       # -- Module version
       version: "0.1.0-beta.3"
     # -- Vars to be applied to all instances defined below
-    # -- Automatically set to 3 in prod and 1 in dev and qa. Override this only if you know what you're doing.
-    # instance_count: number
-    # -- Automatically set to 3 in prod and 1 in dev and qa. Override this only if you know what you're doing.
-    # availability_zone_count: number
-    # -- Automatically set to true in prod and false in dev and qa. Override this only if you know what you're doing.
-    # zone_awareness_enabled: bool
-    defaultVars: {}
+    defaultVars:
+      ### Automatically set to 3 in prod and 1 in dev and qa. Override this only if you know what you're doing.
+      # instance_count: number
+      ### Automatically set to 3 in prod and 1 in dev and qa. Override this only if you know what you're doing.
+      # availability_zone_count: number
+      ### Automatically set to true in prod and false in dev and qa. Override this only if you know what you're doing.
+      # zone_awareness_enabled: bool
     # -- A map of instance names => variable key/value pairs to be sent to the terraform module. The values in
     # `defaultVars` will be applied to every instance if not explicitly defined here.
     instances: {}
@@ -212,7 +213,7 @@ postgresql:
   # -- Set to true to create a PostgreSQL RDS instance
   enabled: false
   terraform:
-    # -- Set Terraform version for this module to overwrite global.TerraformVersion
+    ### Set Terraform version for this module to overwrite global.TerraformVersion
     # terraformVersion:
     module:
       # -- Registry path of the Terraform module used to create the resource
@@ -229,11 +230,11 @@ postgresql:
       engine_version: "13"
       # -- PostgreSQL port
       port: 5432
-      # -- Automatically set to true if prod and false if non-prod. Override this only if you know what you're doing.
+      ### Automatically set to true if prod and false if non-prod. Override this only if you know what you're doing.
       # multi_az: bool
-      # -- Automatically set to 14 in prod, 7 in qa and 0 in dev. Override this only if you know what you're doing.
+      ### Automatically set to 14 in prod, 7 in qa and 0 in dev. Override this only if you know what you're doing.
       # backup_retention_period: number
-      # -- Automatically set to true in prod and qa but false in dev. Override this only if you know what you're doing.
+      ### Automatically set to true in prod and qa but false in dev. Override this only if you know what you're doing.
       # enable_deletion_protection
     # -- A map of instance names => variable key/value pairs to be sent to the terraform module. The values in
     # `defaultVars` will be applied to every instance if not explicitly defined here.
@@ -243,7 +244,7 @@ redis:
   # -- Set to true to create a Redis Elasticache resource
   enabled: false
   terraform:
-    # -- Set Terraform version for this module to overwrite global.TerraformVersion
+    ### Set Terraform version for this module to overwrite global.TerraformVersion
     # terraformVersion:
     module:
       # -- Registry path of the Terraform module used to create the resource
@@ -252,13 +253,13 @@ redis:
       # -- Module version
       version: "0.1.0-beta.4"
     # -- Vars to be applied to all instances defined below
-    # -- Automatically set to 2 in prod and 1 in dev and qa. Override this only if you know what you're doing.
-    # replication_group_size: number
-    # -- Automatically set to true in prod and false in dev and qa. Override this only if you know what you're doing.
-    # enable_automatic_failover: bool
-    # -- Automatically set to true in prod and false in dev and qa. Override this only if you know what you're doing.
-    # enable_multi_az: bool
-    defaultVars: {}
+    defaultVars:
+      ### Automatically set to 2 in prod and 1 in dev and qa. Override this only if you know what you're doing.
+      # replication_group_size: number
+      ### Automatically set to true in prod and false in dev and qa. Override this only if you know what you're doing.
+      # enable_automatic_failover: bool
+      ### Automatically set to true in prod and false in dev and qa. Override this only if you know what you're doing.
+      # enable_multi_az: bool
     # -- A map of instance names => variable key/value pairs to be sent to the terraform module. The values in
     # `defaultVars` will be applied to every instance if not explicitly defined here.
     instances: {}
@@ -267,7 +268,7 @@ s3:
   # -- Set to true to create an S3 bucket
   enabled: false
   terraform:
-    # -- Set Terraform version for this module to overwrite global.TerraformVersion
+    ### Set Terraform version for this module to overwrite global.TerraformVersion
     # terraformVersion:
     module:
       # -- Registry path of the Terraform module used to create the resource
@@ -276,9 +277,9 @@ s3:
       # -- Module version
       version: "0.1.0-beta.2"
     # -- Vars to be applied to all instances defined below
-    # -- Automatically set to true in prod and false in dev and qa. Override this only if you know what you're doing.
-    # enable_versioning: bool
-    defaultVars: {}
+    defaultVars:
+      ### Automatically set to true in prod and false in dev and qa. Override this only if you know what you're doing.
+      # enable_versioning: bool
     # -- A map of instance names => variable key/value pairs to be sent to the terraform module. The values in
     # `defaultVars` will be applied to every instance if not explicitly defined here.
     instances: {}
