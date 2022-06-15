@@ -210,7 +210,7 @@ spec:
             {{- end }}
             {{- if (and .Values.sqs .Values.sqs.enabled) }}
             - secretRef:
-                name: {{ default (include "mintel_common.defaultSQSSecretName" .) .Values.sqs.secretNameOverride }}
+                name: {{ default (include "mintel_common.defaultSqsSecretName" .) .Values.sqs.secretNameOverride }}
             {{- end }}
             {{- if (and .Values.elasticsearch .Values.elasticsearch.enabled) }}
             - secretRef:
