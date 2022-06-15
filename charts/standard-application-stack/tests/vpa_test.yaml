@@ -1,0 +1,54 @@
+suite: Test VerticalPodAutoscalers
+templates:
+  - vpa.yaml
+release:
+  namespace: test-namespace
+tests:
+  - it: Creates a VerticalPodAutoscaler for a Deployment
+    set:
+      vpa.enabled: true
+      statefulset: false
+    asserts:
+      - isKind:
+          of: VerticalPodAutoscaler
+      - equal:
+          path: metadata.namespace
+          value: test-namespace
+      - hasDocuments:
+          count: 1
+      - equal:
+          path: metadata.name
+          value: deployment-example-app
+      - equal:
+          path: spec.targetRef.apiVersion
+          value: apps/v1
+      - equal:
+          path: spec.targetRef.kind
+          value: Deployment
+      - equal:
+          path: spec.targetRef.name
+          value: example-app
+  - it: Creates a VerticalPodAutoscaler for a StatefulSet
+    set:
+      vpa.enabled: true
+      statefulset: true
+    asserts:
+      - isKind:
+          of: VerticalPodAutoscaler
+      - equal:
+          path: metadata.namespace
+          value: test-namespace
+      - hasDocuments:
+          count: 1
+      - equal:
+          path: metadata.name
+          value: statefulset-example-app
+      - equal:
+          path: spec.targetRef.apiVersion
+          value: apps/v1
+      - equal:
+          path: spec.targetRef.kind
+          value: StatefulSet
+      - equal:
+          path: spec.targetRef.name
+          value: example-app

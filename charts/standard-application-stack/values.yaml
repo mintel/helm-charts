@@ -933,3 +933,8 @@ localstack:
       value: test
     - name: AWS_SECRET_ACCESS_KEY
       value: test
+
+# -- Configuration for creating a VerticalPodAutoscaler for this app. Currently only supports recommendations-only mode.
+verticalPodAutoscaler:
+  # -- Set to true to create a VerticalPodAutoscaler.
+  enabled: true

@@ -1,0 +1,25 @@
+{{- if .Values.verticalPodAutoscaler.enabled }}
+apiVersion: {{ include "common.capabilities.verticalPodAutoscaler.apiVersion" . }}
+kind: VerticalPodAutoscaler
+metadata:
+{{- if .Values.statefulset }}
+  name: statefulset-{{ include "mintel_common.fullname" . }}
+{{ else }}
+  name: deployment-{{ include "mintel_common.fullname" . }}
+{{ end }}
+  namespace: {{ .Release.Namespace }}
+  annotations:
+    {{ include "mintel_common.commonAnnotations" . | nindent 4 }}
+  labels: {{ include "mintel_common.labels" . | nindent 4 }}
+spec:
+  targetRef:
+    apiVersion: apps/v1
+{{- if .Values.statefulset }}
+    kind: StatefulSet
+{{ else }}
+    kind: Deployment
+{{ end }}
+    name: {{ include "mintel_common.fullname" . }}
+  updatePolicy:
+    updateMode: "Off"
+{{- end }}
