@@ -21,10 +21,8 @@
       {{- if ( and ( has $resourceType (list "postgresql" "mariadb") ) ( not ( hasKey $instanceConfig "db_name" ) ) ) }}
         {{- $_ := set $instanceConfig "db_name" ( $instanceConfig.name | snakecase ) }}
       {{- end }}
-      # Set delete protection to true only in prod, logs and qa for postgresql and mariadb
-      {{- if ( and ( has $resourceType (list "postgresql" "mariadb") ) ( not ( has $global.clusterEnv (list "prod" "logs" "qa")) ) ) }}
-        {{- $_ := set $instanceConfig "enable_deletion_protection" false }}
-      {{- end }}
+      # Apply defaults based on environment
+      {{- $instanceConfig = mergeOverwrite $instanceConfig (include "mintel_common.defaultVarValues" $instanceDict | fromJson ) }}
       {{- if not (hasKey $instanceConfig "aws_account_name") }}
         {{- $_ := set $instanceConfig "aws_account_name" $global.clusterEnv }}
       {{ end }}

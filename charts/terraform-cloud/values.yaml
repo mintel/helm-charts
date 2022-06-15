@@ -64,6 +64,8 @@ dynamodb:
       # -- Module version
       version: "0.1.0-beta.1"
     # -- Vars to be applied to all instances defined below
+    # -- Automatically set to true in prod and qa but false in non-prod. Override this only if you know what you're doing.
+    # point_in_time_recovery_enabled: bool
     defaultVars: {}
     # -- A map of instance names => variable key/value pairs to be sent to the terraform module. The values in
     # `defaultVars` will be applied to every instance if not explicitly defined here.
@@ -149,6 +151,12 @@ mariadb:
       engine_version: "10.5"
       # -- MariaDB port
       port: 3306
+      # -- Automatically set to true if prod and false if non-prod. Override this only if you know what you're doing.
+      # multi_az: bool
+      # -- Automatically set to 14 in prod, 7 in qa and 0 in dev. Override this only if you know what you're doing.
+      # backup_retention_period: number
+      # -- Automatically set to true in prod and qa but false in dev. Override this only if you know what you're doing.
+      # enable_deletion_protection
     # -- A map of instance names => variable key/value pairs to be sent to the terraform module. The values in
     # `defaultVars` will be applied to every instance if not explicitly defined here.
     instances: {}
@@ -189,6 +197,12 @@ opensearch:
       # -- Module version
       version: "0.1.0-beta.3"
     # -- Vars to be applied to all instances defined below
+    # -- Automatically set to 3 in prod and 1 in dev and qa. Override this only if you know what you're doing.
+    # instance_count: number
+    # -- Automatically set to 3 in prod and 1 in dev and qa. Override this only if you know what you're doing.
+    # availability_zone_count: number
+    # -- Automatically set to true in prod and false in dev and qa. Override this only if you know what you're doing.
+    # zone_awareness_enabled: bool
     defaultVars: {}
     # -- A map of instance names => variable key/value pairs to be sent to the terraform module. The values in
     # `defaultVars` will be applied to every instance if not explicitly defined here.
@@ -215,6 +229,12 @@ postgresql:
       engine_version: "13"
       # -- PostgreSQL port
       port: 5432
+      # -- Automatically set to true if prod and false if non-prod. Override this only if you know what you're doing.
+      # multi_az: bool
+      # -- Automatically set to 14 in prod, 7 in qa and 0 in dev. Override this only if you know what you're doing.
+      # backup_retention_period: number
+      # -- Automatically set to true in prod and qa but false in dev. Override this only if you know what you're doing.
+      # enable_deletion_protection
     # -- A map of instance names => variable key/value pairs to be sent to the terraform module. The values in
     # `defaultVars` will be applied to every instance if not explicitly defined here.
     instances: {}
@@ -232,6 +252,12 @@ redis:
       # -- Module version
       version: "0.1.0-beta.4"
     # -- Vars to be applied to all instances defined below
+    # -- Automatically set to 2 in prod and 1 in dev and qa. Override this only if you know what you're doing.
+    # replication_group_size: number
+    # -- Automatically set to true in prod and false in dev and qa. Override this only if you know what you're doing.
+    # enable_automatic_failover: bool
+    # -- Automatically set to true in prod and false in dev and qa. Override this only if you know what you're doing.
+    # enable_multi_az: bool
     defaultVars: {}
     # -- A map of instance names => variable key/value pairs to be sent to the terraform module. The values in
     # `defaultVars` will be applied to every instance if not explicitly defined here.
@@ -250,6 +276,8 @@ s3:
       # -- Module version
       version: "0.1.0-beta.2"
     # -- Vars to be applied to all instances defined below
+    # -- Automatically set to true in prod and false in dev and qa. Override this only if you know what you're doing.
+    # enable_versioning: bool
     defaultVars: {}
     # -- A map of instance names => variable key/value pairs to be sent to the terraform module. The values in
     # `defaultVars` will be applied to every instance if not explicitly defined here.
