@@ -64,9 +64,9 @@ dynamodb:
       # -- Module version
       version: "0.1.0-beta.1"
     # -- Vars to be applied to all instances defined below
-    # -- Automatically set to true in prod and qa but false in non-prod. Override this only if you know what you're doing.
-    # point_in_time_recovery_enabled: bool
-    defaultVars: {}
+    defaultVars:
+      # -- Automatically set to true in prod and qa but false in non-prod. Override this only if you know what you're doing.
+      # point_in_time_recovery_enabled: bool
     # -- A map of instance names => variable key/value pairs to be sent to the terraform module. The values in
     # `defaultVars` will be applied to every instance if not explicitly defined here.
     instances: {}

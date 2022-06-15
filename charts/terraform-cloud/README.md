@@ -9,7 +9,7 @@ A Helm chart for provisioning resources using Terraform Cloud
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | dynamodb.enabled | bool | `false` | Set to true to create a DynamoDB instance |
-| dynamodb.terraform.defaultVars | object | `{}` | Automatically set to true in prod and qa but false in non-prod. Override this only if you know what you're doing. point_in_time_recovery_enabled: bool |
+| dynamodb.terraform.defaultVars | string | `nil` | Vars to be applied to all instances defined below |
 | dynamodb.terraform.instances | object | `{}` | A map of instance names => variable key/value pairs to be sent to the terraform module. The values in `defaultVars` will be applied to every instance if not explicitly defined here. |
 | dynamodb.terraform.module | object | `{"source":"app.terraform.io/Mintel/dynamodb/aws","version":"0.1.0-beta.1"}` | Set Terraform version for this module to overwrite global.TerraformVersion terraformVersion: |
 | dynamodb.terraform.module.source | string | `"app.terraform.io/Mintel/dynamodb/aws"` | Registry path of the Terraform module used to create the resource (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/dynamodb/aws) |
