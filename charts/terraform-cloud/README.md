@@ -77,7 +77,7 @@ A Helm chart for provisioning resources using Terraform Cloud
 | sqs.terraform.defaultVars | object | `{}` | Vars to be applied to all instances defined below |
 | sqs.terraform.instances | object | `{}` | A map of instance names => variable key/value pairs to be sent to the terraform module. The values in `defaultVars` will be applied to every instance if not explicitly defined here. |
 | sqs.terraform.module.source | string | `"app.terraform.io/Mintel/sqs/aws"` | Registry path of the Terraform module used to create the resource (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/sqs/aws) |
-| sqs.terraform.module.version | string | `"0.0.1-alpha.23"` | Module version |
+| sqs.terraform.module.version | string | `"0.1.0-beta.2"` | Module version |
 | staticWebsite.enabled | bool | `false` | Set to true to create static website (a public bucket and associated resources) |
 | staticWebsite.terraform.defaultVars | object | `{}` | Vars to be applied to all instances defined below |
 | staticWebsite.terraform.instances | object | `{}` | A map of instance names => variable key/value pairs to be sent to the terraform module. The values in `defaultVars` will be applied to every instance if not explicitly defined here. |

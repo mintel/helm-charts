@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Setting environment based defaults for resources via helpers
 - refactor helpers to have `mintel_common.terraform_cloud` prefix rather than just `mintel_common.`
+- bump sqs module version
 
 
 ## [v0.11.0] - 2022-06-13
