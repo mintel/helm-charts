@@ -10,7 +10,7 @@
 {{ join "," $terraformCloudIRSAResources }}
 {{- end -}}
 
-{{- define "mintel_common.irsaRequired"}}
+{{- define "mintel_common.terraform_cloud.irsaRequired"}}
 {{- $irsaRequired := "false"}}
 {{- range include "mintel_common.terraformCloudIRSAResources" $ | split "," }}
   {{- $resourceConfig := (get $.Values .) }}
@@ -44,7 +44,7 @@ app.mintel.com/region: {{ .Values.global.clusterRegion }}
 {{- end -}}
 
 {{/* Set instanceConfig.Name */}}
-{{- define "mintel_common.instanceConfigName" -}}
+{{- define "mintel_common.terraform_cloud.instanceConfigName" -}}
 {{- $name := ""}}
 {{- if ( hasKey .InstanceCfg "name" ) }}
   {{- $name = .InstanceCfg.name }}
@@ -59,4 +59,60 @@ app.mintel.com/region: {{ .Values.global.clusterRegion }}
   {{- $name = (printf "mntl-%s" $name) }}
 {{- end }}
 {{ $name }}
+{{- end -}}
+
+{{/* Set variable values depending on environment */}}
+{{- define "mintel_common.terraform_cloud.defaultVarValues" -}}
+{{- $defaults := dict}}
+{{/* rds */}}
+{{- if ( has .ResourceType (list "postgresql" "mariadb"))}}
+    {{/* deletion_protection */}}
+    {{- if ( not ( has .Global.clusterEnv (list "prod" "logs" "qa"))) }}
+    {{- $_ := set $defaults "enable_deletion_protection" false }}
+    {{- end }}
+    {{/* multi-az */}}
+    {{- if ( has .Global.clusterEnv (list "prod" "logs")) }}
+    {{- $_ := set $defaults "multi_az" false }}
+    {{- end }}
+    {{/* backup retention period */}}
+    {{- if ( eq .Global.clusterEnv "dev") }}
+    {{- $_ := set $defaults "backup_retention_period" 0 }}
+    {{- end }}
+    {{- if ( eq .Global.clusterEnv "qa") }}
+    {{- $_ := set $defaults "backup_retention_period" 7 }}
+    {{- end }}
+{{- end }}
+{{/* dynamoDB */}}
+{{- if ( eq .ResourceType "dynamodb")}}
+    {{/* point in time recovery */}}
+    {{- if ( eq .Global.clusterEnv "dev") }}
+    {{- $_ := set $defaults "point_in_time_recovery_enabled" false }}
+    {{- end }}
+{{- end }}
+{{/* Opensearch */}}
+{{- if ( eq .ResourceType "opensearch")}}
+    {{/* instance count, zone_awareness_enabled and multi-az */}}
+    {{- if ( not ( has .Global.clusterEnv (list "prod" "logs"))) }}
+    {{- $_ := set $defaults "instance_count" 1 }}
+    {{- $_ := set $defaults "availability_zone_count" 1 }}
+    {{- $_ := set $defaults "zone_awareness_enabled" false }}
+    {{- end }}
+{{- end }}
+{{/* Redis */}}
+{{- if ( eq .ResourceType "redis")}}
+    {{/* multi-az, automatic_failover and replication_group_size */}}
+    {{- if ( not ( has .Global.clusterEnv (list "prod" "logs"))) }}
+    {{- $_ := set $defaults "enable_multi_az" false }}
+    {{- $_ := set $defaults "enable_automatic_failover" false }}
+    {{- $_ := set $defaults "replication_group_size" 1 }}
+    {{- end }}
+{{- end }}
+{{/* S3 */}}
+{{- if ( eq .ResourceType "s3")}}
+    {{/* versioning */}}
+    {{- if ( not ( has .Global.clusterEnv (list "prod" "logs"))) }}
+    {{- $_ := set $defaults "enable_versioning" false }}
+    {{- end }}
+{{- end }}
+{{- $defaults | toJson -}}
 {{- end -}}

@@ -4,7 +4,7 @@ templates:
 release:
   namespace: test-namespace
 tests:
-  - it: Dev S3 module workspace name does not repeat mntl-prefix
+  - it: Dev S3 module workspace adds correct env override
     set:
       global.name: mntl-test-app
       global.clusterEnv: dev
@@ -17,6 +17,24 @@ tests:
       - equal:
           path: metadata.name
           value: dev-eu-west-1-cluster1-test-namespace-mntl-test-app-s3
+  - it: Dev S3 module workspace name does not repeat mntl-prefix
+    set:
+      global.name: mntl-test-app
+      global.clusterEnv: dev
+      global.clusterName: cluster1
+      global.clusterRegion: eu-west-1
+      global.owner: sre
+      global.partOf: test-project
+      s3.enabled: true
+    asserts:
+      - contains:
+          path: spec.variables
+          content:
+            environmentVariable: false
+            hcl: false
+            key: enable_versioning
+            sensitive: false
+            value: "false"
   - it: Dev S3 module workspace
     set:
       global.name: test-app
@@ -49,11 +67,11 @@ tests:
       - contains:
           path: spec.variables
           content:
-              environmentVariable: false
-              hcl: false
-              key: name
-              sensitive: false
-              value: mntl-test-app
+            environmentVariable: false
+            hcl: false
+            key: name
+            sensitive: false
+            value: mntl-test-app
       - contains:
           path: spec.variables
           content:

@@ -16,15 +16,13 @@
       {{- $tfVersion := $resourceConfig.terraform.terraformVersion}}
       # Set instance.name via helper
       {{- $instanceDict := dict "Global" $global "InstanceCfg" $instanceConfig "InstanceName" $instanceName "ResourceType" $resourceType }}
-      {{- $_ := set $instanceConfig "name" (include "mintel_common.instanceConfigName" $instanceDict | trim)}}
+      {{- $_ := set $instanceConfig "name" (include "mintel_common.terraform_cloud.instanceConfigName" $instanceDict | trim)}}
       # Set instance.db_name for postgresql and mariadb if not provided
       {{- if ( and ( has $resourceType (list "postgresql" "mariadb") ) ( not ( hasKey $instanceConfig "db_name" ) ) ) }}
         {{- $_ := set $instanceConfig "db_name" ( $instanceConfig.name | snakecase ) }}
       {{- end }}
-      # Set delete protection to true only in prod, logs and qa for postgresql and mariadb
-      {{- if ( and ( has $resourceType (list "postgresql" "mariadb") ) ( not ( has $global.clusterEnv (list "prod" "logs" "qa")) ) ) }}
-        {{- $_ := set $instanceConfig "enable_deletion_protection" false }}
-      {{- end }}
+      # Apply defaults based on environment
+      {{- $instanceConfig = mergeOverwrite $instanceConfig (include "mintel_common.terraform_cloud.defaultVarValues" $instanceDict | fromJson ) }}
       {{- if not (hasKey $instanceConfig "aws_account_name") }}
         {{- $_ := set $instanceConfig "aws_account_name" $global.clusterEnv }}
       {{ end }}
@@ -54,7 +52,7 @@
       {{- end }}
       # Create the CRD
 ---
-      {{- include "mintel_common.workspace" (list $ . $instanceConfig $resourceType $moduleSource $moduleVersion $tfVersion) }}
+      {{- include "mintel_common.terraform_cloud.workspace" (list $ . $instanceConfig $resourceType $moduleSource $moduleVersion $tfVersion) }}
     {{- end }}
   {{- end }}
 {{- end }}
