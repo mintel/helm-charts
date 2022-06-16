@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [v3.31.0] - 2022-06-15
 ### Added
+- create VerticalPodAutoscaler from cronjobs
+
+## [v3.31.0] - 2022-06-15
+### Added
 - allow creating a VerticalPodAutoscaler in recommendations-on
 
 ## [v3.30.0] - 2022-06-14
