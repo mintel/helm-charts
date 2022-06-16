@@ -703,7 +703,7 @@ cronjobs:
     #     - '/bin/sh'
     #   args:
     #     - '-c'
-    #     - 'NO_MIGRATE=1
+    #     - 'NO_MIGRATE=1'
     #     - '/app/docker-entrypoint.sh'
     #     - 'manage'
     #     - 'daily'
