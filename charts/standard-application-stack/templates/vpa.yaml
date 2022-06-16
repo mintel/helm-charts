@@ -1,4 +1,7 @@
 {{- if .Values.verticalPodAutoscaler.enabled }}
+
+{{- if (eq .Values.cronjobsOnly false) }}
+---
 apiVersion: {{ include "common.capabilities.verticalPodAutoscaler.apiVersion" . }}
 kind: VerticalPodAutoscaler
 metadata:
@@ -22,4 +25,26 @@ spec:
     name: {{ include "mintel_common.fullname" . }}
   updatePolicy:
     updateMode: "Off"
+{{- end }}
+
+{{- range .Values.cronjobs.jobs }}
+{{- $data := dict "Release" $.Release "Chart" $.Chart "Values" $.Values "component" .name }}
+---
+apiVersion: {{ include "common.capabilities.verticalPodAutoscaler.apiVersion" . }}
+kind: VerticalPodAutoscaler
+metadata:
+  name: cronjob-{{ include "mintel_common.fullname" $data }}
+  namespace: {{ $.Release.Namespace }}
+  annotations:
+    {{ include "mintel_common.commonAnnotations" $data | nindent 4 }}
+  labels: {{ include "mintel_common.labels" $data | nindent 4 }}
+spec:
+  targetRef:
+    apiVersion: batch/v1
+    kind: CronJob
+    name: {{ include "mintel_common.fullname" $data }}
+  updatePolicy:
+    updateMode: "Off"
+{{- end }}
+
 {{- end }}
