@@ -4,7 +4,32 @@ templates:
 release:
   namespace: test-namespace
 tests:
-  - it: Dev S3 module workspace adds correct env override
+  - it: Dev S3 module workspace name override
+    set:
+      global.name: mntl-test-app
+      global.clusterEnv: dev
+      global.clusterName: cluster1
+      global.clusterRegion: eu-west-1
+      global.owner: sre
+      global.partOf: test-project
+      s3:
+        enabled: true
+        terraform:
+          defaultVars:
+            workspaceNameOverride: i-have-been-overwritten
+    asserts:
+      - equal:
+          path: metadata.name
+          value: i-have-been-overwritten
+      - notContains:
+          path: spec.variables
+          content:
+            environmentVariable: false
+            hcl: false
+            key: workspaceNameOverride
+            sensitive: false
+            value: i-have-been-overwritten
+  - it: Dev S3 module workspace name does not repeat mntl-prefix
     set:
       global.name: mntl-test-app
       global.clusterEnv: dev
@@ -17,7 +42,7 @@ tests:
       - equal:
           path: metadata.name
           value: dev-eu-west-1-cluster1-test-namespace-mntl-test-app-s3
-  - it: Dev S3 module workspace name does not repeat mntl-prefix
+  - it: Dev S3 module workspace adds correct env override
     set:
       global.name: mntl-test-app
       global.clusterEnv: dev

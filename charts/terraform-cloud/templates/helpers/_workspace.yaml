@@ -11,7 +11,7 @@
 apiVersion: app.terraform.io/v1alpha1
 kind: Workspace
 metadata:
-  name: {{ include "mintel_common.terraform_cloud.workspaceName" $workspaceDict | trim | quote }}
+  name: {{ default (include "mintel_common.terraform_cloud.workspaceName" $workspaceDict | trim | quote) $instanceCfg.workspaceNameOverride }}
   namespace: {{ $.Release.Namespace | quote }}
   labels: {{ include "mintel_common.labels" $ | nindent 4 }}
   annotations:
@@ -39,6 +39,7 @@ spec:
   {{include "mintel_common.terraform_cloud.irsaRunTriggers" .| indent 4}}
   {{- end}}
   variables:
+  {{- $_ := unset $instanceCfg "workspaceNameOverride" }}
   {{- range $varKey, $varVal := $instanceCfg }}
     {{- if kindIs "map" $varVal}}
       {{- include "mintel_common.terraform_cloud.tfVar" (merge (dict "key" $varKey) $varVal) | indent 2 }}
@@ -73,7 +74,7 @@ spec:
       {{- $instanceDict := dict "Global" $global "InstanceCfg" $instanceCfg "InstanceName" $instanceName "ResourceType" $resourceType }}
       {{- $_ := set $instanceCfg "name" (include "mintel_common.terraform_cloud.instanceConfigName" $instanceDict | trim)}}
 {{- $workspaceDict := dict "Global" $global "Release" $.Release "InstanceCfg" $instanceCfg "ResourceType" $resourceType }}
-- sourceableName: {{ include "mintel_common.terraform_cloud.workspaceName" $workspaceDict | trim | quote }}
+- sourceableName: {{ default (include "mintel_common.terraform_cloud.workspaceName" $workspaceDict | trim | quote) $instanceCfg.workspaceNameOverride }}
   {{- end }}
   {{- end }}
 {{- end}}
