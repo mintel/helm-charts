@@ -22,7 +22,7 @@
         {{- $_ := set $instanceConfig "db_name" ( $instanceConfig.name | snakecase ) }}
       {{- end }}
       # Apply defaults based on environment
-      {{- $instanceConfig = mergeOverwrite $instanceConfig (include "mintel_common.terraform_cloud.defaultVarValues" $instanceDict | fromJson ) }}
+      {{- $instanceConfig = mergeOverwrite (include "mintel_common.terraform_cloud.defaultVarValues" $instanceDict | fromJson ) $instanceConfig }}
       {{- if not (hasKey $instanceConfig "aws_account_name") }}
         {{- $_ := set $instanceConfig "aws_account_name" $global.clusterEnv }}
       {{ end }}
