@@ -195,7 +195,7 @@ spec:
               - 'celery inspect ping -d celery@$(hostname)'
             {{- end }}
             initialDelaySeconds: {{ default 0 .Values.celery.liveness.initialDelaySeconds }}
-            timeoutSeconds: {{ default 1 .Values.celery.liveness.timeoutSeconds }}
+            timeoutSeconds: {{ default 2 .Values.celery.liveness.timeoutSeconds }}
             periodSeconds: {{ default 10 .Values.celery.liveness.periodSeconds }}
           startupProbe:
             {{- if (and .Values.celery.startup .Values.celery.startup.methodOverride) }}

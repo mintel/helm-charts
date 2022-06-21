@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v3.31.2] - 2022-06-21
+### Changed
+- Upping Celery liveness probe duration to 2s as it times out with 1s
+
 ## [v3.31.0] - 2022-06-15
 ### Added
 - create VerticalPodAutoscaler from cronjobs
