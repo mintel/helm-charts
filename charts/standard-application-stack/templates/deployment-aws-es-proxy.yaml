@@ -49,9 +49,24 @@ spec:
           ports:
             - containerPort: 9200
               name: http
+          startupProbe:
+            httpGet:
+              path: /_cluster/health
+              port: http
+              scheme: HTTP
+            failureThreshold: 60
+            periodSeconds: 5
           livenessProbe:
             tcpSocket:
               port: http
+          readinessProbe:
+            httpGet:
+              path: /_cluster/health
+              port: http
+              scheme: HTTP
+            initialDelaySeconds: 0
+            periodSeconds: 10
+            timeoutSeconds: 1
           securityContext:
             runAsUser: 65534
           {{- with .Values.opensearch.awsEsProxy.resources }}

@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v3.32.0] - 2022=06-24
+### Added
+- Added readiness and startup probes to aws-es-proxy deployments
+
 ## [v3.31.2] - 2022-06-21
 ### Changed
 - Upping Celery liveness probe duration to 2s as it times out with 1s
