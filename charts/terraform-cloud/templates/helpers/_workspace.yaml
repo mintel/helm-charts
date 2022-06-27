@@ -13,7 +13,9 @@ kind: Workspace
 metadata:
   name: {{ default (include "mintel_common.terraform_cloud.workspaceName" $workspaceDict | trim | quote) $instanceCfg.workspaceNameOverride }}
   namespace: {{ $.Release.Namespace | quote }}
-  labels: {{ include "mintel_common.labels" $ | nindent 4 }}
+  labels:
+    {{ include "mintel_common.labels" $ | nindent 4 }}
+    name: {{ printf "%s-%s" ($instanceCfg.name | kebabcase) ($resourceType | kebabcase) | trunc 63 }}
   annotations:
     {{ include "mintel_common.commonAnnotations" $ | nindent 4 }}
     {{- if (eq $resourceType "irsa") }}
