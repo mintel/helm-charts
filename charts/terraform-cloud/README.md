@@ -1,6 +1,6 @@
 # terraform-cloud
 
-![Version: 0.15.0](https://img.shields.io/badge/Version-0.15.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.1.0](https://img.shields.io/badge/AppVersion-1.1.0-informational?style=flat-square)
+![Version: 0.15.1](https://img.shields.io/badge/Version-0.15.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.1.0](https://img.shields.io/badge/AppVersion-1.1.0-informational?style=flat-square)
 
 A Helm chart for provisioning resources using Terraform Cloud
 
@@ -49,7 +49,7 @@ A Helm chart for provisioning resources using Terraform Cloud
 | opensearch.terraform.defaultVars | string | `nil` | Vars to be applied to all instances defined below |
 | opensearch.terraform.instances | object | `{}` | A map of instance names => variable key/value pairs to be sent to the terraform module. The values in `defaultVars` will be applied to every instance if not explicitly defined here. |
 | opensearch.terraform.module.source | string | `"app.terraform.io/Mintel/opensearch/aws"` | Registry path of the Terraform module used to create the resource (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/opensearch/aws) |
-| opensearch.terraform.module.version | string | `"0.1.0-beta.4"` | Module version |
+| opensearch.terraform.module.version | string | `"0.1.0-beta.5"` | Module version |
 | postgresql.enabled | bool | `false` | Set to true to create a PostgreSQL RDS instance |
 | postgresql.terraform.defaultVars | object | See below | Vars to be applied to all instances defined below |
 | postgresql.terraform.defaultVars.engine | string | `"postgres"` | Database engine to use (should always be "postgres") |
