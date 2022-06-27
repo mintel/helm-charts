@@ -4,6 +4,20 @@ templates:
 release:
   namespace: test-namespace
 tests:
+  - it: Dev S3 module name label override
+    set:
+      global.name: mntl-test-app
+      global.clusterEnv: dev
+      global.clusterName: cluster1
+      global.clusterRegion: eu-west-1
+      global.owner: sre
+      global.partOf: test-project
+      s3:
+        enabled: true
+      asserts:
+        - equal:
+            path: metadata.labels.name
+            value: mntl-test-app-s3
   - it: Dev S3 module workspace name override
     set:
       global.name: mntl-test-app
