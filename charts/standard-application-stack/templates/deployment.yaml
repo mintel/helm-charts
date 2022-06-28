@@ -37,7 +37,7 @@ metadata:
     {{- with $configmapListStr }}
     configmap.reloader.stakater.com/reload: {{ . }}
     {{- end }}
-    {{- if .Values.singleReplicaOnly }}
+    {{- if (or .Values.singleReplicaOnly .Values.allowSingleReplica) }}
     app.mintel.com/opa-allow-single-replica: "true"
     {{- end }}
   labels: {{ include "mintel_common.labels" . | nindent 4 }}
@@ -50,7 +50,11 @@ spec:
   minReadySeconds: {{ . }}
   {{- end }}
   {{- end }}
+  {{- if .Values.singleReplicaOnly }}
+  replicas: 1
+  {{- else }}
   replicas: {{ .Values.replicas }}
+  {{- end }}
   selector:
     matchLabels: {{ include "mintel_common.selectorLabels" . | nindent 6 }}
   {{- if .Values.statefulset }}
@@ -58,7 +62,10 @@ spec:
     type: RollingUpdate
   serviceName: {{ include "mintel_common.fullname" . }}
   {{- else }}
-  {{- if (gt (.Values.replicas | int) 1) }}
+  {{- if .Values.singleReplicaOnly }}
+  strategy:
+    type: Recreate
+  {{- else }}
   strategy:
     {{- with .Values.strategy }}
     {{- if (and (eq .type "RollingUpdate") (or .maxSurge .maxUnavailable)) }}
@@ -74,9 +81,6 @@ spec:
     {{- else }}
     type: RollingUpdate
     {{- end }}
-  {{- else }}
-  strategy:
-    type: Recreate
   {{- end }}
   {{- end }}
   template:
