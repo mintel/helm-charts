@@ -1,0 +1,45 @@
+suite: Test Deployment Single Replica Logic
+templates:
+  - deployment.yaml
+release:
+  namespace: test-namespace
+tests:
+  - it: Check singleReplicaOnly applied
+    set:
+      global.clusterEnv: qa
+      singleReplicaOnly: true
+    asserts:
+      - equal:
+          path: spec.replicas
+          value: 1
+      - equal:
+          path: metadata.annotations.[app.mintel.com/opa-allow-single-replica]
+          value: "true"
+      - equal:
+          path: spec.strategy.type
+          value: "Recreate"
+  - it: Check singleReplicaOnly ignore replicas value
+    set:
+      global.clusterEnv: qa
+      singleReplicaOnly: true
+      replicas: 5
+    asserts:
+      - equal:
+          path: spec.replicas
+          value: 1
+  - it: Check allowSingleReplica set annotations
+    set:
+      global.clusterEnv: qa
+      allowSingleReplica: true
+    asserts:
+      - equal:
+          path: metadata.annotations.[app.mintel.com/opa-allow-single-replica]
+          value: "true"
+  - it: Check allowSingleReplica doesn't alter strategy
+    set:
+      global.clusterEnv: qa
+      allowsingleReplica: true
+    asserts:
+      - equal:
+          path: spec.strategy.type
+          value: "RollingUpdate"

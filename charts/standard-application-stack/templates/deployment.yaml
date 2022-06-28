@@ -37,7 +37,7 @@ metadata:
     {{- with $configmapListStr }}
     configmap.reloader.stakater.com/reload: {{ . }}
     {{- end }}
-    {{- if (or .Values.singleReplicaOnly .allowSingleReplica) }}
+    {{- if (or .Values.singleReplicaOnly .Values.allowSingleReplica) }}
     app.mintel.com/opa-allow-single-replica: "true"
     {{- end }}
   labels: {{ include "mintel_common.labels" . | nindent 4 }}
