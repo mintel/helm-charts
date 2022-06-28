@@ -34,7 +34,7 @@ global:
 # ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
 serviceAccount:
   # -- Determine whether a Service Account should be created or it should reuse a exiting one.
-  create: true
+  create: false
   # -- ServiceAccount to use. A name is generated using the mintel_common.fullname template if it is not set
   name: ""
   # -- Additional Service Account annotations
