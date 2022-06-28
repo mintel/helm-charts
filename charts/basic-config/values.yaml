@@ -80,6 +80,6 @@ configMaps: []
 # -- Define ExternalSecrets from AWS
 externalSecrets: []
 #  - name: ""
-#    secretPath: ""
+#    pathOverride: ""
 #    refreshIntervalOverride: ""
 #    secretStoreRefOverride: ""
