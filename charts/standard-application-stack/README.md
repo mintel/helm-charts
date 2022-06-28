@@ -1,6 +1,6 @@
 # standard-application-stack
 
-![Version: 3.32.0](https://img.shields.io/badge/Version-3.32.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 3.33.0](https://img.shields.io/badge/Version-3.33.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A generic chart to support most common application requirements
 
@@ -27,6 +27,7 @@ A generic chart to support most common application requirements
 | affinity.podAntiAffinity | object | `{"node":"soft","zone":"hard"}` | Configure pod anti-affinity rules |
 | affinity.podAntiAffinity.node | string | `"soft"` | Toggle whether node affinity should be required (hard) or preferred (soft) |
 | affinity.podAntiAffinity.zone | string | `"hard"` | Toggle whether zone affinity should be required (hard) or preferred (soft) |
+| allowSingleReplica | bool | `false` | Explicitly allow the number of replicas to equal 1 Useful for backend event based services where we may only want a single replica but still want rolling updates etc |
 | args | list | `[]` | Optional arguments to the container |
 | celery | object | `{"args":["celery"],"enabled":false,"liveness":{"enabled":false},"metrics":{"enabled":true},"podDisruptionBudget":{"enabled":true,"minAvailable":"50%"},"readiness":{"enabled":false},"replicas":2,"resources":{"limits":{},"requests":{}},"startup":{"failureThreshold":60,"methodOverride":{},"periodSeconds":5}}` | Configure celery deployment Defaults to same image as main deployment but with the "celery" argument |
 | celery.args | list | `["celery"]` | Arguments to the celery container |
