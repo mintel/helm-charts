@@ -38,7 +38,7 @@ tests:
   - it: Check allowSingleReplica doesn't alter strategy
     set:
       global.clusterEnv: qa
-      allowsingleReplica: true
+      allowSingleReplica: true
     asserts:
       - equal:
           path: spec.strategy.type
