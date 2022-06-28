@@ -7,7 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [v3.32.0] - 2022=06-24
+## [v3.33.0] - 2022-06-27
+### Added
+- Added option 'allowSingleReplica'
+- Refactored logic around single replica deployments
+
+## [v3.32.0] - 2022-06-24
 ### Added
 - Added readiness and startup probes to aws-es-proxy deployments
 

@@ -48,6 +48,11 @@ statefulset: false
 # usually involving third party apps or prometheus exporters, etc
 singleReplicaOnly: false
 
+# -- Explicitly allow the number of replicas to equal 1
+# Useful for backend event based services where we may only want
+# a single replica but still want rolling updates etc
+allowSingleReplica: false
+
 # -- Docker image values
 image:
   # -- Docker registry used to pull application image
