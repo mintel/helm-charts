@@ -30,7 +30,7 @@ global:
     irsa: false
 
 
-# -- ServiceAccount parameters
+# ServiceAccount parameters
 # ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
 serviceAccount:
   # -- Determine whether a Service Account should be created or it should reuse a exiting one.
