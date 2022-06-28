@@ -1,0 +1,85 @@
+# Default values for basic-config.
+# Declare variables to be passed into your templates.
+
+# -- Global variables for us in all charts and sub charts
+global:
+  # -- Name of the application
+  name: "example-app"
+  # -- Team which "owns" the application
+  owner: ""
+  # -- Top level application each deployment is a part of
+  partOf: ""
+  # -- Additional labels to apply to all resources
+  additionalLabels: {}
+  # -- Kubernetes cluster domain
+  clusterDomain: "127.0.0.1.nip.io"
+  # -- Environment (local, dev, qa, prod)
+  clusterEnv: "local"
+  # -- Kubernetes cluster name
+  clusterName: ""
+  # -- Global variables relating to cloud provider
+  cloudProvider:
+    # -- AWS Account Id
+    accountId: ""
+  # -- Global variable defining RUNTIME_ENVIRONMENT
+  runtimeEnvironment: kubernetes
+  # -- Global dictionary of TLS secrets
+  ingressTLSSecrets: {}
+  terraform:
+    # When true, basic-config sets the service account eks annotation to match the IAM roles created by the terraform-cloud chart
+    irsa: false
+
+
+# -- ServiceAccount parameters
+# ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
+serviceAccount:
+  # -- Determine whether a Service Account should be created or it should reuse a exiting one.
+  create: true
+  # -- ServiceAccount to use. A name is generated using the mintel_common.fullname template if it is not set
+  name: ""
+  # -- Additional Service Account annotations
+  annotations: {}
+  # -- Configures IRSA for the Service Account
+  irsa:
+    # -- Determines whether service account is IRSA enabled
+    enabled: false
+    # -- Override for last component of role-arn, ie: accountid-clusterName-namespace-{nameOverride}
+    nameOverride: ""
+  # -- Whether to automount the service account token or not
+  automountServiceAccountToken: true
+
+  # -- Define list of Role's to create and bind to the service account
+  # ref: https://kubernetes.io/docs/reference/access-authn-authz/rbac/
+  roles: []
+  #  - name: 'main'
+  #    rules:
+  #    - apiGroups: []
+  #      resources: []
+  #      verbs: []
+
+  # -- Define list of ClusterRole's to create and bind to the service account
+  # ref: https://kubernetes.io/docs/reference/access-authn-authz/rbac/
+  clusterRoles: []
+  #  - name: 'main'
+  #    rules:
+  #    - apiGroups: []
+  #      resources: []
+  #      verbs: []
+
+# -- A list of configuration maps
+configMaps: []
+#    # -- Name of the config map
+#  - name: ""
+#    # -- Whether or not to create the configmap
+#    create: false
+#    # -- List of configs (files) within the configmap
+#    configs:
+#      - name: ""
+#        data: ""
+
+# -- Define ExternalSecrets from AWS
+externalSecrets: []
+#  - name: ""
+#    secretPath: ""
+#    refreshIntervalOverride: ""
+#    secretStoreRefOverride: ""
