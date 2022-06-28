@@ -20,6 +20,16 @@ entries:
     urls:
     - https://github.com/mintel/helm-charts/releases/download/aws-api-gateway-operator-0.1.0/aws-api-gateway-operator-0.1.0.tgz
     version: 0.1.0
+  basic-config:
+  - apiVersion: v2
+    created: "2022-06-28T13:46:57.663601976Z"
+    description: A Helm chart for defining basic k8s configuration res
+    digest: 42348a366edb9a32c45017b43f73939c49014484e04ee760500cf844dadc054e
+    name: basic-config
+    type: application
+    urls:
+    - https://github.com/mintel/helm-charts/releases/download/basic-config-0.0.1/basic-config-0.0.1.tgz
+    version: 0.0.1
   dex-k8s-authenticator:
   - apiVersion: v1
     appVersion: v1.2.0
@@ -6780,4 +6790,4 @@ entries:
     urls:
     - https://github.com/mintel/helm-charts/releases/download/testchart-0.1.1/testchart-0.1.1.tgz
     version: 0.1.1
-generated: "2022-06-28T09:20:32.88564235Z"
+generated: "2022-06-28T13:46:57.665057981Z"
