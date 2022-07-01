@@ -1,6 +1,6 @@
 # terraform-cloud
 
-![Version: 0.16.0](https://img.shields.io/badge/Version-0.16.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.1.0](https://img.shields.io/badge/AppVersion-1.1.0-informational?style=flat-square)
+![Version: 0.16.1](https://img.shields.io/badge/Version-0.16.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.1.0](https://img.shields.io/badge/AppVersion-1.1.0-informational?style=flat-square)
 
 A Helm chart for provisioning resources using Terraform Cloud
 
@@ -37,7 +37,7 @@ A Helm chart for provisioning resources using Terraform Cloud
 | mariadb.terraform.defaultVars.port | int | `3306` | MariaDB port |
 | mariadb.terraform.instances | object | `{}` | A map of instance names => variable key/value pairs to be sent to the terraform module. The values in `defaultVars` will be applied to every instance if not explicitly defined here. |
 | mariadb.terraform.module.source | string | `"app.terraform.io/Mintel/rds/aws"` | Registry path of the Terraform module used to create the resource (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/rds/aws) |
-| mariadb.terraform.module.version | string | `"0.1.0-beta.3"` | Module version |
+| mariadb.terraform.module.version | string | `"0.1.0-beta.4"` | Module version |
 | memcached.enabled | bool | `false` | Set to true to create a memcached Elasticache resource |
 | memcached.terraform.defaultVars | object | See below | Vars to be applied to all instances defined below |
 | memcached.terraform.defaultVars.instance_type | string | `"cache.t4g.micro"` | EC2 instance type to use (https://aws.amazon.com/elasticache/pricing) |
@@ -49,7 +49,7 @@ A Helm chart for provisioning resources using Terraform Cloud
 | opensearch.terraform.defaultVars | string | `nil` | Vars to be applied to all instances defined below |
 | opensearch.terraform.instances | object | `{}` | A map of instance names => variable key/value pairs to be sent to the terraform module. The values in `defaultVars` will be applied to every instance if not explicitly defined here. |
 | opensearch.terraform.module.source | string | `"app.terraform.io/Mintel/opensearch/aws"` | Registry path of the Terraform module used to create the resource (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/opensearch/aws) |
-| opensearch.terraform.module.version | string | `"0.1.0-beta.6"` | Module version |
+| opensearch.terraform.module.version | string | `"0.1.0-beta.7"` | Module version |
 | postgresql.enabled | bool | `false` | Set to true to create a PostgreSQL RDS instance |
 | postgresql.terraform.defaultVars | object | See below | Vars to be applied to all instances defined below |
 | postgresql.terraform.defaultVars.engine | string | `"postgres"` | Database engine to use (should always be "postgres") |
@@ -57,7 +57,7 @@ A Helm chart for provisioning resources using Terraform Cloud
 | postgresql.terraform.defaultVars.port | int | `5432` | PostgreSQL port |
 | postgresql.terraform.instances | object | `{}` | A map of instance names => variable key/value pairs to be sent to the terraform module. The values in `defaultVars` will be applied to every instance if not explicitly defined here. |
 | postgresql.terraform.module.source | string | `"app.terraform.io/Mintel/rds/aws"` | Registry path of the Terraform module used to create the resource (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/rds/aws) |
-| postgresql.terraform.module.version | string | `"0.1.0-beta.3"` | Module version |
+| postgresql.terraform.module.version | string | `"0.1.0-beta.4"` | Module version |
 | redis.enabled | bool | `false` | Set to true to create a Redis Elasticache resource |
 | redis.terraform.defaultVars | object | `{}` | Vars to be applied to all instances defined below |
 | redis.terraform.instances | object | `{}` | A map of instance names => variable key/value pairs to be sent to the terraform module. The values in `defaultVars` will be applied to every instance if not explicitly defined here. |
@@ -67,7 +67,7 @@ A Helm chart for provisioning resources using Terraform Cloud
 | s3.terraform.defaultVars | object | `{}` | Vars to be applied to all instances defined below |
 | s3.terraform.instances | object | `{}` | A map of instance names => variable key/value pairs to be sent to the terraform module. The values in `defaultVars` will be applied to every instance if not explicitly defined here. |
 | s3.terraform.module.source | string | `"app.terraform.io/Mintel/private-s3-bucket/aws"` | Registry path of the Terraform module used to create the resource (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/private-s3-bucket/aws) |
-| s3.terraform.module.version | string | `"0.1.0-beta.2"` | Module version |
+| s3.terraform.module.version | string | `"0.1.0-beta.4"` | Module version |
 | sns.enabled | bool | `false` | Set to true to create an SNS resource |
 | sns.terraform.defaultVars | object | `{}` | Vars to be applied to all instances defined below |
 | sns.terraform.instances | object | `{}` | A map of instance names => variable key/value pairs to be sent to the terraform module. The values in `defaultVars` will be applied to every instance if not explicitly defined here. |
