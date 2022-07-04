@@ -25,8 +25,12 @@ A Helm chart for defining basic k8s configuration res
 | headlessService | object | `{"annotations":{},"enabled":false,"jobName":"","labels":{}}` | Define a headless Service |
 | headlessService.annotations | object | `{}` | Annotations to add to service |
 | headlessService.enabled | bool | `false` | Determines whether to create a headless service or not |
-| headlessService.jobName | string | `""` | The name of the job to attach the headless service to |
+| headlessService.jobName | string | `""` | The name of the job to attach the headless service to. Defaults to global.name |
 | headlessService.labels | object | `{}` | Provide any additional labels which may be required. |
+| hybridCloud | object | `{"consulNamespace":"hybrid-consul","enabled":false,"proxyPort":20000}` | Configure Network Policy for Consul Integration |
+| hybridCloud.consulNamespace | string | `"hybrid-consul"` | Define namespace that Consul is runnign in |
+| hybridCloud.enabled | bool | `false` | Set to true to create Network Policy |
+| hybridCloud.proxyPort | int | `20000` | Set port for Envoy proxy public listener (the port consul talks back to envoy on) |
 | serviceAccount.annotations | object | `{}` | Additional Service Account annotations |
 | serviceAccount.automountServiceAccountToken | bool | `true` | Whether to automount the service account token or not |
 | serviceAccount.clusterRoles | list | `[]` | Define list of ClusterRole's to create and bind to the service account ref: https://kubernetes.io/docs/reference/access-authn-authz/rbac/ |

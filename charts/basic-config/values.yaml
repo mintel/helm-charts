@@ -94,3 +94,13 @@ headlessService:
   annotations: {}
   # -- Provide any additional labels which may be required.
   labels: {}
+
+# -- Configure Network Policy for Consul Integration
+hybridCloud:
+  # -- Set to true to create Network Policy
+  enabled: false
+  # -- Set port for Envoy proxy public listener
+  # (the port consul talks back to envoy on)
+  proxyPort: 20000
+  # -- Define namespace that Consul is runnign in
+  consulNamespace: hybrid-consul

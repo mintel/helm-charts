@@ -45,6 +45,11 @@ Return the target Kubernetes version
 {{- print "v1" -}}
 {{- end -}}
 
+{{/* Return the appropriate apiVersion for NetworkPolicy. */}}
+{{- define "common.capabilities.networkpolicy.apiVersion" -}}
+{{- print "networking.k8s.io/v1" -}}
+{{- end -}}
+
 
 {{/*
 Returns true if the used Helm version is 3.3+.

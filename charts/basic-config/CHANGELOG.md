@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [v0.1.0] - 2022-07-04
 ### Added
 - Added headless service template
-- Added network policy template
+- Added hybrid consul network policy template
 
 ### Added
 - First full release of the Mintel basic-config helm chart

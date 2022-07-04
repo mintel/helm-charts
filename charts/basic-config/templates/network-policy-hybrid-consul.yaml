@@ -1,0 +1,23 @@
+{{- if .Values.hybridCloud.enabled }}
+{{- $policyData := dict "Release" .Release "Chart" .Chart "Values" .Values "component" "allow-consul-proxy" }}
+---
+kind: NetworkPolicy
+apiVersion: {{ include "common.capabilities.networkpolicy.apiVersion" . }}
+metadata:
+  name: {{ include "mintel_common.fullname" $policyData }}
+  namespace: {{ .Release.Namespace }}
+  labels: {{ include "mintel_common.labels" $policyData | nindent 4 }}
+  annotations: {{ include "mintel_common.commonAnnotations" $policyData | nindent 4 }}
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/part-of: {{ .Values.global.partOf }}
+  ingress:
+    - from:
+      - namespaceSelector:
+          matchLabels:
+            kubernetes.io/metadata.name: {{ .Values.hybridCloud.consulNamespace }}
+      ports:
+      - port: {{ .Values.hybridCloud.proxyPort }}
+        protocol: TCP
+{{- end }}

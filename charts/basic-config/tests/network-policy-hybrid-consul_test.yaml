@@ -1,0 +1,30 @@
+suite: Test Hybrid Consul Network Policy
+templates:
+  - network-policy-hybrid-consul.yaml
+release:
+  namespace: test-namespace
+tests:
+  - it: Renders hybrid consul network policy
+    set:
+      global.name: test-app
+      hybridCloud:
+        enabled: true
+    asserts:
+      - isKind:
+          of: NetworkPolicy
+      - equal:
+          path: metadata.namespace
+          value: test-namespace
+      - equal:
+          path: metadata.name
+          value: test-app-allow-consul-proxy
+      - contains:
+          path: spec.ingress
+          content:
+            from:
+            - namespaceSelector:
+                matchLabels:
+                  kubernetes.io/metadata.name: hybrid-consul
+            ports:
+              - port: 20000
+                protocol: TCP
