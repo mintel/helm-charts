@@ -88,7 +88,7 @@ externalSecrets: []
 headlessService:
   # -- Determines whether to create a headless service or not
   enabled: false
-  # -- The name of the job to attach the headless service to
+  # -- The name of the job to attach the headless service to. Defaults to global.name
   jobName: ""
   # -- Annotations to add to service
   annotations: {}

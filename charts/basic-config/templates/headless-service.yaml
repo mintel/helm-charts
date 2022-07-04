@@ -3,7 +3,7 @@
 apiVersion: {{ include "common.capabilities.service.apiVersion" . }}
 kind: Service
 metadata:
-  name: {{ .Values.headlessService.jobName }}
+  name: {{ default (include "mintel_common.fullname" $serviceData) .Values.headlessService.jobName }}
   namespace: {{ .Release.Namespace }}
   labels: {{ include "mintel_common.labels" $serviceData | nindent 4}}
   annotations:
@@ -14,5 +14,5 @@ metadata:
 spec:
   clusterIP: None
   selector:
-    job-name: {{ .Values.headlessService.jobName }}
+    job-name: {{ default (include "mintel_common.fullname" $serviceData) .Values.headlessService.jobName }}
 {{- end }}
