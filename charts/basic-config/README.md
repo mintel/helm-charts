@@ -22,15 +22,17 @@ A Helm chart for defining basic k8s configuration res
 | global.owner | string | `""` | Team which "owns" the application |
 | global.partOf | string | `""` | Top level application each deployment is a part of |
 | global.runtimeEnvironment | string | `"kubernetes"` | Global variable defining RUNTIME_ENVIRONMENT |
-| headlessService | object | `{"annotations":{},"enabled":false,"jobName":"","labels":{}}` | Define a headless Service |
-| headlessService.annotations | object | `{}` | Annotations to add to service |
-| headlessService.enabled | bool | `false` | Determines whether to create a headless service or not |
-| headlessService.jobName | string | `""` | The name of the job to attach the headless service to. Defaults to global.name |
-| headlessService.labels | object | `{}` | Provide any additional labels which may be required. |
 | hybridCloud | object | `{"consulNamespace":"hybrid-consul","enabled":false,"proxyPort":20000}` | Configure Network Policy for Consul Integration |
 | hybridCloud.consulNamespace | string | `"hybrid-consul"` | Define namespace that Consul is runnign in |
 | hybridCloud.enabled | bool | `false` | Set to true to create Network Policy |
 | hybridCloud.proxyPort | int | `20000` | Set port for Envoy proxy public listener (the port consul talks back to envoy on) |
+| service | object | `{"annotations":{},"enabled":false,"headless":false,"jobName":"","labels":{},"selectorLabelsOverride":{}}` | Define a headless Service |
+| service.annotations | object | `{}` | Annotations to add to service |
+| service.enabled | bool | `false` | Determines whether to create a headless service or not |
+| service.headless | bool | `false` | Boolean to set whether service is headless or not |
+| service.jobName | string | `""` | The name of the job to attach the headless service to. Defaults to global.name |
+| service.labels | object | `{}` | Provide any additional labels which may be required. |
+| service.selectorLabelsOverride | object | `{}` | Override selector labels |
 | serviceAccount.annotations | object | `{}` | Additional Service Account annotations |
 | serviceAccount.automountServiceAccountToken | bool | `true` | Whether to automount the service account token or not |
 | serviceAccount.clusterRoles | list | `[]` | Define list of ClusterRole's to create and bind to the service account ref: https://kubernetes.io/docs/reference/access-authn-authz/rbac/ |

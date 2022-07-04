@@ -50,3 +50,28 @@ app.mintel.com/region: {{default "${CLUSTER_REGION}" $.Values.global.clusterRegi
 {{- toYaml . }}
 {{- end }}
 {{- end -}}
+
+{{/* Service labels */}}
+{{- define "mintel_common.serviceLabels" -}}
+{{ include "mintel_common.labels" . }}
+{{- with .Values.service.labels }}
+{{- toYaml .}}
+{{- end }}
+{{- end -}}
+
+{{/* Selector labels */}}
+{{- define "mintel_common.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "mintel_common.fullname" . }}
+{{- if .Values.partOf }}
+app.kubernetes.io/part-of: {{ .Values.partOf }}
+{{- else if (and .Values.global .Values.global.partOf) }}
+app.kubernetes.io/part-of: {{ .Values.global.partOf }}
+{{- end }}
+{{- if .component }}
+app.kubernetes.io/component: {{ .component }}
+{{- else if .Values.component }}
+app.kubernetes.io/component: {{ .Values.component }}
+{{- else }}
+app.kubernetes.io/component: app
+{{- end }}
+{{- end -}}

@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 ## [v0.1.0] - 2022-07-04
 ### Added
-- Added headless service template
+- Added service template
 - Added hybrid consul network policy template
 
 ### Added

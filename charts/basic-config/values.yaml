@@ -85,15 +85,19 @@ externalSecrets: []
 #    secretStoreRefOverride: ""
 
 # -- Define a headless Service
-headlessService:
+service:
   # -- Determines whether to create a headless service or not
   enabled: false
   # -- The name of the job to attach the headless service to. Defaults to global.name
   jobName: ""
+  # -- Boolean to set whether service is headless or not
+  headless: false
   # -- Annotations to add to service
   annotations: {}
   # -- Provide any additional labels which may be required.
   labels: {}
+  # -- Override selector labels
+  selectorLabelsOverride: {}
 
 # -- Configure Network Policy for Consul Integration
 hybridCloud:

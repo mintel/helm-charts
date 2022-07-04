@@ -1,15 +1,16 @@
 suite: Test Headless Service
 templates:
-  - headless-service.yaml
+  - service.yaml
 release:
   namespace: test-namespace
 tests:
   - it: Renders headless service
     set:
       global.name: test-app
-      headlessService:
+      service:
         enabled: true
         jobName: test
+        headless: true
     asserts:
       - isKind:
           of: Service
@@ -25,8 +26,9 @@ tests:
   - it: Renders headless service
     set:
       global.name: test-app
-      headlessService:
+      service:
         enabled: true
+        headless: true
     asserts:
       - isKind:
           of: Service
