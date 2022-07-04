@@ -1,6 +1,6 @@
 # basic-config
 
-![Version: 0.0.1](https://img.shields.io/badge/Version-0.0.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A Helm chart for defining basic k8s configuration res
 
@@ -22,6 +22,17 @@ A Helm chart for defining basic k8s configuration res
 | global.owner | string | `""` | Team which "owns" the application |
 | global.partOf | string | `""` | Top level application each deployment is a part of |
 | global.runtimeEnvironment | string | `"kubernetes"` | Global variable defining RUNTIME_ENVIRONMENT |
+| hybridCloud | object | `{"consulNamespace":"hybrid-consul","enabled":false,"proxyPort":20000}` | Configure Network Policy for Consul Integration |
+| hybridCloud.consulNamespace | string | `"hybrid-consul"` | Define namespace that Consul is runnign in |
+| hybridCloud.enabled | bool | `false` | Set to true to create Network Policy |
+| hybridCloud.proxyPort | int | `20000` | Set port for Envoy proxy public listener (the port consul talks back to envoy on) |
+| service | object | `{"annotations":{},"enabled":false,"headless":false,"labels":{},"selectorLabelsOverride":{},"type":"ClusterIP"}` | Define a headless Service |
+| service.annotations | object | `{}` | Annotations to add to service |
+| service.enabled | bool | `false` | Determines whether to create a headless service or not |
+| service.headless | bool | `false` | Boolean to set whether service is headless or not |
+| service.labels | object | `{}` | Provide any additional labels which may be required. |
+| service.selectorLabelsOverride | object | `{}` | Override selector labels |
+| service.type | string | `"ClusterIP"` | Kubernetes Service type |
 | serviceAccount.annotations | object | `{}` | Additional Service Account annotations |
 | serviceAccount.automountServiceAccountToken | bool | `true` | Whether to automount the service account token or not |
 | serviceAccount.clusterRoles | list | `[]` | Define list of ClusterRole's to create and bind to the service account ref: https://kubernetes.io/docs/reference/access-authn-authz/rbac/ |
