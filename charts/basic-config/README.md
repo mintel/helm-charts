@@ -1,6 +1,6 @@
 # basic-config
 
-![Version: 0.0.1](https://img.shields.io/badge/Version-0.0.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A Helm chart for defining basic k8s configuration res
 
@@ -22,6 +22,11 @@ A Helm chart for defining basic k8s configuration res
 | global.owner | string | `""` | Team which "owns" the application |
 | global.partOf | string | `""` | Top level application each deployment is a part of |
 | global.runtimeEnvironment | string | `"kubernetes"` | Global variable defining RUNTIME_ENVIRONMENT |
+| headlessService | object | `{"annotations":{},"enabled":false,"jobName":"","labels":{}}` | Define a headless Service |
+| headlessService.annotations | object | `{}` | Annotations to add to service |
+| headlessService.enabled | bool | `false` | Determines whether to create a headless service or not |
+| headlessService.jobName | string | `""` | The name of the job to attach the headless service to |
+| headlessService.labels | object | `{}` | Provide any additional labels which may be required. |
 | serviceAccount.annotations | object | `{}` | Additional Service Account annotations |
 | serviceAccount.automountServiceAccountToken | bool | `true` | Whether to automount the service account token or not |
 | serviceAccount.clusterRoles | list | `[]` | Define list of ClusterRole's to create and bind to the service account ref: https://kubernetes.io/docs/reference/access-authn-authz/rbac/ |

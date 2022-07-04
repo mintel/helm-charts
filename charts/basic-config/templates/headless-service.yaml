@@ -1,0 +1,18 @@
+{{- if .Values.headlessService.enabled }}
+{{- $serviceData := dict "Release" $.Release "Chart" $.Chart "Values" $.Values "component" .Values.headlessService.jobName }}
+apiVersion: {{ include "common.capabilities.service.apiVersion" . }}
+kind: Service
+metadata:
+  name: {{ .Values.headlessService.jobName }}
+  namespace: {{ .Release.Namespace }}
+  labels: {{ include "mintel_common.labels" $serviceData | nindent 4}}
+  annotations:
+    {{ include "mintel_common.commonAnnotations" . | nindent 4 }}
+    {{- if .Values.headlessService.annotations }}
+    {{ toYaml .Values.headlessService.annotations | nindent 4 }}
+    {{- end }}
+spec:
+  clusterIP: None
+  selector:
+    job-name: {{ .Values.headlessService.jobName }}
+{{- end }}

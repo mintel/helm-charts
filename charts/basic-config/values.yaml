@@ -83,3 +83,14 @@ externalSecrets: []
 #    pathOverride: ""
 #    refreshIntervalOverride: ""
 #    secretStoreRefOverride: ""
+
+# -- Define a headless Service
+headlessService:
+  # -- Determines whether to create a headless service or not
+  enabled: false
+  # -- The name of the job to attach the headless service to
+  jobName: ""
+  # -- Annotations to add to service
+  annotations: {}
+  # -- Provide any additional labels which may be required.
+  labels: {}

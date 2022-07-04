@@ -40,6 +40,11 @@ Return the target Kubernetes version
 {{- print "v1" -}}
 {{- end -}}
 
+{{/* Return the appropriate apiVersion for Services. */}}
+{{- define "common.capabilities.service.apiVersion" -}}
+{{- print "v1" -}}
+{{- end -}}
+
 
 {{/*
 Returns true if the used Helm version is 3.3+.
