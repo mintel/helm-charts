@@ -88,8 +88,8 @@ externalSecrets: []
 service:
   # -- Determines whether to create a headless service or not
   enabled: false
-  # -- The name of the job to attach the headless service to. Defaults to global.name
-  jobName: ""
+  # -- Kubernetes Service type
+  type: ClusterIP
   # -- Boolean to set whether service is headless or not
   headless: false
   # -- Annotations to add to service

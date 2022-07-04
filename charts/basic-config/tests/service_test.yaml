@@ -9,25 +9,6 @@ tests:
       global.name: test-app
       service:
         enabled: true
-        jobName: test
-        headless: true
-    asserts:
-      - isKind:
-          of: Service
-      - equal:
-          path: metadata.namespace
-          value: test-namespace
-      - equal:
-          path: metadata.name
-          value: test
-      - equal:
-          path: spec.clusterIP
-          value: None
-  - it: Renders headless service
-    set:
-      global.name: test-app
-      service:
-        enabled: true
         headless: true
     asserts:
       - isKind:
