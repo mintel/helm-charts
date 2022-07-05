@@ -57,6 +57,8 @@ irsa:
 dynamodb:
   # -- Set to true to create a DynamoDB instance
   enabled: false
+  # -- Set to true to create an AWS secret manager external secret with outputs
+  outputSecret: true
   terraform:
     ### Set Terraform version for this module to overwrite global.TerraformVersion
     # terraformVersion:
@@ -84,6 +86,8 @@ dynamodb:
 sqs:
   # -- Set to true to create an SQS resource
   enabled: false
+  # -- Set to true to create an AWS secret manager external secret with outputs
+  outputSecret: true
   terraform:
     ### Set Terraform version for this module to overwrite global.TerraformVersion
     # terraformVersion:
@@ -104,6 +108,8 @@ sqs:
 sns:
   # -- Set to true to create an SNS resource
   enabled: false
+  # -- Set to true to create an AWS secret manager external secret with outputs
+  outputSecret: true
   terraform:
     ### Set Terraform version for this module to overwrite global.TerraformVersion
     # terraformVersion:
@@ -124,6 +130,8 @@ sns:
 staticWebsite:
   # -- Set to true to create static website (a public bucket and associated resources)
   enabled: false
+  # -- Set to true to create an AWS secret manager external secret with outputs
+  outputSecret: true
   terraform:
     ### Set Terraform version for this module to overwrite global.TerraformVersion
     # terraformVersion:
@@ -144,6 +152,8 @@ staticWebsite:
 mariadb:
   # -- Set to true to create a MariaDB RDS instance
   enabled: false
+  # -- Set to true to create an AWS secret manager external secret with outputs
+  outputSecret: true
   terraform:
     ### Set Terraform version for this module to overwrite global.TerraformVersion
     # terraformVersion:
@@ -177,6 +187,8 @@ mariadb:
 memcached:
   # -- Set to true to create a memcached Elasticache resource
   enabled: false
+  # -- Set to true to create an AWS secret manager external secret with outputs
+  outputSecret: true
   terraform:
     ### Set Terraform version for this module to overwrite global.TerraformVersion
     # terraformVersion:
@@ -202,6 +214,8 @@ memcached:
 opensearch:
   # -- Set to true to create an Opensearch cluster
   enabled: false
+  # -- Set to true to create an AWS secret manager external secret with outputs
+  outputSecret: true
   terraform:
     ### Set Terraform version for this module to overwrite global.TerraformVersion
     # terraformVersion:
@@ -228,6 +242,8 @@ opensearch:
 postgresql:
   # -- Set to true to create a PostgreSQL RDS instance
   enabled: false
+  # -- Set to true to create an AWS secret manager external secret with outputs
+  outputSecret: true
   terraform:
     ### Set Terraform version for this module to overwrite global.TerraformVersion
     # terraformVersion:
@@ -261,6 +277,8 @@ postgresql:
 redis:
   # -- Set to true to create a Redis Elasticache resource
   enabled: false
+  # -- Set to true to create an AWS secret manager external secret with outputs
+  outputSecret: true
   terraform:
     ### Set Terraform version for this module to overwrite global.TerraformVersion
     # terraformVersion:
@@ -287,6 +305,8 @@ redis:
 s3:
   # -- Set to true to create an S3 bucket
   enabled: false
+  # -- Set to true to create an AWS secret manager external secret with outputs
+  outputSecret: true
   terraform:
     ### Set Terraform version for this module to overwrite global.TerraformVersion
     # terraformVersion:
@@ -302,6 +322,29 @@ s3:
       # workspaceNameOverride: string
       ### Automatically set to true in prod and false in dev and qa. Override this only if you know what you're doing.
       # enable_versioning: bool
+    # -- A map of instance names => variable key/value pairs to be sent to the terraform module. The values in
+    # `defaultVars` will be applied to every instance if not explicitly defined here.
+    instances: {}
+
+
+stepFunctionEks:
+  # -- Set to true to create an EKS runtime step function
+  enabled: false
+  # -- Set to true to create an AWS secret manager external secret with outputs
+  outputSecret: false
+  terraform:
+    ### Set Terraform version for this module to overwrite global.TerraformVersion
+    terraformVersion: 1.3.0-alpha20220608
+    module:
+      # -- Registry path of the Terraform module used to create the resource
+      # (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/step-function-eks/aws)
+      source: app.terraform.io/Mintel/step-functions-eks/aws
+      # -- Module version
+      version: "0.0.1-alpha.2"
+    # -- Vars to be applied to all instances defined below
+    defaultVars: {}
+      ### Set to override the generated workspace name for example if the generated name is above the char limit
+      # workspaceNameOverride: string
     # -- A map of instance names => variable key/value pairs to be sent to the terraform module. The values in
     # `defaultVars` will be applied to every instance if not explicitly defined here.
     instances: {}

@@ -21,6 +21,10 @@
       {{- if ( and ( has $resourceType (list "postgresql" "mariadb") ) ( not ( hasKey $instanceConfig "db_name" ) ) ) }}
         {{- $_ := set $instanceConfig "db_name" ( $instanceConfig.name | snakecase ) }}
       {{- end }}
+      # Set instance.eks_namespace for stepFunctionEks if not provided
+      {{- if ( and ( eq $resourceType "stepFunctionEks" ) ( not ( hasKey $instanceConfig "eks_namespace" ) ) ) }}
+        {{- $_ := set $instanceConfig "eks_namespace" $.Release.Namespace }}
+      {{- end }}
       # Apply defaults based on environment
       {{- $instanceConfig = mergeOverwrite (include "mintel_common.terraform_cloud.defaultVarValues" $instanceDict | fromJson ) $instanceConfig }}
       {{- if not (hasKey $instanceConfig "aws_account_name") }}
@@ -32,18 +36,21 @@
       {{- if not (hasKey $instanceConfig "eks_cluster_name") }}
         {{- $_ := set $instanceConfig "eks_cluster_name" $global.clusterName }}
       {{ end }}
-      {{- if not (hasKey $instanceConfig "output_secret_name") }}
-        {{- $_ := set $instanceConfig "output_secret_name" ( printf "%s/%s/%s" $.Release.Namespace $instanceConfig.name $resourceType ) }}
-      {{ end }}
-      {{- if not (hasKey $instanceConfig "secret_tags") }}
-        {{- $_ := set $instanceConfig "secret_tags" (dict "key" "secret_tags" "value" (printf "{access-project = \"%s-ops\"}" $.Release.Namespace ) "hcl" true) }}
-      {{- end }}
       {{- if not (hasKey $instanceConfig "tags") }}
         {{- $_ := set $instanceConfig "tags" (dict "key" "tags" "value" (printf "{\n  Owner       = \"%s\"\n  Project     = \"%s\"\n  Application = \"%s\"\n}" $global.owner $global.partOf $global.name ) "hcl" true) }}
       {{ end }}
       {{- if not (hasKey $instanceConfig "tfcloud_agent") }}
         {{- $_ := set $instanceConfig "tfcloud_agent" "true" }}
       {{ end }}
+      # Set the secret manager related parameters if required
+      {{- if $resourceConfig.outputSecret }}
+      {{- if not (hasKey $instanceConfig "output_secret_name") }}
+        {{- $_ := set $instanceConfig "output_secret_name" ( printf "%s/%s/%s" $.Release.Namespace $instanceConfig.name $resourceType ) }}
+      {{ end }}
+      {{- if not (hasKey $instanceConfig "secret_tags") }}
+        {{- $_ := set $instanceConfig "secret_tags" (dict "key" "secret_tags" "value" (printf "{access-project = \"%s-ops\"}" $.Release.Namespace ) "hcl" true) }}
+      {{- end }}
+      {{- end }}
       # Add default values to each instance if keys not set already
       {{- range $defaultKey, $defaultVal := $resourceConfig.terraform.defaultVars }}
         {{- if not ( hasKey $instanceConfig $defaultKey ) }}
