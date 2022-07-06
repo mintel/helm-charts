@@ -3,7 +3,7 @@
 apiVersion: consul.hashicorp.com/v1alpha1
 kind: TerminatingGateway
 metadata:
-  name: {{ default "terminating-gateway" .terminatingGatewayNameOverride }}
+  name: {{ default "terminating-gateway" .terminatingGatewayNameOverride | replace "+" "_" | trunc 63 | trimSuffix "-" }}
   namespace: {{ $.Release.Namespace }}
 spec:
   services:
