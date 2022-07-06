@@ -58,6 +58,15 @@ entries:
     version: 1.2.0
   hybrid-consul-config-crds:
   - apiVersion: v2
+    created: "2022-07-06T14:02:41.296856039Z"
+    description: A Helm chart for defining Consul CRDs
+    digest: e72cf7c30ff18d993677be19a9e8828ed3ecc2b0963f75b1f6e497ebb7f78c90
+    name: hybrid-consul-config-crds
+    type: application
+    urls:
+    - https://github.com/mintel/helm-charts/releases/download/hybrid-consul-config-crds-0.0.2/hybrid-consul-config-crds-0.0.2.tgz
+    version: 0.0.2
+  - apiVersion: v2
     created: "2022-03-23T11:52:49.997222642Z"
     description: A Helm chart for defining Consul CRDs
     digest: 5a9b56d0735cd37101ec4c4c8c0a54fc2e377a41370cd185b72edcd7b1f56898
@@ -6819,4 +6828,4 @@ entries:
     urls:
     - https://github.com/mintel/helm-charts/releases/download/testchart-0.1.1/testchart-0.1.1.tgz
     version: 0.1.1
-generated: "2022-07-05T07:51:41.263072286Z"
+generated: "2022-07-06T14:02:41.298381413Z"
