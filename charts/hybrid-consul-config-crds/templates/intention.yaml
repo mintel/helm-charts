@@ -3,7 +3,7 @@
 apiVersion: consul.hashicorp.com/v1alpha1
 kind: ServiceIntentions
 metadata:
-  name: {{ .name }}
+  name: {{ .name | replace "+" "_" | trunc 63 | trimSuffix "-" }}
   namespace: {{ $.Release.Namespace }}
 spec:
   destination:
