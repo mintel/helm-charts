@@ -22,6 +22,15 @@ entries:
     version: 0.1.0
   basic-config:
   - apiVersion: v2
+    created: "2022-07-08T15:52:38.549731735Z"
+    description: A Helm chart for defining basic k8s configuration res
+    digest: f06ede590bad24bf03dff1c821aea08b50c62b71894de021b17f5b68ba63c445
+    name: basic-config
+    type: application
+    urls:
+    - https://github.com/mintel/helm-charts/releases/download/basic-config-0.1.1/basic-config-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v2
     created: "2022-07-04T11:56:49.585953847Z"
     description: A Helm chart for defining basic k8s configuration res
     digest: 4b944db0bb5df19ba3b1819c742b15c0e6df92ea3cbfca27c50e42de0a0a6325
@@ -6892,4 +6901,4 @@ entries:
     urls:
     - https://github.com/mintel/helm-charts/releases/download/testchart-0.1.1/testchart-0.1.1.tgz
     version: 0.1.1
-generated: "2022-07-08T12:21:00.057068139Z"
+generated: "2022-07-08T15:52:38.551290653Z"
