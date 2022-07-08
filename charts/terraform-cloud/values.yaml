@@ -72,6 +72,7 @@ dynamodb:
     defaultVars: {}
       ### Set to override the generated workspace name for example if the generated name is above the char limit
       # workspaceNameOverride: string
+      #TODO: Add comments for operator annotations
       ### Automatically set to true in prod and qa but false in non-prod. Override this only if you know what you're doing.
       # point_in_time_recovery_enabled: bool
     # -- A map of instance names => variable key/value pairs to be sent to the terraform module. The values in
