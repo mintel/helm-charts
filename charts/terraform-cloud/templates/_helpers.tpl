@@ -77,6 +77,7 @@ app.mintel.com/region: {{ .Values.global.clusterRegion }}
 
 {{/* Operator extension Annotations */}}
 {{- define "mintel_common.terraform_cloud.operatorAnnotations" -}}
+{{/* ternary and hasKey functions are used instead of defaults below due to https://github.com/helm/helm/issues/3308 */}}
 app.mintel.com/terraform-allow-destroy: {{ hasKey .InstanceCfg "workspaceAllowDestroy" | ternary .InstanceCfg.workspaceAllowDestroy (include "mintel_common.terraform_cloud.allow_destroy_default" .) | quote }}
 app.mintel.com/terraform-owner: {{ default .Global.owner .InstanceCfg.workspaceOwner }}
 app.mintel.com/terraform-cloud-tags: {{ default (include "mintel_common.terraform_cloud.tags" .) .InstanceCfg.workspaceTags }}
