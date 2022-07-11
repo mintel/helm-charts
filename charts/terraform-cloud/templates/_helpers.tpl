@@ -61,26 +61,20 @@ app.mintel.com/region: {{ .Values.global.clusterRegion }}
 {{ $name }}
 {{- end -}}
 
-{{/* Default TF Cloud team */}}
-{{- define "mintel_common.terraform_cloud.teams" -}}
-TODO: Add dict that maps namespaces to teams and returns based on it
-{{- $myDict := dict "name1" "value1" "name2" "value2" "name3" "value 3"}}
-{{- end -}}
-
 {{/* Default TF Cloud tags */}}
 {{- define "mintel_common.terraform_cloud.tags" -}}
-{{- printf "%s,%s,%s,%s,%s" .Global.clusterEnv .Global.clusterRegion .Global.clusterName .Release.Namespace (.ResourceType | kebabcase)  -}}
+{{- printf "%s,%s,%s,%s,%s,%s" .Global.clusterEnv .Global.clusterRegion .Global.clusterName .Release.Namespace (.ResourceType | kebabcase) .Global.owner -}}
 {{- end -}}
 
 
 {{/* Operator extension Annotations */}}
 {{- define "mintel_common.terraform_cloud.operatorAnnotations" -}}
-{{- if ( has .Global.clusterEnv (list "prod" "logs" "qa")) }}
+{{- if ( has .Global.clusterEnv (list "prod" "logs")) }}
 app.mintel.com/terraform-allow-destroy: {{ default "false" (.InstanceCfg.workspaceAllowDestroy | quote) }}
 {{- else }}
 app.mintel.com/terraform-allow-destroy: {{ default "true" (.InstanceCfg.workspaceAllowDestroy | quote) }}
 {{- end }}
-app.mintel.com/terraform-cloud-teams: {{ default (include "mintel_common.terraform_cloud.teams" .) (.InstanceCfg.workspaceTeams | quote) }}
+app.mintel.com/terraform-owner: {{ default .Global.owner (.InstanceCfg.workspaceOwner| quote) }}
 app.mintel.com/terraform-cloud-tags: {{ default (include "mintel_common.terraform_cloud.tags" .) (.InstanceCfg.workspaceTags| quote) }}
 {{- end -}}
 

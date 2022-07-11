@@ -194,3 +194,22 @@ tests:
                   Project     = "test-project"
                   Application = "test-app"
                 }
+  - it: Test workspace extra annotations
+    set:
+      global.name: test-app
+      global.clusterEnv: dev
+      global.clusterName: cluster1
+      global.clusterRegion: eu-west-1
+      global.owner: sre
+      global.partOf: test-project
+      s3.enabled: true
+    asserts:
+      - equal:
+          path: metadata.annotations.[app.mintel.com/terraform-allow-destroy]
+          value: true
+      - equal:
+          path: metadata.annotations.[app.mintel.com/terraform-cloud-tags]
+          value: dev,eu-west-1,cluster1,test-namespace,s3,sre
+      - equal:
+          path: metadata.annotations.[app.mintel.com/terraform-owner]
+          value: sre

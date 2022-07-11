@@ -19,7 +19,7 @@ metadata:
     app.kubernetes.io/name: {{ printf "%s-%s" ($instanceCfg.name | kebabcase) ($resourceType | kebabcase) | trunc 63 }}
   annotations:
     {{ include "mintel_common.commonAnnotations" $ | nindent 4 }}
-    {{include "mintel_common.terraform_cloud.operatorAnnotations" $workspaceDict | nindent 4 }}
+    {{ include "mintel_common.terraform_cloud.operatorAnnotations" $workspaceDict | nindent 4 }}
     {{- if (eq $resourceType "irsa") }}
     app.mintel.com/altManifestFileSuffix: "{{ $global.name }}-{{ $resourceType | kebabcase }}"
     argocd.argoproj.io/sync-wave: "-20"
