@@ -61,6 +61,28 @@ app.mintel.com/region: {{ .Values.global.clusterRegion }}
 {{ $name }}
 {{- end -}}
 
+{{/* Default TF Cloud tags */}}
+{{- define "mintel_common.terraform_cloud.tags" -}}
+{{- printf "%s,%s,%s,%s,%s,%s" .Global.clusterEnv .Global.clusterRegion .Global.clusterName .Release.Namespace (.ResourceType | kebabcase) .Global.owner -}}
+{{- end -}}
+
+{{/* Default TF Cloud Allow Destroy defaults */}}
+{{- define "mintel_common.terraform_cloud.allow_destroy_default" -}}
+{{- if ( has .Global.clusterEnv (list "prod" "logs")) }}
+{{- false }}
+{{- else }}
+{{- true }}
+{{- end -}}
+{{- end }}
+
+{{/* Operator extension Annotations */}}
+{{- define "mintel_common.terraform_cloud.operatorAnnotations" -}}
+{{/* ternary and hasKey functions are used instead of defaults below due to https://github.com/helm/helm/issues/3308 */}}
+app.mintel.com/terraform-allow-destroy: {{ hasKey .InstanceCfg "workspaceAllowDestroy" | ternary .InstanceCfg.workspaceAllowDestroy (include "mintel_common.terraform_cloud.allow_destroy_default" .) | quote }}
+app.mintel.com/terraform-owner: {{ default .Global.owner .InstanceCfg.workspaceOwner }}
+app.mintel.com/terraform-cloud-tags: {{ default (include "mintel_common.terraform_cloud.tags" .) .InstanceCfg.workspaceTags }}
+{{- end -}}
+
 {{/* Set variable values depending on environment */}}
 {{- define "mintel_common.terraform_cloud.defaultVarValues" -}}
 {{- $defaults := dict}}

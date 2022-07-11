@@ -53,6 +53,14 @@ irsa:
     vars: {}
       ### Set to override the generated workspace name for example if the generated name is above the char limit
       # workspaceNameOverride: string
+      ### Comma separated list of tags to add to workspace. Set to override the defaults which are:
+      ### the environment, the AWS region, the cluster name, the namespace, the resource type and the owner
+      # workspaceTags: string
+      ### Boolean which when set to true disables destroy runs on the workspace and vice-versa. It serves as a form of
+      ### deletion protection. It defaults to false in prod and logs and true elsewhere
+      # workspaceAllowDestroy: bool
+      ### Used to map to the Terraform Cloud team(s) to give access to the workspace. Defaults to the global.owner value
+      # workspaceOwner: string
 
 dynamodb:
   # -- Set to true to create a DynamoDB instance
@@ -72,6 +80,14 @@ dynamodb:
     defaultVars: {}
       ### Set to override the generated workspace name for example if the generated name is above the char limit
       # workspaceNameOverride: string
+      ### Comma separated list of tags to add to workspace. Set to override the defaults which are:
+      ### the environment, the AWS region, the cluster name, the namespace, the resource type and the owner
+      # workspaceTags: string
+      ### Boolean which when set to true disables destroy runs on the workspace and vice-versa. It serves as a form of
+      ### deletion protection. It defaults to false in prod and logs and true elsewhere
+      # workspaceAllowDestroy: bool
+      ### Used to map to the Terraform Cloud team(s) to give access to the workspace. Defaults to the global.owner value
+      # workspaceOwner: string
       ### Automatically set to true in prod and qa but false in non-prod. Override this only if you know what you're doing.
       # point_in_time_recovery_enabled: bool
     # -- A map of instance names => variable key/value pairs to be sent to the terraform module. The values in
@@ -101,6 +117,14 @@ sqs:
     defaultVars: {}
       ### Set to override the generated workspace name for example if the generated name is above the char limit
       # workspaceNameOverride: string
+      ### Comma separated list of tags to add to workspace. Set to override the defaults which are:
+      ### the environment, the AWS region, the cluster name, the namespace, the resource type and the owner
+      # workspaceTags: string
+      ### Boolean which when set to true disables destroy runs on the workspace and vice-versa. It serves as a form of
+      ### deletion protection. It defaults to false in prod and logs and true elsewhere
+      # workspaceAllowDestroy: bool
+      ### Used to map to the Terraform Cloud team(s) to give access to the workspace. Defaults to the global.owner value
+      # workspaceOwner: string
     # -- A map of instance names => variable key/value pairs to be sent to the terraform module. The values in
     # `defaultVars` will be applied to every instance if not explicitly defined here.
     instances: {}
@@ -123,6 +147,14 @@ sns:
     defaultVars: {}
       ### Set to override the generated workspace name for example if the generated name is above the char limit
       # workspaceNameOverride: string
+      ### Comma separated list of tags to add to workspace. Set to override the defaults which are:
+      ### the environment, the AWS region, the cluster name, the namespace, the resource type and the owner
+      # workspaceTags: string
+      ### Boolean which when set to true disables destroy runs on the workspace and vice-versa. It serves as a form of
+      ### deletion protection. It defaults to false in prod and logs and true elsewhere
+      # workspaceAllowDestroy: bool
+      ### Used to map to the Terraform Cloud team(s) to give access to the workspace. Defaults to the global.owner value
+      # workspaceOwner: string
     # -- A map of instance names => variable key/value pairs to be sent to the terraform module. The values in
     # `defaultVars` will be applied to every instance if not explicitly defined here.
     instances: {}
@@ -145,6 +177,14 @@ staticWebsite:
     defaultVars: {}
       ### Set to override the generated workspace name for example if the generated name is above the char limit
       # workspaceNameOverride: string
+      ### Comma separated list of tags to add to workspace. Set to override the defaults which are:
+      ### the environment, the AWS region, the cluster name, the namespace, the resource type and the owner
+      # workspaceTags: string
+      ### Boolean which when set to true disables destroy runs on the workspace and vice-versa. It serves as a form of
+      ### deletion protection. It defaults to false in prod and logs and true elsewhere
+      # workspaceAllowDestroy: bool
+      ### Used to map to the Terraform Cloud team(s) to give access to the workspace. Defaults to the global.owner value
+      # workspaceOwner: string
     # -- A map of instance names => variable key/value pairs to be sent to the terraform module. The values in
     # `defaultVars` will be applied to every instance if not explicitly defined here.
     instances: {}
@@ -174,6 +214,14 @@ mariadb:
       port: 3306
       ### Set to override the generated workspace name for example if the generated name is above the char limit
       # workspaceNameOverride: string
+      ### Comma separated list of tags to add to workspace. Set to override the defaults which are:
+      ### the environment, the AWS region, the cluster name, the namespace, the resource type and the owner
+      # workspaceTags: string
+      ### Boolean which when set to true disables destroy runs on the workspace and vice-versa. It serves as a form of
+      ### deletion protection. It defaults to false in prod and logs and true elsewhere
+      # workspaceAllowDestroy: bool
+      ### Used to map to the Terraform Cloud team(s) to give access to the workspace. Defaults to the global.owner value
+      # workspaceOwner: string
       ### Automatically set to true if prod and false if non-prod. Override this only if you know what you're doing.
       # multi_az: bool
       ### Automatically set to 14 in prod, 7 in qa and 0 in dev. Override this only if you know what you're doing.
@@ -207,6 +255,14 @@ memcached:
       num_cache_nodes: 1
       ### Set to override the generated workspace name for example if the generated name is above the char limit
       # workspaceNameOverride: string
+        ### Comma separated list of tags to add to workspace. Set to override the defaults which are:
+        ### the environment, the AWS region, the cluster name, the namespace, the resource type and the owner
+        # workspaceTags: string
+        ### Boolean which when set to true allows destroy runs on the workspace and vice-versa. It serves as a form of
+        ### deletion protection. It defaults to false in prod and logs
+        # workspaceAllowDestroy: bool
+        ### Used to map to the Terraform Cloud team(s) to give access to the workspace. Defaults to the global.owner value
+        # workspaceOwner: string
     # -- A map of instance names => variable key/value pairs to be sent to the terraform module. The values in
     # `defaultVars` will be applied to every instance if not explicitly defined here.
     instances: {}
@@ -229,6 +285,14 @@ opensearch:
     defaultVars:
       ### Set to override the generated workspace name for example if the generated name is above the char limit
       # workspaceNameOverride: string
+      ### Comma separated list of tags to add to workspace. Set to override the defaults which are:
+      ### the environment, the AWS region, the cluster name, the namespace, the resource type and the owner
+      # workspaceTags: string
+      ### Boolean which when set to true disables destroy runs on the workspace and vice-versa. It serves as a form of
+      ### deletion protection. It defaults to false in prod and logs and true elsewhere
+      # workspaceAllowDestroy: bool
+      ### Used to map to the Terraform Cloud team(s) to give access to the workspace. Defaults to the global.owner value
+      # workspaceOwner: string
       ### Automatically set to 3 in prod and 1 in dev and qa. Override this only if you know what you're doing.
       # instance_count: number
       ### Automatically set to 3 in prod and 1 in dev and qa. Override this only if you know what you're doing.
@@ -264,6 +328,14 @@ postgresql:
       port: 5432
       ### Set to override the generated workspace name for example if the generated name is above the char limit
       # workspaceNameOverride: string
+      ### Comma separated list of tags to add to workspace. Set to override the defaults which are:
+      ### the environment, the AWS region, the cluster name, the namespace, the resource type and the owner
+      # workspaceTags: string
+      ### Boolean which when set to true disables destroy runs on the workspace and vice-versa. It serves as a form of
+      ### deletion protection. It defaults to false in prod and logs and true elsewhere
+      # workspaceAllowDestroy: bool
+      ### Used to map to the Terraform Cloud team(s) to give access to the workspace. Defaults to the global.owner value
+      # workspaceOwner: string
       ### Automatically set to true if prod and false if non-prod. Override this only if you know what you're doing.
       # multi_az: bool
       ### Automatically set to 14 in prod, 7 in qa and 0 in dev. Override this only if you know what you're doing.
@@ -292,6 +364,14 @@ redis:
     defaultVars: {}
       ### Set to override the generated workspace name for example if the generated name is above the char limit
       # workspaceNameOverride: string
+      ### Comma separated list of tags to add to workspace. Set to override the defaults which are:
+      ### the environment, the AWS region, the cluster name, the namespace, the resource type and the owner
+      # workspaceTags: string
+      ### Boolean which when set to true disables destroy runs on the workspace and vice-versa. It serves as a form of
+      ### deletion protection. It defaults to false in prod and logs and true elsewhere
+      # workspaceAllowDestroy: bool
+      ### Used to map to the Terraform Cloud team(s) to give access to the workspace. Defaults to the global.owner value
+      # workspaceOwner: string
       ### Automatically set to 2 in prod and 1 in dev and qa. Override this only if you know what you're doing.
       # replication_group_size: number
       ### Automatically set to true in prod and false in dev and qa. Override this only if you know what you're doing.
@@ -320,6 +400,14 @@ s3:
     defaultVars: {}
       ### Set to override the generated workspace name for example if the generated name is above the char limit
       # workspaceNameOverride: string
+      ### Comma separated list of tags to add to workspace. Set to override the defaults which are:
+      ### the environment, the AWS region, the cluster name, the namespace, the resource type and the owner
+      # workspaceTags: string
+      ### Boolean which when set to true disables destroy runs on the workspace and vice-versa. It serves as a form of
+      ### deletion protection. It defaults to false in prod and logs and true elsewhere
+      # workspaceAllowDestroy: bool
+      ### Used to map to the Terraform Cloud team(s) to give access to the workspace. Defaults to the global.owner value
+      # workspaceOwner: string
       ### Automatically set to true in prod and false in dev and qa. Override this only if you know what you're doing.
       # enable_versioning: bool
     # -- A map of instance names => variable key/value pairs to be sent to the terraform module. The values in
@@ -345,6 +433,14 @@ stepFunctionEks:
     defaultVars: {}
       ### Set to override the generated workspace name for example if the generated name is above the char limit
       # workspaceNameOverride: string
+      ### Comma separated list of tags to add to workspace. Set to override the defaults which are:
+      ### the environment, the AWS region, the cluster name, the namespace, the resource type and the owner
+      # workspaceTags: string
+      ### Boolean which when set to true disables destroy runs on the workspace and vice-versa. It serves as a form of
+      ### deletion protection. It defaults to false in prod and logs and true elsewhere
+      # workspaceAllowDestroy: bool
+      ### Used to map to the Terraform Cloud team(s) to give access to the workspace. Defaults to the global.owner value
+      # workspaceOwner: string
     # -- A map of instance names => variable key/value pairs to be sent to the terraform module. The values in
     # `defaultVars` will be applied to every instance if not explicitly defined here.
     instances: {}
