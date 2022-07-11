@@ -45,7 +45,7 @@ spec:
   variables:
   {{- $_ := unset $instanceCfg "workspaceNameOverride" }}
   {{- $_ := unset $instanceCfg "workspaceAllowDestroy" }}
-  {{- $_ := unset $instanceCfg "workspaceTeams" }}
+  {{- $_ := unset $instanceCfg "workspaceOwner" }}
   {{- $_ := unset $instanceCfg "workspaceTags" }}
   {{- range $varKey, $varVal := $instanceCfg }}
     {{- if kindIs "map" $varVal}}

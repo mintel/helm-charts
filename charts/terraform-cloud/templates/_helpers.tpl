@@ -66,16 +66,20 @@ app.mintel.com/region: {{ .Values.global.clusterRegion }}
 {{- printf "%s,%s,%s,%s,%s,%s" .Global.clusterEnv .Global.clusterRegion .Global.clusterName .Release.Namespace (.ResourceType | kebabcase) .Global.owner -}}
 {{- end -}}
 
+{{/* Default TF Cloud Allow Destroy defaults */}}
+{{- define "mintel_common.terraform_cloud.allow_destroy_default" -}}
+{{- if ( has .Global.clusterEnv (list "prod" "logs")) }}
+{{- false }}
+{{- else }}
+{{- true }}
+{{- end -}}
+{{- end }}
 
 {{/* Operator extension Annotations */}}
 {{- define "mintel_common.terraform_cloud.operatorAnnotations" -}}
-{{- if ( has .Global.clusterEnv (list "prod" "logs")) }}
-app.mintel.com/terraform-allow-destroy: {{ default "false" (.InstanceCfg.workspaceAllowDestroy | quote) }}
-{{- else }}
-app.mintel.com/terraform-allow-destroy: {{ default "true" (.InstanceCfg.workspaceAllowDestroy | quote) }}
-{{- end }}
-app.mintel.com/terraform-owner: {{ default .Global.owner (.InstanceCfg.workspaceOwner| quote) }}
-app.mintel.com/terraform-cloud-tags: {{ default (include "mintel_common.terraform_cloud.tags" .) (.InstanceCfg.workspaceTags| quote) }}
+app.mintel.com/terraform-allow-destroy: {{ hasKey .InstanceCfg "workspaceAllowDestroy" | ternary .InstanceCfg.workspaceAllowDestroy (include "mintel_common.terraform_cloud.allow_destroy_default" .) | quote }}
+app.mintel.com/terraform-owner: {{ default .Global.owner .InstanceCfg.workspaceOwner }}
+app.mintel.com/terraform-cloud-tags: {{ default (include "mintel_common.terraform_cloud.tags" .) .InstanceCfg.workspaceTags }}
 {{- end -}}
 
 {{/* Set variable values depending on environment */}}
