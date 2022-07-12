@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v0.18.1] - 2022-07-12
+### Changed
+- Bump default s3, rds and opensearch module versions to avoid S3 mfa_delete bug
+
 ## [v0.18.0] - 2022-07-11
 ### Added
 - Annotations to be used for terraform cloud operator extension with helpers and overrides
