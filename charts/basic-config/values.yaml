@@ -81,6 +81,7 @@ configMaps: []
 externalSecrets: []
 #  - name: ""
 #    pathOverride: ""
+#    nameoverride: ""
 #    refreshIntervalOverride: ""
 #    secretStoreRefOverride: ""
 
