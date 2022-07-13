@@ -3,7 +3,7 @@
 apiVersion: {{ include "common.capabilities.service.apiVersion" . }}
 kind: Service
 metadata:
-  name: {{ include "mintel_common.fullname" $serviceData }}
+  name: {{ default (include "mintel_common.fullname" $serviceData) .Values.service.name }}
   namespace: {{ .Release.Namespace }}
   labels: {{ include "mintel_common.serviceLabels" . | nindent 4 }}
   annotations:
@@ -16,5 +16,5 @@ spec:
   clusterIP: None
   {{- end }}
   type: {{ .Values.service.type }}
-  selector: {{ default (include "mintel_common.selectorLabels" .) .Values.service.selectorLabelsOverride | nindent 6 }}
+  selector: {{ default (include "mintel_common.selectorLabels" .) (toYaml .Values.service.selectorLabelsOverride | nindent 6) }}
 {{- end }}

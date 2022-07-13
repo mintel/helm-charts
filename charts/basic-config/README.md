@@ -1,6 +1,6 @@
 # basic-config
 
-![Version: 0.1.1](https://img.shields.io/badge/Version-0.1.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 0.2.0](https://img.shields.io/badge/Version-0.2.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A Helm chart for defining basic k8s configuration res
 
@@ -26,11 +26,12 @@ A Helm chart for defining basic k8s configuration res
 | hybridCloud.consulNamespace | string | `"hybrid-consul"` | Define namespace that Consul is runnign in |
 | hybridCloud.enabled | bool | `false` | Set to true to create Network Policy |
 | hybridCloud.proxyPort | int | `20000` | Set port for Envoy proxy public listener (the port consul talks back to envoy on) |
-| service | object | `{"annotations":{},"enabled":false,"headless":false,"labels":{},"selectorLabelsOverride":{},"type":"ClusterIP"}` | Define a headless Service |
+| service | object | `{"annotations":{},"enabled":false,"headless":false,"labels":{},"name":"","selectorLabelsOverride":{},"type":"ClusterIP"}` | Define a headless Service |
 | service.annotations | object | `{}` | Annotations to add to service |
 | service.enabled | bool | `false` | Determines whether to create a headless service or not |
 | service.headless | bool | `false` | Boolean to set whether service is headless or not |
 | service.labels | object | `{}` | Provide any additional labels which may be required. |
+| service.name | string | `""` | Service to use. A name is generated using the mintel_common.fullname template if it is not set |
 | service.selectorLabelsOverride | object | `{}` | Override selector labels |
 | service.type | string | `"ClusterIP"` | Kubernetes Service type |
 | serviceAccount.annotations | object | `{}` | Additional Service Account annotations |

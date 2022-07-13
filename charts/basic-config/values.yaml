@@ -88,6 +88,8 @@ externalSecrets: []
 service:
   # -- Determines whether to create a headless service or not
   enabled: false
+  # -- Service to use. A name is generated using the mintel_common.fullname template if it is not set
+  name: ""
   # -- Kubernetes Service type
   type: ClusterIP
   # -- Boolean to set whether service is headless or not
