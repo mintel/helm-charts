@@ -3,7 +3,7 @@
 apiVersion: {{ include "common.capabilities.service.apiVersion" . }}
 kind: Service
 metadata:
-  name: {{ default (include "mintel_common.fullname" $serviceData) .Values.service.name }}
+  name: {{ default (include "mintel_common.fullname" $serviceData) .Values.service.nameOverride }}
   namespace: {{ .Release.Namespace }}
   labels: {{ include "mintel_common.serviceLabels" . | nindent 4 }}
   annotations:

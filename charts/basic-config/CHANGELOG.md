@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [v0.2.0] - 2022-07-13
 ### Added
-- Allow `Service` and `ExternalSecret` to be named explicitly
+- Allow `Service` and `ExternalSecret` to be named explicitly using `nameOverride` option
 
 ### Fixed
 - Fixed `Service.selectorLabelsOverride` reference again (convert from yaml)

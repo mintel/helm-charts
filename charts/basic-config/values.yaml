@@ -89,15 +89,15 @@ externalSecrets: []
 service:
   # -- Determines whether to create a headless service or not
   enabled: false
-  # -- Service to use. A name is generated using the mintel_common.fullname template if it is not set
-  name: ""
+  # -- Override the Service name. Default is to generate a name using the mintel_common.fullname template if not set
+  nameOverride: ""
   # -- Kubernetes Service type
   type: ClusterIP
   # -- Boolean to set whether service is headless or not
   headless: false
   # -- Annotations to add to service
   annotations: {}
-  # -- Provide any additional labels which may be required.
+  # -- Provide any additional labels which may be required
   labels: {}
   # -- Override selector labels
   selectorLabelsOverride: {}
