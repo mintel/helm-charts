@@ -209,7 +209,7 @@ tests:
           value: "true"
       - equal:
           path: metadata.annotations.[app.mintel.com/terraform-cloud-tags]
-          value: dev,eu-west-1,cluster1,test-namespace,s3,sre
+          value: "env:dev,owner:sre,mod:s3"
       - equal:
           path: metadata.annotations.[app.mintel.com/terraform-owner]
           value: sre
@@ -234,7 +234,7 @@ tests:
           value: "false"
       - equal:
           path: metadata.annotations.[app.mintel.com/terraform-cloud-tags]
-          value: test
+          value: "test"
       - equal:
           path: metadata.annotations.[app.mintel.com/terraform-owner]
           value: override
