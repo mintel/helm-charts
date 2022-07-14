@@ -1,9 +1,8 @@
 {{- if .Values.service.enabled }}
-{{- $serviceData := dict "Release" $.Release "Chart" $.Chart "Values" $.Values "component" .name }}
 apiVersion: {{ include "common.capabilities.service.apiVersion" . }}
 kind: Service
 metadata:
-  name: {{ default (include "mintel_common.fullname" $serviceData) .Values.service.nameOverride }}
+  name: {{ default (include "mintel_common.serviceName" .) }}
   namespace: {{ .Release.Namespace }}
   labels: {{ include "mintel_common.serviceLabels" . | nindent 4 }}
   annotations:
