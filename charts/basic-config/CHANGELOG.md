@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+
+## [v0.2.0] - 2022-07-13
+### Added
+- Allow `Service` and `ExternalSecret` to be named explicitly using `nameOverride` option
+
+### Changed
+- Renamed `externalSecrets` to `extraSecrets` to align with existing helper in standard-app-stack chart
+
+### Fixed
+- Fixed `Service.selectorLabelsOverride` reference again (convert from yaml)
+
 ## [v0.1.1] - 2022-07-08
 ### Fixed
 - Fixed `Service.selectorLabelsOverride` reference
@@ -15,6 +26,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Added service template
 - Added hybrid consul network policy template
-
-### Added
 - First full release of the Mintel basic-config helm chart

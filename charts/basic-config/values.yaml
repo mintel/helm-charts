@@ -77,24 +77,41 @@ configMaps: []
 #      - name: ""
 #        data: ""
 
-# -- Define ExternalSecrets from AWS
-externalSecrets: []
+# -- Define ExternalSecret from AWS
+# ref: https://github.com/external-secrets/kubernetes-external-secrets
+externalSecret:
+  enabled: true
+  #  nameOverride: ""
+  #  pathOverride: ""
+  #  secretRefreshIntervalOverride: ""
+  #  secretStoreRefOverride: ""
+  #  localValues:
+  #    - name: TEST_SECRET
+  #      value: test_value
+extraSecrets: []
 #  - name: ""
+#    nameOverride: ""
 #    pathOverride: ""
+#    pathSuffix: ""
 #    refreshIntervalOverride: ""
 #    secretStoreRefOverride: ""
+#    includeInMain: true # defaults to true if not set
+#    localValues: []
+
 
 # -- Define a headless Service
 service:
   # -- Determines whether to create a headless service or not
   enabled: false
+  # -- Override the Service name. Default is to generate a name using the mintel_common.fullname template if not set
+  nameOverride: ""
   # -- Kubernetes Service type
   type: ClusterIP
   # -- Boolean to set whether service is headless or not
   headless: false
   # -- Annotations to add to service
   annotations: {}
-  # -- Provide any additional labels which may be required.
+  # -- Provide any additional labels which may be required
   labels: {}
   # -- Override selector labels
   selectorLabelsOverride: {}

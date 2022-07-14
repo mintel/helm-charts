@@ -1,6 +1,6 @@
 # basic-config
 
-![Version: 0.1.1](https://img.shields.io/badge/Version-0.1.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 0.2.0](https://img.shields.io/badge/Version-0.2.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A Helm chart for defining basic k8s configuration res
 
@@ -9,7 +9,8 @@ A Helm chart for defining basic k8s configuration res
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | configMaps | list | `[]` | A list of configuration maps |
-| externalSecrets | list | `[]` | Define ExternalSecrets from AWS |
+| externalSecret | object | `{"enabled":true}` | Define ExternalSecret from AWS ref: https://github.com/external-secrets/kubernetes-external-secrets |
+| extraSecrets | list | `[]` |  |
 | global | object | `{"additionalLabels":{},"cloudProvider":{"accountId":""},"clusterDomain":"127.0.0.1.nip.io","clusterEnv":"local","clusterName":"","ingressTLSSecrets":{},"name":"example-app","owner":"","partOf":"","runtimeEnvironment":"kubernetes","terraform":{"irsa":false}}` | Global variables for us in all charts and sub charts |
 | global.additionalLabels | object | `{}` | Additional labels to apply to all resources |
 | global.cloudProvider | object | `{"accountId":""}` | Global variables relating to cloud provider |
@@ -26,11 +27,12 @@ A Helm chart for defining basic k8s configuration res
 | hybridCloud.consulNamespace | string | `"hybrid-consul"` | Define namespace that Consul is runnign in |
 | hybridCloud.enabled | bool | `false` | Set to true to create Network Policy |
 | hybridCloud.proxyPort | int | `20000` | Set port for Envoy proxy public listener (the port consul talks back to envoy on) |
-| service | object | `{"annotations":{},"enabled":false,"headless":false,"labels":{},"selectorLabelsOverride":{},"type":"ClusterIP"}` | Define a headless Service |
+| service | object | `{"annotations":{},"enabled":false,"headless":false,"labels":{},"nameOverride":"","selectorLabelsOverride":{},"type":"ClusterIP"}` | Define a headless Service |
 | service.annotations | object | `{}` | Annotations to add to service |
 | service.enabled | bool | `false` | Determines whether to create a headless service or not |
 | service.headless | bool | `false` | Boolean to set whether service is headless or not |
-| service.labels | object | `{}` | Provide any additional labels which may be required. |
+| service.labels | object | `{}` | Provide any additional labels which may be required |
+| service.nameOverride | string | `""` | Override the Service name. Default is to generate a name using the mintel_common.fullname template if not set |
 | service.selectorLabelsOverride | object | `{}` | Override selector labels |
 | service.type | string | `"ClusterIP"` | Kubernetes Service type |
 | serviceAccount.annotations | object | `{}` | Additional Service Account annotations |

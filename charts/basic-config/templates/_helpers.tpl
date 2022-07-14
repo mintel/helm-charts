@@ -51,6 +51,11 @@ app.mintel.com/region: {{default "${CLUSTER_REGION}" $.Values.global.clusterRegi
 {{- end }}
 {{- end -}}
 
+{{/* Service name */}}
+{{- define "mintel_common.serviceName" -}}
+{{ default (include "mintel_common.fullname" .) $.Values.service.nameOverride }}
+{{- end -}}
+
 {{/* Service labels */}}
 {{- define "mintel_common.serviceLabels" -}}
 {{ include "mintel_common.labels" . }}
