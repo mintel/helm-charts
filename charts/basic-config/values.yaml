@@ -77,13 +77,27 @@ configMaps: []
 #      - name: ""
 #        data: ""
 
-# -- Define ExternalSecrets from AWS
-externalSecrets: []
+# -- Define ExternalSecret from AWS
+# ref: https://github.com/external-secrets/kubernetes-external-secrets
+externalSecret:
+  enabled: true
+  #  nameOverride: ""
+  #  pathOverride: ""
+  #  secretRefreshIntervalOverride: ""
+  #  secretStoreRefOverride: ""
+  #  localValues:
+  #    - name: TEST_SECRET
+  #      value: test_value
+extraSecrets: []
 #  - name: ""
+#    nameOverride: ""
 #    pathOverride: ""
-#    nameoverride: ""
+#    pathSuffix: ""
 #    refreshIntervalOverride: ""
 #    secretStoreRefOverride: ""
+#    includeInMain: true # defaults to true if not set
+#    localValues: []
+
 
 # -- Define a headless Service
 service:

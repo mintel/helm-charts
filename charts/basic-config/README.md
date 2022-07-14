@@ -9,7 +9,8 @@ A Helm chart for defining basic k8s configuration res
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | configMaps | list | `[]` | A list of configuration maps |
-| externalSecrets | list | `[]` | Define ExternalSecrets from AWS |
+| externalSecret | object | `{"enabled":true}` | Define ExternalSecret from AWS ref: https://github.com/external-secrets/kubernetes-external-secrets |
+| extraSecrets | list | `[]` |  |
 | global | object | `{"additionalLabels":{},"cloudProvider":{"accountId":""},"clusterDomain":"127.0.0.1.nip.io","clusterEnv":"local","clusterName":"","ingressTLSSecrets":{},"name":"example-app","owner":"","partOf":"","runtimeEnvironment":"kubernetes","terraform":{"irsa":false}}` | Global variables for us in all charts and sub charts |
 | global.additionalLabels | object | `{}` | Additional labels to apply to all resources |
 | global.cloudProvider | object | `{"accountId":""}` | Global variables relating to cloud provider |
