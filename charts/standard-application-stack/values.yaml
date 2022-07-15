@@ -227,7 +227,6 @@ terminationGracePeriodSeconds: 30
 #    exec:
 #      command: ['/bin/sh', '-c', 'echo Called preStop hook > /proc/1/fd/1'],
 
-
 # -- Configure extra options for readiness probe
 # ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes
 readiness:
@@ -332,8 +331,8 @@ volumes:
 # -- A list of persistent volume claims to be added to the pod
 persistentVolumes:
   #  - name: brms-drools-workbench-niogit
-    #    mode: ReadWriteOnce
-    #    size: 100Mi
+  #    mode: ReadWriteOnce
+  #    size: 100Mi
 
 # -- A list of volume mounts to be added to the pod
 volumeMounts: []
@@ -481,6 +480,21 @@ affinity:
   #          topologyKey: topology.kubernetes.io/zone
   #        weight: 100
 
+# -- Configure connection to the Event Bus
+eventBus:
+  # -- Set to true to set Event Bus environment variables
+  enabled: false
+  # -- Required: AWS account ID where the Event Bus is located
+  accountId: ""
+  # -- Whether or not app is considered interactive
+  interactiveApp: false
+  # -- Max number of workers
+  maxWorkers: 1
+  # -- AWS region where Event Bus is located
+  region: "us-east-2"
+  # -- Required: Which service to use
+  serviceName: ""
+
 # -- Configure oauth-proxy sidecar for main deployment
 oauthProxy:
   # -- Set to true to enable oauth-proxy sidecar
@@ -513,16 +527,16 @@ oauthProxy:
   # -- Container resource requests and limits
   # ref: http://kubernetes.io/docs/user-guide/compute-resources
   #  resources:
-    # -- The resource limits for the container
-    #    limits: {}
-    #    cpu: 200m
-    #    memory: 128Mi
-    # -- The requested resources for the container
-    #    requests: {}
-    #    cpu: 100m
-    #    memory: 64Mi
-    #
-    #
+  # -- The resource limits for the container
+  #    limits: {}
+  #    cpu: 200m
+  #    memory: 128Mi
+  # -- The requested resources for the container
+  #    requests: {}
+  #    cpu: 100m
+  #    memory: 64Mi
+  #
+  #
   # -- Optional: Claim contains the user ID
   userIdClaim: ""
   # -- Optional environment variables injected into the container
@@ -601,7 +615,7 @@ celery:
   #  command: []
   # -- Arguments to the celery container
   args:
-    - 'celery'
+    - "celery"
   # -- Optional environment variables injected into the container
   #  env: []
   # -- Container resource requests and limits
@@ -654,7 +668,7 @@ celeryBeat:
   # -- Optional command to the celery container
   #  command: []
   args:
-    - 'celerybeat'
+    - "celerybeat"
   # -- Optional environment variables injected into the container
   #  env: []
   # -- Container resource requests and limits
@@ -697,7 +711,8 @@ cronjobs:
     # ref: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#restart-policy
     restartPolicy: Never
   # -- List of Cronjob configurations to be defined
-  jobs: []
+  jobs:
+    []
     # - name: 'daily'
     #   concurrencyPolicy: Forbid
     #   suspend: false
@@ -730,6 +745,7 @@ cronjobs:
     #   includeElasticsearchEnv: false
     #   includeOpensearchEnv: false
     #   includeLocalstackEnv: false
+    #   includeEventBusEnv: false
     #   includeAppSecret: false
     #   includeMariadbSecret: false
     #   includePostgresqlSecret: false
@@ -787,7 +803,7 @@ postgresql:
   #    password: ""
   #    port: "5432"
   image:
-    tag: '13.5.0-debian-10-r52'
+    tag: "13.5.0-debian-10-r52"
   client:
     enabled: true
     #    image: {}
@@ -830,7 +846,6 @@ s3:
 sqs:
   enabled: false
   #  secretNameOverride: ""
-
 
 # -- Helper to sync a local directory with Git
 # ref: https://github.com/kubernetes/git-sync
@@ -925,7 +940,7 @@ opensearch:
 
 localstack:
   enabled: false
-  startServices: 'sns, sqs, s3'
+  startServices: "sns, sqs, s3"
   enableStartupScripts: true
   service:
     type: ClusterIP
