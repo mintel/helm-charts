@@ -71,6 +71,9 @@ spec:
                 {{- if .includeLocalstackEnv }}
                 {{- include "mintel_common.localstackEnv" $ | nindent 16 }}
                 {{- end }}
+                {{- if .includeEventBusEnv }}
+                {{- include "mintel_common.eventBusEnv" $ | nindent 16 }}
+                {{- end }}
                 {{- if .includeBaseEnv }}
                 {{- with $.Values.env }}
                 {{- toYaml . | nindent 16 }}

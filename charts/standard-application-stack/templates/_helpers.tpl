@@ -319,6 +319,24 @@ app.mintel.com/k8s-notify.team: {{ default .Values.global.owner .Values.k8snotif
 {{- end }}
 {{- end -}}
 
+{{/* Outputs Event Bus env variables */}}
+{{- define "mintel_common.eventBusEnv" -}}
+{{- if (and .Values.eventBus .Values.eventBus.enabled) }}
+- name: EVENT_BUS_AWS_ACCOUNT_ID
+  value: "{{ .Values.eventBus.accountId }}"
+- name: EVENT_BUS_AWS_REGION
+  value: {{ .Values.eventBus.region }}
+- name: EVENT_BUS_MAX_WORKERS
+  value: "{{ .Values.eventBus.maxWorkers }}"
+- name: EVENT_BUS_SERVICE_NAME
+  value: {{ .Values.eventBus.serviceName }}
+{{- if .Values.eventBus.interactiveApp }}
+- name: EVENT_BUS_INTERACTIVE_APP
+  value: "1"
+{{- end }}
+{{- end }}
+{{- end -}}
+
 {{/* Outputs default env variables if local */}}
 {{- define "mintel_common.defaultEnv" -}}
 - name: APP_ENVIRONMENT

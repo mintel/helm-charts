@@ -72,6 +72,13 @@ A generic chart to support most common application requirements
 | elasticsearch.secretStoreRefOverride | string | `""` | Optional: override the SecretStoreRef of the ExternalSecret |
 | env | list | `[]` | Optional environment variables injected into the container |
 | envFrom | list | `[]` | Optional environment variables injected into the container using envFrom (secrets/configmaps) |
+| eventBus | object | `{"accountId":"","enabled":false,"interactiveApp":false,"maxWorkers":1,"region":"us-east-2","serviceName":""}` | Configure connection to the Event Bus |
+| eventBus.accountId | string | `""` | AWS account ID where the Event Bus is located (default filled by jsonnet) |
+| eventBus.enabled | bool | `false` | Set to true to set Event Bus environment variables |
+| eventBus.interactiveApp | bool | `false` | Whether or not app is considered interactive |
+| eventBus.maxWorkers | int | `1` | Max number of workers |
+| eventBus.region | string | `"us-east-2"` | AWS region where Event Bus is located |
+| eventBus.serviceName | string | `""` | Required: Which service to use |
 | externalSecret | object | `{"enabled":true}` | Define ExternalSecret from AWS ref: https://github.com/external-secrets/kubernetes-external-secrets |
 | extraContainers | list | `[]` | Enable extraContainers (oauth2-proxy is a common example) |
 | extraInitContainers | list | `[]` | Enable extra init-containers |

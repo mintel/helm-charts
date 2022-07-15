@@ -140,6 +140,7 @@ spec:
             {{- include "mintel_common.elasticsearchEnv" . | nindent 12 }}
             {{- include "mintel_common.opensearchEnv" . | nindent 12 }}
             {{- include "mintel_common.localstackEnv" . | nindent 12 }}
+            {{- include "mintel_common.eventBusEnv" . | nindent 12 }}
             {{- with .Values.env }}
             {{- toYaml . | nindent 12 }}
             {{- end }}
