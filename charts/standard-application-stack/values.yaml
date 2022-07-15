@@ -484,7 +484,7 @@ affinity:
 eventBus:
   # -- Set to true to set Event Bus environment variables
   enabled: false
-  # -- AWS account ID where the Event Bus is located (default filled by jsonnet)
+  # -- Required: AWS account ID where the Event Bus is located
   accountId: ""
   # -- Whether or not app is considered interactive
   interactiveApp: false

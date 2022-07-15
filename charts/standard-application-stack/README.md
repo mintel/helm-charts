@@ -73,7 +73,7 @@ A generic chart to support most common application requirements
 | env | list | `[]` | Optional environment variables injected into the container |
 | envFrom | list | `[]` | Optional environment variables injected into the container using envFrom (secrets/configmaps) |
 | eventBus | object | `{"accountId":"","enabled":false,"interactiveApp":false,"maxWorkers":1,"region":"us-east-2","serviceName":""}` | Configure connection to the Event Bus |
-| eventBus.accountId | string | `""` | AWS account ID where the Event Bus is located (default filled by jsonnet) |
+| eventBus.accountId | string | `""` | Required: AWS account ID where the Event Bus is located |
 | eventBus.enabled | bool | `false` | Set to true to set Event Bus environment variables |
 | eventBus.interactiveApp | bool | `false` | Whether or not app is considered interactive |
 | eventBus.maxWorkers | int | `1` | Max number of workers |
