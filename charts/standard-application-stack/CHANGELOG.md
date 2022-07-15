@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v3.34.0] - 2022-07-15
+### Added
+- Add Event Bus environment variables
+
 ## [v3.33.1] - 2022-06-27
 ### Fixed
 - Fixed clusterRoleBinding template
