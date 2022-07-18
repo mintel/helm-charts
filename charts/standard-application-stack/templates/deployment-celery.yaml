@@ -209,7 +209,7 @@ spec:
               - 'celery inspect ping -d celery@$(hostname)'
             {{- end }}
             failureThreshold: {{ default 60 .Values.celery.startup.failureThreshold }}
-            timeoutSeconds: {{ default 1 .Values.celery.liveness.timeoutSeconds.Values.celery.startup.timeoutSeconds }}
+            timeoutSeconds: {{ default 1 .Values.celery.liveness.timeoutSeconds .Values.celery.startup.timeoutSeconds }}
             periodSeconds: {{ default 5 .Values.celery.liveness.periodSeconds .Values.celery.startup.periodSeconds }}
           {{- end }}
           {{- if (and .Values.celery.readiness .Values.celery.readiness.enabled) }}
