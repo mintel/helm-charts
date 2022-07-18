@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [v3.35.0] - 2022-07-15
+## [v3.35.0] - 2022-07-18
 ### Added
 - Add ability to override celery startupProbe timeout value
 
