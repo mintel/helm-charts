@@ -643,6 +643,8 @@ celery:
     failureThreshold: 60
     # -- The period of time to wait for an individual run of the start-up check to complete.
     periodSeconds: 5
+    # -- Timeout seconds for startupProbe
+    #  timeoutSeconds: 1
   # -- Configure extra options for readiness probe
   # ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes
   readiness:
