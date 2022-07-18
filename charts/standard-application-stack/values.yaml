@@ -212,6 +212,8 @@ liveness:
     failureThreshold: 60
     # -- Perios seconds for startupProbe
     periodSeconds: 5
+    # -- Timeout seconds for livenessProbe
+    #  timeoutSeconds: 1
 
 # -- Configure terminationGracePeriodSeconds
 # ref: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/
