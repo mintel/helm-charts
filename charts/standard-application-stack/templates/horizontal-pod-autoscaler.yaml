@@ -7,8 +7,13 @@ metadata:
   labels: {{ include "mintel_common.labels" . | nindent 4 }}
 spec:
   scaleTargetRef:
-    apiVersion: apps/v1
+    {{- if .Values.statefulset }}
+    apiVersion: {{ include "common.capabilities.statefulset.apiVersion" . }}
+    kind: StatefulSet
+    {{- else }}
+    apiVersion: {{ include "common.capabilities.deployment.apiVersion" . }}
     kind: Deployment
+    {{- end }}
     name: {{ include "mintel_common.fullname" . }}
   minReplicas: {{ .Values.autoscaling.minReplicas }}
   maxReplicas: {{ .Values.autoscaling.maxReplicas }}
