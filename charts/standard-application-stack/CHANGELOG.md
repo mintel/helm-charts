@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v3.36.0] - 2022-07-19
+### Added
+- Added horizontal-pod-autoscaler to standard app chart
+
 ## [v3.35.1] - 2022-07-18
 ### Fixed
 - Add missing space to previous change causing chart to break
