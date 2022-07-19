@@ -98,6 +98,17 @@ env: []
 # -- Optional environment variables injected into the container using envFrom (secrets/configmaps)
 envFrom: []
 
+# -- Creates a HorizontalPodAutoscaler for the Deployment.
+# ref: https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/
+autoscaling:
+  enabled: false
+  minReplicas: 2
+  maxReplicas: 20
+  targetCPUUtilizationPercentage: 80
+  targetMemoryUtilizationPercentage: 80
+  # -- ref: https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/#support-for-configurable-scaling-behavior
+  behavior: {}
+
 # -- Optional name of PriorityClass to run pods with
 priorityClassName: ""
 
