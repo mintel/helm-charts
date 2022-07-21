@@ -47,7 +47,7 @@ irsa:
       # (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/app-iam/aws)
       source: app.terraform.io/Mintel/app-iam/aws
       # -- Module version
-      version: "0.1.0-beta.9"
+      version: "1.0.0"
     # -- Vars to be applied to all instances defined below
     # @default -- See below
     vars: {}
@@ -75,7 +75,7 @@ dynamodb:
       # (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/dynamodb/aws)
       source: app.terraform.io/Mintel/dynamodb/aws
       # -- Module version
-      version: "0.1.0-beta.1"
+      version: "1.0.0"
     # -- Vars to be applied to all instances defined below
     defaultVars: {}
       ### Set to override the generated workspace name for example if the generated name is above the char limit
@@ -112,7 +112,7 @@ sqs:
       # (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/sqs/aws)
       source: app.terraform.io/Mintel/sqs/aws
       # -- Module version
-      version: "0.1.0-beta.2"
+      version: "1.0.0"
     # -- Vars to be applied to all instances defined below
     defaultVars: {}
       ### Set to override the generated workspace name for example if the generated name is above the char limit
@@ -142,7 +142,7 @@ sns:
       # (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/sns/aws)
       source: app.terraform.io/Mintel/sns/aws
       # -- Module version
-      version: "0.1.0-beta.1"
+      version: "1.0.0"
     # -- Vars to be applied to all instances defined below
     defaultVars: {}
       ### Set to override the generated workspace name for example if the generated name is above the char limit
@@ -172,7 +172,7 @@ staticWebsite:
       # (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/public-static-website/aws)
       source: app.terraform.io/Mintel/public-static-website/aws
       # -- Module version
-      version: "0.1.0-beta.1"
+      version: "1.0.0"
     # -- Vars to be applied to all instances defined below
     defaultVars: {}
       ### Set to override the generated workspace name for example if the generated name is above the char limit
@@ -202,7 +202,7 @@ mariadb:
       # (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/rds/aws)
       source: app.terraform.io/Mintel/rds/aws
       # -- Module version
-      version: "0.1.0-beta.6"
+      version: "1.0.0"
     # -- Vars to be applied to all instances defined below
     # @default -- See below
     defaultVars:
@@ -245,7 +245,7 @@ memcached:
       # (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/memcached/aws)
       source: app.terraform.io/Mintel/memcached/aws
       # -- Module version
-      version: "0.1.0-beta.2"
+      version: "1.0.0"
     # -- Vars to be applied to all instances defined below
     # @default -- See below
     defaultVars:
@@ -280,7 +280,7 @@ opensearch:
       # (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/opensearch/aws)
       source: app.terraform.io/Mintel/opensearch/aws
       # -- Module version
-      version: "0.1.0-beta.9"
+      version: "1.0.0"
     # -- Vars to be applied to all instances defined below
     defaultVars:
       ### Set to override the generated workspace name for example if the generated name is above the char limit
@@ -316,7 +316,7 @@ postgresql:
       # (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/rds/aws)
       source: app.terraform.io/Mintel/rds/aws
       # -- Module version
-      version: "0.1.0-beta.6"
+      version: "1.0.0"
     # -- Vars to be applied to all instances defined below
     # @default -- See below
     defaultVars:
@@ -359,7 +359,7 @@ redis:
       # (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/redis/aws)
       source: app.terraform.io/Mintel/redis/aws
       # -- Module version
-      version: "0.1.0-beta.4"
+      version: "1.0.0"
     # -- Vars to be applied to all instances defined below
     defaultVars: {}
       ### Set to override the generated workspace name for example if the generated name is above the char limit
@@ -395,7 +395,7 @@ s3:
       # (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/private-s3-bucket/aws)
       source: app.terraform.io/Mintel/private-s3-bucket/aws
       # -- Module version
-      version: "0.1.0-beta.5"
+      version: "1.0.0"
     # -- Vars to be applied to all instances defined below
     defaultVars: {}
       ### Set to override the generated workspace name for example if the generated name is above the char limit
@@ -428,7 +428,7 @@ stepFunctionEks:
       # (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/step-function-eks/aws)
       source: app.terraform.io/Mintel/step-functions-eks/aws
       # -- Module version
-      version: "0.0.1-alpha.2"
+      version: "1.0.0"
     # -- Vars to be applied to all instances defined below
     defaultVars: {}
       ### Set to override the generated workspace name for example if the generated name is above the char limit
