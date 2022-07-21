@@ -46,8 +46,13 @@ spec:
               value: "$(DB_USER)"
             - name: PGPASSWORD
               value: "$(DB_PASSWORD)"
+            {{- if not .Values.global.terraform.externalSecrets }}
             - name: PGPORT
               value: "$(DB_PORT)"
+            {{- else }}
+            - name: PGPORT
+              value: "$(PORT)"
+            {{- end }}
           envFrom:
             - secretRef:
                 name: {{ default (include "mintel_common.defaultPostgresqlSecretName" .) .Values.postgresql.secretNameOverride }}
