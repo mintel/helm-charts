@@ -94,7 +94,7 @@ app.mintel.com/terraform-cloud-tags: {{ default (include "mintel_common.terrafor
     {{- end }}
     {{/* multi-az */}}
     {{- if ( has .Global.clusterEnv (list "prod" "logs")) }}
-    {{- $_ := set $defaults "multi_az" false }}
+    {{- $_ := set $defaults "multi_az" true }}
     {{- end }}
     {{/* backup retention period */}}
     {{- if ( eq .Global.clusterEnv "dev") }}
