@@ -88,7 +88,7 @@ dynamodb:
       # workspaceAllowDestroy: bool
       ### Used to map to the Terraform Cloud team(s) to give access to the workspace. Defaults to the global.owner value
       # workspaceOwner: string
-      ### Use to map keys from AWS secret manager secrets to new key names
+      ### Use to map keys from AWS secret manager secrets to new key names. Map values should be in the form <new key>:<module secret key>
       # outputSecretMap: {}
       ### Automatically set to true in prod and qa but false in non-prod. Override this only if you know what you're doing.
       # point_in_time_recovery_enabled: bool
@@ -127,7 +127,7 @@ sqs:
       # workspaceAllowDestroy: bool
       ### Used to map to the Terraform Cloud team(s) to give access to the workspace. Defaults to the global.owner value
       # workspaceOwner: string
-      ### Use to map keys from AWS secret manager secrets to new key names
+      ### Use to map keys from AWS secret manager secrets to new key names. Map values should be in the form <new key>:<module secret key>
       # outputSecretMap: {}
     # -- A map of instance names => variable key/value pairs to be sent to the terraform module. The values in
     # `defaultVars` will be applied to every instance if not explicitly defined here.
@@ -159,7 +159,7 @@ sns:
       # workspaceAllowDestroy: bool
       ### Used to map to the Terraform Cloud team(s) to give access to the workspace. Defaults to the global.owner value
       # workspaceOwner: string
-      ### Use to map keys from AWS secret manager secrets to new key names
+      ### Use to map keys from AWS secret manager secrets to new key names. Map values should be in the form <new key>:<module secret key>
       # outputSecretMap: {}
     # -- A map of instance names => variable key/value pairs to be sent to the terraform module. The values in
     # `defaultVars` will be applied to every instance if not explicitly defined here.
@@ -191,7 +191,7 @@ staticWebsite:
       # workspaceAllowDestroy: bool
       ### Used to map to the Terraform Cloud team(s) to give access to the workspace. Defaults to the global.owner value
       # workspaceOwner: string
-      ### Use to map keys from AWS secret manager secrets to new key names
+      ### Use to map keys from AWS secret manager secrets to new key names. Map values should be in the form <new key>:<module secret key>
       # outputSecretMap: {}
     # -- A map of instance names => variable key/value pairs to be sent to the terraform module. The values in
     # `defaultVars` will be applied to every instance if not explicitly defined here.
@@ -230,7 +230,7 @@ mariadb:
       # workspaceAllowDestroy: bool
       ### Used to map to the Terraform Cloud team(s) to give access to the workspace. Defaults to the global.owner value
       # workspaceOwner: string
-      ### Use to map keys from AWS secret manager secrets to new key names
+      ### Use to map keys from AWS secret manager secrets to new key names. Map values should be in the form <new key>:<module secret key>
       # outputSecretMap: {}
       ### Automatically set to true if prod and false if non-prod. Override this only if you know what you're doing.
       # multi_az: bool
@@ -273,7 +273,7 @@ memcached:
         # workspaceAllowDestroy: bool
         ### Used to map to the Terraform Cloud team(s) to give access to the workspace. Defaults to the global.owner value
         # workspaceOwner: string
-        ### Use to map keys from AWS secret manager secrets to new key names
+        ### Use to map keys from AWS secret manager secrets to new key names. Map values should be in the form <new key>:<module secret key>
         # outputSecretMap: {}
     # -- A map of instance names => variable key/value pairs to be sent to the terraform module. The values in
     # `defaultVars` will be applied to every instance if not explicitly defined here.
@@ -305,7 +305,7 @@ opensearch:
       # workspaceAllowDestroy: bool
       ### Used to map to the Terraform Cloud team(s) to give access to the workspace. Defaults to the global.owner value
       # workspaceOwner: string
-      ### Use to map keys from AWS secret manager secrets to new key names
+      ### Use to map keys from AWS secret manager secrets to new key names. Map values should be in the form <new key>:<module secret key>
       # outputSecretMap: {}
       ### Automatically set to 3 in prod and 1 in dev and qa. Override this only if you know what you're doing.
       # instance_count: number
@@ -350,7 +350,7 @@ postgresql:
       # workspaceAllowDestroy: bool
       ### Used to map to the Terraform Cloud team(s) to give access to the workspace. Defaults to the global.owner value
       # workspaceOwner: string
-      ### Use to map keys from AWS secret manager secrets to new key names
+      ### Use to map keys from AWS secret manager secrets to new key names. Map values should be in the form <new key>:<module secret key>
       # outputSecretMap: {}
       ### Automatically set to true if prod and false if non-prod. Override this only if you know what you're doing.
       # multi_az: bool
@@ -388,7 +388,7 @@ redis:
       # workspaceAllowDestroy: bool
       ### Used to map to the Terraform Cloud team(s) to give access to the workspace. Defaults to the global.owner value
       # workspaceOwner: string
-      ### Use to map keys from AWS secret manager secrets to new key names
+      ### Use to map keys from AWS secret manager secrets to new key names. Map values should be in the form <new key>:<module secret key>
       # outputSecretMap: {}
       ### Automatically set to 2 in prod and 1 in dev and qa. Override this only if you know what you're doing.
       # replication_group_size: number
@@ -426,7 +426,7 @@ s3:
       # workspaceAllowDestroy: bool
       ### Used to map to the Terraform Cloud team(s) to give access to the workspace. Defaults to the global.owner value
       # workspaceOwner: string
-      ### Use to map keys from AWS secret manager secrets to new key names
+      ### Use to map keys from AWS secret manager secrets to new key names. Map values should be in the form <new key>:<module secret key>
       # outputSecretMap: {}
       ### Automatically set to true in prod and false in dev and qa. Override this only if you know what you're doing.
       # enable_versioning: bool
@@ -461,7 +461,7 @@ stepFunctionEks:
       # workspaceAllowDestroy: bool
       ### Used to map to the Terraform Cloud team(s) to give access to the workspace. Defaults to the global.owner value
       # workspaceOwner: string
-      ### Use to map keys from AWS secret manager secrets to new key names
+      ### Use to map keys from AWS secret manager secrets to new key names. Map values should be in the form <new key>:<module secret key>
       # outputSecretMap: {}
     # -- A map of instance names => variable key/value pairs to be sent to the terraform module. The values in
     # `defaultVars` will be applied to every instance if not explicitly defined here.
