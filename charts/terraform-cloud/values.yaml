@@ -88,6 +88,8 @@ dynamodb:
       # workspaceAllowDestroy: bool
       ### Used to map to the Terraform Cloud team(s) to give access to the workspace. Defaults to the global.owner value
       # workspaceOwner: string
+      ### Use to map keys from AWS secret manager secrets to new key names
+      # outputSecretMap: {}
       ### Automatically set to true in prod and qa but false in non-prod. Override this only if you know what you're doing.
       # point_in_time_recovery_enabled: bool
     # -- A map of instance names => variable key/value pairs to be sent to the terraform module. The values in
@@ -125,6 +127,8 @@ sqs:
       # workspaceAllowDestroy: bool
       ### Used to map to the Terraform Cloud team(s) to give access to the workspace. Defaults to the global.owner value
       # workspaceOwner: string
+      ### Use to map keys from AWS secret manager secrets to new key names
+      # outputSecretMap: {}
     # -- A map of instance names => variable key/value pairs to be sent to the terraform module. The values in
     # `defaultVars` will be applied to every instance if not explicitly defined here.
     instances: {}
@@ -155,6 +159,8 @@ sns:
       # workspaceAllowDestroy: bool
       ### Used to map to the Terraform Cloud team(s) to give access to the workspace. Defaults to the global.owner value
       # workspaceOwner: string
+      ### Use to map keys from AWS secret manager secrets to new key names
+      # outputSecretMap: {}
     # -- A map of instance names => variable key/value pairs to be sent to the terraform module. The values in
     # `defaultVars` will be applied to every instance if not explicitly defined here.
     instances: {}
@@ -185,6 +191,8 @@ staticWebsite:
       # workspaceAllowDestroy: bool
       ### Used to map to the Terraform Cloud team(s) to give access to the workspace. Defaults to the global.owner value
       # workspaceOwner: string
+      ### Use to map keys from AWS secret manager secrets to new key names
+      # outputSecretMap: {}
     # -- A map of instance names => variable key/value pairs to be sent to the terraform module. The values in
     # `defaultVars` will be applied to every instance if not explicitly defined here.
     instances: {}
@@ -222,6 +230,8 @@ mariadb:
       # workspaceAllowDestroy: bool
       ### Used to map to the Terraform Cloud team(s) to give access to the workspace. Defaults to the global.owner value
       # workspaceOwner: string
+      ### Use to map keys from AWS secret manager secrets to new key names
+      # outputSecretMap: {}
       ### Automatically set to true if prod and false if non-prod. Override this only if you know what you're doing.
       # multi_az: bool
       ### Automatically set to 14 in prod, 7 in qa and 0 in dev. Override this only if you know what you're doing.
@@ -263,6 +273,8 @@ memcached:
         # workspaceAllowDestroy: bool
         ### Used to map to the Terraform Cloud team(s) to give access to the workspace. Defaults to the global.owner value
         # workspaceOwner: string
+        ### Use to map keys from AWS secret manager secrets to new key names
+        # outputSecretMap: {}
     # -- A map of instance names => variable key/value pairs to be sent to the terraform module. The values in
     # `defaultVars` will be applied to every instance if not explicitly defined here.
     instances: {}
@@ -293,6 +305,8 @@ opensearch:
       # workspaceAllowDestroy: bool
       ### Used to map to the Terraform Cloud team(s) to give access to the workspace. Defaults to the global.owner value
       # workspaceOwner: string
+      ### Use to map keys from AWS secret manager secrets to new key names
+      # outputSecretMap: {}
       ### Automatically set to 3 in prod and 1 in dev and qa. Override this only if you know what you're doing.
       # instance_count: number
       ### Automatically set to 3 in prod and 1 in dev and qa. Override this only if you know what you're doing.
@@ -336,6 +350,8 @@ postgresql:
       # workspaceAllowDestroy: bool
       ### Used to map to the Terraform Cloud team(s) to give access to the workspace. Defaults to the global.owner value
       # workspaceOwner: string
+      ### Use to map keys from AWS secret manager secrets to new key names
+      # outputSecretMap: {}
       ### Automatically set to true if prod and false if non-prod. Override this only if you know what you're doing.
       # multi_az: bool
       ### Automatically set to 14 in prod, 7 in qa and 0 in dev. Override this only if you know what you're doing.
@@ -372,6 +388,8 @@ redis:
       # workspaceAllowDestroy: bool
       ### Used to map to the Terraform Cloud team(s) to give access to the workspace. Defaults to the global.owner value
       # workspaceOwner: string
+      ### Use to map keys from AWS secret manager secrets to new key names
+      # outputSecretMap: {}
       ### Automatically set to 2 in prod and 1 in dev and qa. Override this only if you know what you're doing.
       # replication_group_size: number
       ### Automatically set to true in prod and false in dev and qa. Override this only if you know what you're doing.
@@ -408,6 +426,8 @@ s3:
       # workspaceAllowDestroy: bool
       ### Used to map to the Terraform Cloud team(s) to give access to the workspace. Defaults to the global.owner value
       # workspaceOwner: string
+      ### Use to map keys from AWS secret manager secrets to new key names
+      # outputSecretMap: {}
       ### Automatically set to true in prod and false in dev and qa. Override this only if you know what you're doing.
       # enable_versioning: bool
     # -- A map of instance names => variable key/value pairs to be sent to the terraform module. The values in
@@ -441,6 +461,8 @@ stepFunctionEks:
       # workspaceAllowDestroy: bool
       ### Used to map to the Terraform Cloud team(s) to give access to the workspace. Defaults to the global.owner value
       # workspaceOwner: string
+      ### Use to map keys from AWS secret manager secrets to new key names
+      # outputSecretMap: {}
     # -- A map of instance names => variable key/value pairs to be sent to the terraform module. The values in
     # `defaultVars` will be applied to every instance if not explicitly defined here.
     instances: {}
