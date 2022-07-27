@@ -25,8 +25,6 @@
       {{- if ( and ( eq $resourceType "stepFunctionEks" ) ( not ( hasKey $instanceConfig "eks_namespace" ) ) ) }}
         {{- $_ := set $instanceConfig "eks_namespace" $.Release.Namespace }}
       {{- end }}
-      # Apply defaults based on environment
-      {{- $instanceConfig = mergeOverwrite (include "mintel_common.terraform_cloud.defaultVarValues" $instanceDict | fromJson ) $instanceConfig }}
       {{- if not (hasKey $instanceConfig "aws_account_name") }}
         {{- $_ := set $instanceConfig "aws_account_name" $global.clusterEnv }}
       {{ end }}
@@ -57,6 +55,8 @@
           {{- $_ := set $instanceConfig $defaultKey $defaultVal }}
         {{- end }}
       {{- end }}
+      # Apply defaults based on environment
+      {{- $instanceConfig = mergeOverwrite (include "mintel_common.terraform_cloud.defaultVarValues" $instanceDict | fromJson ) $instanceConfig }}
       # Create the CRD
 ---
       {{- include "mintel_common.terraform_cloud.workspace" (list $ . $instanceConfig $resourceType $moduleSource $moduleVersion $tfVersion) }}
