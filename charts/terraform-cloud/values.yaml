@@ -255,7 +255,7 @@ memcached:
       # (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/memcached/aws)
       source: app.terraform.io/Mintel/memcached/aws
       # -- Module version
-      version: "1.0.0"
+      version: "1.0.1"
     # -- Vars to be applied to all instances defined below
     # @default -- See below
     defaultVars:

@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Bump default S3 module version to setup access logging by default
 
+### Fixed
+- Bump default memcached module version for bugfix in picking up private app subnets
+
 ## [v0.19.1] - 2022-07-27
 ### Fixed
 - Give precedence to defaultVars over environment defaults when setting module variables

@@ -47,7 +47,7 @@ A Helm chart for provisioning resources using Terraform Cloud
 | memcached.terraform.defaultVars.num_cache_nodes | int | `1` | Number of nodes to create in the cluster |
 | memcached.terraform.instances | object | `{}` | A map of instance names => variable key/value pairs to be sent to the terraform module. The values in `defaultVars` will be applied to every instance if not explicitly defined here. |
 | memcached.terraform.module.source | string | `"app.terraform.io/Mintel/memcached/aws"` | Registry path of the Terraform module used to create the resource (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/memcached/aws) |
-| memcached.terraform.module.version | string | `"1.0.0"` | Module version |
+| memcached.terraform.module.version | string | `"1.0.1"` | Module version |
 | opensearch.enabled | bool | `false` | Set to true to create an Opensearch cluster |
 | opensearch.outputSecret | bool | `true` | Set to true to create an AWS secret manager external secret with outputs |
 | opensearch.terraform.defaultVars | string | `nil` | Vars to be applied to all instances defined below |
