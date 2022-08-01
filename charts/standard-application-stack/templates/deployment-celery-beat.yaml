@@ -14,7 +14,6 @@ metadata:
     {{- if (and .Values.celeryBeat.readiness (not .Values.celeryBeat.readiness.enabled)) }}
     app.mintel.com/opa-skip-readiness-probe-check.main: "true"
     {{- end }}
-    {{- include "mintel_common.k8snotify" $data | nindent 4 }}
     {{- $secretListStr := (include "mintel_common.secretList" .) }}
     {{- with $secretListStr }}
     secret.reloader.stakater.com/reload: {{ . }}

@@ -28,7 +28,6 @@ metadata:
     {{- if (and .Values.gitSyncSidecar .Values.gitSyncSidecar.enabled) }}
     app.mintel.com/opa-skip-readiness-probe-check.git-sync: "true"
     {{- end }}
-    {{- include "mintel_common.k8snotify" . | nindent 4 }}
     {{- $secretListStr := (include "mintel_common.secretList" .) }}
     {{- with $secretListStr }}
     secret.reloader.stakater.com/reload: {{ . }}

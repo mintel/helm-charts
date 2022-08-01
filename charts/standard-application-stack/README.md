@@ -1,6 +1,6 @@
 # standard-application-stack
 
-![Version: 3.36.0](https://img.shields.io/badge/Version-3.36.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 3.37.0](https://img.shields.io/badge/Version-3.37.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A generic chart to support most common application requirements
 
@@ -145,11 +145,6 @@ A generic chart to support most common application requirements
 | ingress.specificRulesHostsYaml | object | `{}` | Optional ingress Rules Hosts Yaml that doesn't fit standard pattern |
 | ingress.specificTlsHostsYaml | object | `{}` | Optional ingress Tls Hosts Yaml that doesn't fit standard pattern |
 | ingress.tls | bool | `true` | Enable TLS configuration for the hostname defined at ingress.hostname parameter |
-| k8snotify | object | `{"dashboardUrl":"","enabled":false,"receiver":"flowdock","team":""}` | Configure the use of k8snotify ref: https://github.com/mintel/k8s-notify |
-| k8snotify.dashboardUrl | string | `""` | Defines dashboard URL to be set for k8s-notify.monitoring-url annotation |
-| k8snotify.enabled | bool | `false` | Set to true to enable k8snotify notifications |
-| k8snotify.receiver | string | `"flowdock"` | Defines the receiver of the notifications (flowdock) |
-| k8snotify.team | string | `""` | Defines team (flow) notifications are to be directed at |
 | kibana.elasticsearchHosts | string | `""` |  |
 | kibana.enabled | bool | `false` |  |
 | kubelock | object | `{"enabled":false}` | Configure the use of kubelock ref: https://github.com/mintel/kubelock |
