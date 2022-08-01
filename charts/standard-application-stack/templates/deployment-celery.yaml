@@ -20,7 +20,6 @@ metadata:
     app.mintel.com/opa-skip-liveness-probe-check.beat-exporter: "true"
     {{- end }}
     {{- end }}
-    {{- include "mintel_common.k8snotify" $data | nindent 4 }}
     {{- $secretListStr := (include "mintel_common.secretList" .) }}
     {{- with $secretListStr }}
     secret.reloader.stakater.com/reload: {{ . }}
