@@ -569,18 +569,6 @@ kubelock:
   enabled: false
   #  nameOverride: ""
 
-# -- Configure the use of k8snotify
-# ref: https://github.com/mintel/k8s-notify
-k8snotify:
-  # -- Set to true to enable k8snotify notifications
-  enabled: false
-  # -- Defines the receiver of the notifications (flowdock)
-  receiver: flowdock
-  # -- Defines team (flow) notifications are to be directed at
-  team: ""
-  # -- Defines dashboard URL to be set for k8s-notify.monitoring-url annotation
-  dashboardUrl: ""
-
 # -- Configure Consul annotations to the main deployment for hybrid cloud integration
 hybridCloud:
   # -- Set to true to integrate with hybrid cloud (Consul)
