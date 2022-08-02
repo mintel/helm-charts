@@ -1,6 +1,8 @@
 {{- if .Values.verticalPodAutoscaler.enabled }}
 
 {{- if (eq .Values.cronjobsOnly false) }}
+
+{{- if (ne .Values.global.clusterEnv "local") }}
 ---
 apiVersion: {{ include "common.capabilities.verticalPodAutoscaler.apiVersion" . }}
 kind: VerticalPodAutoscaler
@@ -45,6 +47,8 @@ spec:
     name: {{ include "mintel_common.fullname" $data }}
   updatePolicy:
     updateMode: "Off"
+{{- end }}
+
 {{- end }}
 
 {{- end }}
