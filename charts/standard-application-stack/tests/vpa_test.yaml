@@ -6,7 +6,6 @@ release:
 tests:
   - it: Creates a VerticalPodAutoscaler for a Deployment
     set:
-      global.clusterEnv: qa
       vpa.enabled: true
       statefulset: false
       cronjobsOnly: false
@@ -33,7 +32,6 @@ tests:
 
   - it: Creates a VerticalPodAutoscaler for a StatefulSet
     set:
-      global.clusterEnv: qa
       vpa.enabled: true
       statefulset: true
       cronjobsOnly: false
@@ -60,7 +58,6 @@ tests:
 
   - it: Only creates VerticalPodAutoscaler for CronJobs if cronjobsOnly is true
     set:
-      global.clusterEnv: qa
       vpa.enabled: true
       cronjobsOnly: true
       cronjobs.jobs:
