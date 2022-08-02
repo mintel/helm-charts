@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [v3.38.0] - 2022-08-02
+## [v3.37.1] - 2022-08-02
 ### Fixed
 - Stopped VPA template applying to local environment
 
