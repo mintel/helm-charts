@@ -1,8 +1,8 @@
 {{- if .Values.verticalPodAutoscaler.enabled }}
 
-{{- if (eq .Values.cronjobsOnly false) }}
-
 {{- if (ne .Values.global.clusterEnv "local") }}
+
+{{- if (eq .Values.cronjobsOnly false) }}
 ---
 apiVersion: {{ include "common.capabilities.verticalPodAutoscaler.apiVersion" . }}
 kind: VerticalPodAutoscaler
