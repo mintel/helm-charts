@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v3.37.1] - 2022-08-02
+### Fixed
+- Stopped VPA template applying to local environment
+
 ## [v3.37.0] - 2022-08-01
 ### Removed
 - Removed `k8s-notify` (not used anymore)
