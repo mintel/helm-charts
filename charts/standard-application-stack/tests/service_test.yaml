@@ -24,7 +24,7 @@ tests:
           path: metadata.labels.[name]
           value: test-app
 
-  - it: Check default port set 
+  - it: Check default port set
     set:
       global.name: test-app
       component: exporter
@@ -98,7 +98,7 @@ tests:
     set:
       global.name: test-app
       global.owner: my-team
-      ingress.enabled: true 
+      ingress.enabled: true
       ingress.alb.enabled: false
     asserts:
       - isKind:
@@ -109,7 +109,7 @@ tests:
   - it: Check ALB annotation not set when when Owner missing
     set:
       global.name: test-app
-      ingress.enabled: true 
+      ingress.enabled: true
       ingress.alb.enabled: false
     asserts:
       - isKind:
