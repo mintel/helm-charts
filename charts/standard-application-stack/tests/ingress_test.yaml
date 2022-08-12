@@ -4,24 +4,24 @@ templates:
 release:
   namespace: test-namespace
 tests:
-  - it: Check HAProxy className set by default
+  - it: Check ALB className set by default
     set:
       global.clusterEnv: qa
       ingress.enabled: true
-    asserts:
-      - equal:
-          path: spec.ingressClassName
-          value: haproxy
-
-  - it: Check ALB className set if enabled
-    set:
-      global.clusterEnv: qa
-      ingress.enabled: true
-      ingress.alb.enabled: true
     asserts:
       - equal:
           path: spec.ingressClassName
           value: alb-public-apps-default
+
+  - it: Check HAProxy className set if ALB is disabled
+    set:
+      global.clusterEnv: qa
+      ingress.enabled: true
+      ingress.alb.enabled: false
+    asserts:
+      - equal:
+          path: spec.ingressClassName
+          value: haproxy
 
   - it: Check ALB default health-check port
     set:

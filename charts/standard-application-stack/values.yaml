@@ -384,7 +384,7 @@ ingress:
   # -- Optional ingress Tls Hosts Yaml that doesn't fit standard pattern
   specificTlsHostsYaml: {}
   alb:
-    enabled: false
+    enabled: true
     # -- Public or private alb (internet-facing / internal)
     scheme: internet-facing
     # -- Application Version (HTTP / HTTPS)

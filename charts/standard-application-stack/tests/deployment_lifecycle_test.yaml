@@ -33,6 +33,14 @@ tests:
     asserts:
       - isNull:
           path: spec.template.spec.containers[0].lifecycle
+  - it: Check AWS ALB lifecycle rules are not applied when ALB enabled (but Ingress disabled)
+    set:
+      global.clusterEnv: qa
+      ingress.enabled:  false
+      ingress.alb.enabled: true
+    asserts:
+      - isNull:
+          path: spec.template.spec.containers[0].lifecycle
   - it: Check lifecycle rules
     set:
       global.clusterEnv: qa
