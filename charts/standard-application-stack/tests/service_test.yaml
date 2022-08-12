@@ -4,25 +4,7 @@ templates:
 release:
   namespace: test-namespace
 tests:
-  - it: Sets name
-    set:
-      global.name: test-app
-    asserts:
-      - isKind:
-          of: Service
-      - equal:
-          path: metadata.namespace
-          value: test-namespace
-      - equal:
-          path: metadata.name
-          value: test-app
-      - equal:
-          path: metadata.labels.[app.kubernetes.io/name]
-          value: test-app
-      - equal:
-          path: metadata.labels.[name]
-          value: test-app
-  - it: Sets name and component
+  - it: Check name, namespace and labels
     set:
       global.name: test-app
       component: exporter
@@ -41,3 +23,96 @@ tests:
       - equal:
           path: metadata.labels.[name]
           value: test-app
+
+  - it: Check default port set
+    set:
+      global.name: test-app
+      component: exporter
+    asserts:
+      - isKind:
+          of: Service
+      - equal:
+          path: spec.ports[0].port
+          value: 8000
+
+  - it: Check port can be overridden
+    set:
+      global.name: test-app
+      component: exporter
+      port: 1234
+    asserts:
+      - isKind:
+          of: Service
+      - equal:
+          path: spec.ports[0].port
+          value: 1234
+
+  - it: Check extraPorts
+    set:
+      global.name: test-app
+      component: exporter
+      extraPorts:
+        - name: p1
+          containerPort: 8081
+        - name: p2
+          containerPort: 8082
+        - name: p3
+          containerPort: 8083
+          containerName: custom
+    asserts:
+      - isKind:
+          of: Service
+      - equal:
+          path: spec.ports[1].name
+          value: main-p1
+      - equal:
+          path: spec.ports[1].port
+          value: 8081
+      - equal:
+          path: spec.ports[2].name
+          value: main-p2
+      - equal:
+          path: spec.ports[2].port
+          value: 8082
+          path: spec.ports[3].name
+          value: custom-p3
+      - equal:
+          path: spec.ports[3].port
+          value: 8083
+
+  - it: Check ALB annotation can be set when enabled
+    set:
+      global.name: test-app
+      global.owner: my-team
+      global.clusterEnv: qa
+      ingress.enabled: true
+      ingress.alb.enabled: true
+    asserts:
+      - isKind:
+          of: Service
+      - equal:
+          path: metadata.annotations.[alb.ingress.kubernetes.io/tags]
+          value: Owner=my-team
+
+  - it: Check ALB annotation not set when ALB Ingress is disabled
+    set:
+      global.name: test-app
+      global.owner: my-team
+      ingress.enabled: true
+      ingress.alb.enabled: false
+    asserts:
+      - isKind:
+          of: Service
+      - isNull:
+          path: metadata.annotations.[alb.ingress.kubernetes.io/tags]
+
+  - it: Check ALB annotation not set when when Owner missing
+    set:
+      global.name: test-app
+      ingress.enabled: true
+      ingress.alb.enabled: false
+    asserts:
+      - isKind:
+          of: Service
+      - isNull:
+          path: metadata.annotations.[alb.ingress.kubernetes.io/tags]

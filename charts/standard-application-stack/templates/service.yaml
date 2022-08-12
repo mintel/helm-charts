@@ -9,6 +9,10 @@ metadata:
     {{ include "mintel_common.commonAnnotations" . | nindent 4 }}
     {{- if .Values.service.annotations }}
     {{ toYaml .Values.service.annotations | nindent 4 }}
+    {{ toYaml .Values.service.annotations | nindent 4 }}
+    {{- end }}
+    {{- if (and .Values.global.owner (and .Values.ingress.enabled .Values.ingress.alb.enabled)) }}
+    'alb.ingress.kubernetes.io/tags': 'Owner={{.Values.global.owner}}'
     {{- end }}
 spec:
   ports:
