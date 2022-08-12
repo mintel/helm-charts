@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v3.39.0] - 2022-08-12
+### Added
+- Added support for ALB Owner label being set on `Service
+- Added extra `Service` unit-tests
+
 ## [v3.38.0] - 2022-08-12
 ### Changed
 - Make AWS ALB (`alb-public-apps-default`) the default Ingress
