@@ -47,7 +47,7 @@ irsa:
       # (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/app-iam/aws)
       source: app.terraform.io/Mintel/app-iam/aws
       # -- Module version
-      version: "1.0.1"
+      version: "2.0.0"
     # -- Vars to be applied to all instances defined below
     # @default -- See below
     vars: {}
