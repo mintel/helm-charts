@@ -39,6 +39,10 @@ spec:
           initContainers:
           {{- toYaml . | nindent 12 }}
           {{- end }}
+          {{- with $.Values.cronjobs.volumes }}
+          volumes:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
           containers:
             - name: main
               image: {{ coalesce .image (include "mintel_common.image" $) }}
@@ -137,6 +141,9 @@ spec:
                 {{- end }}
               {{- with .resources }}
               resources: {{- toYaml . | nindent 16 }}
+              {{- end }}
+              {{- with $.Values.cronjobs.volumeMounts }}
+              volumeMounts: {{- toYaml . | nindent 16 }}
               {{- end }}
 
 {{- end }}

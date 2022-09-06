@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v3.40.0] - 2022-09-05
+### Added
+- Added support for volumes to cronjobs
+
 ## [v3.39.0] - 2022-08-12
 ### Added
 - Added support for ALB Owner label being set on `Service
