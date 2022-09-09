@@ -74,7 +74,7 @@ A Helm chart for provisioning resources using Terraform Cloud
 | s3.terraform.defaultVars | object | `{}` | Vars to be applied to all instances defined below |
 | s3.terraform.instances | object | `{}` | A map of instance names => variable key/value pairs to be sent to the terraform module. The values in `defaultVars` will be applied to every instance if not explicitly defined here. |
 | s3.terraform.module.source | string | `"app.terraform.io/Mintel/private-s3-bucket/aws"` | Registry path of the Terraform module used to create the resource (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/private-s3-bucket/aws) |
-| s3.terraform.module.version | string | `"1.1.0"` | Module version |
+| s3.terraform.module.version | string | `"1.1.2"` | Module version |
 | sns.enabled | bool | `false` | Set to true to create an SNS resource |
 | sns.outputSecret | bool | `true` | Set to true to create an AWS secret manager external secret with outputs |
 | sns.terraform.defaultVars | object | `{}` | Vars to be applied to all instances defined below |
