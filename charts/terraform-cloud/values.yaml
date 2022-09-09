@@ -210,7 +210,7 @@ mariadb:
       # (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/rds/aws)
       source: app.terraform.io/Mintel/rds/aws
       # -- Module version
-      version: "1.0.1"
+      version: "1.0.2"
     # -- Vars to be applied to all instances defined below
     # @default -- See below
     defaultVars:
@@ -330,7 +330,7 @@ postgresql:
       # (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/rds/aws)
       source: app.terraform.io/Mintel/rds/aws
       # -- Module version
-      version: "1.0.1"
+      version: "1.0.2"
     # -- Vars to be applied to all instances defined below
     # @default -- See below
     defaultVars:
