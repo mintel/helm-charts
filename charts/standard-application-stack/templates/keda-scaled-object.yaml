@@ -26,8 +26,8 @@ spec:
   advanced:
     {{- toYaml .advanced | nindent 4 }}
   fallback:
-    failureThreshold: {{ .fallback.failureThreshold | default 3 }}
-    replicas: {{ .fallback.replicas | default 2 }}
+    failureThreshold: {{ .fallback.failureThreshold }}
+    replicas: {{ .fallback.replicas }}
   {{- with .triggers }}
   triggers:
   {{- if .targetCPUUtilizationPercentage }}
@@ -53,7 +53,7 @@ spec:
       value: "{{ .targetMemoryAverageValue }}"
   {{- end }}
   {{- if .custom }}
-  #  {{- toYaml .custom | nindent 2 }}
+  {{- toYaml .custom | nindent 2 }}
   {{- end }}
   {{- end }}
 {{- end }}
