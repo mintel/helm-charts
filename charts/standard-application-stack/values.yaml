@@ -103,16 +103,25 @@ envFrom: []
 # ref: https://keda.sh/docs/2.8/concepts/scaling-deployments/
 autoscaling:
   enabled: false
+  pollingInterval: 30
   cooldownPeriod: 300
   maxReplicaCount: 10
   minReplicaCount: 1
-  pollingInterval: 30
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
     envSourceContainerName: ''
 
+  # ref: https://keda.sh/docs/2.8/concepts/scaling-deployments/#fallback
+  fallback:
+    failureThreshold: 3
+    replicas: 2
+
+  # ref: https://keda.sh/docs/2.8/concepts/scaling-deployments/#advanced
   advanced: {}
+
+  # ref: https://keda.sh/docs/2.8/concepts/scaling-deployments/#triggers
+  # Includes helpers around cpu/memory (see `custom` field for upstream trigger support)
   triggers: {}
     # When using Utilization, the target value is the average of the resource metric across
     # all relevant pods, represented as a percentage of the requested value of the resource

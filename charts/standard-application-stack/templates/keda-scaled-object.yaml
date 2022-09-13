@@ -1,4 +1,5 @@
 {{- if .Values.autoscaling.enabled }}
+{{- if (ne .Values.global.clusterEnv "local") }}
 apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
 metadata:
@@ -20,6 +21,8 @@ spec:
     {{- end }}
   advanced:
     {{- toYaml .advanced | nindent 4 }}
+  fallback:
+    {{- toYaml .fallback| nindent 4 }}
   {{- with .triggers }}
   triggers:
   {{- if .targetCPUUtilizationPercentage }}
@@ -48,5 +51,6 @@ spec:
   {{- toYaml .custom | nindent 2 }}
   {{- end }}
   {{- end }}
+{{- end }}
 {{- end }}
 {{- end }}
