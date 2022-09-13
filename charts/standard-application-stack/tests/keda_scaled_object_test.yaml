@@ -66,7 +66,7 @@ tests:
             failureThreshold: 3
             replicas: 2
 
-  - it: Creates custom triggers
+  - it: Creates a ScaledObject with custom triggers
     set:
       global.clusterEnv: qa
       autoscaling.enabled: true
@@ -118,7 +118,6 @@ tests:
         failureThreshold: 1
         replicas: 10
         ignoredValue: true
-
     asserts:
       - isKind:
           of: ScaledObject
@@ -151,7 +150,6 @@ tests:
               - type: Percent
                 value: 100
                 periodSeconds: 15
-
     asserts:
       - isKind:
           of: ScaledObject
@@ -177,7 +175,7 @@ tests:
                     value: 100
                     periodSeconds: 15
 
-  - it: Creates target utilization triggers
+  - it: Creates a ScaledObject with  target utilization triggers
     set:
       global.clusterEnv: qa
       autoscaling.enabled: true
@@ -206,7 +204,7 @@ tests:
                 type: Utilization
                 value: "50"
 
-  - it: Creates target average-value triggers
+  - it: Creates a ScaledObject with target average-value triggers
     set:
       global.clusterEnv: qa
       autoscaling.enabled: true
