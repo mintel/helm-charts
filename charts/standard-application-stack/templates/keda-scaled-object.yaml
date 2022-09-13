@@ -14,7 +14,11 @@ spec:
   pollingInterval: {{ .pollingInterval }}
   scaleTargetRef:
     apiVersion: {{ .scaleTargetRef.apiVersion }}
+    {{- if $.Values.statefulset }}
+    kind: StatefulSet
+    {{- else }}
     kind: {{ .scaleTargetRef.kind}}
+    {{- end }}
     name: {{ include "mintel_common.fullname" $ }}
     {{- if .scaleTargetRef.envSourceContainerName }}
     envSourceContainerName: {{ .scaleTargetRef.envSourceContainerName }}
@@ -22,7 +26,8 @@ spec:
   advanced:
     {{- toYaml .advanced | nindent 4 }}
   fallback:
-    {{- toYaml .fallback| nindent 4 }}
+    failureThreshold: {{ .fallback.failureThreshold | default 3 }}
+    replicas: {{ .fallback.replicas | default 2 }}
   {{- with .triggers }}
   triggers:
   {{- if .targetCPUUtilizationPercentage }}
@@ -45,10 +50,10 @@ spec:
   - type: memory
     metadata:
       type: AverageValue
-      value: "{{ .targetMemoryverageValue }}"
+      value: "{{ .targetMemoryAverageValue }}"
   {{- end }}
   {{- if .custom }}
-  {{- toYaml .custom | nindent 2 }}
+  #  {{- toYaml .custom | nindent 2 }}
   {{- end }}
   {{- end }}
 {{- end }}
