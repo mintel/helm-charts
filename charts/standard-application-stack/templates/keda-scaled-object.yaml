@@ -1,0 +1,61 @@
+{{- if .Values.autoscaling.enabled }}
+{{- if (ne .Values.global.clusterEnv "local") }}
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: {{ include "mintel_common.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels: {{ include "mintel_common.labels" . | nindent 4 }}
+spec:
+  {{- with .Values.autoscaling }}
+  cooldownPeriod: {{ .cooldownPeriod }}
+  maxReplicaCount: {{ .maxReplicaCount }}
+  minReplicaCount: {{ .minReplicaCount }}
+  pollingInterval: {{ .pollingInterval }}
+  scaleTargetRef:
+    apiVersion: {{ .scaleTargetRef.apiVersion }}
+    {{- if $.Values.statefulset }}
+    kind: StatefulSet
+    {{- else }}
+    kind: {{ .scaleTargetRef.kind}}
+    {{- end }}
+    name: {{ include "mintel_common.fullname" $ }}
+    {{- if .scaleTargetRef.envSourceContainerName }}
+    envSourceContainerName: {{ .scaleTargetRef.envSourceContainerName }}
+    {{- end }}
+  advanced:
+    {{- toYaml .advanced | nindent 4 }}
+  fallback:
+    failureThreshold: {{ .fallback.failureThreshold }}
+    replicas: {{ .fallback.replicas }}
+  {{- with .triggers }}
+  triggers:
+  {{- if .targetCPUUtilizationPercentage }}
+  - type: cpu
+    metadata:
+      type: Utilization
+      value: "{{ .targetCPUUtilizationPercentage }}"
+  {{- else if .targetCPUAverageValue }}
+  - type: cpu
+    metadata:
+      type: AverageValue
+      value: "{{ .targetCPUAverageValue }}"
+  {{- end }}
+  {{- if .targetMemoryUtilizationPercentage }}
+  - type: memory
+    metadata:
+      type: Utilization
+      value: "{{ .targetMemoryUtilizationPercentage }}"
+  {{- else if .targetCPUAverageValue}}
+  - type: memory
+    metadata:
+      type: AverageValue
+      value: "{{ .targetMemoryAverageValue }}"
+  {{- end }}
+  {{- if .custom }}
+  {{- toYaml .custom | nindent 2 }}
+  {{- end }}
+  {{- end }}
+{{- end }}
+{{- end }}
+{{- end }}

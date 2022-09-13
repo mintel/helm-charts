@@ -98,16 +98,55 @@ env: []
 # -- Optional environment variables injected into the container using envFrom (secrets/configmaps)
 envFrom: []
 
-# -- Creates a HorizontalPodAutoscaler for the Deployment.
-# ref: https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/
+# -- Handle autoscaling via https://keda.sh
+# Creates a ScaledObject for the workload
+# ref: https://keda.sh/docs/2.8/concepts/scaling-deployments/
 autoscaling:
   enabled: false
-  minReplicas: 2
-  maxReplicas: 20
-  targetCPUUtilizationPercentage: 80
-  targetMemoryUtilizationPercentage: 80
-  # -- ref: https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/#support-for-configurable-scaling-behavior
-  behavior: {}
+  pollingInterval: 30
+  cooldownPeriod: 300
+  maxReplicaCount: 10
+  minReplicaCount: 1
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    envSourceContainerName: ''
+
+  # ref: https://keda.sh/docs/2.8/concepts/scaling-deployments/#fallback
+  fallback:
+    failureThreshold: 3
+    replicas: 2
+
+  # ref: https://keda.sh/docs/2.8/concepts/scaling-deployments/#advanced
+  advanced: {}
+
+  # ref: https://keda.sh/docs/2.8/concepts/scaling-deployments/#triggers
+  # Includes helpers around cpu/memory (see `custom` field for upstream trigger support)
+  triggers: {}
+    # When using Utilization, the target value is the average of the resource metric across
+    # all relevant pods, represented as a percentage of the requested value of the resource
+    # for the pods.
+    #
+    # Only one of utilization or average-value can be specified.
+    #
+    # targetCPUUtilizationPercentage: 80
+    # targetMemoryUtilizationPercentage: 80
+
+    # When using AverageValue, the target value is the target value of the average of the
+    # metric across all relevant pods (quantity).
+
+    # targetCPUAverageValue: 80
+    # targetMemoryAverageValue: 80
+
+    # A list of custom triggers
+    #  custom:
+    #    # ref: https://keda.sh/docs/1.4/scalers/prometheus/
+    #    type: 'prometheus',
+    #    metadata:
+    #      metricName: 'http_requests_total',
+    #      query: 'sum(rate(http_requests_total{service="podinfo-http"}[2m]))',
+    #      serverAddress: 'http://prometheus-k8s.monitoring.svc:9090',
+    #      threshold: '5',
 
 # -- Optional name of PriorityClass to run pods with
 priorityClassName: ""
