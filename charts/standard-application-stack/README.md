@@ -1,6 +1,6 @@
 # standard-application-stack
 
-![Version: 3.40.1](https://img.shields.io/badge/Version-3.40.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 3.41.0](https://img.shields.io/badge/Version-3.41.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A generic chart to support most common application requirements
 
@@ -29,8 +29,7 @@ A generic chart to support most common application requirements
 | affinity.podAntiAffinity.zone | string | `"hard"` | Toggle whether zone affinity should be required (hard) or preferred (soft) |
 | allowSingleReplica | bool | `false` | Explicitly allow the number of replicas to equal 1 Useful for backend event based services where we may only want a single replica but still want rolling updates etc |
 | args | list | `[]` | Optional arguments to the container |
-| autoscaling | object | `{"behavior":{},"enabled":false,"maxReplicas":20,"minReplicas":2,"targetCPUUtilizationPercentage":80,"targetMemoryUtilizationPercentage":80}` | Creates a HorizontalPodAutoscaler for the Deployment. ref: https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/ |
-| autoscaling.behavior | object | `{}` | ref: https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/#support-for-configurable-scaling-behavior |
+| autoscaling | object | `{"advanced":{},"cooldownPeriod":300,"enabled":false,"maxReplicaCount":10,"minReplicaCount":1,"pollingInterval":30,"scaleTargetRef":{"apiVersion":"apps/v1","envSourceContainerName":"","kind":"Deployment"},"triggers":{}}` | Handle autoscaling via https://keda.sh Creates a ScaledObject for the workload ref: https://keda.sh/docs/2.8/concepts/scaling-deployments/ |
 | celery | object | `{"args":["celery"],"enabled":false,"liveness":{"enabled":false},"metrics":{"enabled":true},"podDisruptionBudget":{"enabled":true,"minAvailable":"50%"},"readiness":{"enabled":false},"replicas":2,"resources":{"limits":{},"requests":{}},"startup":{"failureThreshold":60,"methodOverride":{},"periodSeconds":5}}` | Configure celery deployment Defaults to same image as main deployment but with the "celery" argument |
 | celery.args | list | `["celery"]` | Arguments to the celery container |
 | celery.enabled | bool | `false` | Set to true to enable a celery deployment |

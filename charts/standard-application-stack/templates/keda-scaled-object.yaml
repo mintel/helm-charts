@@ -1,0 +1,24 @@
+{{- if .Values.keda.enabled }}
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: {{ include "mintel_common.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels: {{ include "mintel_common.labels" . | nindent 4 }}
+spec:
+  cooldownPeriod: {{ .Values.keda.cooldownPeriod }}
+  maxReplicaCount: {{ .Values.keda.maxReplicaCount }}
+  minReplicaCount: {{ .Values.keda.minReplicaCount }}
+  pollingInterval: {{ .Values.keda.pollingInterval }}
+  scaleTargetRef:
+    apiVersion: {{ .Values.keda.scaleTargetRef.apiVersion }}
+    kind: {{ .Values.keda.scaleTargetRef.kind}}
+    name: {{ include "mintel_common.fullname" . }}
+    {{- if .Values.keda.scaleTargetRef.envSourceContainerName }}
+    envSourceContainerName: {{ .Values.keda.scaleTargetRef.envSourceContainerName }}
+    {{- end }}
+  advanced:
+    {{- toYaml .Values.keda.advanced | nindent 4 }}
+  triggers:
+    {{- toYaml .Values.keda.triggers | nindent 4 }}
+{{- end }}

@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v3.41.0] - 2022-99-05
+### Added
+- Added support for https://keda.sh to handle autoscaling
+
+### Removed
+- Drop support for HorizontalPodAutoscaler (replaced by keda)
+
 ## [v3.40.0] - 2022-09-05
 ### Added
 - Added support for volumes to cronjobs
