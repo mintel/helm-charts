@@ -1,4 +1,4 @@
-{{- if .Values.keda.enabled }}
+{{- if .Values.autoscaling.enabled }}
 apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
 metadata:
@@ -6,19 +6,47 @@ metadata:
   namespace: {{ .Release.Namespace }}
   labels: {{ include "mintel_common.labels" . | nindent 4 }}
 spec:
-  cooldownPeriod: {{ .Values.keda.cooldownPeriod }}
-  maxReplicaCount: {{ .Values.keda.maxReplicaCount }}
-  minReplicaCount: {{ .Values.keda.minReplicaCount }}
-  pollingInterval: {{ .Values.keda.pollingInterval }}
+  {{- with .Values.autoscaling }}
+  cooldownPeriod: {{ .cooldownPeriod }}
+  maxReplicaCount: {{ .maxReplicaCount }}
+  minReplicaCount: {{ .minReplicaCount }}
+  pollingInterval: {{ .pollingInterval }}
   scaleTargetRef:
-    apiVersion: {{ .Values.keda.scaleTargetRef.apiVersion }}
-    kind: {{ .Values.keda.scaleTargetRef.kind}}
-    name: {{ include "mintel_common.fullname" . }}
-    {{- if .Values.keda.scaleTargetRef.envSourceContainerName }}
-    envSourceContainerName: {{ .Values.keda.scaleTargetRef.envSourceContainerName }}
+    apiVersion: {{ .scaleTargetRef.apiVersion }}
+    kind: {{ .scaleTargetRef.kind}}
+    name: {{ include "mintel_common.fullname" $ }}
+    {{- if .scaleTargetRef.envSourceContainerName }}
+    envSourceContainerName: {{ .scaleTargetRef.envSourceContainerName }}
     {{- end }}
   advanced:
-    {{- toYaml .Values.keda.advanced | nindent 4 }}
+    {{- toYaml .advanced | nindent 4 }}
+  {{- with .triggers }}
   triggers:
-    {{- toYaml .Values.keda.triggers | nindent 4 }}
+  {{- if .targetCPUUtilizationPercentage }}
+  - type: cpu
+    metadata:
+      type: Utilization
+      value: "{{ .targetCPUUtilizationPercentage }}"
+  {{- else if .targetCPUAverageValue }}
+  - type: cpu
+    metadata:
+      type: AverageValue
+      value: "{{ .targetCPUAverageValue }}"
+  {{- end }}
+  {{- if .targetMemoryUtilizationPercentage }}
+  - type: memory
+    metadata:
+      type: Utilization
+      value: "{{ .targetMemoryUtilizationPercentage }}"
+  {{- else if .targetCPUAverageValue}}
+  - type: memory
+    metadata:
+      type: AverageValue
+      value: "{{ .targetMemoryverageValue }}"
+  {{- end }}
+  {{- if .custom }}
+  {{- toYaml .custom | nindent 2 }}
+  {{- end }}
+  {{- end }}
+{{- end }}
 {{- end }}

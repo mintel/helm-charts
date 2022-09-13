@@ -118,6 +118,8 @@ autoscaling:
     # all relevant pods, represented as a percentage of the requested value of the resource
     # for the pods.
     #
+    # Only one of utilization or average-value can be specified.
+    #
     # targetCPUUtilizationPercentage: 80
     # targetMemoryUtilizationPercentage: 80
 
