@@ -18,6 +18,7 @@ spec:
   selector:
     matchLabels: {{ include "mintel_common.selectorLabels" . | nindent 6 }}
 {{- end }}
+{{- end }}
 
 {{- if (and .Values.celery .Values.celery.enabled) }}
 {{- if (and (gt (.Values.celery.replicas | int) 1) .Values.celery.podDisruptionBudget.enabled) }}
@@ -39,6 +40,5 @@ spec:
   {{- end }}
   selector:
     matchLabels: {{ include "mintel_common.selectorLabels" $data | nindent 6 }}
-{{- end }}
 {{- end }}
 {{- end }}

@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added extra tests around autoscaling/pdbs
 
 ### Fixed
+- Fixed celery PodDisruptionBudget to only check for `celery.podDisruptionBudget.enabled`
 - Fixed date on previous changelog entry
 
 ## [v3.41.0] - 2022-09-13
