@@ -7,7 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [v3.41.0] - 2022-99-05
+## [v3.42.0] - 2022-09-14
+### Added
+- When autoscaling is enabled, drop PodDisruptionBudget when minReplcaCount is set to 1
+
+### Fixed
+- Fixed date on previous changelog entry
+
+## [v3.41.0] - 2022-09-13
 ### Added
 - Added support for https://keda.sh to handle autoscaling
 
