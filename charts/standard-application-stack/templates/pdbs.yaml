@@ -1,4 +1,4 @@
-{{- if (and (gt (.Values.replicas | int) 1) .Values.podDisruptionBudget.enabled) }}
+{{- if eq ((include "mintel_common.pdb.createPDB" .) | trim) "true" }}
 {{- if eq .Values.cronjobsOnly false }}
 ---
 apiVersion: {{ include "common.capabilities.policy.apiVersion" . }}
