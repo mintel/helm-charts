@@ -9,7 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [v3.42.0] - 2022-09-14
 ### Added
-- Added extra support for autoscaling (conditionally drop pod-disruption-budget and setting of replicas)
+- Added extra support for autoscaling (conditionally drop pdbs and setting of replicas)
+- Added extra tests around autoscaling/pdbs
 
 ### Fixed
 - Fixed date on previous changelog entry
