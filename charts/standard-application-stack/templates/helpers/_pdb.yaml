@@ -1,0 +1,21 @@
+{{/* vim: set filetype=mustache: */}}
+
+{{/*
+Helpers to determine if PodDisruptionBudgets should be enabled
+*/}}
+
+{{- define "mintel_common.pdb.createPDB" -}}
+{{- $createPDB := "false" }}
+{{- if .Values.podDisruptionBudget.enabled }}
+  {{- if .Values.autoscaling.enabled }}
+    {{- if (gt (.Values.autoscaling.minReplicaCount | int) 1) }}
+      {{- $createPDB = "true" }}
+    {{- end }}
+  {{- else }}
+    {{- if (gt (.Values.replicas | int) 1) }}
+      {{- $createPDB = "true" }}
+    {{- end }}
+  {{- end }}
+{{- end }}
+{{ $createPDB }}
+{{- end }}
