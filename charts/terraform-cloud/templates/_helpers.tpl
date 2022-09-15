@@ -103,7 +103,7 @@ app.mintel.com/terraform-cloud-tags: {{ default (include "mintel_common.terrafor
     {{- end }}
     {{/* backup retention period */}}
     {{- if ( eq .Global.clusterEnv "dev") }}
-    {{- $_ := set $defaults "backup_retention_period" 0 }}
+    {{- $_ := set $defaults "backup_retention_period" 2 }}
     {{- end }}
     {{- if ( eq .Global.clusterEnv "qa") }}
     {{- $_ := set $defaults "backup_retention_period" 7 }}
