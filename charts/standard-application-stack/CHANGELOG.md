@@ -7,7 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [v3.41.0] - 2022-99-05
+## [v3.42.0] - 2022-09-14
+### Added
+- Added extra support for autoscaling (conditionally drop pdbs and setting of replicas)
+- Added extra tests around autoscaling/pdbs
+
+### Fixed
+- Fixed celery PodDisruptionBudget to only check for `celery.podDisruptionBudget.enabled`
+- Fixed date on previous changelog entry
+
+## [v3.41.0] - 2022-09-13
 ### Added
 - Added support for https://keda.sh to handle autoscaling
 

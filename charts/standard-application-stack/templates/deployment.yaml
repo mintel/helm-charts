@@ -49,10 +49,12 @@ spec:
   minReadySeconds: {{ . }}
   {{- end }}
   {{- end }}
+  {{- if not .Values.autoscaling.enabled }}
   {{- if .Values.singleReplicaOnly }}
   replicas: 1
   {{- else }}
   replicas: {{ .Values.replicas }}
+  {{- end }}
   {{- end }}
   selector:
     matchLabels: {{ include "mintel_common.selectorLabels" . | nindent 6 }}
