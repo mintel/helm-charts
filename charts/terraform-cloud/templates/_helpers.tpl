@@ -1,6 +1,6 @@
 {{/* Supported resources */}}
 {{- define "mintel_common.terraformCloudResources" -}}
-{{- $terraformCloudResources := (list "memcached" "opensearch" "postgresql" "redis" "s3" "mariadb" "dynamodb" "sns" "sqs" "staticWebsite" "stepFunctionEks") -}}
+{{- $terraformCloudResources := (list "memcached" "opensearch" "postgresql" "redis" "s3" "mariadb" "dynamodb" "sns" "sqs" "staticWebsite" "stepFunctionEks" "activeMQ" "auroraMySql" "auroraPostgresql") -}}
 {{ join "," $terraformCloudResources }}
 {{- end -}}
 
@@ -86,19 +86,24 @@ app.mintel.com/terraform-cloud-tags: {{ default (include "mintel_common.terrafor
 {{/* Set variable values depending on environment */}}
 {{- define "mintel_common.terraform_cloud.defaultVarValues" -}}
 {{- $defaults := dict}}
-{{/* rds */}}
-{{- if ( has .ResourceType (list "postgresql" "mariadb"))}}
+{{/* rds and rds-aurora */}}
+{{- if ( has .ResourceType (list "postgresql" "mariadb" "auroraMySql" "auroraPostgresql"))}}
     {{/* deletion_protection */}}
     {{- if ( not ( has .Global.clusterEnv (list "prod" "logs" "qa"))) }}
     {{- $_ := set $defaults "enable_deletion_protection" false }}
     {{- end }}
     {{/* multi-az */}}
     {{- if ( has .Global.clusterEnv (list "prod" "logs")) }}
+    {{- if ( has .ResourceType (list "postgresql" "mariadb")) }}
     {{- $_ := set $defaults "multi_az" true }}
+    {{- end }}
+    {{- if ( has .ResourceType (list "auroraMySql" "auroraPostgresql")) }}
+    {{- $_ := set $defaults "instance_count" 2 }}
+    {{- end }}
     {{- end }}
     {{/* backup retention period */}}
     {{- if ( eq .Global.clusterEnv "dev") }}
-    {{- $_ := set $defaults "backup_retention_period" 0 }}
+    {{- $_ := set $defaults "backup_retention_period" 2 }}
     {{- end }}
     {{- if ( eq .Global.clusterEnv "qa") }}
     {{- $_ := set $defaults "backup_retention_period" 7 }}
