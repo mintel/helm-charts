@@ -18,7 +18,7 @@
       {{- $instanceDict := dict "Global" $global "InstanceCfg" $instanceConfig "InstanceName" $instanceName "ResourceType" $resourceType }}
       {{- $_ := set $instanceConfig "name" (include "mintel_common.terraform_cloud.instanceConfigName" $instanceDict | trim)}}
       # Set instance.db_name for postgresql and mariadb if not provided
-      {{- if ( and ( has $resourceType (list "postgresql" "mariadb") ) ( not ( hasKey $instanceConfig "db_name" ) ) ) }}
+      {{- if ( and ( has $resourceType (list "postgresql" "mariadb" "auroraMySql" "auroraPostgresql") ) ( not ( hasKey $instanceConfig "db_name" ) ) ) }}
         {{- $_ := set $instanceConfig "db_name" ( $instanceConfig.name | snakecase ) }}
       {{- end }}
       # Set instance.eks_namespace for stepFunctionEks if not provided
