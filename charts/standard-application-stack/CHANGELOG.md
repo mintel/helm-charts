@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v3.44.0] - 2022-09-20
+### Added
+- Added additional constraints around Keda values (`minReplicaCount`, `maxReplicaCount`, `pollingInterval` and `cooldownPeriod`)
+
 ## [v3.43.0] - 2022-09-20
 ### Changed
 - Keda CPU / Memory scalers now uses `metricType`

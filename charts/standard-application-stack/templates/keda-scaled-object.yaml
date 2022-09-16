@@ -8,10 +8,10 @@ metadata:
   labels: {{ include "mintel_common.labels" . | nindent 4 }}
 spec:
   {{- with .Values.autoscaling }}
-  cooldownPeriod: {{ .cooldownPeriod }}
-  maxReplicaCount: {{ .maxReplicaCount }}
-  minReplicaCount: {{ .minReplicaCount }}
-  pollingInterval: {{ .pollingInterval }}
+  cooldownPeriod: {{ include "mintel_common.keda.scaledObject.cooldownPeriod" .}}
+  maxReplicaCount: {{ include "mintel_common.keda.scaledObject.maxReplicaCount" .}}
+  minReplicaCount: {{ include "mintel_common.keda.scaledObject.minReplicaCount" .}}
+  pollingInterval: {{ include "mintel_common.keda.scaledObject.pollingInterval" .}}
   scaleTargetRef:
     apiVersion: {{ .scaleTargetRef.apiVersion }}
     {{- if $.Values.statefulset }}

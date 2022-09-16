@@ -1,0 +1,21 @@
+{{/* vim: set filetype=mustache: */}}
+
+{{/*
+Helpers for Keda objects
+*/}}
+
+{{- define "mintel_common.keda.scaledObject.cooldownPeriod" -}}
+{{- max 60 .cooldownPeriod }}
+{{- end }}
+
+{{- define "mintel_common.keda.scaledObject.maxReplicaCount" -}}
+{{- min 20 .maxReplicaCount}}
+{{- end }}
+
+{{- define "mintel_common.keda.scaledObject.minReplicaCount" -}}
+{{- max 1 .minReplicaCount}}
+{{- end }}
+
+{{- define "mintel_common.keda.scaledObject.pollingInterval" -}}
+{{- max 10 .pollingInterval}}
+{{- end }}
