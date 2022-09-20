@@ -439,7 +439,7 @@ tests:
           value: 60
       - equal:
           path: spec.cooldownPeriod
-          value: 500 
+          value: 500
 
   - it: Creates a ScaledObject with constrained settings
     set:
@@ -486,7 +486,7 @@ tests:
     set:
       global.clusterEnv: qa
       autoscaling.enabled: true
-      autoscaling.minReplicaCount: 15 
+      autoscaling.minReplicaCount: 15
     asserts:
       - isKind:
           of: ScaledObject
