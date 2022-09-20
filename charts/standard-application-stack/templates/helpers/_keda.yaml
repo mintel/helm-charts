@@ -5,24 +5,28 @@ Helpers for Keda objects
 */}}
 
 {{- define "mintel_common.keda.scaledObject.cooldownPeriod" -}}
-{{- max 60 .cooldownPeriod }}
+  {{- max 60 .cooldownPeriod }}
 {{- end }}
 
-# maxReplicaCount must be <= 10
+# maxReplicaCount must be >1 and <= 10
 {{- define "mintel_common.keda.scaledObject.maxReplicaCount" -}}
 {{- if (gt ( .maxReplicaCount | int) 10) }}
-{{- 10 }}
+  {{- 10 }} # apply max allowed value
 {{- else }}
-{{- max 1 .maxReplicaCount }}
+  {{- max 1 .maxReplicaCount }} # ensure >= 1
 {{- end }}
 {{- end }}
 
-# minReplicaCount must be >= 1
+# minReplicaCount must be >1 and <= 10 (default to 2)
 {{- define "mintel_common.keda.scaledObject.minReplicaCount" -}}
-{{- max 1 .minReplicaCount}}
+{{- if (gt ( .minReplicaCount | int) 10) }}
+  {{- 2 }} # apply default value
+{{- else }}
+  {{- max 1 .minReplicaCount }} # ensure >= 1
+{{- end }}
 {{- end }}
 
 # pollingInterval must be >= than 10
 {{- define "mintel_common.keda.scaledObject.pollingInterval" -}}
-{{- max 10 .pollingInterval}}
+  {{- max 10 .pollingInterval}}
 {{- end }}

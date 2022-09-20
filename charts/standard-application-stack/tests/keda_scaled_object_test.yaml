@@ -481,3 +481,32 @@ tests:
       - equal:
           path: spec.cooldownPeriod
           value: 60
+
+  - it: Ensure minReplicaCount cannot be greater than 10
+    set:
+      global.clusterEnv: qa
+      autoscaling.enabled: true
+      autoscaling.minReplicaCount: 15 
+    asserts:
+      - isKind:
+          of: ScaledObject
+      - equal:
+          path: metadata.namespace
+          value: test-namespace
+      - hasDocuments:
+          count: 1
+      - equal:
+          path: metadata.name
+          value: example-app
+      - equal:
+          path: spec.scaleTargetRef.apiVersion
+          value: apps/v1
+      - equal:
+          path: spec.scaleTargetRef.kind
+          value: Deployment
+      - equal:
+          path: spec.scaleTargetRef.name
+          value: example-app
+      - equal:
+          path: spec.minReplicaCount
+          value: 2
