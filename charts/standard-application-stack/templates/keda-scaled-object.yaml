@@ -32,24 +32,24 @@ spec:
   triggers:
   {{- if .targetCPUUtilizationPercentage }}
   - type: cpu
+    metricType: Utilization
     metadata:
-      type: Utilization
       value: "{{ .targetCPUUtilizationPercentage }}"
   {{- else if .targetCPUAverageValue }}
   - type: cpu
+    metricType: AverageValue
     metadata:
-      type: AverageValue
       value: "{{ .targetCPUAverageValue }}"
   {{- end }}
   {{- if .targetMemoryUtilizationPercentage }}
   - type: memory
+    metricType: Utilization
     metadata:
-      type: Utilization
       value: "{{ .targetMemoryUtilizationPercentage }}"
-  {{- else if .targetCPUAverageValue}}
+  {{- else if .targetMemoryAverageValue }}
   - type: memory
+    metricType: AverageValue
     metadata:
-      type: AverageValue
       value: "{{ .targetMemoryAverageValue }}"
   {{- end }}
   {{- if .custom }}

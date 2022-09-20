@@ -208,7 +208,7 @@ tests:
                     value: 100
                     periodSeconds: 15
 
-  - it: Creates a ScaledObject with  target utilization triggers
+  - it: Creates a ScaledObject with both targetCPUUtilizationPercentage and targetMemoryUtilizationPercentage triggers
     set:
       global.clusterEnv: qa
       autoscaling.enabled: true
@@ -229,15 +229,111 @@ tests:
           path: spec.triggers
           value:
             - type: cpu
+              metricType: Utilization
               metadata:
-                type: Utilization
                 value: "100"
             - type: memory
+              metricType: Utilization
               metadata:
-                type: Utilization
                 value: "50"
 
-  - it: Creates a ScaledObject with target average-value triggers
+  - it: Creates a ScaledObject with targetCPUUtilizationPercentage trigger
+    set:
+      global.clusterEnv: qa
+      autoscaling.enabled: true
+      autoscaling.triggers.targetCPUUtilizationPercentage: 100
+    asserts:
+      - isKind:
+          of: ScaledObject
+      - equal:
+          path: metadata.namespace
+          value: test-namespace
+      - hasDocuments:
+          count: 1
+      - equal:
+          path: metadata.name
+          value: example-app
+      - equal:
+          path: spec.triggers
+          value:
+            - type: cpu
+              metricType: Utilization
+              metadata:
+                value: "100"
+
+  - it: Creates a ScaledObject with targetMemoryUtilizationPercentage trigger
+    set:
+      global.clusterEnv: qa
+      autoscaling.enabled: true
+      autoscaling.triggers.targetMemoryUtilizationPercentage: 50
+    asserts:
+      - isKind:
+          of: ScaledObject
+      - equal:
+          path: metadata.namespace
+          value: test-namespace
+      - hasDocuments:
+          count: 1
+      - equal:
+          path: metadata.name
+          value: example-app
+      - equal:
+          path: spec.triggers
+          value:
+            - type: memory
+              metricType: Utilization
+              metadata:
+                value: "50"
+
+  - it: Creates a ScaledObject with both targetCPUAverageValue trigger
+    set:
+      global.clusterEnv: qa
+      autoscaling.enabled: true
+      autoscaling.triggers.targetCPUAverageValue: 101
+    asserts:
+      - isKind:
+          of: ScaledObject
+      - equal:
+          path: metadata.namespace
+          value: test-namespace
+      - hasDocuments:
+          count: 1
+      - equal:
+          path: metadata.name
+          value: example-app
+      - equal:
+          path: spec.triggers
+          value:
+            - type: cpu
+              metricType: AverageValue
+              metadata:
+                value: "101"
+
+  - it: Creates a ScaledObject with targetMemoryAverageValue trigger
+    set:
+      global.clusterEnv: qa
+      autoscaling.enabled: true
+      autoscaling.triggers.targetMemoryAverageValue: 51
+    asserts:
+      - isKind:
+          of: ScaledObject
+      - equal:
+          path: metadata.namespace
+          value: test-namespace
+      - hasDocuments:
+          count: 1
+      - equal:
+          path: metadata.name
+          value: example-app
+      - equal:
+          path: spec.triggers
+          value:
+            - type: memory
+              metricType: AverageValue
+              metadata:
+                value: "51"
+
+  - it: Creates a ScaledObject with both targetCPUAverageValue and targetMemoryAverageValue triggers
     set:
       global.clusterEnv: qa
       autoscaling.enabled: true
@@ -258,12 +354,12 @@ tests:
           path: spec.triggers
           value:
             - type: cpu
+              metricType: AverageValue
               metadata:
-                type: AverageValue
                 value: "101"
             - type: memory
+              metricType: AverageValue
               metadata:
-                type: AverageValue
                 value: "51"
 
   - it: Check utilization takes precedence over average value when both specified
@@ -289,10 +385,10 @@ tests:
           path: spec.triggers
           value:
             - type: cpu
+              metricType: Utilization
               metadata:
-                type: Utilization
                 value: "100"
             - type: memory
+              metricType: Utilization
               metadata:
-                type: Utilization
                 value: "50"
