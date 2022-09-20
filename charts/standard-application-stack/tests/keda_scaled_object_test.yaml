@@ -405,7 +405,7 @@ tests:
       global.clusterEnv: qa
       autoscaling.enabled: true
       autoscaling.minReplicaCount: 5
-      autoscaling.maxReplicaCount: 15
+      autoscaling.maxReplicaCount: 10
       autoscaling.cooldownPeriod: 500
       autoscaling.pollingInterval: 60
     asserts:
@@ -430,16 +430,17 @@ tests:
           value: example-app
       - equal:
           path: spec.maxReplicaCount
-          value: 20
-      - equal:
-          path: spec.minReplicaCount
-          value: 1
-      - equal:
-          path: spec.pollingInterval
           value: 10
       - equal:
-          path: spec.cooldownPeriod
+          path: spec.minReplicaCount
+          value: 5
+      - equal:
+          path: spec.pollingInterval
           value: 60
+      - equal:
+          path: spec.cooldownPeriod
+          value: 500 
+
   - it: Creates a ScaledObject with constrained settings
     set:
       global.clusterEnv: qa
@@ -470,7 +471,7 @@ tests:
           value: example-app
       - equal:
           path: spec.maxReplicaCount
-          value: 20
+          value: 10
       - equal:
           path: spec.minReplicaCount
           value: 1
