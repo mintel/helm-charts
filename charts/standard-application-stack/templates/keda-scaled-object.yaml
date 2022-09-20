@@ -46,7 +46,7 @@ spec:
     metadata:
       type: Utilization
       value: "{{ .targetMemoryUtilizationPercentage }}"
-  {{- else if .targetCPUAverageValue}}
+  {{- else if .targetMemoryAverageValue }}
   - type: memory
     metadata:
       type: AverageValue

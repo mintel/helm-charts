@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v3.42.1] - 2022-09-20
+### Fixed
+- Fix handling of keda `targetMemoryAverageValue`
+
 ## [v3.42.0] - 2022-09-14
 ### Added
 - Added extra support for autoscaling (conditionally drop pdbs and setting of replicas)
