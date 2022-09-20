@@ -229,12 +229,12 @@ tests:
           path: spec.triggers
           value:
             - type: cpu
+              metricType: Utilization
               metadata:
-                type: Utilization
                 value: "100"
             - type: memory
+              metricType: Utilization
               metadata:
-                type: Utilization
                 value: "50"
 
   - it: Creates a ScaledObject with targetCPUUtilizationPercentage trigger
@@ -257,8 +257,8 @@ tests:
           path: spec.triggers
           value:
             - type: cpu
+              metricType: Utilization
               metadata:
-                type: Utilization
                 value: "100"
 
   - it: Creates a ScaledObject with targetMemoryUtilizationPercentage trigger
@@ -281,8 +281,8 @@ tests:
           path: spec.triggers
           value:
             - type: memory
+              metricType: Utilization
               metadata:
-                type: Utilization
                 value: "50"
 
   - it: Creates a ScaledObject with both targetCPUAverageValue trigger
@@ -305,8 +305,8 @@ tests:
           path: spec.triggers
           value:
             - type: cpu
+              metricType: AverageValue
               metadata:
-                type: AverageValue
                 value: "101"
 
   - it: Creates a ScaledObject with targetMemoryAverageValue trigger
@@ -329,8 +329,8 @@ tests:
           path: spec.triggers
           value:
             - type: memory
+              metricType: AverageValue
               metadata:
-                type: AverageValue
                 value: "51"
 
   - it: Creates a ScaledObject with both targetCPUAverageValue and targetMemoryAverageValue triggers
@@ -354,12 +354,12 @@ tests:
           path: spec.triggers
           value:
             - type: cpu
+              metricType: AverageValue
               metadata:
-                type: AverageValue
                 value: "101"
             - type: memory
+              metricType: AverageValue
               metadata:
-                type: AverageValue
                 value: "51"
 
   - it: Check utilization takes precedence over average value when both specified
@@ -385,10 +385,10 @@ tests:
           path: spec.triggers
           value:
             - type: cpu
+              metricType: Utilization
               metadata:
-                type: Utilization
                 value: "100"
             - type: memory
+              metricType: Utilization
               metadata:
-                type: Utilization
                 value: "50"
