@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [v3.43.0] - 2022-09-20
 ### Changed
-- Keda CPU / Memory scalers now uses `metricType`)
+- Keda CPU / Memory scalers now uses `metricType`
 
 ### Fixed
 - Fix handling of keda `targetMemoryAverageValue`
