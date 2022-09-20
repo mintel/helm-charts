@@ -392,3 +392,91 @@ tests:
               metricType: Utilization
               metadata:
                 value: "50"
+
+
+suite: Test Keda ScaledObject Constraints
+templates:
+  - keda-scaled-object.yaml
+release:
+  namespace: test-namespace
+tests:
+  - it: Creates a ScaledObject with non-constrained settings
+    set:
+      global.clusterEnv: qa
+      autoscaling.enabled: true
+      autoscaling.minReplicaCount: 5
+      autoscaling.maxReplicaCount: 15
+      autoscaling.cooldownPeriod: 500
+      autoscaling.pollingInterval: 60
+    asserts:
+      - isKind:
+          of: ScaledObject
+      - equal:
+          path: metadata.namespace
+          value: test-namespace
+      - hasDocuments:
+          count: 1
+      - equal:
+          path: metadata.name
+          value: example-app
+      - equal:
+          path: spec.scaleTargetRef.apiVersion
+          value: apps/v1
+      - equal:
+          path: spec.scaleTargetRef.kind
+          value: Deployment
+      - equal:
+          path: spec.scaleTargetRef.name
+          value: example-app
+      - equal:
+          path: spec.maxReplicaCount
+          value: 20
+      - equal:
+          path: spec.minReplicaCount
+          value: 1
+      - equal:
+          path: spec.pollingInterval
+          value: 10
+      - equal:
+          path: spec.cooldownPeriod
+          value: 60
+  - it: Creates a ScaledObject with constrained settings
+    set:
+      global.clusterEnv: qa
+      autoscaling.enabled: true
+      autoscaling.minReplicaCount: 0
+      autoscaling.maxReplicaCount: 500
+      autoscaling.cooldownPeriod: 5
+      autoscaling.pollingInterval: 5
+    asserts:
+      - isKind:
+          of: ScaledObject
+      - equal:
+          path: metadata.namespace
+          value: test-namespace
+      - hasDocuments:
+          count: 1
+      - equal:
+          path: metadata.name
+          value: example-app
+      - equal:
+          path: spec.scaleTargetRef.apiVersion
+          value: apps/v1
+      - equal:
+          path: spec.scaleTargetRef.kind
+          value: Deployment
+      - equal:
+          path: spec.scaleTargetRef.name
+          value: example-app
+      - equal:
+          path: spec.maxReplicaCount
+          value: 20
+      - equal:
+          path: spec.minReplicaCount
+          value: 1
+      - equal:
+          path: spec.pollingInterval
+          value: 10
+      - equal:
+          path: spec.cooldownPeriod
+          value: 60
