@@ -106,14 +106,14 @@ autoscaling:
 
   # Polling interval only impacts the time-to-activation (scaling from 0 to 1) but once scaled to 1
   # it's up to the HPA which polls KEDA.
-  pollingInterval: 30 # min value allowed 10
+  pollingInterval: 30  # min value allowed 10
 
   # The KEDA cooldownPeriod only applies when scaling to 0; scaling from 1 to N replicas is handled
   # by the Kubernetes Horizontal Pod Autoscaler.
-  cooldownPeriod: 300 # min value allowed 60
+  cooldownPeriod: 300  # min value allowed 60
 
-  maxReplicaCount: 5 # max value allowed 10
-  minReplicaCount: 2 # min value allowed 1
+  maxReplicaCount: 5  # max value allowed 10
+  minReplicaCount: 2  # min value allowed 1
 
   scaleTargetRef:
     apiVersion: apps/v1
