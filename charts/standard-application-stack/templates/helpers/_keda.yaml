@@ -4,6 +4,7 @@
 Helpers for Keda objects
 */}}
 
+# cooldownPeriod must be >= 60
 {{- define "mintel_common.keda.scaledObject.cooldownPeriod" -}}
   {{- max 60 .cooldownPeriod }}
 {{- end }}
@@ -26,7 +27,7 @@ Helpers for Keda objects
 {{- end }}
 {{- end }}
 
-# pollingInterval must be >= than 10
+# pollingInterval must be >= 10
 {{- define "mintel_common.keda.scaledObject.pollingInterval" -}}
   {{- max 10 .pollingInterval}}
 {{- end }}
