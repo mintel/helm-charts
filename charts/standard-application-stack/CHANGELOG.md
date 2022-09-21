@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v3.45.0] - 2022-09-21
+### Added
+- Added support for multiple ingresses per app
+- Added support for path based routing on ingresses
+- Added support for setting X-Forwarded-For headers (haproxy ingress only)
+- Added support for setting no-cache headers (haproxy ingress only)
+
 ## [v3.44.0] - 2022-09-20
 ### Added
 - Added additional constraints around Keda values (`minReplicaCount`, `maxReplicaCount`, `pollingInterval` and `cooldownPeriod`)
