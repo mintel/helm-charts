@@ -69,7 +69,7 @@
 {{- end }}
 
 {{- define "mintel_common.ingress.haproxy_annotations" -}}
-{{- with (coalesce .Values.ingress.serverTimeoutSeconds .ingress.serverTimeoutSeconds) }}
+{{- with (coalesce .ingress.serverTimeoutSeconds .Values.ingress.serverTimeoutSeconds) }}
 ingress.kubernetes.io/timeout-server: {{ . }}s
 {{- end }}
 ingress.kubernetes.io/rewrite-target: /
