@@ -21,7 +21,7 @@ A Helm chart for provisioning resources using Terraform Cloud
 | auroraMySql.terraform.defaultVars.engine_version | string | `"5.7.mysql_aurora.2.10.2"` | Aurora MySQL version |
 | auroraMySql.terraform.defaultVars.port | int | `3306` | Aurora MySQL port |
 | auroraMySql.terraform.instances | object | `{}` | A map of instance names => variable key/value pairs to be sent to the terraform module. The values in `defaultVars` will be applied to every instance if not explicitly defined here. |
-| auroraMySql.terraform.module.source | string | `"app.terraform.io/Mintel/rds/aws"` | Registry path of the Terraform module used to create the resource (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/rds-aurora/aws) |
+| auroraMySql.terraform.module.source | string | `"app.terraform.io/Mintel/rds-aurora/aws"` | Registry path of the Terraform module used to create the resource (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/rds/aws) |
 | auroraMySql.terraform.module.version | string | `"0.0.2"` | Module version |
 | auroraPostgresql.enabled | bool | `false` | Set to true to create a PostgreSQL Aurora RDS cluster |
 | auroraPostgresql.outputSecret | bool | `true` | Set to true to create an AWS secret manager external secret with outputs |
