@@ -55,6 +55,7 @@ helm.sh/chart: {{ include "mintel_common.chart" . }}
 
 {{/* Common labels */}}
 {{- define "mintel_common.labels" -}}
+name: {{ include "mintel_common.fullname" . }}
 {{ include "mintel_common.selectorLabels" . }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- if .Values.owner }}
@@ -80,7 +81,6 @@ app.mintel.com/region: {{default "${CLUSTER_REGION}" $.Values.global.clusterRegi
 
 {{/* Ingress labels */}}
 {{- define "mintel_common.ingressLabels" -}}
-name: {{ include "mintel_common.ingressName" . }}
 {{ include "mintel_common.labels" . | replace (include "mintel_common.fullname" .) (include "mintel_common.ingressName" .)}}
 {{- end -}}
 
