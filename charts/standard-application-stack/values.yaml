@@ -396,7 +396,10 @@ ingress:
   # For a full list of possible ingress annotations, please see
   # ref: https://github.com/kubernetes/ingress-nginx/blob/master/docs/user-guide/nginx-configuration/annotations.md
   extraAnnotations: {}
+  # -- Optional: ability to construct multiple ingresses with different settings (names, cache headers, etc)
+  # Should be able to override all Ingress values be setting them again on a per instance basis
   extraIngresses: []
+  # -- Explicitly set the 'tier: frontend' label on deployments even if ingress is disabled
   explicitFrontendLabel: false
   # -- Enable TLS configuration for the hostname defined at ingress.hostname parameter
   tls: true
