@@ -401,6 +401,10 @@ ingress:
   extraIngresses: []
   # -- Explicitly set the 'tier: frontend' label on deployments even if ingress is disabled
   explicitFrontendLabel: false
+  # -- Only applies for 'haproxy' ingresses; Sets X-Forwarded-For headers
+  setXForwardedForHeaders: false
+  # -- Only applies for 'haproxy' ingresses; Sets no-cache headers
+  setNoCacheHeaders: false
   # -- Enable TLS configuration for the hostname defined at ingress.hostname parameter
   tls: true
   # -- List of extra ingress hosts to setup
