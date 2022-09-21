@@ -17,9 +17,9 @@ We truncate at 63 chars because sometimes Kubernetes name fields are limited to 
 {{/* Create a fully qualified app name, but with ability to override it for ingress */}}
 {{- define "mintel_common.ingressName" -}}
 {{- if .ingress.ingressNameSuffix }}
-{{- printf "%s-%s" (coalesce $.Values.ingress.ingressNameOverride .ingress.ingressNameOverride (include "mintel_common.fullname" .)) .ingress.ingressNameSuffix -}}
+{{- printf "%s-%s" (coalesce .ingress.ingressNameOverride $.Values.ingress.ingressNameOverride (include "mintel_common.fullname" .)) .ingress.ingressNameSuffix -}}
 {{- else -}}
-{{- printf "%s" (coalesce $.Values.ingress.ingressNameOverride .ingress.ingressNameOverride (include "mintel_common.fullname" .)) -}}
+{{- printf "%s" (coalesce .ingress.ingressNameOverride $.Values.ingress.ingressNameOverride (include "mintel_common.fullname" .)) -}}
 {{- end -}}
 {{- end -}}
 
