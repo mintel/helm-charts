@@ -396,6 +396,8 @@ ingress:
   # For a full list of possible ingress annotations, please see
   # ref: https://github.com/kubernetes/ingress-nginx/blob/master/docs/user-guide/nginx-configuration/annotations.md
   extraAnnotations: {}
+  extraIngresses: []
+  explicitFrontendLabel: false
   # -- Enable TLS configuration for the hostname defined at ingress.hostname parameter
   tls: true
   # -- List of extra ingress hosts to setup

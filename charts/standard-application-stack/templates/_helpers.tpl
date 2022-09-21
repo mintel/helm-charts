@@ -14,6 +14,15 @@ We truncate at 63 chars because sometimes Kubernetes name fields are limited to 
 {{- end -}}
 {{- end -}}
 
+{{/* Create a fully qualified app name, but with ability to override it for ingress */}}
+{{- define "mintel_common.ingressName" -}}
+{{- if .ingress.ingressNameSuffix }}
+{{- printf "%s-%s" (coalesce $.Values.ingress.ingressNameOverride .ingress.ingressNameOverride (include "mintel_common.fullname" .)) .ingress.ingressNameSuffix -}}
+{{- else -}}
+{{- printf "%s" (coalesce $.Values.ingress.ingressNameOverride .ingress.ingressNameOverride (include "mintel_common.fullname" .)) -}}
+{{- end -}}
+{{- end -}}
+
 {{/* Local DNS base */}}
 {{- define "mintel_common.publicURL" -}}
 {{- if .Values.ingress.tls }}
@@ -46,7 +55,6 @@ helm.sh/chart: {{ include "mintel_common.chart" . }}
 
 {{/* Common labels */}}
 {{- define "mintel_common.labels" -}}
-name: {{ include "mintel_common.fullname" . }}
 {{ include "mintel_common.selectorLabels" . }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- if .Values.owner }}
@@ -68,6 +76,12 @@ app.mintel.com/region: {{default "${CLUSTER_REGION}" $.Values.global.clusterRegi
 {{- with .Values.additionalLabels }}
 {{- toYaml . }}
 {{- end }}
+{{- end -}}
+
+{{/* Ingress labels */}}
+{{- define "mintel_common.ingressLabels" -}}
+name: {{ include "mintel_common.ingressName" . }}
+{{ include "mintel_common.labels" . | replace (include "mintel_common.fullname" .) (include "mintel_common.ingressName" .)}}
 {{- end -}}
 
 {{/* Selector labels */}}
