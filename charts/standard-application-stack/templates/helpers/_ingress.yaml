@@ -67,3 +67,94 @@
 {{- "HTTP" }}
 {{- end }}
 {{- end }}
+
+{{- define "mintel_common.ingress.haproxy_annotations" -}}
+{{- with (coalesce .ingress.serverTimeoutSeconds .Values.ingress.serverTimeoutSeconds) }}
+ingress.kubernetes.io/timeout-server: {{ . }}s
+{{- end }}
+ingress.kubernetes.io/rewrite-target: /
+{{- if (or (or (and .Values.metrics .Values.metrics.enabled) (or .Values.ingress.setXForwardedForHeaders .ingress.setXForwardedForHeaders)) (or .Values.ingress.setNoCacheHeaders .ingress.setNoCacheHeaders)) }}
+ingress.kubernetes.io/config-backend: |
+{{- end }}
+{{- if (and .Values.metrics .Values.metrics.enabled) }}
+  acl k8s-monitoring-endpoints path {{ include "mintel_common.ingressDenyEndpoints" . }}
+  http-request deny if k8s-monitoring-endpoints
+{{- end }}
+{{- if (or .Values.ingress.setXForwardedForHeaders .ingress.setXForwardedForHeaders) }}
+  acl client-ip-header-exists req.hdr(X-True-Client-IP-BAPqs7Hn0l) -m found
+  http-request set-header X-Forwarded-For %[req.hdr_ip(X-True-Client-IP-BAPqs7Hn0l)] if client-ip-header-exists
+  http-request set-header X-Forwarded-For %[src] if !client-ip-header-exists
+{{- end }}
+{{- if (or .Values.ingress.setNoCacheHeaders .ingress.setNoCacheHeaders) }}
+  http-response set-header Cache-Control no-cache,no-store,max-age="0"
+  http-response set-header Expires -1
+  http-response set-header Pragma no-cache
+{{- end }}
+{{- end }}
+
+{{- define "mintel_common.ingress.alb_annotations" -}}
+alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
+alb.ingress.kubernetes.io/ssl-redirect: "443"
+alb.ingress.kubernetes.io/target-group-attributes: "deregistration_delay.timeout_seconds={{ default 10 .alb.deregistrationDelay.timeoutSeconds }}"
+alb.ingress.kubernetes.io/target-type: "ip"
+external-dns.alpha.kubernetes.io/ttl: "60"
+external-dns.alpha.kubernetes.io/hostname: {{ .defaultHost }}
+alb.ingress.kubernetes.io/backend-protocol: {{ include "mintel_common.ingress.alb.backendProtocol" .alb }}
+alb.ingress.kubernetes.io/backend-protocol-version: {{ include "mintel_common.ingress.alb.backendProtocolVersion" .alb }}
+alb.ingress.kubernetes.io/success-codes: "{{ include "mintel_common.ingress.alb.healthcheck.successCodes" .alb }}"
+alb.ingress.kubernetes.io/healthcheck-path: {{ include "mintel_common.ingress.alb.healthcheck.path" .alb }}
+alb.ingress.kubernetes.io/healthcheck-interval-seconds: "{{ default 15 .alb.healthcheck.intervalSeconds }}"
+alb.ingress.kubernetes.io/healthcheck-port: "{{ include "mintel_common.ingress.alb.healthcheck.port" $ }}"
+alb.ingress.kubernetes.io/healthcheck-protocol: {{ include "mintel_common.ingress.alb.healthcheck.protocol" .alb }}
+alb.ingress.kubernetes.io/healthcheck-timeout-seconds: "{{ default 5 .alb.healthcheck.timeoutSeconds }}"
+alb.ingress.kubernetes.io/healthy-threshold-count: "{{ default 2 .alb.healthcheck.healthyThresholdCount }}"
+alb.ingress.kubernetes.io/unhealthy-threshold-count: "{{ default 2 .alb.healthcheck.unhealthyThresholdCount }}"
+{{- end -}}
+
+{{- define "mintel_common.ingress.ingressPath" -}}
+- path: {{ default "/" .path }}
+  pathType: {{ default "Prefix" .pathType }}
+  backend:
+    service:
+      name: {{ default (include "mintel_common.fullname" .) .targetService }}
+      port:
+        {{- if (and .Values.oauthProxy .Values.oauthProxy.enabled) }}
+        number: 4180
+        {{- else }}
+        number: {{ default .Values.port .targetPort }}
+        {{- end }}
+{{- end -}}
+
+{{/* Outputs space separated list of endpoints to deny at ingress */}}
+{{- define "mintel_common.ingressDenyEndpoints" -}}
+{{- $endpoints := list }}
+{{- $endpoints = append $endpoints (default "/metrics" .Values.metrics.path) }}
+{{- if (ne .Values.ingress.allowLivenessUrl true) }}
+{{- $livenessEndpoint := (coalesce .Values.liveness.path "/healthz") }}
+{{- if (ne $livenessEndpoint .Values.ingress.blackbox.probePath) }}
+{{- $endpoints = append $endpoints $livenessEndpoint }}
+{{- end }}
+{{- end }}
+{{- if (ne .Values.ingress.allowReadinessUrl true) }}
+{{- $readinessEndpoint := (coalesce .Values.readiness.path "/readiness") }}
+{{- if (ne $readinessEndpoint .Values.ingress.blackbox.probePath) }}
+{{- $endpoints = append $endpoints $readinessEndpoint }}
+{{- end }}
+{{- end }}
+{{- print (join " " $endpoints) }}
+{{- end -}}
+
+{{/* Create a fully qualified app name, but with ability to override it for ingress */}}
+{{- define "mintel_common.ingressName" -}}
+{{- if .ingress.ingressNameSuffix }}
+{{- printf "%s-%s" (coalesce .ingress.ingressNameOverride $.Values.ingress.ingressNameOverride (include "mintel_common.fullname" .)) .ingress.ingressNameSuffix -}}
+{{- else -}}
+{{- printf "%s" (coalesce .ingress.ingressNameOverride $.Values.ingress.ingressNameOverride (include "mintel_common.fullname" .)) -}}
+{{- end -}}
+{{- end -}}
+
+{{/* Ingress labels */}}
+{{- define "mintel_common.ingressLabels" -}}
+{{ include "mintel_common.labels" . | replace (include "mintel_common.fullname" .) (include "mintel_common.ingressName" .)}}
+{{- end -}}
+

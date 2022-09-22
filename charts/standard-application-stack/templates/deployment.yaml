@@ -40,7 +40,7 @@ metadata:
     app.mintel.com/opa-allow-single-replica: "true"
     {{- end }}
   labels: {{ include "mintel_common.labels" . | nindent 4 }}
-    {{- if (and .Values.ingress .Values.ingress.enabled) }}
+    {{- if (or (and .Values.ingress .Values.ingress.enabled) .Values.ingress.allowFrontendAccess) }}
     tier: frontend
     {{- end }}
 spec:
@@ -94,7 +94,7 @@ spec:
         {{- end }}
       {{- end }}
       labels: {{ include "mintel_common.labels" . | nindent 8 }}
-        {{- if (and .Values.ingress .Values.ingress.enabled) }}
+        {{- if (or (and .Values.ingress .Values.ingress.enabled) .Values.ingress.allowFrontendAccess) }}
         tier: frontend
         {{- end }}
     spec:
