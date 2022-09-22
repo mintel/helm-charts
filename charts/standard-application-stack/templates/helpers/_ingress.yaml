@@ -124,3 +124,37 @@ alb.ingress.kubernetes.io/unhealthy-threshold-count: "{{ default 2 .alb.healthch
         number: {{ default .Values.port .targetPort }}
         {{- end }}
 {{- end -}}
+
+{{/* Outputs space separated list of endpoints to deny at ingress */}}
+{{- define "mintel_common.ingressDenyEndpoints" -}}
+{{- $endpoints := list }}
+{{- $endpoints = append $endpoints (default "/metrics" .Values.metrics.path) }}
+{{- if (ne .Values.ingress.allowLivenessUrl true) }}
+{{- $livenessEndpoint := (coalesce .Values.liveness.path "/healthz") }}
+{{- if (ne $livenessEndpoint .Values.ingress.blackbox.probePath) }}
+{{- $endpoints = append $endpoints $livenessEndpoint }}
+{{- end }}
+{{- end }}
+{{- if (ne .Values.ingress.allowReadinessUrl true) }}
+{{- $readinessEndpoint := (coalesce .Values.readiness.path "/readiness") }}
+{{- if (ne $readinessEndpoint .Values.ingress.blackbox.probePath) }}
+{{- $endpoints = append $endpoints $readinessEndpoint }}
+{{- end }}
+{{- end }}
+{{- print (join " " $endpoints) }}
+{{- end -}}
+
+{{/* Create a fully qualified app name, but with ability to override it for ingress */}}
+{{- define "mintel_common.ingressName" -}}
+{{- if .ingress.ingressNameSuffix }}
+{{- printf "%s-%s" (coalesce .ingress.ingressNameOverride $.Values.ingress.ingressNameOverride (include "mintel_common.fullname" .)) .ingress.ingressNameSuffix -}}
+{{- else -}}
+{{- printf "%s" (coalesce .ingress.ingressNameOverride $.Values.ingress.ingressNameOverride (include "mintel_common.fullname" .)) -}}
+{{- end -}}
+{{- end -}}
+
+{{/* Ingress labels */}}
+{{- define "mintel_common.ingressLabels" -}}
+{{ include "mintel_common.labels" . | replace (include "mintel_common.fullname" .) (include "mintel_common.ingressName" .)}}
+{{- end -}}
+

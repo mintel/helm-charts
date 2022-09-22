@@ -14,15 +14,6 @@ We truncate at 63 chars because sometimes Kubernetes name fields are limited to 
 {{- end -}}
 {{- end -}}
 
-{{/* Create a fully qualified app name, but with ability to override it for ingress */}}
-{{- define "mintel_common.ingressName" -}}
-{{- if .ingress.ingressNameSuffix }}
-{{- printf "%s-%s" (coalesce .ingress.ingressNameOverride $.Values.ingress.ingressNameOverride (include "mintel_common.fullname" .)) .ingress.ingressNameSuffix -}}
-{{- else -}}
-{{- printf "%s" (coalesce .ingress.ingressNameOverride $.Values.ingress.ingressNameOverride (include "mintel_common.fullname" .)) -}}
-{{- end -}}
-{{- end -}}
-
 {{/* Local DNS base */}}
 {{- define "mintel_common.publicURL" -}}
 {{- if .Values.ingress.tls }}
@@ -77,11 +68,6 @@ app.mintel.com/region: {{default "${CLUSTER_REGION}" $.Values.global.clusterRegi
 {{- with .Values.additionalLabels }}
 {{- toYaml . }}
 {{- end }}
-{{- end -}}
-
-{{/* Ingress labels */}}
-{{- define "mintel_common.ingressLabels" -}}
-{{ include "mintel_common.labels" . | replace (include "mintel_common.fullname" .) (include "mintel_common.ingressName" .)}}
 {{- end -}}
 
 {{/* Selector labels */}}
@@ -477,23 +463,4 @@ topologySpreadConstraints:
 {{- end }}
 {{- end }}
 {{- end }}
-{{- end -}}
-
-{{/* Outputs space separated list of endpoints to deny at ingress */}}
-{{- define "mintel_common.ingressDenyEndpoints" -}}
-{{- $endpoints := list }}
-{{- $endpoints = append $endpoints (default "/metrics" .Values.metrics.path) }}
-{{- if (ne .Values.ingress.allowLivenessUrl true) }}
-{{- $livenessEndpoint := (coalesce .Values.liveness.path "/healthz") }}
-{{- if (ne $livenessEndpoint .Values.ingress.blackbox.probePath) }}
-{{- $endpoints = append $endpoints $livenessEndpoint }}
-{{- end }}
-{{- end }}
-{{- if (ne .Values.ingress.allowReadinessUrl true) }}
-{{- $readinessEndpoint := (coalesce .Values.readiness.path "/readiness") }}
-{{- if (ne $readinessEndpoint .Values.ingress.blackbox.probePath) }}
-{{- $endpoints = append $endpoints $readinessEndpoint }}
-{{- end }}
-{{- end }}
-{{- print (join " " $endpoints) }}
 {{- end -}}
