@@ -249,3 +249,104 @@ tests:
       - equal:
           path: spec.tls[0].hosts[1]
           value: auth.default.com
+
+  - it: Check ingress name override
+    set:
+      global.clusterEnv: qa
+      ingress.enabled: true
+      ingress.ingressNameOverride: ingress-override
+    asserts:
+      - hasDocuments:
+          count: 1
+      - equal:
+          path: metadata.name
+          value: ingress-override
+      - equal:
+          path: metadata.labels.name
+          value: ingress-override
+      - equal:
+          path: metadata.labels.[app.kubernetes.io/name]
+          value: ingress-override
+
+  - it: Check ingress name suffix setting
+    set:
+      global.clusterEnv: qa
+      ingress.enabled: true
+      ingress.ingressNameSuffix: suffix
+    asserts:
+      - hasDocuments:
+          count: 1
+      - equal:
+          path: metadata.name
+          value: example-app-suffix
+      - equal:
+          path: metadata.labels.name
+          value: example-app-suffix
+      - equal:
+          path: metadata.labels.[app.kubernetes.io/name]
+          value: example-app-suffix
+
+  - it: Default ingress with path based routing
+    set:
+      global.clusterEnv: qa
+      ingress.enabled: true
+      ingress.pathBasedRouting:
+        - targetService: service1
+          targetPort: 1234
+          path: /i01
+        - targetService: service2
+          targetPort: 5678
+          path: /i02
+    asserts:
+      - hasDocuments:
+          count: 1
+      - equal:
+          path: spec.rules[0].http.paths[0].path
+          value: /i01
+      - equal:
+          path: spec.rules[0].http.paths[0].backend.service.name
+          value: service1
+      - equal:
+          path: spec.rules[0].http.paths[0].backend.service.port.number
+          value: 1234
+      - equal:
+          path: spec.rules[0].http.paths[1].path
+          value: /i02
+      - equal:
+          path: spec.rules[0].http.paths[1].backend.service.name
+          value: service2
+      - equal:
+          path: spec.rules[0].http.paths[1].backend.service.port.number
+          value: 5678
+
+  - it: Multiple ingresses with different names
+    set:
+      global.clusterEnv: qa
+      ingress.enabled: true
+      ingress.ingressNameOverride: image-service
+      ingress.ingressNameSuffix: media
+      ingress.defaultHost: media.mintel.com
+      ingress.extraIngresses:
+        - ingressNameSuffix: ops-media
+          defaultHost: ops-media.mintel.com
+    asserts:
+      - hasDocuments:
+          count: 2
+      - equal:
+          path: metadata.name
+          value: image-service-media
+        documentIndex: 0
+      - equal:
+          path: spec.rules[0].host
+          value: media.mintel.com
+        documentIndex: 0
+      - equal:
+          path: metadata.name
+          value: image-service-ops-media
+        documentIndex: 1
+      - equal:
+          path: spec.rules[0].host
+          value: ops-media.mintel.com
+        documentIndex: 1
+
+
