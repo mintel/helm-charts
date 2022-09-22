@@ -408,7 +408,7 @@ ingress:
   # Should be able to override all Ingress values be setting them again on a per instance basis
   extraIngresses: []
   # -- Explicitly set the 'tier: frontend' label on deployments even if ingress is disabled
-  explicitFrontendLabel: false
+  allowFrontendAccess: false
   # -- Only applies for 'haproxy' ingresses; Sets X-Forwarded-For headers
   setXForwardedForHeaders: false
   # -- Only applies for 'haproxy' ingresses; Sets no-cache headers

@@ -122,7 +122,7 @@ A generic chart to support most common application requirements
 | image.repository | string | `"test"` | Docker repository |
 | image.tag | string | `"auto-replaced"` | Container image tag |
 | imagePullSecrets | list | `[]` | Optional array of imagePullSecrets ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/ |
-| ingress | object | `{"alb":{"backendProtocol":"HTTP","backendProtocolVersion":"HTTP1","deregistrationDelay":{"timeoutSeconds":5},"enabled":true,"healthcheck":{"healthyThresholdCount":2,"intervalSeconds":15,"protocol":"HTTP","timeoutSeconds":5,"unhealthyThresholdCount":2},"preStopDelay":{"delaySeconds":15,"enabled":true},"scheme":"internet-facing"},"allowLivenessUrl":false,"allowReadinessUrl":false,"blackbox":{"enabled":true,"probePath":"/external-health-check"},"enabled":false,"explicitFrontendLabel":false,"extraAnnotations":{},"extraHosts":[],"extraIngresses":[],"setNoCacheHeaders":false,"setXForwardedForHeaders":false,"specificRulesHostsYaml":{},"specificTlsHostsYaml":{},"tls":true}` | Configure the ingress resource that allows you to access the application from public-internet ref: http://kubernetes.io/docs/user-guide/ingress/ |
+| ingress | object | `{"alb":{"backendProtocol":"HTTP","backendProtocolVersion":"HTTP1","deregistrationDelay":{"timeoutSeconds":5},"enabled":true,"healthcheck":{"healthyThresholdCount":2,"intervalSeconds":15,"protocol":"HTTP","timeoutSeconds":5,"unhealthyThresholdCount":2},"preStopDelay":{"delaySeconds":15,"enabled":true},"scheme":"internet-facing"},"allowFrontendAccess":false,"allowLivenessUrl":false,"allowReadinessUrl":false,"blackbox":{"enabled":true,"probePath":"/external-health-check"},"enabled":false,"extraAnnotations":{},"extraHosts":[],"extraIngresses":[],"setNoCacheHeaders":false,"setXForwardedForHeaders":false,"specificRulesHostsYaml":{},"specificTlsHostsYaml":{},"tls":true}` | Configure the ingress resource that allows you to access the application from public-internet ref: http://kubernetes.io/docs/user-guide/ingress/ |
 | ingress.alb.backendProtocol | string | `"HTTP"` | Application Version (HTTP / HTTPS) |
 | ingress.alb.backendProtocolVersion | string | `"HTTP1"` | Application Protocol Version (HTTP1 / HTTP2 / GRPC) |
 | ingress.alb.healthcheck.healthyThresholdCount | int | `2` | Success threshold |
@@ -133,13 +133,13 @@ A generic chart to support most common application requirements
 | ingress.alb.preStopDelay.delaySeconds | int | `15` | The delay (sleep) to wait for. IMPORTANT: The terminationGracePeriodSeconds must be greater than this. |
 | ingress.alb.preStopDelay.enabled | bool | `true` | Enable an additional delay when the container is shutdown of delaySeconds. This allows ALB to fully de-register the pod (allows zero-downtime rollouts) |
 | ingress.alb.scheme | string | `"internet-facing"` | Public or private alb (internet-facing / internal) |
+| ingress.allowFrontendAccess | bool | `false` | Explicitly set the 'tier: frontend' label on deployments even if ingress is disabled |
 | ingress.allowLivenessUrl | bool | `false` | Set to true to allow the liveness URL through the ingress |
 | ingress.allowReadinessUrl | bool | `false` | Set to true to allow the readiness URL through the ingress |
 | ingress.blackbox | object | `{"enabled":true,"probePath":"/external-health-check"}` | Configures annotations defining blackbox endpoints |
 | ingress.blackbox.enabled | bool | `true` | Set to true to tell blackboxes to hit endpoint |
 | ingress.blackbox.probePath | string | `"/external-health-check"` | Endpoint for blackboxes to hit |
 | ingress.enabled | bool | `false` | Set to true to enable ingress record generation |
-| ingress.explicitFrontendLabel | bool | `false` | Explicitly set the 'tier: frontend' label on deployments even if ingress is disabled |
 | ingress.extraAnnotations | object | `{}` | Additional Ingress annotations For a full list of possible ingress annotations, please see ref: https://github.com/kubernetes/ingress-nginx/blob/master/docs/user-guide/nginx-configuration/annotations.md |
 | ingress.extraHosts | list | `[]` | List of extra ingress hosts to setup |
 | ingress.extraIngresses | list | `[]` | Optional: ability to construct multiple ingresses with different settings (names, cache headers, etc) Should be able to override all Ingress values be setting them again on a per instance basis |
