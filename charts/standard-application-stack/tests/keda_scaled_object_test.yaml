@@ -592,7 +592,7 @@ tests:
               awsRegion: eu-west-2
               identityOwner: operator
               queueURL: test-queue
-              queueLength: 2
+              queueLength: "2"
 
   - it: Check AWS trigger vars can be overriden
     set:
@@ -650,4 +650,4 @@ tests:
               awsRegion: us-east-2
               identityOwner: pod
               queueURL: test-queue
-              queueLength: 2
+              queueLength: "2"

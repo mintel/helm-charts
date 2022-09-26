@@ -153,9 +153,13 @@ autoscaling:
     # targetMemoryAverageValue: 80
 
     # A list of custom triggers
+    # ref: https://keda.sh/docs/2.8/scalers/
     #  custom:
-    #    # ref: https://keda.sh/docs/1.4/scalers/prometheus/
-    #    type: 'prometheus',
+    #  - type: 'aws-sqs-queue'
+    #    metadata:
+    #      queueURL: 'https://my-queue-url'
+    #      queueLength: "20"
+    #  - type: 'prometheus'
     #    metadata:
     #      metricName: 'http_requests_total',
     #      query: 'sum(rate(http_requests_total{service="podinfo-http"}[2m]))',

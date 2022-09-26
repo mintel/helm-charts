@@ -65,7 +65,7 @@ spec:
       awsRegion: {{ $.Values.global.clusterRegion }}
     {{- end }}
     {{- range $k, $v := .metadata }}
-      {{ $k }}: {{ $v }}
+      {{ $k }}: "{{ $v }}"
   {{- end }}
   {{- end }}
   {{- end }}
