@@ -115,6 +115,12 @@ autoscaling:
   maxReplicaCount: 5  # max value allowed 10
   minReplicaCount: 2  # min value allowed 1
 
+  # Enable zero replicas (sets idleReplicaCount=0)
+  # ref: https://keda.sh/docs/2.8/concepts/scaling-deployments/#idlereplicacount
+  # NOTE: Due to limitations in HPA controller the only supported value for this
+  # property is 0, it will not work correctly otherwise (hence the boolean flag).
+  enableZeroReplicas: false
+
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
@@ -147,13 +153,16 @@ autoscaling:
     # targetMemoryAverageValue: 80
 
     # A list of custom triggers
+    # ref: https://keda.sh/docs/2.8/scalers/
     #  custom:
-    #    # ref: https://keda.sh/docs/1.4/scalers/prometheus/
-    #    type: 'prometheus',
+    #  - type: 'aws-sqs-queue'
+    #    metadata:
+    #      queueURL: 'https://my-queue-url'
+    #      queueLength: "20"
+    #  - type: 'prometheus'
     #    metadata:
     #      metricName: 'http_requests_total',
     #      query: 'sum(rate(http_requests_total{service="podinfo-http"}[2m]))',
-    #      serverAddress: 'http://prometheus-k8s.monitoring.svc:9090',
     #      threshold: '5',
 
 # -- Optional name of PriorityClass to run pods with

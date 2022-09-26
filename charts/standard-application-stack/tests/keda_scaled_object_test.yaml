@@ -510,3 +510,159 @@ tests:
       - equal:
           path: spec.minReplicaCount
           value: 2
+
+  - it: Check idleReplicaCount is equal to 0 when enableZeroReplicas is set
+    set:
+      global.clusterEnv: qa
+      autoscaling.enabled: true
+      autoscaling.enableZeroReplicas: true
+    asserts:
+      - isKind:
+          of: ScaledObject
+      - equal:
+          path: metadata.namespace
+          value: test-namespace
+      - hasDocuments:
+          count: 1
+      - equal:
+          path: metadata.name
+          value: example-app
+      - equal:
+          path: spec.scaleTargetRef.apiVersion
+          value: apps/v1
+      - equal:
+          path: spec.scaleTargetRef.kind
+          value: Deployment
+      - equal:
+          path: spec.scaleTargetRef.name
+          value: example-app
+      - equal:
+          path: spec.idleReplicaCount
+          value: 0
+
+  - it: Check trigger vars automatically populated
+    set:
+      global.clusterEnv: qa
+      global.clusterRegion: eu-west-2
+      autoscaling.enabled: true
+      autoscaling.triggers.custom:
+        - type: aws-cloudwatch
+          metadata:
+            namespace: AWS/SQS
+            dimensionName: QueueName
+            dimensionValue: test-queue
+            metricName: ApproximateNumberOfMessagesVisible
+        - type: aws-sqs-queue
+          metadata:
+            queueURL: test-queue
+            queueLength: 2
+        - type: prometheus
+          metadata:
+            metricName: http_requests_total
+    asserts:
+      - isKind:
+          of: ScaledObject
+      - equal:
+          path: metadata.namespace
+          value: test-namespace
+      - hasDocuments:
+          count: 1
+      - equal:
+          path: metadata.name
+          value: example-app
+      - equal:
+          path: spec.scaleTargetRef.apiVersion
+          value: apps/v1
+      - equal:
+          path: spec.scaleTargetRef.kind
+          value: Deployment
+      - equal:
+          path: spec.scaleTargetRef.name
+          value: example-app
+      - equal:
+          path: spec.triggers
+          value:
+          - type: aws-cloudwatch
+            metadata:
+              awsRegion: eu-west-2
+              identityOwner: operator
+              namespace: AWS/SQS
+              dimensionName: QueueName
+              dimensionValue: test-queue
+              metricName: ApproximateNumberOfMessagesVisible
+          - type: aws-sqs-queue
+            metadata:
+              awsRegion: eu-west-2
+              identityOwner: operator
+              queueURL: test-queue
+              queueLength: "2"
+          - type: prometheus
+            metadata:
+              metricName: http_requests_total
+              serverAddress: http://prometheus-k8s.monitoring.svc:9090
+
+  - it: Check trigger vars can be overriden
+    set:
+      global.clusterEnv: qa
+      global.clusterRegion: eu-west-2
+      autoscaling.enabled: true
+      autoscaling.triggers.custom:
+        - type: aws-cloudwatch
+          metadata:
+            awsRegion: us-east-2
+            identityOwner: pod
+            namespace: AWS/SQS
+            dimensionName: QueueName
+            dimensionValue: test-queue
+            metricName: ApproximateNumberOfMessagesVisible
+        - type: aws-sqs-queue
+          metadata:
+            awsRegion: us-east-2
+            identityOwner: pod
+            queueURL: test-queue
+            queueLength: 2
+        - type: prometheus
+          metadata:
+            metricName: http_requests_total
+            serverAddress: http://alt-prometheus-k8s.monitoring.svc:9090
+    asserts:
+      - isKind:
+          of: ScaledObject
+      - equal:
+          path: metadata.namespace
+          value: test-namespace
+      - hasDocuments:
+          count: 1
+      - equal:
+          path: metadata.name
+          value: example-app
+      - equal:
+          path: spec.scaleTargetRef.apiVersion
+          value: apps/v1
+      - equal:
+          path: spec.scaleTargetRef.kind
+          value: Deployment
+      - equal:
+          path: spec.scaleTargetRef.name
+          value: example-app
+      - equal:
+          path: spec.triggers
+          value:
+          - type: aws-cloudwatch
+            metadata:
+              awsRegion: us-east-2
+              identityOwner: pod
+              namespace: AWS/SQS
+              dimensionName: QueueName
+              dimensionValue: test-queue
+              metricName: ApproximateNumberOfMessagesVisible
+          - type: aws-sqs-queue
+            metadata:
+              awsRegion: us-east-2
+              identityOwner: pod
+              queueURL: test-queue
+              queueLength: "2"
+          - type: prometheus
+            metadata:
+              metricName: http_requests_total
+              serverAddress: http://alt-prometheus-k8s.monitoring.svc:9090
