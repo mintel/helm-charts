@@ -157,4 +157,3 @@ alb.ingress.kubernetes.io/unhealthy-threshold-count: "{{ default 2 .alb.healthch
 {{- define "mintel_common.ingressLabels" -}}
 {{ include "mintel_common.labels" . | replace (include "mintel_common.fullname" .) (include "mintel_common.ingressName" .)}}
 {{- end -}}
-

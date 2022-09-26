@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v3.46.0] - 2022-09-26
+### Added
+- Added Keda `enableZeroReplicas` option
+- Added Keda AWS trigger handling for `awsRegion` and `identityOwner` vars
+
 ## [v3.45.0] - 2022-09-21
 ### Added
 - Added support for multiple ingresses per app

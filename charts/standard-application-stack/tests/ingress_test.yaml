@@ -348,5 +348,3 @@ tests:
           path: spec.rules[0].host
           value: ops-media.mintel.com
         documentIndex: 1
-
-
