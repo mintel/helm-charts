@@ -540,7 +540,7 @@ tests:
           path: spec.idleReplicaCount
           value: 0
 
-  - it: Check AWS trigger vars automatically populated
+  - it: Check trigger vars automatically populated
     set:
       global.clusterEnv: qa
       global.clusterRegion: eu-west-2
@@ -556,6 +556,9 @@ tests:
           metadata:
             queueURL: test-queue
             queueLength: 2
+        - type: prometheus
+          metadata:
+            metricName: http_requests_total
     asserts:
       - isKind:
           of: ScaledObject
@@ -593,8 +596,12 @@ tests:
               identityOwner: operator
               queueURL: test-queue
               queueLength: "2"
+          - type: prometheus
+            metadata:
+              metricName: http_requests_total
+              serverAddress: http://prometheus-k8s.monitoring.svc:9090
 
-  - it: Check AWS trigger vars can be overriden
+  - it: Check trigger vars can be overriden
     set:
       global.clusterEnv: qa
       global.clusterRegion: eu-west-2
@@ -614,6 +621,10 @@ tests:
             identityOwner: pod
             queueURL: test-queue
             queueLength: 2
+        - type: prometheus
+          metadata:
+            metricName: http_requests_total
+            serverAddress: http://alt-prometheus-k8s.monitoring.svc:9090
     asserts:
       - isKind:
           of: ScaledObject
@@ -651,3 +662,7 @@ tests:
               identityOwner: pod
               queueURL: test-queue
               queueLength: "2"
+          - type: prometheus
+            metadata:
+              metricName: http_requests_total
+              serverAddress: http://alt-prometheus-k8s.monitoring.svc:9090

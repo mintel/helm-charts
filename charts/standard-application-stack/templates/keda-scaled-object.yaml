@@ -58,10 +58,13 @@ spec:
   {{- range .custom  }}
   - type: {{ .type }}
     metadata:
+    {{- if and (not (hasKey .metadata  "serverAddress")) (eq "prometheus" .type) }}
+      serverAddress: 'http://prometheus-k8s.monitoring.svc:9090'
+    {{- end }}
     {{- if and (not (hasKey .metadata  "identityOwner")) (hasPrefix "aws-" .type) }}
       identityOwner: 'operator'
     {{- end }}
-    {{- if not (hasKey .metadata "awsRegion") }}
+    {{- if and (not (hasKey .metadata  "awsRegion")) (hasPrefix "aws-" .type) }}
       awsRegion: {{ $.Values.global.clusterRegion }}
     {{- end }}
     {{- range $k, $v := .metadata }}

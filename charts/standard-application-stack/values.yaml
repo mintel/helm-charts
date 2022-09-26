@@ -163,7 +163,6 @@ autoscaling:
     #    metadata:
     #      metricName: 'http_requests_total',
     #      query: 'sum(rate(http_requests_total{service="podinfo-http"}[2m]))',
-    #      serverAddress: 'http://prometheus-k8s.monitoring.svc:9090',
     #      threshold: '5',
 
 # -- Optional name of PriorityClass to run pods with
