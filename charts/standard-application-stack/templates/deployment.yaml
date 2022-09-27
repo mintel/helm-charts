@@ -28,9 +28,6 @@ metadata:
     {{- if (and .Values.gitSyncSidecar .Values.gitSyncSidecar.enabled) }}
     app.mintel.com/opa-skip-readiness-probe-check.git-sync: "true"
     {{- end }}
-    {{- if and .Values.autoscaling.enabled .Values.autoscaling.enableZeroReplicas }}
-    app.mintel.com/opa-skip-topology-key-check: "true"
-    {{- end }}
     {{- $secretListStr := (include "mintel_common.secretList" .) }}
     {{- with $secretListStr }}
     secret.reloader.stakater.com/reload: {{ . }}
