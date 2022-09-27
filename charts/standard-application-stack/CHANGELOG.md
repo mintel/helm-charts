@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v3.47.0] - 2022-09-27
+### Changed
+- Disable `topologySpreadConstraints` when autoscaling from zero is enabled
+
 ## [v3.46.0] - 2022-09-26
 ### Added
 - Added Keda `enableZeroReplicas` option

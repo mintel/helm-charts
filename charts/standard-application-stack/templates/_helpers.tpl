@@ -441,6 +441,7 @@ Build comma separated list of configmaps
 {{- define "mintel_common.topologySpreadConstraints" -}}
 {{- if (ne .Values.global.clusterEnv "local") }}
 {{- if (gt (.Values.replicas | int) 1) }}
+{{- if not (and .Values.autoscaling.enabled .Values.autoscaling.enableZeroReplicas) }}
 {{- if (and .Values.topologySpreadConstraints .Values.topologySpreadConstraints.enabled) }}
 topologySpreadConstraints:
   {{- if .Values.topologySpreadConstraints.specificYaml }}
@@ -460,6 +461,7 @@ topologySpreadConstraints:
     topologyKey: kubernetes.io/hostname
     whenUnsatisfiable: {{ default "DoNotSchedule" .Values.topologySpreadConstraints.node.whenUnsatisfiable }}
   {{- end }}
+{{- end }}
 {{- end }}
 {{- end }}
 {{- end }}
