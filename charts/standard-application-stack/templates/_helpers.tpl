@@ -437,10 +437,17 @@ Build comma separated list of configmaps
 {{- end }}
 {{- end -}}
 
-{{/* Outputs topologySpreadConstraints block for a deployment */}}
+{{/*
+Outputs topologySpreadConstraints block for a deployment
+
+This also takes into account autoscaling workloads which allow zero replicas.
+Pod placement for such workloads is not important, since the pods are likely
+to be short-lived (they are only to deal with spikes in queued work),
+*/}}
 {{- define "mintel_common.topologySpreadConstraints" -}}
 {{- if (ne .Values.global.clusterEnv "local") }}
 {{- if (gt (.Values.replicas | int) 1) }}
+{{- if not (and .Values.autoscaling.enabled .Values.autoscaling.enableZeroReplicas) }}
 {{- if (and .Values.topologySpreadConstraints .Values.topologySpreadConstraints.enabled) }}
 topologySpreadConstraints:
   {{- if .Values.topologySpreadConstraints.specificYaml }}
@@ -460,6 +467,7 @@ topologySpreadConstraints:
     topologyKey: kubernetes.io/hostname
     whenUnsatisfiable: {{ default "DoNotSchedule" .Values.topologySpreadConstraints.node.whenUnsatisfiable }}
   {{- end }}
+{{- end }}
 {{- end }}
 {{- end }}
 {{- end }}
