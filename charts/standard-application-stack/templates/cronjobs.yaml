@@ -6,7 +6,9 @@ kind: CronJob
 metadata:
   name: {{ include "mintel_common.fullname" $data }}
   labels: {{ include "mintel_common.labels" $data | nindent 4 }}
-  annotations: {{ include "mintel_common.commonAnnotations" $ | nindent 4 }}
+  annotations:
+    {{- include "mintel_common.commonAnnotations" $ | nindent 4 }}
+    helm.sh/chart: {{ include "mintel_common.chart" $ }}
   namespace: {{ $.Release.Namespace }}
 spec:
   concurrencyPolicy: {{ coalesce .concurrencyPolicy $.Values.cronjobs.defaults.concurrencyPolicy }}

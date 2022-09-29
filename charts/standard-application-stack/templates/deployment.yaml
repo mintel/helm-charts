@@ -12,6 +12,7 @@ metadata:
   namespace: {{ .Release.Namespace }}
   annotations:
     {{- include "mintel_common.commonAnnotations" . | nindent 4 }}
+    helm.sh/chart: {{ include "mintel_common.chart" . }}
     {{- if (and .Values.liveness (not .Values.liveness.enabled)) }}
     app.mintel.com/opa-skip-liveness-probe-check.main: "true"
     {{- end }}
