@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v3.48.0] - 2022-09-29
+### Changed
+- Remove `helm.sh/chart` annotation to avoid merge-request noise (keep on main Deployment/CronJob)
+
 ## [v3.47.0] - 2022-09-27
 ### Changed
 - Disable `topologySpreadConstraints` when autoscaling from zero is enabled
