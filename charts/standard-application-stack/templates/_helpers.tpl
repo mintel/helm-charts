@@ -41,7 +41,6 @@ matchExpressions:
 
 {{/* Common Annotations */}}
 {{- define "mintel_common.commonAnnotations" -}}
-helm.sh/chart: {{ include "mintel_common.chart" . }}
 {{- end -}}
 
 {{/* Common labels */}}

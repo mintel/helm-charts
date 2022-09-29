@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: alfresco-to-alfresco
+  namespace: alfresco
+spec:
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app.kubernetes.io/part-of: alfresco
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/part-of: alfresco
+  policyTypes:
+  - Ingress
+
