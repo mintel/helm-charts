@@ -1,6 +1,6 @@
 # standard-application-stack
 
-![Version: 3.47.0](https://img.shields.io/badge/Version-3.47.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 3.49.0](https://img.shields.io/badge/Version-3.49.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A generic chart to support most common application requirements
 
@@ -186,6 +186,15 @@ A generic chart to support most common application requirements
 | minReadySeconds | int | `10` | Minimum number of seconds before deployments are ready |
 | nameOverride | string | `""` | String to fully override mintel_common.fullname template |
 | networkPolicy | object | `{"additionalAllowFroms":[],"enabled":true}` | Define a default NetworkPolicy for allowing apps in the same 'app.kubernetes.io/part-of' group to communicate with eachother. ref: https://kubernetes.io/docs/concepts/services-networking/network-policies/ |
+| nlb | object | `{"enabled":false,"healthcheck":{"healthyThresholdCount":2,"intervalSeconds":10,"protocol":"TCP","timeoutSeconds":5,"unhealthyThresholdCount":2},"scheme":"internet-facing","targetType":"ip"}` | Configure an NLB to route traffic direct to pods (for non HTTP traffic) |
+| nlb.healthcheck | object | `{"healthyThresholdCount":2,"intervalSeconds":10,"protocol":"TCP","timeoutSeconds":5,"unhealthyThresholdCount":2}` | Configure healthchecks |
+| nlb.healthcheck.healthyThresholdCount | int | `2` | Success threshold |
+| nlb.healthcheck.intervalSeconds | int | `10` | Period seconds {can only be 10 or 30 seconds) |
+| nlb.healthcheck.protocol | string | `"TCP"` | Healthcheck protocol |
+| nlb.healthcheck.timeoutSeconds | int | `5` | Timeout seconds |
+| nlb.healthcheck.unhealthyThresholdCount | int | `2` | Failure threshold |
+| nlb.scheme | string | `"internet-facing"` | Public or private alb (internet-facing / internal) |
+| nlb.targetType | string | `"ip"` | TargetType {instance = nodePort, ip = podIP} |
 | oauthProxy | object | `{"allowedGroups":[],"emailDomain":"","enabled":false,"env":[],"image":"quay.io/oauth2-proxy/oauth2-proxy:v7.1.3","ingressHost":"","issuerUrl":"https://oauth.mintel.com","localSecretValues":[],"scope":"openid profile email","secretNameOverride":"","secretRefreshIntervalOverride":"","secretStoreRefOverride":"","secretSuffix":"","skipAuthRegexes":[],"type":"portal","userIdClaim":""}` | Configure oauth-proxy sidecar for main deployment |
 | oauthProxy.allowedGroups | list | `[]` | Optional: list of group ids to restrict access to |
 | oauthProxy.emailDomain | string | `""` | Optional: email domain to restrict access to |
