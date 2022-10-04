@@ -7,14 +7,11 @@ Helpers for NLB LoadBalancer services
 {{ define "mintel_common.nlb.annotations" -}}
 external-dns.alpha.kubernetes.io/ttl: "60"
 external-dns.alpha.kubernetes.io/hostname: {{ .Values.nlb.defaultHost }}
-service.beta.kubernetes.io/aws-load-balancer-target-group-attributes: "preserve_client_ip.enabled=true,stickiness.enabled=true,stickiness.type=source_ip"
 service.beta.kubernetes.io/aws-load-balancer-scheme: {{ .Values.nlb.scheme }}
 service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: {{ .Values.nlb.targetType }}
-
 service.beta.kubernetes.io/healthcheck-path: {{ include "mintel_common.nlb.healthcheck.path" .Values.nlb }}
 service.beta.kubernetes.io/healthcheck-port: "{{ include "mintel_common.nlb.healthcheck.port" . }}"
 service.beta.kubernetes.io/healthcheck-protocol: {{ include "mintel_common.nlb.healthcheck.protocol" .Values.nlb }}
-
 service.beta.kubernetes.io/aws-load-balancer-healthcheck-timeout: "{{ default 5 .Values.nlb.healthcheck.timeoutSeconds }}"
 service.beta.kubernetes.io/aws-load-balancer-healthcheck-interval: "{{ default 10 .Values.nlb.healthcheck.intervalSeconds }}"
 service.beta.kubernetes.io/aws-load-balancer-healthcheck-healthy-threshold: "{{ default 2 .Values.nlb.healthcheck.healthyThresholdCount }}"
