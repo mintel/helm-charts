@@ -14,11 +14,21 @@ metadata:
     {{- if (and .Values.global.owner (and .Values.ingress.enabled .Values.ingress.alb.enabled)) }}
     'alb.ingress.kubernetes.io/tags': 'Owner={{.Values.global.owner}}'
     {{- end }}
+    {{- if .Values.nlb.enabled }}
+    {{ include "mintel_common.nlb.annotations" . | nindent 4 }}
+    {{- end }}
 spec:
   ports:
+    {{- if .Values.nlb.enabled }}
+    - name: main-tcp
+    {{- else }}
     - name: main-http
+    {{- end }}
       port: {{ .Values.port }}
       targetPort: {{ .Values.port }}
+      {{- if .Values.nlb.enabled }}
+      protocol: TCP
+      {{- end }}
     {{- if (and .Values.oauthProxy .Values.oauthProxy.enabled) }}
     - name: auth-proxy-auth-proxy
       port: 4180
@@ -40,5 +50,10 @@ spec:
       targetPort: {{ .containerPort }}
     {{- end }}
   selector: {{ include "mintel_common.selectorLabels" . | nindent 6 }}
+  {{- if .Values.nlb.enabled }}
+  type: LoadBalancer
+  loadBalancerClass: service.k8s.aws/nlb
+  {{- else }}
   type: {{ .Values.service.type }}
+  {{- end }}
 {{- end }}

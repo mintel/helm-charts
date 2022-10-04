@@ -404,6 +404,30 @@ persistentVolumes:
 # -- A list of volume mounts to be added to the pod
 volumeMounts: []
 
+# -- Configure an NLB to route traffic direct to pods (for non HTTP traffic)
+nlb:
+  enabled: false
+  # -- Public or private alb (internet-facing / internal)
+  scheme: internet-facing
+  # -- TargetType {instance = nodePort, ip = podIP}
+  targetType: ip
+  # -- Configure healthchecks
+  healthcheck:
+    # -- Healthcheck protocol
+    protocol: TCP
+    # -- Period seconds {can only be 10 or 30 seconds)
+    intervalSeconds: 10
+    # -- Healthcheck Request path
+    # path: /
+    # -- Port (defaults to port specified in Ingress used to direct traffic to service)
+    # port: "8000"
+    # -- Timeout seconds
+    timeoutSeconds: 5
+    # -- Failure threshold
+    unhealthyThresholdCount: 2
+    # -- Success threshold
+    healthyThresholdCount: 2
+
 # -- Configure the ingress resource that allows you to access the application from public-internet
 # ref: http://kubernetes.io/docs/user-guide/ingress/
 ingress:

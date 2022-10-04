@@ -102,4 +102,52 @@ spec:
           protocol: TCP
       {{- end }}
 {{- end }}
+
+{{- if .Values.nlb.enabled }}
+# We generate this network policy if routing through the public or
+# internal NLB to allow Ingress traffic
+---
+kind: NetworkPolicy
+apiVersion: {{ include "common.capabilities.networkpolicy.apiVersion" . }}
+metadata:
+  {{- if eq .Values.nlb.scheme "internet-facing" }}
+  name: {{ printf "allow-aws-nlb-to-%s" .Values.global.name }}
+  {{- else }}
+  # Assume internal facing
+  name: {{ printf "allow-aws-nlb-internal-to-%s" .Values.global.name }}
+  {{- end }}
+  namespace: {{ .Release.Namespace }}
+  labels: {{ include "mintel_common.labels" . | nindent 4 }}
+  annotations: {{ include "mintel_common.commonAnnotations" . | nindent 4 }}
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/part-of: {{ .Values.global.partOf }}
+  ingress:
+    - from:
+      {{- if eq .Values.nlb.scheme "internet-facing" }}
+      - ipBlock:
+          cidr: "${AWS_PUBLIC_SUBNET_CIDR_BLOCKS_0}"
+      - ipBlock:
+          cidr: "${AWS_PUBLIC_SUBNET_CIDR_BLOCKS_1}"
+      - ipBlock:
+          cidr: "${AWS_PUBLIC_SUBNET_CIDR_BLOCKS_2}"
+      {{- else }}
+      # Assume internal facing
+      - ipBlock:
+          cidr: "${AWS_PRIVATE_APP_SUBNET_CIDR_BLOCKS_0}"
+      - ipBlock:
+          cidr: "${AWS_PRIVATE_APP_SUBNET_CIDR_BLOCKS_1}"
+      - ipBlock:
+          cidr: "${AWS_PRIVATE_APP_SUBNET_CIDR_BLOCKS_2}"
+      {{- end }}
+      ports:
+      {{ $ports := list }}
+      {{ $ports = append $ports .Values.port}}
+      {{ $ports := sortAlpha $ports | uniq }}
+      {{- range $ports }}
+        - port: {{ . }}
+          protocol: TCP
+      {{- end }}
+{{- end }}
 {{- end }}

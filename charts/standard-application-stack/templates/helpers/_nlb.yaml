@@ -1,0 +1,44 @@
+{{/* vim: set filetype=mustache: */}}
+
+{{/*
+Helpers for NLB LoadBalancer services
+*/}}
+
+{{ define "mintel_common.nlb.annotations" -}}
+service.beta.kubernetes.io/aws-load-balancer-proxy-protocol: "*"
+service.beta.kubernetes.io/aws-load-balancer-target-group-attributes: "preserve_client_ip.enabled=true,stickiness.enabled=true,stickiness.type=source_ip"
+service.beta.kubernetes.io/aws-load-balancer-scheme: {{ .Values.nlb.scheme }}
+service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: {{ .Values.nlb.targetType }}
+
+service.beta.kubernetes.io/healthcheck-path: {{ include "mintel_common.nlb.healthcheck.path" .Values.nlb }}
+service.beta.kubernetes.io/healthcheck-port: "{{ include "mintel_common.nlb.healthcheck.port" . }}"
+service.beta.kubernetes.io/healthcheck-protocol: {{ include "mintel_common.nlb.healthcheck.protocol" .Values.nlb }}
+
+service.beta.kubernetes.io/aws-load-balancer-healthcheck-timeout: "{{ default 5 .Values.nlb.healthcheck.timeoutSeconds }}"
+service.beta.kubernetes.io/aws-load-balancer-healthcheck-interval: "{{ default 10 .Values.nlb.healthcheck.intervalSeconds }}"
+service.beta.kubernetes.io/aws-load-balancer-healthcheck-healthy-threshold: "{{ default 2 .Values.nlb.healthcheck.healthyThresholdCount }}"
+service.beta.kubernetes.io/aws-load-balancer-healthcheck-unhealthy-threshold: "{{ default 2 .Values.nlb.healthcheck.unhealthyThresholdCount }}"
+{{- end }}
+
+{{/* Set default NLB healthcheck path */}}
+{{- define "mintel_common.nlb.healthcheck.path" -}}
+{{- default "/" .healthcheck.path }}
+{{- end }}
+
+{{/* Set default NLB healthcheck port */}}
+{{- define "mintel_common.nlb.healthcheck.port" -}}
+{{- if .Values.oauthProxy.enabled }}
+{{- default 4180 .Values.nlb.healthcheck.port }}
+{{- else }}
+{{- default .Values.port .Values.nlb.healthcheck.port }}
+{{- end }}
+{{- end }}
+
+{{/* Set default NLB healthcheck protocol */}}
+{{- define "mintel_common.nlb.healthcheck.protocol" -}}
+{{- if has .healthcheck.protocol (list "HTTP" "HTTPS" "TCP" ) }}
+{{- .healthcheck.protocol}}
+{{- else }}
+{{- "TCP" }}
+{{- end }}
+{{- end }}
