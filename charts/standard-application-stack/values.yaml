@@ -407,7 +407,7 @@ volumeMounts: []
 # -- Configure an NLB to route traffic direct to pods (for non HTTP traffic)
 nlb:
   enabled: false
-  # -- Public or private alb (internet-facing / internal)
+  # -- Public or private nlb (internet-facing / internal)
   scheme: internet-facing
   # -- TargetType {instance = nodePort, ip = podIP}
   targetType: ip
