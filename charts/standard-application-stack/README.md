@@ -193,7 +193,7 @@ A generic chart to support most common application requirements
 | nlb.healthcheck.protocol | string | `"TCP"` | Healthcheck protocol |
 | nlb.healthcheck.timeoutSeconds | int | `5` | Timeout seconds |
 | nlb.healthcheck.unhealthyThresholdCount | int | `2` | Failure threshold |
-| nlb.scheme | string | `"internet-facing"` | Public or private alb (internet-facing / internal) |
+| nlb.scheme | string | `"internet-facing"` | Public or private nlb (internet-facing / internal) |
 | nlb.targetType | string | `"ip"` | TargetType {instance = nodePort, ip = podIP} |
 | oauthProxy | object | `{"allowedGroups":[],"emailDomain":"","enabled":false,"env":[],"image":"quay.io/oauth2-proxy/oauth2-proxy:v7.1.3","ingressHost":"","issuerUrl":"https://oauth.mintel.com","localSecretValues":[],"scope":"openid profile email","secretNameOverride":"","secretRefreshIntervalOverride":"","secretStoreRefOverride":"","secretSuffix":"","skipAuthRegexes":[],"type":"portal","userIdClaim":""}` | Configure oauth-proxy sidecar for main deployment |
 | oauthProxy.allowedGroups | list | `[]` | Optional: list of group ids to restrict access to |
