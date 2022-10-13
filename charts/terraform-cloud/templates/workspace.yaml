@@ -22,7 +22,7 @@
         {{- $_ := set $instanceConfig "db_name" ( $instanceConfig.name | snakecase ) }}
       {{- end }}
       # Set instance.eks_namespace for stepFunctionEks if not provided
-      {{- if ( and ( eq $resourceType "stepFunctionEks" ) ( not ( hasKey $instanceConfig "eks_namespace" ) ) ) }}
+      {{- if ( and ( has $resourceType (list "stepFunctionEks" "sshKeyPairSecret") ) ( not ( hasKey $instanceConfig "eks_namespace" ) ) ) }}
         {{- $_ := set $instanceConfig "eks_namespace" $.Release.Namespace }}
       {{- end }}
       {{- if not (hasKey $instanceConfig "aws_account_name") }}
