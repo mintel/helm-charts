@@ -116,7 +116,7 @@ A Helm chart for provisioning resources using Terraform Cloud
 | sshKeyPairSecret.terraform.defaultVars | object | `{}` | Vars to be applied to all instances defined below |
 | sshKeyPairSecret.terraform.instances | object | `{}` | A map of instance names => variable key/value pairs to be sent to the terraform module. The values in `defaultVars` will be applied to every instance if not explicitly defined here. |
 | sshKeyPairSecret.terraform.module.source | string | `"app.terraform.io/Mintel/ssh-keypair-secret/aws"` | Registry path of the Terraform module used to create the resource (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/ssh-keypair-secret/aws) |
-| sshKeyPairSecret.terraform.module.version | string | `"0.0.1"` | Module version |
+| sshKeyPairSecret.terraform.module.version | string | `"0.0.2"` | Module version |
 | sshKeyPairSecret.terraform.terraformVersion | string | `"1.3.0-alpha20220608"` |  |
 | staticWebsite.enabled | bool | `false` | Set to true to create static website (a public bucket and associated resources) |
 | staticWebsite.outputSecret | bool | `true` | Set to true to create an AWS secret manager external secret with outputs |
