@@ -33,5 +33,5 @@
     {{- $_ := set $irsaConfig "k8s_namespace" $.Release.Namespace }}
   {{- end }}
   # Create the CRD
-  {{- include "mintel_common.terraform_cloud.workspace" (list $ . $irsaConfig "irsa" $moduleSource $moduleVersion $tfVersion) }}
+  {{- include "mintel_common.terraform_cloud.workspace" (list $ . $irsaConfig "irsa" $moduleSource $moduleVersion $tfVersion $irsa) }}
 {{- end }}

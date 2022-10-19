@@ -270,3 +270,65 @@ tests:
       - equal:
           path: metadata.annotations.[app.mintel.com/terraform-allow-destroy]
           value: "false"
+
+  - it: Dev S3 module workspace with modified syncWave
+    set:
+      global.name: test-app
+      global.clusterEnv: dev
+      global.clusterName: cluster1
+      global.clusterRegion: eu-west-1
+      global.owner: sre
+      global.partOf: test-project
+      s3.enabled: true
+      s3.syncWave: "200"
+    asserts:
+      - isKind:
+          of: Workspace
+      - equal:
+          path: metadata.namespace
+          value: test-namespace
+      - equal:
+          path: metadata.name
+          value: dev-eu-west-1-cluster1-test-namespace-mntl-test-app-s3
+      - equal:
+          path: spec.module.source
+          value: app.terraform.io/Mintel/private-s3-bucket/aws
+      - hasDocuments:
+          count: 1
+      - equal:
+          path: metadata.annotations.[app.mintel.com/altManifestFileSuffix]
+          value: mntl-test-app-s3
+      - equal:
+          path: metadata.annotations.[argocd.argoproj.io/sync-wave]
+          value: "200"
+
+  - it: Dev S3 module workspace with default (0) syncWave
+    set:
+      global.name: test-app
+      global.clusterEnv: dev
+      global.clusterName: cluster1
+      global.clusterRegion: eu-west-1
+      global.owner: sre
+      global.partOf: test-project
+      s3.enabled: true
+      s3.syncWave: "0"
+    asserts:
+      - isKind:
+          of: Workspace
+      - equal:
+          path: metadata.namespace
+          value: test-namespace
+      - equal:
+          path: metadata.name
+          value: dev-eu-west-1-cluster1-test-namespace-mntl-test-app-s3
+      - equal:
+          path: spec.module.source
+          value: app.terraform.io/Mintel/private-s3-bucket/aws
+      - hasDocuments:
+          count: 1
+      - equal:
+          path: metadata.annotations.[app.mintel.com/altManifestFileSuffix]
+          value: mntl-test-app-s3
+      - equal:
+          path: metadata.annotations.[argocd.argoproj.io/sync-wave]
+          value: "0"

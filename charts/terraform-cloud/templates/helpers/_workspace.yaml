@@ -5,6 +5,7 @@
 {{- $moduleSource := index . 4 }}
 {{- $moduleVersion := index . 5 }}
 {{- $tfVersion := index . 6}}
+{{- $resourceCfg := index . 7}}
 {{- $global := $.Values.global }}
 {{- $workspaceDict := dict "Global" $global "Release" $.Release "InstanceCfg" $instanceCfg "ResourceType" $resourceType }}
 {{- with index . 1 }}
@@ -22,10 +23,10 @@ metadata:
     {{ include "mintel_common.terraform_cloud.operatorAnnotations" $workspaceDict | nindent 4 }}
     {{- if (eq $resourceType "irsa") }}
     app.mintel.com/altManifestFileSuffix: "{{ $global.name }}-{{ $resourceType | kebabcase }}"
-    argocd.argoproj.io/sync-wave: "-20"
+    argocd.argoproj.io/sync-wave: "{{ default -20 $resourceCfg.syncWave }}"
     {{- else }}
     app.mintel.com/altManifestFileSuffix: "{{ $instanceCfg.name }}-{{ $resourceType | kebabcase }}"
-    argocd.argoproj.io/sync-wave: "-40"
+    argocd.argoproj.io/sync-wave: "{{ default -40 $resourceCfg.syncWave }}"
     {{- end}}
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:

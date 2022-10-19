@@ -110,3 +110,59 @@ tests:
           value: dev-eu-west-1-cluster1-test-namespace-test-app-irsa
       - hasDocuments:
           count: 1
+
+  - it: IRSA created with modified syncWave
+    set:
+      global.name: test-app
+      global.clusterEnv: dev
+      global.clusterName: cluster1
+      global.clusterRegion: eu-west-1
+      global.owner: sre
+      global.partOf: test-project
+      irsa.enabled: true
+      irsa.syncWave: "-100"
+    asserts:
+      - isKind:
+          of: Workspace
+      - equal:
+          path: metadata.namespace
+          value: test-namespace
+      - equal:
+          path: metadata.name
+          value: dev-eu-west-1-cluster1-test-namespace-test-app-irsa
+      - equal:
+          path: spec.module.source
+          value: app.terraform.io/Mintel/app-iam/aws
+      - hasDocuments:
+          count: 1
+      - equal:
+          path: metadata.annotations.[argocd.argoproj.io/sync-wave]
+          value: "-100"
+
+  - it: IRSA created with default (0) syncWave
+    set:
+      global.name: test-app
+      global.clusterEnv: dev
+      global.clusterName: cluster1
+      global.clusterRegion: eu-west-1
+      global.owner: sre
+      global.partOf: test-project
+      irsa.enabled: true
+      irsa.syncWave: "0"
+    asserts:
+      - isKind:
+          of: Workspace
+      - equal:
+          path: metadata.namespace
+          value: test-namespace
+      - equal:
+          path: metadata.name
+          value: dev-eu-west-1-cluster1-test-namespace-test-app-irsa
+      - equal:
+          path: spec.module.source
+          value: app.terraform.io/Mintel/app-iam/aws
+      - hasDocuments:
+          count: 1
+      - equal:
+          path: metadata.annotations.[argocd.argoproj.io/sync-wave]
+          value: "0"
