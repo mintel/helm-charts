@@ -59,7 +59,7 @@
       {{- $instanceConfig = mergeOverwrite (include "mintel_common.terraform_cloud.defaultVarValues" $instanceDict | fromJson ) $instanceConfig }}
       # Create the CRD
 ---
-      {{- include "mintel_common.terraform_cloud.workspace" (list $ . $instanceConfig $resourceType $moduleSource $moduleVersion $tfVersion) }}
+      {{- include "mintel_common.terraform_cloud.workspace" (list $ . $instanceConfig $resourceType $moduleSource $moduleVersion $tfVersion $resourceConfig) }}
     {{- end }}
   {{- end }}
 {{- end }}

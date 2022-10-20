@@ -36,6 +36,8 @@ global:
 irsa:
   # -- Set to true to explicitly instantiate this module if there's need to access resources created elsewhere
   enabled: false
+  # -- Set ArgoCD syncWave for this resource (default -20)
+  # syncWave: -20
   terraform:
     ### Set Terraform version for this module to overwrite global.TerraformVersion
     # terraformVersion:
@@ -67,6 +69,8 @@ dynamodb:
   enabled: false
   # -- Set to true to create an AWS secret manager external secret with outputs
   outputSecret: true
+  # -- Set ArgoCD syncWave for this resource (default -40)
+  # syncWave: -40
   terraform:
     ### Set Terraform version for this module to overwrite global.TerraformVersion
     # terraformVersion:
@@ -106,6 +110,8 @@ sqs:
   enabled: false
   # -- Set to true to create an AWS secret manager external secret with outputs
   outputSecret: true
+  # -- Set ArgoCD syncWave for this resource (default -40)
+  # syncWave: -40
   terraform:
     ### Set Terraform version for this module to overwrite global.TerraformVersion
     # terraformVersion:
@@ -138,6 +144,8 @@ sns:
   enabled: false
   # -- Set to true to create an AWS secret manager external secret with outputs
   outputSecret: true
+  # -- Set ArgoCD syncWave for this resource (default -40)
+  # syncWave: -40
   terraform:
     ### Set Terraform version for this module to overwrite global.TerraformVersion
     # terraformVersion:
@@ -170,6 +178,8 @@ staticWebsite:
   enabled: false
   # -- Set to true to create an AWS secret manager external secret with outputs
   outputSecret: true
+  # -- Set ArgoCD syncWave for this resource (default -40)
+  # syncWave: -40
   terraform:
     ### Set Terraform version for this module to overwrite global.TerraformVersion
     # terraformVersion:
@@ -202,6 +212,8 @@ mariadb:
   enabled: false
   # -- Set to true to create an AWS secret manager external secret with outputs
   outputSecret: true
+  # -- Set ArgoCD syncWave for this resource (default -40)
+  # syncWave: -40
   terraform:
     ### Set Terraform version for this module to overwrite global.TerraformVersion
     # terraformVersion:
@@ -292,6 +304,8 @@ memcached:
   enabled: false
   # -- Set to true to create an AWS secret manager external secret with outputs
   outputSecret: true
+  # -- Set ArgoCD syncWave for this resource (default -40)
+  # syncWave: -40
   terraform:
     ### Set Terraform version for this module to overwrite global.TerraformVersion
     # terraformVersion:
@@ -329,6 +343,8 @@ opensearch:
   enabled: false
   # -- Set to true to create an AWS secret manager external secret with outputs
   outputSecret: true
+  # -- Set ArgoCD syncWave for this resource (default -40)
+  # syncWave: -40
   terraform:
     ### Set Terraform version for this module to overwrite global.TerraformVersion
     # terraformVersion:
@@ -412,6 +428,8 @@ auroraPostgresql:
   enabled: false
   # -- Set to true to create an AWS secret manager external secret with outputs
   outputSecret: true
+  # -- Set ArgoCD syncWave for this resource (default -40)
+  # syncWave: -40
   terraform:
     ### Set Terraform version for this module to overwrite global.TerraformVersion
     # terraformVersion:
@@ -459,6 +477,8 @@ redis:
   enabled: false
   # -- Set to true to create an AWS secret manager external secret with outputs
   outputSecret: true
+  # -- Set ArgoCD syncWave for this resource (default -40)
+  # syncWave: -40
   terraform:
     ### Set Terraform version for this module to overwrite global.TerraformVersion
     # terraformVersion:
@@ -497,6 +517,8 @@ s3:
   enabled: false
   # -- Set to true to create an AWS secret manager external secret with outputs
   outputSecret: true
+  # -- Set ArgoCD syncWave for this resource (default -40)
+  # syncWave: -40
   terraform:
     ### Set Terraform version for this module to overwrite global.TerraformVersion
     # terraformVersion:
@@ -531,6 +553,8 @@ activeMQ:
   enabled: false
   # -- Set to true to create an AWS secret manager external secret with outputs
   outputSecret: true
+  # -- Set ArgoCD syncWave for this resource (default -40)
+  # syncWave: -40
   terraform:
     ### Set Terraform version for this module to overwrite global.TerraformVersion
     # terraformVersion:
@@ -595,6 +619,8 @@ stepFunctionEks:
 sshKeyPairSecret:
   # -- Set to true to create AWS secret manager secrets for an SSH key pair
   enabled: false
+  # -- Set ArgoCD syncWave for this resource (default -40)
+  # syncWave: -40
   terraform:
     ### Set Terraform version for this module to overwrite global.TerraformVersion
     module:
