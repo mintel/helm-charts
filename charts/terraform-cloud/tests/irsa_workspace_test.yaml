@@ -110,7 +110,6 @@ tests:
           value: dev-eu-west-1-cluster1-test-namespace-test-app-irsa
       - hasDocuments:
           count: 1
-
   - it: IRSA created with modified syncWave
     set:
       global.name: test-app
@@ -138,7 +137,6 @@ tests:
       - equal:
           path: metadata.annotations.[argocd.argoproj.io/sync-wave]
           value: "-100"
-
   - it: IRSA created with default (0) syncWave
     set:
       global.name: test-app
