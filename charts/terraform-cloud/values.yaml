@@ -52,7 +52,8 @@ irsa:
       version: "2.0.0"
     # -- Vars to be applied to all instances defined below
     # @default -- See below
-    vars: {}
+    vars:
+      {}
       ### Set to override the generated workspace name for example if the generated name is above the char limit
       # workspaceNameOverride: string
       ### Comma separated list of tags to add to workspace. Set to override the defaults which are:
@@ -81,7 +82,8 @@ dynamodb:
       # -- Module version
       version: "1.0.0"
     # -- Vars to be applied to all instances defined below
-    defaultVars: {}
+    defaultVars:
+      {}
       ### Set to override the generated workspace name for example if the generated name is above the char limit
       # workspaceNameOverride: string
       ### Comma separated list of tags to add to workspace. Set to override the defaults which are:
@@ -122,7 +124,8 @@ sqs:
       # -- Module version
       version: "1.0.0"
     # -- Vars to be applied to all instances defined below
-    defaultVars: {}
+    defaultVars:
+      {}
       ### Set to override the generated workspace name for example if the generated name is above the char limit
       # workspaceNameOverride: string
       ### Comma separated list of tags to add to workspace. Set to override the defaults which are:
@@ -156,7 +159,8 @@ sns:
       # -- Module version
       version: "1.0.0"
     # -- Vars to be applied to all instances defined below
-    defaultVars: {}
+    defaultVars:
+      {}
       ### Set to override the generated workspace name for example if the generated name is above the char limit
       # workspaceNameOverride: string
       ### Comma separated list of tags to add to workspace. Set to override the defaults which are:
@@ -188,9 +192,10 @@ staticWebsite:
       # (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/public-static-website/aws)
       source: app.terraform.io/Mintel/public-static-website/aws
       # -- Module version
-      version: "1.0.0"
+      version: "1.1.0"
     # -- Vars to be applied to all instances defined below
-    defaultVars: {}
+    defaultVars:
+      {}
       ### Set to override the generated workspace name for example if the generated name is above the char limit
       # workspaceNameOverride: string
       ### Comma separated list of tags to add to workspace. Set to override the defaults which are:
@@ -222,7 +227,7 @@ mariadb:
       # (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/rds/aws)
       source: app.terraform.io/Mintel/rds/aws
       # -- Module version
-      version: "1.0.2"
+      version: "1.1.0"
     # -- Vars to be applied to all instances defined below
     # @default -- See below
     defaultVars:
@@ -324,16 +329,16 @@ memcached:
       num_cache_nodes: 1
       ### Set to override the generated workspace name for example if the generated name is above the char limit
       # workspaceNameOverride: string
-        ### Comma separated list of tags to add to workspace. Set to override the defaults which are:
-        ### the environment, the AWS region, the cluster name, the namespace, the resource type and the owner
-        # workspaceTags: string
-        ### Boolean which when set to true allows destroy runs on the workspace and vice-versa. It serves as a form of
-        ### deletion protection. It defaults to false in prod and logs
-        # workspaceAllowDestroy: bool
-        ### Used to map to the Terraform Cloud team(s) to give access to the workspace. Defaults to the global.owner value
-        # workspaceOwner: string
-        ### Use to map keys from AWS secret manager secrets to new key names. Map values should be in the form <new key>:<module secret key>
-        # outputSecretMap: {}
+      ### Comma separated list of tags to add to workspace. Set to override the defaults which are:
+      ### the environment, the AWS region, the cluster name, the namespace, the resource type and the owner
+      # workspaceTags: string
+      ### Boolean which when set to true allows destroy runs on the workspace and vice-versa. It serves as a form of
+      ### deletion protection. It defaults to false in prod and logs
+      # workspaceAllowDestroy: bool
+      ### Used to map to the Terraform Cloud team(s) to give access to the workspace. Defaults to the global.owner value
+      # workspaceOwner: string
+      ### Use to map keys from AWS secret manager secrets to new key names. Map values should be in the form <new key>:<module secret key>
+      # outputSecretMap: {}
     # -- A map of instance names => variable key/value pairs to be sent to the terraform module. The values in
     # `defaultVars` will be applied to every instance if not explicitly defined here.
     instances: {}
@@ -391,7 +396,7 @@ postgresql:
       # (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/rds/aws)
       source: app.terraform.io/Mintel/rds/aws
       # -- Module version
-      version: "1.0.2"
+      version: "1.1.0"
     # -- Vars to be applied to all instances defined below
     # @default -- See below
     defaultVars:
@@ -487,9 +492,10 @@ redis:
       # (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/redis/aws)
       source: app.terraform.io/Mintel/redis/aws
       # -- Module version
-      version: "1.0.0"
+      version: "1.1.0"
     # -- Vars to be applied to all instances defined below
-    defaultVars: {}
+    defaultVars:
+      {}
       ### Set to override the generated workspace name for example if the generated name is above the char limit
       # workspaceNameOverride: string
       ### Comma separated list of tags to add to workspace. Set to override the defaults which are:
@@ -529,7 +535,8 @@ s3:
       # -- Module version
       version: "1.1.2"
     # -- Vars to be applied to all instances defined below
-    defaultVars: {}
+    defaultVars:
+      {}
       ### Set to override the generated workspace name for example if the generated name is above the char limit
       # workspaceNameOverride: string
       ### Comma separated list of tags to add to workspace. Set to override the defaults which are:
@@ -565,7 +572,8 @@ activeMQ:
       # -- Module version
       version: "0.0.2"
     # -- Vars to be applied to all instances defined below
-    defaultVars: {}
+    defaultVars:
+      {}
       ### Set to override the generated workspace name for example if the generated name is above the char limit
       # workspaceNameOverride: string
       ### Comma separated list of tags to add to workspace. Set to override the defaults which are:
@@ -599,7 +607,8 @@ stepFunctionEks:
       # -- Module version
       version: "1.0.0"
     # -- Vars to be applied to all instances defined below
-    defaultVars: {}
+    defaultVars:
+      {}
       ### Set to override the generated workspace name for example if the generated name is above the char limit
       # workspaceNameOverride: string
       ### Comma separated list of tags to add to workspace. Set to override the defaults which are:
@@ -630,7 +639,8 @@ sshKeyPairSecret:
       # -- Module version
       version: "0.0.5"
     # -- Vars to be applied to all instances defined below
-    defaultVars: {}
+    defaultVars:
+      {}
       ### Set to override the generated workspace name for example if the generated name is above the char limit
       # workspaceNameOverride: string
       ### Comma separated list of tags to add to workspace. Set to override the defaults which are:

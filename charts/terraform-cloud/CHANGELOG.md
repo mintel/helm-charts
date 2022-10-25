@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v0.27.0] - 2022-10-25
+### Changed
+- Bump versions of mariadb, postgresql, redis and staticWebsite Terraform modules
+
 ## [v0.26.0] - 2022-10-19
 ### Added
 - Added option to configure ArgoCD `sync-wave` per resource-type
