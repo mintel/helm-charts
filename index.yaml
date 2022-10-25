@@ -7847,6 +7847,16 @@ entries:
   terraform-cloud:
   - apiVersion: v2
     appVersion: 2.0.0
+    created: "2022-10-25T10:33:17.331405827Z"
+    description: A Helm chart for provisioning resources using Terraform Cloud
+    digest: eb7b55db036a89b12e91006363d06337bdea87b8966bc9a03af0083b2fa4ba98
+    name: terraform-cloud
+    type: application
+    urls:
+    - https://github.com/mintel/helm-charts/releases/download/terraform-cloud-0.27.0/terraform-cloud-0.27.0.tgz
+    version: 0.27.0
+  - apiVersion: v2
+    appVersion: 2.0.0
     created: "2022-10-20T08:24:51.005111471Z"
     description: A Helm chart for provisioning resources using Terraform Cloud
     digest: 32fec5570782f053f273fa7d96f8b70388a0801cd836c45b1afa89fc344bdc77
@@ -8346,4 +8356,4 @@ entries:
     urls:
     - https://github.com/mintel/helm-charts/releases/download/testchart-0.1.1/testchart-0.1.1.tgz
     version: 0.1.1
-generated: "2022-10-20T08:24:51.006980313Z"
+generated: "2022-10-25T10:33:17.333535729Z"
