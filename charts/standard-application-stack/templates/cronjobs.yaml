@@ -121,6 +121,12 @@ spec:
                     name: {{ default (include "mintel_common.defaultRedisSecretName" $) $.Values.redis.secretNameOverride }}
                 {{- end }}
                 {{- end }}
+                {{- if (and $.Values.s3 $.Values.s3.enabled) }}
+                {{- if .includeS3Secret }}
+                - secretRef:
+                    name: {{ default (include "mintel_common.defaultS3SecretName" $) $.Values.s3.secretNameOverride }}
+                {{- end }}
+                {{- end }}
                 {{- if (and $.Values.elasticsearch $.Values.elasticsearch.enabled) }}
                 {{- if .includeElasticsearchSecret }}
                 - secretRef:

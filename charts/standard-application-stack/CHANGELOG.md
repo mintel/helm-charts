@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v3.50.0] - 2022-11-08
+### Added
+- Added `includeS3Secret` flag for cronjobs
+
 ## [v3.49.0] - 2022-10-04
 ### Added
 - Added support for Network Load Balancers to route traffic to Services of type LoadBalancer
