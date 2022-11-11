@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v3.51.0] - 2022-11-11
+### Added
+- Added ability to get correct secret names from terraform cloud helm chart
+
 ## [v3.50.0] - 2022-11-08
 ### Added
 - Added `includeS3Secret` flag for cronjobs

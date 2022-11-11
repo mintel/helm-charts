@@ -471,3 +471,47 @@ topologySpreadConstraints:
 {{- end }}
 {{- end }}
 {{- end -}}
+
+{{/* Supported resources */}}
+{{- define "mintel_common.terraformCloudResources" -}}
+{{- $terraformCloudResources := (list "opensearch" "postgresql" "redis" "s3" "mariadb" "dynamodb" "sqs") -}}
+{{ join "," $terraformCloudResources }}
+{{- end -}}
+
+{{/* Set instanceConfig.Name */}}
+{{- define "mintel_common.terraform_cloud.instanceConfigName" -}}
+{{- $name := ""}}
+{{- if ( hasKey .InstanceCfg "name" ) }}
+  {{- $name = .InstanceCfg.name }}
+{{- else }}
+  {{- if eq .InstanceName "default" }}
+    {{- $name = .Global.name }}
+  {{- else }}
+    {{- $name = .InstanceName }}
+  {{- end }}
+{{- end }}
+{{- if ( and ( eq .ResourceType "s3") ( not (hasPrefix "mntl" $name)))}}
+  {{- $name = (printf "mntl-%s" $name) }}
+{{- end }}
+{{ $name }}
+{{- end -}}
+
+{{/* Build list of TF cloud secrets */}}
+{{- define "mintel_common.tf_cloud_external_secrets" -}}
+{{- $tfSecretList := list }}
+{{- range include "mintel_common.terraformCloudResources" $ | split "," }}
+  {{- $global := $.Values.global }}
+  {{- $resourceType := . }}
+  {{- $resourceConfig := (get $.Values .) }}
+  {{- if ( and (hasKey $resourceConfig "enabled") (hasKey $resourceConfig "outputSecret")) }}
+      {{- if ( and $resourceConfig.enabled $resourceConfig.outputSecret) }}
+        {{- range $instanceName, $instanceConfig := default ( dict "default" dict ) $resourceConfig.terraform.instances }}
+          {{- $instanceDict := dict "Global" $global "InstanceCfg" $instanceConfig "InstanceName" $instanceName "ResourceType" $resourceType }}
+          {{- $_ := set $instanceConfig "name" (include "mintel_common.terraform_cloud.instanceConfigName" $instanceDict | trim)}}
+          {{- $tfSecretList = append $tfSecretList (printf "%s-%s" ($instanceConfig.name | kebabcase) ($resourceType | kebabcase) ) }}
+        {{- end }}
+      {{- end }}
+  {{- end }}
+{{- end }}
+{{- join "," $tfSecretList -}}
+{{- end -}}
