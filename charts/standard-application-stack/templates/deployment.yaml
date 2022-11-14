@@ -195,7 +195,7 @@ spec:
                 name: {{ default (include "mintel_common.defaultAppSecretName" .) .Values.externalSecret.nameOverride }}
             {{- end }}
             {{- end }}
-            {{- if .Values.global.terraform.externalSecrets }}
+            {{- if (and (ne .Values.global.clusterEnv "local") .Values.global.terraform.externalSecrets) }}
               {{- range include "mintel_common.tf_cloud_external_secrets" . | split "," }}
               {{- if . }}
             - secretRef:
