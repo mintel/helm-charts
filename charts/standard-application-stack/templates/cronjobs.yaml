@@ -97,8 +97,8 @@ spec:
                 {{- end }}
                 {{- end }}
                 {{- end }}
-                {{- if .Values.global.terraform.externalSecrets }}
-                  {{- range include "mintel_common.tf_cloud_external_secrets" . | split "," }}
+                {{- if $.Values.global.terraform.externalSecrets }}
+                  {{- range include "mintel_common.tf_cloud_external_secrets" $ | split "," }}
                   {{- if . }}
                 - secretRef:
                     name: {{ . }}
