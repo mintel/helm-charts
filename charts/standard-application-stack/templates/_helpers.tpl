@@ -471,3 +471,56 @@ topologySpreadConstraints:
 {{- end }}
 {{- end }}
 {{- end -}}
+
+{{/* Supported resources */}}
+{{- define "mintel_common.terraformCloudResources" -}}
+{{- $terraformCloudResources := (list "opensearch" "postgresql" "redis" "s3" "mariadb" "dynamodb" "sqs") -}}
+{{ join "," $terraformCloudResources }}
+{{- end -}}
+
+{{/* Set instanceConfig.Name */}}
+{{- define "mintel_common.terraform_cloud.instanceConfigName" -}}
+{{- $name := ""}}
+{{- /* Use the instance config name if it is set explicitly */}}
+{{- if ( hasKey .InstanceCfg "name" ) }}
+  {{- $name = .InstanceCfg.name }}
+{{- else }}
+  {{- /* Use the app name if this is just a default resource setting */}}
+  {{- if eq .InstanceName "default" }}
+    {{- $name = .Global.name }}
+  {{- else }}
+    {{- /* Use the actual instance name otherwise */}}
+    {{- $name = .InstanceName }}
+  {{- end }}
+{{- end }}
+{{- /* If it is an S3 bucket, add the mntl- prefix if it does not exist */}}
+{{- if ( and ( eq .ResourceType "s3") ( not (hasPrefix "mntl" $name)))}}
+  {{- $name = (printf "mntl-%s" $name) }}
+{{- end }}
+{{ $name }}
+{{- end -}}
+
+{{/* Build list of TF cloud secrets */}}
+{{- define "mintel_common.tf_cloud_external_secrets" -}}
+{{- /* Initialize empty list that will contain the names of all TF Cloud secrets */}}
+{{- $tfSecretList := list }}
+{{- /* Loop through all supported Terraform Cloud resources */}}
+{{- range include "mintel_common.terraformCloudResources" $ | split "," }}
+  {{- $global := $.Values.global }}
+  {{- $resourceType := . }}
+  {{- $resourceConfig := (get $.Values .) }}
+  {{- /* Check if they have the keys enabled and outputSecret i.e. if the TF Cloud chart is being used in tandem */}}
+  {{- if ( and (hasKey $resourceConfig "enabled") (hasKey $resourceConfig "outputSecret")) }}
+      {{- /* Check if the resource is enabled and the output secret for it is as well */}}
+      {{- if ( and $resourceConfig.enabled $resourceConfig.outputSecret) }}
+        {{- /* Loop through all instances of every resource type that is enabled and add the secret name to a list */}}
+        {{- range $instanceName, $instanceConfig := default ( dict "default" dict ) $resourceConfig.terraform.instances }}
+          {{- $instanceDict := dict "Global" $global "InstanceCfg" $instanceConfig "InstanceName" $instanceName "ResourceType" $resourceType }}
+          {{- $_ := set $instanceConfig "name" (include "mintel_common.terraform_cloud.instanceConfigName" $instanceDict | trim)}}
+          {{- $tfSecretList = append $tfSecretList (printf "%s-%s" ($instanceConfig.name | kebabcase) ($resourceType | kebabcase) ) }}
+        {{- end }}
+      {{- end }}
+  {{- end }}
+{{- end }}
+{{- join "," $tfSecretList -}}
+{{- end -}}

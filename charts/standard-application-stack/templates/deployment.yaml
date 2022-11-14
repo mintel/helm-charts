@@ -195,37 +195,46 @@ spec:
                 name: {{ default (include "mintel_common.defaultAppSecretName" .) .Values.externalSecret.nameOverride }}
             {{- end }}
             {{- end }}
-            {{- if (and .Values.mariadb .Values.mariadb.enabled) }}
+            {{- if (and (ne .Values.global.clusterEnv "local") .Values.global.terraform.externalSecrets) }}
+              {{- range include "mintel_common.tf_cloud_external_secrets" . | split "," }}
+              {{- if . }}
+            - secretRef:
+                name: {{ . }}
+              {{- end }}
+              {{- end }}
+            {{- else }}
+              {{- if (and .Values.mariadb .Values.mariadb.enabled) }}
             - secretRef:
                 name: {{ default (include "mintel_common.defaultMariadbSecretName" .) .Values.mariadb.secretNameOverride }}
-            {{- end }}
-            {{- if (and .Values.postgresql .Values.postgresql.enabled) }}
+              {{- end }}
+              {{- if (and .Values.postgresql .Values.postgresql.enabled) }}
             - secretRef:
                 name: {{ default (include "mintel_common.defaultPostgresqlSecretName" .) .Values.postgresql.secretNameOverride }}
-            {{- end }}
-            {{- if (and .Values.dynamodb .Values.dynamodb.enabled) }}
+              {{- end }}
+              {{- if (and .Values.dynamodb .Values.dynamodb.enabled) }}
             - secretRef:
                 name: {{ default (include "mintel_common.defaultDynamodbSecretName" .) .Values.dynamodb.secretNameOverride }}
-            {{- end }}
-            {{- if (and .Values.redis .Values.redis.enabled) }}
+              {{- end }}
+              {{- if (and .Values.redis .Values.redis.enabled) }}
             - secretRef:
                 name: {{ default (include "mintel_common.defaultRedisSecretName" .) .Values.redis.secretNameOverride }}
-            {{- end }}
-            {{- if (and .Values.s3 .Values.s3.enabled) }}
+              {{- end }}
+              {{- if (and .Values.s3 .Values.s3.enabled) }}
             - secretRef:
                 name: {{ default (include "mintel_common.defaultS3SecretName" .) .Values.s3.secretNameOverride }}
-            {{- end }}
-            {{- if (and .Values.sqs .Values.sqs.enabled) }}
+              {{- end }}
+              {{- if (and .Values.sqs .Values.sqs.enabled) }}
             - secretRef:
                 name: {{ default (include "mintel_common.defaultSqsSecretName" .) .Values.sqs.secretNameOverride }}
-            {{- end }}
-            {{- if (and .Values.elasticsearch .Values.elasticsearch.enabled) }}
+              {{- end }}
+              {{- if (and .Values.elasticsearch .Values.elasticsearch.enabled) }}
             - secretRef:
                 name: {{ default (include "mintel_common.defaultElasticsearchSecretName" .) .Values.elasticsearch.secretNameOverride }}
-            {{- end }}
-            {{- if (and .Values.opensearch .Values.opensearch.enabled) }}
+              {{- end }}
+              {{- if (and .Values.opensearch .Values.opensearch.enabled) }}
             - secretRef:
                 name: {{ default (include "mintel_common.defaultOpensearchSecretName" .) .Values.opensearch.secretNameOverride }}
+              {{- end }}
             {{- end }}
             {{- range .Values.extraSecrets }}
             {{- if (or (ne (hasKey . "includeInMain") true) .includeInMain) }}

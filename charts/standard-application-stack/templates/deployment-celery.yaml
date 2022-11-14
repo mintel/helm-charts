@@ -153,6 +153,14 @@ spec:
                 name: {{ default (include "mintel_common.defaultAppSecretName" .) .Values.externalSecret.nameOverride }}
             {{- end }}
             {{- end }}
+            {{- if .Values.global.terraform.externalSecrets }}
+              {{- range include "mintel_common.tf_cloud_external_secrets" . | split "," }}
+              {{- if . }}
+            - secretRef:
+                name: {{ . }}
+              {{- end }}
+              {{- end }}
+            {{- else }}
             {{- if (and .Values.mariadb .Values.mariadb.enabled) }}
             - secretRef:
                 name: {{ default (include "mintel_common.defaultMariadbSecretName" .) .Values.mariadb.secretNameOverride }}
@@ -176,6 +184,7 @@ spec:
             {{- if (and .Values.s3 .Values.s3.enabled) }}
             - secretRef:
                 name: {{ default (include "mintel_common.defaultS3SecretName" .) .Values.s3.secretNameOverride }}
+            {{- end }}
             {{- end }}
             {{- with .Values.envFrom }}
             {{- toYaml . | nindent 12 }}

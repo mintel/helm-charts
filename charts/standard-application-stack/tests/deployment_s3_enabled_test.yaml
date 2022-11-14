@@ -22,6 +22,38 @@ tests:
       - equal:
           path: spec.template.spec.containers[0].envFrom[0].secretRef.name
           value: test-app-s3
+  - it: Check S3 envfrom secretRef is present for multiple instances of TF Cloud helm chart
+    set:
+      global.clusterEnv: qa
+      global.name: test-app
+      global.terraform.externalSecrets: true
+      global.clusterName: cluster1
+      global.clusterRegion: eu-west-1
+      global.owner: sre
+      global.partOf: test-project
+      s3:
+        enabled: true
+        outputSecret: true
+        terraform:
+          instances:
+            test-bucket: {}
+            test-bucket-another: {}
+      # Disable default application secret
+      externalSecret.enabled: false
+    asserts:
+      - isKind:
+          of: Deployment
+      - equal:
+          path: metadata.namespace
+          value: test-namespace
+      - hasDocuments:
+          count: 1
+      - equal:
+          path: spec.template.spec.containers[0].envFrom[0].secretRef.name
+          value: mntl-test-bucket-s3
+      - equal:
+          path: spec.template.spec.containers[0].envFrom[1].secretRef.name
+          value: mntl-test-bucket-another-s3
   - it: Check S3 secretName Override
     set:
       global.clusterEnv: qa

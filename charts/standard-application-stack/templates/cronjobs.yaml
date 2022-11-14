@@ -97,6 +97,14 @@ spec:
                 {{- end }}
                 {{- end }}
                 {{- end }}
+                {{- if $.Values.global.terraform.externalSecrets }}
+                  {{- range include "mintel_common.tf_cloud_external_secrets" $ | split "," }}
+                  {{- if . }}
+                - secretRef:
+                    name: {{ . }}
+                  {{- end }}
+                  {{- end }}
+                {{- else }}
                 {{- if (and $.Values.mariadb $.Values.mariadb.enabled) }}
                 {{- if .includeMariadbSecret }}
                 - secretRef:
@@ -137,6 +145,7 @@ spec:
                 {{- if .includeOpensearchSecret }}
                 - secretRef:
                     name: {{ default (include "mintel_common.defaultOpensearchSecretName" $) $.Values.opensearch.secretNameOverride }}
+                {{- end }}
                 {{- end }}
                 {{- end }}
                 {{- if .includeBaseEnv }}
