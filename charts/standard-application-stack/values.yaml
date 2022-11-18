@@ -844,6 +844,8 @@ cronjobs:
 
 dynamodb:
   enabled: false
+  # -- set outputSecret to true to allow TF Cloud chart create ExternalSecrets
+  outputSecret: true
   #  secretNameOverride: ""
   #  secretPathOverride: ""
   #  secretRefreshIntervalOverride: ""
@@ -851,6 +853,8 @@ dynamodb:
 
 mariadb:
   enabled: false
+  # -- set outputSecret to true to allow TF Cloud chart create ExternalSecrets
+  outputSecret: true
   #  secretNameOverride: ""
   #  secretPathOverride: ""
   #  secretRefreshIntervalOverride: ""
@@ -883,6 +887,8 @@ mariadb:
 postgresql:
   enabled: false
   postgresqlDatabase: "postgres"
+  # -- set outputSecret to true to allow TF Cloud chart create ExternalSecrets
+  outputSecret: true
   #  secretNameOverride: ""
   #  secretPathOverride: ""
   #  secretRefreshIntervalOverride: ""
@@ -917,6 +923,8 @@ postgresql:
 
 redis:
   enabled: false
+  # -- set outputSecret to true to allow TF Cloud chart create ExternalSecrets
+  outputSecret: true
   #  secretNameOverride: ""
   #  secretPathOverride: ""
   #  secretRefreshIntervalOverride: ""
@@ -928,6 +936,8 @@ redis:
 
 s3:
   enabled: false
+  # -- set outputSecret to true to allow TF Cloud chart create ExternalSecrets
+  outputSecret: true
   #  secretNameOverride: ""
   #  secretPathOverride: ""
   #  secretRefreshIntervalOverride: ""
@@ -935,6 +945,8 @@ s3:
 
 sqs:
   enabled: false
+  # -- set outputSecret to true to allow TF Cloud chart create ExternalSecrets
+  outputSecret: true
   #  secretNameOverride: ""
 
 # -- Helper to sync a local directory with Git
@@ -1008,6 +1020,8 @@ elasticsearch:
 opensearch:
   # -- Set to true if deployment makes use of AWS opensearch
   enabled: false
+  # -- set outputSecret to true to allow TF Cloud chart create ExternalSecrets
+  outputSecret: true
   # -- Configures aws-es-proxy to enable external access to opensearch
   awsEsProxy:
     # -- Set to true to add an aws-es-proxy deployment in front of opensearch

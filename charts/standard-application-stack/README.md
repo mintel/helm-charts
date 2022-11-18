@@ -1,6 +1,6 @@
 # standard-application-stack
 
-![Version: 3.51.0](https://img.shields.io/badge/Version-3.51.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 3.51.1](https://img.shields.io/badge/Version-3.51.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A generic chart to support most common application requirements
 
@@ -68,6 +68,7 @@ A generic chart to support most common application requirements
 | cronjobs.jobs | list | `[]` | List of Cronjob configurations to be defined |
 | cronjobsOnly | bool | `false` | Only show cronjobs and relevant resources (i.e. if set to `true`, hide the main deployment resource) |
 | dynamodb.enabled | bool | `false` |  |
+| dynamodb.outputSecret | bool | `true` | set outputSecret to true to allow TF Cloud chart create ExternalSecrets |
 | elasticsearch.enabled | bool | `false` |  |
 | elasticsearch.secretRefreshIntervalOverride | string | `""` | Optional: ExternalSecret refreshInterval override |
 | elasticsearch.secretStoreRefOverride | string | `""` | Optional: override the SecretStoreRef of the ExternalSecret |
@@ -180,6 +181,7 @@ A generic chart to support most common application requirements
 | mariadb.metrics.resources.limits.memory | string | `"128Mi"` |  |
 | mariadb.metrics.resources.requests.cpu | string | `"100m"` |  |
 | mariadb.metrics.resources.requests.memory | string | `"64Mi"` |  |
+| mariadb.outputSecret | bool | `true` | set outputSecret to true to allow TF Cloud chart create ExternalSecrets |
 | metrics | object | `{"additionalMonitors":[],"basicAuth":{"enabled":false,"passwordKey":"","secretName":"","usernameKey":""},"enabled":true}` | Prometheus Exporter / Metrics |
 | metrics.basicAuth | object | `{"enabled":false,"passwordKey":"","secretName":"","usernameKey":""}` | Scheme (HTTP ot HTTPS)  scheme: HTTP |
 | metrics.enabled | bool | `true` | Enable Prometheus to access aplpication metrics endpoints |
@@ -211,12 +213,13 @@ A generic chart to support most common application requirements
 | oauthProxy.skipAuthRegexes | list | `[]` | Optional: list of URL endpoints to bypass oauth-proxy for Health check and readiness urls are skipped automatically |
 | oauthProxy.type | string | `"portal"` | Identifies oauth-proxy as auth'ing with a mintel portal instance |
 | oauthProxy.userIdClaim | string | `""` | Optional: Claim contains the user ID |
-| opensearch | object | `{"awsEsProxy":{"enabled":false,"port":9200,"resources":{"limits":{"cpu":"200m","memory":"128Mi"},"requests":{"cpu":"100m","memory":"64Mi"}}},"enabled":false,"secretRefreshIntervalOverride":"","secretStoreRefOverride":""}` | Configures AWS Opensearch deployment/connections |
+| opensearch | object | `{"awsEsProxy":{"enabled":false,"port":9200,"resources":{"limits":{"cpu":"200m","memory":"128Mi"},"requests":{"cpu":"100m","memory":"64Mi"}}},"enabled":false,"outputSecret":true,"secretRefreshIntervalOverride":"","secretStoreRefOverride":""}` | Configures AWS Opensearch deployment/connections |
 | opensearch.awsEsProxy | object | `{"enabled":false,"port":9200,"resources":{"limits":{"cpu":"200m","memory":"128Mi"},"requests":{"cpu":"100m","memory":"64Mi"}}}` | Configures aws-es-proxy to enable external access to opensearch |
 | opensearch.awsEsProxy.enabled | bool | `false` | Set to true to add an aws-es-proxy deployment in front of opensearch |
 | opensearch.awsEsProxy.port | int | `9200` | Port for aws-es-proxy to listen on |
 | opensearch.awsEsProxy.resources | object | `{"limits":{"cpu":"200m","memory":"128Mi"},"requests":{"cpu":"100m","memory":"64Mi"}}` | Container resource requests and limits for aws-es-proxy sidecar ref: http://kubernetes.io/docs/user-guide/compute-resources |
 | opensearch.enabled | bool | `false` | Set to true if deployment makes use of AWS opensearch |
+| opensearch.outputSecret | bool | `true` | set outputSecret to true to allow TF Cloud chart create ExternalSecrets |
 | opensearch.secretRefreshIntervalOverride | string | `""` | Optional: ExternalSecret refreshInterval override |
 | opensearch.secretStoreRefOverride | string | `""` | Optional: override the SecretStoreRef of the ExternalSecret |
 | persistentVolumes | string | `nil` | A list of persistent volume claims to be added to the pod |
@@ -236,10 +239,12 @@ A generic chart to support most common application requirements
 | postgresql.metrics.resources.limits.memory | string | `"128Mi"` |  |
 | postgresql.metrics.resources.requests.cpu | string | `"100m"` |  |
 | postgresql.metrics.resources.requests.memory | string | `"64Mi"` |  |
+| postgresql.outputSecret | bool | `true` | set outputSecret to true to allow TF Cloud chart create ExternalSecrets |
 | postgresql.postgresqlDatabase | string | `"postgres"` |  |
 | priorityClassName | string | `""` | Optional name of PriorityClass to run pods with |
 | readiness | object | `{"enabled":true}` | Configure extra options for readiness probe ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes |
 | redis.enabled | bool | `false` |  |
+| redis.outputSecret | bool | `true` | set outputSecret to true to allow TF Cloud chart create ExternalSecrets |
 | redis.replica.replicaCount | int | `0` |  |
 | redis.tls.enabled | bool | `false` |  |
 | replicas | int | `2` | Desired number of replicas for main deployment |
@@ -247,6 +252,7 @@ A generic chart to support most common application requirements
 | resources.limits | object | `{}` | The resource limits for the container |
 | resources.requests | object | `{}` | The requested resources for the container |
 | s3.enabled | bool | `false` |  |
+| s3.outputSecret | bool | `true` | set outputSecret to true to allow TF Cloud chart create ExternalSecrets |
 | securityContext | object | `{}` | Security context for the container ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/ |
 | service | object | `{"annotations":{},"enabled":true,"labels":{},"type":"ClusterIP"}` | Kubernetes svc configutarion |
 | service.annotations | object | `{}` | Annotations to add to service |
@@ -265,6 +271,7 @@ A generic chart to support most common application requirements
 | serviceAccount.roles | list | `[]` | Define list of Role's to create and bind to the service account ref: https://kubernetes.io/docs/reference/access-authn-authz/rbac/ |
 | singleReplicaOnly | bool | `false` | Explicitly stating that a single replica is required Should only be used if the image truly can't be run multiple times usually involving third party apps or prometheus exporters, etc |
 | sqs.enabled | bool | `false` |  |
+| sqs.outputSecret | bool | `true` | set outputSecret to true to allow TF Cloud chart create ExternalSecrets |
 | statefulset | bool | `false` | Defines whether the deployment should be a statefulset or not |
 | strategy | object | `{"maxSurge":"15%","maxUnavailable":"10%","type":"RollingUpdate"}` | Defines deployment update strategy |
 | strategy.maxSurge | string | `"15%"` | Optional argument to define maximum number of pods allowed over defined replicas |
