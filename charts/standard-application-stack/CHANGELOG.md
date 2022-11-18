@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v3.51.1] - 2022-11-18
+### Fixed
+- Added `outputSecret: true` to defaults for AWS related values to allow TF Cloud chart add secrets by default
+
 ## [v3.51.0] - 2022-11-11
 ### Added
 - Added ability to get correct secret names from terraform cloud helm chart
