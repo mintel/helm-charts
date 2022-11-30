@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v3.52.0] - 2022-12-06
+### Added
+- Allow service monitor for containers other than main
+
 ## [v3.51.2] - 2022-12-01
 ### Fixed
 - Added missing `echo` to ingress.alb.preStopDelay

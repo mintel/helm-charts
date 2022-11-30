@@ -17,7 +17,7 @@ spec:
   endpoints:
     - interval: {{ default "30s" .Values.metrics.interval }}
       path: {{ default "/metrics" .Values.metrics.path }}
-      port: main-{{ default "http" .Values.metrics.port }}
+      port: {{ default "main" .containerName }}-{{ default "http" .Values.metrics.port }}
       {{- if .Values.metrics.basicAuth }}
       {{- if .Values.metrics.basicAuth.enabled }}
       basicAuth:
@@ -61,7 +61,7 @@ spec:
   endpoints:
     - interval: {{ default "30s" .interval $.Values.metrics.interval }}
       path: {{ default "/metrics" .path $.Values.metrics.path }}
-      port: main-{{ .name }}
+      port: {{ default "main" .containerName }}-{{ .name }}
       {{- if .basicAuth }}
       {{- if .basicAuth.enabled }}
       basicAuth:
