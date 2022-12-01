@@ -20,7 +20,7 @@ lifecycle:
       command:
         - '/bin/sh'
         - '-c'
-        - {{ printf "echo 'Called preStop hook with %ds delay' > /proc/1/fd/1 ; sleep %d ; Completed preStop hook" (.alb.preStopDelay.delaySeconds|int) (.alb.preStopDelay.delaySeconds|int) }}
+        - {{ printf "echo 'Called preStop hook with %ds delay' > /proc/1/fd/1 ; sleep %d ; echo 'Completed preStop hook'" (.alb.preStopDelay.delaySeconds|int) (.alb.preStopDelay.delaySeconds|int) }}
 {{- else }}
 {{- if $.Values.lifecycle }}
 lifecycle:
