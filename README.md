@@ -20,6 +20,15 @@ mintel/standard-application-stack	0.1.0-rc1    	     		Mintel Standard Applicati
 
 **Note**: At Mintel, we handle consume these using [Tanka](https://tanka.dev/helm) which is our primary means of templating Kubernetes manifests.
 
+### Contributing
+Whenever making a change to a chart, you must update the version:
+- Update `<chartname>/CHANGELOG.md`
+- Update `<chartname>/Chart.yaml` with the new version number from `CHANGELOG.md`
+- Run pre-commit hook to automatically update the docs
+    ````
+    pre-commit install && pre-commit run -a
+    ````
+
 ### Testing
 [Unit tests](https://github.com/quintush/helm-unittest) are integrated into the pull request workflow, but can also be run locally.
 ```
