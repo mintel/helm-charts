@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v3.51.2] - 2022-12-01
+### Fixed
+- Added missing `echo` to ingress.alb.preStopDelay
+
 ## [v3.51.1] - 2022-11-18
 ### Fixed
 - Added `outputSecret: true` to defaults for AWS related values to allow TF Cloud chart add secrets by default
