@@ -81,7 +81,6 @@ tests:
               scrapeTimeout: 20s
               tlsConfig:
                 insecureSkipVerify: true
-
   - it: Check basic-auth
     set:
       global.name: test-app
