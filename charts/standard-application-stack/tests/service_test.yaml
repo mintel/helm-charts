@@ -60,7 +60,7 @@ tests:
           containerPort: 8083
           containerName: custom
         - name: p4
-          containerPort: 8083
+          containerPort: 8084
           shouldIgnoreThis: value
     asserts:
       - isKind:
@@ -82,6 +82,9 @@ tests:
       - equal:
           path: spec.ports[3].port
           value: 8083
+      - equal:
+          path: spec.ports[4].port
+          value: 8084
 
   - it: Check ALB annotation can be set when enabled
     set:
