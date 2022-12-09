@@ -1,10 +1,13 @@
 suite: Test ServiceMonitors
 templates:
+  - deployment.yaml
+  - service.yaml
   - service-monitor.yaml
 release:
   namespace: test-namespace
 tests:
   - it: Check name, namespace and labels
+    template: service-monitor.yaml
     set:
       global.name: test-app
       global.clusterEnv: prod
@@ -28,6 +31,7 @@ tests:
           path: metadata.labels.[name]
           value: test-app
   - it: Check default endpoints
+    template: service-monitor.yaml
     set:
       global.name: test-app
       global.clusterEnv: prod
@@ -53,6 +57,7 @@ tests:
               tlsConfig:
                 insecureSkipVerify: true
   - it: Check metric overrides
+    template: service-monitor.yaml
     set:
       global.name: test-app
       global.clusterEnv: prod
@@ -82,6 +87,7 @@ tests:
               tlsConfig:
                 insecureSkipVerify: true
   - it: Check basic-auth
+    template: service-monitor.yaml
     set:
       global.name: test-app
       global.clusterEnv: prod
@@ -117,16 +123,17 @@ tests:
               tlsConfig:
                 insecureSkipVerify: true
   - it: Check additional ServiceMonitor resources
+    template: service-monitor.yaml
     set:
       global.name: test-app
       global.clusterEnv: prod
       service.enabled: true
       metrics.enabled: true
       metrics.additionalMonitors:
-        - name: monitor-1
-          path: /metrics-1
-        - name: monitor-2
+        - name: metrics-2
           path: /metrics-2
+        - name: metrics-3
+          path: /metrics-3
           interval: 20s
           scheme: https
     asserts:
@@ -144,21 +151,21 @@ tests:
         documentIndex: 1
       - equal:
           path: metadata.name
-          value: test-app-monitor-1
+          value: test-app-metrics-2
         documentIndex: 1
       - isKind:
           of: ServiceMonitor
         documentIndex: 2
       - equal:
           path: metadata.name
-          value: test-app-monitor-2
+          value: test-app-metrics-3
         documentIndex: 2
       - equal:
           path: spec.endpoints
           value:
             - interval: 30s
-              path: /metrics-1
-              port: main-monitor-1
+              path: /metrics-2
+              port: main-metrics-2
               relabelings:
               - separator: /
                 sourceLabels:
@@ -174,8 +181,8 @@ tests:
           path: spec.endpoints
           value:
             - interval: 20s
-              path: /metrics-2
-              port: main-monitor-2
+              path: /metrics-3
+              port: main-metrics-3
               relabelings:
               - separator: /
                 sourceLabels:
@@ -187,3 +194,175 @@ tests:
               tlsConfig:
                 insecureSkipVerify: true
         documentIndex: 2
+  - it: Check Service defaults
+    template: service.yaml
+    set:
+      global.name: test-app
+      global.clusterEnv: prod
+      service.enabled: true
+      metrics.enabled: true
+    asserts:
+      - isKind:
+          of: Service
+      - equal:
+          path: spec.ports
+          value:
+            - name: main-http
+              port: 8000
+              targetPort: 8000
+  - it: Check combined template defaults
+    set:
+      global.name: test-app
+      global.clusterEnv: prod
+      service.enabled: true
+      metrics.enabled: true
+    asserts:
+      - isKind:
+          of: Service
+        template: service.yaml
+      - equal:
+          path: spec.ports
+          value:
+            - name: main-http
+              port: 8000
+              targetPort: 8000
+        template: service.yaml
+      - isKind:
+          of: ServiceMonitor
+        template: service-monitor.yaml
+      - equal:
+          path: spec.endpoints
+          value:
+            - interval: 30s
+              path: /metrics
+              port: main-http
+              relabelings:
+              - separator: /
+                sourceLabels:
+                - __meta_kubernetes_namespace
+                - __meta_kubernetes_pod_label_app_kubernetes_io_name
+                targetLabel: job
+              scheme: http
+              scrapeTimeout: 10s
+              tlsConfig:
+                insecureSkipVerify: true
+        template: service-monitor.yaml
+      - isKind:
+          of: Deployment
+        template: deployment.yaml
+      - equal:
+          path: spec.template.spec.containers[0].ports
+          value:
+            - containerPort: 8000
+              name: http
+        template: deployment.yaml
+  - it: Check combined template with extra ports and monitors
+    set:
+      global.name: test-app
+      global.clusterEnv: prod
+      service.enabled: true
+      metrics.enabled: true
+      metrics.additionalMonitors:
+        - name: metrics-2
+          path: /metrics-2
+        - name: metrics-3
+          path: /metrics-3
+          interval: 20s
+          scheme: https
+      extraPorts:
+        - name: metrics-2
+          containerPort: 9002
+          targetPort: 9002
+        - name: metrics-3
+          containerPort: 9003
+          targetPort: 9003
+    asserts:
+      - isKind:
+          of: Service
+        template: service.yaml
+      - equal:
+          path: spec.ports
+          value:
+            - name: main-http
+              port: 8000
+              targetPort: 8000
+            - name: main-metrics-2
+              port: 9002
+              targetPort: 9002
+            - name: main-metrics-3
+              port: 9003
+              targetPort: 9003
+        template: service.yaml
+      - isKind:
+          of: ServiceMonitor
+        template: service-monitor.yaml
+      - equal:
+          path: spec.endpoints
+          value:
+            - interval: 30s
+              path: /metrics
+              port: main-http
+              relabelings:
+              - separator: /
+                sourceLabels:
+                - __meta_kubernetes_namespace
+                - __meta_kubernetes_pod_label_app_kubernetes_io_name
+                targetLabel: job
+              scheme: http
+              scrapeTimeout: 10s
+              tlsConfig:
+                insecureSkipVerify: true
+        documentIndex: 0
+        template: service-monitor.yaml
+      - equal:
+          path: spec.endpoints
+          value:
+            - interval: 30s
+              path: /metrics-2
+              port: main-metrics-2
+              relabelings:
+              - separator: /
+                sourceLabels:
+                - __meta_kubernetes_namespace
+                - __meta_kubernetes_pod_label_app_kubernetes_io_name
+                targetLabel: job
+              scheme: http
+              scrapeTimeout: 10s
+              tlsConfig:
+                insecureSkipVerify: true
+        documentIndex: 1
+        template: service-monitor.yaml
+      - equal:
+          path: spec.endpoints
+          value:
+            - interval: 30s
+              path: /metrics-3
+              port: main-metrics-3
+              interval: 20s
+              relabelings:
+              - separator: /
+                sourceLabels:
+                - __meta_kubernetes_namespace
+                - __meta_kubernetes_pod_label_app_kubernetes_io_name
+                targetLabel: job
+              scheme: https
+              scrapeTimeout: 10s
+              tlsConfig:
+                insecureSkipVerify: true
+        documentIndex: 2
+        template: service-monitor.yaml
+      - isKind:
+          of: Deployment
+        template: deployment.yaml
+      - equal:
+          path: spec.template.spec.containers[0].ports
+          value:
+            - containerPort: 8000
+              name: http
+            - containerPort: 9002
+              name: metrics-2
+              targetPort: 9002
+            - containerPort: 9003
+              name: metrics-3
+              targetPort: 9003
+        template: deployment.yaml
