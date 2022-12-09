@@ -1,0 +1,119 @@
+suite: Test ServiceMonitors
+templates:
+  - service-monitor.yaml
+release:
+  namespace: test-namespace
+tests:
+  - it: Check name, namespace and labels
+    set:
+      global.name: test-app
+      global.clusterEnv: prod
+      service.enabled: true
+      metrics.enabled: true
+    asserts:
+      - hasDocuments:
+          count: 1
+      - isKind:
+          of: ServiceMonitor
+      - equal:
+          path: metadata.namespace
+          value: test-namespace
+      - equal:
+          path: metadata.name
+          value: test-app
+      - equal:
+          path: metadata.labels.[app.kubernetes.io/name]
+          value: test-app
+      - equal:
+          path: metadata.labels.[name]
+          value: test-app
+  - it: Check default endpoints
+    set:
+      global.name: test-app
+      global.clusterEnv: prod
+      service.enabled: true
+      metrics.enabled: true
+    asserts:
+      - isKind:
+          of: ServiceMonitor
+      - equal:
+          path: spec.endpoints
+          value:
+            - interval: 30s
+              path: /metrics
+              port: main-http
+              relabelings:
+              - separator: /
+                sourceLabels:
+                - __meta_kubernetes_namespace
+                - __meta_kubernetes_pod_label_app_kubernetes_io_name
+                targetLabel: job
+              scheme: http
+              scrapeTimeout: 10s
+              tlsConfig:
+                insecureSkipVerify: true
+  - it: Check metric overrides
+    set:
+      global.name: test-app
+      global.clusterEnv: prod
+      service.enabled: true
+      metrics.enabled: true
+      metrics.path: /updated-metrics-path
+      metrics.port: another-named-port
+      metrics.scheme: HTTPS
+      metrics.timeout: 20s
+    asserts:
+      - isKind:
+          of: ServiceMonitor
+      - equal:
+          path: spec.endpoints
+          value:
+            - interval: 30s
+              path: /updated-metrics-path
+              port: main-another-named-port
+              relabelings:
+              - separator: /
+                sourceLabels:
+                - __meta_kubernetes_namespace
+                - __meta_kubernetes_pod_label_app_kubernetes_io_name
+                targetLabel: job
+              scheme: HTTPS
+              scrapeTimeout: 20s
+              tlsConfig:
+                insecureSkipVerify: true
+
+  - it: Check basic-auth
+    set:
+      global.name: test-app
+      global.clusterEnv: prod
+      service.enabled: true
+      metrics.enabled: true
+      metrics.basicAuth.enabled: true
+      metrics.basicAuth.usernameKey: user
+      metrics.basicAuth.passwordKey: passwd
+    asserts:
+      - isKind:
+          of: ServiceMonitor
+      - equal:
+          path: spec.endpoints
+          value:
+            - interval: 30s
+              path: /metrics
+              port: main-http
+              basicAuth:
+                username:
+                  key: user
+                  name: test-app-app
+                password:
+                  key:  passwd
+                  name: test-app-app
+              relabelings:
+              - separator: /
+                sourceLabels:
+                - __meta_kubernetes_namespace
+                - __meta_kubernetes_pod_label_app_kubernetes_io_name
+                targetLabel: job
+              scheme: http
+              scrapeTimeout: 10s
+              tlsConfig:
+                insecureSkipVerify: true
