@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v0.29.0] - 2022-12-09
+### Added
+- Now supports creating an ExternalSecret for the Secrets Manager secret the app-iam module can create (see [here](https://gitlab.com/mintel/satoshi/infrastructure/terraform-cloud/terraform-aws-modules/terraform-aws-app-iam/-/merge_requests/15))
+
 ## [v0.28.0] - 2022-11-08
 ### Changed
 - Bump version of S3 Terraform module to allow sftp access
