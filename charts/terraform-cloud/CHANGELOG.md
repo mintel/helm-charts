@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Now supports creating an ExternalSecret for the Secrets Manager secret the app-iam module can create (see [here](https://gitlab.com/mintel/satoshi/infrastructure/terraform-cloud/terraform-aws-modules/terraform-aws-app-iam/-/merge_requests/15))
 
+## [v0.28.1] - 2022-12-08
+### Changed
+- Bump version of OpenSearch Terraform module to fix AWS provider version constraints
+
 ## [v0.28.0] - 2022-11-08
 ### Changed
 - Bump version of S3 Terraform module to allow sftp access
