@@ -117,3 +117,76 @@ tests:
               scrapeTimeout: 10s
               tlsConfig:
                 insecureSkipVerify: true
+  - it: Check additional PodMonitor resources
+    set:
+      global.name: test-app
+      global.clusterEnv: prod
+      service.enabled: false
+      metrics.enabled: true
+      metrics.additionalMonitors:
+        - name: monitor-1
+          path: /metrics-1
+        - name: monitor-2
+          path: /metrics-2
+          interval: 20s
+          scheme: https
+    asserts:
+      - hasDocuments:
+          count: 3
+      - isKind:
+          of: PodMonitor
+        documentIndex: 0
+      - equal:
+          path: metadata.name
+          value: test-app
+        documentIndex: 0
+      - isKind:
+          of: PodMonitor
+        documentIndex: 1
+      - equal:
+          path: metadata.name
+          value: test-app-monitor-1
+        documentIndex: 1
+      - isKind:
+          of: PodMonitor
+        documentIndex: 2
+      - equal:
+          path: metadata.name
+          value: test-app-monitor-2
+        documentIndex: 2
+      - equal:
+          path: spec.podMetricsEndpoints
+          value:
+            - interval: 30s
+              path: /metrics-1
+              # FIXME: This should match main-monitor-1
+              port: http
+              relabelings:
+              - separator: /
+                sourceLabels:
+                - __meta_kubernetes_namespace
+                - __meta_kubernetes_pod_label_app_kubernetes_io_name
+                targetLabel: job
+              scheme: http
+              scrapeTimeout: 10s
+              tlsConfig:
+                insecureSkipVerify: true
+        documentIndex: 1
+      - equal:
+          path: spec.podMetricsEndpoints
+          value:
+            - interval: 20s
+              path: /metrics-2
+              # FIXME: This should match main-monitor-2
+              port: http
+              relabelings:
+              - separator: /
+                sourceLabels:
+                - __meta_kubernetes_namespace
+                - __meta_kubernetes_pod_label_app_kubernetes_io_name
+                targetLabel: job
+              scheme: https
+              scrapeTimeout: 10s
+              tlsConfig:
+                insecureSkipVerify: true
+        documentIndex: 2
