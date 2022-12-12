@@ -1,0 +1,325 @@
+suite: Test PodMonitors
+templates:
+  - deployment.yaml
+  - pod-monitor.yaml
+release:
+  namespace: test-namespace
+tests:
+  - it: Check name, namespace and labels
+    template: pod-monitor.yaml
+    set:
+      global.name: test-app
+      global.clusterEnv: prod
+      service.enabled: false
+      metrics.enabled: true
+    asserts:
+      - hasDocuments:
+          count: 1
+      - isKind:
+          of: PodMonitor
+      - equal:
+          path: metadata.namespace
+          value: test-namespace
+      - equal:
+          path: metadata.name
+          value: test-app
+      - equal:
+          path: metadata.labels.[app.kubernetes.io/name]
+          value: test-app
+      - equal:
+          path: metadata.labels.[name]
+          value: test-app
+  - it: Check default endpoints
+    template: pod-monitor.yaml
+    set:
+      global.name: test-app
+      global.clusterEnv: prod
+      service.enabled: false
+      metrics.enabled: true
+    asserts:
+      - isKind:
+          of: PodMonitor
+      - equal:
+          path: spec.podMetricsEndpoints
+          value:
+            - interval: 30s
+              path: /metrics
+              port: http
+              relabelings:
+              - separator: /
+                sourceLabels:
+                - __meta_kubernetes_namespace
+                - __meta_kubernetes_pod_label_app_kubernetes_io_name
+                targetLabel: job
+              scheme: http
+              scrapeTimeout: 10s
+              tlsConfig:
+                insecureSkipVerify: true
+  - it: Check metric overrides
+    template: pod-monitor.yaml
+    set:
+      global.name: test-app
+      global.clusterEnv: prod
+      service.enabled: false
+      metrics.enabled: true
+      metrics.path: /updated-metrics-path
+      metrics.port: another-named-port
+      metrics.scheme: HTTPS
+      metrics.timeout: 20s
+    asserts:
+      - isKind:
+          of: PodMonitor
+      - equal:
+          path: spec.podMetricsEndpoints
+          value:
+            - interval: 30s
+              path: /updated-metrics-path
+              port: another-named-port
+              relabelings:
+              - separator: /
+                sourceLabels:
+                - __meta_kubernetes_namespace
+                - __meta_kubernetes_pod_label_app_kubernetes_io_name
+                targetLabel: job
+              scheme: HTTPS
+              scrapeTimeout: 20s
+              tlsConfig:
+                insecureSkipVerify: true
+  - it: Check basic-auth
+    template: pod-monitor.yaml
+    set:
+      global.name: test-app
+      global.clusterEnv: prod
+      service.enabled: false
+      metrics.enabled: true
+      metrics.basicAuth.enabled: true
+      metrics.basicAuth.usernameKey: user
+      metrics.basicAuth.passwordKey: passwd
+    asserts:
+      - isKind:
+          of: PodMonitor
+      - equal:
+          path: spec.podMetricsEndpoints
+          value:
+            - interval: 30s
+              path: /metrics
+              port: http
+              basicAuth:
+                username:
+                  key: user
+                  name: test-app-app
+                password:
+                  key:  passwd
+                  name: test-app-app
+              relabelings:
+              - separator: /
+                sourceLabels:
+                - __meta_kubernetes_namespace
+                - __meta_kubernetes_pod_label_app_kubernetes_io_name
+                targetLabel: job
+              scheme: http
+              scrapeTimeout: 10s
+              tlsConfig:
+                insecureSkipVerify: true
+  - it: Check additional PodMonitor resources
+    template: pod-monitor.yaml
+    set:
+      global.name: test-app
+      global.clusterEnv: prod
+      service.enabled: false
+      metrics.enabled: true
+      metrics.additionalMonitors:
+        - name: metrics-2
+          path: /metrics-2
+        - name: metrics-3
+          path: /metrics-3
+          interval: 20s
+          scheme: https
+    asserts:
+      - hasDocuments:
+          count: 3
+      - isKind:
+          of: PodMonitor
+        documentIndex: 0
+      - equal:
+          path: metadata.name
+          value: test-app
+        documentIndex: 0
+      - isKind:
+          of: PodMonitor
+        documentIndex: 1
+      - equal:
+          path: metadata.name
+          value: test-app-metrics-2
+        documentIndex: 1
+      - isKind:
+          of: PodMonitor
+        documentIndex: 2
+      - equal:
+          path: metadata.name
+          value: test-app-metrics-3
+        documentIndex: 2
+      - equal:
+          path: spec.podMetricsEndpoints
+          value:
+            - interval: 30s
+              path: /metrics-2
+              port: http
+              relabelings:
+              - separator: /
+                sourceLabels:
+                - __meta_kubernetes_namespace
+                - __meta_kubernetes_pod_label_app_kubernetes_io_name
+                targetLabel: job
+              scheme: http
+              scrapeTimeout: 10s
+              tlsConfig:
+                insecureSkipVerify: true
+        documentIndex: 1
+      - equal:
+          path: spec.podMetricsEndpoints
+          value:
+            - interval: 20s
+              path: /metrics-3
+              port: http
+              relabelings:
+              - separator: /
+                sourceLabels:
+                - __meta_kubernetes_namespace
+                - __meta_kubernetes_pod_label_app_kubernetes_io_name
+                targetLabel: job
+              scheme: https
+              scrapeTimeout: 10s
+              tlsConfig:
+                insecureSkipVerify: true
+        documentIndex: 2
+  - it: Check combined template defaults
+    set:
+      global.name: test-app
+      global.clusterEnv: prod
+      service.enabled: false
+      metrics.enabled: true
+    asserts:
+      - isKind:
+          of: PodMonitor
+        template: pod-monitor.yaml
+      - equal:
+          path: spec.podMetricsEndpoints
+          value:
+            - interval: 30s
+              path: /metrics
+              port: http
+              relabelings:
+              - separator: /
+                sourceLabels:
+                - __meta_kubernetes_namespace
+                - __meta_kubernetes_pod_label_app_kubernetes_io_name
+                targetLabel: job
+              scheme: http
+              scrapeTimeout: 10s
+              tlsConfig:
+                insecureSkipVerify: true
+        template: pod-monitor.yaml
+      - isKind:
+          of: Deployment
+        template: deployment.yaml
+      - equal:
+          path: spec.template.spec.containers[0].ports
+          value:
+            - containerPort: 8000
+              name: http
+        template: deployment.yaml
+  - it: Check combined template with extra ports and monitors
+    set:
+      global.name: test-app
+      global.clusterEnv: prod
+      service.enabled: false
+      metrics.enabled: true
+      metrics.additionalMonitors:
+        - name: metrics-2
+          path: /metrics-2
+        - name: metrics-3
+          path: /metrics-3
+          interval: 20s
+          scheme: https
+      extraPorts:
+        - name: metrics-2
+          containerPort: 9002
+          targetPort: 9002
+        - name: metrics-3
+          containerPort: 9003
+          targetPort: 9003
+    asserts:
+      - isKind:
+          of: PodMonitor
+        template: pod-monitor.yaml
+      - equal:
+          path: spec.podMetricsEndpoints
+          value:
+            - interval: 30s
+              path: /metrics
+              port: http
+              relabelings:
+              - separator: /
+                sourceLabels:
+                - __meta_kubernetes_namespace
+                - __meta_kubernetes_pod_label_app_kubernetes_io_name
+                targetLabel: job
+              scheme: http
+              scrapeTimeout: 10s
+              tlsConfig:
+                insecureSkipVerify: true
+        documentIndex: 0
+        template: pod-monitor.yaml
+      - equal:
+          path: spec.podMetricsEndpoints
+          value:
+            - interval: 30s
+              path: /metrics-2
+              port: http
+              relabelings:
+              - separator: /
+                sourceLabels:
+                - __meta_kubernetes_namespace
+                - __meta_kubernetes_pod_label_app_kubernetes_io_name
+                targetLabel: job
+              scheme: http
+              scrapeTimeout: 10s
+              tlsConfig:
+                insecureSkipVerify: true
+        documentIndex: 1
+        template: pod-monitor.yaml
+      - equal:
+          path: spec.podMetricsEndpoints
+          value:
+            - interval: 30s
+              path: /metrics-3
+              port: http
+              interval: 20s
+              relabelings:
+              - separator: /
+                sourceLabels:
+                - __meta_kubernetes_namespace
+                - __meta_kubernetes_pod_label_app_kubernetes_io_name
+                targetLabel: job
+              scheme: https
+              scrapeTimeout: 10s
+              tlsConfig:
+                insecureSkipVerify: true
+        documentIndex: 2
+        template: pod-monitor.yaml
+      - isKind:
+          of: Deployment
+        template: deployment.yaml
+      - equal:
+          path: spec.template.spec.containers[0].ports
+          value:
+            - containerPort: 8000
+              name: http
+            - containerPort: 9002
+              name: metrics-2
+              targetPort: 9002
+            - containerPort: 9003
+              name: metrics-3
+              targetPort: 9003
+        template: deployment.yaml
