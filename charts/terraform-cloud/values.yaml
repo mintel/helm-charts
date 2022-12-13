@@ -533,7 +533,7 @@ s3:
       # (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/private-s3-bucket/aws)
       source: app.terraform.io/Mintel/private-s3-bucket/aws
       # -- Module version
-      version: "1.2.0"
+      version: "1.3.0"
     # -- Vars to be applied to all instances defined below
     defaultVars:
       {}
