@@ -175,6 +175,25 @@ tests:
           count: 1
         template: deployment.yaml
 
+  - it: Check EXTRA_ALLOWED_HOSTS env var extraHosts with extraIngresses
+    template: deployment.yaml
+    set:
+      global.clusterEnv: qa
+      ingress.enabled: true
+      ingress.defaultHost: test.default.com
+      ingress.extraHosts:
+        - name: extra.default.com
+      ingress.extraIngresses:
+        - defaultHost: test.extraIngress.com
+          extraHosts:
+            - name: extra.extraIngress.com
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: EXTRA_ALLOWED_HOSTS
+            value: 'extra.default.com,extra.extraIngress.com,test.default.com,test.extraIngress.com'
+          count: 1
 
   - it: Check extraHosts with oauthProxy.ingressHost (different)
     template: ingress.yaml

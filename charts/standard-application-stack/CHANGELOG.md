@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Make `EXTRA_ALLOWED_HOSTS` env var unique and alphabetically sorted
 
+### Fixed
+- Add hosts from `extraIngresses` to `EXTRA_ALLOWED_HOSTS` env var
+
 ## [v3.52.1] - 2022-12-15
 ### Fixed
 - Pass non-default terraform cloud secrets to stakater annotation correctly
