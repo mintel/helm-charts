@@ -440,7 +440,7 @@ Build comma separated list of configmaps
   {{- if (and .Values.oauthProxy.enabled .Values.oauthProxy.ingressHost) -}}
   {{- $hosts = append $hosts .Values.oauthProxy.ingressHost }}
   {{- end }}
-  value: {{ join "," $hosts }}
+  value: {{ uniq $hosts | sortAlpha | join "," }}
 {{- end }}
 {{- end -}}
 

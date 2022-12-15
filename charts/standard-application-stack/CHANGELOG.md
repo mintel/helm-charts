@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Changed
+- Make `EXTRA_ALLOWED_HOSTS` env var unique and alphabetically sorted
 
 ## [v3.52.1] - 2022-12-15
 ### Fixed
