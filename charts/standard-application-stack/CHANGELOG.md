@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v3.52.1] - 2022-12-15
+### Fixed
+- Pass non-default terraform cloud secrets to stakater annotation correctly
+
 ## [v3.52.0] - 2022-12-09
 ### Added
 - Added unit-tests for `ServiceMonitor` and `PodMonitor` resources
