@@ -54,6 +54,36 @@ tests:
       - equal:
           path: spec.template.spec.containers[0].envFrom[1].secretRef.name
           value: mntl-test-bucket-another-s3
+  - it: Check S3 stakater secret reloader annotation contains correct secrets for multiple instances of TF Cloud helm chart
+    set:
+      global.clusterEnv: qa
+      global.name: test-app
+      global.terraform.externalSecrets: true
+      global.clusterName: cluster1
+      global.clusterRegion: eu-west-1
+      global.owner: sre
+      global.partOf: test-project
+      s3:
+        enabled: true
+        outputSecret: true
+        terraform:
+          instances:
+            test-bucket: {}
+            test-bucket-another: {}
+      externalSecret.enabled: true
+      extraSecrets:
+        - name: extra-secret-1
+    asserts:
+      - isKind:
+          of: Deployment
+      - equal:
+          path: metadata.namespace
+          value: test-namespace
+      - hasDocuments:
+          count: 1
+      - equal:
+          path: metadata.annotations.[secret.reloader.stakater.com/reload]
+          value: test-app-app,mntl-test-bucket-s3,mntl-test-bucket-another-s3,test-app-extra-secret-1
   - it: Check S3 secretName Override
     set:
       global.clusterEnv: qa

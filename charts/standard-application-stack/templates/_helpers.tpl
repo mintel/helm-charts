@@ -255,29 +255,37 @@ Build comma separated list of secrets
 {{- if (and .Values.oauthProxy .Values.oauthProxy.enabled) }}
 {{- $secretList = append $secretList (default (include "mintel_common.defaultOauthSecretName" .) .Values.oauthProxy.secretNameOverride) -}}
 {{- end }}
-{{- if (and .Values.mariadb .Values.mariadb.enabled) }}
-{{- $secretList = append $secretList (default (include "mintel_common.defaultMariadbSecretName" .) .Values.mariadb.secretNameOverride) -}}
-{{- end }}
-{{- if (and .Values.dynamodb .Values.dynamodb.enabled) }}
-{{- $secretList = append $secretList (default (include "mintel_common.defaultDynamodbSecretName" .) .Values.dynamodb.secretNameOverride) -}}
-{{- end }}
-{{- if (and .Values.postgresql .Values.postgresql.enabled) }}
-{{- $secretList = append $secretList (default (include "mintel_common.defaultPostgresqlSecretName" .) .Values.postgresql.secretNameOverride) -}}
-{{- end }}
-{{- if (and .Values.redis .Values.redis.enabled) }}
-{{- $secretList = append $secretList (default (include "mintel_common.defaultRedisSecretName" .) .Values.redis.secretNameOverride) -}}
-{{- end }}
-{{- if (and .Values.s3 .Values.s3.enabled) }}
-{{- $secretList = append $secretList (default (include "mintel_common.defaultS3SecretName" .) .Values.s3.secretNameOverride) -}}
-{{- end }}
-{{- if (and .Values.elasticsearch .Values.elasticsearch.enabled) }}
-{{- $secretList = append $secretList (default (include "mintel_common.defaultElasticsearchSecretName" .) .Values.elasticsearch.secretNameOverride) -}}
-{{- end }}
-{{- if (and .Values.opensearch .Values.opensearch.enabled) }}
-{{- $secretList = append $secretList (default (include "mintel_common.defaultOpensearchSecretName" .) .Values.opensearch.secretNameOverride) -}}
-{{- end }}
-{{- if (and .Values.sqs .Values.sqs.enabled) }}
-{{- $secretList = append $secretList (default (include "mintel_common.defaultSqsSecretName" .) .Values.sqs.secretNameOverride) -}}
+{{- if (and (ne .Values.global.clusterEnv "local") .Values.global.terraform.externalSecrets) }}
+  {{- range include "mintel_common.tf_cloud_external_secrets" . | split "," }}
+     {{- if . }}
+     {{- $secretList = append $secretList . -}}
+     {{- end }}
+  {{- end }}
+{{- else }}
+    {{- if (and .Values.mariadb .Values.mariadb.enabled) }}
+    {{- $secretList = append $secretList (default (include "mintel_common.defaultMariadbSecretName" .) .Values.mariadb.secretNameOverride) -}}
+    {{- end }}
+    {{- if (and .Values.dynamodb .Values.dynamodb.enabled) }}
+    {{- $secretList = append $secretList (default (include "mintel_common.defaultDynamodbSecretName" .) .Values.dynamodb.secretNameOverride) -}}
+    {{- end }}
+    {{- if (and .Values.postgresql .Values.postgresql.enabled) }}
+    {{- $secretList = append $secretList (default (include "mintel_common.defaultPostgresqlSecretName" .) .Values.postgresql.secretNameOverride) -}}
+    {{- end }}
+    {{- if (and .Values.redis .Values.redis.enabled) }}
+    {{- $secretList = append $secretList (default (include "mintel_common.defaultRedisSecretName" .) .Values.redis.secretNameOverride) -}}
+    {{- end }}
+    {{- if (and .Values.s3 .Values.s3.enabled) }}
+    {{- $secretList = append $secretList (default (include "mintel_common.defaultS3SecretName" .) .Values.s3.secretNameOverride) -}}
+    {{- end }}
+    {{- if (and .Values.elasticsearch .Values.elasticsearch.enabled) }}
+    {{- $secretList = append $secretList (default (include "mintel_common.defaultElasticsearchSecretName" .) .Values.elasticsearch.secretNameOverride) -}}
+    {{- end }}
+    {{- if (and .Values.opensearch .Values.opensearch.enabled) }}
+    {{- $secretList = append $secretList (default (include "mintel_common.defaultOpensearchSecretName" .) .Values.opensearch.secretNameOverride) -}}
+    {{- end }}
+    {{- if (and .Values.sqs .Values.sqs.enabled) }}
+    {{- $secretList = append $secretList (default (include "mintel_common.defaultSqsSecretName" .) .Values.sqs.secretNameOverride) -}}
+    {{- end }}
 {{- end }}
 {{- range .Values.extraSecrets }}
 {{- if (or (ne (hasKey . "includeInMain") true) .includeInMain) }}
