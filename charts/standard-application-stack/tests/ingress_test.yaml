@@ -1,10 +1,12 @@
 suite: Test Ingresses
 templates:
   - ingress.yaml
+  - deployment.yaml
 release:
   namespace: test-namespace
 tests:
   - it: Check ALB className set by default
+    template: ingress.yaml
     set:
       global.clusterEnv: qa
       ingress.enabled: true
@@ -14,6 +16,7 @@ tests:
           value: alb-public-apps-default
 
   - it: Check HAProxy className set if ALB is disabled
+    template: ingress.yaml
     set:
       global.clusterEnv: qa
       ingress.enabled: true
@@ -24,6 +27,7 @@ tests:
           value: haproxy
 
   - it: Check ALB default health-check port
+    template: ingress.yaml
     set:
       global.clusterEnv: qa
       ingress.enabled: true
@@ -35,6 +39,7 @@ tests:
           value: "8080"
 
   - it: Check ALB custom health-check port
+    template: ingress.yaml
     set:
       global.clusterEnv: qa
       ingress.enabled: true
@@ -47,6 +52,7 @@ tests:
           value: "9999"
 
   - it: Check ALB health-check port with oauthProxy enabled
+    template: ingress.yaml
     set:
       global.clusterEnv: qa
       ingress.enabled: true
@@ -58,6 +64,7 @@ tests:
           value: "4180"
 
   - it: Check ALB gRPC default settings
+    template: ingress.yaml
     set:
       global.clusterEnv: qa
       ingress.enabled: true
@@ -75,6 +82,7 @@ tests:
           value: /grpc.health.v1.Health/Check
 
   - it: Check ALB gRPC custom settings
+    template: ingress.yaml
     set:
       global.clusterEnv: qa
       ingress.enabled: true
@@ -94,6 +102,7 @@ tests:
           value: /grpc.health.v1.Readiness/Check
 
   - it: Check ALB HTTP2 default settings
+    template: ingress.yaml
     set:
       global.clusterEnv: qa
       ingress.enabled: true
@@ -117,6 +126,7 @@ tests:
           value: "443"
 
   - it: Check no TLS set if ingressTLSSecrets and specificTlsHostsYaml is empty
+    template: ingress.yaml
     set:
       global.clusterEnv: qa
       global.ingressTLSSecrets: null
@@ -129,6 +139,7 @@ tests:
           path: spec.tls
 
   - it: Check TLS set if ingressTLSSecrets is not empty
+    template: ingress.yaml
     set:
       global.clusterEnv: qa
       global.ingressTLSSecrets.example_org: star-example-org
@@ -141,7 +152,9 @@ tests:
           path: spec.tls
 
   - it: Check extraHosts
+    template: ingress.yaml
     set:
+      global.name: AppyMcAppface
       global.clusterEnv: qa
       ingress.enabled: true
       ingress.defaultHost: test.default.com
@@ -154,8 +167,36 @@ tests:
       - equal:
           path: spec.rules[1].host
           value: extra.default.com
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: EXTRA_ALLOWED_HOSTS
+            value: 'extra.default.com,test.default.com'
+          count: 1
+        template: deployment.yaml
+
+  - it: Check EXTRA_ALLOWED_HOSTS env var extraHosts with extraIngresses
+    template: deployment.yaml
+    set:
+      global.clusterEnv: qa
+      ingress.enabled: true
+      ingress.defaultHost: test.default.com
+      ingress.extraHosts:
+        - name: extra.default.com
+      ingress.extraIngresses:
+        - defaultHost: test.extraIngress.com
+          extraHosts:
+            - name: extra.extraIngress.com
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: EXTRA_ALLOWED_HOSTS
+            value: 'extra.default.com,extra.extraIngress.com,test.default.com,test.extraIngress.com'
+          count: 1
 
   - it: Check extraHosts with oauthProxy.ingressHost (different)
+    template: ingress.yaml
     set:
       global.clusterEnv: qa
       ingress.enabled: true
@@ -174,8 +215,16 @@ tests:
       - equal:
           path: spec.rules[2].host
           value: auth.default.com
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: EXTRA_ALLOWED_HOSTS
+            value: 'auth.default.com,extra.default.com,test.default.com'
+          count: 1
+        template: deployment.yaml
 
   - it: Check extraHosts with oauthProxy.ingressHost (same as extra host)
+    template: ingress.yaml
     set:
       global.clusterEnv: qa
       ingress.enabled: true
@@ -191,8 +240,16 @@ tests:
       - equal:
           path: spec.rules[1].host
           value: auth.default.com
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: EXTRA_ALLOWED_HOSTS
+            value: 'auth.default.com,test.default.com'
+          count: 1
+        template: deployment.yaml
 
   - it: Check extraHosts with TLS
+    template: ingress.yaml
     set:
       global.clusterEnv: qa
       ingress.enabled: true
@@ -208,8 +265,16 @@ tests:
       - equal:
           path: spec.tls[0].hosts[1]
           value: extra.default.com
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: EXTRA_ALLOWED_HOSTS
+            value: 'extra.default.com,test.default.com'
+          count: 1
+        template: deployment.yaml
 
   - it: Check extraHosts with TLS and oauthProxy.ingressHost (different)
+    template: ingress.yaml
     set:
       global.clusterEnv: qa
       ingress.enabled: true
@@ -230,8 +295,16 @@ tests:
       - equal:
           path: spec.tls[0].hosts[2]
           value: auth.default.com
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: EXTRA_ALLOWED_HOSTS
+            value: 'auth.default.com,extra.default.com,test.default.com'
+          count: 1
+        template: deployment.yaml
 
   - it: Check extraHosts with TLS and oauthProxy.ingressHost (same as extra host)
+    template: ingress.yaml
     set:
       global.clusterEnv: qa
       ingress.enabled: true
@@ -249,8 +322,16 @@ tests:
       - equal:
           path: spec.tls[0].hosts[1]
           value: auth.default.com
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: EXTRA_ALLOWED_HOSTS
+            value: 'auth.default.com,test.default.com'
+          count: 1
+        template: deployment.yaml
 
   - it: Check ingress name override
+    template: ingress.yaml
     set:
       global.clusterEnv: qa
       ingress.enabled: true
@@ -269,6 +350,7 @@ tests:
           value: ingress-override
 
   - it: Check ingress name suffix setting
+    template: ingress.yaml
     set:
       global.clusterEnv: qa
       ingress.enabled: true
@@ -287,6 +369,7 @@ tests:
           value: example-app-suffix
 
   - it: Default ingress with path based routing
+    template: ingress.yaml
     set:
       global.clusterEnv: qa
       ingress.enabled: true
@@ -320,6 +403,7 @@ tests:
           value: 5678
 
   - it: Multiple ingresses with different names
+    template: ingress.yaml
     set:
       global.clusterEnv: qa
       ingress.enabled: true
