@@ -25,6 +25,11 @@ Return the target Kubernetes version
 {{- print "batch/v1" -}}
 {{- end -}}
 
+{{/* Return the appropriate apiVersion for job. */}}
+{{- define "common.capabilities.job.apiVersion" -}}
+{{- print "batch/v1" -}}
+{{- end -}}
+
 {{/* Return the appropriate apiVersion for deployment. */}}
 {{- define "common.capabilities.deployment.apiVersion" -}}
 {{- print "apps/v1" -}}

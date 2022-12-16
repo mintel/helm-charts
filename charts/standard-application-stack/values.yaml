@@ -842,6 +842,42 @@ cronjobs:
     #   includeElasticsearchSecret: false
     #   includeOpensearchSecret: false
 
+# -- Define and Configure Job's
+# Each job has the following configuration options, and defaults to the values below if not set.
+jobs:
+  []
+  #     # The name of the job. Required.
+  # - name: ''
+  #   argo:
+  #       # Phase ArgoCD should apply the manifest, such as PreSync, Sync, PostSync.
+  #       # See https://argo-cd.readthedocs.io/en/stable/user-guide/resource_hooks/#usage.
+  #     hook: 'Sync'
+  #       # When to delete the hook in an automated fashion, suck as HookSucceeded, HookFailed, etc.
+  #       # See https://argo-cd.readthedocs.io/en/stable/user-guide/resource_hooks/#hook-deletion-policies.
+  #     hookDeletePolicy: 'BeforeHookCreation'
+  #       # Order ArgoCD should apply the manifest. Lower values are applied first, and negative values are allowed.
+  #       # See https://argo-cd.readthedocs.io/en/stable/user-guide/sync-waves/.
+  #     syncWave: '0'
+  #     # Whether the pod should be restarted on failure.
+  #     # See https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#restart-policy.
+  #   restartPolicy: Never
+  #     # Configuration for the job image, command, arguments, environment variables, resources, etc. `resources` is required.
+  #   image: '${.image.registry + "/" + .image.repository + ":" + .image.tag}'
+  #   command:
+  #     - ''
+  #   args:
+  #     - ''
+  #   env: if includeBaseEnv then '${.env}' else []
+  #   envFrom: if includeAppSecret then '${.envFrom}' else []
+  #   podSecurityContext:
+  #     runAsUser: if includeBasePodSecurityContext then '${podSecurityContext.rusAsUser}' else ''
+  #   extraInitContainers: []
+  #   resources: []
+  #     # Whether to use the main deployment values above
+  #   includeBaseEnv: false
+  #   includeAppSecret: false
+  #   includeBasePodSecurityContext: false
+
 dynamodb:
   enabled: false
   # -- set outputSecret to true to allow TF Cloud chart create ExternalSecrets

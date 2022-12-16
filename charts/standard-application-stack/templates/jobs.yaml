@@ -1,0 +1,89 @@
+{{- range .Values.jobs }}
+---
+{{- $data := dict "Release" $.Release "Chart" $.Chart "Values" $.Values "component" .name }}
+apiVersion: {{ include "common.capabilities.job.apiVersion" $ }}
+kind: Job
+metadata:
+  name: {{ include "mintel_common.fullname" $data }}
+  labels: {{ include "mintel_common.labels" $data | nindent 4 }}
+  annotations:
+    {{- include "mintel_common.commonAnnotations" $ | nindent 4 }}
+    helm.sh/chart: {{ include "mintel_common.chart" $ }}
+    {{- if .argo }}
+    {{- if .argo.hook }}
+    argocd.argoproj.io/hook: {{ toYaml .argo.hook }}
+    {{- if .argo.hookDeletePolicy }}
+    argocd.argoproj.io/hook-delete-policy: {{ toYaml .argo.hookDeletePolicy }}
+    {{- end }}
+    {{- end }}
+    {{- if .argo.syncWave }}
+    argocd.argoproj.io/sync-wave: {{ toYaml .argo.syncWave }}
+    {{- end }}
+    {{- end }}
+  namespace: {{ $.Release.Namespace }}
+spec:
+  template:
+    spec:
+      {{- include "mintel_common.imagePullSecrets" $ | nindent 6 }}
+      {{- if .includeBasePodSecurityContext }}
+      {{- with $.Values.podSecurityContext }}
+      securityContext: {{- toYaml . | nindent 12 }}
+      {{- end }}
+      {{- end }}
+      {{- with .podSecurityContext }}
+      securityContext: {{ toYaml . | nindent 12 }}
+      {{- end }}
+      {{- if (and $.Values.serviceAccount (or $.Values.serviceAccount.create $.Values.serviceAccount.name)) }}
+      serviceAccountName: {{ default (include "mintel_common.fullname" $) $.Values.serviceAccount.name }}
+      {{- end }}
+      restartPolicy: {{ coalesce .restartPolicy "Never" }}
+      {{- with .extraInitContainers }}
+      initContainers:
+      {{- toYaml . | nindent 12 }}
+      {{- end }}
+      containers:
+        - name: main
+          image: {{ coalesce .image (include "mintel_common.image" $) }}
+          imagePullPolicy: {{ include "mintel_common.imagePullPolicy" $ }}
+          {{- with .command }}
+          command: {{ toYaml . | nindent 16 }}
+          {{- end }}
+          {{- with .args }}
+          args: {{ toYaml . | nindent 16 }}
+          {{- end }}
+          env:
+            - name: KUBERNETES_POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            {{- include "mintel_common.localDevEnv" $ | nindent 12 }}
+            {{- include "mintel_common.defaultEnv" $ | nindent 12 }}
+            {{- if .includeBaseEnv }}
+            {{- with $.Values.env }}
+            {{- toYaml . | nindent 12 }}
+            {{- end }}
+            {{- end }}
+            {{- with .env }}
+            {{- toYaml . | nindent 12 }}
+            {{- end }}
+          envFrom:
+            {{- if (and $.Values.externalSecret $.Values.externalSecret.enabled) }}
+            {{- if (or (ne $.Values.global.clusterEnv "local") (and (eq $.Values.global.clusterEnv "local") $.Values.externalSecret.localValues)) }}
+            {{- if .includeAppSecret }}
+            - secretRef:
+                name: {{ default (include "mintel_common.defaultAppSecretName" $) $.Values.externalSecret.nameOverride }}
+            {{- end }}
+            {{- end }}
+            {{- end }}
+            {{- if .includeBaseEnv }}
+            {{- with $.Values.envFrom }}
+            {{- toYaml . | nindent 12 }}
+            {{- end }}
+            {{- end }}
+            {{- with .envFrom }}
+            {{- toYaml . | nindent 12 }}
+            {{- end }}
+          {{- with .resources }}
+          resources: {{- toYaml . | nindent 12 }}
+          {{- end }}
+{{- end }}

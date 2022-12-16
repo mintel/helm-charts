@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v3.53.0] - 2022-12-16
+### Added
+- Added template for `Job` resources, including config to support ArgoCD sync phases and waves.
+
 ## [v3.52.2] - 2022-12-15
 ### Changed
 - Make `EXTRA_ALLOWED_HOSTS` env var unique and alphabetically sorted
