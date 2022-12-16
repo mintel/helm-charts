@@ -9,14 +9,14 @@ metadata:
   annotations:
     {{- include "mintel_common.commonAnnotations" $ | nindent 4 }}
     helm.sh/chart: {{ include "mintel_common.chart" $ }}
-    {{- if .argoHook }}
-    argocd.argoproj.io/hook: {{ toYaml .argoHook }}
-    {{- if .argoHookDeletePolicy }}
-    argocd.argoproj.io/hook-delete-policy: {{ toYaml .argoHookDeletePolicy }}
+    {{- if .argo.hook }}
+    argocd.argoproj.io/hook: {{ toYaml .argo.hook }}
+    {{- if .argo.hookDeletePolicy }}
+    argocd.argoproj.io/hook-delete-policy: {{ toYaml .argo.hookDeletePolicy }}
     {{- end }}
     {{- end }}
-    {{- if .argoSyncWave }}
-    argocd.argoproj.io/sync-wave: {{ toYaml .argoSyncWave }}
+    {{- if .argo.syncWave }}
+    argocd.argoproj.io/sync-wave: {{ toYaml .argo.syncWave }}
     {{- end }}
   namespace: {{ $.Release.Namespace }}
 spec:
