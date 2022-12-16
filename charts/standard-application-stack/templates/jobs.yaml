@@ -9,6 +9,7 @@ metadata:
   annotations:
     {{- include "mintel_common.commonAnnotations" $ | nindent 4 }}
     helm.sh/chart: {{ include "mintel_common.chart" $ }}
+    {{- if .argo }}
     {{- if .argo.hook }}
     argocd.argoproj.io/hook: {{ toYaml .argo.hook }}
     {{- if .argo.hookDeletePolicy }}
@@ -17,6 +18,7 @@ metadata:
     {{- end }}
     {{- if .argo.syncWave }}
     argocd.argoproj.io/sync-wave: {{ toYaml .argo.syncWave }}
+    {{- end }}
     {{- end }}
   namespace: {{ $.Release.Namespace }}
 spec:

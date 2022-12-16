@@ -848,16 +848,16 @@ jobs:
   []
   #     # The name of the job. Required.
   # - name: ''
-  #   argo: {   # Phase ArgoCD should apply the manifest, such as PreSync, Sync, PostSync.
-  #             # See https://argo-cd.readthedocs.io/en/stable/user-guide/resource_hooks/#usage.
-  #           hook: 'Sync'
-  #             # When to delete the hook in an automated fashion, suck as HookSucceeded, HookFailed, etc.
-  #             # See https://argo-cd.readthedocs.io/en/stable/user-guide/resource_hooks/#hook-deletion-policies.
-  #           hookDeletePolicy: 'BeforeHookCreation'
-  #             # Order ArgoCD should apply the manifest. Lower values are applied first, and negative values are allowed.
-  #             # See https://argo-cd.readthedocs.io/en/stable/user-guide/sync-waves/.
-  #           syncWave: '0'
-  #         }
+  #   argo:
+  #       # Phase ArgoCD should apply the manifest, such as PreSync, Sync, PostSync.
+  #       # See https://argo-cd.readthedocs.io/en/stable/user-guide/resource_hooks/#usage.
+  #     hook: 'Sync'
+  #       # When to delete the hook in an automated fashion, suck as HookSucceeded, HookFailed, etc.
+  #       # See https://argo-cd.readthedocs.io/en/stable/user-guide/resource_hooks/#hook-deletion-policies.
+  #     hookDeletePolicy: 'BeforeHookCreation'
+  #       # Order ArgoCD should apply the manifest. Lower values are applied first, and negative values are allowed.
+  #       # See https://argo-cd.readthedocs.io/en/stable/user-guide/sync-waves/.
+  #     syncWave: '0'
   #     # Whether the pod should be restarted on failure.
   #     # See https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#restart-policy.
   #   restartPolicy: Never
@@ -867,12 +867,12 @@ jobs:
   #     - ''
   #   args:
   #     - ''
-  #   env: if includeBaseEnv then '${.env}' else {}
-  #   envFrom: if includeAppSecret then '${.envFrom}' else {}
+  #   env: if includeBaseEnv then '${.env}' else []
+  #   envFrom: if includeAppSecret then '${.envFrom}' else []
   #   podSecurityContext:
   #     runAsUser: if includeBasePodSecurityContext then '${podSecurityContext.rusAsUser}' else ''
-  #   extraInitContainers: {}
-  #   resources: {}
+  #   extraInitContainers: []
+  #   resources: []
   #     # Whether to use the main deployment values above
   #   includeBaseEnv: false
   #   includeAppSecret: false

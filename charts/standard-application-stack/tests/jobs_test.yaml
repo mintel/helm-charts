@@ -1,0 +1,202 @@
+suite: Test Jobs
+templates:
+  - jobs.yaml
+release:
+  namespace: test-namespace
+tests:
+  - it: Check default values are correct with minimal configuration
+    set:
+      global.clusterEnv: qa
+      global.name: test-app
+      image.registry: registry.example.com
+      image.repository: test/image/repo
+      jobs:
+        - name: testName
+          resources:
+            limits:
+              cpu: 1000m
+              memory: 2Gi
+            requests:
+              cpu: 1000m
+              memory: 2Gi
+    asserts:
+      - isKind:
+          of: Job
+      - equal:
+          path: metadata.namespace
+          value: test-namespace
+      - equal:
+          path: metadata.name
+          value: test-app-testName
+      - hasDocuments:
+          count: 1
+      - equal:
+          path: spec.template.spec.containers[0].image
+          value: registry.example.com/test/image/repo:auto-replaced
+  - it: Check all .job.* values can be set correctly, without overriding from main deployment
+    set:
+      global.clusterEnv: qa
+      global.name: test-app
+      image.registry: registry.example.com
+      image.repository: test/image/repo
+      image.tag: someTag
+      jobs:
+        - name: testName
+          argo:
+            hook: PreSync
+            hookDeletePolicy: HookSucceeded
+            syncWave: '-1'
+          restartPolicy: OnFailure
+          image: registry.example.com/another/image/repo:anotherTag
+          command:
+            - echo
+          args:
+            - Hello, world.
+          env:
+            - name: TEST_VAR
+              value: testVal
+          envFrom:
+            - secretRef:
+                name: test-secret
+          podSecurityContext:
+            runAsUser: 1001
+          extraInitContainers:
+            - name: test-container
+              image: someimage
+          resources:
+            limits:
+              cpu: 1000m
+              memory: 2Gi
+            requests:
+              cpu: 1000m
+              memory: 2Gi
+    asserts:
+      - isKind:
+          of: Job
+      - hasDocuments:
+          count: 1
+      - equal:
+          path: metadata.annotations.[argocd.argoproj.io/hook]
+          value: PreSync
+      - equal:
+          path: metadata.annotations.[argocd.argoproj.io/hook-delete-policy]
+          value: HookSucceeded
+      - equal:
+          path: metadata.annotations.[argocd.argoproj.io/sync-wave]
+          value: '-1'
+      - equal:
+          path: spec.template.spec.restartPolicy
+          value: OnFailure
+      - equal:
+          path: spec.template.spec.containers[0].image
+          value: registry.example.com/another/image/repo:anotherTag
+      - equal:
+          path: spec.template.spec.containers[0].command
+          value:
+            - echo
+      - equal:
+          path: spec.template.spec.containers[0].args
+          value:
+            - Hello, world.
+      - equal:
+          path: spec.template.spec.containers[0].env
+          value:
+            - name: KUBERNETES_POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: APP_ENVIRONMENT
+              value: qa
+            - name: RUNTIME_ENVIRONMENT
+              value: kubernetes
+            - name: TEST_VAR
+              value: testVal
+      - equal:
+          path: spec.template.spec.containers[0].envFrom
+          value:
+            - secretRef:
+                name: test-secret
+      - equal:
+          path: spec.template.spec.securityContext.runAsUser
+          value: 1001
+      - equal:
+          path: spec.template.spec.initContainers
+          value:
+            - name: test-container
+              image: someimage
+      - equal:
+          path: spec.template.spec.containers[0].resources
+          value:
+            limits:
+              cpu: 1000m
+              memory: 2Gi
+            requests:
+              cpu: 1000m
+              memory: 2Gi
+  - it: Check all overrides/additions from main deployment work if enabled
+    set:
+      global.clusterEnv: qa
+      global.name: test-app
+      image.registry: registry.example.com
+      image.repository: test/image/repo
+      image.tag: someTag
+      env:
+        - name: TEST_VAR_1
+          value: foo
+        - name: TEST_VAR_2
+          value: bar
+      podSecurityContext:
+        runAsUser: 1000
+      jobs:
+        - name: testName
+          includeBaseEnv: true
+          includeAppSecret: true
+          includeBasePodSecurityContext: true
+          env:
+            - name: TEST_VAR_3
+              value: baz
+          envFrom:
+            - secretRef:
+                name: another-secret-ref
+          resources:
+            limits:
+              cpu: 1000m
+              memory: 2Gi
+            requests:
+              cpu: 1000m
+              memory: 2Gi
+    asserts:
+      - isKind:
+          of: Job
+      - hasDocuments:
+          count: 1
+      - equal:
+          path: spec.template.spec.containers[0].image
+          value: registry.example.com/test/image/repo:someTag
+      - equal:
+          path: spec.template.spec.containers[0].env
+          value:
+            - name: KUBERNETES_POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: APP_ENVIRONMENT
+              value: qa
+            - name: RUNTIME_ENVIRONMENT
+              value: kubernetes
+            - name: TEST_VAR_1
+              value: foo
+            - name: TEST_VAR_2
+              value: bar
+            - name: TEST_VAR_3
+              value: baz
+      - equal:
+          path: spec.template.spec.containers[0].envFrom
+          value:
+            - secretRef:
+                name: test-app-app
+            - secretRef:
+                name: another-secret-ref
+      - equal:
+          path: spec.template.spec.securityContext.runAsUser
+          value: 1000
