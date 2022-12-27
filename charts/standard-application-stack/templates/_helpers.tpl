@@ -55,9 +55,9 @@ app.mintel.com/owner: {{ .Values.global.owner }}
 {{- end }}
 app.mintel.com/env: {{ .Values.global.clusterEnv }}
 {{- if (eq .Values.global.clusterEnv "local") }}
-app.mintel.com/region: {{default "local" $.Values.global.clusterRegion }}
+app.mintel.com/region: {{$.Values.global.clusterRegion | default "local" }}
 {{- else }}
-app.mintel.com/region: {{default "${CLUSTER_REGION}" $.Values.global.clusterRegion }}
+app.mintel.com/region: {{ $.Values.global.clusterRegion | default "${CLUSTER_REGION}" }}
 {{- end }}
 {{- if .Values.global }}
 {{- with .Values.global.additionalLabels }}
@@ -115,12 +115,12 @@ Return the proper Application image name
 {{- define "mintel_common.image" -}}
 {{- $registryName := "" }}
 {{- if (eq .Values.global.clusterEnv "local") }}
-{{- $registryName = default "k3d-default.localhost:5000" .Values.image.registry -}}
+{{- $registryName = .Values.image.registry | default "k3d-default.localhost:5000" -}}
 {{- else }}
-{{- $registryName = default "registry.gitlab.com" .Values.image.registry -}}
+{{- $registryName = .Values.image.registry | default "registry.gitlab.com" -}}
 {{- end }}
 {{- $repositoryName := required "Must specify a docker repository." .Values.image.repository -}}
-{{- $tag := default "auto-replaced" .Values.image.tag | toString -}}
+{{- $tag := .Values.image.tag | default "auto-replaced" | toString -}}
 {{- printf "%s/%s:%s" $registryName $repositoryName $tag -}}
 {{- end -}}
 
@@ -151,7 +151,7 @@ Create a default oauth external secret name.
 */}}
 {{- define "mintel_common.defaultOauthSecretName" -}}
 {{- $fullname := include "mintel_common.fullname" . }}
-{{- printf "%s-%s" $fullname (default "oauth" .Values.oauthProxy.secretSuffix) }}
+{{- printf "%s-%s" $fullname (.Values.oauthProxy.secretSuffix | default "oauth") }}
 {{- end -}}
 
 {{/*
@@ -250,10 +250,10 @@ Build comma separated list of secrets
 {{- define "mintel_common.secretList" -}}
 {{- $secretList := list -}}
 {{- if (and .Values.externalSecret .Values.externalSecret.enabled) }}
-{{- $secretList = append $secretList (default (include "mintel_common.defaultAppSecretName" .) .Values.externalSecret.nameOverride) -}}
+{{- $secretList = append $secretList (.Values.externalSecret.nameOverride | default (include "mintel_common.defaultAppSecretName" .)) -}}
 {{- end }}
 {{- if (and .Values.oauthProxy .Values.oauthProxy.enabled) }}
-{{- $secretList = append $secretList (default (include "mintel_common.defaultOauthSecretName" .) .Values.oauthProxy.secretNameOverride) -}}
+{{- $secretList = append $secretList (.Values.oauthProxy.secretNameOverride | default (include "mintel_common.defaultOauthSecretName" .)) -}}
 {{- end }}
 {{- if (and (ne .Values.global.clusterEnv "local") .Values.global.terraform.externalSecrets) }}
   {{- range include "mintel_common.tf_cloud_external_secrets" . | split "," }}
@@ -263,33 +263,33 @@ Build comma separated list of secrets
   {{- end }}
 {{- else }}
     {{- if (and .Values.mariadb .Values.mariadb.enabled) }}
-    {{- $secretList = append $secretList (default (include "mintel_common.defaultMariadbSecretName" .) .Values.mariadb.secretNameOverride) -}}
+    {{- $secretList = append $secretList (.Values.mariadb.secretNameOverride | default (include "mintel_common.defaultMariadbSecretName" .)) -}}
     {{- end }}
     {{- if (and .Values.dynamodb .Values.dynamodb.enabled) }}
-    {{- $secretList = append $secretList (default (include "mintel_common.defaultDynamodbSecretName" .) .Values.dynamodb.secretNameOverride) -}}
+    {{- $secretList = append $secretList (.Values.dynamodb.secretNameOverride | default (include "mintel_common.defaultDynamodbSecretName" .)) -}}
     {{- end }}
     {{- if (and .Values.postgresql .Values.postgresql.enabled) }}
-    {{- $secretList = append $secretList (default (include "mintel_common.defaultPostgresqlSecretName" .) .Values.postgresql.secretNameOverride) -}}
+    {{- $secretList = append $secretList (.Values.postgresql.secretNameOverride | default (include "mintel_common.defaultPostgresqlSecretName" .)) -}}
     {{- end }}
     {{- if (and .Values.redis .Values.redis.enabled) }}
-    {{- $secretList = append $secretList (default (include "mintel_common.defaultRedisSecretName" .) .Values.redis.secretNameOverride) -}}
+    {{- $secretList = append $secretList (.Values.redis.secretNameOverride | default (include "mintel_common.defaultRedisSecretName" .)) -}}
     {{- end }}
     {{- if (and .Values.s3 .Values.s3.enabled) }}
-    {{- $secretList = append $secretList (default (include "mintel_common.defaultS3SecretName" .) .Values.s3.secretNameOverride) -}}
+    {{- $secretList = append $secretList (.Values.s3.secretNameOverride | default (include "mintel_common.defaultS3SecretName" .)) -}}
     {{- end }}
     {{- if (and .Values.elasticsearch .Values.elasticsearch.enabled) }}
-    {{- $secretList = append $secretList (default (include "mintel_common.defaultElasticsearchSecretName" .) .Values.elasticsearch.secretNameOverride) -}}
+    {{- $secretList = append $secretList (.Values.elasticsearch.secretNameOverride | default (include "mintel_common.defaultElasticsearchSecretName" .)) -}}
     {{- end }}
     {{- if (and .Values.opensearch .Values.opensearch.enabled) }}
-    {{- $secretList = append $secretList (default (include "mintel_common.defaultOpensearchSecretName" .) .Values.opensearch.secretNameOverride) -}}
+    {{- $secretList = append $secretList (.Values.opensearch.secretNameOverride | default (include "mintel_common.defaultOpensearchSecretName" .)) -}}
     {{- end }}
     {{- if (and .Values.sqs .Values.sqs.enabled) }}
-    {{- $secretList = append $secretList (default (include "mintel_common.defaultSqsSecretName" .) .Values.sqs.secretNameOverride) -}}
+    {{- $secretList = append $secretList (.Values.sqs.secretNameOverride | default (include "mintel_common.defaultSqsSecretName" .)) -}}
     {{- end }}
 {{- end }}
 {{- range .Values.extraSecrets }}
 {{- if (or (ne (hasKey . "includeInMain") true) .includeInMain) }}
-{{- $secretList = append $secretList (default (printf "%s-%s" (include "mintel_common.fullname" $) .name) .nameOverride) -}}
+{{- $secretList = append $secretList (.nameOverride | default (printf "%s-%s" (include "mintel_common.fullname" $) .name) ) -}}
 {{- end }}
 {{- end }}
 {{- uniq $secretList | compact | sortAlpha | join "," -}}
@@ -336,7 +336,7 @@ Build comma separated list of configmaps
   value: {{ .Values.global.runtimeEnvironment }}
 {{- if .Values.kubelock.enabled }}
 - name: KUBELOCK_NAME
-  value: {{ default (include "mintel_common.fullname" .) .Values.kubelock.nameOverride }}
+  value: {{ .Values.kubelock.nameOverride | default (include "mintel_common.fullname" .) }}
 - name: KUBELOCK_NAMESPACE
   value: {{ .Release.Namespace }}
 {{- end }}
@@ -469,16 +469,16 @@ topologySpreadConstraints:
   {{- if (and .Values.topologySpreadConstraints.zone .Values.topologySpreadConstraints.zone.enabled) }}
   - labelSelector:
       matchLabels: {{ include "mintel_common.selectorLabels" . | nindent 8 }}
-    maxSkew: {{ default 1 .Values.topologySpreadConstraints.zone.maxSkew }}
+    maxSkew: {{ .Values.topologySpreadConstraints.zone.maxSkew | default 1 }}
     topologyKey: topology.kubernetes.io/zone
-    whenUnsatisfiable: {{ default "DoNotSchedule" .Values.topologySpreadConstraints.zone.whenUnsatisfiable }}
+    whenUnsatisfiable: {{ .Values.topologySpreadConstraints.zone.whenUnsatisfiable | default "DoNotSchedule" }}
   {{- end }}
   {{- if or (and (not (kindIs "bool" .Values.topologySpreadConstraints.node.enabled)) (or (eq .Values.global.clusterEnv "logs") (eq .Values.global.clusterEnv "prod"))) (and .Values.topologySpreadConstraints.node .Values.topologySpreadConstraints.node.enabled) }}
   - labelSelector:
       matchLabels: {{ include "mintel_common.selectorLabels" . | nindent 8 }}
-    maxSkew: {{ default 1 .Values.topologySpreadConstraints.node.maxSkew }}
+    maxSkew: {{ .Values.topologySpreadConstraints.node.maxSkew | default 1 }}
     topologyKey: kubernetes.io/hostname
-    whenUnsatisfiable: {{ default "DoNotSchedule" .Values.topologySpreadConstraints.node.whenUnsatisfiable }}
+    whenUnsatisfiable: {{ .Values.topologySpreadConstraints.node.whenUnsatisfiable | default "DoNotSchedule" }}
   {{- end }}
 {{- end }}
 {{- end }}

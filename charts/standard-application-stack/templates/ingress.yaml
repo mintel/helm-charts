@@ -44,7 +44,7 @@ metadata:
   annotations:
     {{ include "mintel_common.commonAnnotations" $ingressData | nindent 4 }}
     {{- if (or $.Values.ingress.extraAnnotations $ingressData.ingress.extraAnnotations) }}
-    {{- toYaml (default $.Values.ingress.extraAnnotations $ingressData.extraAnnotations) | nindent 4 }}
+    {{- $ingressData.extraAnnotations | default $.Values.ingress.extraAnnotations | toYaml | nindent 4 }}
     {{- end}}
 
     {{- if (eq (include "mintel_common.ingress.className" $ingressData) "haproxy" ) }}

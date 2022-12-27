@@ -15,9 +15,9 @@ metadata:
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
   endpoints:
-    - interval: {{ default "30s" .Values.metrics.interval }}
-      path: {{ default "/metrics" .Values.metrics.path }}
-      port: main-{{ default "http" .Values.metrics.port }}
+    - interval: {{ .Values.metrics.interval | default "30s" }}
+      path: {{ .Values.metrics.path | default "/metrics" }}
+      port: main-{{ .Values.metrics.port | default "http" }}
       {{- if .Values.metrics.basicAuth }}
       {{- if .Values.metrics.basicAuth.enabled }}
       basicAuth:
@@ -35,8 +35,8 @@ spec:
             - __meta_kubernetes_namespace
             - __meta_kubernetes_pod_label_app_kubernetes_io_name
           targetLabel: job
-      scheme: {{ default "http" .Values.metrics.scheme }}
-      scrapeTimeout: {{ default "10s" .Values.metrics.timeout }}
+      scheme: {{ .Values.metrics.scheme | default "http" }}
+      scrapeTimeout: {{ .Values.metrics.timeout | default "10s" }}
       tlsConfig:
         insecureSkipVerify: true
   selector:
@@ -59,8 +59,8 @@ metadata:
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
   endpoints:
-    - interval: {{ default "30s" .interval $.Values.metrics.interval }}
-      path: {{ default "/metrics" .path $.Values.metrics.path }}
+    - interval: {{ coalesce .interval $.Values.metrics.interval "30s" }}
+      path: {{ coalesce .path $.Values.metrics.path "/metrics" }}
       port: main-{{ .name }}
       {{- if .basicAuth }}
       {{- if .basicAuth.enabled }}
@@ -79,8 +79,8 @@ spec:
             - __meta_kubernetes_namespace
             - __meta_kubernetes_pod_label_app_kubernetes_io_name
           targetLabel: job
-      scheme: {{ default "http" .scheme $.Values.metrics.scheme }}
-      scrapeTimeout: {{ default "10s" .timeout $.Values.metrics.timeout }}
+      scheme: {{ coalesce .scheme $.Values.metrics.scheme "http" }}
+      scrapeTimeout: {{ coalesce .timeout $.Values.metrics.timeout "10s" }}
       tlsConfig:
         insecureSkipVerify: true
   selector:
@@ -105,7 +105,7 @@ metadata:
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
   endpoints:
-    - interval: {{ default "30s" .Values.metrics.interval }}
+    - interval: {{ .Values.metrics.interval | default "30s" }}
       path: /metrics
       port: auth-proxy-metrics
       relabelings:
@@ -139,8 +139,8 @@ metadata:
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
   endpoints:
-    - interval: {{ default "30s" .Values.filebeatSidecar.metrics.interval }}
-      path: {{ default "/metrics" .Values.filebeatSidecar.metrics.path }}
+    - interval: {{ .Values.filebeatSidecar.metrics.interval | default "30s" }}
+      path: {{ .Values.filebeatSidecar.metrics.path | default "/metrics" }}
       port: beat-exporter-metrics
       relabelings:
         - separator: /
@@ -148,8 +148,8 @@ spec:
             - __meta_kubernetes_namespace
             - __meta_kubernetes_pod_label_app_kubernetes_io_name
           targetLabel: job
-      scheme: {{ default "http" .Values.filebeatSidecar.metrics.scheme }}
-      scrapeTimeout: {{ default "10s" .Values.filebeatSidecar.metrics.timeout }}
+      scheme: {{ .Values.filebeatSidecar.metrics.scheme | default "http" }}
+      scrapeTimeout: {{ .Values.filebeatSidecar.metrics.timeout | default "10s" }}
       tlsConfig:
         insecureSkipVerify: true
   selector:

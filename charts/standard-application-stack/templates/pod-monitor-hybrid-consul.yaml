@@ -14,8 +14,8 @@ metadata:
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
   podMetricsEndpoints:
-    - interval: {{ default "30s" .Values.hybridCloud.metrics.interval }}
-      path: {{ default "/metrics" .Values.hybridCloud.metrics.path }}
+    - interval: {{ .Values.hybridCloud.metrics.interval | default "30s" }}
+      path: {{ .Values.hybridCloud.metrics.path | default "/metrics" }}
       port: consul-metrics
       relabelings:
         - separator: /
@@ -23,8 +23,8 @@ spec:
             - __meta_kubernetes_namespace
             - __meta_kubernetes_pod_label_app_kubernetes_io_name
           targetLabel: job
-      scheme: {{ default "http" .Values.hybridCloud.metrics.scheme }}
-      scrapeTimeout: {{ default "10s" .Values.hybridCloud.metrics.timeout }}
+      scheme: {{ .Values.hybridCloud.metrics.scheme | default "http" }}
+      scrapeTimeout: {{ .Values.hybridCloud.metrics.timeout | default "10s" }}
       tlsConfig:
         insecureSkipVerify: true
   selector:

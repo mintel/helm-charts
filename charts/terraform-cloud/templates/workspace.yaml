@@ -10,7 +10,7 @@
   {{- if $resourceConfig.enabled }}
     # Loop through the instances configured in memcached.terraform.instances (create an empty dict with a "default"
     # instance if it hasn't been specified)
-    {{- range $instanceName, $instanceConfig := default ( dict "default" dict ) $resourceConfig.terraform.instances }}
+    {{- range $instanceName, $instanceConfig := $resourceConfig.terraform.instances | default ( dict "default" dict ) }}
       {{- $moduleSource := $resourceConfig.terraform.module.source }}
       {{- $moduleVersion := $resourceConfig.terraform.module.version }}
       {{- $tfVersion := $resourceConfig.terraform.terraformVersion}}

@@ -17,7 +17,7 @@ spec:
         - action: {{ .action }}
         {{- end }}
       {{- else }}
-      action: {{ default "allow" .action }}
+      action: {{ .action | default "allow" }}
       {{- end }}
     {{- end }}
 {{- end }}

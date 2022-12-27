@@ -10,7 +10,7 @@ metadata:
   annotations: {{ include "mintel_common.commonAnnotations" $ | nindent 4 }}
 spec:
   accessModes:
-    - {{ default "ReadWriteOnce" .mode }}
+    - {{ .mode | default "ReadWriteOnce" }}
   resources:
     requests:
       storage: {{ .size }}

@@ -25,12 +25,12 @@ spec:
     spec:
       {{- include "mintel_common.imagePullSecrets" . | nindent 6 }}
       {{- if (and .Values.serviceAccount (or .Values.serviceAccount.create .Values.serviceAccount.name)) }}
-      serviceAccountName: {{ default (include "mintel_common.fullname" .) .Values.serviceAccount.name }}
+      serviceAccountName: {{ .Values.serviceAccount.name | default (include "mintel_common.fullname" .) }}
       {{- end }}
       containers:
         - name: main
-          image: {{ default "index.docker.io/ovalmoney/celery-exporter:1.5.1" .Values.celery.metrics.image }}
-          imagePullPolicy: {{ default "IfNotPresent" .Values.image.pullPolicy }}
+          image: {{ .Values.celery.metrics.image | default "index.docker.io/ovalmoney/celery-exporter:1.5.1"}}
+          imagePullPolicy: {{ .Values.image.pullPolicy | default "IfNotPresent" }}
           args:
             - --transport-options
             - '{"master_name":"mymaster"}'
@@ -52,7 +52,7 @@ spec:
               value: {{ .Release.Namespace }}
           envFrom:
             - secretRef:
-                name: {{ default (include "mintel_common.defaultRedisSecretName" .) .Values.redis.secretNameOverride }}
+                name: {{ .Values.redis.secretNameOverride | default (include "mintel_common.defaultRedisSecretName" .)}}
           ports:
             - containerPort: 9540
               name: metrics

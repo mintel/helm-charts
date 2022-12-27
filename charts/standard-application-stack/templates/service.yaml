@@ -41,7 +41,7 @@ spec:
     {{- end }}
     {{- end }}
     {{- range .Values.extraPorts }}
-    - name: {{ default "main" .containerName }}-{{ .name }}
+    - name: {{ .containerName | default "main" }}-{{ .name }}
       port: {{ .containerPort }}
       targetPort: {{ .containerPort }}
     {{- end }}

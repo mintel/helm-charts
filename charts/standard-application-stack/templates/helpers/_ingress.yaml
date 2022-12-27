@@ -35,27 +35,27 @@
 {{/* Set default ALB healthcheck success-codes */}}
 {{- define "mintel_common.ingress.alb.healthcheck.successCodes" -}}
 {{- if eq .backendProtocolVersion "GRPC"}}
-{{- default "0,12" .healthcheck.successCodes }}
+{{- .healthcheck.successCodes | default "0,12" }}
 {{- else }}
-{{- default "200" .healthcheck.successCodes }}
+{{- .healthcheck.successCodes | default "200" }}
 {{- end }}
 {{- end }}
 
 {{/* Set default ALB healthcheck path */}}
 {{- define "mintel_common.ingress.alb.healthcheck.path" -}}
 {{- if eq .backendProtocolVersion "GRPC"}}
-{{- default "/grpc.health.v1.Health/Check" .healthcheck.path }}
+{{- .healthcheck.path | default "/grpc.health.v1.Health/Check" }}
 {{- else }}
-{{- default "/readiness" .healthcheck.path }}
+{{- .healthcheck.path | default "/readiness" }}
 {{- end }}
 {{- end }}
 
 {{/* Set default ALB healthcheck port */}}
 {{- define "mintel_common.ingress.alb.healthcheck.port" -}}
 {{- if .Values.oauthProxy.enabled }}
-{{- default 4180 .Values.ingress.alb.healthcheck.port }}
+{{- .Values.ingress.alb.healthcheck.port | default 4180 }}
 {{- else }}
-{{- default .Values.port .Values.ingress.alb.healthcheck.port }}
+{{- .Values.ingress.alb.healthcheck.port | default .Values.port }}
 {{- end }}
 {{- end }}
 
@@ -69,7 +69,7 @@
 {{- end }}
 
 {{- define "mintel_common.ingress.haproxy_annotations" -}}
-{{- with (coalesce .ingress.serverTimeoutSeconds .Values.ingress.serverTimeoutSeconds) }}
+{{- with .ingress.serverTimeoutSeconds | default .Values.ingress.serverTimeoutSeconds }}
 ingress.kubernetes.io/timeout-server: {{ . }}s
 {{- end }}
 ingress.kubernetes.io/rewrite-target: /
@@ -95,7 +95,7 @@ ingress.kubernetes.io/config-backend: |
 {{- define "mintel_common.ingress.alb_annotations" -}}
 alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
 alb.ingress.kubernetes.io/ssl-redirect: "443"
-alb.ingress.kubernetes.io/target-group-attributes: "deregistration_delay.timeout_seconds={{ default 10 .alb.deregistrationDelay.timeoutSeconds }}"
+alb.ingress.kubernetes.io/target-group-attributes: "deregistration_delay.timeout_seconds={{ .alb.deregistrationDelay.timeoutSeconds | default 10 }}"
 alb.ingress.kubernetes.io/target-type: "ip"
 external-dns.alpha.kubernetes.io/ttl: "60"
 external-dns.alpha.kubernetes.io/hostname: {{ .defaultHost }}
@@ -103,40 +103,40 @@ alb.ingress.kubernetes.io/backend-protocol: {{ include "mintel_common.ingress.al
 alb.ingress.kubernetes.io/backend-protocol-version: {{ include "mintel_common.ingress.alb.backendProtocolVersion" .alb }}
 alb.ingress.kubernetes.io/success-codes: "{{ include "mintel_common.ingress.alb.healthcheck.successCodes" .alb }}"
 alb.ingress.kubernetes.io/healthcheck-path: {{ include "mintel_common.ingress.alb.healthcheck.path" .alb }}
-alb.ingress.kubernetes.io/healthcheck-interval-seconds: "{{ default 15 .alb.healthcheck.intervalSeconds }}"
+alb.ingress.kubernetes.io/healthcheck-interval-seconds: "{{ .alb.healthcheck.intervalSeconds | default 15 }}"
 alb.ingress.kubernetes.io/healthcheck-port: "{{ include "mintel_common.ingress.alb.healthcheck.port" $ }}"
 alb.ingress.kubernetes.io/healthcheck-protocol: {{ include "mintel_common.ingress.alb.healthcheck.protocol" .alb }}
-alb.ingress.kubernetes.io/healthcheck-timeout-seconds: "{{ default 5 .alb.healthcheck.timeoutSeconds }}"
-alb.ingress.kubernetes.io/healthy-threshold-count: "{{ default 2 .alb.healthcheck.healthyThresholdCount }}"
-alb.ingress.kubernetes.io/unhealthy-threshold-count: "{{ default 2 .alb.healthcheck.unhealthyThresholdCount }}"
+alb.ingress.kubernetes.io/healthcheck-timeout-seconds: "{{ .alb.healthcheck.timeoutSeconds | default 5 }}"
+alb.ingress.kubernetes.io/healthy-threshold-count: "{{ .alb.healthcheck.healthyThresholdCount | default 2 }}"
+alb.ingress.kubernetes.io/unhealthy-threshold-count: "{{ .alb.healthcheck.unhealthyThresholdCount | default 2 }}"
 {{- end -}}
 
 {{- define "mintel_common.ingress.ingressPath" -}}
-- path: {{ default "/" .path }}
-  pathType: {{ default "Prefix" .pathType }}
+- path: {{ .path | default "/" }}
+  pathType: {{ .pathType | default "Prefix" }}
   backend:
     service:
-      name: {{ default (include "mintel_common.fullname" .) .targetService }}
+      name: {{ .targetService | default (include "mintel_common.fullname" .) }}
       port:
         {{- if (and .Values.oauthProxy .Values.oauthProxy.enabled) }}
         number: 4180
         {{- else }}
-        number: {{ default .Values.port .targetPort }}
+        number: {{ .targetPort | default .Values.port }}
         {{- end }}
 {{- end -}}
 
 {{/* Outputs space separated list of endpoints to deny at ingress */}}
 {{- define "mintel_common.ingressDenyEndpoints" -}}
 {{- $endpoints := list }}
-{{- $endpoints = append $endpoints (default "/metrics" .Values.metrics.path) }}
+{{- $endpoints = append $endpoints ( .Values.metrics.path | default "/metrics" ) }}
 {{- if (ne .Values.ingress.allowLivenessUrl true) }}
-{{- $livenessEndpoint := (coalesce .Values.liveness.path "/healthz") }}
+{{- $livenessEndpoint := .Values.liveness.path | default "/healthz" }}
 {{- if (ne $livenessEndpoint .Values.ingress.blackbox.probePath) }}
 {{- $endpoints = append $endpoints $livenessEndpoint }}
 {{- end }}
 {{- end }}
 {{- if (ne .Values.ingress.allowReadinessUrl true) }}
-{{- $readinessEndpoint := (coalesce .Values.readiness.path "/readiness") }}
+{{- $readinessEndpoint := .Values.readiness.path | default "/readiness" }}
 {{- if (ne $readinessEndpoint .Values.ingress.blackbox.probePath) }}
 {{- $endpoints = append $endpoints $readinessEndpoint }}
 {{- end }}

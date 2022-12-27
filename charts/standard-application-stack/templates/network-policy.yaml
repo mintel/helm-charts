@@ -23,13 +23,13 @@ spec:
 kind: NetworkPolicy
 apiVersion: {{ include "common.capabilities.networkpolicy.apiVersion" . }}
 metadata:
-  name: {{ printf "%s-to-%s" .fromName (default $.Values.global.name .toName) }}
+  name: {{ printf "%s-to-%s" .fromName (.toName | default $.Values.global.name) }}
   namespace: {{ $.Release.Namespace }}
   annotations: {{ include "mintel_common.commonAnnotations" $ | nindent 4 }}
 spec:
   podSelector:
     matchLabels:
-      app.kubernetes.io/name: {{ default $.Values.global.name .toName }}
+      app.kubernetes.io/name: {{ .toName | default $.Values.global.name }}
   ingress:
     - from:
       - podSelector:

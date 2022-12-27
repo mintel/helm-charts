@@ -32,9 +32,9 @@ app.mintel.com/owner: {{ .Values.global.owner }}
 {{- end }}
 app.mintel.com/env: {{ .Values.global.clusterEnv }}
 {{- if (eq .Values.global.clusterEnv "local") }}
-app.mintel.com/region: {{default "local" $.Values.global.clusterRegion }}
+app.mintel.com/region: {{ $.Values.global.clusterRegion | default "local" }}
 {{- else }}
-app.mintel.com/region: {{default "${CLUSTER_REGION}" $.Values.global.clusterRegion }}
+app.mintel.com/region: {{ $.Values.global.clusterRegion | default "${CLUSTER_REGION}" }}
 {{- end }}
 {{- if .Values.global }}
 {{- with .Values.global.additionalLabels }}
@@ -68,8 +68,8 @@ Create the name of the service account to use
 */}}
 {{- define "aws-api-gateway-operator.serviceAccountName" -}}
 {{- if (index .Values "standard-application-stack" "serviceAccount" "create") -}}
-    {{ default (include "mintel_common.fullname" .) (index .Values "standard-application-stack" "serviceAccount" "name") }}
+    {{ (index .Values "standard-application-stack" "serviceAccount" "name") | default (include "mintel_common.fullname" .) }}
 {{- else -}}
-    {{ default "default" (index .Values "standard-application-stack" "serviceAccount" "name") }}
+    {{ (index .Values "standard-application-stack" "serviceAccount" "name") | default "default"  }}
 {{- end -}}
 {{- end -}}

@@ -48,7 +48,7 @@ spec:
       maxUnavailable: {{ . }}
       {{- end }}
     {{- end }}
-    type: {{ default "RollingUpdate" .type }}
+    type: {{ .type | default "RollingUpdate"}}
     {{- else }}
     type: RollingUpdate
     {{- end }}
@@ -65,7 +65,7 @@ spec:
       securityContext: {{ toYaml . | nindent 8 }}
       {{- end }}
       {{- if (and .Values.serviceAccount (or .Values.serviceAccount.create .Values.serviceAccount.name)) }}
-      serviceAccountName: {{ default (include "mintel_common.fullname" .) .Values.serviceAccount.name }}
+      serviceAccountName: {{ .Values.serviceAccount.name | default (include "mintel_common.fullname" .) }}
       {{- end }}
       {{- if (ne .Values.global.clusterEnv "local") }}
       {{- with .Values.priorityClassName }}
@@ -103,14 +103,14 @@ spec:
                 labelSelector:
                   matchLabels: {{ include "mintel_common.selectorLabels" $data | nindent 20 }}
                 topologyKey: topology.kubernetes.io/zone
-              weight: {{ default 100 .Values.affinity.podAntiAffinity.weight }}
+              weight: {{ .Values.affinity.podAntiAffinity.weight | default 100 }}
             {{- end }}
             {{- if (eq .Values.affinity.podAntiAffinity.node "soft") }}
             - podAffinityTerm:
                 labelSelector:
                   matchLabels: {{ include "mintel_common.selectorLabels" $data | nindent 20 }}
                 topologyKey: kubernetes.io/hostname
-              weight: {{ default 100 .Values.affinity.podAntiAffinity.weight }}
+              weight: {{ .Values.affinity.podAntiAffinity.weight | default 100 }}
             {{- end }}
         {{- end }}
         {{- end }}
@@ -119,12 +119,12 @@ spec:
       {{- end }}
       containers:
         - name: main
-          image: {{ coalesce .Values.celery.image (include "mintel_common.image" .) }}
+          image: {{ .Values.celery.image | default (include "mintel_common.image" .) }}
           imagePullPolicy: {{ include "mintel_common.imagePullPolicy" . }}
-          {{- with (coalesce .Values.celery.command .Values.command) }}
+          {{- with .Values.celery.command | default .Values.command }}
           command: {{ toYaml . | nindent 12 }}
           {{- end }}
-          {{- with (coalesce .Values.celery.args .Values.args) }}
+          {{- with .Values.celery.args | default .Values.args }}
           args: {{ toYaml . | nindent 12 }}
           {{- end }}
           env:
@@ -150,7 +150,7 @@ spec:
             {{- if (and .Values.externalSecret .Values.externalSecret.enabled) }}
             {{- if (or (ne .Values.global.clusterEnv "local") (and (eq .Values.global.clusterEnv "local") .Values.externalSecret.localValues)) }}
             - secretRef:
-                name: {{ default (include "mintel_common.defaultAppSecretName" .) .Values.externalSecret.nameOverride }}
+                name: {{ .Values.externalSecret.nameOverride | default (include "mintel_common.defaultAppSecretName" .) }}
             {{- end }}
             {{- end }}
             {{- if .Values.global.terraform.externalSecrets }}
@@ -163,27 +163,27 @@ spec:
             {{- else }}
             {{- if (and .Values.mariadb .Values.mariadb.enabled) }}
             - secretRef:
-                name: {{ default (include "mintel_common.defaultMariadbSecretName" .) .Values.mariadb.secretNameOverride }}
+                name: {{ .Values.mariadb.secretNameOverride | default (include "mintel_common.defaultMariadbSecretName" .) }}
             {{- end }}
             {{- if (and .Values.postgresql .Values.postgresql.enabled) }}
             - secretRef:
-                name: {{ default (include "mintel_common.defaultPostgresqlSecretName" .) .Values.postgresql.secretNameOverride }}
+                name: {{ .Values.postgresql.secretNameOverride | default (include "mintel_common.defaultPostgresqlSecretName" .) }}
             {{- end }}
             {{- if (and .Values.redis .Values.redis.enabled) }}
             - secretRef:
-                name: {{ default (include "mintel_common.defaultRedisSecretName" .) .Values.redis.secretNameOverride }}
+                name: {{ .Values.redis.secretNameOverride | default (include "mintel_common.defaultRedisSecretName" .) }}
             {{- end }}
             {{- if (and .Values.elasticsearch .Values.elasticsearch.enabled) }}
             - secretRef:
-                name: {{ default (include "mintel_common.defaultElasticsearchSecretName" .) .Values.elasticsearch.secretNameOverride }}
+                name: {{ .Values.elasticsearch.secretNameOverride | default (include "mintel_common.defaultElasticsearchSecretName" .) }}
             {{- end }}
             {{- if (and .Values.opensearch .Values.opensearch.enabled) }}
             - secretRef:
-                name: {{ default (include "mintel_common.defaultOpensearchSecretName" .) .Values.opensearch.secretNameOverride }}
+                name: {{ .Values.opensearch.secretNameOverride | default (include "mintel_common.defaultOpensearchSecretName" .) }}
             {{- end }}
             {{- if (and .Values.s3 .Values.s3.enabled) }}
             - secretRef:
-                name: {{ default (include "mintel_common.defaultS3SecretName" .) .Values.s3.secretNameOverride }}
+                name: {{ .Values.s3.secretNameOverride | default (include "mintel_common.defaultS3SecretName" .) }}
             {{- end }}
             {{- end }}
             {{- with .Values.envFrom }}
@@ -203,9 +203,9 @@ spec:
               - '-c'
               - 'celery inspect ping -d celery@$(hostname)'
             {{- end }}
-            initialDelaySeconds: {{ default 0 .Values.celery.liveness.initialDelaySeconds }}
-            timeoutSeconds: {{ default 2 .Values.celery.liveness.timeoutSeconds }}
-            periodSeconds: {{ default 10 .Values.celery.liveness.periodSeconds }}
+            initialDelaySeconds: {{ .Values.celery.liveness.initialDelaySeconds | default 0 }}
+            timeoutSeconds: {{ .Values.celery.liveness.timeoutSeconds | default 2 }}
+            periodSeconds: {{ .Values.celery.liveness.periodSeconds | default 10 }}
           startupProbe:
             {{- if (and .Values.celery.startup .Values.celery.startup.methodOverride) }}
             {{- toYaml .Values.celery.startup.methodOverride | nindent 12 }}
@@ -216,9 +216,9 @@ spec:
               - '-c'
               - 'celery inspect ping -d celery@$(hostname)'
             {{- end }}
-            failureThreshold: {{ default 60 .Values.celery.startup.failureThreshold }}
-            timeoutSeconds: {{ default 1 .Values.celery.liveness.timeoutSeconds .Values.celery.startup.timeoutSeconds }}
-            periodSeconds: {{ default 5 .Values.celery.liveness.periodSeconds .Values.celery.startup.periodSeconds }}
+            failureThreshold: {{ .Values.celery.startup.failureThreshold | default 60 }}
+            timeoutSeconds: {{ coalesce .Values.celery.startup.timeoutSeconds .Values.celery.liveness.timeoutSeconds 1 }}
+            periodSeconds: {{ coalesce .Values.celery.startup.periodSeconds .Values.celery.liveness.periodSeconds 5 }}
           {{- end }}
           {{- if (and .Values.celery.readiness .Values.celery.readiness.enabled) }}
           readinessProbe:
@@ -226,13 +226,13 @@ spec:
             {{- toYaml .Values.celery.readiness.methodOverride | nindent 12 }}
             {{- else }}
             httpGet:
-              path: {{ default "/readiness" .Values.readiness.path }}
-              port: {{ default "http" .Values.readiness.port }}
-              scheme: {{ default "HTTP" .Values.readiness.scheme }}
+              path: {{ .Values.readiness.path | default "/readiness" }}
+              port: {{ .Values.readiness.port | default "http" }}
+              scheme: {{ .Values.readiness.scheme | default "HTTP" }}
             {{- end }}
-            initialDelaySeconds: {{ default 0 .Values.celery.readiness.initialDelaySeconds }}
-            timeoutSeconds: {{ default 1 .Values.celery.readiness.timeoutSeconds }}
-            periodSeconds: {{ default 10 .Values.celery.readiness.periodSeconds }}
+            initialDelaySeconds: {{ .Values.celery.readiness.initialDelaySeconds | default 0 }}
+            timeoutSeconds: {{ .Values.celery.readiness.timeoutSeconds | default 1 }}
+            periodSeconds: {{ .Values.celery.readiness.periodSeconds | default 10 }}
           {{- end }}
           {{- with .Values.securityContext }}
           securityContext: {{ toYaml . | nindent 12 }}
@@ -269,11 +269,11 @@ spec:
           envFrom:
             {{- if (and .Values.elasticsearch .Values.elasticsearch.enabled) }}
             - secretRef:
-                name: {{ default (include "mintel_common.defaultElasticsearchSecretName" .) .Values.elasticsearch.secretNameOverride }}
+                name: {{ .Values.elasticsearch.secretNameOverride | default (include "mintel_common.defaultElasticsearchSecretName" .) }}
             {{- end }}
             {{- if (and .Values.opensearch .Values.opensearch.enabled) }}
             - secretRef:
-                name: {{ default (include "mintel_common.defaultOpensearchSecretName" .) .Values.opensearch.secretNameOverride }}
+                name: {{ .Values.opensearch.secretNameOverride | default (include "mintel_common.defaultOpensearchSecretName" .) }}
             {{- end }}
           livenessProbe:
             tcpSocket:

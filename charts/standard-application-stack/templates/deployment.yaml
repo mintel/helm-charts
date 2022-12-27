@@ -79,7 +79,7 @@ spec:
       maxUnavailable: {{ . }}
       {{- end }}
     {{- end }}
-    type: {{ default "RollingUpdate" .type }}
+    type: {{ .type | default "RollingUpdate" }}
     {{- else }}
     type: RollingUpdate
     {{- end }}
@@ -104,7 +104,7 @@ spec:
       securityContext: {{ toYaml . | nindent 8 }}
       {{- end }}
       {{- if (and .Values.serviceAccount (or .Values.serviceAccount.create .Values.serviceAccount.name)) }}
-      serviceAccountName: {{ default (include "mintel_common.fullname" .) .Values.serviceAccount.name }}
+      serviceAccountName: {{ .Values.serviceAccount.name | default (include "mintel_common.fullname" .) }}
       {{- end }}
       {{- if (ne .Values.global.clusterEnv "local") }}
       {{- with .Values.priorityClassName }}
@@ -112,7 +112,7 @@ spec:
       {{- end }}
       {{- end }}
       {{- include "mintel_common.topologySpreadConstraints" . | nindent 6 }}
-      terminationGracePeriodSeconds: {{ default 30 .Values.terminationGracePeriodSeconds }}
+      terminationGracePeriodSeconds: {{ .Values.terminationGracePeriodSeconds | default 30 }}
       {{- if (and (gt (.Values.replicas | int) 1) (and .Values.affinity .Values.affinity.enabled)) }}
       affinity:
         {{- if (and .Values.affinity .Values.affinity.specificYaml) }}
@@ -143,14 +143,14 @@ spec:
                 labelSelector:
                   matchLabels: {{ include "mintel_common.selectorLabels" . | nindent 20 }}
                 topologyKey: topology.kubernetes.io/zone
-              weight: {{ default 100 .Values.affinity.podAntiAffinity.weight }}
+              weight: {{ .Values.affinity.podAntiAffinity.weight | default 100 }}
             {{- end }}
             {{- if (eq .Values.affinity.podAntiAffinity.node "soft") }}
             - podAffinityTerm:
                 labelSelector:
                   matchLabels: {{ include "mintel_common.selectorLabels" . | nindent 20 }}
                 topologyKey: kubernetes.io/hostname
-              weight: {{ default 100 .Values.affinity.podAntiAffinity.weight }}
+              weight: {{ .Values.affinity.podAntiAffinity.weight | default 100 }}
             {{- end }}
         {{- end }}
         {{- end }}
@@ -192,7 +192,7 @@ spec:
             {{- if (and .Values.externalSecret .Values.externalSecret.enabled) }}
             {{- if (or (ne .Values.global.clusterEnv "local") (and (eq .Values.global.clusterEnv "local") .Values.externalSecret.localValues)) }}
             - secretRef:
-                name: {{ default (include "mintel_common.defaultAppSecretName" .) .Values.externalSecret.nameOverride }}
+                name: {{ .Values.externalSecret.nameOverride | default (include "mintel_common.defaultAppSecretName" .) }}
             {{- end }}
             {{- end }}
             {{- if (and (ne .Values.global.clusterEnv "local") .Values.global.terraform.externalSecrets) }}
@@ -205,41 +205,41 @@ spec:
             {{- else }}
               {{- if (and .Values.mariadb .Values.mariadb.enabled) }}
             - secretRef:
-                name: {{ default (include "mintel_common.defaultMariadbSecretName" .) .Values.mariadb.secretNameOverride }}
+                name: {{ .Values.mariadb.secretNameOverride | default (include "mintel_common.defaultMariadbSecretName" .) }}
               {{- end }}
               {{- if (and .Values.postgresql .Values.postgresql.enabled) }}
             - secretRef:
-                name: {{ default (include "mintel_common.defaultPostgresqlSecretName" .) .Values.postgresql.secretNameOverride }}
+                name: {{ .Values.postgresql.secretNameOverride | default (include "mintel_common.defaultPostgresqlSecretName" .) }}
               {{- end }}
               {{- if (and .Values.dynamodb .Values.dynamodb.enabled) }}
             - secretRef:
-                name: {{ default (include "mintel_common.defaultDynamodbSecretName" .) .Values.dynamodb.secretNameOverride }}
+                name: {{ .Values.dynamodb.secretNameOverride | default (include "mintel_common.defaultDynamodbSecretName" .) }}
               {{- end }}
               {{- if (and .Values.redis .Values.redis.enabled) }}
             - secretRef:
-                name: {{ default (include "mintel_common.defaultRedisSecretName" .) .Values.redis.secretNameOverride }}
+                name: {{ .Values.redis.secretNameOverride | default (include "mintel_common.defaultRedisSecretName" .) }}
               {{- end }}
               {{- if (and .Values.s3 .Values.s3.enabled) }}
             - secretRef:
-                name: {{ default (include "mintel_common.defaultS3SecretName" .) .Values.s3.secretNameOverride }}
+                name: {{ .Values.s3.secretNameOverride | default (include "mintel_common.defaultS3SecretName" .) }}
               {{- end }}
               {{- if (and .Values.sqs .Values.sqs.enabled) }}
             - secretRef:
-                name: {{ default (include "mintel_common.defaultSqsSecretName" .) .Values.sqs.secretNameOverride }}
+                name: {{ .Values.sqs.secretNameOverride | default (include "mintel_common.defaultSqsSecretName" .) }}
               {{- end }}
               {{- if (and .Values.elasticsearch .Values.elasticsearch.enabled) }}
             - secretRef:
-                name: {{ default (include "mintel_common.defaultElasticsearchSecretName" .) .Values.elasticsearch.secretNameOverride }}
+                name: {{ .Values.elasticsearch.secretNameOverride | default (include "mintel_common.defaultElasticsearchSecretName" .) }}
               {{- end }}
               {{- if (and .Values.opensearch .Values.opensearch.enabled) }}
             - secretRef:
-                name: {{ default (include "mintel_common.defaultOpensearchSecretName" .) .Values.opensearch.secretNameOverride }}
+                name: {{ .Values.opensearch.secretNameOverride | default (include "mintel_common.defaultOpensearchSecretName" .) }}
               {{- end }}
             {{- end }}
             {{- range .Values.extraSecrets }}
             {{- if (or (ne (hasKey . "includeInMain") true) .includeInMain) }}
             - secretRef:
-                name: {{ default (printf "%s-%s" (include "mintel_common.fullname" $) .name) .nameOverride }}
+                name: {{ .nameOverride | default (printf "%s-%s" (include "mintel_common.fullname" $) .name) }}
             {{- end }}
             {{- end }}
             {{- with .Values.envFrom }}
@@ -250,9 +250,9 @@ spec:
             - containerPort: {{ .Values.port }}
               name: http
             {{- if .Values.hybridCloud.enabled }}
-            - containerPort: {{ default "20200" .Values.hybridCloud.metrics.port }}
+            - containerPort: {{ .Values.hybridCloud.metrics.port | default "20200" }}
               name: consul-metrics
-            - containerPort: {{ default "20000" .Values.hybridCloud.proxyPort }}
+            - containerPort: {{ .Values.hybridCloud.proxyPort | default "20000" }}
               name: consul-proxy
             {{- end }}
             {{- with .Values.extraPorts }}
@@ -265,21 +265,21 @@ spec:
             {{- toYaml .Values.liveness.methodOverride | nindent 12 }}
             {{- else }}
             httpGet:
-              path: {{ default "/healthz" .Values.liveness.path }}
-              port: {{ default "http" .Values.liveness.port }}
-              scheme: {{ default "HTTP" .Values.liveness.scheme }}
+              path: {{ .Values.liveness.path | default "/healthz" }}
+              port: {{ .Values.liveness.port | default "http" }}
+              scheme: {{ .Values.liveness.scheme | default "HTTP" }}
             {{- end }}
-            initialDelaySeconds: {{ default 0 .Values.liveness.initialDelaySeconds }}
-            timeoutSeconds: {{ default 1 .Values.liveness.timeoutSeconds }}
-            periodSeconds: {{ default 10 .Values.liveness.periodSeconds }}
+            initialDelaySeconds: {{ .Values.liveness.initialDelaySeconds | default 0 }}
+            timeoutSeconds: {{ .Values.liveness.timeoutSeconds | default 1 }}
+            periodSeconds: {{ .Values.liveness.periodSeconds | default 10 }}
           startupProbe:
             {{- if .Values.liveness.methodOverride }}
             {{- toYaml .Values.liveness.methodOverride | nindent 12 }}
             {{- else }}
             httpGet:
-              path: {{ default "/healthz" .Values.liveness.path }}
-              port: {{ default "http" .Values.liveness.port }}
-              scheme: {{ default "HTTP" .Values.liveness.scheme }}
+              path: {{ .Values.liveness.path | default "/healthz" }}
+              port: {{ .Values.liveness.port | default "http" }}
+              scheme: {{ .Values.liveness.scheme | default "HTTP" }}
             {{- end }}
             {{- if .Values.liveness.startup }}
             {{- if .Values.liveness.startup.failureThreshold }}
@@ -303,13 +303,13 @@ spec:
             {{- toYaml .Values.readiness.methodOverride | nindent 12 }}
             {{- else }}
             httpGet:
-              path: {{ default "/readiness" .Values.readiness.path }}
-              port: {{ default "http" .Values.readiness.port }}
-              scheme: {{ default "HTTP" .Values.readiness.scheme }}
+              path: {{ .Values.readiness.path | default "/readiness" }}
+              port: {{ .Values.readiness.port | default "http" }}
+              scheme: {{ .Values.readiness.scheme | default "HTTP" }}
             {{- end }}
-            initialDelaySeconds: {{ default 0 .Values.readiness.initialDelaySeconds }}
-            timeoutSeconds: {{ default 1 .Values.readiness.timeoutSeconds }}
-            periodSeconds: {{ default 10 .Values.readiness.periodSeconds }}
+            initialDelaySeconds: {{ .Values.readiness.initialDelaySeconds | default 0 }}
+            timeoutSeconds: {{ .Values.readiness.timeoutSeconds | default 1 }}
+            periodSeconds: {{ .Values.readiness.periodSeconds | default 10 }}
           {{- end }}
           {{- with .Values.securityContext }}
           securityContext: {{ toYaml . | nindent 12 }}
@@ -342,11 +342,11 @@ spec:
           envFrom:
             {{- if (and .Values.elasticsearch .Values.elasticsearch.enabled) }}
             - secretRef:
-                name: {{ default (include "mintel_common.defaultElasticsearchSecretName" .) .Values.opensearch.secretNameOverride }}
+                name: {{ .Values.opensearch.secretNameOverride | default (include "mintel_common.defaultElasticsearchSecretName" .) }}
             {{- end }}
             {{- if (and .Values.opensearch .Values.opensearch.enabled) }}
             - secretRef:
-                name: {{ default (include "mintel_common.defaultOpensearchSecretName" .) .Values.opensearch.secretNameOverride }}
+                name: {{ .Values.opensearch.secretNameOverride | default (include "mintel_common.defaultOpensearchSecretName" .) }}
             {{- end }}
           livenessProbe:
             tcpSocket:

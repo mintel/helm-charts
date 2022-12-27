@@ -16,8 +16,8 @@ metadata:
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
   podMetricsEndpoints:
-    - interval: {{ default "30s" .Values.filebeatSidecar.metrics.interval }}
-      path: {{ default "/metrics" .Values.filebeatSidecar.metrics.path }}
+    - interval: {{ .Values.filebeatSidecar.metrics.interval | default "30s" }}
+      path: {{ .Values.filebeatSidecar.metrics.path | default "/metrics" }}
       port: beat-exporter-metrics
       relabelings:
         - separator: /
@@ -25,8 +25,8 @@ spec:
             - __meta_kubernetes_namespace
             - __meta_kubernetes_pod_label_app_kubernetes_io_name
           targetLabel: job
-      scheme: {{ default "http" .Values.filebeatSidecar.metrics.scheme }}
-      scrapeTimeout: {{ default "10s" .Values.filebeatSidecar.metrics.timeout }}
+      scheme: {{ .Values.filebeatSidecar.metrics.scheme | default "http" }}
+      scrapeTimeout: {{ .Values.filebeatSidecar.metrics.timeout | default "10s" }}
       tlsConfig:
         insecureSkipVerify: true
   selector:

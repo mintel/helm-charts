@@ -11,8 +11,8 @@ metadata:
     helm.sh/chart: {{ include "mintel_common.chart" $ }}
   namespace: {{ $.Release.Namespace }}
 spec:
-  concurrencyPolicy: {{ coalesce .concurrencyPolicy $.Values.cronjobs.defaults.concurrencyPolicy }}
-  {{- if (coalesce .suspend $.Values.cronjobs.defaults.suspend) }}
+  concurrencyPolicy: {{ .concurrencyPolicy | default $.Values.cronjobs.defaults.concurrencyPolicy }}
+  {{- if (.suspend | default $.Values.cronjobs.defaults.suspend) }}
   suspend: true
   {{- else }}
   suspend: false
@@ -34,9 +34,9 @@ spec:
           securityContext: {{ toYaml . | nindent 12 }}
           {{- end }}
           {{- if (and $.Values.serviceAccount (or $.Values.serviceAccount.create $.Values.serviceAccount.name)) }}
-          serviceAccountName: {{ default (include "mintel_common.fullname" $) $.Values.serviceAccount.name }}
+          serviceAccountName: {{ $.Values.serviceAccount.name | default (include "mintel_common.fullname" $) }}
           {{- end }}
-          restartPolicy: {{ coalesce .restartPolicy $.Values.cronjobs.defaults.restartPolicy }}
+          restartPolicy: {{ .restartPolicy | default $.Values.cronjobs.defaults.restartPolicy }}
           {{- with .extraInitContainers }}
           initContainers:
           {{- toYaml . | nindent 12 }}
@@ -47,7 +47,7 @@ spec:
           {{- end }}
           containers:
             - name: main
-              image: {{ coalesce .image (include "mintel_common.image" $) }}
+              image: {{ .image | default (include "mintel_common.image" $) }}
               imagePullPolicy: {{ include "mintel_common.imagePullPolicy" $ }}
               {{- with .command }}
               command: {{ toYaml . | nindent 16 }}
@@ -93,7 +93,7 @@ spec:
                 {{- if (or (ne $.Values.global.clusterEnv "local") (and (eq $.Values.global.clusterEnv "local") $.Values.externalSecret.localValues)) }}
                 {{- if .includeAppSecret }}
                 - secretRef:
-                    name: {{ default (include "mintel_common.defaultAppSecretName" $) $.Values.externalSecret.nameOverride }}
+                    name: {{ $.Values.externalSecret.nameOverride | default (include "mintel_common.defaultAppSecretName" $) }}
                 {{- end }}
                 {{- end }}
                 {{- end }}
@@ -108,43 +108,43 @@ spec:
                 {{- if (and $.Values.mariadb $.Values.mariadb.enabled) }}
                 {{- if .includeMariadbSecret }}
                 - secretRef:
-                    name: {{ default (include "mintel_common.defaultMariadbSecretName" $) $.Values.mariadb.secretNameOverride }}
+                    name: {{ $.Values.mariadb.secretNameOverride | default (include "mintel_common.defaultMariadbSecretName" $) }}
                 {{- end }}
                 {{- end }}
                 {{- if (and $.Values.dynamodb $.Values.dynamodb.enabled) }}
                 {{- if .includeDynamodbSecret }}
                 - secretRef:
-                    name: {{ default (include "mintel_common.defaultDynamodbSecretName" $) $.Values.dynamodb.secretNameOverride }}
+                    name: {{ $.Values.dynamodb.secretNameOverride | default (include "mintel_common.defaultDynamodbSecretName" $) }}
                 {{- end }}
                 {{- end }}
                 {{- if (and $.Values.postgresql $.Values.postgresql.enabled) }}
                 {{- if .includePostgesqlSecret }}
                 - secretRef:
-                    name: {{ default (include "mintel_common.defaultPostgresqlSecretName" $) $.Values.postgresql.secretNameOverride }}
+                    name: {{ $.Values.postgresql.secretNameOverride | default (include "mintel_common.defaultPostgresqlSecretName" $) }}
                 {{- end }}
                 {{- end }}
                 {{- if (and $.Values.redis $.Values.redis.enabled) }}
                 {{- if .includeRedisSecret }}
                 - secretRef:
-                    name: {{ default (include "mintel_common.defaultRedisSecretName" $) $.Values.redis.secretNameOverride }}
+                    name: {{ $.Values.redis.secretNameOverride | default (include "mintel_common.defaultRedisSecretName" $) }}
                 {{- end }}
                 {{- end }}
                 {{- if (and $.Values.s3 $.Values.s3.enabled) }}
                 {{- if .includeS3Secret }}
                 - secretRef:
-                    name: {{ default (include "mintel_common.defaultS3SecretName" $) $.Values.s3.secretNameOverride }}
+                    name: {{ $.Values.s3.secretNameOverride | default (include "mintel_common.defaultS3SecretName" $) }}
                 {{- end }}
                 {{- end }}
                 {{- if (and $.Values.elasticsearch $.Values.elasticsearch.enabled) }}
                 {{- if .includeElasticsearchSecret }}
                 - secretRef:
-                    name: {{ default (include "mintel_common.defaultElasticsearchSecretName" $) $.Values.elasticsearch.secretNameOverride }}
+                    name: {{ $.Values.elasticsearch.secretNameOverride | default (include "mintel_common.defaultElasticsearchSecretName" $) }}
                 {{- end }}
                 {{- end }}
                 {{- if (and $.Values.opensearch $.Values.opensearch.enabled) }}
                 {{- if .includeOpensearchSecret }}
                 - secretRef:
-                    name: {{ default (include "mintel_common.defaultOpensearchSecretName" $) $.Values.opensearch.secretNameOverride }}
+                    name: {{ $.Values.opensearch.secretNameOverride | default (include "mintel_common.defaultOpensearchSecretName" $) }}
                 {{- end }}
                 {{- end }}
                 {{- end }}
