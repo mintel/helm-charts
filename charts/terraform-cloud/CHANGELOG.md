@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 ### Changed
 - Refactor use of the `default` template function (sometimes use `coalesce`)
+- Remove pointless `print` and `printf` function calls
 
 ## [v0.30.0] - 2022-12-13
 ### Changed

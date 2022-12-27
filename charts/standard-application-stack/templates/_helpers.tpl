@@ -10,7 +10,7 @@ We truncate at 63 chars because sometimes Kubernetes name fields are limited to 
 {{- else if .component }}
 {{- printf "%s-%s" .Values.global.name .component | trimSuffix .Chart.Name | trunc 63 | trimSuffix "-" -}}
 {{- else -}}
-{{- printf "%s" .Values.global.name | trunc 63 | trimSuffix "-" -}}
+{{- .Values.global.name | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 {{- end -}}
 
@@ -129,11 +129,11 @@ Return the ImagePullPolicy
 */}}
 {{- define "mintel_common.imagePullPolicy" -}}
 {{- if .Values.image.pullPolicy }}
-{{- printf "%s" .Values.image.pullPolicy -}}
-{{- else if (eq .Values.image.tag "latest") }}
-{{- print "Always" -}}
-{{- else }}
-{{- print "IfNotPresent" -}}
+{{- .Values.image.pullPolicy -}}
+{{- else if (eq .Values.image.tag "latest") -}}
+Always
+{{- else -}}
+IfNotPresent
 {{- end }}
 {{- end -}}
 

@@ -5,7 +5,7 @@ Create a default fully qualified app name.
 We truncate at 63 chars because sometimes Kubernetes name fields are limited to this (by the DNS naming spec).
 */}}
 {{- define "mintel_common.fullname" -}}
-{{- printf "%s" .Values.global.name | trunc 63 | trimSuffix "-" -}}
+{{- .Values.global.name | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
 {{/* Common Annotations */}}

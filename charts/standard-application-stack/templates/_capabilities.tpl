@@ -17,91 +17,91 @@ Return the target Kubernetes version
 
 {{/* Return the appropriate apiVersion for policy. */}}
 {{- define "common.capabilities.policy.apiVersion" -}}
-{{- print "policy/v1" -}}
+policy/v1
 {{- end -}}
 
 {{/* Return the appropriate apiVersion for cronjob. */}}
 {{- define "common.capabilities.cronjob.apiVersion" -}}
-{{- print "batch/v1" -}}
+batch/v1
 {{- end -}}
 
 {{/* Return the appropriate apiVersion for job. */}}
 {{- define "common.capabilities.job.apiVersion" -}}
-{{- print "batch/v1" -}}
+batch/v1
 {{- end -}}
 
 {{/* Return the appropriate apiVersion for deployment. */}}
 {{- define "common.capabilities.deployment.apiVersion" -}}
-{{- print "apps/v1" -}}
+apps/v1
 {{- end -}}
 
 {{/* Return the appropriate apiVersion for statefulset. */}}
 {{- define "common.capabilities.statefulset.apiVersion" -}}
-{{- print "apps/v1" -}}
+apps/v1
 {{- end -}}
 
 {{/* Return the appropriate apiVersion for ingress */}}
 {{- define "common.capabilities.ingress.apiVersion" -}}
 {{- if .Values.ingress.apiVersion -}}
 {{- .Values.ingress.apiVersion -}}
-{{- else }}
-{{- print "networking.k8s.io/v1" -}}
-{{- end }}
+{{- else -}}
+networking.k8s.io/v1
+{{- end -}}
 {{- end -}}
 
 {{/* Return the appropriate apiVersion for RBAC resources. */}}
 {{- define "common.capabilities.rbac.apiVersion" -}}
-{{- print "rbac.authorization.k8s.io/v1" -}}
+rbac.authorization.k8s.io/v1
 {{- end -}}
 
 {{/* Return the appropriate apiVersion for CRDs. */}}
 {{- define "common.capabilities.crd.apiVersion" -}}
-{{- print "apiextensions.k8s.io/v1" -}}
+apiextensions.k8s.io/v1
 {{- end -}}
 
 {{/* Return the appropriate apiVersion for Pod Monitors. */}}
 {{- define "common.capabilities.podmonitor.apiVersion" -}}
-{{- print "monitoring.coreos.com/v1" -}}
+monitoring.coreos.com/v1
 {{- end -}}
 
 {{/* Return the appropriate apiVersion for Service Monitors. */}}
 {{- define "common.capabilities.servicemonitor.apiVersion" -}}
-{{- print "monitoring.coreos.com/v1" -}}
+monitoring.coreos.com/v1
 {{- end -}}
 
 {{/* Return the appropriate apiVersion for External Secrets. */}}
 {{- define "common.capabilities.externalsecret.apiVersion" -}}
-{{- print "external-secrets.io/v1alpha1" -}}
+external-secrets.io/v1alpha1
 {{- end -}}
 
 {{/* Return the appropriate apiVersion for Secrets. */}}
 {{- define "common.capabilities.secret.apiVersion" -}}
-{{- print "v1" -}}
+v1
 {{- end -}}
 
 {{/* Return the appropriate apiVersion for Configmaps */}}
 {{- define "common.capabilities.configmap.apiVersion" -}}
-{{- print "v1" -}}
+v1
 {{- end -}}
 
 {{/* Return the appropriate apiVersion for Service Accounts. */}}
 {{- define "common.capabilities.serviceaccount.apiVersion" -}}
-{{- print "v1" -}}
+v1
 {{- end -}}
 
 {{/* Return the appropriate apiVersion for Services. */}}
 {{- define "common.capabilities.service.apiVersion" -}}
-{{- print "v1" -}}
+v1
 {{- end -}}
 
 {{/* Return the appropriate apiVersion for PersistentVolumeClaim. */}}
 {{- define "common.capabilities.pvc.apiVersion" -}}
-{{- print "v1" -}}
+v1
 {{- end -}}
 
 {{/* Return the appropriate apiVersion for NetworkPolicy. */}}
 {{- define "common.capabilities.networkpolicy.apiVersion" -}}
-{{- print "networking.k8s.io/v1" -}}
+networking.k8s.io/v1
 {{- end -}}
 
 {{/*
@@ -118,5 +118,5 @@ This check is introduced as a regexMatch instead of {{ if .Capabilities.HelmVers
 
 {{/* Return the appropriate apiVersion for VerticalPodAutoscaler. */}}
 {{- define "common.capabilities.verticalPodAutoscaler.apiVersion" -}}
-{{- print "autoscaling.k8s.io/v1" -}}
+autoscaling.k8s.io/v1
 {{- end -}}

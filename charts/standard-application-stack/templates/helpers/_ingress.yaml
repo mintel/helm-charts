@@ -2,35 +2,34 @@
 
 {{/* Output ingressClassName */}}
 {{- define "mintel_common.ingress.className" -}}
-{{- if (and .Values.ingress.alb .Values.ingress.alb.enabled) }}
-{{- if eq .Values.ingress.alb.scheme "internet-facing" }}
-{{- print "alb-public-apps-default" -}}
-{{- end }}
-{{- if eq .Values.ingress.alb.scheme "internal" }}
-{{- print "alb-internal-apps-default" -}}
-{{- end }}
-{{- else }}
-{{- print "haproxy" -}}
-{{- end }}
+{{- if (and .Values.ingress.alb .Values.ingress.alb.enabled) -}}
+  {{- if eq .Values.ingress.alb.scheme "internet-facing" -}}
+  alb-public-apps-default
+  {{- else if eq .Values.ingress.alb.scheme "internal" -}}
+  alb-internal-apps-default
+  {{- end -}}
+{{- else -}}
+haproxy
+{{- end -}}
 {{- end -}}
 
 {{/* Validate ALB BackendProtocol and default to HTTP */}}
 {{- define "mintel_common.ingress.alb.backendProtocol" -}}
-{{- if has .backendProtocol (list "HTTP" "HTTPS" ) }}
-{{- .backendProtocol }}
-{{- else }}
-{{- "HTTP" }}
-{{- end }}
-{{- end }}
+{{- if (list "HTTP" "HTTPS") | has .backendProtocol -}}
+{{- .backendProtocol -}}
+{{- else -}}
+HTTP"
+{{- end -}}
+{{- end -}}
 
 {{/* Validate ALB BackendProtocolVersion and default to HTTP1 */}}
 {{- define "mintel_common.ingress.alb.backendProtocolVersion" -}}
-{{- if has .backendProtocolVersion (list "HTTP1" "HTTP2" "GRPC" ) }}
-{{- .backendProtocolVersion }}
-{{- else }}
-{{- "HTTP1" }}
-{{- end }}
-{{- end }}
+{{- if (list "HTTP1" "HTTP2" "GRPC") | has .backendProtocolVersion -}}
+{{- .backendProtocolVersion -}}
+{{- else -}}
+HTTP1
+{{- end -}}
+{{- end -}}
 
 {{/* Set default ALB healthcheck success-codes */}}
 {{- define "mintel_common.ingress.alb.healthcheck.successCodes" -}}
@@ -43,7 +42,7 @@
 
 {{/* Set default ALB healthcheck path */}}
 {{- define "mintel_common.ingress.alb.healthcheck.path" -}}
-{{- if eq .backendProtocolVersion "GRPC"}}
+{{- if eq .backendProtocolVersion "GRPC" }}
 {{- .healthcheck.path | default "/grpc.health.v1.Health/Check" }}
 {{- else }}
 {{- .healthcheck.path | default "/readiness" }}
@@ -61,19 +60,19 @@
 
 {{/* Set default ALB healthcheck protocol */}}
 {{- define "mintel_common.ingress.alb.healthcheck.protocol" -}}
-{{- if has .healthcheck.protocol (list "HTTP" "HTTPS" ) }}
-{{- .healthcheck.protocol}}
-{{- else }}
-{{- "HTTP" }}
-{{- end }}
-{{- end }}
+{{- if (list "HTTP" "HTTPS") | has .healthcheck.protocol -}}
+{{- .healthcheck.protocol -}}
+{{- else -}}
+HTTP
+{{- end -}}
+{{- end -}}
 
 {{- define "mintel_common.ingress.haproxy_annotations" -}}
 {{- with .ingress.serverTimeoutSeconds | default .Values.ingress.serverTimeoutSeconds }}
 ingress.kubernetes.io/timeout-server: {{ . }}s
 {{- end }}
 ingress.kubernetes.io/rewrite-target: /
-{{- if (or (or (and .Values.metrics .Values.metrics.enabled) (or .Values.ingress.setXForwardedForHeaders .ingress.setXForwardedForHeaders)) (or .Values.ingress.setNoCacheHeaders .ingress.setNoCacheHeaders)) }}
+{{- if or (and .Values.metrics .Values.metrics.enabled) .Values.ingress.setXForwardedForHeaders .ingress.setXForwardedForHeaders .Values.ingress.setNoCacheHeaders .ingress.setNoCacheHeaders }}
 ingress.kubernetes.io/config-backend: |
 {{- end }}
 {{- if (and .Values.metrics .Values.metrics.enabled) }}
@@ -141,7 +140,7 @@ alb.ingress.kubernetes.io/unhealthy-threshold-count: "{{ .alb.healthcheck.unheal
 {{- $endpoints = append $endpoints $readinessEndpoint }}
 {{- end }}
 {{- end }}
-{{- print (join " " $endpoints) }}
+{{- join " " $endpoints }}
 {{- end -}}
 
 {{/* Create a fully qualified app name, but with ability to override it for ingress */}}
@@ -149,7 +148,7 @@ alb.ingress.kubernetes.io/unhealthy-threshold-count: "{{ .alb.healthcheck.unheal
 {{- if .ingress.ingressNameSuffix }}
 {{- printf "%s-%s" (coalesce .ingress.ingressNameOverride $.Values.ingress.ingressNameOverride (include "mintel_common.fullname" .)) .ingress.ingressNameSuffix -}}
 {{- else -}}
-{{- printf "%s" (coalesce .ingress.ingressNameOverride $.Values.ingress.ingressNameOverride (include "mintel_common.fullname" .)) -}}
+{{- coalesce .ingress.ingressNameOverride $.Values.ingress.ingressNameOverride (include "mintel_common.fullname" .) -}}
 {{- end -}}
 {{- end -}}
 

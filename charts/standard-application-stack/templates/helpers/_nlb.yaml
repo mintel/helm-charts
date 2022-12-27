@@ -34,9 +34,9 @@ service.beta.kubernetes.io/aws-load-balancer-healthcheck-unhealthy-threshold: "{
 
 {{/* Set default NLB healthcheck protocol */}}
 {{- define "mintel_common.nlb.healthcheck.protocol" -}}
-{{- if has .healthcheck.protocol (list "HTTP" "HTTPS" "TCP" ) }}
-{{- .healthcheck.protocol}}
-{{- else }}
-{{- "TCP" }}
-{{- end }}
-{{- end }}
+{{- if (list "HTTP" "HTTPS" "TCP") | has .healthcheck.protocol -}}
+{{- .healthcheck.protocol -}}
+{{- else -}}
+TCP
+{{- end -}}
+{{- end -}}
