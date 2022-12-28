@@ -91,7 +91,7 @@ spec:
       annotations:
         'consul.hashicorp.com/connect-inject': 'true'
         {{- if .Values.hybridCloud.upstreamServices }}
-        'consul.hashicorp.com/connect-service-upstreams': {{ join "," .Values.hybridCloud.upstreamServices }}
+        'consul.hashicorp.com/connect-service-upstreams': {{ .Values.hybridCloud.upstreamServices | sortAlpha | uniq | compact | join "," }}
         {{- end }}
       {{- end }}
       labels: {{ include "mintel_common.labels" . | nindent 8 }}

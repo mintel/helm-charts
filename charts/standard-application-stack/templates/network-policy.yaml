@@ -96,7 +96,7 @@ spec:
       {{ if .Values.ingress.alb.healthcheck.port }}
       {{ $ports = append $ports .Values.ingress.alb.healthcheck.port }}
       {{- end }}
-      {{ $ports := sortAlpha $ports | uniq }}
+      {{ $ports := $ports | sortAlpha | uniq | compact }}
       {{- range $ports }}
         - port: {{ . }}
           protocol: TCP
@@ -144,7 +144,7 @@ spec:
       ports:
       {{ $ports := list }}
       {{ $ports = append $ports .Values.port}}
-      {{ $ports := sortAlpha $ports | uniq }}
+      {{ $ports := $ports | sortAlpha | uniq | compact }}
       {{- range $ports }}
         - port: {{ . }}
           protocol: TCP

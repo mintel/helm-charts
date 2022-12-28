@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Refactor use of the `default` template function (sometimes use `coalesce`)
 - Remove pointless print functions from templates
+- Make concatenated lists sorted and unique
 
 ## [v3.53.1] - 2022-12-27
 ### Fixed

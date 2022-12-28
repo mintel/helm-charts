@@ -140,7 +140,7 @@ alb.ingress.kubernetes.io/unhealthy-threshold-count: "{{ .alb.healthcheck.unheal
 {{- $endpoints = append $endpoints $readinessEndpoint }}
 {{- end }}
 {{- end }}
-{{- join " " $endpoints }}
+{{- $endpoints | sortAlpha | uniq | compact | join " " }}
 {{- end -}}
 
 {{/* Create a fully qualified app name, but with ability to override it for ingress */}}

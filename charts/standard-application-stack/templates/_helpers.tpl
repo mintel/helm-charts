@@ -292,7 +292,7 @@ Build comma separated list of secrets
 {{- $secretList = append $secretList (.nameOverride | default (printf "%s-%s" (include "mintel_common.fullname" $) .name) ) -}}
 {{- end }}
 {{- end }}
-{{- uniq $secretList | compact | sortAlpha | join "," -}}
+{{- $secretList | sortAlpha | uniq | compact | join "," -}}
 {{- end -}}
 
 {{/*
@@ -307,7 +307,7 @@ Build comma separated list of configmaps
 {{- range .Values.configMaps }}
 {{- $configmapList = append $configmapList (printf "%s-%s" (include "mintel_common.fullname" $) .name) }}
 {{- end }}
-{{- join "," $configmapList -}}
+{{- $configmapList | sortAlpha | uniq | compact | join "," -}}
 {{- end -}}
 
 {{/* Outputs Event Bus env variables */}}
@@ -424,7 +424,7 @@ Build comma separated list of configmaps
 {{- $endpoints = append $endpoints (printf "%s=http://%s-localstack:%s" (. | trim) (include "mintel_common.fullname" $) (default 4566 ($.Values.localstack.port | toString))) -}}
 {{- end }}
 - name: AWS_ENDPOINTS
-  value: {{ join "," $endpoints }}
+  value: {{ $endpoints | sortAlpha | uniq | compact | join "," }}
 {{- end }}
 {{- end }}
 {{- end -}}
@@ -446,7 +446,7 @@ Build comma separated list of configmaps
     {{- $hosts = append $hosts .name -}}
     {{- end }}
   {{- end }}
-  value: {{ uniq $hosts | compact | sortAlpha | join "," }}
+  value: {{ $hosts | sortAlpha | uniq | compact | join "," }}
 {{- end }}
 {{- end -}}
 
@@ -489,7 +489,7 @@ topologySpreadConstraints:
 {{/* Supported resources */}}
 {{- define "mintel_common.terraformCloudResources" -}}
 {{- $terraformCloudResources := (list "opensearch" "postgresql" "redis" "s3" "mariadb" "dynamodb" "sqs") -}}
-{{ join "," $terraformCloudResources }}
+{{ $terraformCloudResources | sortAlpha | uniq | compact | join ","}}
 {{- end -}}
 
 {{/* Set instanceConfig.Name */}}
@@ -532,5 +532,5 @@ topologySpreadConstraints:
     {{- end }}
   {{- end }}
 {{- end }}
-{{- uniq $tfSecretList | compact | sortAlpha | join "," -}}
+{{- $tfSecretList | sortAlpha | uniq | compact | join "," -}}
 {{- end -}}

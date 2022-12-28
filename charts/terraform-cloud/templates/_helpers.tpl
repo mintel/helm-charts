@@ -1,13 +1,13 @@
 {{/* Supported resources */}}
 {{- define "mintel_common.terraformCloudResources" -}}
 {{- $terraformCloudResources := (list "memcached" "opensearch" "postgresql" "redis" "s3" "mariadb" "dynamodb" "sns" "sqs" "staticWebsite" "stepFunctionEks" "activeMQ" "auroraMySql" "auroraPostgresql" "sshKeyPairSecret") -}}
-{{ join "," $terraformCloudResources }}
+{{ $terraformCloudResources | sortAlpha | uniq | compact | join "," }}
 {{- end -}}
 
 {{/* Supported resources that require IRSA */}}
 {{- define "mintel_common.terraformCloudIRSAResources" -}}
 {{- $terraformCloudIRSAResources := (list "opensearch" "s3" "dynamodb" "sns" "sqs") -}}
-{{ join "," $terraformCloudIRSAResources }}
+{{ $terraformCloudIRSAResources | sortAlpha | uniq | compact | join "," }}
 {{- end -}}
 
 {{- define "mintel_common.terraform_cloud.irsaRequired"}}

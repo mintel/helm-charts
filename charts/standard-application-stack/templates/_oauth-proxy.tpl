@@ -27,7 +27,7 @@
     - --profile-url={{ coalesce (printf "%s/userinfo/" .proxiedService.oauthProxy.issuerUrl) .proxiedService.oauthProxy.profileUrl "https://oauth.mintel.com/userinfo/" }}
     {{- end }}
     {{- with .proxiedService.oauthProxy.allowedGroups }}
-    - --allowed-group={{ join "," . }}
+    - --allowed-group={{ . | sortAlpha | uniq | compact | join "," }}
     {{- end }}
     - --oidc-issuer-url={{ .proxiedService.oauthProxy.issuerUrl | default "https://oauth.mintel.com" }}
     {{- if (eq .proxiedService.oauthProxy.type "portal") }}
