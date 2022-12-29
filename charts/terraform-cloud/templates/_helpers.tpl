@@ -18,7 +18,7 @@
     {{- $irsaRequired = "true" }}
   {{- end }}
 {{- end }}
-{{$irsaRequired}}
+{{ $irsaRequired }}
 {{- end -}}
 
 {{/*
@@ -80,12 +80,12 @@ app.mintel.com/region: {{ .Values.global.clusterRegion }}
 {{/* ternary and hasKey functions are used instead of defaults below due to https://github.com/helm/helm/issues/3308 */}}
 app.mintel.com/terraform-allow-destroy: {{ hasKey .InstanceCfg "workspaceAllowDestroy" | ternary .InstanceCfg.workspaceAllowDestroy (include "mintel_common.terraform_cloud.allow_destroy_default" .) | quote }}
 app.mintel.com/terraform-owner: {{ .InstanceCfg.workspaceOwner | default .Global.owner }}
-app.mintel.com/terraform-cloud-tags: {{ .InstanceCfg.workspaceTags | default (include "mintel_common.terraform_cloud.tags" .) | quote}}
+app.mintel.com/terraform-cloud-tags: {{ .InstanceCfg.workspaceTags | default (include "mintel_common.terraform_cloud.tags" .) | quote }}
 {{- end -}}
 
 {{/* Set variable values depending on environment */}}
 {{- define "mintel_common.terraform_cloud.defaultVarValues" -}}
-{{- $defaults := dict}}
+{{- $defaults := dict }}
 {{/* rds and rds-aurora */}}
 {{- if ( has .ResourceType (list "postgresql" "mariadb" "auroraMySql" "auroraPostgresql"))}}
     {{/* deletion_protection */}}

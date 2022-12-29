@@ -12,7 +12,7 @@ metadata:
     {{ toYaml .Values.service.annotations | nindent 4 }}
     {{- end }}
     {{- if (and .Values.global.owner (and .Values.ingress.enabled .Values.ingress.alb.enabled)) }}
-    'alb.ingress.kubernetes.io/tags': 'Owner={{.Values.global.owner}}'
+    'alb.ingress.kubernetes.io/tags': 'Owner={{ .Values.global.owner }}'
     {{- end }}
     {{- if .Values.nlb.enabled }}
     {{ include "mintel_common.nlb.annotations" . | nindent 4 }}

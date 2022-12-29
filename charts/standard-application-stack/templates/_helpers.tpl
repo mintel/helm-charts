@@ -55,7 +55,7 @@ app.mintel.com/owner: {{ .Values.global.owner }}
 {{- end }}
 app.mintel.com/env: {{ .Values.global.clusterEnv }}
 {{- if (eq .Values.global.clusterEnv "local") }}
-app.mintel.com/region: {{$.Values.global.clusterRegion | default "local" }}
+app.mintel.com/region: {{ $.Values.global.clusterRegion | default "local" }}
 {{- else }}
 app.mintel.com/region: {{ $.Values.global.clusterRegion | default "${CLUSTER_REGION}" }}
 {{- end }}
@@ -90,7 +90,7 @@ app.kubernetes.io/component: app
 {{- define "mintel_common.serviceLabels" -}}
 {{ include "mintel_common.labels" . }}
 {{- with .Values.service.labels }}
-{{- toYaml .}}
+{{- toYaml . }}
 {{- end }}
 {{- end -}}
 

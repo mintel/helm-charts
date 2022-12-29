@@ -13,7 +13,7 @@
     {{- range $instanceName, $instanceConfig := $resourceConfig.terraform.instances | default ( dict "default" dict ) }}
       {{- $moduleSource := $resourceConfig.terraform.module.source }}
       {{- $moduleVersion := $resourceConfig.terraform.module.version }}
-      {{- $tfVersion := $resourceConfig.terraform.terraformVersion}}
+      {{- $tfVersion := $resourceConfig.terraform.terraformVersion }}
       # Set instance.name via helper
       {{- $instanceDict := dict "Global" $global "InstanceCfg" $instanceConfig "InstanceName" $instanceName "ResourceType" $resourceType }}
       {{- $_ := set $instanceConfig "name" (include "mintel_common.terraform_cloud.instanceConfigName" $instanceDict | trim)}}

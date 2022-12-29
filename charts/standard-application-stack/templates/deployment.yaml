@@ -245,7 +245,7 @@ spec:
             {{- with .Values.envFrom }}
             {{- toYaml . | nindent 12 }}
             {{- end }}
-          {{- if .Values.port}}
+          {{- if .Values.port }}
           ports:
             - containerPort: {{ .Values.port }}
               name: http
@@ -258,7 +258,7 @@ spec:
             {{- with .Values.extraPorts }}
             {{- toYaml . | nindent 12 }}
             {{- end }}
-          {{- end}}
+          {{- end }}
           {{- if (and .Values.liveness .Values.liveness.enabled) }}
           livenessProbe:
             {{- if .Values.liveness.methodOverride }}
@@ -378,7 +378,7 @@ spec:
         {{- end }}
         {{- if (and .Values.oauthProxy .Values.oauthProxy.enabled) }}
         {{- $oauthProxyData := dict "Release" .Release "Chart" .Chart "Values" .Values "proxiedService" .Values }}
-        {{- include "mintel_common.oauthProxySidecar" $oauthProxyData | nindent 8}}
+        {{- include "mintel_common.oauthProxySidecar" $oauthProxyData | nindent 8 }}
         {{- end }}
 
         {{- if (and .Values.gitSyncSidecar .Values.gitSyncSidecar.enabled) }}

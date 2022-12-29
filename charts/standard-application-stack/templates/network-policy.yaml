@@ -91,7 +91,7 @@ spec:
       {{- if .Values.oauthProxy.enabled }}
       {{ $ports = append $ports 4180 }}
       {{- else }}
-      {{ $ports = append $ports .Values.port}}
+      {{ $ports = append $ports .Values.port }}
       {{- end }}
       {{ if .Values.ingress.alb.healthcheck.port }}
       {{ $ports = append $ports .Values.ingress.alb.healthcheck.port }}
@@ -143,7 +143,7 @@ spec:
       {{- end }}
       ports:
       {{ $ports := list }}
-      {{ $ports = append $ports .Values.port}}
+      {{ $ports = append $ports .Values.port }}
       {{ $ports := $ports | sortAlpha | uniq | compact }}
       {{- range $ports }}
         - port: {{ . }}

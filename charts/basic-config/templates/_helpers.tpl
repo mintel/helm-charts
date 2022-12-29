@@ -60,7 +60,7 @@ app.mintel.com/region: {{ $.Values.global.clusterRegion | default "${CLUSTER_REG
 {{- define "mintel_common.serviceLabels" -}}
 {{ include "mintel_common.labels" . }}
 {{- with .Values.service.labels }}
-{{- toYaml .}}
+{{- toYaml . }}
 {{- end }}
 {{- end -}}
 

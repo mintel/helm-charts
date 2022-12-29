@@ -7,7 +7,7 @@
   {{- $moduleSource := $irsa.terraform.module.source }}
   {{- $moduleVersion := $irsa.terraform.module.version }}
   {{- $tfVersion := $irsa.terraform.terraformVersion }}
-  {{- $irsaConfig := $irsa.terraform.vars}}
+  {{- $irsaConfig := $irsa.terraform.vars }}
   {{- if not (hasKey $irsaConfig "name") }}
     {{- $_ := set $irsaConfig "name" (.Values.irsa.nameOverride | default $global.name) }}
   {{- end }}

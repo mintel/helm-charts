@@ -11,6 +11,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Remove pointless `print` and `printf` function calls
 - Make concatenated lists sorted and unique
 
+### Fixed
+- Make spacing inside `{{ }}` consistent
+
 ## [v0.30.0] - 2022-12-13
 ### Changed
 - Bump version of S3 Terraform module to allow option to create cloudfront distribution
