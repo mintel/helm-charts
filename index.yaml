@@ -3,6 +3,25 @@ entries:
   aws-api-gateway-operator:
   - apiVersion: v2
     appVersion: v1.0.2
+    created: "2023-01-03T15:01:09.107155772Z"
+    dependencies:
+    - condition: standard-application-stack.enabled
+      name: standard-application-stack
+      repository: https://mintel.github.io/helm-charts
+      version: 3.27.0
+    description: AWS API Gateway Operator Helm chart for Kubernetes
+    digest: 65b21e751726e42ca2f4352310dd59a23753eb70a05a1fbc0c49ca4d338bf8ae
+    keywords:
+    - eks
+    - aws
+    - api gateway
+    name: aws-api-gateway-operator
+    type: application
+    urls:
+    - https://github.com/mintel/helm-charts/releases/download/aws-api-gateway-operator-0.1.1/aws-api-gateway-operator-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v2
+    appVersion: v1.0.2
     created: "2022-06-13T19:42:14.066222683Z"
     dependencies:
     - condition: standard-application-stack.enabled
@@ -21,6 +40,15 @@ entries:
     - https://github.com/mintel/helm-charts/releases/download/aws-api-gateway-operator-0.1.0/aws-api-gateway-operator-0.1.0.tgz
     version: 0.1.0
   basic-config:
+  - apiVersion: v2
+    created: "2023-01-03T15:01:09.439497784Z"
+    description: A Helm chart for defining basic k8s configuration res
+    digest: 253a40a6ed407501aadabb7ca7ee43929212d92432e8069e52fd307a12a38cc3
+    name: basic-config
+    type: application
+    urls:
+    - https://github.com/mintel/helm-charts/releases/download/basic-config-0.2.1/basic-config-0.2.1.tgz
+    version: 0.2.1
   - apiVersion: v2
     created: "2022-07-14T11:39:50.215792636Z"
     description: A Helm chart for defining basic k8s configuration res
@@ -76,6 +104,15 @@ entries:
     version: 1.2.0
   hybrid-consul-config-crds:
   - apiVersion: v2
+    created: "2023-01-03T15:01:09.639825677Z"
+    description: A Helm chart for defining Consul CRDs
+    digest: 1457b6991b516ae4be386c78547300dee4bdb9423b5c85b1be17db9b5d211d12
+    name: hybrid-consul-config-crds
+    type: application
+    urls:
+    - https://github.com/mintel/helm-charts/releases/download/hybrid-consul-config-crds-0.0.3/hybrid-consul-config-crds-0.0.3.tgz
+    version: 0.0.3
+  - apiVersion: v2
     created: "2022-07-06T14:02:41.296856039Z"
     description: A Helm chart for defining Consul CRDs
     digest: e72cf7c30ff18d993677be19a9e8828ed3ecc2b0963f75b1f6e497ebb7f78c90
@@ -94,6 +131,70 @@ entries:
     - https://github.com/mintel/helm-charts/releases/download/hybrid-consul-config-crds-0.0.1/hybrid-consul-config-crds-0.0.1.tgz
     version: 0.0.1
   standard-application-stack:
+  - apiVersion: v2
+    created: "2023-01-03T15:01:09.871218505Z"
+    dependencies:
+    - condition: (and redis.enabled (eq global.clusterEnv "local"))
+      name: redis
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - localRedis
+      version: 16.11.2
+    - condition: (and mariadb.enabled (eq global.clusterEnv "local"))
+      name: mariadb
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - localMariadb
+      version: 11.0.10
+    - condition: (and postgresql.enabled (eq global.clusterEnv "local"))
+      name: postgresql
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - localPostgresql
+      version: 11.6.3
+    - condition: (and mailhog.enabled (eq global.clusterEnv "local"))
+      name: mailhog
+      repository: https://codecentric.github.io/helm-charts
+      tags:
+      - localMailhog
+      version: 4.1.0
+    - condition: (and kibana.enabled (eq global.clusterEnv "local"))
+      name: kibana
+      repository: https://helm.elastic.co
+      tags:
+      - localKibana
+      version: 7.5.2
+    - condition: (and elasticsearch.enabled (eq global.clusterEnv "local"))
+      name: elasticsearch
+      repository: https://helm.elastic.co
+      tags:
+      - localElasticsearch
+      version: 7.5.2
+    - condition: (and opensearch.enabled (eq global.clusterEnv "local"))
+      name: opensearch
+      repository: https://opensearch-project.github.io/helm-charts
+      tags:
+      - localOpensearch
+      version: 1.4.2
+    - condition: (and opensearch.enabled (eq global.clusterEnv "local"))
+      name: opensearch-dashboards
+      repository: https://opensearch-project.github.io/helm-charts
+      tags:
+      - localOpensearch
+      version: 1.0.8
+    - condition: (and localstack.enabled (eq global.clusterEnv "local"))
+      name: localstack
+      repository: https://localstack.github.io/helm-charts
+      tags:
+      - localLocalstack
+      version: 0.3.5
+    description: A generic chart to support most common application requirements
+    digest: e2a66fe38f1f52a5a1cc41f4d3702386565a5647e3222074a8325630fe5c08bf
+    name: standard-application-stack
+    type: application
+    urls:
+    - https://github.com/mintel/helm-charts/releases/download/standard-application-stack-3.53.2/standard-application-stack-3.53.2.tgz
+    version: 3.53.2
   - apiVersion: v2
     created: "2022-12-28T20:34:56.050424771Z"
     dependencies:
@@ -8423,6 +8524,16 @@ entries:
   terraform-cloud:
   - apiVersion: v2
     appVersion: 2.0.0
+    created: "2023-01-03T15:01:10.067569858Z"
+    description: A Helm chart for provisioning resources using Terraform Cloud
+    digest: 9e229a3f44a88fcbe29459528cd288cd2313ef25142055dd41ad50254ff9767f
+    name: terraform-cloud
+    type: application
+    urls:
+    - https://github.com/mintel/helm-charts/releases/download/terraform-cloud-0.30.1/terraform-cloud-0.30.1.tgz
+    version: 0.30.1
+  - apiVersion: v2
+    appVersion: 2.0.0
     created: "2022-12-13T17:21:31.977284646Z"
     description: A Helm chart for provisioning resources using Terraform Cloud
     digest: 2eb161fd91ec93374a0ed53de1ac2146a2f782f6c556de9c7c9b6cc62f1c839e
@@ -8972,4 +9083,4 @@ entries:
     urls:
     - https://github.com/mintel/helm-charts/releases/download/testchart-0.1.1/testchart-0.1.1.tgz
     version: 0.1.1
-generated: "2022-12-28T20:34:56.053133813Z"
+generated: "2023-01-03T15:01:10.069699126Z"
