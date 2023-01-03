@@ -14,8 +14,8 @@ metadata:
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
   podMetricsEndpoints:
-    - interval: {{ default "30s" .Values.celery.metrics.interval }}
-      path: {{ default "/metrics" .Values.celery.metrics.path }}
+    - interval: {{ .Values.celery.metrics.interval | default "30s" }}
+      path: {{ .Values.celery.metrics.path | default "/metrics" }}
       port: metrics
       relabelings:
         - separator: /
@@ -23,8 +23,8 @@ spec:
             - __meta_kubernetes_namespace
             - __meta_kubernetes_pod_label_app_kubernetes_io_name
           targetLabel: job
-      scheme: {{ default "http" .Values.celery.metrics.scheme }}
-      scrapeTimeout: {{ default "10s" .Values.celery.metrics.timeout }}
+      scheme: {{ .Values.celery.metrics.scheme | default "http" }}
+      scrapeTimeout: {{ .Values.celery.metrics.timeout | default "10s" }}
       tlsConfig:
         insecureSkipVerify: true
   selector:

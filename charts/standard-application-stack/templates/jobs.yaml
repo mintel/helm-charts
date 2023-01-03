@@ -34,16 +34,16 @@ spec:
       securityContext: {{ toYaml . | nindent 12 }}
       {{- end }}
       {{- if (and $.Values.serviceAccount (or $.Values.serviceAccount.create $.Values.serviceAccount.name)) }}
-      serviceAccountName: {{ default (include "mintel_common.fullname" $) $.Values.serviceAccount.name }}
+      serviceAccountName: {{ $.Values.serviceAccount.name | default (include "mintel_common.fullname" $)}}
       {{- end }}
-      restartPolicy: {{ coalesce .restartPolicy "Never" }}
+      restartPolicy: {{ .restartPolicy | default "Never" }}
       {{- with .extraInitContainers }}
       initContainers:
       {{- toYaml . | nindent 12 }}
       {{- end }}
       containers:
         - name: main
-          image: {{ coalesce .image (include "mintel_common.image" $) }}
+          image: {{ .image | default (include "mintel_common.image" $) }}
           imagePullPolicy: {{ include "mintel_common.imagePullPolicy" $ }}
           {{- with .command }}
           command: {{ toYaml . | nindent 16 }}
@@ -71,7 +71,7 @@ spec:
             {{- if (or (ne $.Values.global.clusterEnv "local") (and (eq $.Values.global.clusterEnv "local") $.Values.externalSecret.localValues)) }}
             {{- if .includeAppSecret }}
             - secretRef:
-                name: {{ default (include "mintel_common.defaultAppSecretName" $) $.Values.externalSecret.nameOverride }}
+                name: {{ $.Values.externalSecret.nameOverride | default (include "mintel_common.defaultAppSecretName" $) }}
             {{- end }}
             {{- end }}
             {{- end }}

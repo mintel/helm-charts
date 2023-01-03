@@ -10,7 +10,7 @@ We truncate at 63 chars because sometimes Kubernetes name fields are limited to 
 {{- else if .component }}
 {{- printf "%s-%s" .Values.global.name .component | trimSuffix .Chart.Name | trunc 63 | trimSuffix "-" -}}
 {{- else -}}
-{{- printf "%s" .Values.global.name | trunc 63 | trimSuffix "-" -}}
+{{- .Values.global.name | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 {{- end -}}
 
@@ -37,9 +37,9 @@ app.mintel.com/owner: {{ .Values.global.owner }}
 {{- end }}
 app.mintel.com/env: {{ .Values.global.clusterEnv }}
 {{- if (eq .Values.global.clusterEnv "local") }}
-app.mintel.com/region: {{default "local" $.Values.global.clusterRegion }}
+app.mintel.com/region: {{ $.Values.global.clusterRegion | default "local" }}
 {{- else }}
-app.mintel.com/region: {{default "${CLUSTER_REGION}" $.Values.global.clusterRegion }}
+app.mintel.com/region: {{ $.Values.global.clusterRegion | default "${CLUSTER_REGION}" }}
 {{- end }}
 {{- if .Values.global }}
 {{- with .Values.global.additionalLabels }}
@@ -53,14 +53,14 @@ app.mintel.com/region: {{default "${CLUSTER_REGION}" $.Values.global.clusterRegi
 
 {{/* Service name */}}
 {{- define "mintel_common.serviceName" -}}
-{{ default (include "mintel_common.fullname" .) $.Values.service.nameOverride }}
+{{ $.Values.service.nameOverride | default (include "mintel_common.fullname" .) }}
 {{- end -}}
 
 {{/* Service labels */}}
 {{- define "mintel_common.serviceLabels" -}}
 {{ include "mintel_common.labels" . }}
 {{- with .Values.service.labels }}
-{{- toYaml .}}
+{{- toYaml . }}
 {{- end }}
 {{- end -}}
 

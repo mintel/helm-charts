@@ -13,8 +13,8 @@ metadata:
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
   podMetricsEndpoints:
-    - interval: {{ default "30s" .Values.postgresql.metrics.interval }}
-      path: {{ default "/metrics" .Values.postgresql.metrics.path }}
+    - interval: {{ .Values.postgresql.metrics.interval | default "30s" }}
+      path: {{ .Values.postgresql.metrics.path | default "/metrics" }}
       port: metrics
       relabelings:
         - separator: /
@@ -22,8 +22,8 @@ spec:
             - __meta_kubernetes_namespace
             - __meta_kubernetes_pod_label_app_kubernetes_io_name
           targetLabel: job
-      scheme: {{ default "http" .Values.postgresql.metrics.scheme }}
-      scrapeTimeout: {{ default "10s" .Values.postgresql.metrics.timeout }}
+      scheme: {{ .Values.postgresql.metrics.scheme | default "http" }}
+      scrapeTimeout: {{ .Values.postgresql.metrics.timeout | default "10s" }}
       tlsConfig:
         insecureSkipVerify: true
   selector:

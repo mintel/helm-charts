@@ -8,13 +8,13 @@ metadata:
   namespace: {{ .Release.Namespace }}
   annotations:
     {{ include "mintel_common.commonAnnotations" . | nindent 4 }}
-    secret.reloader.stakater.com/reload: {{ default (include "mintel_common.defaultOpensearchSecretName" .) .Values.opensearch.secretNameOverride }}
+    secret.reloader.stakater.com/reload: {{ .Values.opensearch.secretNameOverride | default (include "mintel_common.defaultOpensearchSecretName" .) }}
     app.mintel.com/opa-allow-single-replica: "true"
     app.mintel.com/opa-skip-readiness-probe-check.main: "true"
     app.mintel.com/opa-skip-security-context-check: "true"
   labels: {{ include "mintel_common.labels" $data | nindent 4 }}
 spec:
-  replicas: {{ default 2 .Values.opensearch.awsEsProxy.replicas }}
+  replicas: {{ .Values.opensearch.awsEsProxy.replicas | default 2 }}
   selector:
     matchLabels: {{ include "mintel_common.selectorLabels" $data | nindent 6 }}
   strategy:
@@ -25,13 +25,13 @@ spec:
     spec:
       {{- include "mintel_common.imagePullSecrets" . | nindent 6 }}
       {{- if (and .Values.serviceAccount (or .Values.serviceAccount.create .Values.serviceAccount.name)) }}
-      serviceAccountName: {{ default (include "mintel_common.fullname" .) .Values.serviceAccount.name }}
+      serviceAccountName: {{ .Values.serviceAccount.name | default (include "mintel_common.fullname" .) }}
       {{- end }}
       {{- include "mintel_common.topologySpreadConstraints" $data | nindent 6 }}
       containers:
         - name: main
           image: index.docker.io/mintel/aws-es-proxy:v1.3.0_mintel.0.1.0
-          imagePullPolicy: {{ default "IfNotPresent" .Values.image.pullPolicy }}
+          imagePullPolicy: {{ .Values.image.pullPolicy | default "IfNotPresent" }}
           args:
             - -listen=0.0.0.0:9200
             - -endpoint=$(OPENSEARCH_HOST)
@@ -45,7 +45,7 @@ spec:
                   fieldPath: metadata.namespace
           envFrom:
             - secretRef:
-                name: {{ default (include "mintel_common.defaultOpensearchSecretName" .) .Values.opensearch.secretNameOverride }}
+                name: {{ .Values.opensearch.secretNameOverride | default (include "mintel_common.defaultOpensearchSecretName" .) }}
           ports:
             - containerPort: 9200
               name: http

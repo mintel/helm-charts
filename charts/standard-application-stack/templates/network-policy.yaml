@@ -23,13 +23,13 @@ spec:
 kind: NetworkPolicy
 apiVersion: {{ include "common.capabilities.networkpolicy.apiVersion" . }}
 metadata:
-  name: {{ printf "%s-to-%s" .fromName (default $.Values.global.name .toName) }}
+  name: {{ printf "%s-to-%s" .fromName (.toName | default $.Values.global.name) }}
   namespace: {{ $.Release.Namespace }}
   annotations: {{ include "mintel_common.commonAnnotations" $ | nindent 4 }}
 spec:
   podSelector:
     matchLabels:
-      app.kubernetes.io/name: {{ default $.Values.global.name .toName }}
+      app.kubernetes.io/name: {{ .toName | default $.Values.global.name }}
   ingress:
     - from:
       - podSelector:
@@ -91,12 +91,12 @@ spec:
       {{- if .Values.oauthProxy.enabled }}
       {{ $ports = append $ports 4180 }}
       {{- else }}
-      {{ $ports = append $ports .Values.port}}
+      {{ $ports = append $ports .Values.port }}
       {{- end }}
       {{ if .Values.ingress.alb.healthcheck.port }}
       {{ $ports = append $ports .Values.ingress.alb.healthcheck.port }}
       {{- end }}
-      {{ $ports := sortAlpha $ports | uniq }}
+      {{ $ports := $ports | sortAlpha | uniq | compact }}
       {{- range $ports }}
         - port: {{ . }}
           protocol: TCP
@@ -143,8 +143,8 @@ spec:
       {{- end }}
       ports:
       {{ $ports := list }}
-      {{ $ports = append $ports .Values.port}}
-      {{ $ports := sortAlpha $ports | uniq }}
+      {{ $ports = append $ports .Values.port }}
+      {{ $ports := $ports | sortAlpha | uniq | compact }}
       {{- range $ports }}
         - port: {{ . }}
           protocol: TCP

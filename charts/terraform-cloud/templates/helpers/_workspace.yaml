@@ -4,15 +4,15 @@
 {{- $resourceType := index . 3 }}
 {{- $moduleSource := index . 4 }}
 {{- $moduleVersion := index . 5 }}
-{{- $tfVersion := index . 6}}
-{{- $resourceCfg := index . 7}}
+{{- $tfVersion := index . 6 }}
+{{- $resourceCfg := index . 7 }}
 {{- $global := $.Values.global }}
 {{- $workspaceDict := dict "Global" $global "Release" $.Release "InstanceCfg" $instanceCfg "ResourceType" $resourceType }}
 {{- with index . 1 }}
 apiVersion: app.terraform.io/v1alpha1
 kind: Workspace
 metadata:
-  name: {{ default (include "mintel_common.terraform_cloud.workspaceName" $workspaceDict | trim | quote) $instanceCfg.workspaceNameOverride }}
+  name: {{ $instanceCfg.workspaceNameOverride | default (include "mintel_common.terraform_cloud.workspaceName" $workspaceDict) | trim | quote }}
   namespace: {{ $.Release.Namespace | quote }}
   labels:
     {{ include "mintel_common.labels" $ | nindent 4 }}
@@ -23,11 +23,11 @@ metadata:
     {{ include "mintel_common.terraform_cloud.operatorAnnotations" $workspaceDict | nindent 4 }}
     {{- if (eq $resourceType "irsa") }}
     app.mintel.com/altManifestFileSuffix: "{{ $global.name }}-{{ $resourceType | kebabcase }}"
-    argocd.argoproj.io/sync-wave: "{{ default -20 (default $resourceCfg.syncWave $instanceCfg.syncWave) }}"
+    argocd.argoproj.io/sync-wave: "{{ coalesce $instanceCfg.syncWave $resourceCfg.syncWave -20 }}"
     {{- else }}
     app.mintel.com/altManifestFileSuffix: "{{ $instanceCfg.name }}-{{ $resourceType | kebabcase }}"
-    argocd.argoproj.io/sync-wave: "{{ default -40 (default $resourceCfg.syncWave $instanceCfg.syncWave) }}"
-    {{- end}}
+    argocd.argoproj.io/sync-wave: "{{ coalesce $instanceCfg.syncWave $resourceCfg.syncWave -40 }}"
+    {{- end }}
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
   agentPoolID: {{ $global.terraform.agentPoolID | quote }}
@@ -38,11 +38,11 @@ spec:
   organization: {{ $global.terraform.organization | quote }}
   secretsMountPath: {{ $global.terraform.secretsMountPath | quote }}
   sshKeyID: "mintel-ssh"
-  terraformVersion: {{ (default $global.terraform.terraformVersion $tfVersion) | quote }}
+  terraformVersion: {{ $tfVersion | default $global.terraform.terraformVersion | quote }}
   {{- if (eq $resourceType "irsa") }}
   runTriggers:
-  {{include "mintel_common.terraform_cloud.irsaRunTriggers" .| indent 4}}
-  {{- end}}
+  {{ include "mintel_common.terraform_cloud.irsaRunTriggers" .| indent 4 }}
+  {{- end }}
   variables:
   {{- $_ := unset $instanceCfg "workspaceNameOverride" }}
   {{- $_ := unset $instanceCfg "workspaceAllowDestroy" }}
@@ -51,7 +51,7 @@ spec:
   {{- $_ := unset $instanceCfg "outputSecretMap" }}
   {{- $_ := unset $instanceCfg "syncWave" }}
   {{- range $varKey, $varVal := $instanceCfg }}
-    {{- if kindIs "map" $varVal}}
+    {{- if kindIs "map" $varVal }}
       {{- include "mintel_common.terraform_cloud.tfVar" (merge (dict "key" $varKey) $varVal) | indent 2 }}
     {{- else }}
       {{- include "mintel_common.terraform_cloud.tfVar" (dict "key" $varKey "value" $varVal) | indent 2 }}
@@ -63,13 +63,13 @@ spec:
 {{- define "mintel_common.terraform_cloud.tfVar" }}
 - key: {{ .key | quote }}
   value: {{ .value | quote }}
-  environmentVariable: {{ .environmentVariable | default false}}
+  environmentVariable: {{ .environmentVariable | default false }}
   hcl: {{ .hcl | default false }}
-  sensitive: {{ .sensitive | default false}}
+  sensitive: {{ .sensitive | default false }}
 {{- end }}
 
 {{- define "mintel_common.terraform_cloud.workspaceName"}}
-{{printf "%s-%s-%s-%s-%s-%s" .Global.clusterEnv .Global.clusterRegion .Global.clusterName .Release.Namespace (.InstanceCfg.name | kebabcase) (.ResourceType | kebabcase) }}
+{{ printf "%s-%s-%s-%s-%s-%s" .Global.clusterEnv .Global.clusterRegion .Global.clusterName .Release.Namespace (.InstanceCfg.name | kebabcase) (.ResourceType | kebabcase) }}
 {{- end -}}
 
 
@@ -79,13 +79,13 @@ spec:
   {{- $resourceType := . }}
   {{- $resourceConfig := (get $.Values .) }}
   {{- if (and $resourceConfig.enabled (has $resourceType (list "opensearch" "s3" "dynamodb" "sns" "sqs")))}}
-  {{- range $instanceName, $instanceCfg := default ( dict "default" dict ) $resourceConfig.terraform.instances }}
+  {{- range $instanceName, $instanceCfg := $resourceConfig.terraform.instances | default ( dict "default" dict ) }}
       # Set instance.name via helper
       {{- $instanceDict := dict "Global" $global "InstanceCfg" $instanceCfg "InstanceName" $instanceName "ResourceType" $resourceType }}
       {{- $_ := set $instanceCfg "name" (include "mintel_common.terraform_cloud.instanceConfigName" $instanceDict | trim)}}
 {{- $workspaceDict := dict "Global" $global "Release" $.Release "InstanceCfg" $instanceCfg "ResourceType" $resourceType }}
-- sourceableName: {{ default (include "mintel_common.terraform_cloud.workspaceName" $workspaceDict | trim | quote) $instanceCfg.workspaceNameOverride }}
+- sourceableName: {{ $instanceCfg.workspaceNameOverride | default (include "mintel_common.terraform_cloud.workspaceName" $workspaceDict) | trim | quote }}
   {{- end }}
   {{- end }}
-{{- end}}
+{{- end }}
 {{- end -}}

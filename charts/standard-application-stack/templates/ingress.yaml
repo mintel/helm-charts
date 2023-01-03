@@ -12,7 +12,7 @@ metadata:
     {{ include "mintel_common.commonAnnotations" . | nindent 4 }}
     {{- if .Values.ingress.extraAnnotations }}
     {{- toYaml .Values.ingress.extraAnnotations | nindent 4 }}
-    {{- end}}
+    {{- end }}
     ingress.kubernetes.io/ssl-redirect: "false"
 spec:
   rules:
@@ -44,8 +44,8 @@ metadata:
   annotations:
     {{ include "mintel_common.commonAnnotations" $ingressData | nindent 4 }}
     {{- if (or $.Values.ingress.extraAnnotations $ingressData.ingress.extraAnnotations) }}
-    {{- toYaml (default $.Values.ingress.extraAnnotations $ingressData.extraAnnotations) | nindent 4 }}
-    {{- end}}
+    {{- $ingressData.extraAnnotations | default $.Values.ingress.extraAnnotations | toYaml | nindent 4 }}
+    {{- end }}
 
     {{- if (eq (include "mintel_common.ingress.className" $ingressData) "haproxy" ) }}
     {{- include "mintel_common.ingress.haproxy_annotations" $ingressData | nindent 4 }}

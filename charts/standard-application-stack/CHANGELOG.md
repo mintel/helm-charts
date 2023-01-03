@@ -7,7 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [v3.53.1] - 2022-12-28
+## [v3.53.2] - 2022-12-29
+### Changed
+- Refactor use of the `default` template function (sometimes use `coalesce`)
+- Remove pointless print functions from templates
+- Make concatenated lists sorted and unique
+
+### Fixed
+- Make spacing inside `{{ }}` consistent
+
+## [v3.53.1] - 2022-12-27
 ### Fixed
 - Fix list of Terraform secrets to respect `secretNameOverride`
 

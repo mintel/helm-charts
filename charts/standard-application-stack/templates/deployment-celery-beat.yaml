@@ -42,16 +42,16 @@ spec:
       securityContext: {{ toYaml . | nindent 8 }}
       {{- end }}
       {{- if (and .Values.serviceAccount (or .Values.serviceAccount.create .Values.serviceAccount.name)) }}
-      serviceAccountName: {{ default (include "mintel_common.fullname" .) .Values.serviceAccount.name }}
+      serviceAccountName: {{ .Values.serviceAccount.name | default (include "mintel_common.fullname" .) }}
       {{- end }}
       containers:
         - name: main
-          image: {{ coalesce .Values.celeryBeat.image (include "mintel_common.image" .) }}
+          image: {{ .Values.celeryBeat.image | default (include "mintel_common.image" .) }}
           imagePullPolicy: {{ include "mintel_common.imagePullPolicy" . }}
-          {{- with (coalesce .Values.celeryBeat.command .Values.command) }}
+          {{- with .Values.celeryBeat.command | default .Values.command }}
           command: {{ toYaml . | nindent 12 }}
           {{- end }}
-          {{- with (coalesce .Values.celeryBeat.args .Values.args) }}
+          {{- with .Values.celeryBeat.args | default .Values.args }}
           args: {{ toYaml . | nindent 12 }}
           {{- end }}
           env:
@@ -77,7 +77,7 @@ spec:
             {{- if (and .Values.externalSecret .Values.externalSecret.enabled) }}
             {{- if (or (ne .Values.global.clusterEnv "local") (and (eq .Values.global.clusterEnv "local") .Values.externalSecret.localValues)) }}
             - secretRef:
-                name: {{ default (include "mintel_common.defaultAppSecretName" .) .Values.externalSecret.nameOverride }}
+                name: {{ .Values.externalSecret.nameOverride | default (include "mintel_common.defaultAppSecretName" .) }}
             {{- end }}
             {{- end }}
             {{- if .Values.global.terraform.externalSecrets }}
@@ -90,27 +90,27 @@ spec:
             {{- else }}
             {{- if (and .Values.mariadb .Values.mariadb.enabled) }}
             - secretRef:
-                name: {{ default (include "mintel_common.defaultMariadbSecretName" .) .Values.mariadb.secretNameOverride }}
+                name: {{ .Values.mariadb.secretNameOverride | default (include "mintel_common.defaultMariadbSecretName" .) }}
             {{- end }}
             {{- if (and .Values.postgresql .Values.postgresql.enabled) }}
             - secretRef:
-                name: {{ default (include "mintel_common.defaultPostgresqlSecretName" .) .Values.postgresql.secretNameOverride }}
+                name: {{ .Values.postgresql.secretNameOverride | default (include "mintel_common.defaultPostgresqlSecretName" .) }}
             {{- end }}
             {{- if (and .Values.redis .Values.redis.enabled) }}
             - secretRef:
-                name: {{ default (include "mintel_common.defaultRedisSecretName" .) .Values.redis.secretNameOverride }}
+                name: {{ .Values.redis.secretNameOverride | default (include "mintel_common.defaultRedisSecretName" .) }}
             {{- end }}
             {{- if (and .Values.elasticsearch .Values.elasticsearch.enabled) }}
             - secretRef:
-                name: {{ default (include "mintel_common.defaultElasticsearchSecretName" .) .Values.elasticsearch.secretNameOverride }}
+                name: {{ .Values.elasticsearch.secretNameOverride | default (include "mintel_common.defaultElasticsearchSecretName" .) }}
             {{- end }}
             {{- if (and .Values.opensearch .Values.opensearch.enabled) }}
             - secretRef:
-                name: {{ default (include "mintel_common.defaultOpensearchSecretName" .) .Values.opensearch.secretNameOverride }}
+                name: {{ .Values.opensearch.secretNameOverride | default (include "mintel_common.defaultOpensearchSecretName" .) }}
             {{- end }}
             {{- if (and .Values.s3 .Values.s3.enabled) }}
             - secretRef:
-                name: {{ default (include "mintel_common.defaultS3SecretName" .) .Values.s3.secretNameOverride }}
+                name: {{ .Values.s3.secretNameOverride | default (include "mintel_common.defaultS3SecretName" .) }}
             {{- end }}
             {{- end }}
             {{- with .Values.envFrom }}
@@ -125,21 +125,21 @@ spec:
             {{- toYaml .Values.celeryBeat.liveness.methodOverride | nindent 12 }}
             {{- else }}
             httpGet:
-              path: {{ default "/healthz" .Values.liveness.path }}
-              port: {{ default "http" .Values.liveness.port }}
-              scheme: {{ default "HTTP" .Values.liveness.scheme }}
+              path: {{ .Values.liveness.path | default "/healthz" }}
+              port: {{ .Values.liveness.port | default "http" }}
+              scheme: {{ .Values.liveness.scheme | default "HTTP" }}
             {{- end }}
-            initialDelaySeconds: {{ default 0 .Values.celeryBeat.liveness.initialDelaySeconds }}
-            timeoutSeconds: {{ default 1 .Values.celeryBeat.liveness.timeoutSeconds }}
-            periodSeconds: {{ default 10 .Values.celeryBeat.liveness.periodSeconds }}
+            initialDelaySeconds: {{ .Values.celeryBeat.liveness.initialDelaySeconds | default 0 }}
+            timeoutSeconds: {{ .Values.celeryBeat.liveness.timeoutSeconds | default 1 }}
+            periodSeconds: {{ .Values.celeryBeat.liveness.periodSeconds | default 10 }}
           startupProbe:
             {{- if .Values.celeryBeat.liveness.methodOverride }}
             {{- toYaml .Values.celeryBeat.liveness.methodOverride | nindent 12 }}
             {{- else }}
             httpGet:
-              path: {{ default "/healthz" .Values.liveness.path }}
-              port: {{ default "http" .Values.liveness.port }}
-              scheme: {{ default "HTTP" .Values.liveness.scheme }}
+              path: {{ .Values.liveness.path | default "/healthz" }}
+              port: {{ .Values.liveness.port | default "http" }}
+              scheme: {{ .Values.liveness.scheme | default "HTTP" }}
             {{- end }}
             {{- if .Values.celeryBeat.liveness.startup }}
             {{- if .Values.celeryBeat.liveness.startup.failureThreshold }}
@@ -163,13 +163,13 @@ spec:
             {{- toYaml .Values.celeryBeat.readiness.methodOverride | nindent 12 }}
             {{- else }}
             httpGet:
-              path: {{ default "/readiness" .Values.readiness.path }}
-              port: {{ default "http" .Values.readiness.port }}
-              scheme: {{ default "HTTP" .Values.readiness.scheme }}
+              path: {{ .Values.readiness.path | default "/readiness" }}
+              port: {{ .Values.readiness.port | default "http" }}
+              scheme: {{ .Values.readiness.scheme | default "HTTP" }}
             {{- end }}
-            initialDelaySeconds: {{ default 0 .Values.celeryBeat.readiness.initialDelaySeconds }}
-            timeoutSeconds: {{ default 1 .Values.celeryBeat.readiness.timeoutSeconds }}
-            periodSeconds: {{ default 10 .Values.celeryBeat.readiness.periodSeconds }}
+            initialDelaySeconds: {{ .Values.celeryBeat.readiness.initialDelaySeconds | default 0 }}
+            timeoutSeconds: {{ .Values.celeryBeat.readiness.timeoutSeconds | default 1 }}
+            periodSeconds: {{ .Values.celeryBeat.readiness.periodSeconds | default 10 }}
           {{- end }}
           {{- with .Values.securityContext }}
           securityContext: {{ toYaml . | nindent 12 }}

@@ -8,7 +8,7 @@ metadata:
   namespace: {{ .Release.Namespace }}
   annotations:
     {{ include "mintel_common.commonAnnotations" . | nindent 4 }}
-    secret.reloader.stakater.com/reload: {{ default (include "mintel_common.defaultMariadbSecretName" .) .Values.mariadb.secretNameOverride }}
+    secret.reloader.stakater.com/reload: {{ .Values.mariadb.secretNameOverride | default (include "mintel_common.defaultMariadbSecretName" .) }}
     app.mintel.com/opa-allow-single-replica: "true"
     app.mintel.com/opa-skip-liveness-probe-check.main: "true"
     app.mintel.com/opa-skip-readiness-probe-check.main: "true"
@@ -27,12 +27,12 @@ spec:
       securityContext:
         runAsUser: 1000
       {{- if (and .Values.serviceAccount (or .Values.serviceAccount.create .Values.serviceAccount.name)) }}
-      serviceAccountName: {{ default (include "mintel_common.fullname" .) .Values.serviceAccount.name }}
+      serviceAccountName: {{ .Values.serviceAccount.name | default (include "mintel_common.fullname" .) }}
       {{- end }}
       containers:
         - name: main
-          image: {{ default "index.docker.io/mintel/k8s-mysqlclient:0.5.1" .Values.mariadb.client.image }}
-          imagePullPolicy: {{ default "IfNotPresent" .Values.image.pullPolicy }}
+          image: {{ .Values.mariadb.client.image | default "index.docker.io/mintel/k8s-mysqlclient:0.5.1" }}
+          imagePullPolicy: {{ .Values.image.pullPolicy | default "IfNotPresent" }}
           env:
             - name: KUBERNETES_POD_NAMESPACE
               valueFrom:
@@ -40,7 +40,7 @@ spec:
                   fieldPath: metadata.namespace
           envFrom:
             - secretRef:
-                name: {{ default (include "mintel_common.defaultMariadbSecretName" .) .Values.mariadb.secretNameOverride }}
+                name: {{ .Values.mariadb.secretNameOverride | default (include "mintel_common.defaultMariadbSecretName" .) }}
           ports:
             - containerPort: 3306
               name: mysql

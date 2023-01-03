@@ -29,5 +29,5 @@ Helpers for Keda objects
 
 # pollingInterval must be >= 10
 {{- define "mintel_common.keda.scaledObject.pollingInterval" -}}
-  {{- max 10 .pollingInterval}}
+  {{- max 10 .pollingInterval }}
 {{- end }}

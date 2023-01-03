@@ -8,46 +8,46 @@ Return the target Kubernetes version
     {{- if .Values.global.kubeVersion }}
     {{- .Values.global.kubeVersion -}}
     {{- else }}
-    {{- default .Capabilities.KubeVersion.Version .Values.kubeVersion -}}
+    {{- .Values.kubeVersion | default .Capabilities.KubeVersion.Version -}}
     {{- end -}}
 {{- else }}
-{{- default .Capabilities.KubeVersion.Version .Values.kubeVersion -}}
+{{- .Values.kubeVersion | default .Capabilities.KubeVersion.Version -}}
 {{- end -}}
 {{- end -}}
 
 {{/* Return the appropriate apiVersion for RBAC resources. */}}
 {{- define "common.capabilities.rbac.apiVersion" -}}
-{{- print "rbac.authorization.k8s.io/v1" -}}
+rbac.authorization.k8s.io/v1
 {{- end -}}
 
 {{/* Return the appropriate apiVersion for External Secrets. */}}
 {{- define "common.capabilities.externalsecret.apiVersion" -}}
-{{- print "external-secrets.io/v1alpha1" -}}
+external-secrets.io/v1alpha1
 {{- end -}}
 
 {{/* Return the appropriate apiVersion for Secrets. */}}
 {{- define "common.capabilities.secret.apiVersion" -}}
-{{- print "v1" -}}
+v1
 {{- end -}}
 
 {{/* Return the appropriate apiVersion for Configmaps */}}
 {{- define "common.capabilities.configmap.apiVersion" -}}
-{{- print "v1" -}}
+v1
 {{- end -}}
 
 {{/* Return the appropriate apiVersion for Service Accounts. */}}
 {{- define "common.capabilities.serviceaccount.apiVersion" -}}
-{{- print "v1" -}}
+v1
 {{- end -}}
 
 {{/* Return the appropriate apiVersion for Services. */}}
 {{- define "common.capabilities.service.apiVersion" -}}
-{{- print "v1" -}}
+v1
 {{- end -}}
 
 {{/* Return the appropriate apiVersion for NetworkPolicy. */}}
 {{- define "common.capabilities.networkpolicy.apiVersion" -}}
-{{- print "networking.k8s.io/v1" -}}
+networking.k8s.io/v1
 {{- end -}}
 
 

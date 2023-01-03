@@ -6,11 +6,11 @@ kind: PersistentVolumeClaim
 metadata:
   name: {{ include "mintel_common.fullname" $pvcData  }}
   namespace: {{ $.Release.Namespace }}
-  labels: {{ include "mintel_common.labels" $pvcData | nindent 4}}
+  labels: {{ include "mintel_common.labels" $pvcData | nindent 4 }}
   annotations: {{ include "mintel_common.commonAnnotations" $ | nindent 4 }}
 spec:
   accessModes:
-    - {{ default "ReadWriteOnce" .mode }}
+    - {{ .mode | default "ReadWriteOnce" }}
   resources:
     requests:
       storage: {{ .size }}

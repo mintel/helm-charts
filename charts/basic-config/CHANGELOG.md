@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v0.2.1] - 2022-12-29
+### Changed
+- Refactor use of the `default` template function (sometimes use `coalesce`)
+- Remove pointless `print` and `printf` function calls
+
+### Fixed
+- Make spacing inside `{{ }}` consistent
 
 ## [v0.2.0] - 2022-07-13
 ### Added

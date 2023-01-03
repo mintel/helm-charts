@@ -8,7 +8,7 @@ metadata:
   namespace: {{ .Release.Namespace }}
   annotations:
     {{ include "mintel_common.commonAnnotations" . | nindent 4 }}
-    secret.reloader.stakater.com/reload: {{ default (include "mintel_common.defaultPostgresqlSecretName" .) .Values.postgresql.secretNameOverride }}
+    secret.reloader.stakater.com/reload: {{ .Values.postgresql.secretNameOverride | default (include "mintel_common.defaultPostgresqlSecretName" .) }}
     app.mintel.com/opa-allow-single-replica: "true"
   labels: {{ include "mintel_common.labels" $data | nindent 4 }}
 spec:
@@ -25,12 +25,12 @@ spec:
     spec:
       {{- include "mintel_common.imagePullSecrets" . | nindent 6 }}
       {{- if (and .Values.serviceAccount (or .Values.serviceAccount.create .Values.serviceAccount.name)) }}
-      serviceAccountName: {{ default (include "mintel_common.fullname" .) .Values.serviceAccount.name }}
+      serviceAccountName: {{ .Values.serviceAccount.name | default (include "mintel_common.fullname" .) }}
       {{- end }}
       containers:
         - name: main
-          image: {{ default "index.docker.io/bitnami/postgres-exporter:0.10.0-debian-10-r169" .Values.postgresql.metrics.imageOverride }}
-          imagePullPolicy: {{ default "IfNotPresent" .Values.image.pullPolicy }}
+          image: {{ .Values.postgresql.metrics.imageOverride | default "index.docker.io/bitnami/postgres-exporter:0.10.0-debian-10-r169" }}
+          imagePullPolicy: {{ .Values.image.pullPolicy | default "IfNotPresent" }}
           env:
             - name: KUBERNETES_POD_NAMESPACE
               valueFrom:
@@ -46,7 +46,7 @@ spec:
               value: "$(DB_PASSWORD)"
           envFrom:
             - secretRef:
-                name: {{ default (include "mintel_common.defaultPostgresqlSecretName" .) .Values.postgresql.secretNameOverride }}
+                name: {{ .Values.postgresql.secretNameOverride | default (include "mintel_common.defaultPostgresqlSecretName" .) }}
           ports:
             - containerPort: 9187
               name: metrics

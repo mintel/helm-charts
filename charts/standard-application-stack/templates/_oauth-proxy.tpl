@@ -2,17 +2,17 @@
 {{- define "mintel_common.oauthProxySidecar" -}}
 {{- if (and .proxiedService.oauthProxy.enabled (ne .Values.global.clusterEnv "local")) }}
 - name: auth-proxy
-  image: {{ default "quay.io/oauth2-proxy/oauth2-proxy:v7.1.3" .proxiedService.oauthProxy.image }}
-  imagePullPolicy: {{ default "IfNotPresent" .Values.image.pullPolicy }}
+  image: {{ .proxiedService.oauthProxy.image | default "quay.io/oauth2-proxy/oauth2-proxy:v7.1.3" }}
+  imagePullPolicy: {{ .Values.image.pullPolicy | default "IfNotPresent" }}
   args:
-    - --redirect-url=https://{{ default .Values.ingress.defaultHost .proxiedService.oauthProxy.ingressHost }}/oauth2/callback
+    - --redirect-url=https://{{ .proxiedService.oauthProxy.ingressHost | default .Values.ingress.defaultHost }}/oauth2/callback
     - --upstream=http://localhost:{{ .proxiedService.port }}
     - --http-address=http://0.0.0.0:4180
     - --provider=oidc
     - --skip-auth-regex=^/ping$
-    - --skip-auth-regex=^{{ default "/healthz" .Values.liveness.path }}$
-    - --skip-auth-regex=^{{ default "/readiness" .Values.readiness.path }}$
-    - --skip-auth-regex=^{{ default "/external-health-check" .Values.ingress.blackbox.probePath }}$
+    - --skip-auth-regex=^{{ .Values.liveness.path | default "/healthz" }}$
+    - --skip-auth-regex=^{{ .Values.readiness.path | default "/readiness" }}$
+    - --skip-auth-regex=^{{ .Values.ingress.blackbox.probePath | default "/external-health-check" }}$
     {{- range .proxiedService.oauthProxy.skipAuthRegexes }}
     - --skip-auth-regex={{ if not (hasPrefix "^" . )}}^{{ end }}{{ . }}{{ if not (hasSuffix "$" . )}}${{ end }}
     {{- end }}
@@ -22,23 +22,23 @@
     - --ssl-upstream-insecure-skip-verify=true
     - --oidc-groups-claim=groups
     - --metrics-address=http://0.0.0.0:9090
-    - --email-domain={{ default "*" .proxiedService.oauthProxy.emailDomain }}
+    - --email-domain={{ .proxiedService.oauthProxy.emailDomain | default "*" }}
     {{- if .proxiedService.oauthProxy.emailDomain }}
-    - --profile-url={{ default "https://oauth.mintel.com/userinfo/" (printf "%s/userinfo/" .proxiedService.oauthProxy.issuerUrl) .proxiedService.oauthProxy.profileUrl }}
+    - --profile-url={{ coalesce (printf "%s/userinfo/" .proxiedService.oauthProxy.issuerUrl) .proxiedService.oauthProxy.profileUrl "https://oauth.mintel.com/userinfo/" }}
     {{- end }}
     {{- with .proxiedService.oauthProxy.allowedGroups }}
-    - --allowed-group={{ join "," . }}
+    - --allowed-group={{ . | sortAlpha | uniq | compact | join "," }}
     {{- end }}
-    - --oidc-issuer-url={{ default "https://oauth.mintel.com" .proxiedService.oauthProxy.issuerUrl }}
+    - --oidc-issuer-url={{ .proxiedService.oauthProxy.issuerUrl | default "https://oauth.mintel.com" }}
     {{- if (eq .proxiedService.oauthProxy.type "portal") }}
     - --insecure-oidc-allow-unverified-email=true
     - --cookie-secure=false
     {{- if .proxiedService.oauthProxy.emailDomain }}
-    - --user-id-claim={{ default "email" .proxiedService.oauthProxy.userIdClaim }}
+    - --user-id-claim={{ .proxiedService.oauthProxy.userIdClaim | default "email" }}
     {{- else }}
-    - --user-id-claim={{ default "sub" .proxiedService.oauthProxy.userIdClaim }}
+    - --user-id-claim={{ .proxiedService.oauthProxy.userIdClaim | default "sub" }}
     {{- end }}
-    - --scope={{ default "openid profile email" .proxiedService.oauthProxy.scope }}
+    - --scope={{ .proxiedService.oauthProxy.scope | default "openid profile email" }}
     {{- end }}
   env:
     {{- with .proxiedService.oauthProxy.env }}
