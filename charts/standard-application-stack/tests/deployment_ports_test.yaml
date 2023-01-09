@@ -13,7 +13,7 @@ tests:
           value:
           - containerPort: 8000
             name: http
-  - it: Check overidden container main port
+  - it: Check overridden container main port
     set:
       global.clusterEnv: qa
       port: 9000
