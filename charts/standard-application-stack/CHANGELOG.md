@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v3.54.0] - 2023-01-09
+### Added
+- Added extra tests around Deployment `extraPorts`
+
+### Fixed
+- Validate usage of `extraPorts` when generating Deployment containerPort spec
+
 ## [v3.53.2] - 2022-12-29
 ### Changed
 - Refactor use of the `default` template function (sometimes use `coalesce`)

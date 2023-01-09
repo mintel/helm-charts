@@ -255,8 +255,12 @@ spec:
             - containerPort: {{ .Values.hybridCloud.proxyPort | default "20000" }}
               name: consul-proxy
             {{- end }}
-            {{- with .Values.extraPorts }}
-            {{- toYaml . | nindent 12 }}
+            {{- range .Values.extraPorts }}
+            - name: {{ .name }}
+              containerPort: {{ .containerPort }}
+              {{- if .protocol }}
+              protocol: {{ .protocol }}
+              {{- end }}
             {{- end }}
           {{- end }}
           {{- if (and .Values.liveness .Values.liveness.enabled) }}

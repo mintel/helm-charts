@@ -318,8 +318,6 @@ tests:
               name: http
             - containerPort: 9002
               name: metrics-2
-              targetPort: 9002
             - containerPort: 9003
               name: metrics-3
-              targetPort: 9003
         template: deployment.yaml

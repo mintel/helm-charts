@@ -78,6 +78,7 @@ extraPorts: []
 # extraPorts:
 #   - name: ""
 #     containerPort: 1234
+#     protocol: "TCP"
 
 # -- Optional command to the container
 command:

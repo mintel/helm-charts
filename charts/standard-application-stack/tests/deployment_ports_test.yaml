@@ -1,0 +1,86 @@
+suite: Test Deployment Ports
+templates:
+  - deployment.yaml
+release:
+  namespace: test-namespace
+tests:
+  - it: Check default container main port
+    set:
+      global.clusterEnv: qa
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].ports
+          value:
+          - containerPort: 8000
+            name: http
+  - it: Check overridden container main port
+    set:
+      global.clusterEnv: qa
+      port: 9000
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].ports
+          value:
+          - containerPort: 9000
+            name: http
+  - it: Check container extraPorts
+    set:
+      global.clusterEnv: qa
+      extraPorts:
+        - name: "extra-port-1"
+          containerPort: 8001
+        - name: "extra-port-2"
+          containerPort: 8002
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].ports
+          value:
+          - containerPort: 8000
+            name: http
+          - containerPort: 8001
+            name: extra-port-1
+          - containerPort: 8002
+            name: extra-port-2
+  - it: Check container extraPorts are validated
+    set:
+      global.clusterEnv: qa
+      extraPorts:
+        - name: "extra-port-1"
+          containerPort: 8001
+        - name: "extra-port-2"
+          containerPort: 8002
+        - name: "extra-port-3"
+          containerPort: 8003
+          shouldIgnoreThis: value
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].ports
+          value:
+          - containerPort: 8000
+            name: http
+          - containerPort: 8001
+            name: extra-port-1
+          - containerPort: 8002
+            name: extra-port-2
+          - containerPort: 8003
+            name: extra-port-3
+  - it: Check container extraPorts protocol
+    set:
+      global.clusterEnv: qa
+      extraPorts:
+        - name: "extra-port-1"
+          containerPort: 8001
+        - name: "extra-port-2"
+          containerPort: 8002
+          protocol: "UDP"
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].ports
+          value:
+          - containerPort: 8000
+            name: http
+          - containerPort: 8001
+            name: extra-port-1
+          - containerPort: 8002
+            name: extra-port-2
+            protocol: "UDP"
