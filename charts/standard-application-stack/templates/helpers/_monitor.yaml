@@ -19,10 +19,14 @@ metadata:
     {{ include "mintel_common.commonAnnotations" . | nindent 4 }}
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
+  {{- if eq .type "Pod" }}
   podMetricsEndpoints:
-    - interval: {{ coalesce .config.interval "30s" }}
-      path: {{ coalesce .config.path "/metrics" }}
-      port: {{ coalesce .config.port "http" }}
+  {{- else if eq .type "Service" }}
+  endpoints:
+  {{- end }}
+    - interval: {{ coalesce .config.interval .Values.metrics.interval "30s" }}
+      path: {{ coalesce .config.path .Values.metrics.path "/metrics" }}
+      port: {{ coalesce .config.port .Values.metrics.port "http" }}
       {{- if hasKey .config "basicAuth" }}
       {{- if .config.basicAuth.enabled }}
       basicAuth:
@@ -40,8 +44,8 @@ spec:
             - __meta_kubernetes_namespace
             - __meta_kubernetes_pod_label_app_kubernetes_io_name
           targetLabel: job
-      scheme: {{ coalesce .config.scheme "http" }}
-      scrapeTimeout: {{ coalesce .config.timeout "10s" }}
+      scheme: {{ coalesce .config.scheme .Values.metrics.scheme "http" }}
+      scrapeTimeout: {{ coalesce .config.timeout .Values.metrics.timeout "10s" }}
       tlsConfig:
         insecureSkipVerify: true
   selector:

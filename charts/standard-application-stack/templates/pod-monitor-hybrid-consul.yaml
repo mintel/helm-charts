@@ -1,7 +1,7 @@
 {{- if (ne .Values.global.clusterEnv "local") }}
 {{- if (and .Values.hybridCloud .Values.hybridCloud.enabled) }}
 {{- if (and .Values.hybridCloud.metrics .Values.hybridCloud.metrics.enabled) }}
-{{- $monitorData := dict "Release" .Release "Chart" .Chart "Values" .Values "component" "consul-proxy" .name "config" $.Values.hybridCloud.metrics "type" "Pod" }}
+{{- $monitorData := dict "Release" .Release "Chart" .Chart "Values" .Values "component" "consul-proxy" "config" $.Values.hybridCloud.metrics "type" "Pod" }}
 ---
 {{ include "mintel_common.monitor" $monitorData }}
 {{- end }}
