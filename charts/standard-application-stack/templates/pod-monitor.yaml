@@ -2,28 +2,28 @@
 {{- if (ne .Values.global.clusterEnv "local") }}
 {{- if (and .Values.metrics .Values.metrics.enabled) }}
 ---
-{{- $monitorData := dict "Release" $.Release "Chart" $.Chart "Values" $.Values "component" .name "override" dict }}
+{{- $monitorData := dict "Release" $.Release "Chart" $.Chart "Values" $.Values "component" .name "config" $.Values.metrics }}
 {{ include "mintel_common.podMonitor" $monitorData }}
 
 
 {{- range .Values.metrics.additionalMonitors }}
-{{- $monitorData := dict "Release" $.Release "Chart" $.Chart "Values" $.Values "component" .name "override" . }}
+{{- $monitorData := dict "Release" $.Release "Chart" $.Chart "Values" $.Values "component" .name "config" . }}
 ---
 {{ include "mintel_common.podMonitor" $monitorData }}
 {{- end }}
 {{- end }}
 
 {{- if (and .Values.oauthProxy .Values.oauthProxy.enabled) }}
-{{- $override := dict "port" "auth-proxy-metrics" }}
-{{- $monitorData := dict "Release" $.Release "Chart" $.Chart "Values" $.Values "component" "oauth-metrics" "override" $override }}
+{{- $config := dict "port" "auth-proxy-metrics" }}
+{{- $monitorData := dict "Release" $.Release "Chart" $.Chart "Values" $.Values "component" "oauth-metrics" "config" $config }}
 ---
 {{ include "mintel_common.podMonitor" $monitorData }}
 {{- end }}
 
 {{- if (and .Values.filebeatSidecar .Values.filebeatSidecar.enabled) }}
 {{- if (and .Values.filebeatSidecar.metrics .Values.filebeatSidecar.metrics.enabled) }}
-{{- $override := dict "port" "beat-exporter-metrics" }}
-{{- $filebeatData := dict "Release" .Release "Chart" .Chart "Values" .Values "component" "filebeat" "override" $override }}
+{{- $config := dict "port" "beat-exporter-metrics" }}
+{{- $filebeatData := dict "Release" .Release "Chart" .Chart "Values" .Values "component" "filebeat" "config" $config }}
 ---
 {{ include "mintel_common.podMonitor" $filebeatData }}
 {{- end }}
