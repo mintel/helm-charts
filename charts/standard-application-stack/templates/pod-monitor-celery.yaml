@@ -5,9 +5,9 @@
 {{- if (and .Values.filebeatSidecar.metrics .Values.filebeatSidecar.metrics.enabled) }}
 {{- $config := .Values.filebeatSidecar.metrics }}
 {{- $_ := set $config "port" "beat-exporter-metrics"
-{{- $filebeatData := dict "Release" .Release "Chart" .Chart "Values" .Values "component" "celery-filebeat" "config" $config }}
+{{- $filebeatData := dict "Release" .Release "Chart" .Chart "Values" .Values "component" "celery-filebeat" "config" $config "type" "Pod" }}
 ---
-{{ include "mintel_common.podMonitor" $filebeatData }}
+{{ include "mintel_common.monitor" $filebeatData }}
 {{- end }}
 {{- end }}
 {{- end }}

@@ -2,8 +2,8 @@
 {{- if (and .Values.mariadb .Values.mariadb.enabled) }}
 {{- if (and .Values.mariadb.metrics .Values.mariadb.metrics.enabled) }}
 
-{{- $monitorData := dict "Release" .Release "Chart" .Chart "Values" .Values "component" "mysqldexporter" "config" .Values.mariadb.metrics }}
-{{ include "mintel_common.podMonitor" $monitorData }}
+{{- $monitorData := dict "Release" .Release "Chart" .Chart "Values" .Values "component" "mysqldexporter" "config" .Values.mariadb.metrics "type" "Pod" }}
+{{ include "mintel_common.monitor" $monitorData }}
 {{- end }}
 {{- end }}
 {{- end }}
