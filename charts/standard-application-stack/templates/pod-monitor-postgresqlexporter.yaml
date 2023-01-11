@@ -1,8 +1,8 @@
 {{- if (ne .Values.global.clusterEnv "local") }}
 {{- if (and .Values.postgresql .Values.postgresql.enabled) }}
 {{- if (and .Values.postgresql.metrics .Values.postgresql.metrics.enabled) }}
-{{- $monitorData := dict "Release" .Release "Chart" .Chart "Values" .Values "component" "postgresqlexporter" "config" .Values.postgresql.metrics  }}
-{{ include "mintel_common.podMonitor" $monitorData }}
+{{- $monitorData := dict "Release" .Release "Chart" .Chart "Values" .Values "component" "postgresqlexporter" "config" .Values.postgresql.metrics "type" "Pod" }}
+{{ include "mintel_common.monitor" $monitorData }}
 {{- end }}
 {{- end }}
 {{- end }}

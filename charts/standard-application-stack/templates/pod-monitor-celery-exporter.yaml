@@ -2,34 +2,8 @@
 {{- if (and .Values.celery .Values.celery.enabled) }}
 {{- if (and .Values.redis .Values.redis.enabled) }}
 {{- if (and .Values.celery.metrics .Values.celery.metrics.enabled) }}
-{{- $data := dict "Release" .Release "Chart" .Chart "Values" .Values "component" "celery-exporter" }}
-apiVersion: {{ include "common.capabilities.podmonitor.apiVersion" . }}
-kind: PodMonitor
-metadata:
-  name: {{ include "mintel_common.fullname" $data }}
-  namespace: {{ .Release.Namespace }}
-  labels: {{ include "mintel_common.labels" $data | nindent 4 }}
-  annotations:
-    {{ include "mintel_common.commonAnnotations" . | nindent 4 }}
-    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
-spec:
-  podMetricsEndpoints:
-    - interval: {{ .Values.celery.metrics.interval | default "30s" }}
-      path: {{ .Values.celery.metrics.path | default "/metrics" }}
-      port: metrics
-      relabelings:
-        - separator: /
-          sourceLabels:
-            - __meta_kubernetes_namespace
-            - __meta_kubernetes_pod_label_app_kubernetes_io_name
-          targetLabel: job
-      scheme: {{ .Values.celery.metrics.scheme | default "http" }}
-      scrapeTimeout: {{ .Values.celery.metrics.timeout | default "10s" }}
-      tlsConfig:
-        insecureSkipVerify: true
-  selector:
-    matchLabels: {{ include "mintel_common.selectorLabels" $data | nindent 6 }}
-  podTargetLabels: {{ include "mintel_common.podTargetLabelNames" . | nindent 4 }}
+{{- $monitorData := dict "Release" .Release "Chart" .Chart "Values" .Values "component" "celery-exporter" "config" .Values.celery.metrics "type" "Pod" }}
+{{ include "mintel_common.monitor" $monitorData }}
 {{- end }}
 {{- end }}
 {{- end }}
