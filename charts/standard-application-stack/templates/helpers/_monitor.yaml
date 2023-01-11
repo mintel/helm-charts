@@ -1,10 +1,15 @@
 {{/* vim: set filetype=mustache: */}}
 
-{{/* Used to render pod Monitors */}}
+{{/* Used to render pod and Service Monitors */}}
 
-{{- define "mintel_common.podMonitor" -}}
+{{- define "mintel_common.monitor" -}}
+{{- if eq .type "Pod" }}
 apiVersion: {{ include "common.capabilities.podmonitor.apiVersion" $ }}
 kind: PodMonitor
+{{- else if eq .type "Service" }}
+apiVersion: {{ include "common.capabilities.servicemonitor.apiVersion" . }}
+kind: ServiceMonitor
+{{- end }}
 metadata:
   name: {{ include "mintel_common.fullname" . }}
   namespace: {{ $.Release.Namespace }}
