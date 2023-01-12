@@ -528,7 +528,7 @@ topologySpreadConstraints:
     {{- range $instanceName, $instanceConfig := $resourceConfig | dig "terraform" "instances" (dict "default" dict) }}
       {{- $instanceDict := dict "Global" $global "InstanceCfg" $instanceConfig "InstanceName" $instanceName "ResourceType" $resourceType }}
       {{- $_ := set $instanceConfig "name" (include "mintel_common.terraform_cloud.instanceConfigName" $instanceDict | trim)}}
-      {{- $tfSecretList = append $tfSecretList (coalesce $instanceConfig.secretNameOverride $resourceConfig.secretNameOverride (printf "%s-%s" ($instanceConfig.name | kebabcase) ($resourceType | kebabcase)) ) }}
+      {{- $tfSecretList = append $tfSecretList (printf "%s-%s" ($instanceConfig.name | kebabcase) ($resourceType | kebabcase) ) }}
     {{- end }}
   {{- end }}
 {{- end }}
