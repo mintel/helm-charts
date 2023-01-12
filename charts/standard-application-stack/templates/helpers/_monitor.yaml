@@ -49,7 +49,12 @@ spec:
       tlsConfig:
         insecureSkipVerify: true
   selector:
+    # If main target labels are used: if component is either .name, consul-proxy, oauth-metrics or filebeat
+    {{- if (has .component (list .Values.global.name "consul-proxy" "oauth-metrics" "filebeat" )) }}
+    matchLabels: {{ include "mintel_common.selectorLabels" .parent | nindent 6 }}
+    {{- else }}
     matchLabels: {{ include "mintel_common.selectorLabels" . | nindent 6 }}
+    {{- end }}
   {{- if eq .type "Service" }}
   targetLabels: {{ include "mintel_common.targetLabelNames" . | nindent 4 }}
   {{- end }}
