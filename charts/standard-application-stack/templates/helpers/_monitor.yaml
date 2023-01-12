@@ -50,5 +50,8 @@ spec:
         insecureSkipVerify: true
   selector:
     matchLabels: {{ include "mintel_common.selectorLabels" $ | nindent 6 }}
+  {{- if eq .type "Service" }}
+  targetLabels: {{ include "mintel_common.targetLabelNames" . | nindent 4 }}
+  {{- end }}
   podTargetLabels: {{ include "mintel_common.podTargetLabelNames" $ | nindent 4 }}
 {{- end -}}
