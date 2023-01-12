@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v3.54.1] - 2023-01-12
+### Fixed
+- Fixed bug with tf cloud secret list
+
 ## [v3.54.0] - 2023-01-09
 ### Added
 - Added extra tests around Deployment `extraPorts`
