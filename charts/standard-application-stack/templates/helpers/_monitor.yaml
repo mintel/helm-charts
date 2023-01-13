@@ -14,7 +14,9 @@ metadata:
   name: {{ include "mintel_common.fullname" . }}
   namespace: {{ $.Release.Namespace }}
   labels: {{ include "mintel_common.labels" . | nindent 4 }}
+    {{- if eq .type "Service" }}
     k8s-app: {{ include "mintel_common.fullname" . }}
+    {{- end }}
   annotations:
     {{ include "mintel_common.commonAnnotations" . | nindent 4 }}
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
@@ -49,9 +51,11 @@ spec:
       tlsConfig:
         insecureSkipVerify: true
   selector:
-    # If main target labels are used: if component is either .name, consul-proxy, oauth-metrics or filebeat
+    # If main target labels are required: if component is either .name, consul-proxy, oauth-metrics or filebeat
     {{- if (has .component (list .Values.global.name "consul-proxy" "oauth-metrics" "filebeat" )) }}
-    matchLabels: {{ include "mintel_common.selectorLabels" .parent | nindent 6 }}
+    {{- $_ := set . "name" .Values.global.name }}
+    {{- $_ := unset . "component" }}
+    matchLabels: {{ include "mintel_common.selectorLabels" . | nindent 6 }}
     {{- else }}
     matchLabels: {{ include "mintel_common.selectorLabels" . | nindent 6 }}
     {{- end }}

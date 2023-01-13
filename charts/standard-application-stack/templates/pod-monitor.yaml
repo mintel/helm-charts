@@ -23,7 +23,7 @@
 {{- if (and .Values.filebeatSidecar .Values.filebeatSidecar.enabled) }}
 {{- if (and .Values.filebeatSidecar.metrics .Values.filebeatSidecar.metrics.enabled) }}
 {{- $config := dict "port" "beat-exporter-metrics" }}
-{{- $filebeatData := dict "Release" .Release "Chart" .Chart "Values" .Values "component" "filebeat" "config" $config "parent" $ "type" "Pod" }}
+{{- $filebeatData := dict "Release" .Release "Chart" .Chart "Values" .Values "component" "filebeat" "config" $config "type" "Pod" }}
 ---
 {{ include "mintel_common.monitor" $filebeatData }}
 {{- end }}
