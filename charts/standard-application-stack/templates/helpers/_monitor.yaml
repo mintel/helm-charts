@@ -51,11 +51,18 @@ spec:
       tlsConfig:
         insecureSkipVerify: true
   selector:
-    # If main target labels are required: if component is either .name, consul-proxy, oauth-metrics or filebeat
-    {{- if (has .component (list .Values.global.name "consul-proxy" "oauth-metrics" "filebeat" )) }}
-    {{- $_ := set . "name" .Values.global.name }}
-    {{- $_ := unset . "component" }}
+    # If target labels require some adjustment: if component is either .name, consul-proxy, oauth-metrics, filebeat or celery-filebeat
+    {{- if (has .component (list .Values.global.name "consul-proxy" "oauth-metrics" "filebeat" "celery-filebeat" )) }}
+      # Celery filebeat needs target label component to be celery
+      {{- if (eq .component "celery-filebeat" ) }}
+      {{- $_ := set . "component" "celery" }}
     matchLabels: {{ include "mintel_common.selectorLabels" . | nindent 6 }}
+      # Others in this list relate to main pod so need name to be the app name and component unset
+      {{- else }}
+      {{- $_ := set . "name" .Values.global.name }}
+      {{- $_ := unset . "component" }}
+    matchLabels: {{ include "mintel_common.selectorLabels" . | nindent 6 }}
+      {{- end }}
     {{- else }}
     matchLabels: {{ include "mintel_common.selectorLabels" . | nindent 6 }}
     {{- end }}
