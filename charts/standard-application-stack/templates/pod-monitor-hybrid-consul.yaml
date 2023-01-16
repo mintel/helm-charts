@@ -1,35 +1,11 @@
 {{- if (ne .Values.global.clusterEnv "local") }}
 {{- if (and .Values.hybridCloud .Values.hybridCloud.enabled) }}
 {{- if (and .Values.hybridCloud.metrics .Values.hybridCloud.metrics.enabled) }}
-{{- $monitorData := dict "Release" .Release "Chart" .Chart "Values" .Values "component" "consul-proxy" }}
+{{- $config := $.Values.hybridCloud.metrics }}
+{{- $_ := set $config "port" "consul-metrics" }}
+{{- $monitorData := dict "Release" .Release "Chart" .Chart "Values" .Values "component" "consul-proxy" "config" $config "type" "Pod" }}
 ---
-apiVersion: {{ include "common.capabilities.podmonitor.apiVersion" . }}
-kind: PodMonitor
-metadata:
-  name: {{ include "mintel_common.fullname" $monitorData }}
-  namespace: {{ .Release.Namespace }}
-  labels: {{ include "mintel_common.labels" $monitorData | nindent 4 }}
-  annotations:
-    {{ include "mintel_common.commonAnnotations" . | nindent 4 }}
-    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
-spec:
-  podMetricsEndpoints:
-    - interval: {{ .Values.hybridCloud.metrics.interval | default "30s" }}
-      path: {{ .Values.hybridCloud.metrics.path | default "/metrics" }}
-      port: consul-metrics
-      relabelings:
-        - separator: /
-          sourceLabels:
-            - __meta_kubernetes_namespace
-            - __meta_kubernetes_pod_label_app_kubernetes_io_name
-          targetLabel: job
-      scheme: {{ .Values.hybridCloud.metrics.scheme | default "http" }}
-      scrapeTimeout: {{ .Values.hybridCloud.metrics.timeout | default "10s" }}
-      tlsConfig:
-        insecureSkipVerify: true
-  selector:
-    matchLabels: {{ include "mintel_common.selectorLabels" . | nindent 6 }}
-  podTargetLabels: {{ include "mintel_common.podTargetLabelNames" . | nindent 4 }}
+{{ include "mintel_common.monitor" $monitorData }}
 {{- end }}
 {{- end }}
 {{- end }}

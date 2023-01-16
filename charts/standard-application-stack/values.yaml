@@ -743,6 +743,8 @@ celery:
   metrics:
     # -- Enable Prometheus to access application metrics endpoints
     enabled: true
+    # -- Port to collect celery metrics
+    port: metrics
   # -- Pod Disruption Budget
   # ref: https://kubernetes.io/docs/tasks/run-application/configure-pdb/
   podDisruptionBudget:

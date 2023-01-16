@@ -84,3 +84,18 @@ tests:
           - containerPort: 8002
             name: extra-port-2
             protocol: "UDP"
+  - it: Check container hybrid cloud ports
+    set:
+      global.clusterEnv: qa
+      hybridCloud.enabled: true
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[0].ports
+          content:
+            containerPort: 20200
+            name: consul-metrics
+      - contains:
+          path: spec.template.spec.containers[0].ports
+          content:
+            containerPort: 20000
+            name: consul-proxy

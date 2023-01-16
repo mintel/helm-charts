@@ -3,35 +3,11 @@
 {{- $targetData := dict "Release" .Release "Chart" .Chart "Values" .Values "component" "celery" }}
 {{- if (and .Values.filebeatSidecar .Values.filebeatSidecar.enabled) }}
 {{- if (and .Values.filebeatSidecar.metrics .Values.filebeatSidecar.metrics.enabled) }}
-{{- $filebeatData := dict "Release" .Release "Chart" .Chart "Values" .Values "component" "celery-filebeat" }}
+{{- $config := .Values.filebeatSidecar.metrics }}
+{{- $_ := set $config "port" "beat-exporter-metrics" }}
+{{- $filebeatData := dict "Release" .Release "Chart" .Chart "Values" .Values "component" "celery-filebeat" "config" $config "type" "Pod" }}
 ---
-apiVersion: {{ include "common.capabilities.podmonitor.apiVersion" . }}
-kind: PodMonitor
-metadata:
-  name: {{ include "mintel_common.fullname" $filebeatData }}
-  namespace: {{ .Release.Namespace }}
-  labels: {{ include "mintel_common.labels" $filebeatData | nindent 4 }}
-  annotations:
-    {{ include "mintel_common.commonAnnotations" . | nindent 4 }}
-    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
-spec:
-  podMetricsEndpoints:
-    - interval: {{ .Values.filebeatSidecar.metrics.interval | default "30s" }}
-      path: {{ .Values.filebeatSidecar.metrics.path | default "/metrics" }}
-      port: beat-exporter-metrics
-      relabelings:
-        - separator: /
-          sourceLabels:
-            - __meta_kubernetes_namespace
-            - __meta_kubernetes_pod_label_app_kubernetes_io_name
-          targetLabel: job
-      scheme: {{ .Values.filebeatSidecar.metrics.scheme | default "http" }}
-      scrapeTimeout: {{ .Values.filebeatSidecar.metrics.timeout | default "10s" }}
-      tlsConfig:
-        insecureSkipVerify: true
-  selector:
-    matchLabels: {{ include "mintel_common.selectorLabels" $targetData | nindent 6 }}
-  podTargetLabels: {{ include "mintel_common.podTargetLabelNames" . | nindent 4 }}
+{{ include "mintel_common.monitor" $filebeatData }}
 {{- end }}
 {{- end }}
 {{- end }}

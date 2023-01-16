@@ -1,0 +1,73 @@
+{{/* vim: set filetype=mustache: */}}
+
+{{/* Used to render pod and Service Monitors */}}
+
+{{- define "mintel_common.monitor" -}}
+{{- if eq .type "Pod" }}
+apiVersion: {{ include "common.capabilities.podmonitor.apiVersion" $ }}
+kind: PodMonitor
+{{- else if eq .type "Service" }}
+apiVersion: {{ include "common.capabilities.servicemonitor.apiVersion" . }}
+kind: ServiceMonitor
+{{- end }}
+metadata:
+  name: {{ include "mintel_common.fullname" . }}
+  namespace: {{ $.Release.Namespace }}
+  labels: {{ include "mintel_common.labels" . | nindent 4 }}
+    {{- if eq .type "Service" }}
+    k8s-app: {{ include "mintel_common.fullname" . }}
+    {{- end }}
+  annotations:
+    {{ include "mintel_common.commonAnnotations" . | nindent 4 }}
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+spec:
+  {{- if eq .type "Pod" }}
+  podMetricsEndpoints:
+  {{- else if eq .type "Service" }}
+  endpoints:
+  {{- end }}
+    - interval: {{ coalesce .config.interval .Values.metrics.interval "30s" }}
+      path: {{ coalesce .config.path .Values.metrics.path "/metrics" }}
+      port: {{ coalesce .config.port .Values.metrics.port "http" }}
+      {{- if hasKey .config "basicAuth" }}
+      {{- if .config.basicAuth.enabled }}
+      basicAuth:
+        username:
+          key: {{ .config.basicAuth.usernameKey }}
+          name: {{ include "mintel_common.defaultAppSecretName" $ }}
+        password:
+          key: {{ .config.basicAuth.passwordKey }}
+          name: {{ include "mintel_common.defaultAppSecretName" $ }}
+      {{- end }}
+      {{- end }}
+      relabelings:
+        - separator: /
+          sourceLabels:
+            - __meta_kubernetes_namespace
+            - __meta_kubernetes_pod_label_app_kubernetes_io_name
+          targetLabel: job
+      scheme: {{ coalesce .config.scheme .Values.metrics.scheme "http" }}
+      scrapeTimeout: {{ coalesce .config.timeout .Values.metrics.timeout "10s" }}
+      tlsConfig:
+        insecureSkipVerify: true
+  selector:
+    # If target labels require some adjustment: if component is either .name, consul-proxy, oauth-metrics, filebeat or celery-filebeat
+    {{- if (has .component (list .Values.global.name "consul-proxy" "oauth-metrics" "filebeat" "celery-filebeat" )) }}
+      # Celery filebeat needs target label component to be celery
+      {{- if (eq .component "celery-filebeat" ) }}
+      {{- $_ := set . "component" "celery" }}
+    matchLabels: {{ include "mintel_common.selectorLabels" . | nindent 6 }}
+      # Others in this list relate to main pod so need name to be the app name and component unset
+      {{- else }}
+      {{- $_ := set . "name" .Values.global.name }}
+      {{- $_ := unset . "component" }}
+    matchLabels: {{ include "mintel_common.selectorLabels" . | nindent 6 }}
+      {{- end }}
+    {{- else }}
+    matchLabels: {{ include "mintel_common.selectorLabels" . | nindent 6 }}
+    {{- end }}
+  {{- if eq .type "Service" }}
+  targetLabels: {{ include "mintel_common.targetLabelNames" . | nindent 4 }}
+  {{- end }}
+  podTargetLabels: {{ include "mintel_common.podTargetLabelNames" . | nindent 4 }}
+{{- end -}}
