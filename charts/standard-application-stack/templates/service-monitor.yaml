@@ -10,7 +10,9 @@
 
 {{- range .Values.metrics.additionalMonitors }}
 {{- $config := . }}
+{{- if not $config.port }}
 {{- $_ := set $config "port" ( printf "main-%s" .name ) }}
+{{- end }}
 {{- $monitorData := dict "Release" $.Release "Chart" $.Chart "Values" $.Values "component" .name "config" . "type" "Service" }}
 ---
 {{ include "mintel_common.monitor" $monitorData }}
