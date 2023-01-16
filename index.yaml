@@ -132,6 +132,70 @@ entries:
     version: 0.0.1
   standard-application-stack:
   - apiVersion: v2
+    created: "2023-01-16T09:33:53.025300922Z"
+    dependencies:
+    - condition: (and redis.enabled (eq global.clusterEnv "local"))
+      name: redis
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - localRedis
+      version: 16.11.2
+    - condition: (and mariadb.enabled (eq global.clusterEnv "local"))
+      name: mariadb
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - localMariadb
+      version: 11.0.10
+    - condition: (and postgresql.enabled (eq global.clusterEnv "local"))
+      name: postgresql
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - localPostgresql
+      version: 11.6.3
+    - condition: (and mailhog.enabled (eq global.clusterEnv "local"))
+      name: mailhog
+      repository: https://codecentric.github.io/helm-charts
+      tags:
+      - localMailhog
+      version: 4.1.0
+    - condition: (and kibana.enabled (eq global.clusterEnv "local"))
+      name: kibana
+      repository: https://helm.elastic.co
+      tags:
+      - localKibana
+      version: 7.5.2
+    - condition: (and elasticsearch.enabled (eq global.clusterEnv "local"))
+      name: elasticsearch
+      repository: https://helm.elastic.co
+      tags:
+      - localElasticsearch
+      version: 7.5.2
+    - condition: (and opensearch.enabled (eq global.clusterEnv "local"))
+      name: opensearch
+      repository: https://opensearch-project.github.io/helm-charts
+      tags:
+      - localOpensearch
+      version: 1.4.2
+    - condition: (and opensearch.enabled (eq global.clusterEnv "local"))
+      name: opensearch-dashboards
+      repository: https://opensearch-project.github.io/helm-charts
+      tags:
+      - localOpensearch
+      version: 1.0.8
+    - condition: (and localstack.enabled (eq global.clusterEnv "local"))
+      name: localstack
+      repository: https://localstack.github.io/helm-charts
+      tags:
+      - localLocalstack
+      version: 0.3.5
+    description: A generic chart to support most common application requirements
+    digest: df4d4285ef271305d5cd0f51fd234725888cd9befffc9d82a59f4bc2009f510b
+    name: standard-application-stack
+    type: application
+    urls:
+    - https://github.com/mintel/helm-charts/releases/download/standard-application-stack-3.55.0/standard-application-stack-3.55.0.tgz
+    version: 3.55.0
+  - apiVersion: v2
     created: "2023-01-12T18:36:13.379461824Z"
     dependencies:
     - condition: (and redis.enabled (eq global.clusterEnv "local"))
@@ -9147,4 +9211,4 @@ entries:
     urls:
     - https://github.com/mintel/helm-charts/releases/download/testchart-0.1.1/testchart-0.1.1.tgz
     version: 0.1.1
-generated: "2023-01-12T18:36:13.381694351Z"
+generated: "2023-01-16T09:33:53.027482658Z"
