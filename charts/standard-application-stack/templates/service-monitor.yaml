@@ -9,7 +9,7 @@
 {{ include "mintel_common.monitor" $monitorData }}
 
 {{- range .Values.metrics.additionalMonitors }}
-{{- $config := . | deepCopy }}
+{{- $config := . }}
 {{- if not $config.port }}
 {{- $_ := set $config "port" ( printf "main-%s" .name ) }}
 {{- end }}
