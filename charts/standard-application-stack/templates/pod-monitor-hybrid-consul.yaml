@@ -1,7 +1,7 @@
 {{- if (ne .Values.global.clusterEnv "local") }}
 {{- if (and .Values.hybridCloud .Values.hybridCloud.enabled) }}
 {{- if (and .Values.hybridCloud.metrics .Values.hybridCloud.metrics.enabled) }}
-{{- $config := $.Values.hybridCloud.metrics }}
+{{- $config := .Values.hybridCloud.metrics | deepCopy }}
 {{- if not $config.port }}
 {{- $_ := set $config "port" "consul-metrics" }}
 {{- end }}

@@ -2,14 +2,14 @@
 {{- if (eq .Values.cronjobsOnly false) }}
 {{- if (ne .Values.global.clusterEnv "local") }}
 {{- if (and .Values.metrics .Values.metrics.enabled) }}
-{{- $config := .Values.metrics }}
+{{- $config := .Values.metrics | deepCopy }}
 {{- $_ := set $config "port" ( printf "main-%s" (.Values.metrics.port | default "http")) }}
 {{- $monitorData := dict "Release" .Release "Chart" .Chart "Values" .Values "component" .name "config" $config "type" "Service" }}
 ---
 {{ include "mintel_common.monitor" $monitorData }}
 
 {{- range .Values.metrics.additionalMonitors }}
-{{- $config := . }}
+{{- $config := . | deepCopy }}
 {{- if not $config.port }}
 {{- $_ := set $config "port" ( printf "main-%s" .name ) }}
 {{- end }}
