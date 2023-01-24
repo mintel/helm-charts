@@ -482,6 +482,22 @@ ingress:
     # -- Application Protocol Version (HTTP1 / HTTP2 / GRPC)
     backendProtocolVersion: HTTP1
 
+    # -- Enable and configure authentication using okta
+    # aws-load-balancer-controller must be installed on the cluster for Okta integration to work
+    okta:
+      enabled: false
+      # -- (required) Name of the ingress
+      ingressName: ''
+      # -- Comma separated list of Okta Users that have access to the Ingress URI. e.g. 'user1,user2,user3'
+      users: ''
+      # -- Comma separated list of Okta Groups that have access to the Ingress URI. e.g. 'group1,group2,group3'
+      groups: ''
+      # -- The path that is appended onto the Ingress URI for Oauth authentication on the Ingress URI. Defaults to '/oauth2/idpresponse/'
+      redirectPath: ''
+      # -- Specifies the behavior if the user is not authenticated.
+      #    Possible values are 'authenticate' (defalt value, and used in most cases), 'allow', or 'deny'
+      authOnUnauthenticated: 'authenticate'
+
     deregistrationDelay:
       timeoutSeconds: 5
 
@@ -1076,6 +1092,65 @@ opensearch:
         memory: 64Mi
     # -- Port for aws-es-proxy to listen on
     port: 9200
+    # -- Ingress for aws-es-proxy
+    ingress:
+      enabled: false
+      # -- Path for the Ingress
+      path: /_dashboards
+      extraAnnotations: {}
+      alb:
+        enabled: true
+        # -- Public or private alb (internet-facing / internal)
+        scheme: internet-facing
+        # -- Application Version (HTTP / HTTPS)
+        backendProtocol: HTTP
+        # -- Application Protocol Version (HTTP1 / HTTP2 / GRPC)
+        backendProtocolVersion: HTTP1
+
+        # -- Enable and configure authentication using okta
+        # aws-load-balancer-controller must be installed on the cluster for Okta integration to work
+        okta:
+          enabled: false
+          # -- (required) Name of the ingress
+          ingressName: ''
+          # -- Comma separated list of Okta Users that have access to the Ingress URI. e.g. 'user1,user2,user3'
+          users: ''
+          # -- Comma separated list of Okta Groups that have access to the Ingress URI. e.g. 'group1,group2,group3'
+          groups: ''
+          # -- The path that is appended onto the Ingress URI for Oauth authentication on the Ingress URI. Defaults to '/oauth2/idpresponse/'
+          redirectPath: ''
+          # -- Specifies the behavior if the user is not authenticated.
+          #    Possible values are 'authenticate' (defalt value, and used in most cases), 'allow', or 'deny'
+          authOnUnauthenticated: 'authenticate'
+
+        deregistrationDelay:
+          timeoutSeconds: 5
+
+        preStopDelay:
+          # -- Enable an additional delay when the container is shutdown of delaySeconds.
+          # This allows ALB to fully de-register the pod (allows zero-downtime rollouts)
+          enabled: true
+          # -- The delay (sleep) to wait for.
+          # IMPORTANT: The terminationGracePeriodSeconds must be greater than this.
+          delaySeconds: 15
+
+        healthcheck:
+          # -- Healthcheck protocol
+          protocol: HTTP
+          # -- Healthcheck success codes
+          # successCodes: "200"
+          # -- Period seconds
+          intervalSeconds: 15
+          # -- Healthcheck Request path
+          path: /_cluster/health
+          # -- Port (defaults to port specified in Ingress used to direct traffic to service)
+          # port: "9200"
+          # -- Timeout seconds
+          timeoutSeconds: 5
+          # -- Failure threshold
+          unhealthyThresholdCount: 2
+          # -- Success threshold
+          healthyThresholdCount: 2
   # -- Optional: ExternalSecret refreshInterval override
   secretRefreshIntervalOverride: ""
   # -- Optional: override the SecretStoreRef of the ExternalSecret

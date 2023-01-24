@@ -534,3 +534,9 @@ topologySpreadConstraints:
 {{- end }}
 {{- $tfSecretList | sortAlpha | uniq | compact | join "," -}}
 {{- end -}}
+
+{{/* Return the name of the role used by the AWS Load Balancer Controller to read Okta secrets */}}
+{{- define "mintel_common.okta.alb_controller_role_name" -}}
+{{- $name := include "mintel_common.fullname" . }}
+{{- print $name "-alb-controller-role" -}}
+{{- end -}}

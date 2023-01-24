@@ -54,7 +54,11 @@ HTTP1
 {{- if .Values.oauthProxy.enabled }}
 {{- .Values.ingress.alb.healthcheck.port | default 4180 }}
 {{- else }}
+{{- if (and .Values.opensearch.awsEsProxy.ingress .Values.opensearch.awsEsProxy.ingress.enabled) }}
+{{- .Values.opensearch.awsEsProxy.ingress.alb.healthcheck.port | default .Values.opensearch.awsEsProxy.port }}
+{{- else }}
 {{- .Values.ingress.alb.healthcheck.port | default .Values.port }}
+{{- end }}
 {{- end }}
 {{- end }}
 

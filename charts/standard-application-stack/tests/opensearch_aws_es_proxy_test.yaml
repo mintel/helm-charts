@@ -1,0 +1,139 @@
+suite: Test OpenSearch AWS ElasticSearch Proxy configuration
+templates:
+  - deployment-aws-es-proxy.yaml
+  - ingress-aws-es-proxy.yaml
+  - network-policy-aws-es-proxy.yaml
+  - role-aws-load-balancer-controller-okta.yaml
+  - role-binding-aws-load-balancer-controller-okta.yaml
+  - service-aws-es-proxy.yaml
+release:
+  namespace: test-namespace
+tests:
+  - it: Check awsEsProxy deployment is created if enabled
+    template: deployment-aws-es-proxy.yaml
+    set:
+      opensearch.enabled: true
+      opensearch.awsEsProxy.enabled: true
+    asserts:
+      - isKind:
+          of: Deployment
+      - equal:
+          path: metadata.name
+          value: example-app-aws-es-proxy
+      - matchRegex:
+          path: spec.template.spec.containers[0].image
+          pattern: index.docker.io/mintel/aws-es-proxy:.*
+
+  - it: Check awsEsProxy service is created if enabled
+    template: service-aws-es-proxy.yaml
+    set:
+      opensearch.enabled: true
+      opensearch.awsEsProxy.enabled: true
+    asserts:
+      - isKind:
+          of: Service
+      - equal:
+          path: metadata.name
+          value: example-app-aws-es-proxy
+      - equal:
+          path: spec.selector.[app.kubernetes.io/name]
+          value: example-app-aws-es-proxy
+
+  - it: Check awsEsProxy Ingress is created if enabled
+    template: ingress-aws-es-proxy.yaml
+    set:
+      opensearch.enabled: true
+      opensearch.awsEsProxy.enabled: true
+      opensearch.awsEsProxy.ingress.enabled: true
+    asserts:
+      - isKind:
+          of: Ingress
+      - equal:
+          path: metadata.name
+          value: example-app-aws-es-proxy
+      - equal:
+          path: spec.rules[0].http.paths[0].path
+          value: /_dashboards
+
+  - it: Check awsEsProxy NetworkPolicy is created if enabled
+    template: network-policy-aws-es-proxy.yaml
+    set:
+      opensearch.enabled: true
+      opensearch.awsEsProxy.enabled: true
+      opensearch.awsEsProxy.ingress.enabled: true
+    asserts:
+      - isKind:
+          of: NetworkPolicy
+      - equal:
+          path: metadata.name
+          value: allow-aws-alb-to-example-app-opensearch
+      - equal:
+          path: spec.ingress[0].from
+          value:
+            - ipBlock:
+                cidr: ${AWS_PUBLIC_SUBNET_CIDR_BLOCKS_0}
+            - ipBlock:
+                cidr: ${AWS_PUBLIC_SUBNET_CIDR_BLOCKS_1}
+            - ipBlock:
+                cidr: ${AWS_PUBLIC_SUBNET_CIDR_BLOCKS_2}
+
+  - it: Check awsEsProxy aws-load-balancer-controller okta role is created if enabled
+    template: role-aws-load-balancer-controller-okta.yaml
+    set:
+      global.clusterEnv: qa
+      opensearch.enabled: true
+      opensearch.awsEsProxy.enabled: true
+      opensearch.awsEsProxy.ingress.enabled: true
+      opensearch.awsEsProxy.ingress.alb.enabled: true
+      opensearch.awsEsProxy.ingress.alb.okta.enabled: true
+    asserts:
+      - isKind:
+          of: Role
+      - equal:
+          path: metadata.name
+          value: example-app-alb-controller-role
+      - equal:
+          path: metadata.namespace
+          value: test-namespace
+      - equal:
+          path: rules
+          value:
+            - apiGroups:
+              - ""
+              resources:
+              - secrets
+              verbs:
+              - get
+              - list
+              - watch
+
+  - it: Check awsEsProxy aws-load-balancer-controller okta role is created if enabled
+    template: role-binding-aws-load-balancer-controller-okta.yaml
+    set:
+      global.clusterEnv: qa
+      opensearch.enabled: true
+      opensearch.awsEsProxy.enabled: true
+      opensearch.awsEsProxy.ingress.enabled: true
+      opensearch.awsEsProxy.ingress.alb.enabled: true
+      opensearch.awsEsProxy.ingress.alb.okta.enabled: true
+    asserts:
+      - isKind:
+          of: RoleBinding
+      - equal:
+          path: metadata.name
+          value: example-app-alb-controller-role
+      - equal:
+          path: metadata.namespace
+          value: test-namespace
+      - equal:
+          path: roleRef
+          value:
+            apiGroup: rbac.authorization.k8s.io
+            kind: Role
+            name: example-app-alb-controller-role
+      - equal:
+          path: subjects
+          value:
+            - kind: ServiceAccount
+              name: aws-load-balancer-controller
+              namespace: ingress-controller

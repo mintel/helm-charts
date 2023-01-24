@@ -1,0 +1,19 @@
+{{- if (or (and .Values.ingress.alb.okta .Values.ingress.alb.okta.enabled) (and .Values.opensearch.awsEsProxy.ingress.alb.okta .Values.opensearch.awsEsProxy.ingress.alb.okta.enabled)) }}
+{{- $roleData := dict "Release" $.Release "Chart" $.Chart "Values" $.Values "component" .name }}
+apiVersion: {{ include "common.capabilities.rbac.apiVersion" $ }}
+kind: Role
+metadata:
+  name: {{ include "mintel_common.okta.alb_controller_role_name" $roleData }}
+  namespace: {{ $.Release.Namespace }}
+  annotations: {{ include "mintel_common.commonAnnotations" $roleData | nindent 4 }}
+  labels: {{ include "mintel_common.labels" $roleData | nindent 4 }}
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - secrets
+  verbs:
+  - get
+  - list
+  - watch
+{{- end }}
