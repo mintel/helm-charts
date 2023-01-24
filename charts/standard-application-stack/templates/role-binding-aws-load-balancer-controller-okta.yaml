@@ -1,0 +1,18 @@
+{{- if (or (and .Values.ingress.alb.okta .Values.ingress.alb.okta.enabled) (and .Values.opensearch.awsEsProxy.ingress.alb.okta .Values.opensearch.awsEsProxy.ingress.alb.okta.enabled)) }}
+{{- $roleData := dict "Release" $.Release "Chart" $.Chart "Values" $.Values "component" .name }}
+apiVersion: {{ include "common.capabilities.rbac.apiVersion" $ }}
+kind: RoleBinding
+metadata:
+  name: {{ include "mintel_common.okta.alb_controller_role_name" $roleData }}
+  namespace: {{ $.Release.Namespace }}
+  labels: {{ include "mintel_common.labels" $roleData | nindent 4 }}
+  annotations: {{ include "mintel_common.commonAnnotations" $roleData | nindent 4 }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: {{ include "mintel_common.okta.alb_controller_role_name" $roleData }}
+subjects:
+  - kind: ServiceAccount
+    name: aws-load-balancer-controller
+    namespace: ingress-controller
+{{- end }}

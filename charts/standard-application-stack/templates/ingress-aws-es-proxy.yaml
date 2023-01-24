@@ -1,0 +1,39 @@
+{{- if (and .Values.opensearch .Values.opensearch.enabled) }}
+{{- if (and .Values.opensearch.awsEsProxy .Values.opensearch.awsEsProxy.enabled) }}
+{{- if (and .Values.opensearch.awsEsProxy.ingress .Values.opensearch.awsEsProxy.ingress.enabled) }}
+{{- $data := dict "Release" .Release "Chart" .Chart "Values" .Values "component" "aws-es-proxy" }}
+{{- $ingressData := dict "Release" $.Release "Chart" $.Chart "Values" $.Values "ingress" .Values.opensearch.awsEsProxy.ingress }}
+apiVersion: {{ include "common.capabilities.ingress.apiVersion" $ }}
+kind: Ingress
+metadata:
+  name: {{ include "mintel_common.fullname" $data }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{ include "mintel_common.labels" $data | nindent 4 }}
+  annotations:
+    {{ include "mintel_common.commonAnnotations" . | nindent 4 }}
+    # alb annotations
+    {{- if (and $.Values.opensearch.awsEsProxy.ingress.alb $.Values.opensearch.awsEsProxy.ingress.alb.enabled) }}
+    {{- $albData := dict "Release" $.Release "Chart" $.Chart "Values" $.Values "alb" $.Values.opensearch.awsEsProxy.ingress.alb "defaultHost" $.Values.opensearch.awsEsProxy.ingress.defaultHost }}
+    {{- include "mintel_common.ingress.alb_annotations" $albData | nindent 4 }}
+    {{- end }}
+    # extra annotations
+    {{- if .Values.opensearch.awsEsProxy.ingress.extraAnnotations }}
+    {{- toYaml .Values.opensearch.awsEsProxy.ingress.extraAnnotations | nindent 4 }}
+    {{- end }}
+spec:
+  ingressClassName: {{ include "mintel_common.ingress.className" $ingressData }}
+  rules:
+  - host: {{ .Values.opensearch.awsEsProxy.ingress.defaultHost }}
+    http:
+      paths:
+      - backend:
+          service:
+            name: {{ include "mintel_common.fullname" $data }}
+            port:
+              number: {{ .Values.opensearch.awsEsProxy.port }}
+        path: {{ .Values.opensearch.awsEsProxy.ingress.path }}
+        pathType: Prefix
+{{- end }}
+{{- end }}
+{{- end }}

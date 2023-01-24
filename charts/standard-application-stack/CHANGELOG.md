@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v3.56.0] - 2023-01-24
+### Added
+- Added `ingress.alb.okta` values used for Okta ALB authentication
+- Added `opensearch.awsEsProxy.ingress` values to allow placing opensearch behind an ingress
+
 ## [v3.55.2] - 2023-01-17
 ### Fixed
 - Use `deepCopy` function when creating new dict from values

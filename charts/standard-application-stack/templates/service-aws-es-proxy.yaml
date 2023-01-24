@@ -6,7 +6,11 @@ kind: Service
 metadata:
   name: {{ include "mintel_common.fullname" $data }}
   namespace: {{ .Release.Namespace }}
-  annotations: {{ include "mintel_common.commonAnnotations" . | nindent 4 }}
+  annotations:
+    {{ include "mintel_common.commonAnnotations" . | nindent 4 }}
+    {{- if (and .Values.global.owner (and .Values.opensearch.awsEsProxy.ingress.enabled .Values.opensearch.awsEsProxy.ingress.alb.enabled)) }}
+    'alb.ingress.kubernetes.io/tags': 'Owner={{ .Values.global.owner }}'
+    {{- end }}
   labels: {{ include "mintel_common.labels" $data | nindent 4 }}
 spec:
   ports:
