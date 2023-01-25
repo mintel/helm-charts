@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v3.57.0] - 2023-01-25
+### Changed
+- Bump version of mysqlclient docker image
+
 ## [v3.56.0] - 2023-01-24
 ### Added
 - Added `ingress.alb.okta` values used for Okta ALB authentication
