@@ -1,0 +1,22 @@
+suite: Test Deployment with Host Networking
+templates:
+  - deployment.yaml
+release:
+  namespace: test-namespace
+tests:
+  - it: Has a pod template that uses the host network
+    set:
+      global.clusterEnv: qa
+      global.name: test-app
+      useHostNetwork: true
+    asserts:
+      - isKind:
+          of: Deployment
+      - equal:
+          path: metadata.namespace
+          value: test-namespace
+      - hasDocuments:
+          count: 1
+      - equal:
+          path: spec.template.spec.hostNetwork
+          value: true
