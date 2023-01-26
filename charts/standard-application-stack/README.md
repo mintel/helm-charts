@@ -1,6 +1,6 @@
 # standard-application-stack
 
-![Version: 3.57.0](https://img.shields.io/badge/Version-3.57.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 3.58.0](https://img.shields.io/badge/Version-3.58.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A generic chart to support most common application requirements
 
@@ -311,6 +311,7 @@ A generic chart to support most common application requirements
 | topologySpreadConstraints.specificYaml | string | `nil` | Specify custom topologySpreadConstraints yaml |
 | topologySpreadConstraints.zone.enabled | bool | `true` |  |
 | topologySpreadConstraints.zone.maxSkew | int | `1` |  |
+| useHostNetwork | bool | `false` | If true, use the host network for the main deployment. |
 | verticalPodAutoscaler | object | `{"enabled":true}` | Configuration for creating a VerticalPodAutoscaler for this app. Currently only supports recommendations-only mode. |
 | verticalPodAutoscaler.enabled | bool | `true` | Set to true to create a VerticalPodAutoscaler. |
 | volumeMounts | list | `[]` | A list of volume mounts to be added to the pod |
