@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v0.31.0] - 2023-01-27
+### Changed
+- Update `opensearch` module to `v1.2.0`
+
 ## [v0.30.1] - 2022-12-29
 ### Changed
 - Refactor use of the `default` template function (sometimes use `coalesce`)
