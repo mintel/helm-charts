@@ -1,6 +1,6 @@
 suite: Test IRSA Workspaces
 templates:
-  - irsa-workspace.yaml
+  - iam-workspace.yaml
 release:
   namespace: test-namespace
 tests:

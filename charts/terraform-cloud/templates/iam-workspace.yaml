@@ -1,0 +1,90 @@
+# List the supported resource types here. These should map directly to the top-level fields of the same name in the
+# values.yaml file.
+{{- $global := $.Values.global }}
+# check if any of the irsa dependent resources are enabled
+{{- if (or $.Values.irsa.enabled (eq "true" (include "mintel_common.terraform_cloud.irsaRequired" . | trim))) }}
+  {{- $irsa := $.Values.irsa }}
+  {{- $moduleSource := $irsa.terraform.module.source }}
+  {{- $moduleVersion := $irsa.terraform.module.version }}
+  {{- $tfVersion := $irsa.terraform.terraformVersion }}
+  {{- $irsaConfig := $irsa.terraform.vars }}
+  {{- if not (hasKey $irsaConfig "name") }}
+    {{- $_ := set $irsaConfig "name" (.Values.irsa.nameOverride | default $global.name) }}
+  {{- end }}
+  {{- if not (hasKey $irsaConfig "aws_account_name") }}
+    {{- $_ := set $irsaConfig "aws_account_name" $global.clusterEnv }}
+  {{ end }}
+  {{- if not (hasKey $irsaConfig "aws_region") }}
+    {{- $_ := set $irsaConfig "aws_region" $global.clusterRegion }}
+  {{ end }}
+  {{- if not (hasKey $irsaConfig "eks_cluster_name") }}
+    {{- $_ := set $irsaConfig "eks_cluster_name" $global.clusterName }}
+  {{ end }}
+  {{- if not (hasKey $irsaConfig "tags") }}
+    {{- $_ := set $irsaConfig "tags" (dict "key" "tags" "value" (printf "{\n  Owner       = \"%s\"\n  Project     = \"%s\"\n  Application = \"%s\"\n}" $global.owner $global.partOf $global.name ) "hcl" true) }}
+  {{ end }}
+  {{- if not (hasKey $irsaConfig "tfcloud_agent") }}
+    {{- $_ := set $irsaConfig "tfcloud_agent" "true" }}
+  {{ end }}
+  {{- if (not (hasKey $irsaConfig "k8s_service_account_name")) }}
+    {{- $_ := set $irsaConfig "k8s_service_account_name" $global.name }}
+  {{- end }}
+  {{- if (not (hasKey $irsaConfig "k8s_namespace")) }}
+    {{- $_ := set $irsaConfig "k8s_namespace" $.Release.Namespace }}
+  {{- end }}
+  # Create the CRD
+  ---
+  {{- include "mintel_common.terraform_cloud.workspace" (list $ . $irsaConfig "irsa" $moduleSource $moduleVersion $tfVersion $irsa) }}
+{{- end }}
+
+{{- $resourceType := "extraIAM" }}
+{{- $resourceConfig := (get $.Values "extraIAM") }}
+# check if extra IAM is set up
+{{- if $resourceConfig.enabled }}
+    # Loop through the instances configured in extraIAM.terraform.instances (create an empty dict with a "default"
+    # instance if it hasn't been specified)
+    {{- range $instanceName, $instanceConfig := $resourceConfig.terraform.instances | default ( dict "default" dict ) }}
+      {{- $moduleSource := $resourceConfig.terraform.module.source }}
+      {{- $moduleVersion := $resourceConfig.terraform.module.version }}
+      {{- $tfVersion := $resourceConfig.terraform.terraformVersion }}
+      # Set instance.name via helper
+      {{- $instanceDict := dict "Global" $global "InstanceCfg" $instanceConfig "InstanceName" $instanceName "ResourceType" $resourceType }}
+      {{- $_ := set $instanceConfig "name" (include "mintel_common.terraform_cloud.instanceConfigName" $instanceDict | trim)}}
+
+      {{- if not (hasKey $instanceConfig "aws_account_name") }}
+        {{- $_ := set $instanceConfig "aws_account_name" $global.clusterEnv }}
+      {{ end }}
+      {{- if not (hasKey $instanceConfig "aws_region") }}
+        {{- $_ := set $instanceConfig "aws_region" $global.clusterRegion }}
+      {{ end }}
+      {{- if not (hasKey $instanceConfig "eks_cluster_name") }}
+        {{- $_ := set $instanceConfig "eks_cluster_name" $global.clusterName }}
+      {{ end }}
+      {{- if not (hasKey $instanceConfig "tags") }}
+        {{- $_ := set $instanceConfig "tags" (dict "key" "tags" "value" (printf "{\n  Owner       = \"%s\"\n  Project     = \"%s\"\n  Application = \"%s\"\n}" $global.owner $global.partOf $global.name ) "hcl" true) }}
+      {{ end }}
+      {{- if not (hasKey $instanceConfig "tfcloud_agent") }}
+        {{- $_ := set $instanceConfig "tfcloud_agent" "true" }}
+      {{ end }}
+      # Set the secret manager related parameters if required
+      {{- if $resourceConfig.outputSecret }}
+      {{- if not (hasKey $instanceConfig "output_secret_name") }}
+        {{- $_ := set $instanceConfig "output_secret_name" ( printf "%s/%s/%s" $.Release.Namespace $instanceConfig.name $resourceType ) }}
+      {{ end }}
+      {{- if not (hasKey $instanceConfig "secret_tags") }}
+        {{- $_ := set $instanceConfig "secret_tags" (dict "key" "secret_tags" "value" (printf "{access-project = \"%s-ops\"}" $.Release.Namespace ) "hcl" true) }}
+      {{- end }}
+      {{- end }}
+      # Add default values to each instance if keys not set already
+      {{- range $defaultKey, $defaultVal := $resourceConfig.terraform.defaultVars }}
+        {{- if not ( hasKey $instanceConfig $defaultKey ) }}
+          {{- $_ := set $instanceConfig $defaultKey $defaultVal }}
+        {{- end }}
+      {{- end }}
+      # Apply defaults based on environment
+      {{- $instanceConfig = mergeOverwrite (include "mintel_common.terraform_cloud.defaultVarValues" $instanceDict | fromJson ) $instanceConfig }}
+      # Create the CRD
+      ---
+  {{- include "mintel_common.terraform_cloud.workspace" (list $ . $instanceConfig $resourceType $moduleSource $moduleVersion $tfVersion $resourceConfig) }}
+    {{- end }}
+  {{- end }}
