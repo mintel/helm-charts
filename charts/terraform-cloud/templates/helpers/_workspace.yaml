@@ -23,9 +23,12 @@ metadata:
     {{ include "mintel_common.terraform_cloud.operatorAnnotations" $workspaceDict | nindent 4 }}
     {{- if (eq $resourceType "irsa") }}
     app.mintel.com/altManifestFileSuffix: "{{ $global.name }}-{{ $resourceType | kebabcase }}"
-    argocd.argoproj.io/sync-wave: "{{ coalesce $instanceCfg.syncWave $resourceCfg.syncWave -20 }}"
     {{- else }}
     app.mintel.com/altManifestFileSuffix: "{{ $instanceCfg.name }}-{{ $resourceType | kebabcase }}"
+    {{- end }}
+    {{- if (has $resourceType (list "irsa" "extraIAM" )) }}
+    argocd.argoproj.io/sync-wave: "{{ coalesce $instanceCfg.syncWave $resourceCfg.syncWave -20 }}"
+    {{- else }}
     argocd.argoproj.io/sync-wave: "{{ coalesce $instanceCfg.syncWave $resourceCfg.syncWave -40 }}"
     {{- end }}
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
@@ -39,9 +42,9 @@ spec:
   secretsMountPath: {{ $global.terraform.secretsMountPath | quote }}
   sshKeyID: "mintel-ssh"
   terraformVersion: {{ $tfVersion | default $global.terraform.terraformVersion | quote }}
-  {{- if (eq $resourceType "irsa") }}
+  {{- if (has $resourceType (list "irsa" "extraIAM" )) }}
   runTriggers:
-  {{ include "mintel_common.terraform_cloud.irsaRunTriggers" .| indent 4 }}
+  {{ include "mintel_common.terraform_cloud.irsaRunTriggers" $| indent 4 }}
   {{- end }}
   variables:
   {{- $_ := unset $instanceCfg "workspaceNameOverride" }}
