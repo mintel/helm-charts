@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v0.32.0] - 2023-02-01
+### Changed
+- Add extraIAM resource type to allow additional IAM users and roles
+- Bump app-iam module version to include bugfix
+
 ## [v0.31.0] - 2023-01-27
 ### Changed
 - Update `opensearch` module to `v1.2.0`

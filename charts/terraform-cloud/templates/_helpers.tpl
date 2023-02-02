@@ -1,6 +1,6 @@
 {{/* Supported resources */}}
 {{- define "mintel_common.terraformCloudResources" -}}
-{{- $terraformCloudResources := (list "memcached" "opensearch" "postgresql" "redis" "s3" "mariadb" "dynamodb" "sns" "sqs" "staticWebsite" "stepFunctionEks" "activeMQ" "auroraMySql" "auroraPostgresql" "sshKeyPairSecret") -}}
+{{- $terraformCloudResources := (list "memcached" "opensearch" "postgresql" "redis" "s3" "mariadb" "dynamodb" "sns" "sqs" "staticWebsite" "stepFunctionEks" "activeMQ" "auroraMySql" "auroraPostgresql" "sshKeyPairSecret" "extraIAM") -}}
 {{ $terraformCloudResources | sortAlpha | uniq | compact | join "," }}
 {{- end -}}
 
