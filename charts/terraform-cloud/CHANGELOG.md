@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v0.33.0] - 2023-02-02
+### Changed
+- Bump app-iam module version to include refactor of resource filtering
+
 ## [v0.32.0] - 2023-02-01
 ### Changed
 - Add extraIAM resource type to allow additional IAM users and roles
