@@ -1,6 +1,6 @@
 # terraform-cloud
 
-![Version: 0.32.0](https://img.shields.io/badge/Version-0.32.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.0](https://img.shields.io/badge/AppVersion-2.0.0-informational?style=flat-square)
+![Version: 0.33.0](https://img.shields.io/badge/Version-0.33.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.0](https://img.shields.io/badge/AppVersion-2.0.0-informational?style=flat-square)
 
 A Helm chart for provisioning resources using Terraform Cloud
 
@@ -44,11 +44,11 @@ A Helm chart for provisioning resources using Terraform Cloud
 | dynamodb.terraform.module.version | string | `"1.0.0"` | Module version |
 | extraIAM.enabled | bool | `false` | Set to true to create an IAM Role or user aside from IRSA for the application |
 | extraIAM.outputSecret | bool | `true` | Set to true to create an AWS secret manager external secret with outputs |
-| extraIAM.terraform | object | `{"defaultVars":{},"instances":{},"module":{"source":"app.terraform.io/Mintel/app-iam/aws","version":"2.1.1"}}` | Set ArgoCD syncWave for this resource (default -20) syncWave: -20 |
+| extraIAM.terraform | object | `{"defaultVars":{},"instances":{},"module":{"source":"app.terraform.io/Mintel/app-iam/aws","version":"2.1.2"}}` | Set ArgoCD syncWave for this resource (default -20) syncWave: -20 |
 | extraIAM.terraform.defaultVars | object | `{}` | Vars to be applied to all instances defined below |
 | extraIAM.terraform.instances | object | `{}` | A map of instance names => variable key/value pairs to be sent to the terraform module. The values in `defaultVars` will be applied to every instance if not explicitly defined here. |
 | extraIAM.terraform.module.source | string | `"app.terraform.io/Mintel/app-iam/aws"` | Registry path of the Terraform module used to create the resource (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/app-iam/aws) |
-| extraIAM.terraform.module.version | string | `"2.1.1"` | Module version |
+| extraIAM.terraform.module.version | string | `"2.1.2"` | Module version |
 | global.clusterDomain | string | `"127.0.0.1.nip.io"` | Additional labels to apply to all resources |
 | global.clusterEnv | string | `"local"` | Environment (local, dev, qa, prod) |
 | global.clusterName | string | `""` | Kubernetes cluster name |
@@ -63,9 +63,9 @@ A Helm chart for provisioning resources using Terraform Cloud
 | global.terraform.secretsMountPath | string | `"/tmp/secrets"` | Where secrets are mounted inside the Terraform Operator container |
 | global.terraform.terraformVersion | string | `"1.0.7"` | Global Terraform version for all modules |
 | irsa.enabled | bool | `false` | Set to true to explicitly instantiate this module if there's need to access resources created elsewhere |
-| irsa.terraform | object | `{"module":{"source":"app.terraform.io/Mintel/app-iam/aws","version":"2.1.1"},"vars":{}}` | Set ArgoCD syncWave for this resource (default -20) syncWave: -20 |
+| irsa.terraform | object | `{"module":{"source":"app.terraform.io/Mintel/app-iam/aws","version":"2.1.2"},"vars":{}}` | Set ArgoCD syncWave for this resource (default -20) syncWave: -20 |
 | irsa.terraform.module.source | string | `"app.terraform.io/Mintel/app-iam/aws"` | Registry path of the Terraform module used to create the resource (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/app-iam/aws) |
-| irsa.terraform.module.version | string | `"2.1.1"` | Module version |
+| irsa.terraform.module.version | string | `"2.1.2"` | Module version |
 | irsa.terraform.vars | object | See below | Vars to be applied to all instances defined below |
 | mariadb.enabled | bool | `false` | Set to true to create a MariaDB RDS instance |
 | mariadb.outputSecret | bool | `true` | Set to true to create an AWS secret manager external secret with outputs |
