@@ -120,10 +120,10 @@ tests:
       - hasDocuments:
           count: 1
       - equal:
-          path: metadata.annotations.[app.mintel.com/altManifestFileSuffix]
+          path: metadata.annotations["app.mintel.com/altManifestFileSuffix"]
           value: mntl-test-app-s3
       - equal:
-          path: metadata.annotations.[argocd.argoproj.io/sync-wave]
+          path: metadata.annotations["argocd.argoproj.io/sync-wave"]
           value: "-40"
       - contains:
           path: spec.variables
@@ -205,13 +205,13 @@ tests:
       s3.enabled: true
     asserts:
       - equal:
-          path: metadata.annotations.[app.mintel.com/terraform-allow-destroy]
+          path: metadata.annotations["app.mintel.com/terraform-allow-destroy"]
           value: "true"
       - equal:
-          path: metadata.annotations.[app.mintel.com/terraform-cloud-tags]
+          path: metadata.annotations["app.mintel.com/terraform-cloud-tags"]
           value: "env:dev,owner:sre,mod:s3"
       - equal:
-          path: metadata.annotations.[app.mintel.com/terraform-owner]
+          path: metadata.annotations["app.mintel.com/terraform-owner"]
           value: sre
   - it: Test workspace extra annotations override
     set:
@@ -230,13 +230,13 @@ tests:
             workspaceTags: test
     asserts:
       - equal:
-          path: metadata.annotations.[app.mintel.com/terraform-allow-destroy]
+          path: metadata.annotations["app.mintel.com/terraform-allow-destroy"]
           value: "false"
       - equal:
-          path: metadata.annotations.[app.mintel.com/terraform-cloud-tags]
+          path: metadata.annotations["app.mintel.com/terraform-cloud-tags"]
           value: "test"
       - equal:
-          path: metadata.annotations.[app.mintel.com/terraform-owner]
+          path: metadata.annotations["app.mintel.com/terraform-owner"]
           value: override
       - notContains:
           path: spec.variables
@@ -268,7 +268,7 @@ tests:
         enabled: true
     asserts:
       - equal:
-          path: metadata.annotations.[app.mintel.com/terraform-allow-destroy]
+          path: metadata.annotations["app.mintel.com/terraform-allow-destroy"]
           value: "false"
   - it: Dev S3 module workspace with multiple instances
     set:
@@ -320,10 +320,10 @@ tests:
       - hasDocuments:
           count: 1
       - equal:
-          path: metadata.annotations.[app.mintel.com/altManifestFileSuffix]
+          path: metadata.annotations["app.mintel.com/altManifestFileSuffix"]
           value: mntl-test-app-s3
       - equal:
-          path: metadata.annotations.[argocd.argoproj.io/sync-wave]
+          path: metadata.annotations["argocd.argoproj.io/sync-wave"]
           value: "200"
   - it: Dev S3 module workspace with default (0) syncWave
     set:
@@ -350,10 +350,10 @@ tests:
       - hasDocuments:
           count: 1
       - equal:
-          path: metadata.annotations.[app.mintel.com/altManifestFileSuffix]
+          path: metadata.annotations["app.mintel.com/altManifestFileSuffix"]
           value: mntl-test-app-s3
       - equal:
-          path: metadata.annotations.[argocd.argoproj.io/sync-wave]
+          path: metadata.annotations["argocd.argoproj.io/sync-wave"]
           value: "0"
   - it: Dev S3 module workspace with multiple instances and syncWave overrides
     set:
@@ -375,10 +375,10 @@ tests:
       - hasDocuments:
           count: 2
       - equal:
-          path: metadata.annotations.[argocd.argoproj.io/sync-wave]
+          path: metadata.annotations["argocd.argoproj.io/sync-wave"]
           value: "200"
         documentIndex: 0
       - equal:
-          path: metadata.annotations.[argocd.argoproj.io/sync-wave]
+          path: metadata.annotations["argocd.argoproj.io/sync-wave"]
           value: "300"
         documentIndex: 1

@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v0.34.1] - 2023-02-06
+### Fixed
+- Upgrade to helm-unittest v0.3.0; fix problems it found
+
 ## [v0.34.0] - 2023-02-07
 ### Changed
 - Bump s3 module version to get new fixes

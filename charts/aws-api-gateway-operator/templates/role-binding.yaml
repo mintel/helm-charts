@@ -1,0 +1,18 @@
+{{- if .Values.rbac.create }}
+{{- $data := dict "Release" $.Release "Chart" $.Chart "Values" $.Values "component" .name }}
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: {{ template "mintel_common.fullname" (index .Subcharts "standard-application-stack") }}-leader-election-rolebinding
+  namespace: {{ .Release.Namespace }}
+  annotations: {{ include "mintel_common.commonAnnotations" . | nindent 4 }}
+  labels: {{ include "mintel_common.labels" $data | nindent 4 }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: {{ template "mintel_common.fullname" (index .Subcharts "standard-application-stack") }}-leader-election-role
+subjects:
+- kind: ServiceAccount
+  name: {{ template "aws-api-gateway-operator.serviceAccountName" . }}
+  namespace: {{ .Release.Namespace }}
+{{- end }}

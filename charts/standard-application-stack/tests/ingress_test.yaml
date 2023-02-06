@@ -35,7 +35,7 @@ tests:
       port: 8080
     asserts:
       - equal:
-          path: metadata.annotations.[alb.ingress.kubernetes.io/healthcheck-port]
+          path: metadata.annotations["alb.ingress.kubernetes.io/healthcheck-port"]
           value: "8080"
 
   - it: Check ALB custom health-check port
@@ -48,7 +48,7 @@ tests:
       port: 8080
     asserts:
       - equal:
-          path: metadata.annotations.[alb.ingress.kubernetes.io/healthcheck-port]
+          path: metadata.annotations["alb.ingress.kubernetes.io/healthcheck-port"]
           value: "9999"
 
   - it: Check ALB health-check port with oauthProxy enabled
@@ -60,7 +60,7 @@ tests:
       oauthProxy.enabled: true
     asserts:
       - equal:
-          path: metadata.annotations.[alb.ingress.kubernetes.io/healthcheck-port]
+          path: metadata.annotations["alb.ingress.kubernetes.io/healthcheck-port"]
           value: "4180"
 
   - it: Check ALB gRPC default settings
@@ -72,13 +72,13 @@ tests:
       ingress.alb.backendProtocolVersion: GRPC
     asserts:
       - equal:
-          path: metadata.annotations.[alb.ingress.kubernetes.io/backend-protocol-version]
+          path: metadata.annotations["alb.ingress.kubernetes.io/backend-protocol-version"]
           value: GRPC
       - equal:
-          path: metadata.annotations.[alb.ingress.kubernetes.io/success-codes]
+          path: metadata.annotations["alb.ingress.kubernetes.io/success-codes"]
           value: "0,12"
       - equal:
-          path: metadata.annotations.[alb.ingress.kubernetes.io/healthcheck-path]
+          path: metadata.annotations["alb.ingress.kubernetes.io/healthcheck-path"]
           value: /grpc.health.v1.Health/Check
 
   - it: Check ALB gRPC custom settings
@@ -92,13 +92,13 @@ tests:
       ingress.alb.healthcheck.path: /grpc.health.v1.Readiness/Check
     asserts:
       - equal:
-          path: metadata.annotations.[alb.ingress.kubernetes.io/backend-protocol-version]
+          path: metadata.annotations["alb.ingress.kubernetes.io/backend-protocol-version"]
           value: GRPC
       - equal:
-          path: metadata.annotations.[alb.ingress.kubernetes.io/success-codes]
+          path: metadata.annotations["alb.ingress.kubernetes.io/success-codes"]
           value: "0"
       - equal:
-          path: metadata.annotations.[alb.ingress.kubernetes.io/healthcheck-path]
+          path: metadata.annotations["alb.ingress.kubernetes.io/healthcheck-path"]
           value: /grpc.health.v1.Readiness/Check
 
   - it: Check ALB HTTP2 default settings
@@ -110,19 +110,19 @@ tests:
       ingress.alb.backendProtocolVersion: HTTP2
     asserts:
       - equal:
-          path: metadata.annotations.[alb.ingress.kubernetes.io/backend-protocol-version]
+          path: metadata.annotations["alb.ingress.kubernetes.io/backend-protocol-version"]
           value: HTTP2
       - equal:
-          path: metadata.annotations.[alb.ingress.kubernetes.io/success-codes]
+          path: metadata.annotations["alb.ingress.kubernetes.io/success-codes"]
           value: "200"
       - equal:
-          path: metadata.annotations.[alb.ingress.kubernetes.io/healthcheck-path]
+          path: metadata.annotations["alb.ingress.kubernetes.io/healthcheck-path"]
           value: /readiness
       - equal:
-          path: metadata.annotations.[alb.ingress.kubernetes.io/listen-ports]
+          path: metadata.annotations["alb.ingress.kubernetes.io/listen-ports"]
           value: '[{"HTTP": 80}, {"HTTPS": 443}]'
       - equal:
-          path: metadata.annotations.[alb.ingress.kubernetes.io/ssl-redirect]
+          path: metadata.annotations["alb.ingress.kubernetes.io/ssl-redirect"]
           value: "443"
 
   - it: Check no TLS set if ingressTLSSecrets and specificTlsHostsYaml is empty
@@ -135,7 +135,7 @@ tests:
       ingress.tls: true
       ingress.specificTlsHostsYaml: null
     asserts:
-      - isEmpty:
+      - isNull:
           path: spec.tls
 
   - it: Check TLS set if ingressTLSSecrets is not empty
@@ -346,7 +346,7 @@ tests:
           path: metadata.labels.name
           value: ingress-override
       - equal:
-          path: metadata.labels.[app.kubernetes.io/name]
+          path: metadata.labels["app.kubernetes.io/name"]
           value: ingress-override
 
   - it: Check ingress name suffix setting
@@ -365,7 +365,7 @@ tests:
           path: metadata.labels.name
           value: example-app-suffix
       - equal:
-          path: metadata.labels.[app.kubernetes.io/name]
+          path: metadata.labels["app.kubernetes.io/name"]
           value: example-app-suffix
 
   - it: Default ingress with path based routing

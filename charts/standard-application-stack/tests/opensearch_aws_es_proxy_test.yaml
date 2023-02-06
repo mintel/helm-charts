@@ -36,7 +36,7 @@ tests:
           path: metadata.name
           value: example-app-aws-es-proxy
       - equal:
-          path: spec.selector.[app.kubernetes.io/name]
+          path: spec.selector["app.kubernetes.io/name"]
           value: example-app-aws-es-proxy
 
   - it: Check awsEsProxy Ingress is created if enabled
@@ -107,7 +107,7 @@ tests:
               - list
               - watch
 
-  - it: Check awsEsProxy aws-load-balancer-controller okta role is created if enabled
+  - it: Check awsEsProxy aws-load-balancer-controller okta role binding is created if enabled
     template: role-binding-aws-load-balancer-controller-okta.yaml
     set:
       global.clusterEnv: qa

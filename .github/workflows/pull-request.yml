@@ -55,7 +55,7 @@ jobs:
         run: ct lint --target-branch main --validate-maintainers=false
 
       - name: Run unit tests
-        uses: buttahtoast/helm-release-action@master
+        uses: mintel/helm-testing-action@master
         with:
           exec: "unit-tests"
           charts: "${{ steps.list-changed.outputs.changed_charts }}"

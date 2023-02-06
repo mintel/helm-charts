@@ -18,10 +18,10 @@ tests:
           path: metadata.name
           value: test-app
       - equal:
-          path: metadata.labels.[app.kubernetes.io/name]
+          path: metadata.labels["app.kubernetes.io/name"]
           value: test-app
       - equal:
-          path: metadata.labels.[name]
+          path: metadata.labels["name"]
           value: test-app
 
   - it: Check default port set
@@ -77,6 +77,7 @@ tests:
       - equal:
           path: spec.ports[2].port
           value: 8082
+      - equal:
           path: spec.ports[3].name
           value: custom-p3
       - equal:
@@ -97,7 +98,7 @@ tests:
       - isKind:
           of: Service
       - equal:
-          path: metadata.annotations.[alb.ingress.kubernetes.io/tags]
+          path: metadata.annotations["alb.ingress.kubernetes.io/tags"]
           value: Owner=my-team
 
   - it: Check ALB annotation not set when ALB Ingress is disabled
@@ -113,7 +114,7 @@ tests:
       - isKind:
           of: Service
       - isNull:
-          path: metadata.annotations.[alb.ingress.kubernetes.io/tags]
+          path: metadata.annotations["alb.ingress.kubernetes.io/tags"]
 
   - it: Check ALB annotation not set when when Owner missing
     set:
@@ -127,4 +128,4 @@ tests:
       - isKind:
           of: Service
       - isNull:
-          path: metadata.annotations.[alb.ingress.kubernetes.io/tags]
+          path: metadata.annotations["alb.ingress.kubernetes.io/tags"]

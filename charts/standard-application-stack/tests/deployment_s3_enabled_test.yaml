@@ -82,7 +82,7 @@ tests:
       - hasDocuments:
           count: 1
       - equal:
-          path: metadata.annotations.[secret.reloader.stakater.com/reload]
+          path: metadata.annotations["secret.reloader.stakater.com/reload"]
           value: mntl-test-bucket-another-s3,mntl-test-bucket-s3,test-app-app,test-app-extra-secret-1
   - it: Check S3 secretName Override
     set:
@@ -104,7 +104,7 @@ tests:
           path: spec.template.spec.containers[0].envFrom[0].secretRef.name
           value: overrideName
       - equal:
-          path: metadata.annotations.[secret.reloader.stakater.com/reload]
+          path: metadata.annotations["secret.reloader.stakater.com/reload"]
           value: overrideName
   - it: Check S3 envfrom secretRef is present for local environment
     set:
@@ -122,7 +122,7 @@ tests:
       - hasDocuments:
           count: 1
       - equal:
-          path: metadata.annotations.[secret.reloader.stakater.com/reload]
+          path: metadata.annotations["secret.reloader.stakater.com/reload"]
           value: test-app-s3
       - equal:
           path: spec.template.spec.containers[0].envFrom[0].secretRef.name

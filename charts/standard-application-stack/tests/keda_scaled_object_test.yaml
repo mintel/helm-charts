@@ -393,6 +393,7 @@ tests:
               metadata:
                 value: "50"
 
+---
 
 suite: Test Keda ScaledObject Constraints
 templates:

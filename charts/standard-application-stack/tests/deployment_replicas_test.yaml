@@ -20,7 +20,7 @@ tests:
           path: spec.replicas
           value: 1
       - equal:
-          path: metadata.annotations.[app.mintel.com/opa-allow-single-replica]
+          path: metadata.annotations["app.mintel.com/opa-allow-single-replica"]
           value: "true"
       - equal:
           path: spec.strategy.type
@@ -40,7 +40,7 @@ tests:
       allowSingleReplica: true
     asserts:
       - equal:
-          path: metadata.annotations.[app.mintel.com/opa-allow-single-replica]
+          path: metadata.annotations["app.mintel.com/opa-allow-single-replica"]
           value: "true"
   - it: Check allowSingleReplica doesn't alter strategy
     set:

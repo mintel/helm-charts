@@ -76,13 +76,13 @@ tests:
       - hasDocuments:
           count: 1
       - equal:
-          path: metadata.annotations.[argocd.argoproj.io/hook]
+          path: metadata.annotations["argocd.argoproj.io/hook"]
           value: PreSync
       - equal:
-          path: metadata.annotations.[argocd.argoproj.io/hook-delete-policy]
+          path: metadata.annotations["argocd.argoproj.io/hook-delete-policy"]
           value: HookSucceeded
       - equal:
-          path: metadata.annotations.[argocd.argoproj.io/sync-wave]
+          path: metadata.annotations["argocd.argoproj.io/sync-wave"]
           value: '-1'
       - equal:
           path: spec.template.spec.restartPolicy

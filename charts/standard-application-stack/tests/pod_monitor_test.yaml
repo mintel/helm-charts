@@ -24,10 +24,10 @@ tests:
           path: metadata.name
           value: test-app
       - equal:
-          path: metadata.labels.[app.kubernetes.io/name]
+          path: metadata.labels["app.kubernetes.io/name"]
           value: test-app
       - equal:
-          path: metadata.labels.[name]
+          path: metadata.labels["name"]
           value: test-app
   - it: Check default targetLabels
     template: pod-monitor.yaml
@@ -308,10 +308,9 @@ tests:
       - equal:
           path: spec.podMetricsEndpoints
           value:
-            - interval: 30s
+            - interval: 20s
               path: /metrics-3
               port: http
-              interval: 20s
               relabelings:
                 - separator: /
                   sourceLabels:
