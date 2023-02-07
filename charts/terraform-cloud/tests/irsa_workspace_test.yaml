@@ -14,6 +14,7 @@ tests:
       global.partOf: test-project
       s3.enabled: true
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - isKind:
           of: Workspace
       - equal:
@@ -100,6 +101,7 @@ tests:
       global.partOf: test-project
       irsa.enabled: true
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - isKind:
           of: Workspace
       - equal:
@@ -121,6 +123,7 @@ tests:
       irsa.enabled: true
       irsa.syncWave: "-100"
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - isKind:
           of: Workspace
       - equal:
@@ -148,6 +151,7 @@ tests:
       irsa.enabled: true
       irsa.syncWave: "0"
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - isKind:
           of: Workspace
       - equal:

@@ -11,6 +11,7 @@ tests:
       ingress.alb.enabled: true
       ingress.alb.preStopDelay.enabled: true
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - matchRegex:
           path: spec.template.spec.containers[0].lifecycle.preStop.exec.command[2]
           pattern: .*sleep 15.*
@@ -22,6 +23,7 @@ tests:
       ingress.alb.preStopDelay.enabled: true
       ingress.alb.preStopDelay.delaySeconds: 20
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - matchRegex:
           path: spec.template.spec.containers[0].lifecycle.preStop.exec.command[2]
           pattern: .*sleep 20.*
@@ -31,6 +33,7 @@ tests:
       ingress.enabled: true
       ingress.alb.enabled: false
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - isNull:
           path: spec.template.spec.containers[0].lifecycle
   - it: Check AWS ALB lifecycle rules are not applied when ALB enabled (but Ingress disabled)
@@ -39,6 +42,7 @@ tests:
       ingress.enabled:  false
       ingress.alb.enabled: true
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - isNull:
           path: spec.template.spec.containers[0].lifecycle
   - it: Check lifecycle rules
@@ -49,6 +53,7 @@ tests:
           exec:
             command: ['hello world']
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - matchRegex:
           path: spec.template.spec.containers[0].lifecycle.preStop.exec.command[0]
           pattern: .*hello world.*

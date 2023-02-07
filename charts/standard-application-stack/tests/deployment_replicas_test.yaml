@@ -9,6 +9,7 @@ tests:
       global.clusterEnv: qa
       autoscaling.enabled: true
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - isNull:
           path: spec.replicas
   - it: Check singleReplicaOnly applied
@@ -16,6 +17,7 @@ tests:
       global.clusterEnv: qa
       singleReplicaOnly: true
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - equal:
           path: spec.replicas
           value: 1
@@ -31,6 +33,7 @@ tests:
       singleReplicaOnly: true
       replicas: 5
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - equal:
           path: spec.replicas
           value: 1
@@ -39,6 +42,7 @@ tests:
       global.clusterEnv: qa
       allowSingleReplica: true
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - equal:
           path: metadata.annotations["app.mintel.com/opa-allow-single-replica"]
           value: "true"
@@ -47,6 +51,7 @@ tests:
       global.clusterEnv: qa
       allowSingleReplica: true
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - equal:
           path: spec.strategy.type
           value: "RollingUpdate"

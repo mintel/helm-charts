@@ -7,10 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ## [v0.1.2] - 2023-02-06
-### Fixed
-- Upgrade to helm-unittest v0.3.0; fix problems it found
+### Added
+- Add snapshot tests
 ### Changed
 - Upgrade standard-application-stack subchart version
+### Fixed
+- Upgrade to helm-unittest v0.3.0; fix problems it found
 
 ## [v0.1.1] - 2022-12-29
 ### Changed

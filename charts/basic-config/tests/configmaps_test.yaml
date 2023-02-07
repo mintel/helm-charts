@@ -12,6 +12,7 @@ tests:
           create: true
           configs: []
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - isKind:
           of: ConfigMap
       - equal:
@@ -33,6 +34,7 @@ tests:
             - name: test1
               data: test-data
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - equal:
           path: data["test1"]
           value: test-data
@@ -50,6 +52,7 @@ tests:
                 test data line 2
                 test data line 3
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - equal:
           path: data["test1"]
           value: |
@@ -72,6 +75,7 @@ tests:
             - name: test2
               data: even more test data
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - equal:
           path: data["test1"]
           value: |

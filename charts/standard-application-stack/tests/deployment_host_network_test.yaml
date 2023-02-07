@@ -10,6 +10,7 @@ tests:
       global.name: test-app
       useHostNetwork: true
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - isKind:
           of: Deployment
       - equal:

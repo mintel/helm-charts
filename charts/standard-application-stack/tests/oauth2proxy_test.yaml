@@ -10,6 +10,7 @@ tests:
       global.name: test-app
       oauthProxy.enabled: true
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - isKind:
           of: Deployment
       - equal:
@@ -26,6 +27,7 @@ tests:
       global.name: test-app
       oauthProxy.enabled: true
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - equal:
           path: spec.template.spec.containers[1].args
           value:
@@ -56,6 +58,7 @@ tests:
       oauthProxy.enabled: true
       oauthProxy.skipAuthRegexes: ['/readyz']
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - equal:
           path: spec.template.spec.containers[1].args
           value:
@@ -87,6 +90,7 @@ tests:
       oauthProxy.enabled: true
       oauthProxy.skipAuthRegexes: ['^/readyz$']
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - equal:
           path: spec.template.spec.containers[1].args
           value:
@@ -121,6 +125,7 @@ tests:
       readiness.path: /readiness-overridden
       ingress.blackbox.probePath: /external-health-check-overridden
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - equal:
           path: spec.template.spec.containers[1].args
           value:

@@ -15,6 +15,7 @@ tests:
       opensearch.enabled: true
       opensearch.awsEsProxy.enabled: true
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - isKind:
           of: Deployment
       - equal:
@@ -30,6 +31,7 @@ tests:
       opensearch.enabled: true
       opensearch.awsEsProxy.enabled: true
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - isKind:
           of: Service
       - equal:
@@ -46,6 +48,7 @@ tests:
       opensearch.awsEsProxy.enabled: true
       opensearch.awsEsProxy.ingress.enabled: true
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - isKind:
           of: Ingress
       - equal:
@@ -62,6 +65,7 @@ tests:
       opensearch.awsEsProxy.enabled: true
       opensearch.awsEsProxy.ingress.enabled: true
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - isKind:
           of: NetworkPolicy
       - equal:
@@ -87,6 +91,7 @@ tests:
       opensearch.awsEsProxy.ingress.alb.enabled: true
       opensearch.awsEsProxy.ingress.alb.okta.enabled: true
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - isKind:
           of: Role
       - equal:
@@ -117,6 +122,7 @@ tests:
       opensearch.awsEsProxy.ingress.alb.enabled: true
       opensearch.awsEsProxy.ingress.alb.okta.enabled: true
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - isKind:
           of: RoleBinding
       - equal:

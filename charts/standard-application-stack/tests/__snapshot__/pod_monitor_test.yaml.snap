@@ -1,0 +1,715 @@
+Check additional PodMonitor resources:
+  1: |
+    apiVersion: monitoring.coreos.com/v1
+    kind: PodMonitor
+    metadata:
+      annotations:
+        argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+      labels:
+        app.kubernetes.io/component: app
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: test-app
+        app.mintel.com/env: prod
+        app.mintel.com/region: ${CLUSTER_REGION}
+        name: test-app
+      name: test-app
+      namespace: test-namespace
+    spec:
+      podMetricsEndpoints:
+        - interval: 30s
+          path: /metrics
+          port: http
+          relabelings:
+            - separator: /
+              sourceLabels:
+                - __meta_kubernetes_namespace
+                - __meta_kubernetes_pod_label_app_kubernetes_io_name
+              targetLabel: job
+          scheme: http
+          scrapeTimeout: 10s
+          tlsConfig:
+            insecureSkipVerify: true
+      podTargetLabels:
+        - app.kubernetes.io/name
+        - app.kubernetes.io/part-of
+        - app.kubernetes.io/component
+        - app.kubernetes.io/instance
+        - app.mintel.com/owner
+      selector:
+        matchLabels:
+          app.kubernetes.io/component: app
+          app.kubernetes.io/name: test-app
+  2: |
+    apiVersion: monitoring.coreos.com/v1
+    kind: PodMonitor
+    metadata:
+      annotations:
+        argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+      labels:
+        app.kubernetes.io/component: metrics-2
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: test-app-metrics-2
+        app.mintel.com/env: prod
+        app.mintel.com/region: ${CLUSTER_REGION}
+        name: test-app-metrics-2
+      name: test-app-metrics-2
+      namespace: test-namespace
+    spec:
+      podMetricsEndpoints:
+        - interval: 30s
+          path: /metrics-2
+          port: http
+          relabelings:
+            - separator: /
+              sourceLabels:
+                - __meta_kubernetes_namespace
+                - __meta_kubernetes_pod_label_app_kubernetes_io_name
+              targetLabel: job
+          scheme: http
+          scrapeTimeout: 10s
+          tlsConfig:
+            insecureSkipVerify: true
+      podTargetLabels:
+        - app.kubernetes.io/name
+        - app.kubernetes.io/part-of
+        - app.kubernetes.io/component
+        - app.kubernetes.io/instance
+        - app.mintel.com/owner
+      selector:
+        matchLabels:
+          app.kubernetes.io/component: metrics-2
+          app.kubernetes.io/name: test-app-metrics-2
+  3: |
+    apiVersion: monitoring.coreos.com/v1
+    kind: PodMonitor
+    metadata:
+      annotations:
+        argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+      labels:
+        app.kubernetes.io/component: metrics-3
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: test-app-metrics-3
+        app.mintel.com/env: prod
+        app.mintel.com/region: ${CLUSTER_REGION}
+        name: test-app-metrics-3
+      name: test-app-metrics-3
+      namespace: test-namespace
+    spec:
+      podMetricsEndpoints:
+        - interval: 20s
+          path: /metrics-3
+          port: http
+          relabelings:
+            - separator: /
+              sourceLabels:
+                - __meta_kubernetes_namespace
+                - __meta_kubernetes_pod_label_app_kubernetes_io_name
+              targetLabel: job
+          scheme: https
+          scrapeTimeout: 10s
+          tlsConfig:
+            insecureSkipVerify: true
+      podTargetLabels:
+        - app.kubernetes.io/name
+        - app.kubernetes.io/part-of
+        - app.kubernetes.io/component
+        - app.kubernetes.io/instance
+        - app.mintel.com/owner
+      selector:
+        matchLabels:
+          app.kubernetes.io/component: metrics-3
+          app.kubernetes.io/name: test-app-metrics-3
+Check basic-auth:
+  1: |
+    apiVersion: monitoring.coreos.com/v1
+    kind: PodMonitor
+    metadata:
+      annotations:
+        argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+      labels:
+        app.kubernetes.io/component: app
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: test-app
+        app.mintel.com/env: prod
+        app.mintel.com/region: ${CLUSTER_REGION}
+        name: test-app
+      name: test-app
+      namespace: test-namespace
+    spec:
+      podMetricsEndpoints:
+        - basicAuth:
+            password:
+              key: passwd
+              name: test-app-app
+            username:
+              key: user
+              name: test-app-app
+          interval: 30s
+          path: /metrics
+          port: http
+          relabelings:
+            - separator: /
+              sourceLabels:
+                - __meta_kubernetes_namespace
+                - __meta_kubernetes_pod_label_app_kubernetes_io_name
+              targetLabel: job
+          scheme: http
+          scrapeTimeout: 10s
+          tlsConfig:
+            insecureSkipVerify: true
+      podTargetLabels:
+        - app.kubernetes.io/name
+        - app.kubernetes.io/part-of
+        - app.kubernetes.io/component
+        - app.kubernetes.io/instance
+        - app.mintel.com/owner
+      selector:
+        matchLabels:
+          app.kubernetes.io/component: app
+          app.kubernetes.io/name: test-app
+Check combined template defaults:
+  1: |
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      annotations:
+        helm.sh/chart: standard-application-stack-3.59.1
+        secret.reloader.stakater.com/reload: test-app-app
+      labels:
+        app.kubernetes.io/component: app
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: test-app
+        app.mintel.com/env: prod
+        app.mintel.com/region: ${CLUSTER_REGION}
+        name: test-app
+      name: test-app
+      namespace: test-namespace
+    spec:
+      minReadySeconds: 10
+      replicas: 2
+      selector:
+        matchLabels:
+          app.kubernetes.io/component: app
+          app.kubernetes.io/name: test-app
+      strategy:
+        rollingUpdate:
+          maxSurge: 15%
+          maxUnavailable: 10%
+        type: RollingUpdate
+      template:
+        metadata:
+          labels:
+            app.kubernetes.io/component: app
+            app.kubernetes.io/managed-by: Helm
+            app.kubernetes.io/name: test-app
+            app.mintel.com/env: prod
+            app.mintel.com/region: ${CLUSTER_REGION}
+            name: test-app
+        spec:
+          containers:
+            - command:
+                - /app/docker-entrypoint.sh
+              env:
+                - name: KUBERNETES_POD_NAMESPACE
+                  valueFrom:
+                    fieldRef:
+                      fieldPath: metadata.namespace
+                - name: APP_ENVIRONMENT
+                  value: prod
+                - name: RUNTIME_ENVIRONMENT
+                  value: kubernetes
+              envFrom:
+                - secretRef:
+                    name: test-app-app
+              image: registry.gitlab.com/test:auto-replaced
+              imagePullPolicy: IfNotPresent
+              livenessProbe:
+                httpGet:
+                  path: /healthz
+                  port: http
+                  scheme: HTTP
+                initialDelaySeconds: 0
+                periodSeconds: 10
+                timeoutSeconds: 1
+              name: main
+              ports:
+                - containerPort: 8000
+                  name: http
+              readinessProbe:
+                httpGet:
+                  path: /readiness
+                  port: http
+                  scheme: HTTP
+                initialDelaySeconds: 0
+                periodSeconds: 10
+                timeoutSeconds: 1
+              resources:
+                limits: {}
+                requests: {}
+              startupProbe:
+                failureThreshold: 60
+                httpGet:
+                  path: /healthz
+                  port: http
+                  scheme: HTTP
+                periodSeconds: 5
+          imagePullSecrets:
+            - name: image-pull-gitlab
+            - name: image-pull-docker-hub
+          securityContext:
+            runAsUser: 1000
+          serviceAccountName: test-app
+          terminationGracePeriodSeconds: 30
+          topologySpreadConstraints:
+            - labelSelector:
+                matchLabels:
+                  app.kubernetes.io/component: app
+                  app.kubernetes.io/name: test-app
+              maxSkew: 1
+              topologyKey: topology.kubernetes.io/zone
+              whenUnsatisfiable: DoNotSchedule
+            - labelSelector:
+                matchLabels:
+                  app.kubernetes.io/component: app
+                  app.kubernetes.io/name: test-app
+              maxSkew: 1
+              topologyKey: kubernetes.io/hostname
+              whenUnsatisfiable: DoNotSchedule
+          volumes: null
+  2: |
+    apiVersion: monitoring.coreos.com/v1
+    kind: PodMonitor
+    metadata:
+      annotations:
+        argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+      labels:
+        app.kubernetes.io/component: app
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: test-app
+        app.mintel.com/env: prod
+        app.mintel.com/region: ${CLUSTER_REGION}
+        name: test-app
+      name: test-app
+      namespace: test-namespace
+    spec:
+      podMetricsEndpoints:
+        - interval: 30s
+          path: /metrics
+          port: http
+          relabelings:
+            - separator: /
+              sourceLabels:
+                - __meta_kubernetes_namespace
+                - __meta_kubernetes_pod_label_app_kubernetes_io_name
+              targetLabel: job
+          scheme: http
+          scrapeTimeout: 10s
+          tlsConfig:
+            insecureSkipVerify: true
+      podTargetLabels:
+        - app.kubernetes.io/name
+        - app.kubernetes.io/part-of
+        - app.kubernetes.io/component
+        - app.kubernetes.io/instance
+        - app.mintel.com/owner
+      selector:
+        matchLabels:
+          app.kubernetes.io/component: app
+          app.kubernetes.io/name: test-app
+Check combined template with extra ports and monitors:
+  1: |
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      annotations:
+        helm.sh/chart: standard-application-stack-3.59.1
+        secret.reloader.stakater.com/reload: test-app-app
+      labels:
+        app.kubernetes.io/component: app
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: test-app
+        app.mintel.com/env: prod
+        app.mintel.com/region: ${CLUSTER_REGION}
+        name: test-app
+      name: test-app
+      namespace: test-namespace
+    spec:
+      minReadySeconds: 10
+      replicas: 2
+      selector:
+        matchLabels:
+          app.kubernetes.io/component: app
+          app.kubernetes.io/name: test-app
+      strategy:
+        rollingUpdate:
+          maxSurge: 15%
+          maxUnavailable: 10%
+        type: RollingUpdate
+      template:
+        metadata:
+          labels:
+            app.kubernetes.io/component: app
+            app.kubernetes.io/managed-by: Helm
+            app.kubernetes.io/name: test-app
+            app.mintel.com/env: prod
+            app.mintel.com/region: ${CLUSTER_REGION}
+            name: test-app
+        spec:
+          containers:
+            - command:
+                - /app/docker-entrypoint.sh
+              env:
+                - name: KUBERNETES_POD_NAMESPACE
+                  valueFrom:
+                    fieldRef:
+                      fieldPath: metadata.namespace
+                - name: APP_ENVIRONMENT
+                  value: prod
+                - name: RUNTIME_ENVIRONMENT
+                  value: kubernetes
+              envFrom:
+                - secretRef:
+                    name: test-app-app
+              image: registry.gitlab.com/test:auto-replaced
+              imagePullPolicy: IfNotPresent
+              livenessProbe:
+                httpGet:
+                  path: /healthz
+                  port: http
+                  scheme: HTTP
+                initialDelaySeconds: 0
+                periodSeconds: 10
+                timeoutSeconds: 1
+              name: main
+              ports:
+                - containerPort: 8000
+                  name: http
+                - containerPort: 9002
+                  name: metrics-2
+                - containerPort: 9003
+                  name: metrics-3
+              readinessProbe:
+                httpGet:
+                  path: /readiness
+                  port: http
+                  scheme: HTTP
+                initialDelaySeconds: 0
+                periodSeconds: 10
+                timeoutSeconds: 1
+              resources:
+                limits: {}
+                requests: {}
+              startupProbe:
+                failureThreshold: 60
+                httpGet:
+                  path: /healthz
+                  port: http
+                  scheme: HTTP
+                periodSeconds: 5
+          imagePullSecrets:
+            - name: image-pull-gitlab
+            - name: image-pull-docker-hub
+          securityContext:
+            runAsUser: 1000
+          serviceAccountName: test-app
+          terminationGracePeriodSeconds: 30
+          topologySpreadConstraints:
+            - labelSelector:
+                matchLabels:
+                  app.kubernetes.io/component: app
+                  app.kubernetes.io/name: test-app
+              maxSkew: 1
+              topologyKey: topology.kubernetes.io/zone
+              whenUnsatisfiable: DoNotSchedule
+            - labelSelector:
+                matchLabels:
+                  app.kubernetes.io/component: app
+                  app.kubernetes.io/name: test-app
+              maxSkew: 1
+              topologyKey: kubernetes.io/hostname
+              whenUnsatisfiable: DoNotSchedule
+          volumes: null
+  2: |
+    apiVersion: monitoring.coreos.com/v1
+    kind: PodMonitor
+    metadata:
+      annotations:
+        argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+      labels:
+        app.kubernetes.io/component: app
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: test-app
+        app.mintel.com/env: prod
+        app.mintel.com/region: ${CLUSTER_REGION}
+        name: test-app
+      name: test-app
+      namespace: test-namespace
+    spec:
+      podMetricsEndpoints:
+        - interval: 30s
+          path: /metrics
+          port: http
+          relabelings:
+            - separator: /
+              sourceLabels:
+                - __meta_kubernetes_namespace
+                - __meta_kubernetes_pod_label_app_kubernetes_io_name
+              targetLabel: job
+          scheme: http
+          scrapeTimeout: 10s
+          tlsConfig:
+            insecureSkipVerify: true
+      podTargetLabels:
+        - app.kubernetes.io/name
+        - app.kubernetes.io/part-of
+        - app.kubernetes.io/component
+        - app.kubernetes.io/instance
+        - app.mintel.com/owner
+      selector:
+        matchLabels:
+          app.kubernetes.io/component: app
+          app.kubernetes.io/name: test-app
+  3: |
+    apiVersion: monitoring.coreos.com/v1
+    kind: PodMonitor
+    metadata:
+      annotations:
+        argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+      labels:
+        app.kubernetes.io/component: metrics-2
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: test-app-metrics-2
+        app.mintel.com/env: prod
+        app.mintel.com/region: ${CLUSTER_REGION}
+        name: test-app-metrics-2
+      name: test-app-metrics-2
+      namespace: test-namespace
+    spec:
+      podMetricsEndpoints:
+        - interval: 30s
+          path: /metrics-2
+          port: http
+          relabelings:
+            - separator: /
+              sourceLabels:
+                - __meta_kubernetes_namespace
+                - __meta_kubernetes_pod_label_app_kubernetes_io_name
+              targetLabel: job
+          scheme: http
+          scrapeTimeout: 10s
+          tlsConfig:
+            insecureSkipVerify: true
+      podTargetLabels:
+        - app.kubernetes.io/name
+        - app.kubernetes.io/part-of
+        - app.kubernetes.io/component
+        - app.kubernetes.io/instance
+        - app.mintel.com/owner
+      selector:
+        matchLabels:
+          app.kubernetes.io/component: metrics-2
+          app.kubernetes.io/name: test-app-metrics-2
+  4: |
+    apiVersion: monitoring.coreos.com/v1
+    kind: PodMonitor
+    metadata:
+      annotations:
+        argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+      labels:
+        app.kubernetes.io/component: metrics-3
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: test-app-metrics-3
+        app.mintel.com/env: prod
+        app.mintel.com/region: ${CLUSTER_REGION}
+        name: test-app-metrics-3
+      name: test-app-metrics-3
+      namespace: test-namespace
+    spec:
+      podMetricsEndpoints:
+        - interval: 20s
+          path: /metrics-3
+          port: http
+          relabelings:
+            - separator: /
+              sourceLabels:
+                - __meta_kubernetes_namespace
+                - __meta_kubernetes_pod_label_app_kubernetes_io_name
+              targetLabel: job
+          scheme: https
+          scrapeTimeout: 10s
+          tlsConfig:
+            insecureSkipVerify: true
+      podTargetLabels:
+        - app.kubernetes.io/name
+        - app.kubernetes.io/part-of
+        - app.kubernetes.io/component
+        - app.kubernetes.io/instance
+        - app.mintel.com/owner
+      selector:
+        matchLabels:
+          app.kubernetes.io/component: metrics-3
+          app.kubernetes.io/name: test-app-metrics-3
+Check default endpoints:
+  1: |
+    apiVersion: monitoring.coreos.com/v1
+    kind: PodMonitor
+    metadata:
+      annotations:
+        argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+      labels:
+        app.kubernetes.io/component: app
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: test-app
+        app.mintel.com/env: prod
+        app.mintel.com/region: ${CLUSTER_REGION}
+        name: test-app
+      name: test-app
+      namespace: test-namespace
+    spec:
+      podMetricsEndpoints:
+        - interval: 30s
+          path: /metrics
+          port: http
+          relabelings:
+            - separator: /
+              sourceLabels:
+                - __meta_kubernetes_namespace
+                - __meta_kubernetes_pod_label_app_kubernetes_io_name
+              targetLabel: job
+          scheme: http
+          scrapeTimeout: 10s
+          tlsConfig:
+            insecureSkipVerify: true
+      podTargetLabels:
+        - app.kubernetes.io/name
+        - app.kubernetes.io/part-of
+        - app.kubernetes.io/component
+        - app.kubernetes.io/instance
+        - app.mintel.com/owner
+      selector:
+        matchLabels:
+          app.kubernetes.io/component: app
+          app.kubernetes.io/name: test-app
+Check default targetLabels:
+  1: |
+    apiVersion: monitoring.coreos.com/v1
+    kind: PodMonitor
+    metadata:
+      annotations:
+        argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+      labels:
+        app.kubernetes.io/component: app
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: test-app
+        app.mintel.com/env: prod
+        app.mintel.com/region: ${CLUSTER_REGION}
+        name: test-app
+      name: test-app
+      namespace: test-namespace
+    spec:
+      podMetricsEndpoints:
+        - interval: 30s
+          path: /metrics
+          port: http
+          relabelings:
+            - separator: /
+              sourceLabels:
+                - __meta_kubernetes_namespace
+                - __meta_kubernetes_pod_label_app_kubernetes_io_name
+              targetLabel: job
+          scheme: http
+          scrapeTimeout: 10s
+          tlsConfig:
+            insecureSkipVerify: true
+      podTargetLabels:
+        - app.kubernetes.io/name
+        - app.kubernetes.io/part-of
+        - app.kubernetes.io/component
+        - app.kubernetes.io/instance
+        - app.mintel.com/owner
+      selector:
+        matchLabels:
+          app.kubernetes.io/component: app
+          app.kubernetes.io/name: test-app
+Check metric overrides:
+  1: |
+    apiVersion: monitoring.coreos.com/v1
+    kind: PodMonitor
+    metadata:
+      annotations:
+        argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+      labels:
+        app.kubernetes.io/component: app
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: test-app
+        app.mintel.com/env: prod
+        app.mintel.com/region: ${CLUSTER_REGION}
+        name: test-app
+      name: test-app
+      namespace: test-namespace
+    spec:
+      podMetricsEndpoints:
+        - interval: 30s
+          path: /updated-metrics-path
+          port: another-named-port
+          relabelings:
+            - separator: /
+              sourceLabels:
+                - __meta_kubernetes_namespace
+                - __meta_kubernetes_pod_label_app_kubernetes_io_name
+              targetLabel: job
+          scheme: HTTPS
+          scrapeTimeout: 20s
+          tlsConfig:
+            insecureSkipVerify: true
+      podTargetLabels:
+        - app.kubernetes.io/name
+        - app.kubernetes.io/part-of
+        - app.kubernetes.io/component
+        - app.kubernetes.io/instance
+        - app.mintel.com/owner
+      selector:
+        matchLabels:
+          app.kubernetes.io/component: app
+          app.kubernetes.io/name: test-app
+Check name, namespace and labels:
+  1: |
+    apiVersion: monitoring.coreos.com/v1
+    kind: PodMonitor
+    metadata:
+      annotations:
+        argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+      labels:
+        app.kubernetes.io/component: app
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: test-app
+        app.mintel.com/env: prod
+        app.mintel.com/region: ${CLUSTER_REGION}
+        name: test-app
+      name: test-app
+      namespace: test-namespace
+    spec:
+      podMetricsEndpoints:
+        - interval: 30s
+          path: /metrics
+          port: http
+          relabelings:
+            - separator: /
+              sourceLabels:
+                - __meta_kubernetes_namespace
+                - __meta_kubernetes_pod_label_app_kubernetes_io_name
+              targetLabel: job
+          scheme: http
+          scrapeTimeout: 10s
+          tlsConfig:
+            insecureSkipVerify: true
+      podTargetLabels:
+        - app.kubernetes.io/name
+        - app.kubernetes.io/part-of
+        - app.kubernetes.io/component
+        - app.kubernetes.io/instance
+        - app.mintel.com/owner
+      selector:
+        matchLabels:
+          app.kubernetes.io/component: app
+          app.kubernetes.io/name: test-app

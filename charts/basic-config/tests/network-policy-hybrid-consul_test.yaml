@@ -10,6 +10,7 @@ tests:
       hybridCloud:
         enabled: true
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - isKind:
           of: NetworkPolicy
       - equal:

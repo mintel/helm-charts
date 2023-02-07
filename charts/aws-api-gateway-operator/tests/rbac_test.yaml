@@ -10,6 +10,7 @@ tests:
     set:
       image.tag: latest
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - isKind:
           of: ClusterRole
       - equal:

@@ -9,6 +9,7 @@ tests:
       global.clusterEnv: qa
       replicas: 2
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - isKind:
           of: PodDisruptionBudget
       - equal:
@@ -25,6 +26,7 @@ tests:
       global.clusterEnv: qa
       replicas: 1
     asserts:
+      # - matchSnapshot: {} # Check for regressions and unexpected changes.
       - hasDocuments:
           count: 0
 
@@ -34,6 +36,7 @@ tests:
       autoscaling.enabled: false
       autoscaling.minReplicaCount: 2
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - isKind:
           of: PodDisruptionBudget
       - hasDocuments:
@@ -46,5 +49,6 @@ tests:
       autoscaling.enabled: true
       autoscaling.minReplicaCount: 1
     asserts:
+      # - matchSnapshot: {} # Check for regressions and unexpected changes.
       - hasDocuments:
           count: 0

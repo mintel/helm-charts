@@ -12,6 +12,7 @@ tests:
       # Disable default application secret
       externalSecret.enabled: false
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - isKind:
           of: Deployment
       - equal:
@@ -31,6 +32,7 @@ tests:
       # Disable default application secret
       externalSecret.enabled: false
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - isKind:
           of: Deployment
       - equal:
@@ -52,6 +54,7 @@ tests:
       # Disable default application secret
       externalSecret.enabled: false
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - isKind:
           of: Deployment
       - equal:

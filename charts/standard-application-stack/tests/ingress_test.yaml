@@ -11,6 +11,7 @@ tests:
       global.clusterEnv: qa
       ingress.enabled: true
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - equal:
           path: spec.ingressClassName
           value: alb-public-apps-default
@@ -22,6 +23,7 @@ tests:
       ingress.enabled: true
       ingress.alb.enabled: false
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - equal:
           path: spec.ingressClassName
           value: haproxy
@@ -34,6 +36,7 @@ tests:
       ingress.alb.enabled: true
       port: 8080
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - equal:
           path: metadata.annotations["alb.ingress.kubernetes.io/healthcheck-port"]
           value: "8080"
@@ -47,6 +50,7 @@ tests:
       ingress.alb.healthcheck.port: 9999
       port: 8080
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - equal:
           path: metadata.annotations["alb.ingress.kubernetes.io/healthcheck-port"]
           value: "9999"
@@ -59,6 +63,7 @@ tests:
       ingress.alb.enabled: true
       oauthProxy.enabled: true
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - equal:
           path: metadata.annotations["alb.ingress.kubernetes.io/healthcheck-port"]
           value: "4180"
@@ -71,6 +76,7 @@ tests:
       ingress.alb.enabled: true
       ingress.alb.backendProtocolVersion: GRPC
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - equal:
           path: metadata.annotations["alb.ingress.kubernetes.io/backend-protocol-version"]
           value: GRPC
@@ -91,6 +97,7 @@ tests:
       ingress.alb.healthcheck.successCodes: "0"
       ingress.alb.healthcheck.path: /grpc.health.v1.Readiness/Check
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - equal:
           path: metadata.annotations["alb.ingress.kubernetes.io/backend-protocol-version"]
           value: GRPC
@@ -109,6 +116,7 @@ tests:
       ingress.alb.enabled: true
       ingress.alb.backendProtocolVersion: HTTP2
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - equal:
           path: metadata.annotations["alb.ingress.kubernetes.io/backend-protocol-version"]
           value: HTTP2
@@ -135,6 +143,7 @@ tests:
       ingress.tls: true
       ingress.specificTlsHostsYaml: null
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - isNull:
           path: spec.tls
 
@@ -148,6 +157,7 @@ tests:
       ingress.tls: true
       ingress.specificTlsHostsYaml: null
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - isNotEmpty:
           path: spec.tls
 
@@ -161,6 +171,7 @@ tests:
       ingress.extraHosts:
         - name: extra.default.com
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - equal:
           path: spec.rules[0].host
           value: test.default.com
@@ -188,6 +199,7 @@ tests:
           extraHosts:
             - name: extra.extraIngress.com
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - contains:
           path: spec.template.spec.containers[0].env
           content:
@@ -206,6 +218,7 @@ tests:
       oauthProxy.enabled: true
       oauthProxy.ingressHost: auth.default.com
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - equal:
           path: spec.rules[0].host
           value: test.default.com
@@ -234,6 +247,7 @@ tests:
       oauthProxy.enabled: true
       oauthProxy.ingressHost: auth.default.com
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - equal:
           path: spec.rules[0].host
           value: test.default.com
@@ -259,6 +273,7 @@ tests:
       ingress.extraHosts:
         - name: extra.default.com
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - equal:
           path: spec.tls[0].hosts[0]
           value: test.default.com
@@ -286,6 +301,7 @@ tests:
       oauthProxy.enabled: true
       oauthProxy.ingressHost: auth.default.com
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - equal:
           path: spec.tls[0].hosts[0]
           value: test.default.com
@@ -316,6 +332,7 @@ tests:
       oauthProxy.enabled: true
       oauthProxy.ingressHost: auth.default.com
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - equal:
           path: spec.tls[0].hosts[0]
           value: test.default.com
@@ -337,6 +354,7 @@ tests:
       ingress.enabled: true
       ingress.ingressNameOverride: ingress-override
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - hasDocuments:
           count: 1
       - equal:
@@ -356,6 +374,7 @@ tests:
       ingress.enabled: true
       ingress.ingressNameSuffix: suffix
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - hasDocuments:
           count: 1
       - equal:
@@ -381,6 +400,7 @@ tests:
           targetPort: 5678
           path: /i02
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - hasDocuments:
           count: 1
       - equal:
@@ -414,6 +434,7 @@ tests:
         - ingressNameSuffix: ops-media
           defaultHost: ops-media.mintel.com
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - hasDocuments:
           count: 2
       - equal:

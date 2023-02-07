@@ -9,6 +9,7 @@ tests:
       global.name: test-app
       component: exporter
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - isKind:
           of: Service
       - equal:
@@ -29,6 +30,7 @@ tests:
       global.name: test-app
       component: exporter
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - isKind:
           of: Service
       - equal:
@@ -41,6 +43,7 @@ tests:
       component: exporter
       port: 1234
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - isKind:
           of: Service
       - equal:
@@ -63,6 +66,7 @@ tests:
           containerPort: 8084
           shouldIgnoreThis: value
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - isKind:
           of: Service
       - equal:
@@ -95,6 +99,7 @@ tests:
       ingress.enabled: true
       ingress.alb.enabled: true
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - isKind:
           of: Service
       - equal:
@@ -111,6 +116,7 @@ tests:
       service.annotations:
         k: v
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - isKind:
           of: Service
       - isNull:
@@ -125,6 +131,7 @@ tests:
       service.annotations:
         k: v
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - isKind:
           of: Service
       - isNull:

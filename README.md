@@ -44,3 +44,20 @@ helm plugin uninstall unittest
 helm plugin install https://github.com/helm-unittest/helm-unittest
 helm unittest ./charts/standard-application-stack --strict
 ```
+
+This repo makes use of [snapshot testing](https://github.com/helm-unittest/helm-unittest#snapshot-testing)
+to detect unexpected changes to manifests. When you run the tests after making a change that effects existing manifests,
+you will see a lot of test errors complaining about differences between what the chart renders and the snapshots.
+Review the changes and, if you're satisfied, update the snapshots by rerunning the tests with the `--update-snapshot` flag:
+
+```sh
+helm unittest ./charts/standard-application-stack --strict --update-snapshot
+```
+
+When adding new tests, please be sure to always add a `matchSnapshot` assertion:
+
+```yaml
+- it: does something
+  asserts:
+    - matchSnapshot: {} # <-- Make sure to always add this after `asserts`!
+```
