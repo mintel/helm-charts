@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v3.59.0] - 2023-02-07
+### Added
+- Added `extraRedirectPaths` values for ingresses with Okta auth (consumed by libs-jsonnet Helm chart wrapper)
+
 ## [v3.58.0] - 2023-01-25
 ### Added
 - Ability to use host network for the main deployment
