@@ -12,6 +12,7 @@ tests:
       # Disable default application secret
       externalSecret.enabled: false
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - isKind:
           of: Deployment
       - equal:
@@ -31,6 +32,7 @@ tests:
       # Disable default application secret
       externalSecret.enabled: false
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - isKind:
           of: Deployment
       - equal:
@@ -42,7 +44,7 @@ tests:
           path: spec.template.spec.containers[0].envFrom[0].secretRef.name
           value: overrideName
       - equal:
-          path: metadata.annotations.[secret.reloader.stakater.com/reload]
+          path: metadata.annotations["secret.reloader.stakater.com/reload"]
           value: overrideName
   - it: Check MariaDB envfrom secretRef is present for local environment
     set:
@@ -52,6 +54,7 @@ tests:
       # Disable default application secret
       externalSecret.enabled: false
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - isKind:
           of: Deployment
       - equal:
@@ -60,7 +63,7 @@ tests:
       - hasDocuments:
           count: 1
       - equal:
-          path: metadata.annotations.[secret.reloader.stakater.com/reload]
+          path: metadata.annotations["secret.reloader.stakater.com/reload"]
           value: test-app-mariadb
       - equal:
           path: spec.template.spec.containers[0].envFrom[0].secretRef.name

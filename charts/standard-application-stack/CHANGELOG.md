@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v3.59.1] - 2023-02-06
+### Added
+- Add snapshot tests
+### Fixed
+- Upgrade to helm-unittest v0.3.0; fix problems it found
+
 ## [v3.59.0] - 2023-02-07
 ### Added
 - Added `extraRedirectPaths` values for ingresses with Okta auth (consumed by libs-jsonnet Helm chart wrapper)

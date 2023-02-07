@@ -12,6 +12,7 @@ tests:
       networkPolicy.enabled: false
       ingress.alb.enabled: true
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - isKind:
           of: NetworkPolicy
       - equal:
@@ -36,6 +37,7 @@ tests:
       ingress.alb.enabled: true
       ingress.alb.scheme: internal
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - isKind:
           of: NetworkPolicy
       - equal:
@@ -60,6 +62,7 @@ tests:
       ingress.alb.enabled: true
       port: 8080
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - isKind:
           of: NetworkPolicy
       - equal:
@@ -81,6 +84,7 @@ tests:
       port: 8080
       oauthProxy.enabled: true
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - isKind:
           of: NetworkPolicy
       - equal:
@@ -103,6 +107,7 @@ tests:
       oauthProxy.enabled: true
       ingress.alb.healthcheck.port: 9999
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - isKind:
           of: NetworkPolicy
       - equal:
@@ -127,6 +132,7 @@ tests:
       oauthProxy.enabled: true
       ingress.alb.healthcheck.port: 4180
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - isKind:
           of: NetworkPolicy
       - equal:

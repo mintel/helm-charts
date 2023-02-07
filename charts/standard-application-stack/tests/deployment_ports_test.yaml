@@ -8,6 +8,7 @@ tests:
     set:
       global.clusterEnv: qa
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - equal:
           path: spec.template.spec.containers[0].ports
           value:
@@ -18,6 +19,7 @@ tests:
       global.clusterEnv: qa
       port: 9000
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - equal:
           path: spec.template.spec.containers[0].ports
           value:
@@ -32,6 +34,7 @@ tests:
         - name: "extra-port-2"
           containerPort: 8002
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - equal:
           path: spec.template.spec.containers[0].ports
           value:
@@ -53,6 +56,7 @@ tests:
           containerPort: 8003
           shouldIgnoreThis: value
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - equal:
           path: spec.template.spec.containers[0].ports
           value:
@@ -74,6 +78,7 @@ tests:
           containerPort: 8002
           protocol: "UDP"
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - equal:
           path: spec.template.spec.containers[0].ports
           value:
@@ -89,6 +94,7 @@ tests:
       global.clusterEnv: qa
       hybridCloud.enabled: true
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - contains:
           path: spec.template.spec.containers[0].ports
           content:

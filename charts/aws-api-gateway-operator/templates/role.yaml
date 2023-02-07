@@ -1,0 +1,18 @@
+{{- if .Values.rbac.create }}
+{{- $data := dict "Release" $.Release "Chart" $.Chart "Values" $.Values "component" .name }}
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: {{ template "mintel_common.fullname" (index .Subcharts "standard-application-stack") }}-leader-election-role
+  namespace: {{ .Release.Namespace }}
+  annotations: {{ include "mintel_common.commonAnnotations" . | nindent 4 }}
+  labels: {{ include "mintel_common.labels" $data | nindent 4 }}
+rules:
+- apiGroups: [""]
+  resources: [configmaps]
+  verbs: [create]
+- apiGroups: [""]
+  resources: [configmaps]
+  resourceNames: [aws-api-gateway-operator-leader]
+  verbs: [get, patch, update]
+{{- end }}

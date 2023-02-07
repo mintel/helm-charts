@@ -13,6 +13,7 @@ tests:
       service.enabled: false
       metrics.enabled: true
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - hasDocuments:
           count: 1
       - isKind:
@@ -24,10 +25,10 @@ tests:
           path: metadata.name
           value: test-app
       - equal:
-          path: metadata.labels.[app.kubernetes.io/name]
+          path: metadata.labels["app.kubernetes.io/name"]
           value: test-app
       - equal:
-          path: metadata.labels.[name]
+          path: metadata.labels["name"]
           value: test-app
   - it: Check default targetLabels
     template: pod-monitor.yaml
@@ -37,6 +38,7 @@ tests:
       service.enabled: false
       metrics.enabled: true
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - equal:
           path: spec.podTargetLabels
           value:
@@ -53,6 +55,7 @@ tests:
       service.enabled: false
       metrics.enabled: true
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - isKind:
           of: PodMonitor
       - equal:
@@ -83,6 +86,7 @@ tests:
       metrics.scheme: HTTPS
       metrics.timeout: 20s
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - isKind:
           of: PodMonitor
       - equal:
@@ -112,6 +116,7 @@ tests:
       metrics.basicAuth.usernameKey: user
       metrics.basicAuth.passwordKey: passwd
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - isKind:
           of: PodMonitor
       - equal:
@@ -152,6 +157,7 @@ tests:
           interval: 20s
           scheme: https
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - hasDocuments:
           count: 3
       - isKind:
@@ -216,6 +222,7 @@ tests:
       service.enabled: false
       metrics.enabled: true
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - isKind:
           of: PodMonitor
         template: pod-monitor.yaml
@@ -266,6 +273,7 @@ tests:
           containerPort: 9003
           targetPort: 9003
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - isKind:
           of: PodMonitor
         template: pod-monitor.yaml
@@ -308,10 +316,9 @@ tests:
       - equal:
           path: spec.podMetricsEndpoints
           value:
-            - interval: 30s
+            - interval: 20s
               path: /metrics-3
               port: http
-              interval: 20s
               relabelings:
                 - separator: /
                   sourceLabels:

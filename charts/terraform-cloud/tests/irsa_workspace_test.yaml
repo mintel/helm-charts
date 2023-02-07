@@ -14,6 +14,7 @@ tests:
       global.partOf: test-project
       s3.enabled: true
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - isKind:
           of: Workspace
       - equal:
@@ -28,10 +29,10 @@ tests:
       - hasDocuments:
           count: 1
       - equal:
-          path: metadata.annotations.[app.mintel.com/altManifestFileSuffix]
+          path: metadata.annotations["app.mintel.com/altManifestFileSuffix"]
           value: test-app-irsa
       - equal:
-          path: metadata.annotations.[argocd.argoproj.io/sync-wave]
+          path: metadata.annotations["argocd.argoproj.io/sync-wave"]
           value: "-20"
       - contains:
           path: spec.runTriggers
@@ -100,6 +101,7 @@ tests:
       global.partOf: test-project
       irsa.enabled: true
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - isKind:
           of: Workspace
       - equal:
@@ -121,6 +123,7 @@ tests:
       irsa.enabled: true
       irsa.syncWave: "-100"
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - isKind:
           of: Workspace
       - equal:
@@ -135,7 +138,7 @@ tests:
       - hasDocuments:
           count: 1
       - equal:
-          path: metadata.annotations.[argocd.argoproj.io/sync-wave]
+          path: metadata.annotations["argocd.argoproj.io/sync-wave"]
           value: "-100"
   - it: IRSA created with default (0) syncWave
     set:
@@ -148,6 +151,7 @@ tests:
       irsa.enabled: true
       irsa.syncWave: "0"
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - isKind:
           of: Workspace
       - equal:
@@ -162,5 +166,5 @@ tests:
       - hasDocuments:
           count: 1
       - equal:
-          path: metadata.annotations.[argocd.argoproj.io/sync-wave]
+          path: metadata.annotations["argocd.argoproj.io/sync-wave"]
           value: "0"

@@ -15,6 +15,7 @@ tests:
       s3:
         enabled: true
       asserts:
+        - matchSnapshot: {} # Check for regressions and unexpected changes.
         - equal:
             path: metadata.labels.name
             value: mntl-test-app-s3
@@ -32,6 +33,7 @@ tests:
           defaultVars:
             workspaceNameOverride: i-have-been-overwritten
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - equal:
           path: metadata.name
           value: i-have-been-overwritten
@@ -53,6 +55,7 @@ tests:
       global.partOf: test-project
       s3.enabled: true
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - equal:
           path: metadata.name
           value: dev-eu-west-1-cluster1-test-namespace-mntl-test-app-s3
@@ -70,6 +73,7 @@ tests:
           defaultVars:
             enable_versioning: true
       asserts:
+        - matchSnapshot: {} # Check for regressions and unexpected changes.
         - contains:
             path: spec.variables
             content:
@@ -88,6 +92,7 @@ tests:
       global.partOf: test-project
       s3.enabled: true
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - contains:
           path: spec.variables
           content:
@@ -106,6 +111,7 @@ tests:
       global.partOf: test-project
       s3.enabled: true
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - isKind:
           of: Workspace
       - equal:
@@ -120,10 +126,10 @@ tests:
       - hasDocuments:
           count: 1
       - equal:
-          path: metadata.annotations.[app.mintel.com/altManifestFileSuffix]
+          path: metadata.annotations["app.mintel.com/altManifestFileSuffix"]
           value: mntl-test-app-s3
       - equal:
-          path: metadata.annotations.[argocd.argoproj.io/sync-wave]
+          path: metadata.annotations["argocd.argoproj.io/sync-wave"]
           value: "-40"
       - contains:
           path: spec.variables
@@ -204,14 +210,15 @@ tests:
       global.partOf: test-project
       s3.enabled: true
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - equal:
-          path: metadata.annotations.[app.mintel.com/terraform-allow-destroy]
+          path: metadata.annotations["app.mintel.com/terraform-allow-destroy"]
           value: "true"
       - equal:
-          path: metadata.annotations.[app.mintel.com/terraform-cloud-tags]
+          path: metadata.annotations["app.mintel.com/terraform-cloud-tags"]
           value: "env:dev,owner:sre,mod:s3"
       - equal:
-          path: metadata.annotations.[app.mintel.com/terraform-owner]
+          path: metadata.annotations["app.mintel.com/terraform-owner"]
           value: sre
   - it: Test workspace extra annotations override
     set:
@@ -229,14 +236,15 @@ tests:
             workspaceAllowDestroy: false
             workspaceTags: test
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - equal:
-          path: metadata.annotations.[app.mintel.com/terraform-allow-destroy]
+          path: metadata.annotations["app.mintel.com/terraform-allow-destroy"]
           value: "false"
       - equal:
-          path: metadata.annotations.[app.mintel.com/terraform-cloud-tags]
+          path: metadata.annotations["app.mintel.com/terraform-cloud-tags"]
           value: "test"
       - equal:
-          path: metadata.annotations.[app.mintel.com/terraform-owner]
+          path: metadata.annotations["app.mintel.com/terraform-owner"]
           value: override
       - notContains:
           path: spec.variables
@@ -267,8 +275,9 @@ tests:
       s3:
         enabled: true
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - equal:
-          path: metadata.annotations.[app.mintel.com/terraform-allow-destroy]
+          path: metadata.annotations["app.mintel.com/terraform-allow-destroy"]
           value: "false"
   - it: Dev S3 module workspace with multiple instances
     set:
@@ -285,6 +294,7 @@ tests:
             test-bucket: {}
             test-bucket-another: {}
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - hasDocuments:
           count: 2
       - equal:
@@ -306,6 +316,7 @@ tests:
       s3.enabled: true
       s3.syncWave: "200"
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - isKind:
           of: Workspace
       - equal:
@@ -320,10 +331,10 @@ tests:
       - hasDocuments:
           count: 1
       - equal:
-          path: metadata.annotations.[app.mintel.com/altManifestFileSuffix]
+          path: metadata.annotations["app.mintel.com/altManifestFileSuffix"]
           value: mntl-test-app-s3
       - equal:
-          path: metadata.annotations.[argocd.argoproj.io/sync-wave]
+          path: metadata.annotations["argocd.argoproj.io/sync-wave"]
           value: "200"
   - it: Dev S3 module workspace with default (0) syncWave
     set:
@@ -336,6 +347,7 @@ tests:
       s3.enabled: true
       s3.syncWave: "0"
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - isKind:
           of: Workspace
       - equal:
@@ -350,10 +362,10 @@ tests:
       - hasDocuments:
           count: 1
       - equal:
-          path: metadata.annotations.[app.mintel.com/altManifestFileSuffix]
+          path: metadata.annotations["app.mintel.com/altManifestFileSuffix"]
           value: mntl-test-app-s3
       - equal:
-          path: metadata.annotations.[argocd.argoproj.io/sync-wave]
+          path: metadata.annotations["argocd.argoproj.io/sync-wave"]
           value: "0"
   - it: Dev S3 module workspace with multiple instances and syncWave overrides
     set:
@@ -372,13 +384,14 @@ tests:
             test-bucket-another:
               syncWave: "300"
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - hasDocuments:
           count: 2
       - equal:
-          path: metadata.annotations.[argocd.argoproj.io/sync-wave]
+          path: metadata.annotations["argocd.argoproj.io/sync-wave"]
           value: "200"
         documentIndex: 0
       - equal:
-          path: metadata.annotations.[argocd.argoproj.io/sync-wave]
+          path: metadata.annotations["argocd.argoproj.io/sync-wave"]
           value: "300"
         documentIndex: 1

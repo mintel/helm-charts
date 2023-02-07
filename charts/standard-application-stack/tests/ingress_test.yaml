@@ -11,6 +11,7 @@ tests:
       global.clusterEnv: qa
       ingress.enabled: true
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - equal:
           path: spec.ingressClassName
           value: alb-public-apps-default
@@ -22,6 +23,7 @@ tests:
       ingress.enabled: true
       ingress.alb.enabled: false
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - equal:
           path: spec.ingressClassName
           value: haproxy
@@ -34,8 +36,9 @@ tests:
       ingress.alb.enabled: true
       port: 8080
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - equal:
-          path: metadata.annotations.[alb.ingress.kubernetes.io/healthcheck-port]
+          path: metadata.annotations["alb.ingress.kubernetes.io/healthcheck-port"]
           value: "8080"
 
   - it: Check ALB custom health-check port
@@ -47,8 +50,9 @@ tests:
       ingress.alb.healthcheck.port: 9999
       port: 8080
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - equal:
-          path: metadata.annotations.[alb.ingress.kubernetes.io/healthcheck-port]
+          path: metadata.annotations["alb.ingress.kubernetes.io/healthcheck-port"]
           value: "9999"
 
   - it: Check ALB health-check port with oauthProxy enabled
@@ -59,8 +63,9 @@ tests:
       ingress.alb.enabled: true
       oauthProxy.enabled: true
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - equal:
-          path: metadata.annotations.[alb.ingress.kubernetes.io/healthcheck-port]
+          path: metadata.annotations["alb.ingress.kubernetes.io/healthcheck-port"]
           value: "4180"
 
   - it: Check ALB gRPC default settings
@@ -71,14 +76,15 @@ tests:
       ingress.alb.enabled: true
       ingress.alb.backendProtocolVersion: GRPC
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - equal:
-          path: metadata.annotations.[alb.ingress.kubernetes.io/backend-protocol-version]
+          path: metadata.annotations["alb.ingress.kubernetes.io/backend-protocol-version"]
           value: GRPC
       - equal:
-          path: metadata.annotations.[alb.ingress.kubernetes.io/success-codes]
+          path: metadata.annotations["alb.ingress.kubernetes.io/success-codes"]
           value: "0,12"
       - equal:
-          path: metadata.annotations.[alb.ingress.kubernetes.io/healthcheck-path]
+          path: metadata.annotations["alb.ingress.kubernetes.io/healthcheck-path"]
           value: /grpc.health.v1.Health/Check
 
   - it: Check ALB gRPC custom settings
@@ -91,14 +97,15 @@ tests:
       ingress.alb.healthcheck.successCodes: "0"
       ingress.alb.healthcheck.path: /grpc.health.v1.Readiness/Check
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - equal:
-          path: metadata.annotations.[alb.ingress.kubernetes.io/backend-protocol-version]
+          path: metadata.annotations["alb.ingress.kubernetes.io/backend-protocol-version"]
           value: GRPC
       - equal:
-          path: metadata.annotations.[alb.ingress.kubernetes.io/success-codes]
+          path: metadata.annotations["alb.ingress.kubernetes.io/success-codes"]
           value: "0"
       - equal:
-          path: metadata.annotations.[alb.ingress.kubernetes.io/healthcheck-path]
+          path: metadata.annotations["alb.ingress.kubernetes.io/healthcheck-path"]
           value: /grpc.health.v1.Readiness/Check
 
   - it: Check ALB HTTP2 default settings
@@ -109,20 +116,21 @@ tests:
       ingress.alb.enabled: true
       ingress.alb.backendProtocolVersion: HTTP2
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - equal:
-          path: metadata.annotations.[alb.ingress.kubernetes.io/backend-protocol-version]
+          path: metadata.annotations["alb.ingress.kubernetes.io/backend-protocol-version"]
           value: HTTP2
       - equal:
-          path: metadata.annotations.[alb.ingress.kubernetes.io/success-codes]
+          path: metadata.annotations["alb.ingress.kubernetes.io/success-codes"]
           value: "200"
       - equal:
-          path: metadata.annotations.[alb.ingress.kubernetes.io/healthcheck-path]
+          path: metadata.annotations["alb.ingress.kubernetes.io/healthcheck-path"]
           value: /readiness
       - equal:
-          path: metadata.annotations.[alb.ingress.kubernetes.io/listen-ports]
+          path: metadata.annotations["alb.ingress.kubernetes.io/listen-ports"]
           value: '[{"HTTP": 80}, {"HTTPS": 443}]'
       - equal:
-          path: metadata.annotations.[alb.ingress.kubernetes.io/ssl-redirect]
+          path: metadata.annotations["alb.ingress.kubernetes.io/ssl-redirect"]
           value: "443"
 
   - it: Check no TLS set if ingressTLSSecrets and specificTlsHostsYaml is empty
@@ -135,7 +143,8 @@ tests:
       ingress.tls: true
       ingress.specificTlsHostsYaml: null
     asserts:
-      - isEmpty:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
+      - isNull:
           path: spec.tls
 
   - it: Check TLS set if ingressTLSSecrets is not empty
@@ -148,6 +157,7 @@ tests:
       ingress.tls: true
       ingress.specificTlsHostsYaml: null
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - isNotEmpty:
           path: spec.tls
 
@@ -161,6 +171,7 @@ tests:
       ingress.extraHosts:
         - name: extra.default.com
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - equal:
           path: spec.rules[0].host
           value: test.default.com
@@ -188,6 +199,7 @@ tests:
           extraHosts:
             - name: extra.extraIngress.com
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - contains:
           path: spec.template.spec.containers[0].env
           content:
@@ -206,6 +218,7 @@ tests:
       oauthProxy.enabled: true
       oauthProxy.ingressHost: auth.default.com
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - equal:
           path: spec.rules[0].host
           value: test.default.com
@@ -234,6 +247,7 @@ tests:
       oauthProxy.enabled: true
       oauthProxy.ingressHost: auth.default.com
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - equal:
           path: spec.rules[0].host
           value: test.default.com
@@ -259,6 +273,7 @@ tests:
       ingress.extraHosts:
         - name: extra.default.com
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - equal:
           path: spec.tls[0].hosts[0]
           value: test.default.com
@@ -286,6 +301,7 @@ tests:
       oauthProxy.enabled: true
       oauthProxy.ingressHost: auth.default.com
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - equal:
           path: spec.tls[0].hosts[0]
           value: test.default.com
@@ -316,6 +332,7 @@ tests:
       oauthProxy.enabled: true
       oauthProxy.ingressHost: auth.default.com
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - equal:
           path: spec.tls[0].hosts[0]
           value: test.default.com
@@ -337,6 +354,7 @@ tests:
       ingress.enabled: true
       ingress.ingressNameOverride: ingress-override
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - hasDocuments:
           count: 1
       - equal:
@@ -346,7 +364,7 @@ tests:
           path: metadata.labels.name
           value: ingress-override
       - equal:
-          path: metadata.labels.[app.kubernetes.io/name]
+          path: metadata.labels["app.kubernetes.io/name"]
           value: ingress-override
 
   - it: Check ingress name suffix setting
@@ -356,6 +374,7 @@ tests:
       ingress.enabled: true
       ingress.ingressNameSuffix: suffix
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - hasDocuments:
           count: 1
       - equal:
@@ -365,7 +384,7 @@ tests:
           path: metadata.labels.name
           value: example-app-suffix
       - equal:
-          path: metadata.labels.[app.kubernetes.io/name]
+          path: metadata.labels["app.kubernetes.io/name"]
           value: example-app-suffix
 
   - it: Default ingress with path based routing
@@ -381,6 +400,7 @@ tests:
           targetPort: 5678
           path: /i02
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - hasDocuments:
           count: 1
       - equal:
@@ -414,6 +434,7 @@ tests:
         - ingressNameSuffix: ops-media
           defaultHost: ops-media.mintel.com
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - hasDocuments:
           count: 2
       - equal:

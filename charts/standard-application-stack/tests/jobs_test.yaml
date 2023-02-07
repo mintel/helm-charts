@@ -20,6 +20,7 @@ tests:
               cpu: 1000m
               memory: 2Gi
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - isKind:
           of: Job
       - equal:
@@ -71,18 +72,19 @@ tests:
               cpu: 1000m
               memory: 2Gi
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - isKind:
           of: Job
       - hasDocuments:
           count: 1
       - equal:
-          path: metadata.annotations.[argocd.argoproj.io/hook]
+          path: metadata.annotations["argocd.argoproj.io/hook"]
           value: PreSync
       - equal:
-          path: metadata.annotations.[argocd.argoproj.io/hook-delete-policy]
+          path: metadata.annotations["argocd.argoproj.io/hook-delete-policy"]
           value: HookSucceeded
       - equal:
-          path: metadata.annotations.[argocd.argoproj.io/sync-wave]
+          path: metadata.annotations["argocd.argoproj.io/sync-wave"]
           value: '-1'
       - equal:
           path: spec.template.spec.restartPolicy
@@ -166,6 +168,7 @@ tests:
               cpu: 1000m
               memory: 2Gi
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - isKind:
           of: Job
       - hasDocuments:

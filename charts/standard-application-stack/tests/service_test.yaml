@@ -9,6 +9,7 @@ tests:
       global.name: test-app
       component: exporter
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - isKind:
           of: Service
       - equal:
@@ -18,10 +19,10 @@ tests:
           path: metadata.name
           value: test-app
       - equal:
-          path: metadata.labels.[app.kubernetes.io/name]
+          path: metadata.labels["app.kubernetes.io/name"]
           value: test-app
       - equal:
-          path: metadata.labels.[name]
+          path: metadata.labels["name"]
           value: test-app
 
   - it: Check default port set
@@ -29,6 +30,7 @@ tests:
       global.name: test-app
       component: exporter
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - isKind:
           of: Service
       - equal:
@@ -41,6 +43,7 @@ tests:
       component: exporter
       port: 1234
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - isKind:
           of: Service
       - equal:
@@ -63,6 +66,7 @@ tests:
           containerPort: 8084
           shouldIgnoreThis: value
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - isKind:
           of: Service
       - equal:
@@ -77,6 +81,7 @@ tests:
       - equal:
           path: spec.ports[2].port
           value: 8082
+      - equal:
           path: spec.ports[3].name
           value: custom-p3
       - equal:
@@ -94,10 +99,11 @@ tests:
       ingress.enabled: true
       ingress.alb.enabled: true
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - isKind:
           of: Service
       - equal:
-          path: metadata.annotations.[alb.ingress.kubernetes.io/tags]
+          path: metadata.annotations["alb.ingress.kubernetes.io/tags"]
           value: Owner=my-team
 
   - it: Check ALB annotation not set when ALB Ingress is disabled
@@ -110,10 +116,11 @@ tests:
       service.annotations:
         k: v
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - isKind:
           of: Service
       - isNull:
-          path: metadata.annotations.[alb.ingress.kubernetes.io/tags]
+          path: metadata.annotations["alb.ingress.kubernetes.io/tags"]
 
   - it: Check ALB annotation not set when when Owner missing
     set:
@@ -124,7 +131,8 @@ tests:
       service.annotations:
         k: v
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - isKind:
           of: Service
       - isNull:
-          path: metadata.annotations.[alb.ingress.kubernetes.io/tags]
+          path: metadata.annotations["alb.ingress.kubernetes.io/tags"]

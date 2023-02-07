@@ -11,6 +11,7 @@ tests:
       statefulset: false
       cronjobsOnly: false
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - isKind:
           of: VerticalPodAutoscaler
       - equal:
@@ -38,6 +39,7 @@ tests:
       statefulset: true
       cronjobsOnly: false
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - isKind:
           of: VerticalPodAutoscaler
       - equal:
@@ -78,6 +80,7 @@ tests:
             - "manage"
             - "daily"
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - isKind:
           of: VerticalPodAutoscaler
       - equal:

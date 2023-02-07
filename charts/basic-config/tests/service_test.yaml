@@ -11,6 +11,7 @@ tests:
         enabled: true
         headless: true
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - isKind:
           of: Service
       - equal:

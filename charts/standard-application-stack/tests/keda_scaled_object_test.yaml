@@ -10,6 +10,7 @@ tests:
       autoscaling.enabled: true
       statefulset: false
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - isKind:
           of: ScaledObject
       - equal:
@@ -41,6 +42,7 @@ tests:
       autoscaling.enabled: true
       statefulset: true
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - isKind:
           of: ScaledObject
       - equal:
@@ -74,6 +76,7 @@ tests:
         apiVersion: apps/v2
         kind: CustomResource
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - isKind:
           of: ScaledObject
       - equal:
@@ -117,6 +120,7 @@ tests:
             serverAddress: 'http://prometheus-k8s.monitoring.svc:9090'
             threshold: '10'
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - isKind:
           of: ScaledObject
       - equal:
@@ -152,6 +156,7 @@ tests:
         replicas: 10
         ignoredValue: true
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - isKind:
           of: ScaledObject
       - equal:
@@ -184,6 +189,7 @@ tests:
                 value: 100
                 periodSeconds: 15
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - isKind:
           of: ScaledObject
       - equal:
@@ -215,6 +221,7 @@ tests:
       autoscaling.triggers.targetCPUUtilizationPercentage: 100
       autoscaling.triggers.targetMemoryUtilizationPercentage: 50
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - isKind:
           of: ScaledObject
       - equal:
@@ -243,6 +250,7 @@ tests:
       autoscaling.enabled: true
       autoscaling.triggers.targetCPUUtilizationPercentage: 100
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - isKind:
           of: ScaledObject
       - equal:
@@ -267,6 +275,7 @@ tests:
       autoscaling.enabled: true
       autoscaling.triggers.targetMemoryUtilizationPercentage: 50
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - isKind:
           of: ScaledObject
       - equal:
@@ -291,6 +300,7 @@ tests:
       autoscaling.enabled: true
       autoscaling.triggers.targetCPUAverageValue: 101
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - isKind:
           of: ScaledObject
       - equal:
@@ -315,6 +325,7 @@ tests:
       autoscaling.enabled: true
       autoscaling.triggers.targetMemoryAverageValue: 51
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - isKind:
           of: ScaledObject
       - equal:
@@ -340,6 +351,7 @@ tests:
       autoscaling.triggers.targetCPUAverageValue: 101
       autoscaling.triggers.targetMemoryAverageValue: 51
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - isKind:
           of: ScaledObject
       - equal:
@@ -371,6 +383,7 @@ tests:
       autoscaling.triggers.targetCPUAverageValue: 101
       autoscaling.triggers.targetMemoryAverageValue: 51
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - isKind:
           of: ScaledObject
       - equal:
@@ -393,6 +406,7 @@ tests:
               metadata:
                 value: "50"
 
+---
 
 suite: Test Keda ScaledObject Constraints
 templates:
@@ -409,6 +423,7 @@ tests:
       autoscaling.cooldownPeriod: 500
       autoscaling.pollingInterval: 60
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - isKind:
           of: ScaledObject
       - equal:
@@ -450,6 +465,7 @@ tests:
       autoscaling.cooldownPeriod: 5
       autoscaling.pollingInterval: 5
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - isKind:
           of: ScaledObject
       - equal:
@@ -488,6 +504,7 @@ tests:
       autoscaling.enabled: true
       autoscaling.minReplicaCount: 15
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - isKind:
           of: ScaledObject
       - equal:
@@ -517,6 +534,7 @@ tests:
       autoscaling.enabled: true
       autoscaling.enableZeroReplicas: true
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - isKind:
           of: ScaledObject
       - equal:
@@ -560,6 +578,7 @@ tests:
           metadata:
             metricName: http_requests_total
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - isKind:
           of: ScaledObject
       - equal:
@@ -626,6 +645,7 @@ tests:
             metricName: http_requests_total
             serverAddress: http://alt-prometheus-k8s.monitoring.svc:9090
     asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
       - isKind:
           of: ScaledObject
       - equal:

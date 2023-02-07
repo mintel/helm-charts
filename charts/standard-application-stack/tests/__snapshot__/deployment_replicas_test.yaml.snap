@@ -1,0 +1,507 @@
+Check allowSingleReplica doesn't alter strategy:
+  1: |
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      annotations:
+        app.mintel.com/opa-allow-single-replica: "true"
+        helm.sh/chart: standard-application-stack-3.59.1
+        secret.reloader.stakater.com/reload: example-app-app
+      labels:
+        app.kubernetes.io/component: app
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: example-app
+        app.mintel.com/env: qa
+        app.mintel.com/region: ${CLUSTER_REGION}
+        name: example-app
+      name: example-app
+      namespace: test-namespace
+    spec:
+      minReadySeconds: 10
+      replicas: 2
+      selector:
+        matchLabels:
+          app.kubernetes.io/component: app
+          app.kubernetes.io/name: example-app
+      strategy:
+        rollingUpdate:
+          maxSurge: 15%
+          maxUnavailable: 10%
+        type: RollingUpdate
+      template:
+        metadata:
+          labels:
+            app.kubernetes.io/component: app
+            app.kubernetes.io/managed-by: Helm
+            app.kubernetes.io/name: example-app
+            app.mintel.com/env: qa
+            app.mintel.com/region: ${CLUSTER_REGION}
+            name: example-app
+        spec:
+          containers:
+            - command:
+                - /app/docker-entrypoint.sh
+              env:
+                - name: KUBERNETES_POD_NAMESPACE
+                  valueFrom:
+                    fieldRef:
+                      fieldPath: metadata.namespace
+                - name: APP_ENVIRONMENT
+                  value: qa
+                - name: RUNTIME_ENVIRONMENT
+                  value: kubernetes
+              envFrom:
+                - secretRef:
+                    name: example-app-app
+              image: registry.gitlab.com/test:auto-replaced
+              imagePullPolicy: IfNotPresent
+              livenessProbe:
+                httpGet:
+                  path: /healthz
+                  port: http
+                  scheme: HTTP
+                initialDelaySeconds: 0
+                periodSeconds: 10
+                timeoutSeconds: 1
+              name: main
+              ports:
+                - containerPort: 8000
+                  name: http
+              readinessProbe:
+                httpGet:
+                  path: /readiness
+                  port: http
+                  scheme: HTTP
+                initialDelaySeconds: 0
+                periodSeconds: 10
+                timeoutSeconds: 1
+              resources:
+                limits: {}
+                requests: {}
+              startupProbe:
+                failureThreshold: 60
+                httpGet:
+                  path: /healthz
+                  port: http
+                  scheme: HTTP
+                periodSeconds: 5
+          imagePullSecrets:
+            - name: image-pull-gitlab
+            - name: image-pull-docker-hub
+          securityContext:
+            runAsUser: 1000
+          serviceAccountName: example-app
+          terminationGracePeriodSeconds: 30
+          topologySpreadConstraints:
+            - labelSelector:
+                matchLabels:
+                  app.kubernetes.io/component: app
+                  app.kubernetes.io/name: example-app
+              maxSkew: 1
+              topologyKey: topology.kubernetes.io/zone
+              whenUnsatisfiable: DoNotSchedule
+          volumes: null
+Check allowSingleReplica set annotations:
+  1: |
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      annotations:
+        app.mintel.com/opa-allow-single-replica: "true"
+        helm.sh/chart: standard-application-stack-3.59.1
+        secret.reloader.stakater.com/reload: example-app-app
+      labels:
+        app.kubernetes.io/component: app
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: example-app
+        app.mintel.com/env: qa
+        app.mintel.com/region: ${CLUSTER_REGION}
+        name: example-app
+      name: example-app
+      namespace: test-namespace
+    spec:
+      minReadySeconds: 10
+      replicas: 2
+      selector:
+        matchLabels:
+          app.kubernetes.io/component: app
+          app.kubernetes.io/name: example-app
+      strategy:
+        rollingUpdate:
+          maxSurge: 15%
+          maxUnavailable: 10%
+        type: RollingUpdate
+      template:
+        metadata:
+          labels:
+            app.kubernetes.io/component: app
+            app.kubernetes.io/managed-by: Helm
+            app.kubernetes.io/name: example-app
+            app.mintel.com/env: qa
+            app.mintel.com/region: ${CLUSTER_REGION}
+            name: example-app
+        spec:
+          containers:
+            - command:
+                - /app/docker-entrypoint.sh
+              env:
+                - name: KUBERNETES_POD_NAMESPACE
+                  valueFrom:
+                    fieldRef:
+                      fieldPath: metadata.namespace
+                - name: APP_ENVIRONMENT
+                  value: qa
+                - name: RUNTIME_ENVIRONMENT
+                  value: kubernetes
+              envFrom:
+                - secretRef:
+                    name: example-app-app
+              image: registry.gitlab.com/test:auto-replaced
+              imagePullPolicy: IfNotPresent
+              livenessProbe:
+                httpGet:
+                  path: /healthz
+                  port: http
+                  scheme: HTTP
+                initialDelaySeconds: 0
+                periodSeconds: 10
+                timeoutSeconds: 1
+              name: main
+              ports:
+                - containerPort: 8000
+                  name: http
+              readinessProbe:
+                httpGet:
+                  path: /readiness
+                  port: http
+                  scheme: HTTP
+                initialDelaySeconds: 0
+                periodSeconds: 10
+                timeoutSeconds: 1
+              resources:
+                limits: {}
+                requests: {}
+              startupProbe:
+                failureThreshold: 60
+                httpGet:
+                  path: /healthz
+                  port: http
+                  scheme: HTTP
+                periodSeconds: 5
+          imagePullSecrets:
+            - name: image-pull-gitlab
+            - name: image-pull-docker-hub
+          securityContext:
+            runAsUser: 1000
+          serviceAccountName: example-app
+          terminationGracePeriodSeconds: 30
+          topologySpreadConstraints:
+            - labelSelector:
+                matchLabels:
+                  app.kubernetes.io/component: app
+                  app.kubernetes.io/name: example-app
+              maxSkew: 1
+              topologyKey: topology.kubernetes.io/zone
+              whenUnsatisfiable: DoNotSchedule
+          volumes: null
+Check replicas unset when autoscaling is enabled:
+  1: |
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      annotations:
+        helm.sh/chart: standard-application-stack-3.59.1
+        secret.reloader.stakater.com/reload: example-app-app
+      labels:
+        app.kubernetes.io/component: app
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: example-app
+        app.mintel.com/env: qa
+        app.mintel.com/region: ${CLUSTER_REGION}
+        name: example-app
+      name: example-app
+      namespace: test-namespace
+    spec:
+      minReadySeconds: 10
+      selector:
+        matchLabels:
+          app.kubernetes.io/component: app
+          app.kubernetes.io/name: example-app
+      strategy:
+        rollingUpdate:
+          maxSurge: 15%
+          maxUnavailable: 10%
+        type: RollingUpdate
+      template:
+        metadata:
+          labels:
+            app.kubernetes.io/component: app
+            app.kubernetes.io/managed-by: Helm
+            app.kubernetes.io/name: example-app
+            app.mintel.com/env: qa
+            app.mintel.com/region: ${CLUSTER_REGION}
+            name: example-app
+        spec:
+          containers:
+            - command:
+                - /app/docker-entrypoint.sh
+              env:
+                - name: KUBERNETES_POD_NAMESPACE
+                  valueFrom:
+                    fieldRef:
+                      fieldPath: metadata.namespace
+                - name: APP_ENVIRONMENT
+                  value: qa
+                - name: RUNTIME_ENVIRONMENT
+                  value: kubernetes
+              envFrom:
+                - secretRef:
+                    name: example-app-app
+              image: registry.gitlab.com/test:auto-replaced
+              imagePullPolicy: IfNotPresent
+              livenessProbe:
+                httpGet:
+                  path: /healthz
+                  port: http
+                  scheme: HTTP
+                initialDelaySeconds: 0
+                periodSeconds: 10
+                timeoutSeconds: 1
+              name: main
+              ports:
+                - containerPort: 8000
+                  name: http
+              readinessProbe:
+                httpGet:
+                  path: /readiness
+                  port: http
+                  scheme: HTTP
+                initialDelaySeconds: 0
+                periodSeconds: 10
+                timeoutSeconds: 1
+              resources:
+                limits: {}
+                requests: {}
+              startupProbe:
+                failureThreshold: 60
+                httpGet:
+                  path: /healthz
+                  port: http
+                  scheme: HTTP
+                periodSeconds: 5
+          imagePullSecrets:
+            - name: image-pull-gitlab
+            - name: image-pull-docker-hub
+          securityContext:
+            runAsUser: 1000
+          serviceAccountName: example-app
+          terminationGracePeriodSeconds: 30
+          topologySpreadConstraints:
+            - labelSelector:
+                matchLabels:
+                  app.kubernetes.io/component: app
+                  app.kubernetes.io/name: example-app
+              maxSkew: 1
+              topologyKey: topology.kubernetes.io/zone
+              whenUnsatisfiable: DoNotSchedule
+          volumes: null
+Check singleReplicaOnly applied:
+  1: |
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      annotations:
+        app.mintel.com/opa-allow-single-replica: "true"
+        helm.sh/chart: standard-application-stack-3.59.1
+        secret.reloader.stakater.com/reload: example-app-app
+      labels:
+        app.kubernetes.io/component: app
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: example-app
+        app.mintel.com/env: qa
+        app.mintel.com/region: ${CLUSTER_REGION}
+        name: example-app
+      name: example-app
+      namespace: test-namespace
+    spec:
+      minReadySeconds: 10
+      replicas: 1
+      selector:
+        matchLabels:
+          app.kubernetes.io/component: app
+          app.kubernetes.io/name: example-app
+      strategy:
+        type: Recreate
+      template:
+        metadata:
+          labels:
+            app.kubernetes.io/component: app
+            app.kubernetes.io/managed-by: Helm
+            app.kubernetes.io/name: example-app
+            app.mintel.com/env: qa
+            app.mintel.com/region: ${CLUSTER_REGION}
+            name: example-app
+        spec:
+          containers:
+            - command:
+                - /app/docker-entrypoint.sh
+              env:
+                - name: KUBERNETES_POD_NAMESPACE
+                  valueFrom:
+                    fieldRef:
+                      fieldPath: metadata.namespace
+                - name: APP_ENVIRONMENT
+                  value: qa
+                - name: RUNTIME_ENVIRONMENT
+                  value: kubernetes
+              envFrom:
+                - secretRef:
+                    name: example-app-app
+              image: registry.gitlab.com/test:auto-replaced
+              imagePullPolicy: IfNotPresent
+              livenessProbe:
+                httpGet:
+                  path: /healthz
+                  port: http
+                  scheme: HTTP
+                initialDelaySeconds: 0
+                periodSeconds: 10
+                timeoutSeconds: 1
+              name: main
+              ports:
+                - containerPort: 8000
+                  name: http
+              readinessProbe:
+                httpGet:
+                  path: /readiness
+                  port: http
+                  scheme: HTTP
+                initialDelaySeconds: 0
+                periodSeconds: 10
+                timeoutSeconds: 1
+              resources:
+                limits: {}
+                requests: {}
+              startupProbe:
+                failureThreshold: 60
+                httpGet:
+                  path: /healthz
+                  port: http
+                  scheme: HTTP
+                periodSeconds: 5
+          imagePullSecrets:
+            - name: image-pull-gitlab
+            - name: image-pull-docker-hub
+          securityContext:
+            runAsUser: 1000
+          serviceAccountName: example-app
+          terminationGracePeriodSeconds: 30
+          topologySpreadConstraints:
+            - labelSelector:
+                matchLabels:
+                  app.kubernetes.io/component: app
+                  app.kubernetes.io/name: example-app
+              maxSkew: 1
+              topologyKey: topology.kubernetes.io/zone
+              whenUnsatisfiable: DoNotSchedule
+          volumes: null
+Check singleReplicaOnly ignore replicas value:
+  1: |
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      annotations:
+        app.mintel.com/opa-allow-single-replica: "true"
+        helm.sh/chart: standard-application-stack-3.59.1
+        secret.reloader.stakater.com/reload: example-app-app
+      labels:
+        app.kubernetes.io/component: app
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: example-app
+        app.mintel.com/env: qa
+        app.mintel.com/region: ${CLUSTER_REGION}
+        name: example-app
+      name: example-app
+      namespace: test-namespace
+    spec:
+      minReadySeconds: 10
+      replicas: 1
+      selector:
+        matchLabels:
+          app.kubernetes.io/component: app
+          app.kubernetes.io/name: example-app
+      strategy:
+        type: Recreate
+      template:
+        metadata:
+          labels:
+            app.kubernetes.io/component: app
+            app.kubernetes.io/managed-by: Helm
+            app.kubernetes.io/name: example-app
+            app.mintel.com/env: qa
+            app.mintel.com/region: ${CLUSTER_REGION}
+            name: example-app
+        spec:
+          containers:
+            - command:
+                - /app/docker-entrypoint.sh
+              env:
+                - name: KUBERNETES_POD_NAMESPACE
+                  valueFrom:
+                    fieldRef:
+                      fieldPath: metadata.namespace
+                - name: APP_ENVIRONMENT
+                  value: qa
+                - name: RUNTIME_ENVIRONMENT
+                  value: kubernetes
+              envFrom:
+                - secretRef:
+                    name: example-app-app
+              image: registry.gitlab.com/test:auto-replaced
+              imagePullPolicy: IfNotPresent
+              livenessProbe:
+                httpGet:
+                  path: /healthz
+                  port: http
+                  scheme: HTTP
+                initialDelaySeconds: 0
+                periodSeconds: 10
+                timeoutSeconds: 1
+              name: main
+              ports:
+                - containerPort: 8000
+                  name: http
+              readinessProbe:
+                httpGet:
+                  path: /readiness
+                  port: http
+                  scheme: HTTP
+                initialDelaySeconds: 0
+                periodSeconds: 10
+                timeoutSeconds: 1
+              resources:
+                limits: {}
+                requests: {}
+              startupProbe:
+                failureThreshold: 60
+                httpGet:
+                  path: /healthz
+                  port: http
+                  scheme: HTTP
+                periodSeconds: 5
+          imagePullSecrets:
+            - name: image-pull-gitlab
+            - name: image-pull-docker-hub
+          securityContext:
+            runAsUser: 1000
+          serviceAccountName: example-app
+          terminationGracePeriodSeconds: 30
+          topologySpreadConstraints:
+            - labelSelector:
+                matchLabels:
+                  app.kubernetes.io/component: app
+                  app.kubernetes.io/name: example-app
+              maxSkew: 1
+              topologyKey: topology.kubernetes.io/zone
+              whenUnsatisfiable: DoNotSchedule
+          volumes: null
