@@ -492,8 +492,10 @@ ingress:
       users: ''
       # -- Comma separated list of Okta Groups that have access to the Ingress URI. e.g. 'group1,group2,group3'
       groups: ''
-      # -- The path that is appended onto the Ingress URI for Oauth authentication on the Ingress URI. Defaults to '/oauth2/idpresponse/'
+      # -- The path that is appended to the Ingress URI for OAuth authentication. Defaults to '/oauth2/idpresponse/'
       redirectPath: ''
+      # -- The extra paths appended to the Ingress URI for OAuth authentication (for apps which require additional auth endpoints)
+      extraRedirectPaths: []
       # -- Specifies the behavior if the user is not authenticated.
       #    Possible values are 'authenticate' (defalt value, and used in most cases), 'allow', or 'deny'
       authOnUnauthenticated: 'authenticate'
@@ -1120,8 +1122,10 @@ opensearch:
           users: ''
           # -- Comma separated list of Okta Groups that have access to the Ingress URI. e.g. 'group1,group2,group3'
           groups: ''
-          # -- The path that is appended onto the Ingress URI for Oauth authentication on the Ingress URI. Defaults to '/oauth2/idpresponse/'
+          # -- The path that is appended to the Ingress URI for OAuth authentication. Defaults to '/oauth2/idpresponse/'
           redirectPath: ''
+          # -- The extra paths appended to the Ingress URI for OAuth authentication (for apps which require additional auth endpoints)
+          extraRedirectPaths: []
           # -- Specifies the behavior if the user is not authenticated.
           #    Possible values are 'authenticate' (defalt value, and used in most cases), 'allow', or 'deny'
           authOnUnauthenticated: 'authenticate'
