@@ -120,3 +120,8 @@ This check is introduced as a regexMatch instead of {{ if .Capabilities.HelmVers
 {{- define "common.capabilities.verticalPodAutoscaler.apiVersion" -}}
 autoscaling.k8s.io/v1
 {{- end -}}
+
+{{/* Return the appropriate apiVersion for the opentelemetry-operator Instrumentation resource. */}}
+{{- define "common.capabilities.otelInstrumentation.apiVersion" -}}
+opentelemetry.io/v1alpha1
+{{- end -}}

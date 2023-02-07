@@ -1,19 +1,57 @@
-Check default container args:
+adds the .NET injection annotation to the Deployment:
   1: |
+    apiVersion: opentelemetry.io/v1alpha1
+    kind: Instrumentation
+    metadata:
+      annotations:
+        argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+        argocd.argoproj.io/sync-wave: "-20"
+      labels:
+        app.kubernetes.io/component: app
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: example-app
+        app.mintel.com/env: qa
+        app.mintel.com/region: ${CLUSTER_REGION}
+        name: example-app
+      name: example-app
+      namespace: test-namespace
+    spec:
+      dotnet:
+        env:
+          - name: OTEL_ENV_VAR
+            value: mock-env-var-value
+      exporter:
+        endpoint: http://grafana-agent.monitoring.svc.cluster.local:4317
+      propagators:
+        - tracecontext
+        - baggage
+        - b3
+        - jaeger
+        - xray
+      resource:
+        resourceAttributes:
+          cloud.platform: aws_eks
+          cloud.provider: aws
+          deployment.environment: qa
+          service.name: example-app
+          service.namespace: test-namespace
+      sampler:
+        type: parentbased_always_on
+  2: |
     apiVersion: apps/v1
     kind: Deployment
     metadata:
       annotations:
         helm.sh/chart: standard-application-stack-3.60.0
-        secret.reloader.stakater.com/reload: test-app-app,test-app-oauth
+        secret.reloader.stakater.com/reload: example-app-app
       labels:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
-        app.kubernetes.io/name: test-app
+        app.kubernetes.io/name: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
-        name: test-app
-      name: test-app
+        name: example-app
+      name: example-app
       namespace: test-namespace
     spec:
       minReadySeconds: 10
@@ -21,7 +59,7 @@ Check default container args:
       selector:
         matchLabels:
           app.kubernetes.io/component: app
-          app.kubernetes.io/name: test-app
+          app.kubernetes.io/name: example-app
       strategy:
         rollingUpdate:
           maxSurge: 15%
@@ -30,14 +68,14 @@ Check default container args:
       template:
         metadata:
           annotations:
-            instrumentation.opentelemetry.io/inject-sdk: test-namespace/test-app
+            instrumentation.opentelemetry.io/inject-dotnet: test-namespace/example-app
           labels:
             app.kubernetes.io/component: app
             app.kubernetes.io/managed-by: Helm
-            app.kubernetes.io/name: test-app
+            app.kubernetes.io/name: example-app
             app.mintel.com/env: qa
             app.mintel.com/region: ${CLUSTER_REGION}
-            name: test-app
+            name: example-app
         spec:
           containers:
             - command:
@@ -53,7 +91,7 @@ Check default container args:
                   value: kubernetes
               envFrom:
                 - secretRef:
-                    name: test-app-app
+                    name: example-app-app
               image: registry.gitlab.com/test:auto-replaced
               imagePullPolicy: IfNotPresent
               livenessProbe:
@@ -86,88 +124,76 @@ Check default container args:
                   port: http
                   scheme: HTTP
                 periodSeconds: 5
-            - args:
-                - --redirect-url=https:///oauth2/callback
-                - --upstream=http://localhost:8000
-                - --http-address=http://0.0.0.0:4180
-                - --provider=oidc
-                - --skip-auth-regex=^/ping$
-                - --skip-auth-regex=^/healthz$
-                - --skip-auth-regex=^/readiness$
-                - --skip-auth-regex=^/external-health-check$
-                - --skip-provider-button=true
-                - --skip-jwt-bearer-tokens=true
-                - --ssl-insecure-skip-verify=true
-                - --ssl-upstream-insecure-skip-verify=true
-                - --oidc-groups-claim=groups
-                - --metrics-address=http://0.0.0.0:9090
-                - --email-domain=*
-                - --oidc-issuer-url=https://oauth.mintel.com
-                - --insecure-oidc-allow-unverified-email=true
-                - --cookie-secure=false
-                - --user-id-claim=sub
-                - --scope=openid profile email
-              env: null
-              envFrom:
-                - secretRef:
-                    name: test-app-oauth
-              image: quay.io/oauth2-proxy/oauth2-proxy:v7.1.3
-              imagePullPolicy: IfNotPresent
-              livenessProbe:
-                httpGet:
-                  path: /ping
-                  port: auth-proxy
-                  scheme: HTTP
-              name: auth-proxy
-              ports:
-                - containerPort: 4180
-                  name: auth-proxy
-                - containerPort: 9090
-                  name: metrics
-              readinessProbe:
-                httpGet:
-                  path: /ping
-                  port: auth-proxy
-                  scheme: HTTP
-              resources:
-                limits:
-                  cpu: 200m
-                  memory: 128Mi
-                requests:
-                  cpu: 100m
-                  memory: 64Mi
           imagePullSecrets:
             - name: image-pull-gitlab
             - name: image-pull-docker-hub
           securityContext:
             runAsUser: 1000
-          serviceAccountName: test-app
+          serviceAccountName: example-app
           terminationGracePeriodSeconds: 30
           topologySpreadConstraints:
             - labelSelector:
                 matchLabels:
                   app.kubernetes.io/component: app
-                  app.kubernetes.io/name: test-app
+                  app.kubernetes.io/name: example-app
               maxSkew: 1
               topologyKey: topology.kubernetes.io/zone
               whenUnsatisfiable: DoNotSchedule
           volumes: null
-Check setting skip-auth-regex from extra passed in values:
+adds the Java injection annotation to the Deployment:
   1: |
+    apiVersion: opentelemetry.io/v1alpha1
+    kind: Instrumentation
+    metadata:
+      annotations:
+        argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+        argocd.argoproj.io/sync-wave: "-20"
+      labels:
+        app.kubernetes.io/component: app
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: example-app
+        app.mintel.com/env: qa
+        app.mintel.com/region: ${CLUSTER_REGION}
+        name: example-app
+      name: example-app
+      namespace: test-namespace
+    spec:
+      exporter:
+        endpoint: http://grafana-agent.monitoring.svc.cluster.local:4317
+      java:
+        env:
+          - name: OTEL_ENV_VAR
+            value: mock-env-var-value
+      propagators:
+        - tracecontext
+        - baggage
+        - b3
+        - jaeger
+        - xray
+      resource:
+        resourceAttributes:
+          cloud.platform: aws_eks
+          cloud.provider: aws
+          deployment.environment: qa
+          service.name: example-app
+          service.namespace: test-namespace
+      sampler:
+        type: parentbased_always_on
+  2: |
     apiVersion: apps/v1
     kind: Deployment
     metadata:
       annotations:
         helm.sh/chart: standard-application-stack-3.60.0
-        secret.reloader.stakater.com/reload: test-app-app,test-app-oauth
+        secret.reloader.stakater.com/reload: example-app-app
       labels:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
-        app.kubernetes.io/name: test-app
+        app.kubernetes.io/name: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
-        name: test-app
-      name: test-app
+        name: example-app
+      name: example-app
       namespace: test-namespace
     spec:
       minReadySeconds: 10
@@ -175,7 +201,7 @@ Check setting skip-auth-regex from extra passed in values:
       selector:
         matchLabels:
           app.kubernetes.io/component: app
-          app.kubernetes.io/name: test-app
+          app.kubernetes.io/name: example-app
       strategy:
         rollingUpdate:
           maxSurge: 15%
@@ -184,14 +210,14 @@ Check setting skip-auth-regex from extra passed in values:
       template:
         metadata:
           annotations:
-            instrumentation.opentelemetry.io/inject-sdk: test-namespace/test-app
+            instrumentation.opentelemetry.io/inject-java: test-namespace/example-app
           labels:
             app.kubernetes.io/component: app
             app.kubernetes.io/managed-by: Helm
-            app.kubernetes.io/name: test-app
+            app.kubernetes.io/name: example-app
             app.mintel.com/env: qa
             app.mintel.com/region: ${CLUSTER_REGION}
-            name: test-app
+            name: example-app
         spec:
           containers:
             - command:
@@ -207,7 +233,7 @@ Check setting skip-auth-regex from extra passed in values:
                   value: kubernetes
               envFrom:
                 - secretRef:
-                    name: test-app-app
+                    name: example-app-app
               image: registry.gitlab.com/test:auto-replaced
               imagePullPolicy: IfNotPresent
               livenessProbe:
@@ -240,89 +266,76 @@ Check setting skip-auth-regex from extra passed in values:
                   port: http
                   scheme: HTTP
                 periodSeconds: 5
-            - args:
-                - --redirect-url=https:///oauth2/callback
-                - --upstream=http://localhost:8000
-                - --http-address=http://0.0.0.0:4180
-                - --provider=oidc
-                - --skip-auth-regex=^/ping$
-                - --skip-auth-regex=^/healthz$
-                - --skip-auth-regex=^/readiness$
-                - --skip-auth-regex=^/external-health-check$
-                - --skip-auth-regex=^/readyz$
-                - --skip-provider-button=true
-                - --skip-jwt-bearer-tokens=true
-                - --ssl-insecure-skip-verify=true
-                - --ssl-upstream-insecure-skip-verify=true
-                - --oidc-groups-claim=groups
-                - --metrics-address=http://0.0.0.0:9090
-                - --email-domain=*
-                - --oidc-issuer-url=https://oauth.mintel.com
-                - --insecure-oidc-allow-unverified-email=true
-                - --cookie-secure=false
-                - --user-id-claim=sub
-                - --scope=openid profile email
-              env: null
-              envFrom:
-                - secretRef:
-                    name: test-app-oauth
-              image: quay.io/oauth2-proxy/oauth2-proxy:v7.1.3
-              imagePullPolicy: IfNotPresent
-              livenessProbe:
-                httpGet:
-                  path: /ping
-                  port: auth-proxy
-                  scheme: HTTP
-              name: auth-proxy
-              ports:
-                - containerPort: 4180
-                  name: auth-proxy
-                - containerPort: 9090
-                  name: metrics
-              readinessProbe:
-                httpGet:
-                  path: /ping
-                  port: auth-proxy
-                  scheme: HTTP
-              resources:
-                limits:
-                  cpu: 200m
-                  memory: 128Mi
-                requests:
-                  cpu: 100m
-                  memory: 64Mi
           imagePullSecrets:
             - name: image-pull-gitlab
             - name: image-pull-docker-hub
           securityContext:
             runAsUser: 1000
-          serviceAccountName: test-app
+          serviceAccountName: example-app
           terminationGracePeriodSeconds: 30
           topologySpreadConstraints:
             - labelSelector:
                 matchLabels:
                   app.kubernetes.io/component: app
-                  app.kubernetes.io/name: test-app
+                  app.kubernetes.io/name: example-app
               maxSkew: 1
               topologyKey: topology.kubernetes.io/zone
               whenUnsatisfiable: DoNotSchedule
           volumes: null
-Check setting skip-auth-regex from extra passed in values when they already contain start/end meta-characters:
+adds the NodeJS injection annotation to the Deployment:
   1: |
+    apiVersion: opentelemetry.io/v1alpha1
+    kind: Instrumentation
+    metadata:
+      annotations:
+        argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+        argocd.argoproj.io/sync-wave: "-20"
+      labels:
+        app.kubernetes.io/component: app
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: example-app
+        app.mintel.com/env: qa
+        app.mintel.com/region: ${CLUSTER_REGION}
+        name: example-app
+      name: example-app
+      namespace: test-namespace
+    spec:
+      exporter:
+        endpoint: http://grafana-agent.monitoring.svc.cluster.local:4317
+      nodejs:
+        env:
+          - name: OTEL_ENV_VAR
+            value: mock-env-var-value
+      propagators:
+        - tracecontext
+        - baggage
+        - b3
+        - jaeger
+        - xray
+      resource:
+        resourceAttributes:
+          cloud.platform: aws_eks
+          cloud.provider: aws
+          deployment.environment: qa
+          service.name: example-app
+          service.namespace: test-namespace
+      sampler:
+        type: parentbased_always_on
+  2: |
     apiVersion: apps/v1
     kind: Deployment
     metadata:
       annotations:
         helm.sh/chart: standard-application-stack-3.60.0
-        secret.reloader.stakater.com/reload: test-app-app,test-app-oauth
+        secret.reloader.stakater.com/reload: example-app-app
       labels:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
-        app.kubernetes.io/name: test-app
+        app.kubernetes.io/name: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
-        name: test-app
-      name: test-app
+        name: example-app
+      name: example-app
       namespace: test-namespace
     spec:
       minReadySeconds: 10
@@ -330,7 +343,7 @@ Check setting skip-auth-regex from extra passed in values when they already cont
       selector:
         matchLabels:
           app.kubernetes.io/component: app
-          app.kubernetes.io/name: test-app
+          app.kubernetes.io/name: example-app
       strategy:
         rollingUpdate:
           maxSurge: 15%
@@ -339,14 +352,14 @@ Check setting skip-auth-regex from extra passed in values when they already cont
       template:
         metadata:
           annotations:
-            instrumentation.opentelemetry.io/inject-sdk: test-namespace/test-app
+            instrumentation.opentelemetry.io/inject-nodejs: test-namespace/example-app
           labels:
             app.kubernetes.io/component: app
             app.kubernetes.io/managed-by: Helm
-            app.kubernetes.io/name: test-app
+            app.kubernetes.io/name: example-app
             app.mintel.com/env: qa
             app.mintel.com/region: ${CLUSTER_REGION}
-            name: test-app
+            name: example-app
         spec:
           containers:
             - command:
@@ -362,7 +375,7 @@ Check setting skip-auth-regex from extra passed in values when they already cont
                   value: kubernetes
               envFrom:
                 - secretRef:
-                    name: test-app-app
+                    name: example-app-app
               image: registry.gitlab.com/test:auto-replaced
               imagePullPolicy: IfNotPresent
               livenessProbe:
@@ -395,89 +408,76 @@ Check setting skip-auth-regex from extra passed in values when they already cont
                   port: http
                   scheme: HTTP
                 periodSeconds: 5
-            - args:
-                - --redirect-url=https:///oauth2/callback
-                - --upstream=http://localhost:8000
-                - --http-address=http://0.0.0.0:4180
-                - --provider=oidc
-                - --skip-auth-regex=^/ping$
-                - --skip-auth-regex=^/healthz$
-                - --skip-auth-regex=^/readiness$
-                - --skip-auth-regex=^/external-health-check$
-                - --skip-auth-regex=^/readyz$
-                - --skip-provider-button=true
-                - --skip-jwt-bearer-tokens=true
-                - --ssl-insecure-skip-verify=true
-                - --ssl-upstream-insecure-skip-verify=true
-                - --oidc-groups-claim=groups
-                - --metrics-address=http://0.0.0.0:9090
-                - --email-domain=*
-                - --oidc-issuer-url=https://oauth.mintel.com
-                - --insecure-oidc-allow-unverified-email=true
-                - --cookie-secure=false
-                - --user-id-claim=sub
-                - --scope=openid profile email
-              env: null
-              envFrom:
-                - secretRef:
-                    name: test-app-oauth
-              image: quay.io/oauth2-proxy/oauth2-proxy:v7.1.3
-              imagePullPolicy: IfNotPresent
-              livenessProbe:
-                httpGet:
-                  path: /ping
-                  port: auth-proxy
-                  scheme: HTTP
-              name: auth-proxy
-              ports:
-                - containerPort: 4180
-                  name: auth-proxy
-                - containerPort: 9090
-                  name: metrics
-              readinessProbe:
-                httpGet:
-                  path: /ping
-                  port: auth-proxy
-                  scheme: HTTP
-              resources:
-                limits:
-                  cpu: 200m
-                  memory: 128Mi
-                requests:
-                  cpu: 100m
-                  memory: 64Mi
           imagePullSecrets:
             - name: image-pull-gitlab
             - name: image-pull-docker-hub
           securityContext:
             runAsUser: 1000
-          serviceAccountName: test-app
+          serviceAccountName: example-app
           terminationGracePeriodSeconds: 30
           topologySpreadConstraints:
             - labelSelector:
                 matchLabels:
                   app.kubernetes.io/component: app
-                  app.kubernetes.io/name: test-app
+                  app.kubernetes.io/name: example-app
               maxSkew: 1
               topologyKey: topology.kubernetes.io/zone
               whenUnsatisfiable: DoNotSchedule
           volumes: null
-Check setting skip-auth-regex from overridden health-check values:
+adds the Python injection annotation to the Deployment:
   1: |
+    apiVersion: opentelemetry.io/v1alpha1
+    kind: Instrumentation
+    metadata:
+      annotations:
+        argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+        argocd.argoproj.io/sync-wave: "-20"
+      labels:
+        app.kubernetes.io/component: app
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: example-app
+        app.mintel.com/env: qa
+        app.mintel.com/region: ${CLUSTER_REGION}
+        name: example-app
+      name: example-app
+      namespace: test-namespace
+    spec:
+      exporter:
+        endpoint: http://grafana-agent.monitoring.svc.cluster.local:4317
+      propagators:
+        - tracecontext
+        - baggage
+        - b3
+        - jaeger
+        - xray
+      python:
+        env:
+          - name: OTEL_ENV_VAR
+            value: mock-env-var-value
+      resource:
+        resourceAttributes:
+          cloud.platform: aws_eks
+          cloud.provider: aws
+          deployment.environment: qa
+          service.name: example-app
+          service.namespace: test-namespace
+      sampler:
+        type: parentbased_always_on
+  2: |
     apiVersion: apps/v1
     kind: Deployment
     metadata:
       annotations:
         helm.sh/chart: standard-application-stack-3.60.0
-        secret.reloader.stakater.com/reload: test-app-app,test-app-oauth
+        secret.reloader.stakater.com/reload: example-app-app
       labels:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
-        app.kubernetes.io/name: test-app
+        app.kubernetes.io/name: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
-        name: test-app
-      name: test-app
+        name: example-app
+      name: example-app
       namespace: test-namespace
     spec:
       minReadySeconds: 10
@@ -485,7 +485,7 @@ Check setting skip-auth-regex from overridden health-check values:
       selector:
         matchLabels:
           app.kubernetes.io/component: app
-          app.kubernetes.io/name: test-app
+          app.kubernetes.io/name: example-app
       strategy:
         rollingUpdate:
           maxSurge: 15%
@@ -494,14 +494,14 @@ Check setting skip-auth-regex from overridden health-check values:
       template:
         metadata:
           annotations:
-            instrumentation.opentelemetry.io/inject-sdk: test-namespace/test-app
+            instrumentation.opentelemetry.io/inject-python: test-namespace/example-app
           labels:
             app.kubernetes.io/component: app
             app.kubernetes.io/managed-by: Helm
-            app.kubernetes.io/name: test-app
+            app.kubernetes.io/name: example-app
             app.mintel.com/env: qa
             app.mintel.com/region: ${CLUSTER_REGION}
-            name: test-app
+            name: example-app
         spec:
           containers:
             - command:
@@ -517,161 +517,7 @@ Check setting skip-auth-regex from overridden health-check values:
                   value: kubernetes
               envFrom:
                 - secretRef:
-                    name: test-app-app
-              image: registry.gitlab.com/test:auto-replaced
-              imagePullPolicy: IfNotPresent
-              livenessProbe:
-                httpGet:
-                  path: /healthz-overridden
-                  port: http
-                  scheme: HTTP
-                initialDelaySeconds: 0
-                periodSeconds: 10
-                timeoutSeconds: 1
-              name: main
-              ports:
-                - containerPort: 8000
-                  name: http
-              readinessProbe:
-                httpGet:
-                  path: /readiness-overridden
-                  port: http
-                  scheme: HTTP
-                initialDelaySeconds: 0
-                periodSeconds: 10
-                timeoutSeconds: 1
-              resources:
-                limits: {}
-                requests: {}
-              startupProbe:
-                failureThreshold: 60
-                httpGet:
-                  path: /healthz-overridden
-                  port: http
-                  scheme: HTTP
-                periodSeconds: 5
-            - args:
-                - --redirect-url=https:///oauth2/callback
-                - --upstream=http://localhost:8000
-                - --http-address=http://0.0.0.0:4180
-                - --provider=oidc
-                - --skip-auth-regex=^/ping$
-                - --skip-auth-regex=^/healthz-overridden$
-                - --skip-auth-regex=^/readiness-overridden$
-                - --skip-auth-regex=^/external-health-check-overridden$
-                - --skip-provider-button=true
-                - --skip-jwt-bearer-tokens=true
-                - --ssl-insecure-skip-verify=true
-                - --ssl-upstream-insecure-skip-verify=true
-                - --oidc-groups-claim=groups
-                - --metrics-address=http://0.0.0.0:9090
-                - --email-domain=*
-                - --oidc-issuer-url=https://oauth.mintel.com
-                - --insecure-oidc-allow-unverified-email=true
-                - --cookie-secure=false
-                - --user-id-claim=sub
-                - --scope=openid profile email
-              env: null
-              envFrom:
-                - secretRef:
-                    name: test-app-oauth
-              image: quay.io/oauth2-proxy/oauth2-proxy:v7.1.3
-              imagePullPolicy: IfNotPresent
-              livenessProbe:
-                httpGet:
-                  path: /ping
-                  port: auth-proxy
-                  scheme: HTTP
-              name: auth-proxy
-              ports:
-                - containerPort: 4180
-                  name: auth-proxy
-                - containerPort: 9090
-                  name: metrics
-              readinessProbe:
-                httpGet:
-                  path: /ping
-                  port: auth-proxy
-                  scheme: HTTP
-              resources:
-                limits:
-                  cpu: 200m
-                  memory: 128Mi
-                requests:
-                  cpu: 100m
-                  memory: 64Mi
-          imagePullSecrets:
-            - name: image-pull-gitlab
-            - name: image-pull-docker-hub
-          securityContext:
-            runAsUser: 1000
-          serviceAccountName: test-app
-          terminationGracePeriodSeconds: 30
-          topologySpreadConstraints:
-            - labelSelector:
-                matchLabels:
-                  app.kubernetes.io/component: app
-                  app.kubernetes.io/name: test-app
-              maxSkew: 1
-              topologyKey: topology.kubernetes.io/zone
-              whenUnsatisfiable: DoNotSchedule
-          volumes: null
-Check sidecar present if enabled:
-  1: |
-    apiVersion: apps/v1
-    kind: Deployment
-    metadata:
-      annotations:
-        helm.sh/chart: standard-application-stack-3.60.0
-        secret.reloader.stakater.com/reload: test-app-app,test-app-oauth
-      labels:
-        app.kubernetes.io/component: app
-        app.kubernetes.io/managed-by: Helm
-        app.kubernetes.io/name: test-app
-        app.mintel.com/env: qa
-        app.mintel.com/region: ${CLUSTER_REGION}
-        name: test-app
-      name: test-app
-      namespace: test-namespace
-    spec:
-      minReadySeconds: 10
-      replicas: 2
-      selector:
-        matchLabels:
-          app.kubernetes.io/component: app
-          app.kubernetes.io/name: test-app
-      strategy:
-        rollingUpdate:
-          maxSurge: 15%
-          maxUnavailable: 10%
-        type: RollingUpdate
-      template:
-        metadata:
-          annotations:
-            instrumentation.opentelemetry.io/inject-sdk: test-namespace/test-app
-          labels:
-            app.kubernetes.io/component: app
-            app.kubernetes.io/managed-by: Helm
-            app.kubernetes.io/name: test-app
-            app.mintel.com/env: qa
-            app.mintel.com/region: ${CLUSTER_REGION}
-            name: test-app
-        spec:
-          containers:
-            - command:
-                - /app/docker-entrypoint.sh
-              env:
-                - name: KUBERNETES_POD_NAMESPACE
-                  valueFrom:
-                    fieldRef:
-                      fieldPath: metadata.namespace
-                - name: APP_ENVIRONMENT
-                  value: qa
-                - name: RUNTIME_ENVIRONMENT
-                  value: kubernetes
-              envFrom:
-                - secretRef:
-                    name: test-app-app
+                    name: example-app-app
               image: registry.gitlab.com/test:auto-replaced
               imagePullPolicy: IfNotPresent
               livenessProbe:
@@ -704,68 +550,300 @@ Check sidecar present if enabled:
                   port: http
                   scheme: HTTP
                 periodSeconds: 5
-            - args:
-                - --redirect-url=https:///oauth2/callback
-                - --upstream=http://localhost:8000
-                - --http-address=http://0.0.0.0:4180
-                - --provider=oidc
-                - --skip-auth-regex=^/ping$
-                - --skip-auth-regex=^/healthz$
-                - --skip-auth-regex=^/readiness$
-                - --skip-auth-regex=^/external-health-check$
-                - --skip-provider-button=true
-                - --skip-jwt-bearer-tokens=true
-                - --ssl-insecure-skip-verify=true
-                - --ssl-upstream-insecure-skip-verify=true
-                - --oidc-groups-claim=groups
-                - --metrics-address=http://0.0.0.0:9090
-                - --email-domain=*
-                - --oidc-issuer-url=https://oauth.mintel.com
-                - --insecure-oidc-allow-unverified-email=true
-                - --cookie-secure=false
-                - --user-id-claim=sub
-                - --scope=openid profile email
-              env: null
-              envFrom:
-                - secretRef:
-                    name: test-app-oauth
-              image: quay.io/oauth2-proxy/oauth2-proxy:v7.1.3
-              imagePullPolicy: IfNotPresent
-              livenessProbe:
-                httpGet:
-                  path: /ping
-                  port: auth-proxy
-                  scheme: HTTP
-              name: auth-proxy
-              ports:
-                - containerPort: 4180
-                  name: auth-proxy
-                - containerPort: 9090
-                  name: metrics
-              readinessProbe:
-                httpGet:
-                  path: /ping
-                  port: auth-proxy
-                  scheme: HTTP
-              resources:
-                limits:
-                  cpu: 200m
-                  memory: 128Mi
-                requests:
-                  cpu: 100m
-                  memory: 64Mi
           imagePullSecrets:
             - name: image-pull-gitlab
             - name: image-pull-docker-hub
           securityContext:
             runAsUser: 1000
-          serviceAccountName: test-app
+          serviceAccountName: example-app
           terminationGracePeriodSeconds: 30
           topologySpreadConstraints:
             - labelSelector:
                 matchLabels:
                   app.kubernetes.io/component: app
-                  app.kubernetes.io/name: test-app
+                  app.kubernetes.io/name: example-app
+              maxSkew: 1
+              topologyKey: topology.kubernetes.io/zone
+              whenUnsatisfiable: DoNotSchedule
+          volumes: null
+adds the env var injection annotation to the Deployment:
+  1: |
+    apiVersion: opentelemetry.io/v1alpha1
+    kind: Instrumentation
+    metadata:
+      annotations:
+        argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+        argocd.argoproj.io/sync-wave: "-20"
+      labels:
+        app.kubernetes.io/component: app
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: example-app
+        app.mintel.com/env: qa
+        app.mintel.com/region: ${CLUSTER_REGION}
+        name: example-app
+      name: example-app
+      namespace: test-namespace
+    spec:
+      exporter:
+        endpoint: http://grafana-agent.monitoring.svc.cluster.local:4317
+      propagators:
+        - tracecontext
+        - baggage
+        - b3
+        - jaeger
+        - xray
+      resource:
+        resourceAttributes:
+          cloud.platform: aws_eks
+          cloud.provider: aws
+          deployment.environment: qa
+          service.name: example-app
+          service.namespace: test-namespace
+      sampler:
+        type: parentbased_always_on
+  2: |
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      annotations:
+        helm.sh/chart: standard-application-stack-3.60.0
+        secret.reloader.stakater.com/reload: example-app-app
+      labels:
+        app.kubernetes.io/component: app
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: example-app
+        app.mintel.com/env: qa
+        app.mintel.com/region: ${CLUSTER_REGION}
+        name: example-app
+      name: example-app
+      namespace: test-namespace
+    spec:
+      minReadySeconds: 10
+      replicas: 2
+      selector:
+        matchLabels:
+          app.kubernetes.io/component: app
+          app.kubernetes.io/name: example-app
+      strategy:
+        rollingUpdate:
+          maxSurge: 15%
+          maxUnavailable: 10%
+        type: RollingUpdate
+      template:
+        metadata:
+          annotations:
+            instrumentation.opentelemetry.io/inject-sdk: test-namespace/example-app
+          labels:
+            app.kubernetes.io/component: app
+            app.kubernetes.io/managed-by: Helm
+            app.kubernetes.io/name: example-app
+            app.mintel.com/env: qa
+            app.mintel.com/region: ${CLUSTER_REGION}
+            name: example-app
+        spec:
+          containers:
+            - command:
+                - /app/docker-entrypoint.sh
+              env:
+                - name: KUBERNETES_POD_NAMESPACE
+                  valueFrom:
+                    fieldRef:
+                      fieldPath: metadata.namespace
+                - name: APP_ENVIRONMENT
+                  value: qa
+                - name: RUNTIME_ENVIRONMENT
+                  value: kubernetes
+              envFrom:
+                - secretRef:
+                    name: example-app-app
+              image: registry.gitlab.com/test:auto-replaced
+              imagePullPolicy: IfNotPresent
+              livenessProbe:
+                httpGet:
+                  path: /healthz
+                  port: http
+                  scheme: HTTP
+                initialDelaySeconds: 0
+                periodSeconds: 10
+                timeoutSeconds: 1
+              name: main
+              ports:
+                - containerPort: 8000
+                  name: http
+              readinessProbe:
+                httpGet:
+                  path: /readiness
+                  port: http
+                  scheme: HTTP
+                initialDelaySeconds: 0
+                periodSeconds: 10
+                timeoutSeconds: 1
+              resources:
+                limits: {}
+                requests: {}
+              startupProbe:
+                failureThreshold: 60
+                httpGet:
+                  path: /healthz
+                  port: http
+                  scheme: HTTP
+                periodSeconds: 5
+          imagePullSecrets:
+            - name: image-pull-gitlab
+            - name: image-pull-docker-hub
+          securityContext:
+            runAsUser: 1000
+          serviceAccountName: example-app
+          terminationGracePeriodSeconds: 30
+          topologySpreadConstraints:
+            - labelSelector:
+                matchLabels:
+                  app.kubernetes.io/component: app
+                  app.kubernetes.io/name: example-app
+              maxSkew: 1
+              topologyKey: topology.kubernetes.io/zone
+              whenUnsatisfiable: DoNotSchedule
+          volumes: null
+creates an Instrumentation:
+  1: |
+    apiVersion: opentelemetry.io/v1alpha1
+    kind: Instrumentation
+    metadata:
+      annotations:
+        argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+        argocd.argoproj.io/sync-wave: "-20"
+      labels:
+        app.kubernetes.io/component: app
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: example-app
+        app.mintel.com/env: qa
+        app.mintel.com/region: ${CLUSTER_REGION}
+        name: example-app
+      name: example-app
+      namespace: test-namespace
+    spec:
+      env:
+        - name: OTEL_ENV_VAR
+          value: mock-env-var-value
+      exporter:
+        endpoint: mock-endpoint
+      propagators:
+        - mock-propagators
+      resource:
+        addK8sUIDAttributes: true
+        resourceAttributes:
+          cloud.account.id: mock-account-id
+          cloud.platform: aws_eks
+          cloud.provider: aws
+          cloud.region: mock-aws-region
+          deployment.environment: qa
+          k8s.cluster.name: mock-cluster-name
+          mock-resource-key: mock-resource-value
+          service.name: example-app
+          service.namespace: test-namespace
+      sampler:
+        type: parentbased_always_on
+sets the container names annotation:
+  1: |
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      annotations:
+        helm.sh/chart: standard-application-stack-3.60.0
+        secret.reloader.stakater.com/reload: example-app-app
+      labels:
+        app.kubernetes.io/component: app
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: example-app
+        app.mintel.com/env: qa
+        app.mintel.com/region: ${CLUSTER_REGION}
+        name: example-app
+      name: example-app
+      namespace: test-namespace
+    spec:
+      minReadySeconds: 10
+      replicas: 2
+      selector:
+        matchLabels:
+          app.kubernetes.io/component: app
+          app.kubernetes.io/name: example-app
+      strategy:
+        rollingUpdate:
+          maxSurge: 15%
+          maxUnavailable: 10%
+        type: RollingUpdate
+      template:
+        metadata:
+          annotations:
+            instrumentation.opentelemetry.io/container-names: bar,foo
+            instrumentation.opentelemetry.io/inject-sdk: test-namespace/example-app
+          labels:
+            app.kubernetes.io/component: app
+            app.kubernetes.io/managed-by: Helm
+            app.kubernetes.io/name: example-app
+            app.mintel.com/env: qa
+            app.mintel.com/region: ${CLUSTER_REGION}
+            name: example-app
+        spec:
+          containers:
+            - command:
+                - /app/docker-entrypoint.sh
+              env:
+                - name: KUBERNETES_POD_NAMESPACE
+                  valueFrom:
+                    fieldRef:
+                      fieldPath: metadata.namespace
+                - name: APP_ENVIRONMENT
+                  value: qa
+                - name: RUNTIME_ENVIRONMENT
+                  value: kubernetes
+              envFrom:
+                - secretRef:
+                    name: example-app-app
+              image: registry.gitlab.com/test:auto-replaced
+              imagePullPolicy: IfNotPresent
+              livenessProbe:
+                httpGet:
+                  path: /healthz
+                  port: http
+                  scheme: HTTP
+                initialDelaySeconds: 0
+                periodSeconds: 10
+                timeoutSeconds: 1
+              name: main
+              ports:
+                - containerPort: 8000
+                  name: http
+              readinessProbe:
+                httpGet:
+                  path: /readiness
+                  port: http
+                  scheme: HTTP
+                initialDelaySeconds: 0
+                periodSeconds: 10
+                timeoutSeconds: 1
+              resources:
+                limits: {}
+                requests: {}
+              startupProbe:
+                failureThreshold: 60
+                httpGet:
+                  path: /healthz
+                  port: http
+                  scheme: HTTP
+                periodSeconds: 5
+          imagePullSecrets:
+            - name: image-pull-gitlab
+            - name: image-pull-docker-hub
+          securityContext:
+            runAsUser: 1000
+          serviceAccountName: example-app
+          terminationGracePeriodSeconds: 30
+          topologySpreadConstraints:
+            - labelSelector:
+                matchLabels:
+                  app.kubernetes.io/component: app
+                  app.kubernetes.io/name: example-app
               maxSkew: 1
               topologyKey: topology.kubernetes.io/zone
               whenUnsatisfiable: DoNotSchedule

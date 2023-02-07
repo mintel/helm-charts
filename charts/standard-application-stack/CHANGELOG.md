@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v3.60.0] - 2023-02-07
+### Added
+- Add opentelemetry-operator Instrumentation custom resource
+
 ## [v3.59.1] - 2023-02-06
 ### Added
 - Add snapshot tests
