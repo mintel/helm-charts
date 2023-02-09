@@ -88,11 +88,11 @@ A Helm chart for provisioning resources using Terraform Cloud
 | memcached.terraform.module.version | string | `"1.0.1"` | Module version |
 | opensearch.enabled | bool | `false` | Set to true to create an Opensearch cluster |
 | opensearch.outputSecret | bool | `true` | Set to true to create an AWS secret manager external secret with outputs |
-| opensearch.terraform | object | `{"defaultVars":null,"instances":{},"module":{"source":"app.terraform.io/Mintel/opensearch/aws","version":"1.2.0"}}` | Set ArgoCD syncWave for this resource (default -40) syncWave: -40 |
+| opensearch.terraform | object | `{"defaultVars":null,"instances":{},"module":{"source":"app.terraform.io/Mintel/opensearch/aws","version":"1.2.1"}}` | Set ArgoCD syncWave for this resource (default -40) syncWave: -40 |
 | opensearch.terraform.defaultVars | string | `nil` | Vars to be applied to all instances defined below |
 | opensearch.terraform.instances | object | `{}` | A map of instance names => variable key/value pairs to be sent to the terraform module. The values in `defaultVars` will be applied to every instance if not explicitly defined here. |
 | opensearch.terraform.module.source | string | `"app.terraform.io/Mintel/opensearch/aws"` | Registry path of the Terraform module used to create the resource (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/opensearch/aws) |
-| opensearch.terraform.module.version | string | `"1.2.0"` | Module version |
+| opensearch.terraform.module.version | string | `"1.2.1"` | Module version |
 | postgresql.enabled | bool | `false` | Set to true to create a PostgreSQL RDS instance |
 | postgresql.outputSecret | bool | `true` | Set to true to create an AWS secret manager external secret with outputs |
 | postgresql.terraform.defaultVars | object | See below | Vars to be applied to all instances defined below |
