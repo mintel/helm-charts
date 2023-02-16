@@ -213,7 +213,7 @@ Check combined template defaults:
     kind: Deployment
     metadata:
       annotations:
-        helm.sh/chart: standard-application-stack-3.59.1
+        helm.sh/chart: standard-application-stack-3.60.0
         secret.reloader.stakater.com/reload: test-app-app
       labels:
         app.kubernetes.io/component: app
@@ -238,6 +238,8 @@ Check combined template defaults:
         type: RollingUpdate
       template:
         metadata:
+          annotations:
+            instrumentation.opentelemetry.io/inject-sdk: test-namespace/test-app
           labels:
             app.kubernetes.io/component: app
             app.kubernetes.io/managed-by: Helm
@@ -389,7 +391,7 @@ Check combined template with extra ports and monitors:
     kind: Deployment
     metadata:
       annotations:
-        helm.sh/chart: standard-application-stack-3.59.1
+        helm.sh/chart: standard-application-stack-3.60.0
         secret.reloader.stakater.com/reload: test-app-app
       labels:
         app.kubernetes.io/component: app
@@ -414,6 +416,8 @@ Check combined template with extra ports and monitors:
         type: RollingUpdate
       template:
         metadata:
+          annotations:
+            instrumentation.opentelemetry.io/inject-sdk: test-namespace/test-app
           labels:
             app.kubernetes.io/component: app
             app.kubernetes.io/managed-by: Helm

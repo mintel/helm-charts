@@ -326,7 +326,7 @@ Check EXTRA_ALLOWED_HOSTS env var extraHosts with extraIngresses:
     kind: Deployment
     metadata:
       annotations:
-        helm.sh/chart: standard-application-stack-3.59.1
+        helm.sh/chart: standard-application-stack-3.60.0
         secret.reloader.stakater.com/reload: example-app-app
       labels:
         app.kubernetes.io/component: app
@@ -352,6 +352,8 @@ Check EXTRA_ALLOWED_HOSTS env var extraHosts with extraIngresses:
         type: RollingUpdate
       template:
         metadata:
+          annotations:
+            instrumentation.opentelemetry.io/inject-sdk: test-namespace/example-app
           labels:
             app.kubernetes.io/component: app
             app.kubernetes.io/managed-by: Helm

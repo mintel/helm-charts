@@ -4,7 +4,7 @@ Check DynamoDB envfrom secretRef is present:
     kind: Deployment
     metadata:
       annotations:
-        helm.sh/chart: standard-application-stack-3.59.1
+        helm.sh/chart: standard-application-stack-3.60.0
         secret.reloader.stakater.com/reload: test-app-dynamodb
       labels:
         app.kubernetes.io/component: app
@@ -29,6 +29,8 @@ Check DynamoDB envfrom secretRef is present:
         type: RollingUpdate
       template:
         metadata:
+          annotations:
+            instrumentation.opentelemetry.io/inject-sdk: test-namespace/test-app
           labels:
             app.kubernetes.io/component: app
             app.kubernetes.io/managed-by: Helm
@@ -106,7 +108,7 @@ Check DynamoDB envfrom secretRef is present for local environment:
     kind: Deployment
     metadata:
       annotations:
-        helm.sh/chart: standard-application-stack-3.59.1
+        helm.sh/chart: standard-application-stack-3.60.0
         secret.reloader.stakater.com/reload: test-app-dynamodb
       labels:
         app.kubernetes.io/component: app
@@ -131,6 +133,8 @@ Check DynamoDB envfrom secretRef is present for local environment:
         type: RollingUpdate
       template:
         metadata:
+          annotations:
+            instrumentation.opentelemetry.io/inject-sdk: test-namespace/test-app
           labels:
             app.kubernetes.io/component: app
             app.kubernetes.io/managed-by: Helm
@@ -206,7 +210,7 @@ Check DynamoDB secretName Override:
     kind: Deployment
     metadata:
       annotations:
-        helm.sh/chart: standard-application-stack-3.59.1
+        helm.sh/chart: standard-application-stack-3.60.0
         secret.reloader.stakater.com/reload: overrideName
       labels:
         app.kubernetes.io/component: app
@@ -231,6 +235,8 @@ Check DynamoDB secretName Override:
         type: RollingUpdate
       template:
         metadata:
+          annotations:
+            instrumentation.opentelemetry.io/inject-sdk: test-namespace/test-app
           labels:
             app.kubernetes.io/component: app
             app.kubernetes.io/managed-by: Helm

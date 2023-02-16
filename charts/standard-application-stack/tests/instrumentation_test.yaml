@@ -1,0 +1,197 @@
+suite: Test opentelemetry-operator Instrumentation
+templates:
+  - instrumentation.yaml
+  - deployment.yaml
+release:
+  namespace: test-namespace
+tests:
+  - it: creates an Instrumentation
+    template: instrumentation.yaml
+    set:
+      global.clusterEnv: qa
+      global.cloudProvider.accountId: mock-account-id
+      global.cloudProvider.region: mock-aws-region
+      global.clusterName: mock-cluster-name
+      otelInstrumentation.enabled: true
+      otelInstrumentation.env:
+        - name: OTEL_ENV_VAR
+          value: mock-env-var-value
+      otelInstrumentation.exporter.endpoint: "mock-endpoint"
+      otelInstrumentation.resource.resourceAttributes.mock-resource-key: mock-resource-value
+      otelInstrumentation.resource.addK8sUIDAttributes: true
+      otelInstrumentation.propagators: [mock-propagators]
+    asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
+      - hasDocuments:
+          count: 1
+      - isKind:
+          of: Instrumentation
+      - equal:
+          path: spec.exporter.endpoint
+          value: "mock-endpoint"
+      - contains:
+          path: spec.env
+          content:
+            name: OTEL_ENV_VAR
+            value: mock-env-var-value
+      - equal:
+          path: spec.resource.resourceAttributes
+          value:
+            cloud.account.id: mock-account-id
+            cloud.platform: aws_eks
+            cloud.provider: aws
+            cloud.region: mock-aws-region
+            deployment.environment: qa
+            k8s.cluster.name: mock-cluster-name
+            mock-resource-key: mock-resource-value
+            service.name: example-app
+            service.namespace: test-namespace
+      - equal:
+          path: spec.resource.addK8sUIDAttributes
+          value: true
+      - equal:
+          path: spec.propagators
+          value: [mock-propagators]
+
+  - it: adds the env var injection annotation to the Deployment
+    set:
+      global.clusterEnv: qa
+      global.name: example-app
+      otelInstrumentation.enabled: true
+    asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
+      - template: instrumentation.yaml
+        equal:
+          path: metadata.namespace
+          value: "test-namespace"
+      - template: instrumentation.yaml
+        equal:
+          path: metadata.name
+          value: "example-app"
+      - template: deployment.yaml
+        equal:
+          path: spec.template.metadata.annotations["instrumentation.opentelemetry.io/inject-sdk"]
+          value: "test-namespace/example-app"
+
+  - it: adds the Python injection annotation to the Deployment
+    set:
+      global.clusterEnv: qa
+      global.name: example-app
+      otelInstrumentation.enabled: true
+      otelInstrumentation.injectPython.enabled: true
+      otelInstrumentation.injectPython.env:
+        - name: OTEL_ENV_VAR
+          value: mock-env-var-value
+    asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
+      - template: instrumentation.yaml
+        equal:
+          path: metadata.namespace
+          value: "test-namespace"
+      - template: instrumentation.yaml
+        equal:
+          path: metadata.name
+          value: "example-app"
+      - template: deployment.yaml
+        equal:
+          path: spec.template.metadata.annotations["instrumentation.opentelemetry.io/inject-python"]
+          value: "test-namespace/example-app"
+      - template: deployment.yaml
+        isNull:
+          path: spec.template.metadata.annotations["instrumentation.opentelemetry.io/inject-sdk"]
+
+  - it: adds the Java injection annotation to the Deployment
+    set:
+      global.clusterEnv: qa
+      global.name: example-app
+      otelInstrumentation.enabled: true
+      otelInstrumentation.injectJava.enabled: true
+      otelInstrumentation.injectJava.env:
+        - name: OTEL_ENV_VAR
+          value: mock-env-var-value
+    asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
+      - template: instrumentation.yaml
+        equal:
+          path: metadata.namespace
+          value: "test-namespace"
+      - template: instrumentation.yaml
+        equal:
+          path: metadata.name
+          value: "example-app"
+      - template: deployment.yaml
+        equal:
+          path: spec.template.metadata.annotations["instrumentation.opentelemetry.io/inject-java"]
+          value: "test-namespace/example-app"
+      - template: deployment.yaml
+        isNull:
+          path: spec.template.metadata.annotations["instrumentation.opentelemetry.io/inject-sdk"]
+
+  - it: adds the NodeJS injection annotation to the Deployment
+    set:
+      global.clusterEnv: qa
+      global.name: example-app
+      otelInstrumentation.enabled: true
+      otelInstrumentation.injectNodeJS.enabled: true
+      otelInstrumentation.injectNodeJS.env:
+        - name: OTEL_ENV_VAR
+          value: mock-env-var-value
+    asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
+      - template: instrumentation.yaml
+        equal:
+          path: metadata.namespace
+          value: "test-namespace"
+      - template: instrumentation.yaml
+        equal:
+          path: metadata.name
+          value: "example-app"
+      - template: deployment.yaml
+        equal:
+          path: spec.template.metadata.annotations["instrumentation.opentelemetry.io/inject-nodejs"]
+          value: "test-namespace/example-app"
+      - template: deployment.yaml
+        isNull:
+          path: spec.template.metadata.annotations["instrumentation.opentelemetry.io/inject-sdk"]
+
+  - it: adds the .NET injection annotation to the Deployment
+    set:
+      global.clusterEnv: qa
+      global.name: example-app
+      otelInstrumentation.enabled: true
+      otelInstrumentation.injectDotNet.enabled: true
+      otelInstrumentation.injectDotNet.env:
+        - name: OTEL_ENV_VAR
+          value: mock-env-var-value
+    asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
+      - template: instrumentation.yaml
+        equal:
+          path: metadata.namespace
+          value: "test-namespace"
+      - template: instrumentation.yaml
+        equal:
+          path: metadata.name
+          value: "example-app"
+      - template: deployment.yaml
+        equal:
+          path: spec.template.metadata.annotations["instrumentation.opentelemetry.io/inject-dotnet"]
+          value: "test-namespace/example-app"
+      - template: deployment.yaml
+        isNull:
+          path: spec.template.metadata.annotations["instrumentation.opentelemetry.io/inject-sdk"]
+
+  - it: sets the container names annotation
+    template: deployment.yaml
+    set:
+      global.clusterEnv: qa
+      global.name: example-app
+      otelInstrumentation.enabled: true
+      otelInstrumentation.containerNames:
+        - foo
+        - bar
+    asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
+      - equal:
+          path: spec.template.metadata.annotations["instrumentation.opentelemetry.io/container-names"]
+          value: "bar,foo"
