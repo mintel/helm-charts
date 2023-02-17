@@ -7,7 +7,11 @@ kind: ConfigMap
 metadata:
   name: {{ include "mintel_common.fullname" $data }}
   labels: {{ include "mintel_common.labels" $data | nindent 4 }}
-  annotations: {{ include "mintel_common.commonAnnotations" $data | nindent 4 }}
+  annotations:
+    {{ include "mintel_common.commonAnnotations" $data | nindent 4 }}
+    {{ if .argo }}
+    {{ include "mintel_common.argoAnnotations" .argo | nindent 4 }}
+    {{ end }}
   namespace: {{ $.Release.Namespace }}
 data:
   {{- range (required "Configmap content required." .configs) }}

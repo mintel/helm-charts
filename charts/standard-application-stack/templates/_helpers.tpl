@@ -43,6 +43,19 @@ matchExpressions:
 {{- define "mintel_common.commonAnnotations" -}}
 {{- end -}}
 
+{{/* Set up Argo annotations based on argo values block */}}
+{{ define "mintel_common.argoAnnotations" }}
+  {{ if .hook }}
+argocd.argoproj.io/hook: {{ toYaml .hook }}
+    {{ if .hookDeletePolicy }}
+argocd.argoproj.io/hook-delete-policy: {{ toYaml .hookDeletePolicy }}
+    {{ end }}
+  {{ end }}
+  {{ if .syncWave }}
+argocd.argoproj.io/sync-wave: {{ toYaml .syncWave }}
+  {{ end }}
+{{ end }}
+
 {{/* Common labels */}}
 {{- define "mintel_common.labels" -}}
 name: {{ include "mintel_common.fullname" . }}

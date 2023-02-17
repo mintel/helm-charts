@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v3.61.0] - 2023-02-17
+### Added
+- INFRA-29309: Support for setting ArgoCD annotations on config maps, secrets and service accounts
+### Fixed
+- Contents of `serviceAccount.annotations` do not get applied to the manifest.
+
 ## [v3.60.0] - 2023-02-07
 ### Added
 - Add opentelemetry-operator Instrumentation custom resource
