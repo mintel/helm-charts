@@ -83,3 +83,28 @@ tests:
       - equal:
           path: data["test2"]
           value: even more test data
+
+  - it: ArgoCD annotations
+    set:
+      global.clusterEnv: test
+      configMaps:
+        - name: "config"
+          argo:
+            hook: PreSync
+            hookDeletePolicy: HookSucceeded
+            syncWave: "-1"
+          create: true
+          configs: []
+    asserts:
+      - matchSnapshot: {}
+      - hasDocuments:
+          count: 1
+      - equal:
+          path: metadata.annotations["argocd.argoproj.io/hook"]
+          value: PreSync
+      - equal:
+          path: metadata.annotations["argocd.argoproj.io/hook-delete-policy"]
+          value: HookSucceeded
+      - equal:
+          path: metadata.annotations["argocd.argoproj.io/sync-wave"]
+          value: "-1"

@@ -217,8 +217,6 @@ serviceAccount:
   create: true
   # -- ServiceAccount to use. A name is generated using the mintel_common.fullname template if it is not set
   name: ""
-  # -- Additional Service Account annotations
-  annotations: {}
   # -- Configures IRSA for the Service Account
   irsa:
     # -- Determines whether service account is IRSA enabled
@@ -227,6 +225,12 @@ serviceAccount:
     nameOverride: ""
   # -- Whether to automount the service account token or not
   automountServiceAccountToken: true
+
+  # # -- ArgoCD settings
+  # argo:
+  #   hook: PreSync
+  #   hookDeletePolicy: HookSucceeded
+  #   syncWave: "-1"
 
   # -- Define list of Role's to create and bind to the service account
   # ref: https://kubernetes.io/docs/reference/access-authn-authz/rbac/
@@ -365,6 +369,10 @@ metrics:
 # ref: https://github.com/external-secrets/kubernetes-external-secrets
 externalSecret:
   enabled: true
+  #  argo:
+  #   hook: PreSync
+  #   hookDeletePolicy: HookSucceeded
+  #   syncWave: "-1"
   #  nameOverride: ""
   #  pathOverride: ""
   #  secretRefreshIntervalOverride: ""
@@ -374,6 +382,10 @@ externalSecret:
   #      value: test_value
 extraSecrets: []
 #  - name: ""
+#    argo:
+#     hook: PreSync
+#     hookDeletePolicy: HookSucceeded
+#     syncWave: "-1"
 #    pathOverride: ""
 #    pathSuffix: ""
 #    refreshIntervalOverride: ""
@@ -387,6 +399,11 @@ configMaps: []
 #  - name: ""
 #    # -- Whether or not to create the configmap
 #    create: false
+#    # -- ArgoCD settings
+#    argo:
+#      hook: PreSync
+#      hookDeletePolicy: HookSucceeded
+#      syncWave: "-1"
 #    # -- List of configs (files) within the configmap
 #    configs:
 #      - name: ""
