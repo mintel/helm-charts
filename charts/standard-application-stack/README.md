@@ -1,6 +1,6 @@
 # standard-application-stack
 
-![Version: 3.61.0](https://img.shields.io/badge/Version-3.61.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 3.60.0](https://img.shields.io/badge/Version-3.60.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A generic chart to support most common application requirements
 
@@ -323,7 +323,8 @@ A generic chart to support most common application requirements
 | service.enabled | bool | `true` | Whether to create Service resource or not |
 | service.labels | object | `{}` | Provide any additional labels which may be required. |
 | service.type | string | `"ClusterIP"` | Kubernetes Service type |
-| serviceAccount | object | `{"automountServiceAccountToken":true,"clusterRoles":[],"create":true,"irsa":{"enabled":false,"nameOverride":""},"name":"","roles":[]}` | ServiceAccount parameters ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/ |
+| serviceAccount | object | `{"annotations":{},"automountServiceAccountToken":true,"clusterRoles":[],"create":true,"irsa":{"enabled":false,"nameOverride":""},"name":"","roles":[]}` | ServiceAccount parameters ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/ |
+| serviceAccount.annotations | object | `{}` | Additional Service Account annotations |
 | serviceAccount.automountServiceAccountToken | bool | `true` | Whether to automount the service account token or not |
 | serviceAccount.clusterRoles | list | `[]` | Define list of ClusterRole's to create and bind to the service account ref: https://kubernetes.io/docs/reference/access-authn-authz/rbac/ |
 | serviceAccount.create | bool | `true` | Determine whether a Service Account should be created or it should reuse a exiting one. |

@@ -217,6 +217,8 @@ serviceAccount:
   create: true
   # -- ServiceAccount to use. A name is generated using the mintel_common.fullname template if it is not set
   name: ""
+  # -- Additional Service Account annotations
+  annotations: {}
   # -- Configures IRSA for the Service Account
   irsa:
     # -- Determines whether service account is IRSA enabled
