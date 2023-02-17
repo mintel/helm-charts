@@ -4,7 +4,7 @@ Check S3 envfrom secretRef is present:
     kind: Deployment
     metadata:
       annotations:
-        helm.sh/chart: standard-application-stack-3.60.0
+        helm.sh/chart: standard-application-stack-3.61.0
         secret.reloader.stakater.com/reload: test-app-s3
       labels:
         app.kubernetes.io/component: app
@@ -108,7 +108,7 @@ Check S3 envfrom secretRef is present for local environment:
     kind: Deployment
     metadata:
       annotations:
-        helm.sh/chart: standard-application-stack-3.60.0
+        helm.sh/chart: standard-application-stack-3.61.0
         secret.reloader.stakater.com/reload: test-app-s3
       labels:
         app.kubernetes.io/component: app
@@ -210,7 +210,7 @@ Check S3 envfrom secretRef is present for multiple instances of TF Cloud helm ch
     kind: Deployment
     metadata:
       annotations:
-        helm.sh/chart: standard-application-stack-3.60.0
+        helm.sh/chart: standard-application-stack-3.61.0
         secret.reloader.stakater.com/reload: mntl-test-bucket-another-s3,mntl-test-bucket-s3
       labels:
         app.kubernetes.io/component: app
@@ -322,7 +322,7 @@ Check S3 secretName Override:
     kind: Deployment
     metadata:
       annotations:
-        helm.sh/chart: standard-application-stack-3.60.0
+        helm.sh/chart: standard-application-stack-3.61.0
         secret.reloader.stakater.com/reload: overrideName
       labels:
         app.kubernetes.io/component: app
@@ -426,7 +426,7 @@ Check S3 stakater secret reloader annotation contains correct secrets for multip
     kind: Deployment
     metadata:
       annotations:
-        helm.sh/chart: standard-application-stack-3.60.0
+        helm.sh/chart: standard-application-stack-3.61.0
         secret.reloader.stakater.com/reload: mntl-test-bucket-another-s3,mntl-test-bucket-s3,test-app-app,test-app-extra-secret-1
       labels:
         app.kubernetes.io/component: app

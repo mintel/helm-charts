@@ -84,7 +84,7 @@ tests:
           path: data["test2"]
           value: even more test data
 
-  - it: ArgoCD annotations
+  - it: ensures ArgoCD annotations are populated
     set:
       global.clusterEnv: test
       configMaps:
