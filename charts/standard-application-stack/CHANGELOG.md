@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v3.61.2] - 2023-02-23
+### Fixed
+- Disable default OpenTelemetry propagators
+
 ## [v3.61.1] - 2023-02-17
 ### Fixed
 - Error when `serviceAccount.annotations` is empty.
