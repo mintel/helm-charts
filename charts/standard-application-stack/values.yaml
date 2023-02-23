@@ -554,12 +554,7 @@ otelInstrumentation:
   # -- Enable OpenTelemetry propagators.
   # Default to enabling all of the official list of propagators + AWS XRay.
   # ref: https://opentelemetry.io/docs/reference/specification/context/api-propagators/
-  propagators:
-    - tracecontext
-    - baggage
-    - b3
-    - jaeger
-    - xray
+  propagators: []
 
 # -- Configure an NLB to route traffic direct to pods (for non HTTP traffic)
 nlb:
