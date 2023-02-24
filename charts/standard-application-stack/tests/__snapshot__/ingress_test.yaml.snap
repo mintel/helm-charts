@@ -326,7 +326,7 @@ Check EXTRA_ALLOWED_HOSTS env var extraHosts with extraIngresses:
     kind: Deployment
     metadata:
       annotations:
-        helm.sh/chart: standard-application-stack-3.61.2
+        helm.sh/chart: standard-application-stack-3.61.3
         secret.reloader.stakater.com/reload: example-app-app
       labels:
         app.kubernetes.io/component: app
@@ -1085,7 +1085,7 @@ Default ingress with path based routing:
                       number: 5678
                 path: /i02
                 pathType: Prefix
-Multiple ingresses with different names:
+allows extraIngresses to override default values:
   1: |
     apiVersion: networking.k8s.io/v1
     kind: Ingress
@@ -1171,8 +1171,8 @@ Multiple ingresses with different names:
             paths:
               - backend:
                   service:
-                    name: example-app
+                    name: mock-service
                     port:
-                      number: 8000
-                path: /
+                      name: mock-port
+                path: /mock-path
                 pathType: Prefix

@@ -422,7 +422,7 @@ tests:
           path: spec.rules[0].http.paths[1].backend.service.port.number
           value: 5678
 
-  - it: Multiple ingresses with different names
+  - it: allows extraIngresses to override default values
     template: ingress.yaml
     set:
       global.clusterEnv: qa
@@ -433,6 +433,11 @@ tests:
       ingress.extraIngresses:
         - ingressNameSuffix: ops-media
           defaultHost: ops-media.mintel.com
+          pathBasedRouting:
+            - targetService: mock-service
+              targetPort: mock-port
+              path: /mock-path
+
     asserts:
       - matchSnapshot: {} # Check for regressions and unexpected changes.
       - hasDocuments:
@@ -452,4 +457,16 @@ tests:
       - equal:
           path: spec.rules[0].host
           value: ops-media.mintel.com
+        documentIndex: 1
+      - equal:
+          path: spec.rules[0].http.paths[0].backend.service.name
+          value: mock-service
+        documentIndex: 1
+      - equal:
+          path: spec.rules[0].http.paths[0].backend.service.port.name
+          value: mock-port
+        documentIndex: 1
+      - equal:
+          path: spec.rules[0].http.paths[0].path
+          value: /mock-path
         documentIndex: 1

@@ -1,6 +1,6 @@
 # standard-application-stack
 
-![Version: 3.61.2](https://img.shields.io/badge/Version-3.61.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 3.61.3](https://img.shields.io/badge/Version-3.61.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A generic chart to support most common application requirements
 
@@ -152,7 +152,7 @@ A generic chart to support most common application requirements
 | ingress.enabled | bool | `false` | Set to true to enable ingress record generation |
 | ingress.extraAnnotations | object | `{}` | Additional Ingress annotations For a full list of possible ingress annotations, please see ref: https://github.com/kubernetes/ingress-nginx/blob/master/docs/user-guide/nginx-configuration/annotations.md |
 | ingress.extraHosts | list | `[]` | List of extra ingress hosts to setup |
-| ingress.extraIngresses | list | `[]` | Optional: ability to construct multiple ingresses with different settings (names, cache headers, etc) Should be able to override all Ingress values be setting them again on a per instance basis |
+| ingress.extraIngresses | list | `[]` | Optional: ability to construct multiple ingresses with different settings (names, cache headers, etc) This accepts all the same values as the top-level ingress. It also inherits its default values from the top-level ingress, so all differences must be overridden per-instance. |
 | ingress.setNoCacheHeaders | bool | `false` | Only applies for 'haproxy' ingresses; Sets no-cache headers |
 | ingress.setXForwardedForHeaders | bool | `false` | Only applies for 'haproxy' ingresses; Sets X-Forwarded-For headers |
 | ingress.specificRulesHostsYaml | object | `{}` | Optional ingress Rules Hosts Yaml that doesn't fit standard pattern |

@@ -124,7 +124,11 @@ alb.ingress.kubernetes.io/unhealthy-threshold-count: "{{ .alb.healthcheck.unheal
         {{- if (and .Values.oauthProxy .Values.oauthProxy.enabled) }}
         number: 4180
         {{- else }}
-        number: {{ .targetPort | default .Values.port }}
+        {{ $port := .targetPort | default .Values.port }}
+        {{- if not (eq ($port | int) 0) }}
+        {{- $port = $port | int }}
+        {{- end }}
+        {{ if $port | kindIs "int" }}number{{else}}name{{end}}: {{ $port }}
         {{- end }}
 {{- end -}}
 
