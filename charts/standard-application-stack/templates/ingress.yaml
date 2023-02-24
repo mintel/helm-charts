@@ -1,7 +1,7 @@
 {{- if .Values.ingress.enabled }}
 {{- if (eq .Values.global.clusterEnv "local") }}
----
 {{- $ingressData := dict "Release" $.Release "Chart" $.Chart "Values" $.Values "ingress" .Values.ingress }}
+---
 apiVersion: {{ include "common.capabilities.ingress.apiVersion" . }}
 kind: Ingress
 metadata:
@@ -31,64 +31,60 @@ spec:
                   number: {{ .Values.port }}
                   {{- end }}
 {{- else }}
-{{- $ingresses := prepend .Values.ingress.extraIngresses .Values.ingress -}}
-{{- range $ingresses }}
----
+{{- range prepend .Values.ingress.extraIngresses .Values.ingress }}
+{{- with deepCopy $.Values.ingress | merge . }}
 {{- $ingressData := dict "Release" $.Release "Chart" $.Chart "Values" $.Values "ingress" . }}
+{{- $ingressName := include "mintel_common.ingressName" $ingressData }}
+{{- $ingressClass := include "mintel_common.ingress.className" $ingressData }}
+---
 apiVersion: {{ include "common.capabilities.ingress.apiVersion" $ }}
 kind: Ingress
 metadata:
-  name: {{ include "mintel_common.ingressName" $ingressData }}
+  name: {{ $ingressName }}
   namespace: {{ $.Release.Namespace }}
   labels: {{ include "mintel_common.ingressLabels" $ingressData | nindent 4 }}
   annotations:
     {{ include "mintel_common.commonAnnotations" $ingressData | nindent 4 }}
-    {{- if (or $.Values.ingress.extraAnnotations $ingressData.ingress.extraAnnotations) }}
-    {{- $ingressData.extraAnnotations | default $.Values.ingress.extraAnnotations | toYaml | nindent 4 }}
+
+    {{- with .extraAnnotations }}
+    {{- toYaml . | nindent 4 }}
     {{- end }}
 
-    {{- if (eq (include "mintel_common.ingress.className" $ingressData) "haproxy" ) }}
-    {{- include "mintel_common.ingress.haproxy_annotations" $ingressData | nindent 4 }}
-    {{- else }}
-
-    {{- if (and $.Values.ingress.alb $.Values.ingress.alb.enabled) }}
-    {{- $albData := dict "Release" $.Release "Chart" $.Chart "Values" $.Values "alb" $.Values.ingress.alb "defaultHost" $ingressData.ingress.defaultHost }}
-    {{- include "mintel_common.ingress.alb_annotations" $albData | nindent 4 }}
+    {{- if (eq $ingressClass "haproxy" ) }}
+      {{- include "mintel_common.ingress.haproxy_annotations" $ingressData | nindent 4 }}
+    {{- else if (and .alb .alb.enabled) }}
+      {{- $albData := dict "Release" $.Release "Chart" $.Chart "Values" $.Values "alb" .alb "defaultHost" .defaultHost }}
+      {{- include "mintel_common.ingress.alb_annotations" $albData | nindent 4 }}
     {{- end }}
 
-    {{- end }}
-    {{- if (and $.Values.ingress.blackbox $.Values.ingress.blackbox.enabled) }}
+    {{- if (and .blackbox .blackbox.enabled) }}
     prometheus.io/probe: "true"
-    prometheus.io/probepath: {{ $.Values.ingress.blackbox.probePath }}
+    prometheus.io/probepath: {{ .blackbox.probePath }}
     {{- end }}
 spec:
-  ingressClassName: {{ include "mintel_common.ingress.className" $ingressData }}
+  ingressClassName: {{ $ingressClass }}
   rules:
     - host: {{ .defaultHost }}
       http:
         paths:
           # 10
-          {{- if (not $.Values.ingress.pathBasedRouting) }}
-          {{- include "mintel_common.ingress.ingressPath" $ingressData | nindent 10 }}
+          {{- range .pathBasedRouting }}
+            {{- $pathData := dict "Release" $.Release "Chart" $.Chart "Values" $.Values "targetService" .targetService "targetPort" .targetPort "path" .path "pathType" .pathType }}
+            {{- include "mintel_common.ingress.ingressPath" $pathData | nindent 10 }}
           {{- else }}
-          {{- range $.Values.ingress.pathBasedRouting }}
-          {{- $pathData := dict "Release" $.Release "Chart" $.Chart "Values" $.Values "targetService" .targetService "targetPort" .targetPort "path" .path "pathType" .pathType }}
-          {{- include "mintel_common.ingress.ingressPath" $pathData | nindent 10 }}
-          {{- end }}
+            {{- include "mintel_common.ingress.ingressPath" $ingressData | nindent 10 }}
           {{- end }}
     {{- range .extraHosts }}
     {{- if (or (not $.Values.oauthProxy.enabled) (ne $.Values.oauthProxy.ingressHost .name)) }}
     - host: {{ .name }}
       http:
         paths:
-          {{- if (not $.Values.ingress.pathBasedRouting) }}
-          {{- $pathData := dict "Release" $.Release "Chart" $.Chart "Values" $.Values "targetService" .serviceName "targetPort" .servicePort "path" .path "pathType" .pathType }}
-          {{- include "mintel_common.ingress.ingressPath" $pathData | nindent 10 }}
+          {{- range .pathBasedRouting }}
+            {{- $pathData := dict "Release" $.Release "Chart" $.Chart "Values" $.Values "targetService" .targetService "targetPort" .targetPort "path" .path "pathType" .pathType }}
+            {{- include "mintel_common.ingress.ingressPath" $pathData | nindent 10 }}
           {{- else }}
-          {{- range $.Values.ingress.pathBasedRouting }}
-          {{- $pathData := dict "Release" $.Release "Chart" $.Chart "Values" $.Values "targetService" .targetService "targetPort" .targetPort "path" .path "pathType" .pathType }}
-          {{- include "mintel_common.ingress.ingressPath" $pathData | nindent 10 }}
-          {{- end }}
+            {{- $pathData := dict "Release" $.Release "Chart" $.Chart "Values" $.Values "targetService" .serviceName "targetPort" .servicePort "path" .path "pathType" .pathType }}
+            {{- include "mintel_common.ingress.ingressPath" $pathData | nindent 10 }}
           {{- end }}
     {{- end }}
     {{- end }}
@@ -104,37 +100,42 @@ spec:
                 port:
                   number: 4180
     {{- end }}
-    {{- with $.Values.ingress.specificRulesHostsYaml }}
+
+    {{- with .specificRulesHostsYaml }}
     {{- toYaml . | nindent 4 }}
     {{- end }}
-  {{- if and $.Values.ingress.tls ( or $.Values.global.ingressTLSSecrets $.Values.ingress.specificTlsHostsYaml ) }}
+
+  {{- if and .tls ( or $.Values.global.ingressTLSSecrets .specificTlsHostsYaml ) }}
   tls:
     {{- range $key, $val := $.Values.global.ingressTLSSecrets }}
-    {{- $domainUsed := false -}}
-    {{- $domainHosts := list -}}
-    {{- if hasSuffix ($key | replace "_" ".") $.Values.ingress.defaultHost -}}
-    {{- $domainUsed = true -}}
-    {{- $domainHosts = append $domainHosts $.Values.ingress.defaultHost -}}
-    {{- end -}}
-    {{- range $.Values.ingress.extraHosts -}}
-    {{- if hasSuffix ($key | replace "_" ".") .name -}}
-    {{- $domainUsed = true -}}
-    {{- $domainHosts = append $domainHosts .name -}}
-    {{- end -}}
-    {{- end -}}
-    {{- if (and $.Values.oauthProxy $.Values.oauthProxy.ingressHost) }}
-    {{- $domainHosts = append $domainHosts $.Values.oauthProxy.ingressHost }}
-    {{- end }}
-    {{- if $domainUsed }}
+      {{- $domainUsed := false -}}
+      {{- $domainHosts := list -}}
+      {{- if hasSuffix ($key | replace "_" ".") $ingressData.ingress.defaultHost -}}
+        {{- $domainUsed = true -}}
+        {{- $domainHosts = append $domainHosts $ingressData.ingress.defaultHost -}}
+      {{- end -}}
+      {{- range $ingressData.ingress.extraHosts -}}
+        {{- if hasSuffix ($key | replace "_" ".") .name -}}
+          {{- $domainUsed = true -}}
+          {{- $domainHosts = append $domainHosts .name -}}
+        {{- end -}}
+      {{- end -}}
+      {{- if (and $.Values.oauthProxy $.Values.oauthProxy.ingressHost) }}
+        {{- $domainHosts = append $domainHosts $.Values.oauthProxy.ingressHost }}
+      {{- end }}
+      {{- if $domainUsed }}
     - hosts:
         {{- toYaml $domainHosts | nindent 8 }}
       secretName: {{ $val }}
+      {{- end }}
     {{- end }}
-    {{- end }}
-    {{- with $.Values.ingress.specificTlsHostsYaml }}
+
+    {{- with $ingressData.ingress.specificTlsHostsYaml }}
     {{- toYaml . | nindent 4 }}
     {{- end }}
   {{- end }}
+
+{{- end }}
 {{- end }}
 
 {{- end }}
