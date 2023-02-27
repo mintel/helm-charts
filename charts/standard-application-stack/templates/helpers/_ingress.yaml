@@ -2,10 +2,10 @@
 
 {{/* Output ingressClassName */}}
 {{- define "mintel_common.ingress.className" -}}
-{{- if (and .Values.ingress.alb .Values.ingress.alb.enabled) -}}
-  {{- if eq .Values.ingress.alb.scheme "internet-facing" -}}
+{{- if (and .Values.ingress.alb .ingress.alb.enabled) -}}
+  {{- if eq .ingress.alb.scheme "internet-facing" -}}
   alb-public-apps-default
-  {{- else if eq .Values.ingress.alb.scheme "internal" -}}
+  {{- else if eq .ingress.alb.scheme "internal" -}}
   alb-internal-apps-default
   {{- end -}}
 {{- else -}}
@@ -154,9 +154,9 @@ alb.ingress.kubernetes.io/unhealthy-threshold-count: "{{ .alb.healthcheck.unheal
 {{/* Create a fully qualified app name, but with ability to override it for ingress */}}
 {{- define "mintel_common.ingressName" -}}
 {{- if .ingress.ingressNameSuffix }}
-{{- printf "%s-%s" (coalesce .ingress.ingressNameOverride $.Values.ingress.ingressNameOverride (include "mintel_common.fullname" .)) .ingress.ingressNameSuffix -}}
+{{- printf "%s-%s" (coalesce .ingress.ingressNameOverride (include "mintel_common.fullname" .)) .ingress.ingressNameSuffix -}}
 {{- else -}}
-{{- coalesce .ingress.ingressNameOverride $.Values.ingress.ingressNameOverride (include "mintel_common.fullname" .) -}}
+{{- coalesce .ingress.ingressNameOverride (include "mintel_common.fullname" .) -}}
 {{- end -}}
 {{- end -}}
 

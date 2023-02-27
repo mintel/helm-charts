@@ -4,7 +4,7 @@ Check MariaDB envfrom secretRef is present:
     kind: Deployment
     metadata:
       annotations:
-        helm.sh/chart: standard-application-stack-3.61.3
+        helm.sh/chart: standard-application-stack-3.61.4
         secret.reloader.stakater.com/reload: test-app-mariadb
       labels:
         app.kubernetes.io/component: app
@@ -108,7 +108,7 @@ Check MariaDB envfrom secretRef is present for local environment:
     kind: Deployment
     metadata:
       annotations:
-        helm.sh/chart: standard-application-stack-3.61.3
+        helm.sh/chart: standard-application-stack-3.61.4
         secret.reloader.stakater.com/reload: test-app-mariadb
       labels:
         app.kubernetes.io/component: app
@@ -210,7 +210,7 @@ Check MariaDB secretName Override:
     kind: Deployment
     metadata:
       annotations:
-        helm.sh/chart: standard-application-stack-3.61.3
+        helm.sh/chart: standard-application-stack-3.61.4
         secret.reloader.stakater.com/reload: overrideName
       labels:
         app.kubernetes.io/component: app

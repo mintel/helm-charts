@@ -433,6 +433,8 @@ tests:
       ingress.extraIngresses:
         - ingressNameSuffix: ops-media
           defaultHost: ops-media.mintel.com
+          alb:
+            enabled: false
           pathBasedRouting:
             - targetService: mock-service
               targetPort: mock-port
@@ -449,6 +451,17 @@ tests:
       - equal:
           path: spec.rules[0].host
           value: media.mintel.com
+        documentIndex: 0
+      - equal:
+          path: spec.ingressClassName
+          value: alb-public-apps-default
+        documentIndex: 0
+      - isNull:
+          path: metadata.annotations["ingress.kubernetes.io/rewrite-target"]
+        documentIndex: 0
+      - equal:
+          path: metadata.annotations["alb.ingress.kubernetes.io/backend-protocol"]
+          value: HTTP
         documentIndex: 0
       - equal:
           path: metadata.name
@@ -469,4 +482,15 @@ tests:
       - equal:
           path: spec.rules[0].http.paths[0].path
           value: /mock-path
+        documentIndex: 1
+      - equal:
+          path: spec.ingressClassName
+          value: haproxy
+        documentIndex: 1
+      - equal:
+          path: metadata.annotations["ingress.kubernetes.io/rewrite-target"]
+          value: /
+        documentIndex: 1
+      - isNull:
+          path: metadata.annotations["alb.ingress.kubernetes.io/backend-protocol"]
         documentIndex: 1
