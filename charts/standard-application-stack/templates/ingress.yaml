@@ -31,16 +31,16 @@ spec:
                   number: {{ .Values.port }}
                   {{- end }}
 {{- else }}
-{{- range prepend .Values.ingress.extraIngresses .Values.ingress }}
-{{- with deepCopy $.Values.ingress | merge . }}
-{{- $ingressData := dict "Release" $.Release "Chart" $.Chart "Values" $.Values "ingress" . }}
-{{- $ingressName := include "mintel_common.ingressName" $ingressData }}
+{{- $rootIngress := omit .Values.ingress "extraIngresses" }}
+{{- range prepend .Values.ingress.extraIngresses $rootIngress }}
+{{- $ingressData := dict "Release" $.Release "Chart" $.Chart "Values" $.Values "ingress" (mergeOverwrite (deepCopy $rootIngress) .) }}
 {{- $ingressClass := include "mintel_common.ingress.className" $ingressData }}
+{{- with $ingressData.ingress }}
 ---
 apiVersion: {{ include "common.capabilities.ingress.apiVersion" $ }}
 kind: Ingress
 metadata:
-  name: {{ $ingressName }}
+  name: {{ include "mintel_common.ingressName" $ingressData }}
   namespace: {{ $.Release.Namespace }}
   labels: {{ include "mintel_common.ingressLabels" $ingressData | nindent 4 }}
   annotations:
@@ -52,7 +52,7 @@ metadata:
 
     {{- if (eq $ingressClass "haproxy" ) }}
       {{- include "mintel_common.ingress.haproxy_annotations" $ingressData | nindent 4 }}
-    {{- else if (and .alb .alb.enabled) }}
+    {{- else if .alb.enabled }}
       {{- $albData := dict "Release" $.Release "Chart" $.Chart "Values" $.Values "alb" .alb "defaultHost" .defaultHost }}
       {{- include "mintel_common.ingress.alb_annotations" $albData | nindent 4 }}
     {{- end }}

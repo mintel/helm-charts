@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v3.61.4] - 2023-02-27
+### Fixed
+- Fix ingress values/rendering for extraIngresses
+
 ## [v3.61.3] - 2023-02-24
 ### Fixed
 - Allow `ingress.extraIngresses` to override any field of the top-level ingress
