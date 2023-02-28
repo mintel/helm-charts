@@ -4,7 +4,7 @@ Check container extraPorts:
     kind: Deployment
     metadata:
       annotations:
-        helm.sh/chart: standard-application-stack-3.61.4
+        helm.sh/chart: standard-application-stack-3.61.5
         secret.reloader.stakater.com/reload: example-app-app
       labels:
         app.kubernetes.io/component: app
@@ -112,7 +112,7 @@ Check container extraPorts are validated:
     kind: Deployment
     metadata:
       annotations:
-        helm.sh/chart: standard-application-stack-3.61.4
+        helm.sh/chart: standard-application-stack-3.61.5
         secret.reloader.stakater.com/reload: example-app-app
       labels:
         app.kubernetes.io/component: app
@@ -222,7 +222,7 @@ Check container extraPorts protocol:
     kind: Deployment
     metadata:
       annotations:
-        helm.sh/chart: standard-application-stack-3.61.4
+        helm.sh/chart: standard-application-stack-3.61.5
         secret.reloader.stakater.com/reload: example-app-app
       labels:
         app.kubernetes.io/component: app
@@ -331,7 +331,7 @@ Check container hybrid cloud ports:
     kind: Deployment
     metadata:
       annotations:
-        helm.sh/chart: standard-application-stack-3.61.4
+        helm.sh/chart: standard-application-stack-3.61.5
         secret.reloader.stakater.com/reload: example-app-app
       labels:
         app.kubernetes.io/component: app
@@ -440,7 +440,7 @@ Check default container main port:
     kind: Deployment
     metadata:
       annotations:
-        helm.sh/chart: standard-application-stack-3.61.4
+        helm.sh/chart: standard-application-stack-3.61.5
         secret.reloader.stakater.com/reload: example-app-app
       labels:
         app.kubernetes.io/component: app
@@ -544,7 +544,7 @@ Check overridden container main port:
     kind: Deployment
     metadata:
       annotations:
-        helm.sh/chart: standard-application-stack-3.61.4
+        helm.sh/chart: standard-application-stack-3.61.5
         secret.reloader.stakater.com/reload: example-app-app
       labels:
         app.kubernetes.io/component: app
