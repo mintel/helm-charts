@@ -71,7 +71,7 @@ monitoring.coreos.com/v1
 
 {{/* Return the appropriate apiVersion for External Secrets. */}}
 {{- define "common.capabilities.externalsecret.apiVersion" -}}
-external-secrets.io/v1alpha1
+external-secrets.io/v1beta1
 {{- end -}}
 
 {{/* Return the appropriate apiVersion for Secrets. */}}

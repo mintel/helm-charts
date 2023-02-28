@@ -36,7 +36,7 @@ adds the .NET injection annotation to the Deployment:
     kind: Deployment
     metadata:
       annotations:
-        helm.sh/chart: standard-application-stack-3.61.4
+        helm.sh/chart: standard-application-stack-3.61.5
         secret.reloader.stakater.com/reload: example-app-app
       labels:
         app.kubernetes.io/component: app
@@ -172,7 +172,7 @@ adds the Java injection annotation to the Deployment:
     kind: Deployment
     metadata:
       annotations:
-        helm.sh/chart: standard-application-stack-3.61.4
+        helm.sh/chart: standard-application-stack-3.61.5
         secret.reloader.stakater.com/reload: example-app-app
       labels:
         app.kubernetes.io/component: app
@@ -308,7 +308,7 @@ adds the NodeJS injection annotation to the Deployment:
     kind: Deployment
     metadata:
       annotations:
-        helm.sh/chart: standard-application-stack-3.61.4
+        helm.sh/chart: standard-application-stack-3.61.5
         secret.reloader.stakater.com/reload: example-app-app
       labels:
         app.kubernetes.io/component: app
@@ -444,7 +444,7 @@ adds the Python injection annotation to the Deployment:
     kind: Deployment
     metadata:
       annotations:
-        helm.sh/chart: standard-application-stack-3.61.4
+        helm.sh/chart: standard-application-stack-3.61.5
         secret.reloader.stakater.com/reload: example-app-app
       labels:
         app.kubernetes.io/component: app
@@ -576,7 +576,7 @@ adds the env var injection annotation to the Deployment:
     kind: Deployment
     metadata:
       annotations:
-        helm.sh/chart: standard-application-stack-3.61.4
+        helm.sh/chart: standard-application-stack-3.61.5
         secret.reloader.stakater.com/reload: example-app-app
       labels:
         app.kubernetes.io/component: app
@@ -719,7 +719,7 @@ sets the container names annotation:
     kind: Deployment
     metadata:
       annotations:
-        helm.sh/chart: standard-application-stack-3.61.4
+        helm.sh/chart: standard-application-stack-3.61.5
         secret.reloader.stakater.com/reload: example-app-app
       labels:
         app.kubernetes.io/component: app

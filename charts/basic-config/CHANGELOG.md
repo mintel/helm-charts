@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v0.2.3] - 2023-02-28
+### Fixed
+- Upgrade from deprecated external-secrets API version
+
 ## [v0.2.2] - 2023-02-06
 ### Added
 - Add snapshot tests
