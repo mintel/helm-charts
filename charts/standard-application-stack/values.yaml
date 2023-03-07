@@ -429,11 +429,6 @@ volumeMounts: []
 # -- Enabled opentelemetry-operator Instrumentation
 # ref: https://github.com/open-telemetry/opentelemetry-operator#opentelemetry-auto-instrumentation-injection
 otelInstrumentation:
-  # -- If true, create opentelemetry-operator Instrumentation custom resource and add annotations to pods
-  # such that the OpenTelemetry config environment variables are automatically injected into pods.
-  # You can also optionally inject auto-instrumentation libraries for some languages.
-  # ref: https://github.com/open-telemetry/opentelemetry-operator/blob/v0.68.0/docs/api.md#instrumentation
-  enabled: false
   # -- The ArgoCD sync-wave to use for the Instrumentation CR.
   # This needs to be lower than the sync-wave of any deployments/statefulsets that use it.
   # ref: https://argo-cd.readthedocs.io/en/stable/user-guide/sync-waves/

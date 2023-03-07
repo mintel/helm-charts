@@ -36,7 +36,7 @@ adds the .NET injection annotation to the Deployment:
     kind: Deployment
     metadata:
       annotations:
-        helm.sh/chart: standard-application-stack-3.61.5
+        helm.sh/chart: standard-application-stack-3.62.0
         secret.reloader.stakater.com/reload: example-app-app
       labels:
         app.kubernetes.io/component: app
@@ -172,7 +172,7 @@ adds the Java injection annotation to the Deployment:
     kind: Deployment
     metadata:
       annotations:
-        helm.sh/chart: standard-application-stack-3.61.5
+        helm.sh/chart: standard-application-stack-3.62.0
         secret.reloader.stakater.com/reload: example-app-app
       labels:
         app.kubernetes.io/component: app
@@ -308,7 +308,7 @@ adds the NodeJS injection annotation to the Deployment:
     kind: Deployment
     metadata:
       annotations:
-        helm.sh/chart: standard-application-stack-3.61.5
+        helm.sh/chart: standard-application-stack-3.62.0
         secret.reloader.stakater.com/reload: example-app-app
       labels:
         app.kubernetes.io/component: app
@@ -444,7 +444,7 @@ adds the Python injection annotation to the Deployment:
     kind: Deployment
     metadata:
       annotations:
-        helm.sh/chart: standard-application-stack-3.61.5
+        helm.sh/chart: standard-application-stack-3.62.0
         secret.reloader.stakater.com/reload: example-app-app
       labels:
         app.kubernetes.io/component: app
@@ -491,6 +491,8 @@ adds the Python injection annotation to the Deployment:
                   value: qa
                 - name: RUNTIME_ENVIRONMENT
                   value: kubernetes
+                - name: OTEL_EXPORTER_OTLP_ENDPOINT
+                  value: http://grafana-agent.monitoring.svc.cluster.local:4318
               envFrom:
                 - secretRef:
                     name: example-app-app
@@ -576,7 +578,7 @@ adds the env var injection annotation to the Deployment:
     kind: Deployment
     metadata:
       annotations:
-        helm.sh/chart: standard-application-stack-3.61.5
+        helm.sh/chart: standard-application-stack-3.62.0
         secret.reloader.stakater.com/reload: example-app-app
       labels:
         app.kubernetes.io/component: app
@@ -623,6 +625,8 @@ adds the env var injection annotation to the Deployment:
                   value: qa
                 - name: RUNTIME_ENVIRONMENT
                   value: kubernetes
+                - name: OTEL_PYTHON_EXCLUDED_URLS
+                  value: /health[zy]?,/ready[z]?,/readiness,/external-health-check,/metrics
               envFrom:
                 - secretRef:
                     name: example-app-app
@@ -674,7 +678,7 @@ adds the env var injection annotation to the Deployment:
               topologyKey: topology.kubernetes.io/zone
               whenUnsatisfiable: DoNotSchedule
           volumes: null
-creates an Instrumentation:
+creates an Instrumentation using Python as an example:
   1: |
     apiVersion: opentelemetry.io/v1alpha1
     kind: Instrumentation
@@ -719,7 +723,7 @@ sets the container names annotation:
     kind: Deployment
     metadata:
       annotations:
-        helm.sh/chart: standard-application-stack-3.61.5
+        helm.sh/chart: standard-application-stack-3.62.0
         secret.reloader.stakater.com/reload: example-app-app
       labels:
         app.kubernetes.io/component: app
@@ -746,7 +750,7 @@ sets the container names annotation:
         metadata:
           annotations:
             instrumentation.opentelemetry.io/container-names: bar,foo
-            instrumentation.opentelemetry.io/inject-sdk: test-namespace/example-app
+            instrumentation.opentelemetry.io/inject-python: test-namespace/example-app
           labels:
             app.kubernetes.io/component: app
             app.kubernetes.io/managed-by: Helm
@@ -767,6 +771,8 @@ sets the container names annotation:
                   value: qa
                 - name: RUNTIME_ENVIRONMENT
                   value: kubernetes
+                - name: OTEL_EXPORTER_OTLP_ENDPOINT
+                  value: http://grafana-agent.monitoring.svc.cluster.local:4318
               envFrom:
                 - secretRef:
                     name: example-app-app

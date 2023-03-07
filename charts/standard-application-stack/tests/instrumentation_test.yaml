@@ -5,14 +5,14 @@ templates:
 release:
   namespace: test-namespace
 tests:
-  - it: creates an Instrumentation
+  - it: creates an Instrumentation using Python as an example
     template: instrumentation.yaml
     set:
       global.clusterEnv: qa
       global.cloudProvider.accountId: mock-account-id
       global.cloudProvider.region: mock-aws-region
       global.clusterName: mock-cluster-name
-      otelInstrumentation.enabled: true
+      otelInstrumentation.injectPython.enabled: true
       otelInstrumentation.env:
         - name: OTEL_ENV_VAR
           value: mock-env-var-value
@@ -57,7 +57,7 @@ tests:
     set:
       global.clusterEnv: qa
       global.name: example-app
-      otelInstrumentation.enabled: true
+      otelInstrumentation.injectPython.enabled: true
     asserts:
       - matchSnapshot: {} # Check for regressions and unexpected changes.
       - template: instrumentation.yaml
@@ -77,8 +77,8 @@ tests:
     set:
       global.clusterEnv: qa
       global.name: example-app
-      otelInstrumentation.enabled: true
       otelInstrumentation.injectPython.enabled: true
+      otelInstrumentation.autoInjectSidecar.enabled: true
       otelInstrumentation.injectPython.env:
         - name: OTEL_ENV_VAR
           value: mock-env-var-value
@@ -104,8 +104,8 @@ tests:
     set:
       global.clusterEnv: qa
       global.name: example-app
-      otelInstrumentation.enabled: true
       otelInstrumentation.injectJava.enabled: true
+      otelInstrumentation.autoInjectSidecar.enabled: true
       otelInstrumentation.injectJava.env:
         - name: OTEL_ENV_VAR
           value: mock-env-var-value
@@ -131,8 +131,8 @@ tests:
     set:
       global.clusterEnv: qa
       global.name: example-app
-      otelInstrumentation.enabled: true
       otelInstrumentation.injectNodeJS.enabled: true
+      otelInstrumentation.autoInjectSidecar.enabled: true
       otelInstrumentation.injectNodeJS.env:
         - name: OTEL_ENV_VAR
           value: mock-env-var-value
@@ -158,8 +158,8 @@ tests:
     set:
       global.clusterEnv: qa
       global.name: example-app
-      otelInstrumentation.enabled: true
       otelInstrumentation.injectDotNet.enabled: true
+      otelInstrumentation.autoInjectSidecar.enabled: true
       otelInstrumentation.injectDotNet.env:
         - name: OTEL_ENV_VAR
           value: mock-env-var-value
@@ -186,7 +186,8 @@ tests:
     set:
       global.clusterEnv: qa
       global.name: example-app
-      otelInstrumentation.enabled: true
+      otelInstrumentation.autoInjectSidecar.enabled: true
+      otelInstrumentation.injectPython.enabled: true
       otelInstrumentation.containerNames:
         - foo
         - bar

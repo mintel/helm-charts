@@ -4,7 +4,7 @@ Check MariaDB envfrom secretRef is present:
     kind: Deployment
     metadata:
       annotations:
-        helm.sh/chart: standard-application-stack-3.61.5
+        helm.sh/chart: standard-application-stack-3.62.0
         secret.reloader.stakater.com/reload: test-app-mariadb
       labels:
         app.kubernetes.io/component: app
@@ -29,8 +29,7 @@ Check MariaDB envfrom secretRef is present:
         type: RollingUpdate
       template:
         metadata:
-          annotations:
-            instrumentation.opentelemetry.io/inject-sdk: test-namespace/test-app
+          annotations: null
           labels:
             app.kubernetes.io/component: app
             app.kubernetes.io/managed-by: Helm
@@ -108,7 +107,7 @@ Check MariaDB envfrom secretRef is present for local environment:
     kind: Deployment
     metadata:
       annotations:
-        helm.sh/chart: standard-application-stack-3.61.5
+        helm.sh/chart: standard-application-stack-3.62.0
         secret.reloader.stakater.com/reload: test-app-mariadb
       labels:
         app.kubernetes.io/component: app
@@ -133,8 +132,7 @@ Check MariaDB envfrom secretRef is present for local environment:
         type: RollingUpdate
       template:
         metadata:
-          annotations:
-            instrumentation.opentelemetry.io/inject-sdk: test-namespace/test-app
+          annotations: null
           labels:
             app.kubernetes.io/component: app
             app.kubernetes.io/managed-by: Helm
@@ -210,7 +208,7 @@ Check MariaDB secretName Override:
     kind: Deployment
     metadata:
       annotations:
-        helm.sh/chart: standard-application-stack-3.61.5
+        helm.sh/chart: standard-application-stack-3.62.0
         secret.reloader.stakater.com/reload: overrideName
       labels:
         app.kubernetes.io/component: app
@@ -235,8 +233,7 @@ Check MariaDB secretName Override:
         type: RollingUpdate
       template:
         metadata:
-          annotations:
-            instrumentation.opentelemetry.io/inject-sdk: test-namespace/test-app
+          annotations: null
           labels:
             app.kubernetes.io/component: app
             app.kubernetes.io/managed-by: Helm

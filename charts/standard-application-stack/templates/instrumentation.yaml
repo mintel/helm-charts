@@ -1,4 +1,4 @@
-{{- if .Values.otelInstrumentation.enabled -}}
+{{- if eq (include "mintel_common.instrumentation.enabled" $) "true" }}
 {{- with dict "Release" $.Release "Chart" $.Chart "Values" $.Values "instrumentation" | merge .Values.otelInstrumentation }}
 apiVersion: {{ include "common.capabilities.otelInstrumentation.apiVersion" $ }}
 kind: Instrumentation

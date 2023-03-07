@@ -94,8 +94,7 @@ spec:
         consul.hashicorp.com/connect-service-upstreams: {{ . | sortAlpha | uniq | compact | join "," | quote }}
           {{- end }}
         {{- end }}
-
-        {{- if .Values.otelInstrumentation.enabled }}
+        {{- if eq (include "mintel_common.instrumentation.enabled" $) "true" }}
           {{- with .Values.otelInstrumentation }}
             {{- $instrumentationRef := printf "%s/%s" $.Release.Namespace (include "mintel_common.fullname" $) }}
             {{- if .autoInjectSidecar.enabled }}

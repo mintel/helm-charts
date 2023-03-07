@@ -444,7 +444,7 @@ Build comma separated list of configmaps
 
 {{/* Outputs Open Telemetry instrumentation env variables */}}
 {{- define "mintel_common.instrumentationEnv" -}}
-  {{- if .Values.otelInstrumentation.enabled }}
+  {{- if eq (include "mintel_common.instrumentation.enabled" $) "true" }}
   {{- with .Values.otelInstrumentation }}
     {{- if .autoInjectSidecar.enabled }}
       {{- if .injectPython.enabled }}

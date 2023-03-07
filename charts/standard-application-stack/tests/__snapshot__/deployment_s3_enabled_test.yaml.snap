@@ -4,7 +4,7 @@ Check S3 envfrom secretRef is present:
     kind: Deployment
     metadata:
       annotations:
-        helm.sh/chart: standard-application-stack-3.61.5
+        helm.sh/chart: standard-application-stack-3.62.0
         secret.reloader.stakater.com/reload: test-app-s3
       labels:
         app.kubernetes.io/component: app
@@ -29,8 +29,7 @@ Check S3 envfrom secretRef is present:
         type: RollingUpdate
       template:
         metadata:
-          annotations:
-            instrumentation.opentelemetry.io/inject-sdk: test-namespace/test-app
+          annotations: null
           labels:
             app.kubernetes.io/component: app
             app.kubernetes.io/managed-by: Helm
@@ -108,7 +107,7 @@ Check S3 envfrom secretRef is present for local environment:
     kind: Deployment
     metadata:
       annotations:
-        helm.sh/chart: standard-application-stack-3.61.5
+        helm.sh/chart: standard-application-stack-3.62.0
         secret.reloader.stakater.com/reload: test-app-s3
       labels:
         app.kubernetes.io/component: app
@@ -133,8 +132,7 @@ Check S3 envfrom secretRef is present for local environment:
         type: RollingUpdate
       template:
         metadata:
-          annotations:
-            instrumentation.opentelemetry.io/inject-sdk: test-namespace/test-app
+          annotations: null
           labels:
             app.kubernetes.io/component: app
             app.kubernetes.io/managed-by: Helm
@@ -210,7 +208,7 @@ Check S3 envfrom secretRef is present for multiple instances of TF Cloud helm ch
     kind: Deployment
     metadata:
       annotations:
-        helm.sh/chart: standard-application-stack-3.61.5
+        helm.sh/chart: standard-application-stack-3.62.0
         secret.reloader.stakater.com/reload: mntl-test-bucket-another-s3,mntl-test-bucket-s3
       labels:
         app.kubernetes.io/component: app
@@ -238,8 +236,7 @@ Check S3 envfrom secretRef is present for multiple instances of TF Cloud helm ch
         type: RollingUpdate
       template:
         metadata:
-          annotations:
-            instrumentation.opentelemetry.io/inject-sdk: test-namespace/test-app
+          annotations: null
           labels:
             app.kubernetes.io/component: app
             app.kubernetes.io/managed-by: Helm
@@ -322,7 +319,7 @@ Check S3 secretName Override:
     kind: Deployment
     metadata:
       annotations:
-        helm.sh/chart: standard-application-stack-3.61.5
+        helm.sh/chart: standard-application-stack-3.62.0
         secret.reloader.stakater.com/reload: overrideName
       labels:
         app.kubernetes.io/component: app
@@ -347,8 +344,7 @@ Check S3 secretName Override:
         type: RollingUpdate
       template:
         metadata:
-          annotations:
-            instrumentation.opentelemetry.io/inject-sdk: test-namespace/test-app
+          annotations: null
           labels:
             app.kubernetes.io/component: app
             app.kubernetes.io/managed-by: Helm
@@ -426,7 +422,7 @@ Check S3 stakater secret reloader annotation contains correct secrets for multip
     kind: Deployment
     metadata:
       annotations:
-        helm.sh/chart: standard-application-stack-3.61.5
+        helm.sh/chart: standard-application-stack-3.62.0
         secret.reloader.stakater.com/reload: mntl-test-bucket-another-s3,mntl-test-bucket-s3,test-app-app,test-app-extra-secret-1
       labels:
         app.kubernetes.io/component: app
@@ -454,8 +450,7 @@ Check S3 stakater secret reloader annotation contains correct secrets for multip
         type: RollingUpdate
       template:
         metadata:
-          annotations:
-            instrumentation.opentelemetry.io/inject-sdk: test-namespace/test-app
+          annotations: null
           labels:
             app.kubernetes.io/component: app
             app.kubernetes.io/managed-by: Helm
