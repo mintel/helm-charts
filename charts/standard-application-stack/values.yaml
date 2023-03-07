@@ -451,8 +451,7 @@ otelInstrumentation:
   #      value: "otlp"
 
   # -- Enable/disable injecting auto-instrumentation sidecar (will volume mount packages via an initContainer)
-  autoInjectSidecar:
-    enabled: false
+  injectSidecar: false
 
   # -- Set an annotation on the pods to have opentelemetry-operator inject
   # environment variables to configure OpenTelemetry client libraries.

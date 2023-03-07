@@ -63,7 +63,7 @@ spec:
     addK8sUIDAttributes: true
     {{- end }}
 
-  {{- if .injectPython.enabled | and .autoInjectSidecar.enabled | and (.injectPython.image | or .injectPython.env) }}
+  {{- if .injectPython.enabled | and .injectSidecar | and (.injectPython.image | or .injectPython.env) }}
   python:
     {{- if .injectPython.image }}
     image: {{ .injectPython.image | quote }}

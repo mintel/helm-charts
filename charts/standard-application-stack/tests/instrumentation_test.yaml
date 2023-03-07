@@ -78,7 +78,7 @@ tests:
       global.clusterEnv: qa
       global.name: example-app
       otelInstrumentation.injectPython.enabled: true
-      otelInstrumentation.autoInjectSidecar.enabled: true
+      otelInstrumentation.injectSidecar: true
       otelInstrumentation.injectPython.env:
         - name: OTEL_ENV_VAR
           value: mock-env-var-value
@@ -105,7 +105,7 @@ tests:
       global.clusterEnv: qa
       global.name: example-app
       otelInstrumentation.injectJava.enabled: true
-      otelInstrumentation.autoInjectSidecar.enabled: true
+      otelInstrumentation.injectSidecar: true
       otelInstrumentation.injectJava.env:
         - name: OTEL_ENV_VAR
           value: mock-env-var-value
@@ -132,7 +132,7 @@ tests:
       global.clusterEnv: qa
       global.name: example-app
       otelInstrumentation.injectNodeJS.enabled: true
-      otelInstrumentation.autoInjectSidecar.enabled: true
+      otelInstrumentation.injectSidecar: true
       otelInstrumentation.injectNodeJS.env:
         - name: OTEL_ENV_VAR
           value: mock-env-var-value
@@ -159,7 +159,7 @@ tests:
       global.clusterEnv: qa
       global.name: example-app
       otelInstrumentation.injectDotNet.enabled: true
-      otelInstrumentation.autoInjectSidecar.enabled: true
+      otelInstrumentation.injectSidecar: true
       otelInstrumentation.injectDotNet.env:
         - name: OTEL_ENV_VAR
           value: mock-env-var-value
@@ -186,7 +186,7 @@ tests:
     set:
       global.clusterEnv: qa
       global.name: example-app
-      otelInstrumentation.autoInjectSidecar.enabled: true
+      otelInstrumentation.injectSidecar: true
       otelInstrumentation.injectPython.enabled: true
       otelInstrumentation.containerNames:
         - foo

@@ -97,7 +97,7 @@ spec:
         {{- if eq (include "mintel_common.instrumentation.enabled" $) "true" }}
           {{- with .Values.otelInstrumentation }}
             {{- $instrumentationRef := printf "%s/%s" $.Release.Namespace (include "mintel_common.fullname" $) }}
-            {{- if .autoInjectSidecar.enabled }}
+            {{- if .injectSidecar }}
               {{- if .injectPython.enabled }}
         instrumentation.opentelemetry.io/inject-python: {{ $instrumentationRef | quote }}
               {{- end }}

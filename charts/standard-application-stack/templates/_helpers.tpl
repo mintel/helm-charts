@@ -446,7 +446,7 @@ Build comma separated list of configmaps
 {{- define "mintel_common.instrumentationEnv" -}}
   {{- if eq (include "mintel_common.instrumentation.enabled" $) "true" }}
   {{- with .Values.otelInstrumentation }}
-    {{- if .autoInjectSidecar.enabled }}
+    {{- if .injectSidecar }}
       {{- if .injectPython.enabled }}
 # Required if exporter endpoint is set to 4317.
 # Python autoinstrumentation uses http/proto by default
