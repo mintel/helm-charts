@@ -442,6 +442,27 @@ Build comma separated list of configmaps
 {{- end }}
 {{- end -}}
 
+{{/* Outputs Open Telemetry instrumentation env variables */}}
+{{- define "mintel_common.instrumentationEnv" -}}
+  {{- if .Values.otelInstrumentation.enabled }}
+  {{- with .Values.otelInstrumentation }}
+    {{- if .autoInjectSidecar.enabled }}
+      {{- if .injectPython.enabled }}
+# Required if exporter endpoint is set to 4317.
+# Python autoinstrumentation uses http/proto by default
+# so data must be sent to 4318 instead of 4137.
+- name: OTEL_EXPORTER_OTLP_ENDPOINT
+  value: http://grafana-agent.monitoring.svc.cluster.local:4318
+      {{- end }}
+    {{- else }}
+      {{- if .injectPython.enabled }}
+        {{- toYaml .injectPython.env }}
+      {{- end }}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- end -}}
+
 {{/* Outputs EXTRA_ALLOWED_HOSTS env variable */}}
 {{- define "mintel_common.extraHostsEnv" -}}
 {{- if (and .Values.ingress .Values.ingress.enabled) }}

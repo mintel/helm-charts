@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v3.62.0] - 2023-03-07
+### Changed
+- Change opentelemetry-operator Instrumentation custom resource to not deploy side-car injection container by default
+
 ## [v3.61.5] - 2023-02-28
 ### Fixed
 - Upgrade from deprecated external-secrets API version

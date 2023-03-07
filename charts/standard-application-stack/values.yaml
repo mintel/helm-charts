@@ -452,6 +452,13 @@ otelInstrumentation:
   # The `valueFrom` field is supported.  Only var names beginning with "OTEL_" or "SPLUNK_" are allowed.
   # ref: https://opentelemetry.io/docs/reference/specification/sdk-environment-variables/
   env: []
+  #    - name: OTEL_TRACES_EXPORTER
+  #      value: "otlp"
+
+  # -- Enable/disable injecting auto-instrumentation sidecar (will volume mount packages via an initContainer)
+  autoInjectSidecar:
+    enabled: false
+
   # -- Set an annotation on the pods to have opentelemetry-operator inject
   # environment variables to configure OpenTelemetry client libraries.
   injectEnvVars:
@@ -468,11 +475,6 @@ otelInstrumentation:
     # The `valueFrom` field is supported.  Only var names beginning with "OTEL_" or "SPLUNK_" are allowed.
     # ref: https://opentelemetry.io/docs/reference/specification/sdk-environment-variables/
     env:
-      # Required if exporter endpoint is set to 4317.
-      # Python autoinstrumentation uses http/proto by default
-      # so data must be sent to 4318 instead of 4137.
-      - name: OTEL_EXPORTER_OTLP_ENDPOINT
-        value: http://grafana-agent.monitoring.svc.cluster.local:4318
       # A lot of the Python instrumentation libraries respect this variable.
       - name: OTEL_PYTHON_EXCLUDED_URLS
         value: '/health[zy]?,/ready[z]?,/readiness,/external-health-check,/metrics'
