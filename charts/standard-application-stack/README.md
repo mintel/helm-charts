@@ -252,10 +252,9 @@ A generic chart to support most common application requirements
 | opensearch.outputSecret | bool | `true` | set outputSecret to true to allow TF Cloud chart create ExternalSecrets |
 | opensearch.secretRefreshIntervalOverride | string | `""` | Optional: ExternalSecret refreshInterval override |
 | opensearch.secretStoreRefOverride | string | `""` | Optional: override the SecretStoreRef of the ExternalSecret |
-| otel | object | `{"exporter":{"endpoint":"http://grafana-agent.monitoring.svc.cluster.local:4317"},"extraEnv":[],"inject":false,"java":{"enabled":false,"extraEnv":[]},"python":{"enabled":false,"excludedUrls":"/health[zy]?,/liveness,/ready[z]?,/readiness,/external-health-check,/metrics,/favicon.ico,/static.*","extraEnv":[]},"sampler":{"arg":"","type":"parentbased_always_on"}}` | Enabled opentelemetry-operator Instrumentation |
+| otel | object | `{"exporter":{"endpoint":"http://grafana-agent.monitoring.svc.cluster.local:4317"},"extraEnv":[],"java":{"enabled":false,"extraEnv":[]},"python":{"enabled":false,"excludedUrls":"/health[zy]?,/liveness,/ready[z]?,/readiness,/external-health-check,/metrics,/favicon.ico,/static.*","extraEnv":[]},"sampler":{"arg":"","type":"parentbased_always_on"}}` | Enabled opentelemetry-operator Instrumentation |
 | otel.exporter | object | `{"endpoint":"http://grafana-agent.monitoring.svc.cluster.local:4317"}` | The endpoint to send traces/spans to. |
 | otel.extraEnv | list | `[]` | Additional otel (generic) vars to add to the pod |
-| otel.inject | bool | `false` | Enable/disable injecting auto-instrumentation sidecar |
 | otel.java.enabled | bool | `false` | Enable/disable injecting Java otel environment vars |
 | otel.java.extraEnv | list | `[]` | Additional Java specific vars to add to the pod |
 | otel.python.enabled | bool | `false` | Enable/disable injecting Python otel environment vars |

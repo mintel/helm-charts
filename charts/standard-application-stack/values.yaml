@@ -444,9 +444,6 @@ otel:
   # -- Additional otel (generic) vars to add to the pod
   extraEnv: []
 
-  # -- Enable/disable injecting auto-instrumentation sidecar
-  inject: false
-
   python:
     # -- Enable/disable injecting Python otel environment vars
     enabled: false
