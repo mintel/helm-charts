@@ -445,7 +445,7 @@ otel:
     # -- Additional Python specific vars to add to the pod
     extraEnv:
       - name: OTEL_PYTHON_EXCLUDED_URLS
-        value: /health[zy]?,/ready[z]?,/readiness,/external-health-check,/metrics
+        value: /health[zy]?,/liveness,/ready[z]?,/readiness,/external-health-check,/metrics,/favicon.ico,/static.*
 
   java:
     # -- Enable/disable injecting Java otel environment vars
