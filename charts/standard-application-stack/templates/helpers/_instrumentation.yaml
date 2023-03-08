@@ -47,6 +47,8 @@ Generate the otel pod enivonrment vars
 {{ if .python.extraEnv }}
 {{ toYaml .python.extraEnv }}
 {{ end }}
+- name: OTEL_PYTHON_EXCLUDED_URLS
+  value: {{ .python.excludedUrls }}
 {{- end -}}
 
 {{- if .java.enabled }}
