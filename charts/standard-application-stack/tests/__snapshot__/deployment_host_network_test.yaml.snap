@@ -4,7 +4,7 @@ Has a pod template that uses the host network:
     kind: Deployment
     metadata:
       annotations:
-        helm.sh/chart: standard-application-stack-3.61.5
+        helm.sh/chart: standard-application-stack-3.61.6
         secret.reloader.stakater.com/reload: test-app-app
       labels:
         app.kubernetes.io/component: app
