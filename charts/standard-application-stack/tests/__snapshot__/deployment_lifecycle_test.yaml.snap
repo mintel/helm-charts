@@ -4,7 +4,7 @@ Check AWS ALB lifecycle rule applied:
     kind: Deployment
     metadata:
       annotations:
-        helm.sh/chart: standard-application-stack-3.61.6
+        helm.sh/chart: standard-application-stack-4.0.0
         secret.reloader.stakater.com/reload: example-app-app
       labels:
         app.kubernetes.io/component: app
@@ -30,8 +30,7 @@ Check AWS ALB lifecycle rule applied:
         type: RollingUpdate
       template:
         metadata:
-          annotations:
-            instrumentation.opentelemetry.io/inject-sdk: test-namespace/example-app
+          annotations: null
           labels:
             app.kubernetes.io/component: app
             app.kubernetes.io/managed-by: Helm
@@ -121,7 +120,7 @@ Check AWS ALB lifecycle rules applied with custom delay:
     kind: Deployment
     metadata:
       annotations:
-        helm.sh/chart: standard-application-stack-3.61.6
+        helm.sh/chart: standard-application-stack-4.0.0
         secret.reloader.stakater.com/reload: example-app-app
       labels:
         app.kubernetes.io/component: app
@@ -147,8 +146,7 @@ Check AWS ALB lifecycle rules applied with custom delay:
         type: RollingUpdate
       template:
         metadata:
-          annotations:
-            instrumentation.opentelemetry.io/inject-sdk: test-namespace/example-app
+          annotations: null
           labels:
             app.kubernetes.io/component: app
             app.kubernetes.io/managed-by: Helm
@@ -238,7 +236,7 @@ Check AWS ALB lifecycle rules are not applied when ALB disabled:
     kind: Deployment
     metadata:
       annotations:
-        helm.sh/chart: standard-application-stack-3.61.6
+        helm.sh/chart: standard-application-stack-4.0.0
         secret.reloader.stakater.com/reload: example-app-app
       labels:
         app.kubernetes.io/component: app
@@ -264,8 +262,7 @@ Check AWS ALB lifecycle rules are not applied when ALB disabled:
         type: RollingUpdate
       template:
         metadata:
-          annotations:
-            instrumentation.opentelemetry.io/inject-sdk: test-namespace/example-app
+          annotations: null
           labels:
             app.kubernetes.io/component: app
             app.kubernetes.io/managed-by: Helm
@@ -348,7 +345,7 @@ Check AWS ALB lifecycle rules are not applied when ALB enabled (but Ingress disa
     kind: Deployment
     metadata:
       annotations:
-        helm.sh/chart: standard-application-stack-3.61.6
+        helm.sh/chart: standard-application-stack-4.0.0
         secret.reloader.stakater.com/reload: example-app-app
       labels:
         app.kubernetes.io/component: app
@@ -373,8 +370,7 @@ Check AWS ALB lifecycle rules are not applied when ALB enabled (but Ingress disa
         type: RollingUpdate
       template:
         metadata:
-          annotations:
-            instrumentation.opentelemetry.io/inject-sdk: test-namespace/example-app
+          annotations: null
           labels:
             app.kubernetes.io/component: app
             app.kubernetes.io/managed-by: Helm
@@ -452,7 +448,7 @@ Check lifecycle rules:
     kind: Deployment
     metadata:
       annotations:
-        helm.sh/chart: standard-application-stack-3.61.6
+        helm.sh/chart: standard-application-stack-4.0.0
         secret.reloader.stakater.com/reload: example-app-app
       labels:
         app.kubernetes.io/component: app
@@ -477,8 +473,7 @@ Check lifecycle rules:
         type: RollingUpdate
       template:
         metadata:
-          annotations:
-            instrumentation.opentelemetry.io/inject-sdk: test-namespace/example-app
+          annotations: null
           labels:
             app.kubernetes.io/component: app
             app.kubernetes.io/managed-by: Helm

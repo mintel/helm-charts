@@ -1,0 +1,60 @@
+{{/* vim: set filetype=mustache: */}}
+
+{{/*
+Return true if any of the otel instrumentation has been enabled
+*/}}
+{{- define "mintel_common.instrumentation.enabled" -}}
+{{- with .Values.otel -}}
+{{ .python.enabled | or .java.enabled }}
+{{- end -}}
+{{- end -}}
+
+{{/*
+Generate the otel pod enivonrment vars
+*/}}
+
+{{- define "mintel_common.instrumentation.env" -}}
+{{- if eq (include "mintel_common.instrumentation.enabled" $) "true" }}
+{{- with .Values.otel }}
+- name: OTEL_TRACES_EXPORTER
+  value: otlp
+- name: OTEL_EXPORTER_OTLP_ENDPOINT
+  value: {{ .exporter.endpoint }}
+- name: OTEL_METRICS_EXPORTER
+  value: otlp
+- name: OTEL_SERVICE_NAME
+  value: {{ include "mintel_common.fullname" $ | quote }}
+- name: OTEL_RESOURCE_ATTRIBUTES_POD_NAME
+  valueFrom:
+    fieldRef:
+      apiVersion: v1
+      fieldPath: metadata.name
+- name: OTEL_RESOURCE_ATTRIBUTES_NODE_NAME
+  valueFrom:
+    fieldRef:
+      apiVersion: v1
+      fieldPath: spec.nodeName
+- name: OTEL_TRACES_SAMPLER
+  value: parentbased_always_on
+- name: OTEL_RESOURCE_ATTRIBUTES
+  value: service.name=$(OTEL_SERVICE_NAME),k8s.node.name=$(OTEL_RESOURCE_ATTRIBUTES_NODE_NAME),k8s.pod.name=$(OTEL_RESOURCE_ATTRIBUTES_POD_NAME)
+
+{{ if .extraEnv }}
+{{ toYaml .extraEnv }}
+{{ end }}
+
+{{- if .python.enabled }}
+{{ if .python.extraEnv }}
+{{ toYaml .python.extraEnv }}
+{{ end }}
+{{- end -}}
+
+{{- if .java.enabled }}
+{{ if .java.extraEnv }}
+{{ toYaml .java.extraEnv }}
+{{ end }}
+{{- end -}}
+
+{{- end -}}
+{{- end -}}
+{{- end -}}

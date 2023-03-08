@@ -94,30 +94,6 @@ spec:
         consul.hashicorp.com/connect-service-upstreams: {{ . | sortAlpha | uniq | compact | join "," | quote }}
           {{- end }}
         {{- end }}
-
-        {{- if .Values.otelInstrumentation.enabled }}
-          {{- with .Values.otelInstrumentation }}
-            {{- $instrumentationRef := printf "%s/%s" $.Release.Namespace (include "mintel_common.fullname" $) }}
-            {{- if .injectPython.enabled }}
-        instrumentation.opentelemetry.io/inject-python: {{ $instrumentationRef | quote }}
-            {{- end }}
-            {{- if .injectJava.enabled }}
-        instrumentation.opentelemetry.io/inject-java: {{ $instrumentationRef | quote }}
-            {{- end }}
-            {{- if .injectNodeJS.enabled }}
-        instrumentation.opentelemetry.io/inject-nodejs: {{ $instrumentationRef | quote }}
-            {{- end }}
-            {{- if .injectDotNet.enabled }}
-        instrumentation.opentelemetry.io/inject-dotnet: {{ $instrumentationRef | quote }}
-            {{- end }}
-            {{- if .injectEnvVars.enabled | and (not (or .injectPython.enabled .injectJava.enabled .injectNodeJS.enabled .injectDotNet.enabled)) }}
-        instrumentation.opentelemetry.io/inject-sdk: {{ $instrumentationRef | quote }}
-            {{- end }}
-            {{- with .containerNames }}
-        instrumentation.opentelemetry.io/container-names: {{ . | sortAlpha | uniq | compact | join "," | quote }}
-            {{- end }}
-          {{- end }}
-        {{- end }}
       labels:
         {{- include "mintel_common.labels" . | nindent 8 }}
         {{- if (or (and .Values.ingress .Values.ingress.enabled) .Values.ingress.allowFrontendAccess) }}
@@ -213,6 +189,7 @@ spec:
             {{- include "mintel_common.localstackEnv" . | nindent 12 }}
             {{- include "mintel_common.extraHostsEnv" . | nindent 12 }}
             {{- include "mintel_common.eventBusEnv" . | nindent 12 }}
+            {{- include "mintel_common.instrumentation.env" . | nindent 12 }}
             {{- with .Values.env }}
             {{- toYaml . | nindent 12 }}
             {{- end }}

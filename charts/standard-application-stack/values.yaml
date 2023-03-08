@@ -427,136 +427,32 @@ persistentVolumes:
 volumeMounts: []
 
 # -- Enabled opentelemetry-operator Instrumentation
-# ref: https://github.com/open-telemetry/opentelemetry-operator#opentelemetry-auto-instrumentation-injection
-otelInstrumentation:
-  # -- If true, create opentelemetry-operator Instrumentation custom resource and add annotations to pods
-  # such that the OpenTelemetry config environment variables are automatically injected into pods.
-  # You can also optionally inject auto-instrumentation libraries for some languages.
-  # ref: https://github.com/open-telemetry/opentelemetry-operator/blob/v0.68.0/docs/api.md#instrumentation
-  enabled: true
-  # -- The ArgoCD sync-wave to use for the Instrumentation CR.
-  # This needs to be lower than the sync-wave of any deployments/statefulsets that use it.
-  # ref: https://argo-cd.readthedocs.io/en/stable/user-guide/sync-waves/
-  syncWave: -20
-  # -- Extra labels to add to the Instrumentation resource.
-  labels: {}
-  # -- Extra annotations to add to the Instrumentation resource.
-  annotations: {}
+otel:
   # -- Configure where the OpenTelemetry client exporters traces/spans.
   exporter:
     # -- The endpoint to send traces/spans to.
     endpoint: 'http://grafana-agent.monitoring.svc.cluster.local:4317'
-  # -- If the pod has multiple containers, only inject instrumentation to containers with these names.
-  containerNames: []
-  # -- Common environment variables to inject regardless of language.
-  # The `valueFrom` field is supported.  Only var names beginning with "OTEL_" or "SPLUNK_" are allowed.
-  # ref: https://opentelemetry.io/docs/reference/specification/sdk-environment-variables/
-  env: []
-  # -- Set an annotation on the pods to have opentelemetry-operator inject
-  # environment variables to configure OpenTelemetry client libraries.
-  injectEnvVars:
-    # -- If true add the annotation to pods.
-    enabled: true
-  # -- Inject Python auto-instrumentation.
-  injectPython:
-    # -- Enable/disable injecting auto-instrumentation.
-    # Implies also injecting the OpenTelemetry config environment variables.
-    enabled: false
-    # -- Use a custom auto-instrumentation image.
-    image: null
-    # -- Additional environment variables to inject into the pod container(s).
-    # The `valueFrom` field is supported.  Only var names beginning with "OTEL_" or "SPLUNK_" are allowed.
-    # ref: https://opentelemetry.io/docs/reference/specification/sdk-environment-variables/
-    env:
-      # Required if exporter endpoint is set to 4317.
-      # Python autoinstrumentation uses http/proto by default
-      # so data must be sent to 4318 instead of 4137.
-      - name: OTEL_EXPORTER_OTLP_ENDPOINT
-        value: http://grafana-agent.monitoring.svc.cluster.local:4318
-      # A lot of the Python instrumentation libraries respect this variable.
-      - name: OTEL_PYTHON_EXCLUDED_URLS
-        value: '/health[zy]?,/ready[z]?,/readiness,/external-health-check,/metrics'
-  # -- Inject Java auto-instrumentation.
-  injectJava:
-    # -- Enable/disable injecting auto-instrumentation.
-    # Implies also injecting the OpenTelemetry config environment variables.
-    enabled: false
-     # -- Use a custom auto-instrumentation image.
-    image: null
-    # -- Additional environment variables to inject into the pod container(s).
-    # The `valueFrom` field is supported.  Only var names beginning with "OTEL_" or "SPLUNK_" are allowed.
-    # ref: https://opentelemetry.io/docs/reference/specification/sdk-environment-variables/
-    env: []
-  # -- Inject NodeJS auto-instrumentation.
-  injectNodeJS:
-    # -- Enable/disable injecting auto-instrumentation.
-    # Implies also injecting the OpenTelemetry config environment variables.
-    enabled: false
-     # -- Use a custom auto-instrumentation image.
-    image: null
-    # -- Additional environment variables to inject into the pod container(s).
-    # The `valueFrom` field is supported.  Only var names beginning with "OTEL_" or "SPLUNK_" are allowed.
-    # ref: https://opentelemetry.io/docs/reference/specification/sdk-environment-variables/
-    env: []
-  # -- Inject .NET auto-instrumentation.
-  injectDotNet:
-    # -- Enable/disable injecting auto-instrumentation.
-    # Implies also injecting the OpenTelemetry config environment variables.
-    enabled: false
-     # -- Use a custom auto-instrumentation image.
-    image: null
-    # -- Additional environment variables to inject into the pod container(s).
-    # The `valueFrom` field is supported.  Only var names beginning with "OTEL_" or "SPLUNK_" are allowed.
-    # ref: https://opentelemetry.io/docs/reference/specification/sdk-environment-variables/
-    env: []
-  # -- Set client side trace sampling.
-  sampler:
-    # -- The type of sampling to use.
-    #
-    # Valid values:
-    # - `always_on` - Sampler that always samples spans, regardless of the parent span’s sampling decision.
-    # - `always_off` - Sampler that never samples spans, regardless of the parent span’s sampling decision.
-    # - `traceidratio` - Sampler that samples probabilistically based on rate.
-    # - `parentbased_always_on` - (default) Sampler that respects its parent span’s sampling decision, but otherwise always samples.
-    # - `parentbased_always_off` - Sampler that respects its parent span’s sampling decision, but otherwise never samples.
-    # - `parentbased_traceidratio` - Sampler that respects its parent span’s sampling decision, but otherwise samples probabilistically based on rate.
-    #
-    # ref: https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/trace/sdk.md#sampling
-    # ref: https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/trace/sdk.md#built-in-samplers
-    type: "parentbased_always_on"
-    # -- Optional argument to pass to the sampler. For example, for the `traceidratio` sampler you
-    # would use this to pass the ratio of traces to sample.
-    argument: ""
-  # -- Resource defines the configuration for the resource attributes, as defined by the OpenTelemetry specification.
-  # ref: https://github.com/open-telemetry/opentelemetry-specification/blob/v1.8.0/specification/overview.md#resources
-  resource:
-    # -- Key/value attributes that will be added to the trace spans exported by OpenTelemetry.
-    # The following attributes are added automatically, either by the opentelemetry-operator
-    # or by values from this chart:
-    # - `cloud.account.id`
-    # - `cloud.platform`
-    # - `cloud.provider`
-    # - `cloud.region`
-    # - `deployment.environment`
-    # - `k8s.cluster.name`
-    # - `k8s.container.name`
-    # - `k8s.deployment.name`
-    # - `k8s.namespace.name`
-    # - `k8s.node.name`
-    # - `k8s.pod.name`
-    # - `k8s.replicaset.name`
-    # - `service.name`
-    # - `service.namespace`
-    # ref: https://opentelemetry.io/docs/reference/specification/resource/semantic_conventions/
-    resourceAttributes: {}
-    # -- If true, add deployment and pod UID attributes e.g. `k8s.deployment.uid`.
-    addK8sUIDAttributes: false
-  # -- Enable OpenTelemetry propagators.
-  # Default to enabling all of the official list of propagators + AWS XRay.
-  # ref: https://opentelemetry.io/docs/reference/specification/context/api-propagators/
-  propagators: []
 
-# -- Configure an NLB to route traffic direct to pods (for non HTTP traffic)
+  # -- Additional otel (generic) vars to add to the pod
+  extraEnv: []
+
+  # -- Enable/disable injecting auto-instrumentation sidecar
+  inject: false
+
+  python:
+    # -- Enable/disable injecting Python otel environment vars
+    enabled: false
+    # -- Additional Python specific vars to add to the pod
+    extraEnv:
+      - name: OTEL_PYTHON_EXCLUDED_URLS
+        value: /health[zy]?,/ready[z]?,/readiness,/external-health-check,/metrics
+
+  java:
+    # -- Enable/disable injecting Java otel environment vars
+    enabled: false
+    # -- Additional Java specific vars to add to the pod
+    extraEnv: []
+
 nlb:
   enabled: false
   # -- Public or private nlb (internet-facing / internal)

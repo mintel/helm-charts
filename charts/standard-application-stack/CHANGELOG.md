@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v4.0.0] - 2023-03-09
+### Changed
+- Configure open-telemetry for apps using env-vars rather than the operator
+
+### Removed
+- Removed the open-telemetry `Instrumentation` resource
+
 ## [v3.61.6] - 2022-03-08
 ### Fixed
 - Replace `k8s.gcr.io` with `registry.k8s.io`
