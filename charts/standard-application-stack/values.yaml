@@ -428,10 +428,18 @@ volumeMounts: []
 
 # -- Enabled opentelemetry-operator Instrumentation
 otel:
-  # -- Configure where the OpenTelemetry client exporters traces/spans.
+  # -- The endpoint to send traces/spans to.
   exporter:
-    # -- The endpoint to send traces/spans to.
     endpoint: 'http://grafana-agent.monitoring.svc.cluster.local:4317'
+
+  # -- The sampler configuration
+  # ref: https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/trace/sdk.md#sampling
+  sampler:
+    # -- Configures OTEL_TRACES_SAMPLER
+    type: parentbased_always_on
+
+    # -- Configures OTEL_TRACES_SAMPLER_ARG
+    arg: ""
 
   # -- Additional otel (generic) vars to add to the pod
   extraEnv: []

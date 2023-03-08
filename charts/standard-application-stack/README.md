@@ -252,9 +252,8 @@ A generic chart to support most common application requirements
 | opensearch.outputSecret | bool | `true` | set outputSecret to true to allow TF Cloud chart create ExternalSecrets |
 | opensearch.secretRefreshIntervalOverride | string | `""` | Optional: ExternalSecret refreshInterval override |
 | opensearch.secretStoreRefOverride | string | `""` | Optional: override the SecretStoreRef of the ExternalSecret |
-| otel | object | `{"exporter":{"endpoint":"http://grafana-agent.monitoring.svc.cluster.local:4317"},"extraEnv":[],"inject":false,"java":{"enabled":false,"extraEnv":[]},"python":{"enabled":false,"excludedUrls":"/health[zy]?,/liveness,/ready[z]?,/readiness,/external-health-check,/metrics,/favicon.ico,/static.*","extraEnv":[]}}` | Enabled opentelemetry-operator Instrumentation |
-| otel.exporter | object | `{"endpoint":"http://grafana-agent.monitoring.svc.cluster.local:4317"}` | Configure where the OpenTelemetry client exporters traces/spans. |
-| otel.exporter.endpoint | string | `"http://grafana-agent.monitoring.svc.cluster.local:4317"` | The endpoint to send traces/spans to. |
+| otel | object | `{"exporter":{"endpoint":"http://grafana-agent.monitoring.svc.cluster.local:4317"},"extraEnv":[],"inject":false,"java":{"enabled":false,"extraEnv":[]},"python":{"enabled":false,"excludedUrls":"/health[zy]?,/liveness,/ready[z]?,/readiness,/external-health-check,/metrics,/favicon.ico,/static.*","extraEnv":[]},"sampler":{"arg":"","type":"parentbased_always_on"}}` | Enabled opentelemetry-operator Instrumentation |
+| otel.exporter | object | `{"endpoint":"http://grafana-agent.monitoring.svc.cluster.local:4317"}` | The endpoint to send traces/spans to. |
 | otel.extraEnv | list | `[]` | Additional otel (generic) vars to add to the pod |
 | otel.inject | bool | `false` | Enable/disable injecting auto-instrumentation sidecar |
 | otel.java.enabled | bool | `false` | Enable/disable injecting Java otel environment vars |
@@ -262,6 +261,9 @@ A generic chart to support most common application requirements
 | otel.python.enabled | bool | `false` | Enable/disable injecting Python otel environment vars |
 | otel.python.excludedUrls | string | `"/health[zy]?,/liveness,/ready[z]?,/readiness,/external-health-check,/metrics,/favicon.ico,/static.*"` | Urls to exclude |
 | otel.python.extraEnv | list | `[]` | Additional Python specific vars to add to the pod |
+| otel.sampler | object | `{"arg":"","type":"parentbased_always_on"}` | The sampler configuration ref: https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/trace/sdk.md#sampling |
+| otel.sampler.arg | string | `""` | Configures OTEL_TRACES_SAMPLER_ARG |
+| otel.sampler.type | string | `"parentbased_always_on"` | Configures OTEL_TRACES_SAMPLER |
 | persistentVolumes | string | `nil` | A list of persistent volume claims to be added to the pod |
 | podAnnotations | object | `{}` | Additional annotations to apply to the pod |
 | podDisruptionBudget | object | `{"enabled":true,"minAvailable":"50%"}` | Pod Disruption Budget ref: https://kubernetes.io/docs/tasks/run-application/configure-pdb/ |
