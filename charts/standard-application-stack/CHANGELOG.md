@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [v4.0.0] - 2023-03-09
 ### Changed
 - Configure open-telemetry for apps using env-vars rather than the operator
+- Simplify `OTEL_RESOURCE_ATTRIBUTES` as most labels/attributes can be handled by grafana-agent/prom
 
 ### Removed
 - Removed the open-telemetry `Instrumentation` resource
