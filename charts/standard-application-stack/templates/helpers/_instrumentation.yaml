@@ -1,0 +1,59 @@
+{{/* vim: set filetype=mustache: */}}
+
+{{/*
+Return true if any of the otel instrumentation has been enabled
+*/}}
+{{- define "mintel_common.instrumentation.enabled" -}}
+{{- with .Values.otel -}}
+{{ .python.enabled | or .java.enabled }}
+{{- end -}}
+{{- end -}}
+
+{{/*
+Generate the otel pod enivonrment vars
+*/}}
+
+{{- define "mintel_common.instrumentation.env" -}}
+{{- if eq (include "mintel_common.instrumentation.enabled" $) "true" }}
+{{- with .Values.otel }}
+- name: OTEL_TRACES_EXPORTER
+  value: otlp
+- name: OTEL_EXPORTER_OTLP_ENDPOINT
+  value: {{ .exporter.endpoint }}
+- name: OTEL_METRICS_EXPORTER
+  value: otlp
+- name: OTEL_SERVICE_NAME
+  value: {{ include "mintel_common.fullname" $ | quote }}
+- name: OTEL_RESOURCE_ATTRIBUTES_POD_IP
+  valueFrom:
+    fieldRef:
+      fieldPath: status.podIP
+- name: OTEL_TRACES_SAMPLER
+  value: {{ .sampler.type }}
+{{- if .sampler.arg }}
+- name: OTEL_TRACES_SAMPLER_ARG
+  value: {{ .sampler.arg }}
+{{- end }}
+- name: OTEL_RESOURCE_ATTRIBUTES
+  value: service.name=$(OTEL_SERVICE_NAME),ip=$(OTEL_RESOURCE_ATTRIBUTES_POD_IP)
+{{ if .extraEnv }}
+{{ toYaml .extraEnv }}
+{{ end }}
+
+{{- if .python.enabled }}
+{{ if .python.extraEnv }}
+{{ toYaml .python.extraEnv }}
+{{ end }}
+- name: OTEL_PYTHON_EXCLUDED_URLS
+  value: {{ .python.excludedUrls }}
+{{- end -}}
+
+{{- if .java.enabled }}
+{{ if .java.extraEnv }}
+{{ toYaml .java.extraEnv }}
+{{ end }}
+{{- end -}}
+
+{{- end -}}
+{{- end -}}
+{{- end -}}

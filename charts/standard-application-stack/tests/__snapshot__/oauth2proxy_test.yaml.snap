@@ -4,7 +4,7 @@ Check default container args:
     kind: Deployment
     metadata:
       annotations:
-        helm.sh/chart: standard-application-stack-3.61.6
+        helm.sh/chart: standard-application-stack-4.0.0
         secret.reloader.stakater.com/reload: test-app-app,test-app-oauth
       labels:
         app.kubernetes.io/component: app
@@ -29,8 +29,7 @@ Check default container args:
         type: RollingUpdate
       template:
         metadata:
-          annotations:
-            instrumentation.opentelemetry.io/inject-sdk: test-namespace/test-app
+          annotations: null
           labels:
             app.kubernetes.io/component: app
             app.kubernetes.io/managed-by: Helm
@@ -158,7 +157,7 @@ Check setting skip-auth-regex from extra passed in values:
     kind: Deployment
     metadata:
       annotations:
-        helm.sh/chart: standard-application-stack-3.61.6
+        helm.sh/chart: standard-application-stack-4.0.0
         secret.reloader.stakater.com/reload: test-app-app,test-app-oauth
       labels:
         app.kubernetes.io/component: app
@@ -183,8 +182,7 @@ Check setting skip-auth-regex from extra passed in values:
         type: RollingUpdate
       template:
         metadata:
-          annotations:
-            instrumentation.opentelemetry.io/inject-sdk: test-namespace/test-app
+          annotations: null
           labels:
             app.kubernetes.io/component: app
             app.kubernetes.io/managed-by: Helm
@@ -313,7 +311,7 @@ Check setting skip-auth-regex from extra passed in values when they already cont
     kind: Deployment
     metadata:
       annotations:
-        helm.sh/chart: standard-application-stack-3.61.6
+        helm.sh/chart: standard-application-stack-4.0.0
         secret.reloader.stakater.com/reload: test-app-app,test-app-oauth
       labels:
         app.kubernetes.io/component: app
@@ -338,8 +336,7 @@ Check setting skip-auth-regex from extra passed in values when they already cont
         type: RollingUpdate
       template:
         metadata:
-          annotations:
-            instrumentation.opentelemetry.io/inject-sdk: test-namespace/test-app
+          annotations: null
           labels:
             app.kubernetes.io/component: app
             app.kubernetes.io/managed-by: Helm
@@ -468,7 +465,7 @@ Check setting skip-auth-regex from overridden health-check values:
     kind: Deployment
     metadata:
       annotations:
-        helm.sh/chart: standard-application-stack-3.61.6
+        helm.sh/chart: standard-application-stack-4.0.0
         secret.reloader.stakater.com/reload: test-app-app,test-app-oauth
       labels:
         app.kubernetes.io/component: app
@@ -493,8 +490,7 @@ Check setting skip-auth-regex from overridden health-check values:
         type: RollingUpdate
       template:
         metadata:
-          annotations:
-            instrumentation.opentelemetry.io/inject-sdk: test-namespace/test-app
+          annotations: null
           labels:
             app.kubernetes.io/component: app
             app.kubernetes.io/managed-by: Helm
@@ -622,7 +618,7 @@ Check sidecar present if enabled:
     kind: Deployment
     metadata:
       annotations:
-        helm.sh/chart: standard-application-stack-3.61.6
+        helm.sh/chart: standard-application-stack-4.0.0
         secret.reloader.stakater.com/reload: test-app-app,test-app-oauth
       labels:
         app.kubernetes.io/component: app
@@ -647,8 +643,7 @@ Check sidecar present if enabled:
         type: RollingUpdate
       template:
         metadata:
-          annotations:
-            instrumentation.opentelemetry.io/inject-sdk: test-namespace/test-app
+          annotations: null
           labels:
             app.kubernetes.io/component: app
             app.kubernetes.io/managed-by: Helm

@@ -1,6 +1,6 @@
 # standard-application-stack
 
-![Version: 3.61.6](https://img.shields.io/badge/Version-3.61.6-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 4.0.0](https://img.shields.io/badge/Version-4.0.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A generic chart to support most common application requirements
 
@@ -198,7 +198,7 @@ A generic chart to support most common application requirements
 | minReadySeconds | int | `10` | Minimum number of seconds before deployments are ready |
 | nameOverride | string | `""` | String to fully override mintel_common.fullname template |
 | networkPolicy | object | `{"additionalAllowFroms":[],"enabled":true}` | Define a default NetworkPolicy for allowing apps in the same 'app.kubernetes.io/part-of' group to communicate with eachother. ref: https://kubernetes.io/docs/concepts/services-networking/network-policies/ |
-| nlb | object | `{"enabled":false,"healthcheck":{"healthyThresholdCount":2,"intervalSeconds":10,"protocol":"TCP","timeoutSeconds":5,"unhealthyThresholdCount":2},"scheme":"internet-facing","targetType":"ip"}` | Configure an NLB to route traffic direct to pods (for non HTTP traffic) |
+| nlb.enabled | bool | `false` |  |
 | nlb.healthcheck | object | `{"healthyThresholdCount":2,"intervalSeconds":10,"protocol":"TCP","timeoutSeconds":5,"unhealthyThresholdCount":2}` | Configure healthchecks |
 | nlb.healthcheck.healthyThresholdCount | int | `2` | Success threshold |
 | nlb.healthcheck.intervalSeconds | int | `10` | Period seconds {can only be 10 or 30 seconds) |
@@ -252,40 +252,17 @@ A generic chart to support most common application requirements
 | opensearch.outputSecret | bool | `true` | set outputSecret to true to allow TF Cloud chart create ExternalSecrets |
 | opensearch.secretRefreshIntervalOverride | string | `""` | Optional: ExternalSecret refreshInterval override |
 | opensearch.secretStoreRefOverride | string | `""` | Optional: override the SecretStoreRef of the ExternalSecret |
-| otelInstrumentation | object | `{"annotations":{},"containerNames":[],"enabled":true,"env":[],"exporter":{"endpoint":"http://grafana-agent.monitoring.svc.cluster.local:4317"},"injectDotNet":{"enabled":false,"env":[],"image":null},"injectEnvVars":{"enabled":true},"injectJava":{"enabled":false,"env":[],"image":null},"injectNodeJS":{"enabled":false,"env":[],"image":null},"injectPython":{"enabled":false,"env":[{"name":"OTEL_EXPORTER_OTLP_ENDPOINT","value":"http://grafana-agent.monitoring.svc.cluster.local:4318"},{"name":"OTEL_PYTHON_EXCLUDED_URLS","value":"/health[zy]?,/ready[z]?,/readiness,/external-health-check,/metrics"}],"image":null},"labels":{},"propagators":[],"resource":{"addK8sUIDAttributes":false,"resourceAttributes":{}},"sampler":{"argument":"","type":"parentbased_always_on"},"syncWave":-20}` | Enabled opentelemetry-operator Instrumentation ref: https://github.com/open-telemetry/opentelemetry-operator#opentelemetry-auto-instrumentation-injection |
-| otelInstrumentation.annotations | object | `{}` | Extra annotations to add to the Instrumentation resource. |
-| otelInstrumentation.containerNames | list | `[]` | If the pod has multiple containers, only inject instrumentation to containers with these names. |
-| otelInstrumentation.enabled | bool | `true` | If true, create opentelemetry-operator Instrumentation custom resource and add annotations to pods such that the OpenTelemetry config environment variables are automatically injected into pods. You can also optionally inject auto-instrumentation libraries for some languages. ref: https://github.com/open-telemetry/opentelemetry-operator/blob/v0.68.0/docs/api.md#instrumentation |
-| otelInstrumentation.env | list | `[]` | Common environment variables to inject regardless of language. The `valueFrom` field is supported.  Only var names beginning with "OTEL_" or "SPLUNK_" are allowed. ref: https://opentelemetry.io/docs/reference/specification/sdk-environment-variables/ |
-| otelInstrumentation.exporter | object | `{"endpoint":"http://grafana-agent.monitoring.svc.cluster.local:4317"}` | Configure where the OpenTelemetry client exporters traces/spans. |
-| otelInstrumentation.exporter.endpoint | string | `"http://grafana-agent.monitoring.svc.cluster.local:4317"` | The endpoint to send traces/spans to. |
-| otelInstrumentation.injectDotNet | object | `{"enabled":false,"env":[],"image":null}` | Inject .NET auto-instrumentation. |
-| otelInstrumentation.injectDotNet.enabled | bool | `false` | Enable/disable injecting auto-instrumentation. Implies also injecting the OpenTelemetry config environment variables. |
-| otelInstrumentation.injectDotNet.env | list | `[]` | Additional environment variables to inject into the pod container(s). The `valueFrom` field is supported.  Only var names beginning with "OTEL_" or "SPLUNK_" are allowed. ref: https://opentelemetry.io/docs/reference/specification/sdk-environment-variables/ |
-| otelInstrumentation.injectDotNet.image | string | `nil` | Use a custom auto-instrumentation image. |
-| otelInstrumentation.injectEnvVars | object | `{"enabled":true}` | Set an annotation on the pods to have opentelemetry-operator inject environment variables to configure OpenTelemetry client libraries. |
-| otelInstrumentation.injectEnvVars.enabled | bool | `true` | If true add the annotation to pods. |
-| otelInstrumentation.injectJava | object | `{"enabled":false,"env":[],"image":null}` | Inject Java auto-instrumentation. |
-| otelInstrumentation.injectJava.enabled | bool | `false` | Enable/disable injecting auto-instrumentation. Implies also injecting the OpenTelemetry config environment variables. |
-| otelInstrumentation.injectJava.env | list | `[]` | Additional environment variables to inject into the pod container(s). The `valueFrom` field is supported.  Only var names beginning with "OTEL_" or "SPLUNK_" are allowed. ref: https://opentelemetry.io/docs/reference/specification/sdk-environment-variables/ |
-| otelInstrumentation.injectJava.image | string | `nil` | Use a custom auto-instrumentation image. |
-| otelInstrumentation.injectNodeJS | object | `{"enabled":false,"env":[],"image":null}` | Inject NodeJS auto-instrumentation. |
-| otelInstrumentation.injectNodeJS.enabled | bool | `false` | Enable/disable injecting auto-instrumentation. Implies also injecting the OpenTelemetry config environment variables. |
-| otelInstrumentation.injectNodeJS.env | list | `[]` | Additional environment variables to inject into the pod container(s). The `valueFrom` field is supported.  Only var names beginning with "OTEL_" or "SPLUNK_" are allowed. ref: https://opentelemetry.io/docs/reference/specification/sdk-environment-variables/ |
-| otelInstrumentation.injectNodeJS.image | string | `nil` | Use a custom auto-instrumentation image. |
-| otelInstrumentation.injectPython | object | `{"enabled":false,"env":[{"name":"OTEL_EXPORTER_OTLP_ENDPOINT","value":"http://grafana-agent.monitoring.svc.cluster.local:4318"},{"name":"OTEL_PYTHON_EXCLUDED_URLS","value":"/health[zy]?,/ready[z]?,/readiness,/external-health-check,/metrics"}],"image":null}` | Inject Python auto-instrumentation. |
-| otelInstrumentation.injectPython.enabled | bool | `false` | Enable/disable injecting auto-instrumentation. Implies also injecting the OpenTelemetry config environment variables. |
-| otelInstrumentation.injectPython.env | list | `[{"name":"OTEL_EXPORTER_OTLP_ENDPOINT","value":"http://grafana-agent.monitoring.svc.cluster.local:4318"},{"name":"OTEL_PYTHON_EXCLUDED_URLS","value":"/health[zy]?,/ready[z]?,/readiness,/external-health-check,/metrics"}]` | Additional environment variables to inject into the pod container(s). The `valueFrom` field is supported.  Only var names beginning with "OTEL_" or "SPLUNK_" are allowed. ref: https://opentelemetry.io/docs/reference/specification/sdk-environment-variables/ |
-| otelInstrumentation.injectPython.image | string | `nil` | Use a custom auto-instrumentation image. |
-| otelInstrumentation.labels | object | `{}` | Extra labels to add to the Instrumentation resource. |
-| otelInstrumentation.propagators | list | `[]` | Enable OpenTelemetry propagators. Default to enabling all of the official list of propagators + AWS XRay. ref: https://opentelemetry.io/docs/reference/specification/context/api-propagators/ |
-| otelInstrumentation.resource | object | `{"addK8sUIDAttributes":false,"resourceAttributes":{}}` | Resource defines the configuration for the resource attributes, as defined by the OpenTelemetry specification. ref: https://github.com/open-telemetry/opentelemetry-specification/blob/v1.8.0/specification/overview.md#resources |
-| otelInstrumentation.resource.addK8sUIDAttributes | bool | `false` | If true, add deployment and pod UID attributes e.g. `k8s.deployment.uid`. |
-| otelInstrumentation.resource.resourceAttributes | object | `{}` | Key/value attributes that will be added to the trace spans exported by OpenTelemetry. The following attributes are added automatically, either by the opentelemetry-operator or by values from this chart: - `cloud.account.id` - `cloud.platform` - `cloud.provider` - `cloud.region` - `deployment.environment` - `k8s.cluster.name` - `k8s.container.name` - `k8s.deployment.name` - `k8s.namespace.name` - `k8s.node.name` - `k8s.pod.name` - `k8s.replicaset.name` - `service.name` - `service.namespace` ref: https://opentelemetry.io/docs/reference/specification/resource/semantic_conventions/ |
-| otelInstrumentation.sampler | object | `{"argument":"","type":"parentbased_always_on"}` | Set client side trace sampling. |
-| otelInstrumentation.sampler.argument | string | `""` | Optional argument to pass to the sampler. For example, for the `traceidratio` sampler you would use this to pass the ratio of traces to sample. |
-| otelInstrumentation.sampler.type | string | `"parentbased_always_on"` | The type of sampling to use. Valid values: - `always_on` - Sampler that always samples spans, regardless of the parent span’s sampling decision. - `always_off` - Sampler that never samples spans, regardless of the parent span’s sampling decision. - `traceidratio` - Sampler that samples probabilistically based on rate. - `parentbased_always_on` - (default) Sampler that respects its parent span’s sampling decision, but otherwise always samples. - `parentbased_always_off` - Sampler that respects its parent span’s sampling decision, but otherwise never samples. - `parentbased_traceidratio` - Sampler that respects its parent span’s sampling decision, but otherwise samples probabilistically based on rate. ref: https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/trace/sdk.md#sampling ref: https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/trace/sdk.md#built-in-samplers |
-| otelInstrumentation.syncWave | int | `-20` | The ArgoCD sync-wave to use for the Instrumentation CR. This needs to be lower than the sync-wave of any deployments/statefulsets that use it. ref: https://argo-cd.readthedocs.io/en/stable/user-guide/sync-waves/ |
+| otel | object | `{"exporter":{"endpoint":"http://grafana-agent.monitoring.svc.cluster.local:4317"},"extraEnv":[],"java":{"enabled":false,"extraEnv":[]},"python":{"enabled":false,"excludedUrls":"/health[zy]?,/liveness,/ready[z]?,/readiness,/external-health-check,/metrics,/favicon.ico,/static.*","extraEnv":[]},"sampler":{"arg":"","type":"parentbased_always_on"}}` | Enabled opentelemetry-operator Instrumentation |
+| otel.exporter | object | `{"endpoint":"http://grafana-agent.monitoring.svc.cluster.local:4317"}` | The endpoint to send traces/spans to. |
+| otel.extraEnv | list | `[]` | Additional otel (generic) vars to add to the pod |
+| otel.java.enabled | bool | `false` | Enable/disable injecting Java otel environment vars |
+| otel.java.extraEnv | list | `[]` | Additional Java specific vars to add to the pod |
+| otel.python.enabled | bool | `false` | Enable/disable injecting Python otel environment vars |
+| otel.python.excludedUrls | string | `"/health[zy]?,/liveness,/ready[z]?,/readiness,/external-health-check,/metrics,/favicon.ico,/static.*"` | Urls to exclude |
+| otel.python.extraEnv | list | `[]` | Additional Python specific vars to add to the pod |
+| otel.sampler | object | `{"arg":"","type":"parentbased_always_on"}` | The sampler configuration ref: https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/trace/sdk.md#sampling |
+| otel.sampler.arg | string | `""` | Configures OTEL_TRACES_SAMPLER_ARG |
+| otel.sampler.type | string | `"parentbased_always_on"` | Configures OTEL_TRACES_SAMPLER |
 | persistentVolumes | string | `nil` | A list of persistent volume claims to be added to the pod |
 | podAnnotations | object | `{}` | Additional annotations to apply to the pod |
 | podDisruptionBudget | object | `{"enabled":true,"minAvailable":"50%"}` | Pod Disruption Budget ref: https://kubernetes.io/docs/tasks/run-application/configure-pdb/ |
