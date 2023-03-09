@@ -431,28 +431,22 @@ otel:
   # -- The endpoint to send traces/spans to.
   exporter:
     endpoint: 'http://grafana-agent.monitoring.svc.cluster.local:4317'
-
   # -- The sampler configuration
   # ref: https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/trace/sdk.md#sampling
   sampler:
     # -- Configures OTEL_TRACES_SAMPLER
     type: parentbased_always_on
-
     # -- Configures OTEL_TRACES_SAMPLER_ARG
     arg: ""
-
   # -- Additional otel (generic) vars to add to the pod
   extraEnv: []
-
   python:
     # -- Enable/disable injecting Python otel environment vars
     enabled: false
     # -- Additional Python specific vars to add to the pod
     extraEnv: []
-
     # -- Urls to exclude
     excludedUrls: "/health[zy]?,/liveness,/ready[z]?,/readiness,/external-health-check,/metrics,/favicon.ico,/static.*"
-
   java:
     # -- Enable/disable injecting Java otel environment vars
     enabled: false
