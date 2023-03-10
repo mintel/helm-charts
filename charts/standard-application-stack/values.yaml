@@ -62,7 +62,7 @@ image:
   # -- Docker repository
   repository: "test"
   # -- Semantic Version
-  semver: "v0.1.0"
+  semver: "0.1.0"
   # -- Container image tag
   tag: "auto-replaced"
   # -- Optional ImagePullPolicy
