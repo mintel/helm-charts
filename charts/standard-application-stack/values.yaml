@@ -62,9 +62,7 @@ image:
   # -- Docker repository
   repository: "test"
   # -- Semantic Version
-  semver: "0.1.0"
-  # -- Container image tag
-  tag: "auto-replaced"
+  tag: "v0.1.0"
   # -- Optional ImagePullPolicy
   # ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
   pullPolicy: IfNotPresent
