@@ -5,7 +5,7 @@ Check allowSingleReplica doesn't alter strategy:
     metadata:
       annotations:
         app.mintel.com/opa-allow-single-replica: "true"
-        helm.sh/chart: standard-application-stack-4.1.0
+        helm.sh/chart: standard-application-stack-4.1.1
         secret.reloader.stakater.com/reload: example-app-app
       labels:
         app.kubernetes.io/component: app
@@ -54,7 +54,7 @@ Check allowSingleReplica doesn't alter strategy:
               envFrom:
                 - secretRef:
                     name: example-app-app
-              image: registry.gitlab.com/test:auto-replaced
+              image: registry.gitlab.com/test:v0.1.0
               imagePullPolicy: IfNotPresent
               livenessProbe:
                 httpGet:
@@ -109,7 +109,7 @@ Check allowSingleReplica set annotations:
     metadata:
       annotations:
         app.mintel.com/opa-allow-single-replica: "true"
-        helm.sh/chart: standard-application-stack-4.1.0
+        helm.sh/chart: standard-application-stack-4.1.1
         secret.reloader.stakater.com/reload: example-app-app
       labels:
         app.kubernetes.io/component: app
@@ -158,7 +158,7 @@ Check allowSingleReplica set annotations:
               envFrom:
                 - secretRef:
                     name: example-app-app
-              image: registry.gitlab.com/test:auto-replaced
+              image: registry.gitlab.com/test:v0.1.0
               imagePullPolicy: IfNotPresent
               livenessProbe:
                 httpGet:
@@ -212,7 +212,7 @@ Check replicas unset when autoscaling is enabled:
     kind: Deployment
     metadata:
       annotations:
-        helm.sh/chart: standard-application-stack-4.1.0
+        helm.sh/chart: standard-application-stack-4.1.1
         secret.reloader.stakater.com/reload: example-app-app
       labels:
         app.kubernetes.io/component: app
@@ -260,7 +260,7 @@ Check replicas unset when autoscaling is enabled:
               envFrom:
                 - secretRef:
                     name: example-app-app
-              image: registry.gitlab.com/test:auto-replaced
+              image: registry.gitlab.com/test:v0.1.0
               imagePullPolicy: IfNotPresent
               livenessProbe:
                 httpGet:
@@ -315,7 +315,7 @@ Check singleReplicaOnly applied:
     metadata:
       annotations:
         app.mintel.com/opa-allow-single-replica: "true"
-        helm.sh/chart: standard-application-stack-4.1.0
+        helm.sh/chart: standard-application-stack-4.1.1
         secret.reloader.stakater.com/reload: example-app-app
       labels:
         app.kubernetes.io/component: app
@@ -361,7 +361,7 @@ Check singleReplicaOnly applied:
               envFrom:
                 - secretRef:
                     name: example-app-app
-              image: registry.gitlab.com/test:auto-replaced
+              image: registry.gitlab.com/test:v0.1.0
               imagePullPolicy: IfNotPresent
               livenessProbe:
                 httpGet:
@@ -416,7 +416,7 @@ Check singleReplicaOnly ignore replicas value:
     metadata:
       annotations:
         app.mintel.com/opa-allow-single-replica: "true"
-        helm.sh/chart: standard-application-stack-4.1.0
+        helm.sh/chart: standard-application-stack-4.1.1
         secret.reloader.stakater.com/reload: example-app-app
       labels:
         app.kubernetes.io/component: app
@@ -462,7 +462,7 @@ Check singleReplicaOnly ignore replicas value:
               envFrom:
                 - secretRef:
                     name: example-app-app
-              image: registry.gitlab.com/test:auto-replaced
+              image: registry.gitlab.com/test:v0.1.0
               imagePullPolicy: IfNotPresent
               livenessProbe:
                 httpGet:
