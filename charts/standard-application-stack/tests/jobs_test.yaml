@@ -33,7 +33,7 @@ tests:
           count: 1
       - equal:
           path: spec.template.spec.containers[0].image
-          value: registry.example.com/test/image/repo:auto-replaced
+          value: registry.example.com/test/image/repo:v0.1.0
   - it: Check all .job.* values can be set correctly, without overriding from main deployment
     set:
       global.clusterEnv: qa
