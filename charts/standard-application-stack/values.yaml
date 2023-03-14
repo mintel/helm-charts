@@ -61,7 +61,7 @@ image:
   registry: ""
   # -- Docker repository
   repository: "test"
-  # -- Semantic Version
+  # -- Container image tag
   tag: "v0.1.0"
   # -- Optional ImagePullPolicy
   # ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images

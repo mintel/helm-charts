@@ -4,7 +4,7 @@ Check default container args:
     kind: Deployment
     metadata:
       annotations:
-        helm.sh/chart: standard-application-stack-4.0.0
+        helm.sh/chart: standard-application-stack-4.0.1
         secret.reloader.stakater.com/reload: test-app-app,test-app-oauth
       labels:
         app.kubernetes.io/component: app
@@ -53,7 +53,7 @@ Check default container args:
               envFrom:
                 - secretRef:
                     name: test-app-app
-              image: registry.gitlab.com/test:auto-replaced
+              image: registry.gitlab.com/test:v0.1.0
               imagePullPolicy: IfNotPresent
               livenessProbe:
                 httpGet:
@@ -157,7 +157,7 @@ Check setting skip-auth-regex from extra passed in values:
     kind: Deployment
     metadata:
       annotations:
-        helm.sh/chart: standard-application-stack-4.0.0
+        helm.sh/chart: standard-application-stack-4.0.1
         secret.reloader.stakater.com/reload: test-app-app,test-app-oauth
       labels:
         app.kubernetes.io/component: app
@@ -206,7 +206,7 @@ Check setting skip-auth-regex from extra passed in values:
               envFrom:
                 - secretRef:
                     name: test-app-app
-              image: registry.gitlab.com/test:auto-replaced
+              image: registry.gitlab.com/test:v0.1.0
               imagePullPolicy: IfNotPresent
               livenessProbe:
                 httpGet:
@@ -311,7 +311,7 @@ Check setting skip-auth-regex from extra passed in values when they already cont
     kind: Deployment
     metadata:
       annotations:
-        helm.sh/chart: standard-application-stack-4.0.0
+        helm.sh/chart: standard-application-stack-4.0.1
         secret.reloader.stakater.com/reload: test-app-app,test-app-oauth
       labels:
         app.kubernetes.io/component: app
@@ -360,7 +360,7 @@ Check setting skip-auth-regex from extra passed in values when they already cont
               envFrom:
                 - secretRef:
                     name: test-app-app
-              image: registry.gitlab.com/test:auto-replaced
+              image: registry.gitlab.com/test:v0.1.0
               imagePullPolicy: IfNotPresent
               livenessProbe:
                 httpGet:
@@ -465,7 +465,7 @@ Check setting skip-auth-regex from overridden health-check values:
     kind: Deployment
     metadata:
       annotations:
-        helm.sh/chart: standard-application-stack-4.0.0
+        helm.sh/chart: standard-application-stack-4.0.1
         secret.reloader.stakater.com/reload: test-app-app,test-app-oauth
       labels:
         app.kubernetes.io/component: app
@@ -514,7 +514,7 @@ Check setting skip-auth-regex from overridden health-check values:
               envFrom:
                 - secretRef:
                     name: test-app-app
-              image: registry.gitlab.com/test:auto-replaced
+              image: registry.gitlab.com/test:v0.1.0
               imagePullPolicy: IfNotPresent
               livenessProbe:
                 httpGet:
@@ -618,7 +618,7 @@ Check sidecar present if enabled:
     kind: Deployment
     metadata:
       annotations:
-        helm.sh/chart: standard-application-stack-4.0.0
+        helm.sh/chart: standard-application-stack-4.0.1
         secret.reloader.stakater.com/reload: test-app-app,test-app-oauth
       labels:
         app.kubernetes.io/component: app
@@ -667,7 +667,7 @@ Check sidecar present if enabled:
               envFrom:
                 - secretRef:
                     name: test-app-app
-              image: registry.gitlab.com/test:auto-replaced
+              image: registry.gitlab.com/test:v0.1.0
               imagePullPolicy: IfNotPresent
               livenessProbe:
                 httpGet:

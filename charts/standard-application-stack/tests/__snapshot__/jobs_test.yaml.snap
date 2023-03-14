@@ -7,7 +7,7 @@ Check all .job.* values can be set correctly, without overriding from main deplo
         argocd.argoproj.io/hook: PreSync
         argocd.argoproj.io/hook-delete-policy: HookSucceeded
         argocd.argoproj.io/sync-wave: "-1"
-        helm.sh/chart: standard-application-stack-4.0.0
+        helm.sh/chart: standard-application-stack-4.0.1
       labels:
         app.kubernetes.io/component: testName
         app.kubernetes.io/managed-by: Helm
@@ -65,7 +65,7 @@ Check all overrides/additions from main deployment work if enabled:
     kind: Job
     metadata:
       annotations:
-        helm.sh/chart: standard-application-stack-4.0.0
+        helm.sh/chart: standard-application-stack-4.0.1
       labels:
         app.kubernetes.io/component: testName
         app.kubernetes.io/managed-by: Helm
@@ -122,7 +122,7 @@ Check default values are correct with minimal configuration:
     kind: Job
     metadata:
       annotations:
-        helm.sh/chart: standard-application-stack-4.0.0
+        helm.sh/chart: standard-application-stack-4.0.1
       labels:
         app.kubernetes.io/component: testName
         app.kubernetes.io/managed-by: Helm
@@ -146,7 +146,7 @@ Check default values are correct with minimal configuration:
                 - name: RUNTIME_ENVIRONMENT
                   value: kubernetes
               envFrom: null
-              image: registry.example.com/test/image/repo:auto-replaced
+              image: registry.example.com/test/image/repo:v0.1.0
               imagePullPolicy: IfNotPresent
               name: main
               resources:

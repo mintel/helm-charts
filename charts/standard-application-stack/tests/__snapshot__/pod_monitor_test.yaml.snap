@@ -173,7 +173,7 @@ Check combined template defaults:
     kind: Deployment
     metadata:
       annotations:
-        helm.sh/chart: standard-application-stack-4.0.0
+        helm.sh/chart: standard-application-stack-4.0.1
         secret.reloader.stakater.com/reload: test-app-app
       labels:
         app.kubernetes.io/component: app
@@ -222,7 +222,7 @@ Check combined template defaults:
               envFrom:
                 - secretRef:
                     name: test-app-app
-              image: registry.gitlab.com/test:auto-replaced
+              image: registry.gitlab.com/test:v0.1.0
               imagePullPolicy: IfNotPresent
               livenessProbe:
                 httpGet:
@@ -323,7 +323,7 @@ Check combined template with extra ports and monitors:
     kind: Deployment
     metadata:
       annotations:
-        helm.sh/chart: standard-application-stack-4.0.0
+        helm.sh/chart: standard-application-stack-4.0.1
         secret.reloader.stakater.com/reload: test-app-app
       labels:
         app.kubernetes.io/component: app
@@ -372,7 +372,7 @@ Check combined template with extra ports and monitors:
               envFrom:
                 - secretRef:
                     name: test-app-app
-              image: registry.gitlab.com/test:auto-replaced
+              image: registry.gitlab.com/test:v0.1.0
               imagePullPolicy: IfNotPresent
               livenessProbe:
                 httpGet:

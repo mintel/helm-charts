@@ -4,7 +4,7 @@ Check AWS ALB lifecycle rule applied:
     kind: Deployment
     metadata:
       annotations:
-        helm.sh/chart: standard-application-stack-4.0.0
+        helm.sh/chart: standard-application-stack-4.0.1
         secret.reloader.stakater.com/reload: example-app-app
       labels:
         app.kubernetes.io/component: app
@@ -59,7 +59,7 @@ Check AWS ALB lifecycle rule applied:
               envFrom:
                 - secretRef:
                     name: example-app-app
-              image: registry.gitlab.com/test:auto-replaced
+              image: registry.gitlab.com/test:v0.1.0
               imagePullPolicy: IfNotPresent
               lifecycle:
                 preStop:
@@ -120,7 +120,7 @@ Check AWS ALB lifecycle rules applied with custom delay:
     kind: Deployment
     metadata:
       annotations:
-        helm.sh/chart: standard-application-stack-4.0.0
+        helm.sh/chart: standard-application-stack-4.0.1
         secret.reloader.stakater.com/reload: example-app-app
       labels:
         app.kubernetes.io/component: app
@@ -175,7 +175,7 @@ Check AWS ALB lifecycle rules applied with custom delay:
               envFrom:
                 - secretRef:
                     name: example-app-app
-              image: registry.gitlab.com/test:auto-replaced
+              image: registry.gitlab.com/test:v0.1.0
               imagePullPolicy: IfNotPresent
               lifecycle:
                 preStop:
@@ -236,7 +236,7 @@ Check AWS ALB lifecycle rules are not applied when ALB disabled:
     kind: Deployment
     metadata:
       annotations:
-        helm.sh/chart: standard-application-stack-4.0.0
+        helm.sh/chart: standard-application-stack-4.0.1
         secret.reloader.stakater.com/reload: example-app-app
       labels:
         app.kubernetes.io/component: app
@@ -291,7 +291,7 @@ Check AWS ALB lifecycle rules are not applied when ALB disabled:
               envFrom:
                 - secretRef:
                     name: example-app-app
-              image: registry.gitlab.com/test:auto-replaced
+              image: registry.gitlab.com/test:v0.1.0
               imagePullPolicy: IfNotPresent
               livenessProbe:
                 httpGet:
@@ -345,7 +345,7 @@ Check AWS ALB lifecycle rules are not applied when ALB enabled (but Ingress disa
     kind: Deployment
     metadata:
       annotations:
-        helm.sh/chart: standard-application-stack-4.0.0
+        helm.sh/chart: standard-application-stack-4.0.1
         secret.reloader.stakater.com/reload: example-app-app
       labels:
         app.kubernetes.io/component: app
@@ -394,7 +394,7 @@ Check AWS ALB lifecycle rules are not applied when ALB enabled (but Ingress disa
               envFrom:
                 - secretRef:
                     name: example-app-app
-              image: registry.gitlab.com/test:auto-replaced
+              image: registry.gitlab.com/test:v0.1.0
               imagePullPolicy: IfNotPresent
               livenessProbe:
                 httpGet:
@@ -448,7 +448,7 @@ Check lifecycle rules:
     kind: Deployment
     metadata:
       annotations:
-        helm.sh/chart: standard-application-stack-4.0.0
+        helm.sh/chart: standard-application-stack-4.0.1
         secret.reloader.stakater.com/reload: example-app-app
       labels:
         app.kubernetes.io/component: app
@@ -497,7 +497,7 @@ Check lifecycle rules:
               envFrom:
                 - secretRef:
                     name: example-app-app
-              image: registry.gitlab.com/test:auto-replaced
+              image: registry.gitlab.com/test:v0.1.0
               imagePullPolicy: IfNotPresent
               lifecycle:
                 preStop:
