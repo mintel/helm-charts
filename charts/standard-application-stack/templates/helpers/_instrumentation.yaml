@@ -21,7 +21,7 @@ Generate the otel pod enivonrment vars
 - name: OTEL_EXPORTER_OTLP_ENDPOINT
   value: {{ .exporter.endpoint }}
 - name: OTEL_METRICS_EXPORTER
-  value: otlp
+  value: none
 - name: OTEL_SERVICE_NAME
   value: {{ include "mintel_common.fullname" $ | quote }}
 - name: OTEL_RESOURCE_ATTRIBUTES_POD_IP

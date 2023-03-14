@@ -34,7 +34,7 @@ tests:
             - name: OTEL_EXPORTER_OTLP_ENDPOINT
               value: http://grafana-agent.monitoring.svc.cluster.local:4317
             - name: OTEL_METRICS_EXPORTER
-              value: otlp
+              value: none
             - name: OTEL_SERVICE_NAME
               value: test-app
             - name: OTEL_RESOURCE_ATTRIBUTES_POD_IP
@@ -81,7 +81,7 @@ tests:
             - name: OTEL_EXPORTER_OTLP_ENDPOINT
               value: http://grafana-agent.monitoring.svc.cluster.local:4317
             - name: OTEL_METRICS_EXPORTER
-              value: otlp
+              value: none
             - name: OTEL_SERVICE_NAME
               value: test-app
             - name: OTEL_RESOURCE_ATTRIBUTES_POD_IP
@@ -130,7 +130,7 @@ tests:
             - name: OTEL_EXPORTER_OTLP_ENDPOINT
               value: http://grafana-agent.monitoring.svc.cluster.local:4317
             - name: OTEL_METRICS_EXPORTER
-              value: otlp
+              value: none
             - name: OTEL_SERVICE_NAME
               value: test-app
             - name: OTEL_RESOURCE_ATTRIBUTES_POD_IP
@@ -178,7 +178,7 @@ tests:
             - name: OTEL_EXPORTER_OTLP_ENDPOINT
               value: http://grafana-agent.monitoring.svc.cluster.local:4317
             - name: OTEL_METRICS_EXPORTER
-              value: otlp
+              value: none
             - name: OTEL_SERVICE_NAME
               value: test-app
             - name: OTEL_RESOURCE_ATTRIBUTES_POD_IP
