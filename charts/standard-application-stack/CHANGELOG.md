@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v4.1.0] - 2023-03-14
+### Changed
+- Set `OTEL_METRICS_EXPORTER=none` to disable metrics-exporter (not used) and avoids unwanted log warnings
+
 ## [v4.0.0] - 2023-03-09
 ### Changed
 - Configure open-telemetry for apps using env-vars rather than the operator
