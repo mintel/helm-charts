@@ -1,6 +1,6 @@
 # standard-application-stack
 
-![Version: 4.1.0](https://img.shields.io/badge/Version-4.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 4.1.1](https://img.shields.io/badge/Version-4.1.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A generic chart to support most common application requirements
 
@@ -119,11 +119,11 @@ A generic chart to support most common application requirements
 | hybridCloud.metrics.enabled | bool | `true` | Enable Prometheus to scrape consul proxy metrics |
 | hybridCloud.proxyPort | int | `20000` | Set port for Envoy proxy public listener (the port consul talks back to envoy on) |
 | hybridCloud.upstreamServices | list | `[]` | Defines list of upstream services to connect to  upstreamServices:    - 'service1:1234'    - 'service2:2345' |
-| image | object | `{"pullPolicy":"IfNotPresent","registry":"","repository":"test","tag":"auto-replaced"}` | Docker image values |
+| image | object | `{"pullPolicy":"IfNotPresent","registry":"","repository":"test","tag":"v0.1.0"}` | Docker image values |
 | image.pullPolicy | string | `"IfNotPresent"` | Optional ImagePullPolicy ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images |
 | image.registry | string | `""` | Docker registry used to pull application image |
 | image.repository | string | `"test"` | Docker repository |
-| image.tag | string | `"auto-replaced"` | Container image tag |
+| image.tag | string | `"v0.1.0"` | Container image tag |
 | imagePullSecrets | list | `[]` | Optional array of imagePullSecrets ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/ |
 | ingress | object | `{"alb":{"backendProtocol":"HTTP","backendProtocolVersion":"HTTP1","deregistrationDelay":{"timeoutSeconds":5},"enabled":true,"healthcheck":{"healthyThresholdCount":2,"intervalSeconds":15,"protocol":"HTTP","timeoutSeconds":5,"unhealthyThresholdCount":2},"okta":{"authOnUnauthenticated":"authenticate","enabled":false,"extraRedirectPaths":[],"groups":"","ingressName":"","redirectPath":"","users":""},"preStopDelay":{"delaySeconds":15,"enabled":true},"scheme":"internet-facing"},"allowFrontendAccess":false,"allowLivenessUrl":false,"allowReadinessUrl":false,"blackbox":{"enabled":true,"probePath":"/external-health-check"},"enabled":false,"extraAnnotations":{},"extraHosts":[],"extraIngresses":[],"setNoCacheHeaders":false,"setXForwardedForHeaders":false,"specificRulesHostsYaml":{},"specificTlsHostsYaml":{},"tls":true}` | Configure the ingress resource that allows you to access the application from public-internet ref: http://kubernetes.io/docs/user-guide/ingress/ |
 | ingress.alb.backendProtocol | string | `"HTTP"` | Application Version (HTTP / HTTPS) |

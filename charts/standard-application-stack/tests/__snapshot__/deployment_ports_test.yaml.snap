@@ -4,7 +4,7 @@ Check container extraPorts:
     kind: Deployment
     metadata:
       annotations:
-        helm.sh/chart: standard-application-stack-4.1.0
+        helm.sh/chart: standard-application-stack-4.1.1
         secret.reloader.stakater.com/reload: example-app-app
       labels:
         app.kubernetes.io/component: app
@@ -53,7 +53,7 @@ Check container extraPorts:
               envFrom:
                 - secretRef:
                     name: example-app-app
-              image: registry.gitlab.com/test:auto-replaced
+              image: registry.gitlab.com/test:v0.1.0
               imagePullPolicy: IfNotPresent
               livenessProbe:
                 httpGet:
@@ -111,7 +111,7 @@ Check container extraPorts are validated:
     kind: Deployment
     metadata:
       annotations:
-        helm.sh/chart: standard-application-stack-4.1.0
+        helm.sh/chart: standard-application-stack-4.1.1
         secret.reloader.stakater.com/reload: example-app-app
       labels:
         app.kubernetes.io/component: app
@@ -160,7 +160,7 @@ Check container extraPorts are validated:
               envFrom:
                 - secretRef:
                     name: example-app-app
-              image: registry.gitlab.com/test:auto-replaced
+              image: registry.gitlab.com/test:v0.1.0
               imagePullPolicy: IfNotPresent
               livenessProbe:
                 httpGet:
@@ -220,7 +220,7 @@ Check container extraPorts protocol:
     kind: Deployment
     metadata:
       annotations:
-        helm.sh/chart: standard-application-stack-4.1.0
+        helm.sh/chart: standard-application-stack-4.1.1
         secret.reloader.stakater.com/reload: example-app-app
       labels:
         app.kubernetes.io/component: app
@@ -269,7 +269,7 @@ Check container extraPorts protocol:
               envFrom:
                 - secretRef:
                     name: example-app-app
-              image: registry.gitlab.com/test:auto-replaced
+              image: registry.gitlab.com/test:v0.1.0
               imagePullPolicy: IfNotPresent
               livenessProbe:
                 httpGet:
@@ -328,7 +328,7 @@ Check container hybrid cloud ports:
     kind: Deployment
     metadata:
       annotations:
-        helm.sh/chart: standard-application-stack-4.1.0
+        helm.sh/chart: standard-application-stack-4.1.1
         secret.reloader.stakater.com/reload: example-app-app
       labels:
         app.kubernetes.io/component: app
@@ -378,7 +378,7 @@ Check container hybrid cloud ports:
               envFrom:
                 - secretRef:
                     name: example-app-app
-              image: registry.gitlab.com/test:auto-replaced
+              image: registry.gitlab.com/test:v0.1.0
               imagePullPolicy: IfNotPresent
               livenessProbe:
                 httpGet:
@@ -436,7 +436,7 @@ Check default container main port:
     kind: Deployment
     metadata:
       annotations:
-        helm.sh/chart: standard-application-stack-4.1.0
+        helm.sh/chart: standard-application-stack-4.1.1
         secret.reloader.stakater.com/reload: example-app-app
       labels:
         app.kubernetes.io/component: app
@@ -485,7 +485,7 @@ Check default container main port:
               envFrom:
                 - secretRef:
                     name: example-app-app
-              image: registry.gitlab.com/test:auto-replaced
+              image: registry.gitlab.com/test:v0.1.0
               imagePullPolicy: IfNotPresent
               livenessProbe:
                 httpGet:
@@ -539,7 +539,7 @@ Check overridden container main port:
     kind: Deployment
     metadata:
       annotations:
-        helm.sh/chart: standard-application-stack-4.1.0
+        helm.sh/chart: standard-application-stack-4.1.1
         secret.reloader.stakater.com/reload: example-app-app
       labels:
         app.kubernetes.io/component: app
@@ -588,7 +588,7 @@ Check overridden container main port:
               envFrom:
                 - secretRef:
                     name: example-app-app
-              image: registry.gitlab.com/test:auto-replaced
+              image: registry.gitlab.com/test:v0.1.0
               imagePullPolicy: IfNotPresent
               livenessProbe:
                 httpGet:
