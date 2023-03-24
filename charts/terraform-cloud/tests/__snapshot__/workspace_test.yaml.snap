@@ -30,56 +30,56 @@ Dev S3 module workspace:
       sshKeyID: mintel-ssh
       terraformVersion: 1.0.7
       variables:
-        - environmentVariable: false
-          hcl: false
-          key: aws_account_name
-          sensitive: false
-          value: dev
-        - environmentVariable: false
-          hcl: false
-          key: aws_region
-          sensitive: false
-          value: eu-west-1
-        - environmentVariable: false
-          hcl: false
-          key: eks_cluster_name
-          sensitive: false
-          value: cluster1
-        - environmentVariable: false
-          hcl: false
-          key: enable_versioning
-          sensitive: false
-          value: "false"
-        - environmentVariable: false
-          hcl: false
-          key: name
-          sensitive: false
-          value: mntl-test-app
-        - environmentVariable: false
-          hcl: false
-          key: output_secret_name
-          sensitive: false
-          value: test-namespace/mntl-test-app/s3
-        - environmentVariable: false
-          hcl: true
-          key: secret_tags
-          sensitive: false
-          value: '{access-project = "test-namespace-ops"}'
-        - environmentVariable: false
-          hcl: true
-          key: tags
-          sensitive: false
-          value: |-
-            {
-              Owner       = "sre"
-              Project     = "test-project"
-              Application = "test-app"
-            }
-        - environmentVariable: false
-          hcl: false
-          key: tfcloud_agent
-          sensitive: false
-          value: "true"
+      - environmentVariable: false
+        hcl: false
+        key: aws_account_name
+        sensitive: false
+        value: dev
+      - environmentVariable: false
+        hcl: false
+        key: aws_region
+        sensitive: false
+        value: eu-west-1
+      - environmentVariable: false
+        hcl: false
+        key: eks_cluster_name
+        sensitive: false
+        value: cluster1
+      - environmentVariable: false
+        hcl: false
+        key: enable_versioning
+        sensitive: false
+        value: "false"
+      - environmentVariable: false
+        hcl: false
+        key: name
+        sensitive: false
+        value: mntl-test-app
+      - environmentVariable: false
+        hcl: false
+        key: output_secret_name
+        sensitive: false
+        value: test-namespace/mntl-test-app/s3
+      - environmentVariable: false
+        hcl: true
+        key: secret_tags
+        sensitive: false
+        value: '{access-project = "test-namespace-ops"}'
+      - environmentVariable: false
+        hcl: true
+        key: tags
+        sensitive: false
+        value: |-
+          {
+            Owner       = "sre"
+            Project     = "test-project"
+            Application = "test-app"
+          }
+      - environmentVariable: false
+        hcl: false
+        key: tfcloud_agent
+        sensitive: false
+        value: "true"
 Dev S3 module workspace adds correct env override:
   1: |
     apiVersion: app.terraform.io/v1alpha1
@@ -112,56 +112,56 @@ Dev S3 module workspace adds correct env override:
       sshKeyID: mintel-ssh
       terraformVersion: 1.0.7
       variables:
-        - environmentVariable: false
-          hcl: false
-          key: aws_account_name
-          sensitive: false
-          value: dev
-        - environmentVariable: false
-          hcl: false
-          key: aws_region
-          sensitive: false
-          value: eu-west-1
-        - environmentVariable: false
-          hcl: false
-          key: eks_cluster_name
-          sensitive: false
-          value: cluster1
-        - environmentVariable: false
-          hcl: false
-          key: enable_versioning
-          sensitive: false
-          value: "false"
-        - environmentVariable: false
-          hcl: false
-          key: name
-          sensitive: false
-          value: mntl-test-app
-        - environmentVariable: false
-          hcl: false
-          key: output_secret_name
-          sensitive: false
-          value: test-namespace/mntl-test-app/s3
-        - environmentVariable: false
-          hcl: true
-          key: secret_tags
-          sensitive: false
-          value: '{access-project = "test-namespace-ops"}'
-        - environmentVariable: false
-          hcl: true
-          key: tags
-          sensitive: false
-          value: |-
-            {
-              Owner       = "sre"
-              Project     = "test-project"
-              Application = "mntl-test-app"
-            }
-        - environmentVariable: false
-          hcl: false
-          key: tfcloud_agent
-          sensitive: false
-          value: "true"
+      - environmentVariable: false
+        hcl: false
+        key: aws_account_name
+        sensitive: false
+        value: dev
+      - environmentVariable: false
+        hcl: false
+        key: aws_region
+        sensitive: false
+        value: eu-west-1
+      - environmentVariable: false
+        hcl: false
+        key: eks_cluster_name
+        sensitive: false
+        value: cluster1
+      - environmentVariable: false
+        hcl: false
+        key: enable_versioning
+        sensitive: false
+        value: "false"
+      - environmentVariable: false
+        hcl: false
+        key: name
+        sensitive: false
+        value: mntl-test-app
+      - environmentVariable: false
+        hcl: false
+        key: output_secret_name
+        sensitive: false
+        value: test-namespace/mntl-test-app/s3
+      - environmentVariable: false
+        hcl: true
+        key: secret_tags
+        sensitive: false
+        value: '{access-project = "test-namespace-ops"}'
+      - environmentVariable: false
+        hcl: true
+        key: tags
+        sensitive: false
+        value: |-
+          {
+            Owner       = "sre"
+            Project     = "test-project"
+            Application = "mntl-test-app"
+          }
+      - environmentVariable: false
+        hcl: false
+        key: tfcloud_agent
+        sensitive: false
+        value: "true"
 Dev S3 module workspace name does not repeat mntl-prefix:
   1: |
     apiVersion: app.terraform.io/v1alpha1
@@ -194,56 +194,56 @@ Dev S3 module workspace name does not repeat mntl-prefix:
       sshKeyID: mintel-ssh
       terraformVersion: 1.0.7
       variables:
-        - environmentVariable: false
-          hcl: false
-          key: aws_account_name
-          sensitive: false
-          value: dev
-        - environmentVariable: false
-          hcl: false
-          key: aws_region
-          sensitive: false
-          value: eu-west-1
-        - environmentVariable: false
-          hcl: false
-          key: eks_cluster_name
-          sensitive: false
-          value: cluster1
-        - environmentVariable: false
-          hcl: false
-          key: enable_versioning
-          sensitive: false
-          value: "false"
-        - environmentVariable: false
-          hcl: false
-          key: name
-          sensitive: false
-          value: mntl-test-app
-        - environmentVariable: false
-          hcl: false
-          key: output_secret_name
-          sensitive: false
-          value: test-namespace/mntl-test-app/s3
-        - environmentVariable: false
-          hcl: true
-          key: secret_tags
-          sensitive: false
-          value: '{access-project = "test-namespace-ops"}'
-        - environmentVariable: false
-          hcl: true
-          key: tags
-          sensitive: false
-          value: |-
-            {
-              Owner       = "sre"
-              Project     = "test-project"
-              Application = "mntl-test-app"
-            }
-        - environmentVariable: false
-          hcl: false
-          key: tfcloud_agent
-          sensitive: false
-          value: "true"
+      - environmentVariable: false
+        hcl: false
+        key: aws_account_name
+        sensitive: false
+        value: dev
+      - environmentVariable: false
+        hcl: false
+        key: aws_region
+        sensitive: false
+        value: eu-west-1
+      - environmentVariable: false
+        hcl: false
+        key: eks_cluster_name
+        sensitive: false
+        value: cluster1
+      - environmentVariable: false
+        hcl: false
+        key: enable_versioning
+        sensitive: false
+        value: "false"
+      - environmentVariable: false
+        hcl: false
+        key: name
+        sensitive: false
+        value: mntl-test-app
+      - environmentVariable: false
+        hcl: false
+        key: output_secret_name
+        sensitive: false
+        value: test-namespace/mntl-test-app/s3
+      - environmentVariable: false
+        hcl: true
+        key: secret_tags
+        sensitive: false
+        value: '{access-project = "test-namespace-ops"}'
+      - environmentVariable: false
+        hcl: true
+        key: tags
+        sensitive: false
+        value: |-
+          {
+            Owner       = "sre"
+            Project     = "test-project"
+            Application = "mntl-test-app"
+          }
+      - environmentVariable: false
+        hcl: false
+        key: tfcloud_agent
+        sensitive: false
+        value: "true"
 Dev S3 module workspace name override:
   1: |
     apiVersion: app.terraform.io/v1alpha1
@@ -276,56 +276,56 @@ Dev S3 module workspace name override:
       sshKeyID: mintel-ssh
       terraformVersion: 1.0.7
       variables:
-        - environmentVariable: false
-          hcl: false
-          key: aws_account_name
-          sensitive: false
-          value: dev
-        - environmentVariable: false
-          hcl: false
-          key: aws_region
-          sensitive: false
-          value: eu-west-1
-        - environmentVariable: false
-          hcl: false
-          key: eks_cluster_name
-          sensitive: false
-          value: cluster1
-        - environmentVariable: false
-          hcl: false
-          key: enable_versioning
-          sensitive: false
-          value: "false"
-        - environmentVariable: false
-          hcl: false
-          key: name
-          sensitive: false
-          value: mntl-test-app
-        - environmentVariable: false
-          hcl: false
-          key: output_secret_name
-          sensitive: false
-          value: test-namespace/mntl-test-app/s3
-        - environmentVariable: false
-          hcl: true
-          key: secret_tags
-          sensitive: false
-          value: '{access-project = "test-namespace-ops"}'
-        - environmentVariable: false
-          hcl: true
-          key: tags
-          sensitive: false
-          value: |-
-            {
-              Owner       = "sre"
-              Project     = "test-project"
-              Application = "mntl-test-app"
-            }
-        - environmentVariable: false
-          hcl: false
-          key: tfcloud_agent
-          sensitive: false
-          value: "true"
+      - environmentVariable: false
+        hcl: false
+        key: aws_account_name
+        sensitive: false
+        value: dev
+      - environmentVariable: false
+        hcl: false
+        key: aws_region
+        sensitive: false
+        value: eu-west-1
+      - environmentVariable: false
+        hcl: false
+        key: eks_cluster_name
+        sensitive: false
+        value: cluster1
+      - environmentVariable: false
+        hcl: false
+        key: enable_versioning
+        sensitive: false
+        value: "false"
+      - environmentVariable: false
+        hcl: false
+        key: name
+        sensitive: false
+        value: mntl-test-app
+      - environmentVariable: false
+        hcl: false
+        key: output_secret_name
+        sensitive: false
+        value: test-namespace/mntl-test-app/s3
+      - environmentVariable: false
+        hcl: true
+        key: secret_tags
+        sensitive: false
+        value: '{access-project = "test-namespace-ops"}'
+      - environmentVariable: false
+        hcl: true
+        key: tags
+        sensitive: false
+        value: |-
+          {
+            Owner       = "sre"
+            Project     = "test-project"
+            Application = "mntl-test-app"
+          }
+      - environmentVariable: false
+        hcl: false
+        key: tfcloud_agent
+        sensitive: false
+        value: "true"
 Dev S3 module workspace with default (0) syncWave:
   1: |
     apiVersion: app.terraform.io/v1alpha1
@@ -358,56 +358,56 @@ Dev S3 module workspace with default (0) syncWave:
       sshKeyID: mintel-ssh
       terraformVersion: 1.0.7
       variables:
-        - environmentVariable: false
-          hcl: false
-          key: aws_account_name
-          sensitive: false
-          value: dev
-        - environmentVariable: false
-          hcl: false
-          key: aws_region
-          sensitive: false
-          value: eu-west-1
-        - environmentVariable: false
-          hcl: false
-          key: eks_cluster_name
-          sensitive: false
-          value: cluster1
-        - environmentVariable: false
-          hcl: false
-          key: enable_versioning
-          sensitive: false
-          value: "false"
-        - environmentVariable: false
-          hcl: false
-          key: name
-          sensitive: false
-          value: mntl-test-app
-        - environmentVariable: false
-          hcl: false
-          key: output_secret_name
-          sensitive: false
-          value: test-namespace/mntl-test-app/s3
-        - environmentVariable: false
-          hcl: true
-          key: secret_tags
-          sensitive: false
-          value: '{access-project = "test-namespace-ops"}'
-        - environmentVariable: false
-          hcl: true
-          key: tags
-          sensitive: false
-          value: |-
-            {
-              Owner       = "sre"
-              Project     = "test-project"
-              Application = "test-app"
-            }
-        - environmentVariable: false
-          hcl: false
-          key: tfcloud_agent
-          sensitive: false
-          value: "true"
+      - environmentVariable: false
+        hcl: false
+        key: aws_account_name
+        sensitive: false
+        value: dev
+      - environmentVariable: false
+        hcl: false
+        key: aws_region
+        sensitive: false
+        value: eu-west-1
+      - environmentVariable: false
+        hcl: false
+        key: eks_cluster_name
+        sensitive: false
+        value: cluster1
+      - environmentVariable: false
+        hcl: false
+        key: enable_versioning
+        sensitive: false
+        value: "false"
+      - environmentVariable: false
+        hcl: false
+        key: name
+        sensitive: false
+        value: mntl-test-app
+      - environmentVariable: false
+        hcl: false
+        key: output_secret_name
+        sensitive: false
+        value: test-namespace/mntl-test-app/s3
+      - environmentVariable: false
+        hcl: true
+        key: secret_tags
+        sensitive: false
+        value: '{access-project = "test-namespace-ops"}'
+      - environmentVariable: false
+        hcl: true
+        key: tags
+        sensitive: false
+        value: |-
+          {
+            Owner       = "sre"
+            Project     = "test-project"
+            Application = "test-app"
+          }
+      - environmentVariable: false
+        hcl: false
+        key: tfcloud_agent
+        sensitive: false
+        value: "true"
 Dev S3 module workspace with modified syncWave:
   1: |
     apiVersion: app.terraform.io/v1alpha1
@@ -440,56 +440,56 @@ Dev S3 module workspace with modified syncWave:
       sshKeyID: mintel-ssh
       terraformVersion: 1.0.7
       variables:
-        - environmentVariable: false
-          hcl: false
-          key: aws_account_name
-          sensitive: false
-          value: dev
-        - environmentVariable: false
-          hcl: false
-          key: aws_region
-          sensitive: false
-          value: eu-west-1
-        - environmentVariable: false
-          hcl: false
-          key: eks_cluster_name
-          sensitive: false
-          value: cluster1
-        - environmentVariable: false
-          hcl: false
-          key: enable_versioning
-          sensitive: false
-          value: "false"
-        - environmentVariable: false
-          hcl: false
-          key: name
-          sensitive: false
-          value: mntl-test-app
-        - environmentVariable: false
-          hcl: false
-          key: output_secret_name
-          sensitive: false
-          value: test-namespace/mntl-test-app/s3
-        - environmentVariable: false
-          hcl: true
-          key: secret_tags
-          sensitive: false
-          value: '{access-project = "test-namespace-ops"}'
-        - environmentVariable: false
-          hcl: true
-          key: tags
-          sensitive: false
-          value: |-
-            {
-              Owner       = "sre"
-              Project     = "test-project"
-              Application = "test-app"
-            }
-        - environmentVariable: false
-          hcl: false
-          key: tfcloud_agent
-          sensitive: false
-          value: "true"
+      - environmentVariable: false
+        hcl: false
+        key: aws_account_name
+        sensitive: false
+        value: dev
+      - environmentVariable: false
+        hcl: false
+        key: aws_region
+        sensitive: false
+        value: eu-west-1
+      - environmentVariable: false
+        hcl: false
+        key: eks_cluster_name
+        sensitive: false
+        value: cluster1
+      - environmentVariable: false
+        hcl: false
+        key: enable_versioning
+        sensitive: false
+        value: "false"
+      - environmentVariable: false
+        hcl: false
+        key: name
+        sensitive: false
+        value: mntl-test-app
+      - environmentVariable: false
+        hcl: false
+        key: output_secret_name
+        sensitive: false
+        value: test-namespace/mntl-test-app/s3
+      - environmentVariable: false
+        hcl: true
+        key: secret_tags
+        sensitive: false
+        value: '{access-project = "test-namespace-ops"}'
+      - environmentVariable: false
+        hcl: true
+        key: tags
+        sensitive: false
+        value: |-
+          {
+            Owner       = "sre"
+            Project     = "test-project"
+            Application = "test-app"
+          }
+      - environmentVariable: false
+        hcl: false
+        key: tfcloud_agent
+        sensitive: false
+        value: "true"
 Dev S3 module workspace with multiple instances:
   1: |
     apiVersion: app.terraform.io/v1alpha1
@@ -522,56 +522,56 @@ Dev S3 module workspace with multiple instances:
       sshKeyID: mintel-ssh
       terraformVersion: 1.0.7
       variables:
-        - environmentVariable: false
-          hcl: false
-          key: aws_account_name
-          sensitive: false
-          value: dev
-        - environmentVariable: false
-          hcl: false
-          key: aws_region
-          sensitive: false
-          value: eu-west-1
-        - environmentVariable: false
-          hcl: false
-          key: eks_cluster_name
-          sensitive: false
-          value: cluster1
-        - environmentVariable: false
-          hcl: false
-          key: enable_versioning
-          sensitive: false
-          value: "false"
-        - environmentVariable: false
-          hcl: false
-          key: name
-          sensitive: false
-          value: mntl-test-bucket
-        - environmentVariable: false
-          hcl: false
-          key: output_secret_name
-          sensitive: false
-          value: test-namespace/mntl-test-bucket/s3
-        - environmentVariable: false
-          hcl: true
-          key: secret_tags
-          sensitive: false
-          value: '{access-project = "test-namespace-ops"}'
-        - environmentVariable: false
-          hcl: true
-          key: tags
-          sensitive: false
-          value: |-
-            {
-              Owner       = "sre"
-              Project     = "test-project"
-              Application = "test-app"
-            }
-        - environmentVariable: false
-          hcl: false
-          key: tfcloud_agent
-          sensitive: false
-          value: "true"
+      - environmentVariable: false
+        hcl: false
+        key: aws_account_name
+        sensitive: false
+        value: dev
+      - environmentVariable: false
+        hcl: false
+        key: aws_region
+        sensitive: false
+        value: eu-west-1
+      - environmentVariable: false
+        hcl: false
+        key: eks_cluster_name
+        sensitive: false
+        value: cluster1
+      - environmentVariable: false
+        hcl: false
+        key: enable_versioning
+        sensitive: false
+        value: "false"
+      - environmentVariable: false
+        hcl: false
+        key: name
+        sensitive: false
+        value: mntl-test-bucket
+      - environmentVariable: false
+        hcl: false
+        key: output_secret_name
+        sensitive: false
+        value: test-namespace/mntl-test-bucket/s3
+      - environmentVariable: false
+        hcl: true
+        key: secret_tags
+        sensitive: false
+        value: '{access-project = "test-namespace-ops"}'
+      - environmentVariable: false
+        hcl: true
+        key: tags
+        sensitive: false
+        value: |-
+          {
+            Owner       = "sre"
+            Project     = "test-project"
+            Application = "test-app"
+          }
+      - environmentVariable: false
+        hcl: false
+        key: tfcloud_agent
+        sensitive: false
+        value: "true"
   2: |
     apiVersion: app.terraform.io/v1alpha1
     kind: Workspace
@@ -603,56 +603,56 @@ Dev S3 module workspace with multiple instances:
       sshKeyID: mintel-ssh
       terraformVersion: 1.0.7
       variables:
-        - environmentVariable: false
-          hcl: false
-          key: aws_account_name
-          sensitive: false
-          value: dev
-        - environmentVariable: false
-          hcl: false
-          key: aws_region
-          sensitive: false
-          value: eu-west-1
-        - environmentVariable: false
-          hcl: false
-          key: eks_cluster_name
-          sensitive: false
-          value: cluster1
-        - environmentVariable: false
-          hcl: false
-          key: enable_versioning
-          sensitive: false
-          value: "false"
-        - environmentVariable: false
-          hcl: false
-          key: name
-          sensitive: false
-          value: mntl-test-bucket-another
-        - environmentVariable: false
-          hcl: false
-          key: output_secret_name
-          sensitive: false
-          value: test-namespace/mntl-test-bucket-another/s3
-        - environmentVariable: false
-          hcl: true
-          key: secret_tags
-          sensitive: false
-          value: '{access-project = "test-namespace-ops"}'
-        - environmentVariable: false
-          hcl: true
-          key: tags
-          sensitive: false
-          value: |-
-            {
-              Owner       = "sre"
-              Project     = "test-project"
-              Application = "test-app"
-            }
-        - environmentVariable: false
-          hcl: false
-          key: tfcloud_agent
-          sensitive: false
-          value: "true"
+      - environmentVariable: false
+        hcl: false
+        key: aws_account_name
+        sensitive: false
+        value: dev
+      - environmentVariable: false
+        hcl: false
+        key: aws_region
+        sensitive: false
+        value: eu-west-1
+      - environmentVariable: false
+        hcl: false
+        key: eks_cluster_name
+        sensitive: false
+        value: cluster1
+      - environmentVariable: false
+        hcl: false
+        key: enable_versioning
+        sensitive: false
+        value: "false"
+      - environmentVariable: false
+        hcl: false
+        key: name
+        sensitive: false
+        value: mntl-test-bucket-another
+      - environmentVariable: false
+        hcl: false
+        key: output_secret_name
+        sensitive: false
+        value: test-namespace/mntl-test-bucket-another/s3
+      - environmentVariable: false
+        hcl: true
+        key: secret_tags
+        sensitive: false
+        value: '{access-project = "test-namespace-ops"}'
+      - environmentVariable: false
+        hcl: true
+        key: tags
+        sensitive: false
+        value: |-
+          {
+            Owner       = "sre"
+            Project     = "test-project"
+            Application = "test-app"
+          }
+      - environmentVariable: false
+        hcl: false
+        key: tfcloud_agent
+        sensitive: false
+        value: "true"
 Dev S3 module workspace with multiple instances and syncWave overrides:
   1: |
     apiVersion: app.terraform.io/v1alpha1
@@ -685,56 +685,56 @@ Dev S3 module workspace with multiple instances and syncWave overrides:
       sshKeyID: mintel-ssh
       terraformVersion: 1.0.7
       variables:
-        - environmentVariable: false
-          hcl: false
-          key: aws_account_name
-          sensitive: false
-          value: dev
-        - environmentVariable: false
-          hcl: false
-          key: aws_region
-          sensitive: false
-          value: eu-west-1
-        - environmentVariable: false
-          hcl: false
-          key: eks_cluster_name
-          sensitive: false
-          value: cluster1
-        - environmentVariable: false
-          hcl: false
-          key: enable_versioning
-          sensitive: false
-          value: "false"
-        - environmentVariable: false
-          hcl: false
-          key: name
-          sensitive: false
-          value: mntl-test-bucket
-        - environmentVariable: false
-          hcl: false
-          key: output_secret_name
-          sensitive: false
-          value: test-namespace/mntl-test-bucket/s3
-        - environmentVariable: false
-          hcl: true
-          key: secret_tags
-          sensitive: false
-          value: '{access-project = "test-namespace-ops"}'
-        - environmentVariable: false
-          hcl: true
-          key: tags
-          sensitive: false
-          value: |-
-            {
-              Owner       = "sre"
-              Project     = "test-project"
-              Application = "test-app"
-            }
-        - environmentVariable: false
-          hcl: false
-          key: tfcloud_agent
-          sensitive: false
-          value: "true"
+      - environmentVariable: false
+        hcl: false
+        key: aws_account_name
+        sensitive: false
+        value: dev
+      - environmentVariable: false
+        hcl: false
+        key: aws_region
+        sensitive: false
+        value: eu-west-1
+      - environmentVariable: false
+        hcl: false
+        key: eks_cluster_name
+        sensitive: false
+        value: cluster1
+      - environmentVariable: false
+        hcl: false
+        key: enable_versioning
+        sensitive: false
+        value: "false"
+      - environmentVariable: false
+        hcl: false
+        key: name
+        sensitive: false
+        value: mntl-test-bucket
+      - environmentVariable: false
+        hcl: false
+        key: output_secret_name
+        sensitive: false
+        value: test-namespace/mntl-test-bucket/s3
+      - environmentVariable: false
+        hcl: true
+        key: secret_tags
+        sensitive: false
+        value: '{access-project = "test-namespace-ops"}'
+      - environmentVariable: false
+        hcl: true
+        key: tags
+        sensitive: false
+        value: |-
+          {
+            Owner       = "sre"
+            Project     = "test-project"
+            Application = "test-app"
+          }
+      - environmentVariable: false
+        hcl: false
+        key: tfcloud_agent
+        sensitive: false
+        value: "true"
   2: |
     apiVersion: app.terraform.io/v1alpha1
     kind: Workspace
@@ -766,56 +766,56 @@ Dev S3 module workspace with multiple instances and syncWave overrides:
       sshKeyID: mintel-ssh
       terraformVersion: 1.0.7
       variables:
-        - environmentVariable: false
-          hcl: false
-          key: aws_account_name
-          sensitive: false
-          value: dev
-        - environmentVariable: false
-          hcl: false
-          key: aws_region
-          sensitive: false
-          value: eu-west-1
-        - environmentVariable: false
-          hcl: false
-          key: eks_cluster_name
-          sensitive: false
-          value: cluster1
-        - environmentVariable: false
-          hcl: false
-          key: enable_versioning
-          sensitive: false
-          value: "false"
-        - environmentVariable: false
-          hcl: false
-          key: name
-          sensitive: false
-          value: mntl-test-bucket-another
-        - environmentVariable: false
-          hcl: false
-          key: output_secret_name
-          sensitive: false
-          value: test-namespace/mntl-test-bucket-another/s3
-        - environmentVariable: false
-          hcl: true
-          key: secret_tags
-          sensitive: false
-          value: '{access-project = "test-namespace-ops"}'
-        - environmentVariable: false
-          hcl: true
-          key: tags
-          sensitive: false
-          value: |-
-            {
-              Owner       = "sre"
-              Project     = "test-project"
-              Application = "test-app"
-            }
-        - environmentVariable: false
-          hcl: false
-          key: tfcloud_agent
-          sensitive: false
-          value: "true"
+      - environmentVariable: false
+        hcl: false
+        key: aws_account_name
+        sensitive: false
+        value: dev
+      - environmentVariable: false
+        hcl: false
+        key: aws_region
+        sensitive: false
+        value: eu-west-1
+      - environmentVariable: false
+        hcl: false
+        key: eks_cluster_name
+        sensitive: false
+        value: cluster1
+      - environmentVariable: false
+        hcl: false
+        key: enable_versioning
+        sensitive: false
+        value: "false"
+      - environmentVariable: false
+        hcl: false
+        key: name
+        sensitive: false
+        value: mntl-test-bucket-another
+      - environmentVariable: false
+        hcl: false
+        key: output_secret_name
+        sensitive: false
+        value: test-namespace/mntl-test-bucket-another/s3
+      - environmentVariable: false
+        hcl: true
+        key: secret_tags
+        sensitive: false
+        value: '{access-project = "test-namespace-ops"}'
+      - environmentVariable: false
+        hcl: true
+        key: tags
+        sensitive: false
+        value: |-
+          {
+            Owner       = "sre"
+            Project     = "test-project"
+            Application = "test-app"
+          }
+      - environmentVariable: false
+        hcl: false
+        key: tfcloud_agent
+        sensitive: false
+        value: "true"
 Test workspace allow destroy env:
   1: |
     apiVersion: app.terraform.io/v1alpha1
@@ -848,51 +848,51 @@ Test workspace allow destroy env:
       sshKeyID: mintel-ssh
       terraformVersion: 1.0.7
       variables:
-        - environmentVariable: false
-          hcl: false
-          key: aws_account_name
-          sensitive: false
-          value: prod
-        - environmentVariable: false
-          hcl: false
-          key: aws_region
-          sensitive: false
-          value: eu-west-1
-        - environmentVariable: false
-          hcl: false
-          key: eks_cluster_name
-          sensitive: false
-          value: cluster1
-        - environmentVariable: false
-          hcl: false
-          key: name
-          sensitive: false
-          value: mntl-test-app
-        - environmentVariable: false
-          hcl: false
-          key: output_secret_name
-          sensitive: false
-          value: test-namespace/mntl-test-app/s3
-        - environmentVariable: false
-          hcl: true
-          key: secret_tags
-          sensitive: false
-          value: '{access-project = "test-namespace-ops"}'
-        - environmentVariable: false
-          hcl: true
-          key: tags
-          sensitive: false
-          value: |-
-            {
-              Owner       = "sre"
-              Project     = "test-project"
-              Application = "test-app"
-            }
-        - environmentVariable: false
-          hcl: false
-          key: tfcloud_agent
-          sensitive: false
-          value: "true"
+      - environmentVariable: false
+        hcl: false
+        key: aws_account_name
+        sensitive: false
+        value: prod
+      - environmentVariable: false
+        hcl: false
+        key: aws_region
+        sensitive: false
+        value: eu-west-1
+      - environmentVariable: false
+        hcl: false
+        key: eks_cluster_name
+        sensitive: false
+        value: cluster1
+      - environmentVariable: false
+        hcl: false
+        key: name
+        sensitive: false
+        value: mntl-test-app
+      - environmentVariable: false
+        hcl: false
+        key: output_secret_name
+        sensitive: false
+        value: test-namespace/mntl-test-app/s3
+      - environmentVariable: false
+        hcl: true
+        key: secret_tags
+        sensitive: false
+        value: '{access-project = "test-namespace-ops"}'
+      - environmentVariable: false
+        hcl: true
+        key: tags
+        sensitive: false
+        value: |-
+          {
+            Owner       = "sre"
+            Project     = "test-project"
+            Application = "test-app"
+          }
+      - environmentVariable: false
+        hcl: false
+        key: tfcloud_agent
+        sensitive: false
+        value: "true"
 Test workspace extra annotations:
   1: |
     apiVersion: app.terraform.io/v1alpha1
@@ -925,56 +925,56 @@ Test workspace extra annotations:
       sshKeyID: mintel-ssh
       terraformVersion: 1.0.7
       variables:
-        - environmentVariable: false
-          hcl: false
-          key: aws_account_name
-          sensitive: false
-          value: dev
-        - environmentVariable: false
-          hcl: false
-          key: aws_region
-          sensitive: false
-          value: eu-west-1
-        - environmentVariable: false
-          hcl: false
-          key: eks_cluster_name
-          sensitive: false
-          value: cluster1
-        - environmentVariable: false
-          hcl: false
-          key: enable_versioning
-          sensitive: false
-          value: "false"
-        - environmentVariable: false
-          hcl: false
-          key: name
-          sensitive: false
-          value: mntl-test-app
-        - environmentVariable: false
-          hcl: false
-          key: output_secret_name
-          sensitive: false
-          value: test-namespace/mntl-test-app/s3
-        - environmentVariable: false
-          hcl: true
-          key: secret_tags
-          sensitive: false
-          value: '{access-project = "test-namespace-ops"}'
-        - environmentVariable: false
-          hcl: true
-          key: tags
-          sensitive: false
-          value: |-
-            {
-              Owner       = "sre"
-              Project     = "test-project"
-              Application = "test-app"
-            }
-        - environmentVariable: false
-          hcl: false
-          key: tfcloud_agent
-          sensitive: false
-          value: "true"
+      - environmentVariable: false
+        hcl: false
+        key: aws_account_name
+        sensitive: false
+        value: dev
+      - environmentVariable: false
+        hcl: false
+        key: aws_region
+        sensitive: false
+        value: eu-west-1
+      - environmentVariable: false
+        hcl: false
+        key: eks_cluster_name
+        sensitive: false
+        value: cluster1
+      - environmentVariable: false
+        hcl: false
+        key: enable_versioning
+        sensitive: false
+        value: "false"
+      - environmentVariable: false
+        hcl: false
+        key: name
+        sensitive: false
+        value: mntl-test-app
+      - environmentVariable: false
+        hcl: false
+        key: output_secret_name
+        sensitive: false
+        value: test-namespace/mntl-test-app/s3
+      - environmentVariable: false
+        hcl: true
+        key: secret_tags
+        sensitive: false
+        value: '{access-project = "test-namespace-ops"}'
+      - environmentVariable: false
+        hcl: true
+        key: tags
+        sensitive: false
+        value: |-
+          {
+            Owner       = "sre"
+            Project     = "test-project"
+            Application = "test-app"
+          }
+      - environmentVariable: false
+        hcl: false
+        key: tfcloud_agent
+        sensitive: false
+        value: "true"
 Test workspace extra annotations override:
   1: |
     apiVersion: app.terraform.io/v1alpha1
@@ -1007,53 +1007,53 @@ Test workspace extra annotations override:
       sshKeyID: mintel-ssh
       terraformVersion: 1.0.7
       variables:
-        - environmentVariable: false
-          hcl: false
-          key: aws_account_name
-          sensitive: false
-          value: dev
-        - environmentVariable: false
-          hcl: false
-          key: aws_region
-          sensitive: false
-          value: eu-west-1
-        - environmentVariable: false
-          hcl: false
-          key: eks_cluster_name
-          sensitive: false
-          value: cluster1
-        - environmentVariable: false
-          hcl: false
-          key: enable_versioning
-          sensitive: false
-          value: "false"
-        - environmentVariable: false
-          hcl: false
-          key: name
-          sensitive: false
-          value: mntl-test-app
-        - environmentVariable: false
-          hcl: false
-          key: output_secret_name
-          sensitive: false
-          value: test-namespace/mntl-test-app/s3
-        - environmentVariable: false
-          hcl: true
-          key: secret_tags
-          sensitive: false
-          value: '{access-project = "test-namespace-ops"}'
-        - environmentVariable: false
-          hcl: true
-          key: tags
-          sensitive: false
-          value: |-
-            {
-              Owner       = "sre"
-              Project     = "test-project"
-              Application = "test-app"
-            }
-        - environmentVariable: false
-          hcl: false
-          key: tfcloud_agent
-          sensitive: false
-          value: "true"
+      - environmentVariable: false
+        hcl: false
+        key: aws_account_name
+        sensitive: false
+        value: dev
+      - environmentVariable: false
+        hcl: false
+        key: aws_region
+        sensitive: false
+        value: eu-west-1
+      - environmentVariable: false
+        hcl: false
+        key: eks_cluster_name
+        sensitive: false
+        value: cluster1
+      - environmentVariable: false
+        hcl: false
+        key: enable_versioning
+        sensitive: false
+        value: "false"
+      - environmentVariable: false
+        hcl: false
+        key: name
+        sensitive: false
+        value: mntl-test-app
+      - environmentVariable: false
+        hcl: false
+        key: output_secret_name
+        sensitive: false
+        value: test-namespace/mntl-test-app/s3
+      - environmentVariable: false
+        hcl: true
+        key: secret_tags
+        sensitive: false
+        value: '{access-project = "test-namespace-ops"}'
+      - environmentVariable: false
+        hcl: true
+        key: tags
+        sensitive: false
+        value: |-
+          {
+            Owner       = "sre"
+            Project     = "test-project"
+            Application = "test-app"
+          }
+      - environmentVariable: false
+        hcl: false
+        key: tfcloud_agent
+        sensitive: false
+        value: "true"

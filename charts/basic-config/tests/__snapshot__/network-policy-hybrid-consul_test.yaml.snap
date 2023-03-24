@@ -14,13 +14,13 @@ Renders hybrid consul network policy:
       namespace: test-namespace
     spec:
       ingress:
-        - from:
-            - namespaceSelector:
-                matchLabels:
-                  kubernetes.io/metadata.name: hybrid-consul
-          ports:
-            - port: 20000
-              protocol: TCP
+      - from:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: hybrid-consul
+        ports:
+        - port: 20000
+          protocol: TCP
       podSelector:
         matchLabels:
           app.kubernetes.io/part-of: null

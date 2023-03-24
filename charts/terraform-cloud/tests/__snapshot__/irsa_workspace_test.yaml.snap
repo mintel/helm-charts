@@ -31,51 +31,51 @@ IRSA created explicitly:
       sshKeyID: mintel-ssh
       terraformVersion: 1.0.7
       variables:
-        - environmentVariable: false
-          hcl: false
-          key: aws_account_name
-          sensitive: false
-          value: dev
-        - environmentVariable: false
-          hcl: false
-          key: aws_region
-          sensitive: false
-          value: eu-west-1
-        - environmentVariable: false
-          hcl: false
-          key: eks_cluster_name
-          sensitive: false
-          value: cluster1
-        - environmentVariable: false
-          hcl: false
-          key: k8s_namespace
-          sensitive: false
-          value: test-namespace
-        - environmentVariable: false
-          hcl: false
-          key: k8s_service_account_name
-          sensitive: false
-          value: test-app
-        - environmentVariable: false
-          hcl: false
-          key: name
-          sensitive: false
-          value: test-app
-        - environmentVariable: false
-          hcl: true
-          key: tags
-          sensitive: false
-          value: |-
-            {
-              Owner       = "sre"
-              Project     = "test-project"
-              Application = "test-app"
-            }
-        - environmentVariable: false
-          hcl: false
-          key: tfcloud_agent
-          sensitive: false
-          value: "true"
+      - environmentVariable: false
+        hcl: false
+        key: aws_account_name
+        sensitive: false
+        value: dev
+      - environmentVariable: false
+        hcl: false
+        key: aws_region
+        sensitive: false
+        value: eu-west-1
+      - environmentVariable: false
+        hcl: false
+        key: eks_cluster_name
+        sensitive: false
+        value: cluster1
+      - environmentVariable: false
+        hcl: false
+        key: k8s_namespace
+        sensitive: false
+        value: test-namespace
+      - environmentVariable: false
+        hcl: false
+        key: k8s_service_account_name
+        sensitive: false
+        value: test-app
+      - environmentVariable: false
+        hcl: false
+        key: name
+        sensitive: false
+        value: test-app
+      - environmentVariable: false
+        hcl: true
+        key: tags
+        sensitive: false
+        value: |-
+          {
+            Owner       = "sre"
+            Project     = "test-project"
+            Application = "test-app"
+          }
+      - environmentVariable: false
+        hcl: false
+        key: tfcloud_agent
+        sensitive: false
+        value: "true"
 IRSA created for Dev S3 module workspace:
   1: |
     apiVersion: app.terraform.io/v1alpha1
@@ -105,56 +105,56 @@ IRSA created for Dev S3 module workspace:
       omitNamespacePrefix: true
       organization: Mintel
       runTriggers:
-        - sourceableName: dev-eu-west-1-cluster1-test-namespace-mntl-test-app-s3
+      - sourceableName: dev-eu-west-1-cluster1-test-namespace-mntl-test-app-s3
       secretsMountPath: /tmp/secrets
       sshKeyID: mintel-ssh
       terraformVersion: 1.0.7
       variables:
-        - environmentVariable: false
-          hcl: false
-          key: aws_account_name
-          sensitive: false
-          value: dev
-        - environmentVariable: false
-          hcl: false
-          key: aws_region
-          sensitive: false
-          value: eu-west-1
-        - environmentVariable: false
-          hcl: false
-          key: eks_cluster_name
-          sensitive: false
-          value: cluster1
-        - environmentVariable: false
-          hcl: false
-          key: k8s_namespace
-          sensitive: false
-          value: test-namespace
-        - environmentVariable: false
-          hcl: false
-          key: k8s_service_account_name
-          sensitive: false
-          value: test-app
-        - environmentVariable: false
-          hcl: false
-          key: name
-          sensitive: false
-          value: test-app
-        - environmentVariable: false
-          hcl: true
-          key: tags
-          sensitive: false
-          value: |-
-            {
-              Owner       = "sre"
-              Project     = "test-project"
-              Application = "test-app"
-            }
-        - environmentVariable: false
-          hcl: false
-          key: tfcloud_agent
-          sensitive: false
-          value: "true"
+      - environmentVariable: false
+        hcl: false
+        key: aws_account_name
+        sensitive: false
+        value: dev
+      - environmentVariable: false
+        hcl: false
+        key: aws_region
+        sensitive: false
+        value: eu-west-1
+      - environmentVariable: false
+        hcl: false
+        key: eks_cluster_name
+        sensitive: false
+        value: cluster1
+      - environmentVariable: false
+        hcl: false
+        key: k8s_namespace
+        sensitive: false
+        value: test-namespace
+      - environmentVariable: false
+        hcl: false
+        key: k8s_service_account_name
+        sensitive: false
+        value: test-app
+      - environmentVariable: false
+        hcl: false
+        key: name
+        sensitive: false
+        value: test-app
+      - environmentVariable: false
+        hcl: true
+        key: tags
+        sensitive: false
+        value: |-
+          {
+            Owner       = "sre"
+            Project     = "test-project"
+            Application = "test-app"
+          }
+      - environmentVariable: false
+        hcl: false
+        key: tfcloud_agent
+        sensitive: false
+        value: "true"
 IRSA created with default (0) syncWave:
   1: |
     apiVersion: app.terraform.io/v1alpha1
@@ -188,51 +188,51 @@ IRSA created with default (0) syncWave:
       sshKeyID: mintel-ssh
       terraformVersion: 1.0.7
       variables:
-        - environmentVariable: false
-          hcl: false
-          key: aws_account_name
-          sensitive: false
-          value: dev
-        - environmentVariable: false
-          hcl: false
-          key: aws_region
-          sensitive: false
-          value: eu-west-1
-        - environmentVariable: false
-          hcl: false
-          key: eks_cluster_name
-          sensitive: false
-          value: cluster1
-        - environmentVariable: false
-          hcl: false
-          key: k8s_namespace
-          sensitive: false
-          value: test-namespace
-        - environmentVariable: false
-          hcl: false
-          key: k8s_service_account_name
-          sensitive: false
-          value: test-app
-        - environmentVariable: false
-          hcl: false
-          key: name
-          sensitive: false
-          value: test-app
-        - environmentVariable: false
-          hcl: true
-          key: tags
-          sensitive: false
-          value: |-
-            {
-              Owner       = "sre"
-              Project     = "test-project"
-              Application = "test-app"
-            }
-        - environmentVariable: false
-          hcl: false
-          key: tfcloud_agent
-          sensitive: false
-          value: "true"
+      - environmentVariable: false
+        hcl: false
+        key: aws_account_name
+        sensitive: false
+        value: dev
+      - environmentVariable: false
+        hcl: false
+        key: aws_region
+        sensitive: false
+        value: eu-west-1
+      - environmentVariable: false
+        hcl: false
+        key: eks_cluster_name
+        sensitive: false
+        value: cluster1
+      - environmentVariable: false
+        hcl: false
+        key: k8s_namespace
+        sensitive: false
+        value: test-namespace
+      - environmentVariable: false
+        hcl: false
+        key: k8s_service_account_name
+        sensitive: false
+        value: test-app
+      - environmentVariable: false
+        hcl: false
+        key: name
+        sensitive: false
+        value: test-app
+      - environmentVariable: false
+        hcl: true
+        key: tags
+        sensitive: false
+        value: |-
+          {
+            Owner       = "sre"
+            Project     = "test-project"
+            Application = "test-app"
+          }
+      - environmentVariable: false
+        hcl: false
+        key: tfcloud_agent
+        sensitive: false
+        value: "true"
 IRSA created with modified syncWave:
   1: |
     apiVersion: app.terraform.io/v1alpha1
@@ -266,48 +266,48 @@ IRSA created with modified syncWave:
       sshKeyID: mintel-ssh
       terraformVersion: 1.0.7
       variables:
-        - environmentVariable: false
-          hcl: false
-          key: aws_account_name
-          sensitive: false
-          value: dev
-        - environmentVariable: false
-          hcl: false
-          key: aws_region
-          sensitive: false
-          value: eu-west-1
-        - environmentVariable: false
-          hcl: false
-          key: eks_cluster_name
-          sensitive: false
-          value: cluster1
-        - environmentVariable: false
-          hcl: false
-          key: k8s_namespace
-          sensitive: false
-          value: test-namespace
-        - environmentVariable: false
-          hcl: false
-          key: k8s_service_account_name
-          sensitive: false
-          value: test-app
-        - environmentVariable: false
-          hcl: false
-          key: name
-          sensitive: false
-          value: test-app
-        - environmentVariable: false
-          hcl: true
-          key: tags
-          sensitive: false
-          value: |-
-            {
-              Owner       = "sre"
-              Project     = "test-project"
-              Application = "test-app"
-            }
-        - environmentVariable: false
-          hcl: false
-          key: tfcloud_agent
-          sensitive: false
-          value: "true"
+      - environmentVariable: false
+        hcl: false
+        key: aws_account_name
+        sensitive: false
+        value: dev
+      - environmentVariable: false
+        hcl: false
+        key: aws_region
+        sensitive: false
+        value: eu-west-1
+      - environmentVariable: false
+        hcl: false
+        key: eks_cluster_name
+        sensitive: false
+        value: cluster1
+      - environmentVariable: false
+        hcl: false
+        key: k8s_namespace
+        sensitive: false
+        value: test-namespace
+      - environmentVariable: false
+        hcl: false
+        key: k8s_service_account_name
+        sensitive: false
+        value: test-app
+      - environmentVariable: false
+        hcl: false
+        key: name
+        sensitive: false
+        value: test-app
+      - environmentVariable: false
+        hcl: true
+        key: tags
+        sensitive: false
+        value: |-
+          {
+            Owner       = "sre"
+            Project     = "test-project"
+            Application = "test-app"
+          }
+      - environmentVariable: false
+        hcl: false
+        key: tfcloud_agent
+        sensitive: false
+        value: "true"
