@@ -1,0 +1,231 @@
+Check awsEsProxy Ingress is created if enabled:
+  1: |
+    apiVersion: networking.k8s.io/v1
+    kind: Ingress
+    metadata:
+      annotations:
+        alb.ingress.kubernetes.io/backend-protocol: HTTP
+        alb.ingress.kubernetes.io/backend-protocol-version: HTTP1
+        alb.ingress.kubernetes.io/healthcheck-interval-seconds: "15"
+        alb.ingress.kubernetes.io/healthcheck-path: /_cluster/health
+        alb.ingress.kubernetes.io/healthcheck-port: "9200"
+        alb.ingress.kubernetes.io/healthcheck-protocol: HTTP
+        alb.ingress.kubernetes.io/healthcheck-timeout-seconds: "5"
+        alb.ingress.kubernetes.io/healthy-threshold-count: "2"
+        alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
+        alb.ingress.kubernetes.io/ssl-redirect: "443"
+        alb.ingress.kubernetes.io/success-codes: "200"
+        alb.ingress.kubernetes.io/target-group-attributes: deregistration_delay.timeout_seconds=5
+        alb.ingress.kubernetes.io/target-type: ip
+        alb.ingress.kubernetes.io/unhealthy-threshold-count: "2"
+        external-dns.alpha.kubernetes.io/hostname: null
+        external-dns.alpha.kubernetes.io/ttl: "60"
+      labels:
+        app.kubernetes.io/component: aws-es-proxy
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: example-app-aws-es-proxy
+        app.mintel.com/env: local
+        app.mintel.com/region: local
+        name: example-app-aws-es-proxy
+      name: example-app-aws-es-proxy
+      namespace: test-namespace
+    spec:
+      ingressClassName: alb-public-apps-default
+      rules:
+      - host: null
+        http:
+          paths:
+          - backend:
+              service:
+                name: example-app-aws-es-proxy
+                port:
+                  number: 9200
+            path: /_dashboards
+            pathType: Prefix
+Check awsEsProxy NetworkPolicy is created if enabled:
+  1: |
+    apiVersion: networking.k8s.io/v1
+    kind: NetworkPolicy
+    metadata:
+      annotations: null
+      labels:
+        app.kubernetes.io/component: app
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: example-app
+        app.mintel.com/env: local
+        app.mintel.com/region: local
+        name: example-app
+      name: allow-aws-alb-to-example-app-opensearch
+      namespace: test-namespace
+    spec:
+      ingress:
+      - from:
+        - ipBlock:
+            cidr: ${AWS_PUBLIC_SUBNET_CIDR_BLOCKS_0}
+        - ipBlock:
+            cidr: ${AWS_PUBLIC_SUBNET_CIDR_BLOCKS_1}
+        - ipBlock:
+            cidr: ${AWS_PUBLIC_SUBNET_CIDR_BLOCKS_2}
+        ports:
+        - port: 9200
+          protocol: TCP
+      podSelector:
+        matchLabels:
+          app.kubernetes.io/part-of: null
+Check awsEsProxy aws-load-balancer-controller okta role binding is created if enabled:
+  1: |
+    apiVersion: rbac.authorization.k8s.io/v1
+    kind: RoleBinding
+    metadata:
+      annotations: null
+      labels:
+        app.kubernetes.io/component: app
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: example-app
+        app.mintel.com/env: qa
+        app.mintel.com/region: ${CLUSTER_REGION}
+        name: example-app
+      name: example-app-alb-controller-role
+      namespace: test-namespace
+    roleRef:
+      apiGroup: rbac.authorization.k8s.io
+      kind: Role
+      name: example-app-alb-controller-role
+    subjects:
+    - kind: ServiceAccount
+      name: aws-load-balancer-controller
+      namespace: ingress-controller
+Check awsEsProxy aws-load-balancer-controller okta role is created if enabled:
+  1: |
+    apiVersion: rbac.authorization.k8s.io/v1
+    kind: Role
+    metadata:
+      annotations: null
+      labels:
+        app.kubernetes.io/component: app
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: example-app
+        app.mintel.com/env: qa
+        app.mintel.com/region: ${CLUSTER_REGION}
+        name: example-app
+      name: example-app-alb-controller-role
+      namespace: test-namespace
+    rules:
+    - apiGroups:
+      - ""
+      resources:
+      - secrets
+      verbs:
+      - get
+      - list
+      - watch
+Check awsEsProxy deployment is created if enabled:
+  1: |
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      annotations:
+        app.mintel.com/opa-allow-single-replica: "true"
+        app.mintel.com/opa-skip-readiness-probe-check.main: "true"
+        app.mintel.com/opa-skip-security-context-check: "true"
+        secret.reloader.stakater.com/reload: example-app-opensearch
+      labels:
+        app.kubernetes.io/component: aws-es-proxy
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: example-app-aws-es-proxy
+        app.mintel.com/env: local
+        app.mintel.com/region: local
+        name: example-app-aws-es-proxy
+      name: example-app-aws-es-proxy
+      namespace: test-namespace
+    spec:
+      replicas: 2
+      selector:
+        matchLabels:
+          app.kubernetes.io/component: aws-es-proxy
+          app.kubernetes.io/name: example-app-aws-es-proxy
+      strategy:
+        type: RollingUpdate
+      template:
+        metadata:
+          labels:
+            app.kubernetes.io/component: aws-es-proxy
+            app.kubernetes.io/managed-by: Helm
+            app.kubernetes.io/name: example-app-aws-es-proxy
+            app.mintel.com/env: local
+            app.mintel.com/region: local
+            name: example-app-aws-es-proxy
+        spec:
+          containers:
+          - args:
+            - -listen=0.0.0.0:9200
+            - -endpoint=$(OPENSEARCH_HOST)
+            - -no-sign-reqs
+            env:
+            - name: KUBERNETES_POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            envFrom:
+            - secretRef:
+                name: example-app-opensearch
+            image: index.docker.io/mintel/aws-es-proxy:v1.3.0_mintel.0.1.0
+            imagePullPolicy: IfNotPresent
+            livenessProbe:
+              tcpSocket:
+                port: http
+            name: main
+            ports:
+            - containerPort: 9200
+              name: http
+            readinessProbe:
+              httpGet:
+                path: /_cluster/health
+                port: http
+                scheme: HTTP
+              initialDelaySeconds: 0
+              periodSeconds: 10
+              timeoutSeconds: 1
+            resources:
+              limits:
+                cpu: 200m
+                memory: 128Mi
+              requests:
+                cpu: 100m
+                memory: 64Mi
+            securityContext:
+              runAsUser: 65534
+            startupProbe:
+              failureThreshold: 60
+              httpGet:
+                path: /_cluster/health
+                port: http
+                scheme: HTTP
+              periodSeconds: 5
+          imagePullSecrets:
+          - name: image-pull-gitlab
+          - name: image-pull-docker-hub
+          serviceAccountName: example-app
+Check awsEsProxy service is created if enabled:
+  1: |
+    apiVersion: v1
+    kind: Service
+    metadata:
+      annotations: null
+      labels:
+        app.kubernetes.io/component: aws-es-proxy
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: example-app-aws-es-proxy
+        app.mintel.com/env: local
+        app.mintel.com/region: local
+        name: example-app-aws-es-proxy
+      name: example-app-aws-es-proxy
+      namespace: test-namespace
+    spec:
+      ports:
+      - name: main-http
+        port: 9200
+        targetPort: 9200
+      selector:
+        app.kubernetes.io/component: aws-es-proxy
+        app.kubernetes.io/name: example-app-aws-es-proxy

@@ -1,0 +1,93 @@
+Empty configmap:
+  1: |
+    apiVersion: v1
+    data: null
+    kind: ConfigMap
+    metadata:
+      annotations: null
+      labels:
+        app.kubernetes.io/component: config
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: test-app-config
+        app.mintel.com/env: local
+        app.mintel.com/region: local
+        name: test-app-config
+      name: test-app-config
+      namespace: test-namespace
+Mixed singleline and  multiline data entries:
+  1: |
+    apiVersion: v1
+    data:
+      test1: |
+        test data line 1
+        test data line 2
+        test data line 3
+      test2: even more test data
+    kind: ConfigMap
+    metadata:
+      annotations: null
+      labels:
+        app.kubernetes.io/component: config
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: test-app-config
+        app.mintel.com/env: local
+        app.mintel.com/region: local
+        name: test-app-config
+      name: test-app-config
+      namespace: test-namespace
+Single multiline data entry:
+  1: |
+    apiVersion: v1
+    data:
+      test1: |
+        test data line 1
+        test data line 2
+        test data line 3
+    kind: ConfigMap
+    metadata:
+      annotations: null
+      labels:
+        app.kubernetes.io/component: config
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: test-app-config
+        app.mintel.com/env: local
+        app.mintel.com/region: local
+        name: test-app-config
+      name: test-app-config
+      namespace: test-namespace
+Single singleline data entry:
+  1: |
+    apiVersion: v1
+    data:
+      test1: test-data
+    kind: ConfigMap
+    metadata:
+      annotations: null
+      labels:
+        app.kubernetes.io/component: config
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: test-app-config
+        app.mintel.com/env: local
+        app.mintel.com/region: local
+        name: test-app-config
+      name: test-app-config
+      namespace: test-namespace
+ensures ArgoCD annotations are populated:
+  1: |
+    apiVersion: v1
+    data: null
+    kind: ConfigMap
+    metadata:
+      annotations:
+        argocd.argoproj.io/hook: PreSync
+        argocd.argoproj.io/hook-delete-policy: HookSucceeded
+        argocd.argoproj.io/sync-wave: "-1"
+      labels:
+        app.kubernetes.io/component: config
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: example-app-config
+        app.mintel.com/env: test
+        app.mintel.com/region: ${CLUSTER_REGION}
+        name: example-app-config
+      name: example-app-config
+      namespace: test-namespace
