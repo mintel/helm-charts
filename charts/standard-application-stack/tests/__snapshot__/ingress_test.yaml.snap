@@ -34,16 +34,16 @@ Check ALB HTTP2 default settings:
     spec:
       ingressClassName: alb-public-apps-default
       rules:
-      - host: null
-        http:
-          paths:
-          - backend:
-              service:
-                name: example-app
-                port:
-                  number: 8000
-            path: /
-            pathType: Prefix
+        - host: null
+          http:
+            paths:
+              - backend:
+                  service:
+                    name: example-app
+                    port:
+                      number: 8000
+                path: /
+                pathType: Prefix
 Check ALB className set by default:
   1: |
     apiVersion: networking.k8s.io/v1
@@ -80,16 +80,16 @@ Check ALB className set by default:
     spec:
       ingressClassName: alb-public-apps-default
       rules:
-      - host: null
-        http:
-          paths:
-          - backend:
-              service:
-                name: example-app
-                port:
-                  number: 8000
-            path: /
-            pathType: Prefix
+        - host: null
+          http:
+            paths:
+              - backend:
+                  service:
+                    name: example-app
+                    port:
+                      number: 8000
+                path: /
+                pathType: Prefix
 Check ALB custom health-check port:
   1: |
     apiVersion: networking.k8s.io/v1
@@ -126,16 +126,16 @@ Check ALB custom health-check port:
     spec:
       ingressClassName: alb-public-apps-default
       rules:
-      - host: null
-        http:
-          paths:
-          - backend:
-              service:
-                name: example-app
-                port:
-                  number: 8080
-            path: /
-            pathType: Prefix
+        - host: null
+          http:
+            paths:
+              - backend:
+                  service:
+                    name: example-app
+                    port:
+                      number: 8080
+                path: /
+                pathType: Prefix
 Check ALB default health-check port:
   1: |
     apiVersion: networking.k8s.io/v1
@@ -172,16 +172,16 @@ Check ALB default health-check port:
     spec:
       ingressClassName: alb-public-apps-default
       rules:
-      - host: null
-        http:
-          paths:
-          - backend:
-              service:
-                name: example-app
-                port:
-                  number: 8080
-            path: /
-            pathType: Prefix
+        - host: null
+          http:
+            paths:
+              - backend:
+                  service:
+                    name: example-app
+                    port:
+                      number: 8080
+                path: /
+                pathType: Prefix
 Check ALB gRPC custom settings:
   1: |
     apiVersion: networking.k8s.io/v1
@@ -218,16 +218,16 @@ Check ALB gRPC custom settings:
     spec:
       ingressClassName: alb-public-apps-default
       rules:
-      - host: null
-        http:
-          paths:
-          - backend:
-              service:
-                name: example-app
-                port:
-                  number: 8000
-            path: /
-            pathType: Prefix
+        - host: null
+          http:
+            paths:
+              - backend:
+                  service:
+                    name: example-app
+                    port:
+                      number: 8000
+                path: /
+                pathType: Prefix
 Check ALB gRPC default settings:
   1: |
     apiVersion: networking.k8s.io/v1
@@ -264,16 +264,16 @@ Check ALB gRPC default settings:
     spec:
       ingressClassName: alb-public-apps-default
       rules:
-      - host: null
-        http:
-          paths:
-          - backend:
-              service:
-                name: example-app
-                port:
-                  number: 8000
-            path: /
-            pathType: Prefix
+        - host: null
+          http:
+            paths:
+              - backend:
+                  service:
+                    name: example-app
+                    port:
+                      number: 8000
+                path: /
+                pathType: Prefix
 Check ALB health-check port with oauthProxy enabled:
   1: |
     apiVersion: networking.k8s.io/v1
@@ -310,16 +310,16 @@ Check ALB health-check port with oauthProxy enabled:
     spec:
       ingressClassName: alb-public-apps-default
       rules:
-      - host: null
-        http:
-          paths:
-          - backend:
-              service:
-                name: example-app
-                port:
-                  number: 4180
-            path: /
-            pathType: Prefix
+        - host: null
+          http:
+            paths:
+              - backend:
+                  service:
+                    name: example-app
+                    port:
+                      number: 4180
+                path: /
+                pathType: Prefix
 Check EXTRA_ALLOWED_HOSTS env var extraHosts with extraIngresses:
   1: |
     apiVersion: apps/v1
@@ -363,79 +363,78 @@ Check EXTRA_ALLOWED_HOSTS env var extraHosts with extraIngresses:
             tier: frontend
         spec:
           containers:
-          - command:
-            - /app/docker-entrypoint.sh
-            env:
-            - name: KUBERNETES_POD_NAMESPACE
-              valueFrom:
-                fieldRef:
-                  fieldPath: metadata.namespace
-            - name: APP_ENVIRONMENT
-              value: qa
-            - name: RUNTIME_ENVIRONMENT
-              value: kubernetes
-            - name: USE_SSL
-              value: "1"
-            - name: EXTRA_ALLOWED_HOSTS
-              value: extra.default.com,extra.extraIngress.com,test.default.com,test.extraIngress.com
-            envFrom:
-            - secretRef:
-                name: example-app-app
-            image: registry.gitlab.com/test:v0.1.0
-            imagePullPolicy: IfNotPresent
-            lifecycle:
-              preStop:
-                exec:
-                  command:
-                  - /bin/sh
-                  - -c
-                  - echo 'Called preStop hook with 15s delay' > /proc/1/fd/1 ; sleep 15
-                    ; echo 'Completed preStop hook'
-            livenessProbe:
-              httpGet:
-                path: /healthz
-                port: http
-                scheme: HTTP
-              initialDelaySeconds: 0
-              periodSeconds: 10
-              timeoutSeconds: 1
-            name: main
-            ports:
-            - containerPort: 8000
-              name: http
-            readinessProbe:
-              httpGet:
-                path: /readiness
-                port: http
-                scheme: HTTP
-              initialDelaySeconds: 0
-              periodSeconds: 10
-              timeoutSeconds: 1
-            resources:
-              limits: {}
-              requests: {}
-            startupProbe:
-              failureThreshold: 60
-              httpGet:
-                path: /healthz
-                port: http
-                scheme: HTTP
-              periodSeconds: 5
+            - command:
+                - /app/docker-entrypoint.sh
+              env:
+                - name: KUBERNETES_POD_NAMESPACE
+                  valueFrom:
+                    fieldRef:
+                      fieldPath: metadata.namespace
+                - name: APP_ENVIRONMENT
+                  value: qa
+                - name: RUNTIME_ENVIRONMENT
+                  value: kubernetes
+                - name: USE_SSL
+                  value: "1"
+                - name: EXTRA_ALLOWED_HOSTS
+                  value: extra.default.com,extra.extraIngress.com,test.default.com,test.extraIngress.com
+              envFrom:
+                - secretRef:
+                    name: example-app-app
+              image: registry.gitlab.com/test:v0.1.0
+              imagePullPolicy: IfNotPresent
+              lifecycle:
+                preStop:
+                  exec:
+                    command:
+                      - /bin/sh
+                      - -c
+                      - echo 'Called preStop hook with 15s delay' > /proc/1/fd/1 ; sleep 15 ; echo 'Completed preStop hook'
+              livenessProbe:
+                httpGet:
+                  path: /healthz
+                  port: http
+                  scheme: HTTP
+                initialDelaySeconds: 0
+                periodSeconds: 10
+                timeoutSeconds: 1
+              name: main
+              ports:
+                - containerPort: 8000
+                  name: http
+              readinessProbe:
+                httpGet:
+                  path: /readiness
+                  port: http
+                  scheme: HTTP
+                initialDelaySeconds: 0
+                periodSeconds: 10
+                timeoutSeconds: 1
+              resources:
+                limits: {}
+                requests: {}
+              startupProbe:
+                failureThreshold: 60
+                httpGet:
+                  path: /healthz
+                  port: http
+                  scheme: HTTP
+                periodSeconds: 5
           imagePullSecrets:
-          - name: image-pull-gitlab
-          - name: image-pull-docker-hub
+            - name: image-pull-gitlab
+            - name: image-pull-docker-hub
           securityContext:
             runAsUser: 1000
           serviceAccountName: example-app
           terminationGracePeriodSeconds: 30
           topologySpreadConstraints:
-          - labelSelector:
-              matchLabels:
-                app.kubernetes.io/component: app
-                app.kubernetes.io/name: example-app
-            maxSkew: 1
-            topologyKey: topology.kubernetes.io/zone
-            whenUnsatisfiable: DoNotSchedule
+            - labelSelector:
+                matchLabels:
+                  app.kubernetes.io/component: app
+                  app.kubernetes.io/name: example-app
+              maxSkew: 1
+              topologyKey: topology.kubernetes.io/zone
+              whenUnsatisfiable: DoNotSchedule
           volumes: null
 Check HAProxy className set if ALB is disabled:
   1: |
@@ -461,16 +460,16 @@ Check HAProxy className set if ALB is disabled:
     spec:
       ingressClassName: haproxy
       rules:
-      - host: null
-        http:
-          paths:
-          - backend:
-              service:
-                name: example-app
-                port:
-                  number: 8000
-            path: /
-            pathType: Prefix
+        - host: null
+          http:
+            paths:
+              - backend:
+                  service:
+                    name: example-app
+                    port:
+                      number: 8000
+                path: /
+                pathType: Prefix
 Check TLS set if ingressTLSSecrets is not empty:
   1: |
     apiVersion: networking.k8s.io/v1
@@ -507,20 +506,20 @@ Check TLS set if ingressTLSSecrets is not empty:
     spec:
       ingressClassName: alb-public-apps-default
       rules:
-      - host: test-app.example.org
-        http:
-          paths:
-          - backend:
-              service:
-                name: example-app
-                port:
-                  number: 8000
-            path: /
-            pathType: Prefix
+        - host: test-app.example.org
+          http:
+            paths:
+              - backend:
+                  service:
+                    name: example-app
+                    port:
+                      number: 8000
+                path: /
+                pathType: Prefix
       tls:
-      - hosts:
-        - test-app.example.org
-        secretName: star-example-org
+        - hosts:
+            - test-app.example.org
+          secretName: star-example-org
 Check extraHosts:
   1: |
     apiVersion: networking.k8s.io/v1
@@ -557,26 +556,26 @@ Check extraHosts:
     spec:
       ingressClassName: alb-public-apps-default
       rules:
-      - host: test.default.com
-        http:
-          paths:
-          - backend:
-              service:
-                name: AppyMcAppface
-                port:
-                  number: 8000
-            path: /
-            pathType: Prefix
-      - host: extra.default.com
-        http:
-          paths:
-          - backend:
-              service:
-                name: AppyMcAppface
-                port:
-                  number: 8000
-            path: /
-            pathType: Prefix
+        - host: test.default.com
+          http:
+            paths:
+              - backend:
+                  service:
+                    name: AppyMcAppface
+                    port:
+                      number: 8000
+                path: /
+                pathType: Prefix
+        - host: extra.default.com
+          http:
+            paths:
+              - backend:
+                  service:
+                    name: AppyMcAppface
+                    port:
+                      number: 8000
+                path: /
+                pathType: Prefix
 Check extraHosts with TLS:
   1: |
     apiVersion: networking.k8s.io/v1
@@ -613,31 +612,31 @@ Check extraHosts with TLS:
     spec:
       ingressClassName: alb-public-apps-default
       rules:
-      - host: test.default.com
-        http:
-          paths:
-          - backend:
-              service:
-                name: example-app
-                port:
-                  number: 8000
-            path: /
-            pathType: Prefix
-      - host: extra.default.com
-        http:
-          paths:
-          - backend:
-              service:
-                name: example-app
-                port:
-                  number: 8000
-            path: /
-            pathType: Prefix
+        - host: test.default.com
+          http:
+            paths:
+              - backend:
+                  service:
+                    name: example-app
+                    port:
+                      number: 8000
+                path: /
+                pathType: Prefix
+        - host: extra.default.com
+          http:
+            paths:
+              - backend:
+                  service:
+                    name: example-app
+                    port:
+                      number: 8000
+                path: /
+                pathType: Prefix
       tls:
-      - hosts:
-        - test.default.com
-        - extra.default.com
-        secretName: star-default-com
+        - hosts:
+            - test.default.com
+            - extra.default.com
+          secretName: star-default-com
 Check extraHosts with TLS and oauthProxy.ingressHost (different):
   1: |
     apiVersion: networking.k8s.io/v1
@@ -674,42 +673,42 @@ Check extraHosts with TLS and oauthProxy.ingressHost (different):
     spec:
       ingressClassName: alb-public-apps-default
       rules:
-      - host: test.default.com
-        http:
-          paths:
-          - backend:
-              service:
-                name: example-app
-                port:
-                  number: 4180
-            path: /
-            pathType: Prefix
-      - host: extra.default.com
-        http:
-          paths:
-          - backend:
-              service:
-                name: example-app
-                port:
-                  number: 4180
-            path: /
-            pathType: Prefix
-      - host: auth.default.com
-        http:
-          paths:
-          - backend:
-              service:
-                name: example-app
-                port:
-                  number: 4180
-            path: /
-            pathType: Prefix
+        - host: test.default.com
+          http:
+            paths:
+              - backend:
+                  service:
+                    name: example-app
+                    port:
+                      number: 4180
+                path: /
+                pathType: Prefix
+        - host: extra.default.com
+          http:
+            paths:
+              - backend:
+                  service:
+                    name: example-app
+                    port:
+                      number: 4180
+                path: /
+                pathType: Prefix
+        - host: auth.default.com
+          http:
+            paths:
+              - backend:
+                  service:
+                    name: example-app
+                    port:
+                      number: 4180
+                path: /
+                pathType: Prefix
       tls:
-      - hosts:
-        - test.default.com
-        - extra.default.com
-        - auth.default.com
-        secretName: star-default-com
+        - hosts:
+            - test.default.com
+            - extra.default.com
+            - auth.default.com
+          secretName: star-default-com
 Check extraHosts with TLS and oauthProxy.ingressHost (same as extra host):
   1: |
     apiVersion: networking.k8s.io/v1
@@ -746,32 +745,32 @@ Check extraHosts with TLS and oauthProxy.ingressHost (same as extra host):
     spec:
       ingressClassName: alb-public-apps-default
       rules:
-      - host: test.default.com
-        http:
-          paths:
-          - backend:
-              service:
-                name: example-app
-                port:
-                  number: 4180
-            path: /
-            pathType: Prefix
-      - host: auth.default.com
-        http:
-          paths:
-          - backend:
-              service:
-                name: example-app
-                port:
-                  number: 4180
-            path: /
-            pathType: Prefix
+        - host: test.default.com
+          http:
+            paths:
+              - backend:
+                  service:
+                    name: example-app
+                    port:
+                      number: 4180
+                path: /
+                pathType: Prefix
+        - host: auth.default.com
+          http:
+            paths:
+              - backend:
+                  service:
+                    name: example-app
+                    port:
+                      number: 4180
+                path: /
+                pathType: Prefix
       tls:
-      - hosts:
-        - test.default.com
-        - auth.default.com
-        - auth.default.com
-        secretName: star-default-com
+        - hosts:
+            - test.default.com
+            - auth.default.com
+            - auth.default.com
+          secretName: star-default-com
 Check extraHosts with oauthProxy.ingressHost (different):
   1: |
     apiVersion: networking.k8s.io/v1
@@ -808,36 +807,36 @@ Check extraHosts with oauthProxy.ingressHost (different):
     spec:
       ingressClassName: alb-public-apps-default
       rules:
-      - host: test.default.com
-        http:
-          paths:
-          - backend:
-              service:
-                name: example-app
-                port:
-                  number: 4180
-            path: /
-            pathType: Prefix
-      - host: extra.default.com
-        http:
-          paths:
-          - backend:
-              service:
-                name: example-app
-                port:
-                  number: 4180
-            path: /
-            pathType: Prefix
-      - host: auth.default.com
-        http:
-          paths:
-          - backend:
-              service:
-                name: example-app
-                port:
-                  number: 4180
-            path: /
-            pathType: Prefix
+        - host: test.default.com
+          http:
+            paths:
+              - backend:
+                  service:
+                    name: example-app
+                    port:
+                      number: 4180
+                path: /
+                pathType: Prefix
+        - host: extra.default.com
+          http:
+            paths:
+              - backend:
+                  service:
+                    name: example-app
+                    port:
+                      number: 4180
+                path: /
+                pathType: Prefix
+        - host: auth.default.com
+          http:
+            paths:
+              - backend:
+                  service:
+                    name: example-app
+                    port:
+                      number: 4180
+                path: /
+                pathType: Prefix
 Check extraHosts with oauthProxy.ingressHost (same as extra host):
   1: |
     apiVersion: networking.k8s.io/v1
@@ -874,26 +873,26 @@ Check extraHosts with oauthProxy.ingressHost (same as extra host):
     spec:
       ingressClassName: alb-public-apps-default
       rules:
-      - host: test.default.com
-        http:
-          paths:
-          - backend:
-              service:
-                name: example-app
-                port:
-                  number: 4180
-            path: /
-            pathType: Prefix
-      - host: auth.default.com
-        http:
-          paths:
-          - backend:
-              service:
-                name: example-app
-                port:
-                  number: 4180
-            path: /
-            pathType: Prefix
+        - host: test.default.com
+          http:
+            paths:
+              - backend:
+                  service:
+                    name: example-app
+                    port:
+                      number: 4180
+                path: /
+                pathType: Prefix
+        - host: auth.default.com
+          http:
+            paths:
+              - backend:
+                  service:
+                    name: example-app
+                    port:
+                      number: 4180
+                path: /
+                pathType: Prefix
 Check ingress name override:
   1: |
     apiVersion: networking.k8s.io/v1
@@ -930,16 +929,16 @@ Check ingress name override:
     spec:
       ingressClassName: alb-public-apps-default
       rules:
-      - host: null
-        http:
-          paths:
-          - backend:
-              service:
-                name: example-app
-                port:
-                  number: 8000
-            path: /
-            pathType: Prefix
+        - host: null
+          http:
+            paths:
+              - backend:
+                  service:
+                    name: example-app
+                    port:
+                      number: 8000
+                path: /
+                pathType: Prefix
 Check ingress name suffix setting:
   1: |
     apiVersion: networking.k8s.io/v1
@@ -976,16 +975,16 @@ Check ingress name suffix setting:
     spec:
       ingressClassName: alb-public-apps-default
       rules:
-      - host: null
-        http:
-          paths:
-          - backend:
-              service:
-                name: example-app
-                port:
-                  number: 8000
-            path: /
-            pathType: Prefix
+        - host: null
+          http:
+            paths:
+              - backend:
+                  service:
+                    name: example-app
+                    port:
+                      number: 8000
+                path: /
+                pathType: Prefix
 Check no TLS set if ingressTLSSecrets and specificTlsHostsYaml is empty:
   1: |
     apiVersion: networking.k8s.io/v1
@@ -1022,16 +1021,16 @@ Check no TLS set if ingressTLSSecrets and specificTlsHostsYaml is empty:
     spec:
       ingressClassName: alb-public-apps-default
       rules:
-      - host: test-app.example.org
-        http:
-          paths:
-          - backend:
-              service:
-                name: example-app
-                port:
-                  number: 8000
-            path: /
-            pathType: Prefix
+        - host: test-app.example.org
+          http:
+            paths:
+              - backend:
+                  service:
+                    name: example-app
+                    port:
+                      number: 8000
+                path: /
+                pathType: Prefix
 Default ingress with path based routing:
   1: |
     apiVersion: networking.k8s.io/v1
@@ -1068,23 +1067,23 @@ Default ingress with path based routing:
     spec:
       ingressClassName: alb-public-apps-default
       rules:
-      - host: null
-        http:
-          paths:
-          - backend:
-              service:
-                name: service1
-                port:
-                  number: 1234
-            path: /i01
-            pathType: Prefix
-          - backend:
-              service:
-                name: service2
-                port:
-                  number: 5678
-            path: /i02
-            pathType: Prefix
+        - host: null
+          http:
+            paths:
+              - backend:
+                  service:
+                    name: service1
+                    port:
+                      number: 1234
+                path: /i01
+                pathType: Prefix
+              - backend:
+                  service:
+                    name: service2
+                    port:
+                      number: 5678
+                path: /i02
+                pathType: Prefix
 allows extraIngresses to override default values:
   1: |
     apiVersion: networking.k8s.io/v1
@@ -1121,16 +1120,16 @@ allows extraIngresses to override default values:
     spec:
       ingressClassName: alb-public-apps-default
       rules:
-      - host: media.mintel.com
-        http:
-          paths:
-          - backend:
-              service:
-                name: example-app
-                port:
-                  number: 8000
-            path: /
-            pathType: Prefix
+        - host: media.mintel.com
+          http:
+            paths:
+              - backend:
+                  service:
+                    name: example-app
+                    port:
+                      number: 8000
+                path: /
+                pathType: Prefix
   2: |
     apiVersion: networking.k8s.io/v1
     kind: Ingress
@@ -1154,13 +1153,13 @@ allows extraIngresses to override default values:
     spec:
       ingressClassName: haproxy
       rules:
-      - host: ops-media.mintel.com
-        http:
-          paths:
-          - backend:
-              service:
-                name: mock-service
-                port:
-                  name: mock-port
-            path: /mock-path
-            pathType: Prefix
+        - host: ops-media.mintel.com
+          http:
+            paths:
+              - backend:
+                  service:
+                    name: mock-service
+                    port:
+                      name: mock-port
+                path: /mock-path
+                pathType: Prefix

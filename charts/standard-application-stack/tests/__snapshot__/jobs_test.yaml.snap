@@ -21,40 +21,40 @@ Check all .job.* values can be set correctly, without overriding from main deplo
       template:
         spec:
           containers:
-          - args:
-            - Hello, world.
-            command:
-            - echo
-            env:
-            - name: KUBERNETES_POD_NAMESPACE
-              valueFrom:
-                fieldRef:
-                  fieldPath: metadata.namespace
-            - name: APP_ENVIRONMENT
-              value: qa
-            - name: RUNTIME_ENVIRONMENT
-              value: kubernetes
-            - name: TEST_VAR
-              value: testVal
-            envFrom:
-            - secretRef:
-                name: test-secret
-            image: registry.example.com/another/image/repo:anotherTag
-            imagePullPolicy: IfNotPresent
-            name: main
-            resources:
-              limits:
-                cpu: 1000m
-                memory: 2Gi
-              requests:
-                cpu: 1000m
-                memory: 2Gi
+            - args:
+                - Hello, world.
+              command:
+                - echo
+              env:
+                - name: KUBERNETES_POD_NAMESPACE
+                  valueFrom:
+                    fieldRef:
+                      fieldPath: metadata.namespace
+                - name: APP_ENVIRONMENT
+                  value: qa
+                - name: RUNTIME_ENVIRONMENT
+                  value: kubernetes
+                - name: TEST_VAR
+                  value: testVal
+              envFrom:
+                - secretRef:
+                    name: test-secret
+              image: registry.example.com/another/image/repo:anotherTag
+              imagePullPolicy: IfNotPresent
+              name: main
+              resources:
+                limits:
+                  cpu: 1000m
+                  memory: 2Gi
+                requests:
+                  cpu: 1000m
+                  memory: 2Gi
           imagePullSecrets:
-          - name: image-pull-gitlab
-          - name: image-pull-docker-hub
+            - name: image-pull-gitlab
+            - name: image-pull-docker-hub
           initContainers:
-          - image: someimage
-            name: test-container
+            - image: someimage
+              name: test-container
           restartPolicy: OnFailure
           securityContext:
             runAsUser: 1001
@@ -79,39 +79,39 @@ Check all overrides/additions from main deployment work if enabled:
       template:
         spec:
           containers:
-          - env:
-            - name: KUBERNETES_POD_NAMESPACE
-              valueFrom:
-                fieldRef:
-                  fieldPath: metadata.namespace
-            - name: APP_ENVIRONMENT
-              value: qa
-            - name: RUNTIME_ENVIRONMENT
-              value: kubernetes
-            - name: TEST_VAR_1
-              value: foo
-            - name: TEST_VAR_2
-              value: bar
-            - name: TEST_VAR_3
-              value: baz
-            envFrom:
-            - secretRef:
-                name: test-app-app
-            - secretRef:
-                name: another-secret-ref
-            image: registry.example.com/test/image/repo:someTag
-            imagePullPolicy: IfNotPresent
-            name: main
-            resources:
-              limits:
-                cpu: 1000m
-                memory: 2Gi
-              requests:
-                cpu: 1000m
-                memory: 2Gi
+            - env:
+                - name: KUBERNETES_POD_NAMESPACE
+                  valueFrom:
+                    fieldRef:
+                      fieldPath: metadata.namespace
+                - name: APP_ENVIRONMENT
+                  value: qa
+                - name: RUNTIME_ENVIRONMENT
+                  value: kubernetes
+                - name: TEST_VAR_1
+                  value: foo
+                - name: TEST_VAR_2
+                  value: bar
+                - name: TEST_VAR_3
+                  value: baz
+              envFrom:
+                - secretRef:
+                    name: test-app-app
+                - secretRef:
+                    name: another-secret-ref
+              image: registry.example.com/test/image/repo:someTag
+              imagePullPolicy: IfNotPresent
+              name: main
+              resources:
+                limits:
+                  cpu: 1000m
+                  memory: 2Gi
+                requests:
+                  cpu: 1000m
+                  memory: 2Gi
           imagePullSecrets:
-          - name: image-pull-gitlab
-          - name: image-pull-docker-hub
+            - name: image-pull-gitlab
+            - name: image-pull-docker-hub
           restartPolicy: Never
           securityContext:
             runAsUser: 1000
@@ -136,28 +136,28 @@ Check default values are correct with minimal configuration:
       template:
         spec:
           containers:
-          - env:
-            - name: KUBERNETES_POD_NAMESPACE
-              valueFrom:
-                fieldRef:
-                  fieldPath: metadata.namespace
-            - name: APP_ENVIRONMENT
-              value: qa
-            - name: RUNTIME_ENVIRONMENT
-              value: kubernetes
-            envFrom: null
-            image: registry.example.com/test/image/repo:v0.1.0
-            imagePullPolicy: IfNotPresent
-            name: main
-            resources:
-              limits:
-                cpu: 1000m
-                memory: 2Gi
-              requests:
-                cpu: 1000m
-                memory: 2Gi
+            - env:
+                - name: KUBERNETES_POD_NAMESPACE
+                  valueFrom:
+                    fieldRef:
+                      fieldPath: metadata.namespace
+                - name: APP_ENVIRONMENT
+                  value: qa
+                - name: RUNTIME_ENVIRONMENT
+                  value: kubernetes
+              envFrom: null
+              image: registry.example.com/test/image/repo:v0.1.0
+              imagePullPolicy: IfNotPresent
+              name: main
+              resources:
+                limits:
+                  cpu: 1000m
+                  memory: 2Gi
+                requests:
+                  cpu: 1000m
+                  memory: 2Gi
           imagePullSecrets:
-          - name: image-pull-gitlab
-          - name: image-pull-docker-hub
+            - name: image-pull-gitlab
+            - name: image-pull-docker-hub
           restartPolicy: Never
           serviceAccountName: test-app

@@ -26,14 +26,14 @@ Check utilization takes precedence over average value when both specified:
         kind: Deployment
         name: example-app
       triggers:
-      - metadata:
-          value: "100"
-        metricType: Utilization
-        type: cpu
-      - metadata:
-          value: "50"
-        metricType: Utilization
-        type: memory
+        - metadata:
+            value: "100"
+          metricType: Utilization
+          type: cpu
+        - metadata:
+            value: "50"
+          metricType: Utilization
+          type: memory
 Creates a ScaledObject for a Deployment:
   1: |
     apiVersion: keda.sh/v1alpha1
@@ -135,9 +135,9 @@ Creates a ScaledObject with advanced settings:
           behavior:
             scaleDown:
               policies:
-              - periodSeconds: 15
-                type: Percent
-                value: 100
+                - periodSeconds: 15
+                  type: Percent
+                  value: 100
               stabilizationWindowSeconds: 300
           name: test-hpa
         restoreToOriginalReplicaCount: true
@@ -180,14 +180,14 @@ Creates a ScaledObject with both targetCPUAverageValue and targetMemoryAverageVa
         kind: Deployment
         name: example-app
       triggers:
-      - metadata:
-          value: "101"
-        metricType: AverageValue
-        type: cpu
-      - metadata:
-          value: "51"
-        metricType: AverageValue
-        type: memory
+        - metadata:
+            value: "101"
+          metricType: AverageValue
+          type: cpu
+        - metadata:
+            value: "51"
+          metricType: AverageValue
+          type: memory
 Creates a ScaledObject with both targetCPUAverageValue trigger:
   1: |
     apiVersion: keda.sh/v1alpha1
@@ -216,10 +216,10 @@ Creates a ScaledObject with both targetCPUAverageValue trigger:
         kind: Deployment
         name: example-app
       triggers:
-      - metadata:
-          value: "101"
-        metricType: AverageValue
-        type: cpu
+        - metadata:
+            value: "101"
+          metricType: AverageValue
+          type: cpu
 Creates a ScaledObject with both targetCPUUtilizationPercentage and targetMemoryUtilizationPercentage triggers:
   1: |
     apiVersion: keda.sh/v1alpha1
@@ -248,14 +248,14 @@ Creates a ScaledObject with both targetCPUUtilizationPercentage and targetMemory
         kind: Deployment
         name: example-app
       triggers:
-      - metadata:
-          value: "100"
-        metricType: Utilization
-        type: cpu
-      - metadata:
-          value: "50"
-        metricType: Utilization
-        type: memory
+        - metadata:
+            value: "100"
+          metricType: Utilization
+          type: cpu
+        - metadata:
+            value: "50"
+          metricType: Utilization
+          type: memory
 Creates a ScaledObject with custom triggers:
   1: |
     apiVersion: keda.sh/v1alpha1
@@ -284,18 +284,18 @@ Creates a ScaledObject with custom triggers:
         kind: Deployment
         name: example-app
       triggers:
-      - metadata:
-          metricName: http_requests_total
-          query: sum(rate(http_requests_total{service="podinfo-http"}[2m]))
-          serverAddress: http://prometheus-k8s.monitoring.svc:9090
-          threshold: "5"
-        type: prometheus
-      - metadata:
-          metricName: http_requests_total
-          query: sum(rate(http_requests_total{service="podinfo-grpc"}[5m]))
-          serverAddress: http://prometheus-k8s.monitoring.svc:9090
-          threshold: "10"
-        type: prometheus
+        - metadata:
+            metricName: http_requests_total
+            query: sum(rate(http_requests_total{service="podinfo-http"}[2m]))
+            serverAddress: http://prometheus-k8s.monitoring.svc:9090
+            threshold: "5"
+          type: prometheus
+        - metadata:
+            metricName: http_requests_total
+            query: sum(rate(http_requests_total{service="podinfo-grpc"}[5m]))
+            serverAddress: http://prometheus-k8s.monitoring.svc:9090
+            threshold: "10"
+          type: prometheus
 Creates a ScaledObject with fallback settings:
   1: |
     apiVersion: keda.sh/v1alpha1
@@ -351,10 +351,10 @@ Creates a ScaledObject with targetCPUUtilizationPercentage trigger:
         kind: Deployment
         name: example-app
       triggers:
-      - metadata:
-          value: "100"
-        metricType: Utilization
-        type: cpu
+        - metadata:
+            value: "100"
+          metricType: Utilization
+          type: cpu
 Creates a ScaledObject with targetMemoryAverageValue trigger:
   1: |
     apiVersion: keda.sh/v1alpha1
@@ -383,10 +383,10 @@ Creates a ScaledObject with targetMemoryAverageValue trigger:
         kind: Deployment
         name: example-app
       triggers:
-      - metadata:
-          value: "51"
-        metricType: AverageValue
-        type: memory
+        - metadata:
+            value: "51"
+          metricType: AverageValue
+          type: memory
 Creates a ScaledObject with targetMemoryUtilizationPercentage trigger:
   1: |
     apiVersion: keda.sh/v1alpha1
@@ -415,7 +415,7 @@ Creates a ScaledObject with targetMemoryUtilizationPercentage trigger:
         kind: Deployment
         name: example-app
       triggers:
-      - metadata:
-          value: "50"
-        metricType: Utilization
-        type: memory
+        - metadata:
+            value: "50"
+          metricType: Utilization
+          type: memory
