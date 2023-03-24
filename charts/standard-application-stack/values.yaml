@@ -389,6 +389,8 @@ extraSecrets: []
 #     hookDeletePolicy: HookSucceeded
 #     syncWave: "-1"
 #    pathOverride: ""
+###  Use to map keys from AWS secret manager secrets to new key names. Map values should be in the form <new key>:<secret key>
+#    outputSecretMap: {}
 #    pathSuffix: ""
 #    refreshIntervalOverride: ""
 #    secretStoreRefOverride: ""
