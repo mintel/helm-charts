@@ -15,16 +15,16 @@ Check ALB NetworkPolicy created if enabled:
       namespace: test-namespace
     spec:
       ingress:
-        - from:
-            - ipBlock:
-                cidr: ${AWS_PUBLIC_SUBNET_CIDR_BLOCKS_0}
-            - ipBlock:
-                cidr: ${AWS_PUBLIC_SUBNET_CIDR_BLOCKS_1}
-            - ipBlock:
-                cidr: ${AWS_PUBLIC_SUBNET_CIDR_BLOCKS_2}
-          ports:
-            - port: 8000
-              protocol: TCP
+      - from:
+        - ipBlock:
+            cidr: ${AWS_PUBLIC_SUBNET_CIDR_BLOCKS_0}
+        - ipBlock:
+            cidr: ${AWS_PUBLIC_SUBNET_CIDR_BLOCKS_1}
+        - ipBlock:
+            cidr: ${AWS_PUBLIC_SUBNET_CIDR_BLOCKS_2}
+        ports:
+        - port: 8000
+          protocol: TCP
       podSelector:
         matchLabels:
           app.kubernetes.io/part-of: null
@@ -45,16 +45,16 @@ Check ALB NetworkPolicy created if internal alb selected:
       namespace: test-namespace
     spec:
       ingress:
-        - from:
-            - ipBlock:
-                cidr: ${AWS_PRIVATE_APP_SUBNET_CIDR_BLOCKS_0}
-            - ipBlock:
-                cidr: ${AWS_PRIVATE_APP_SUBNET_CIDR_BLOCKS_1}
-            - ipBlock:
-                cidr: ${AWS_PRIVATE_APP_SUBNET_CIDR_BLOCKS_2}
-          ports:
-            - port: 8000
-              protocol: TCP
+      - from:
+        - ipBlock:
+            cidr: ${AWS_PRIVATE_APP_SUBNET_CIDR_BLOCKS_0}
+        - ipBlock:
+            cidr: ${AWS_PRIVATE_APP_SUBNET_CIDR_BLOCKS_1}
+        - ipBlock:
+            cidr: ${AWS_PRIVATE_APP_SUBNET_CIDR_BLOCKS_2}
+        ports:
+        - port: 8000
+          protocol: TCP
       podSelector:
         matchLabels:
           app.kubernetes.io/part-of: null
@@ -75,16 +75,16 @@ Check ALB NetworkPolicy ports are unique:
       namespace: test-namespace
     spec:
       ingress:
-        - from:
-            - ipBlock:
-                cidr: ${AWS_PUBLIC_SUBNET_CIDR_BLOCKS_0}
-            - ipBlock:
-                cidr: ${AWS_PUBLIC_SUBNET_CIDR_BLOCKS_1}
-            - ipBlock:
-                cidr: ${AWS_PUBLIC_SUBNET_CIDR_BLOCKS_2}
-          ports:
-            - port: 4180
-              protocol: TCP
+      - from:
+        - ipBlock:
+            cidr: ${AWS_PUBLIC_SUBNET_CIDR_BLOCKS_0}
+        - ipBlock:
+            cidr: ${AWS_PUBLIC_SUBNET_CIDR_BLOCKS_1}
+        - ipBlock:
+            cidr: ${AWS_PUBLIC_SUBNET_CIDR_BLOCKS_2}
+        ports:
+        - port: 4180
+          protocol: TCP
       podSelector:
         matchLabels:
           app.kubernetes.io/part-of: null
@@ -105,16 +105,16 @@ Check ALB NetworkPolicy ports set for default conatiner:
       namespace: test-namespace
     spec:
       ingress:
-        - from:
-            - ipBlock:
-                cidr: ${AWS_PUBLIC_SUBNET_CIDR_BLOCKS_0}
-            - ipBlock:
-                cidr: ${AWS_PUBLIC_SUBNET_CIDR_BLOCKS_1}
-            - ipBlock:
-                cidr: ${AWS_PUBLIC_SUBNET_CIDR_BLOCKS_2}
-          ports:
-            - port: 8080
-              protocol: TCP
+      - from:
+        - ipBlock:
+            cidr: ${AWS_PUBLIC_SUBNET_CIDR_BLOCKS_0}
+        - ipBlock:
+            cidr: ${AWS_PUBLIC_SUBNET_CIDR_BLOCKS_1}
+        - ipBlock:
+            cidr: ${AWS_PUBLIC_SUBNET_CIDR_BLOCKS_2}
+        ports:
+        - port: 8080
+          protocol: TCP
       podSelector:
         matchLabels:
           app.kubernetes.io/part-of: null
@@ -135,16 +135,16 @@ Check ALB NetworkPolicy ports set with oauth2proxy:
       namespace: test-namespace
     spec:
       ingress:
-        - from:
-            - ipBlock:
-                cidr: ${AWS_PUBLIC_SUBNET_CIDR_BLOCKS_0}
-            - ipBlock:
-                cidr: ${AWS_PUBLIC_SUBNET_CIDR_BLOCKS_1}
-            - ipBlock:
-                cidr: ${AWS_PUBLIC_SUBNET_CIDR_BLOCKS_2}
-          ports:
-            - port: 4180
-              protocol: TCP
+      - from:
+        - ipBlock:
+            cidr: ${AWS_PUBLIC_SUBNET_CIDR_BLOCKS_0}
+        - ipBlock:
+            cidr: ${AWS_PUBLIC_SUBNET_CIDR_BLOCKS_1}
+        - ipBlock:
+            cidr: ${AWS_PUBLIC_SUBNET_CIDR_BLOCKS_2}
+        ports:
+        - port: 4180
+          protocol: TCP
       podSelector:
         matchLabels:
           app.kubernetes.io/part-of: null
@@ -165,18 +165,18 @@ Check ALB NetworkPolicy ports set with oauth2proxy and healthcheck:
       namespace: test-namespace
     spec:
       ingress:
-        - from:
-            - ipBlock:
-                cidr: ${AWS_PUBLIC_SUBNET_CIDR_BLOCKS_0}
-            - ipBlock:
-                cidr: ${AWS_PUBLIC_SUBNET_CIDR_BLOCKS_1}
-            - ipBlock:
-                cidr: ${AWS_PUBLIC_SUBNET_CIDR_BLOCKS_2}
-          ports:
-            - port: 4180
-              protocol: TCP
-            - port: 9999
-              protocol: TCP
+      - from:
+        - ipBlock:
+            cidr: ${AWS_PUBLIC_SUBNET_CIDR_BLOCKS_0}
+        - ipBlock:
+            cidr: ${AWS_PUBLIC_SUBNET_CIDR_BLOCKS_1}
+        - ipBlock:
+            cidr: ${AWS_PUBLIC_SUBNET_CIDR_BLOCKS_2}
+        ports:
+        - port: 4180
+          protocol: TCP
+        - port: 9999
+          protocol: TCP
       podSelector:
         matchLabels:
           app.kubernetes.io/part-of: null
