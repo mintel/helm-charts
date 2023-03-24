@@ -17,9 +17,9 @@ Check ALB annotation can be set when enabled:
       namespace: test-namespace
     spec:
       ports:
-        - name: main-http
-          port: 8000
-          targetPort: 8000
+      - name: main-http
+        port: 8000
+        targetPort: 8000
       selector:
         app.kubernetes.io/component: app
         app.kubernetes.io/name: test-app
@@ -43,9 +43,9 @@ Check ALB annotation not set when ALB Ingress is disabled:
       namespace: test-namespace
     spec:
       ports:
-        - name: main-http
-          port: 8000
-          targetPort: 8000
+      - name: main-http
+        port: 8000
+        targetPort: 8000
       selector:
         app.kubernetes.io/component: app
         app.kubernetes.io/name: test-app
@@ -68,9 +68,9 @@ Check ALB annotation not set when when Owner missing:
       namespace: test-namespace
     spec:
       ports:
-        - name: main-http
-          port: 8000
-          targetPort: 8000
+      - name: main-http
+        port: 8000
+        targetPort: 8000
       selector:
         app.kubernetes.io/component: app
         app.kubernetes.io/name: test-app
@@ -92,9 +92,9 @@ Check default port set:
       namespace: test-namespace
     spec:
       ports:
-        - name: main-http
-          port: 8000
-          targetPort: 8000
+      - name: main-http
+        port: 8000
+        targetPort: 8000
       selector:
         app.kubernetes.io/component: exporter
         app.kubernetes.io/name: test-app
@@ -116,21 +116,21 @@ Check extraPorts:
       namespace: test-namespace
     spec:
       ports:
-        - name: main-http
-          port: 8000
-          targetPort: 8000
-        - name: main-p1
-          port: 8081
-          targetPort: 8081
-        - name: main-p2
-          port: 8082
-          targetPort: 8082
-        - name: custom-p3
-          port: 8083
-          targetPort: 8083
-        - name: main-p4
-          port: 8084
-          targetPort: 8084
+      - name: main-http
+        port: 8000
+        targetPort: 8000
+      - name: main-p1
+        port: 8081
+        targetPort: 8081
+      - name: main-p2
+        port: 8082
+        targetPort: 8082
+      - name: custom-p3
+        port: 8083
+        targetPort: 8083
+      - name: main-p4
+        port: 8084
+        targetPort: 8084
       selector:
         app.kubernetes.io/component: exporter
         app.kubernetes.io/name: test-app
@@ -152,9 +152,9 @@ Check name, namespace and labels:
       namespace: test-namespace
     spec:
       ports:
-        - name: main-http
-          port: 8000
-          targetPort: 8000
+      - name: main-http
+        port: 8000
+        targetPort: 8000
       selector:
         app.kubernetes.io/component: exporter
         app.kubernetes.io/name: test-app
@@ -176,9 +176,9 @@ Check port can be overridden:
       namespace: test-namespace
     spec:
       ports:
-        - name: main-http
-          port: 1234
-          targetPort: 1234
+      - name: main-http
+        port: 1234
+        targetPort: 1234
       selector:
         app.kubernetes.io/component: exporter
         app.kubernetes.io/name: test-app

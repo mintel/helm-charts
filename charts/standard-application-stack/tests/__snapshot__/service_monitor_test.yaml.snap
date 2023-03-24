@@ -15,9 +15,9 @@ Check Service defaults:
       namespace: test-namespace
     spec:
       ports:
-        - name: main-http
-          port: 8000
-          targetPort: 8000
+      - name: main-http
+        port: 8000
+        targetPort: 8000
       selector:
         app.kubernetes.io/component: app
         app.kubernetes.io/name: test-app
@@ -41,32 +41,32 @@ Check additional ServiceMonitor resources:
       namespace: test-namespace
     spec:
       endpoints:
-        - interval: 30s
-          path: /metrics
-          port: main-http
-          relabelings:
-            - separator: /
-              sourceLabels:
-                - __meta_kubernetes_namespace
-                - __meta_kubernetes_pod_label_app_kubernetes_io_name
-              targetLabel: job
-          scheme: http
-          scrapeTimeout: 10s
-          tlsConfig:
-            insecureSkipVerify: true
+      - interval: 30s
+        path: /metrics
+        port: main-http
+        relabelings:
+        - separator: /
+          sourceLabels:
+          - __meta_kubernetes_namespace
+          - __meta_kubernetes_pod_label_app_kubernetes_io_name
+          targetLabel: job
+        scheme: http
+        scrapeTimeout: 10s
+        tlsConfig:
+          insecureSkipVerify: true
       podTargetLabels:
-        - app.kubernetes.io/name
-        - app.kubernetes.io/part-of
-        - app.kubernetes.io/component
-        - app.kubernetes.io/instance
-        - app.mintel.com/owner
+      - app.kubernetes.io/name
+      - app.kubernetes.io/part-of
+      - app.kubernetes.io/component
+      - app.kubernetes.io/instance
+      - app.mintel.com/owner
       selector:
         matchLabels:
           app.kubernetes.io/component: app
           app.kubernetes.io/name: test-app
       targetLabels:
-        - app.mintel.com/owner
-        - app.mintel.com/ignore_alerts
+      - app.mintel.com/owner
+      - app.mintel.com/ignore_alerts
   2: |
     apiVersion: monitoring.coreos.com/v1
     kind: ServiceMonitor
@@ -85,32 +85,32 @@ Check additional ServiceMonitor resources:
       namespace: test-namespace
     spec:
       endpoints:
-        - interval: 30s
-          path: /metrics-2
-          port: main-metrics-2
-          relabelings:
-            - separator: /
-              sourceLabels:
-                - __meta_kubernetes_namespace
-                - __meta_kubernetes_pod_label_app_kubernetes_io_name
-              targetLabel: job
-          scheme: http
-          scrapeTimeout: 10s
-          tlsConfig:
-            insecureSkipVerify: true
+      - interval: 30s
+        path: /metrics-2
+        port: main-metrics-2
+        relabelings:
+        - separator: /
+          sourceLabels:
+          - __meta_kubernetes_namespace
+          - __meta_kubernetes_pod_label_app_kubernetes_io_name
+          targetLabel: job
+        scheme: http
+        scrapeTimeout: 10s
+        tlsConfig:
+          insecureSkipVerify: true
       podTargetLabels:
-        - app.kubernetes.io/name
-        - app.kubernetes.io/part-of
-        - app.kubernetes.io/component
-        - app.kubernetes.io/instance
-        - app.mintel.com/owner
+      - app.kubernetes.io/name
+      - app.kubernetes.io/part-of
+      - app.kubernetes.io/component
+      - app.kubernetes.io/instance
+      - app.mintel.com/owner
       selector:
         matchLabels:
           app.kubernetes.io/component: metrics-2
           app.kubernetes.io/name: test-app-metrics-2
       targetLabels:
-        - app.mintel.com/owner
-        - app.mintel.com/ignore_alerts
+      - app.mintel.com/owner
+      - app.mintel.com/ignore_alerts
   3: |
     apiVersion: monitoring.coreos.com/v1
     kind: ServiceMonitor
@@ -129,32 +129,32 @@ Check additional ServiceMonitor resources:
       namespace: test-namespace
     spec:
       endpoints:
-        - interval: 20s
-          path: /metrics-3
-          port: main-metrics-3
-          relabelings:
-            - separator: /
-              sourceLabels:
-                - __meta_kubernetes_namespace
-                - __meta_kubernetes_pod_label_app_kubernetes_io_name
-              targetLabel: job
-          scheme: https
-          scrapeTimeout: 10s
-          tlsConfig:
-            insecureSkipVerify: true
+      - interval: 20s
+        path: /metrics-3
+        port: main-metrics-3
+        relabelings:
+        - separator: /
+          sourceLabels:
+          - __meta_kubernetes_namespace
+          - __meta_kubernetes_pod_label_app_kubernetes_io_name
+          targetLabel: job
+        scheme: https
+        scrapeTimeout: 10s
+        tlsConfig:
+          insecureSkipVerify: true
       podTargetLabels:
-        - app.kubernetes.io/name
-        - app.kubernetes.io/part-of
-        - app.kubernetes.io/component
-        - app.kubernetes.io/instance
-        - app.mintel.com/owner
+      - app.kubernetes.io/name
+      - app.kubernetes.io/part-of
+      - app.kubernetes.io/component
+      - app.kubernetes.io/instance
+      - app.mintel.com/owner
       selector:
         matchLabels:
           app.kubernetes.io/component: metrics-3
           app.kubernetes.io/name: test-app-metrics-3
       targetLabels:
-        - app.mintel.com/owner
-        - app.mintel.com/ignore_alerts
+      - app.mintel.com/owner
+      - app.mintel.com/ignore_alerts
 Check basic-auth:
   1: |
     apiVersion: monitoring.coreos.com/v1
@@ -174,46 +174,46 @@ Check basic-auth:
       namespace: test-namespace
     spec:
       endpoints:
-        - basicAuth:
-            password:
-              key: passwd
-              name: test-app-app
-            username:
-              key: user
-              name: test-app-app
-          interval: 30s
-          path: /metrics
-          port: main-http
-          relabelings:
-            - separator: /
-              sourceLabels:
-                - __meta_kubernetes_namespace
-                - __meta_kubernetes_pod_label_app_kubernetes_io_name
-              targetLabel: job
-          scheme: http
-          scrapeTimeout: 10s
-          tlsConfig:
-            insecureSkipVerify: true
+      - basicAuth:
+          password:
+            key: passwd
+            name: test-app-app
+          username:
+            key: user
+            name: test-app-app
+        interval: 30s
+        path: /metrics
+        port: main-http
+        relabelings:
+        - separator: /
+          sourceLabels:
+          - __meta_kubernetes_namespace
+          - __meta_kubernetes_pod_label_app_kubernetes_io_name
+          targetLabel: job
+        scheme: http
+        scrapeTimeout: 10s
+        tlsConfig:
+          insecureSkipVerify: true
       podTargetLabels:
-        - app.kubernetes.io/name
-        - app.kubernetes.io/part-of
-        - app.kubernetes.io/component
-        - app.kubernetes.io/instance
-        - app.mintel.com/owner
+      - app.kubernetes.io/name
+      - app.kubernetes.io/part-of
+      - app.kubernetes.io/component
+      - app.kubernetes.io/instance
+      - app.mintel.com/owner
       selector:
         matchLabels:
           app.kubernetes.io/component: app
           app.kubernetes.io/name: test-app
       targetLabels:
-        - app.mintel.com/owner
-        - app.mintel.com/ignore_alerts
+      - app.mintel.com/owner
+      - app.mintel.com/ignore_alerts
 Check combined template defaults:
   1: |
     apiVersion: apps/v1
     kind: Deployment
     metadata:
       annotations:
-        helm.sh/chart: standard-application-stack-4.1.1
+        helm.sh/chart: standard-application-stack-4.2.0
         secret.reloader.stakater.com/reload: test-app-app
       labels:
         app.kubernetes.io/component: app
@@ -248,74 +248,74 @@ Check combined template defaults:
             name: test-app
         spec:
           containers:
-            - command:
-                - /app/docker-entrypoint.sh
-              env:
-                - name: KUBERNETES_POD_NAMESPACE
-                  valueFrom:
-                    fieldRef:
-                      fieldPath: metadata.namespace
-                - name: APP_ENVIRONMENT
-                  value: prod
-                - name: RUNTIME_ENVIRONMENT
-                  value: kubernetes
-              envFrom:
-                - secretRef:
-                    name: test-app-app
-              image: registry.gitlab.com/test:v0.1.0
-              imagePullPolicy: IfNotPresent
-              livenessProbe:
-                httpGet:
-                  path: /healthz
-                  port: http
-                  scheme: HTTP
-                initialDelaySeconds: 0
-                periodSeconds: 10
-                timeoutSeconds: 1
-              name: main
-              ports:
-                - containerPort: 8000
-                  name: http
-              readinessProbe:
-                httpGet:
-                  path: /readiness
-                  port: http
-                  scheme: HTTP
-                initialDelaySeconds: 0
-                periodSeconds: 10
-                timeoutSeconds: 1
-              resources:
-                limits: {}
-                requests: {}
-              startupProbe:
-                failureThreshold: 60
-                httpGet:
-                  path: /healthz
-                  port: http
-                  scheme: HTTP
-                periodSeconds: 5
+          - command:
+            - /app/docker-entrypoint.sh
+            env:
+            - name: KUBERNETES_POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: APP_ENVIRONMENT
+              value: prod
+            - name: RUNTIME_ENVIRONMENT
+              value: kubernetes
+            envFrom:
+            - secretRef:
+                name: test-app-app
+            image: registry.gitlab.com/test:v0.1.0
+            imagePullPolicy: IfNotPresent
+            livenessProbe:
+              httpGet:
+                path: /healthz
+                port: http
+                scheme: HTTP
+              initialDelaySeconds: 0
+              periodSeconds: 10
+              timeoutSeconds: 1
+            name: main
+            ports:
+            - containerPort: 8000
+              name: http
+            readinessProbe:
+              httpGet:
+                path: /readiness
+                port: http
+                scheme: HTTP
+              initialDelaySeconds: 0
+              periodSeconds: 10
+              timeoutSeconds: 1
+            resources:
+              limits: {}
+              requests: {}
+            startupProbe:
+              failureThreshold: 60
+              httpGet:
+                path: /healthz
+                port: http
+                scheme: HTTP
+              periodSeconds: 5
           imagePullSecrets:
-            - name: image-pull-gitlab
-            - name: image-pull-docker-hub
+          - name: image-pull-gitlab
+          - name: image-pull-docker-hub
           securityContext:
             runAsUser: 1000
           serviceAccountName: test-app
           terminationGracePeriodSeconds: 30
           topologySpreadConstraints:
-            - labelSelector:
-                matchLabels:
-                  app.kubernetes.io/component: app
-                  app.kubernetes.io/name: test-app
-              maxSkew: 1
-              topologyKey: topology.kubernetes.io/zone
-              whenUnsatisfiable: DoNotSchedule
-            - labelSelector:
-                matchLabels:
-                  app.kubernetes.io/component: app
-                  app.kubernetes.io/name: test-app
-              maxSkew: 1
-              topologyKey: kubernetes.io/hostname
-              whenUnsatisfiable: DoNotSchedule
+          - labelSelector:
+              matchLabels:
+                app.kubernetes.io/component: app
+                app.kubernetes.io/name: test-app
+            maxSkew: 1
+            topologyKey: topology.kubernetes.io/zone
+            whenUnsatisfiable: DoNotSchedule
+          - labelSelector:
+              matchLabels:
+                app.kubernetes.io/component: app
+                app.kubernetes.io/name: test-app
+            maxSkew: 1
+            topologyKey: kubernetes.io/hostname
+            whenUnsatisfiable: DoNotSchedule
           volumes: null
   2: |
     apiVersion: v1
@@ -333,9 +333,9 @@ Check combined template defaults:
       namespace: test-namespace
     spec:
       ports:
-        - name: main-http
-          port: 8000
-          targetPort: 8000
+      - name: main-http
+        port: 8000
+        targetPort: 8000
       selector:
         app.kubernetes.io/component: app
         app.kubernetes.io/name: test-app
@@ -358,39 +358,39 @@ Check combined template defaults:
       namespace: test-namespace
     spec:
       endpoints:
-        - interval: 30s
-          path: /metrics
-          port: main-http
-          relabelings:
-            - separator: /
-              sourceLabels:
-                - __meta_kubernetes_namespace
-                - __meta_kubernetes_pod_label_app_kubernetes_io_name
-              targetLabel: job
-          scheme: http
-          scrapeTimeout: 10s
-          tlsConfig:
-            insecureSkipVerify: true
+      - interval: 30s
+        path: /metrics
+        port: main-http
+        relabelings:
+        - separator: /
+          sourceLabels:
+          - __meta_kubernetes_namespace
+          - __meta_kubernetes_pod_label_app_kubernetes_io_name
+          targetLabel: job
+        scheme: http
+        scrapeTimeout: 10s
+        tlsConfig:
+          insecureSkipVerify: true
       podTargetLabels:
-        - app.kubernetes.io/name
-        - app.kubernetes.io/part-of
-        - app.kubernetes.io/component
-        - app.kubernetes.io/instance
-        - app.mintel.com/owner
+      - app.kubernetes.io/name
+      - app.kubernetes.io/part-of
+      - app.kubernetes.io/component
+      - app.kubernetes.io/instance
+      - app.mintel.com/owner
       selector:
         matchLabels:
           app.kubernetes.io/component: app
           app.kubernetes.io/name: test-app
       targetLabels:
-        - app.mintel.com/owner
-        - app.mintel.com/ignore_alerts
+      - app.mintel.com/owner
+      - app.mintel.com/ignore_alerts
 Check combined template with extra ports and monitors:
   1: |
     apiVersion: apps/v1
     kind: Deployment
     metadata:
       annotations:
-        helm.sh/chart: standard-application-stack-4.1.1
+        helm.sh/chart: standard-application-stack-4.2.0
         secret.reloader.stakater.com/reload: test-app-app
       labels:
         app.kubernetes.io/component: app
@@ -425,78 +425,78 @@ Check combined template with extra ports and monitors:
             name: test-app
         spec:
           containers:
-            - command:
-                - /app/docker-entrypoint.sh
-              env:
-                - name: KUBERNETES_POD_NAMESPACE
-                  valueFrom:
-                    fieldRef:
-                      fieldPath: metadata.namespace
-                - name: APP_ENVIRONMENT
-                  value: prod
-                - name: RUNTIME_ENVIRONMENT
-                  value: kubernetes
-              envFrom:
-                - secretRef:
-                    name: test-app-app
-              image: registry.gitlab.com/test:v0.1.0
-              imagePullPolicy: IfNotPresent
-              livenessProbe:
-                httpGet:
-                  path: /healthz
-                  port: http
-                  scheme: HTTP
-                initialDelaySeconds: 0
-                periodSeconds: 10
-                timeoutSeconds: 1
-              name: main
-              ports:
-                - containerPort: 8000
-                  name: http
-                - containerPort: 9002
-                  name: metrics-2
-                - containerPort: 9003
-                  name: metrics-3
-              readinessProbe:
-                httpGet:
-                  path: /readiness
-                  port: http
-                  scheme: HTTP
-                initialDelaySeconds: 0
-                periodSeconds: 10
-                timeoutSeconds: 1
-              resources:
-                limits: {}
-                requests: {}
-              startupProbe:
-                failureThreshold: 60
-                httpGet:
-                  path: /healthz
-                  port: http
-                  scheme: HTTP
-                periodSeconds: 5
+          - command:
+            - /app/docker-entrypoint.sh
+            env:
+            - name: KUBERNETES_POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: APP_ENVIRONMENT
+              value: prod
+            - name: RUNTIME_ENVIRONMENT
+              value: kubernetes
+            envFrom:
+            - secretRef:
+                name: test-app-app
+            image: registry.gitlab.com/test:v0.1.0
+            imagePullPolicy: IfNotPresent
+            livenessProbe:
+              httpGet:
+                path: /healthz
+                port: http
+                scheme: HTTP
+              initialDelaySeconds: 0
+              periodSeconds: 10
+              timeoutSeconds: 1
+            name: main
+            ports:
+            - containerPort: 8000
+              name: http
+            - containerPort: 9002
+              name: metrics-2
+            - containerPort: 9003
+              name: metrics-3
+            readinessProbe:
+              httpGet:
+                path: /readiness
+                port: http
+                scheme: HTTP
+              initialDelaySeconds: 0
+              periodSeconds: 10
+              timeoutSeconds: 1
+            resources:
+              limits: {}
+              requests: {}
+            startupProbe:
+              failureThreshold: 60
+              httpGet:
+                path: /healthz
+                port: http
+                scheme: HTTP
+              periodSeconds: 5
           imagePullSecrets:
-            - name: image-pull-gitlab
-            - name: image-pull-docker-hub
+          - name: image-pull-gitlab
+          - name: image-pull-docker-hub
           securityContext:
             runAsUser: 1000
           serviceAccountName: test-app
           terminationGracePeriodSeconds: 30
           topologySpreadConstraints:
-            - labelSelector:
-                matchLabels:
-                  app.kubernetes.io/component: app
-                  app.kubernetes.io/name: test-app
-              maxSkew: 1
-              topologyKey: topology.kubernetes.io/zone
-              whenUnsatisfiable: DoNotSchedule
-            - labelSelector:
-                matchLabels:
-                  app.kubernetes.io/component: app
-                  app.kubernetes.io/name: test-app
-              maxSkew: 1
-              topologyKey: kubernetes.io/hostname
-              whenUnsatisfiable: DoNotSchedule
+          - labelSelector:
+              matchLabels:
+                app.kubernetes.io/component: app
+                app.kubernetes.io/name: test-app
+            maxSkew: 1
+            topologyKey: topology.kubernetes.io/zone
+            whenUnsatisfiable: DoNotSchedule
+          - labelSelector:
+              matchLabels:
+                app.kubernetes.io/component: app
+                app.kubernetes.io/name: test-app
+            maxSkew: 1
+            topologyKey: kubernetes.io/hostname
+            whenUnsatisfiable: DoNotSchedule
           volumes: null
   2: |
     apiVersion: v1
@@ -514,15 +514,15 @@ Check combined template with extra ports and monitors:
       namespace: test-namespace
     spec:
       ports:
-        - name: main-http
-          port: 8000
-          targetPort: 8000
-        - name: main-metrics-2
-          port: 9002
-          targetPort: 9002
-        - name: main-metrics-3
-          port: 9003
-          targetPort: 9003
+      - name: main-http
+        port: 8000
+        targetPort: 8000
+      - name: main-metrics-2
+        port: 9002
+        targetPort: 9002
+      - name: main-metrics-3
+        port: 9003
+        targetPort: 9003
       selector:
         app.kubernetes.io/component: app
         app.kubernetes.io/name: test-app
@@ -545,32 +545,32 @@ Check combined template with extra ports and monitors:
       namespace: test-namespace
     spec:
       endpoints:
-        - interval: 30s
-          path: /metrics
-          port: main-http
-          relabelings:
-            - separator: /
-              sourceLabels:
-                - __meta_kubernetes_namespace
-                - __meta_kubernetes_pod_label_app_kubernetes_io_name
-              targetLabel: job
-          scheme: http
-          scrapeTimeout: 10s
-          tlsConfig:
-            insecureSkipVerify: true
+      - interval: 30s
+        path: /metrics
+        port: main-http
+        relabelings:
+        - separator: /
+          sourceLabels:
+          - __meta_kubernetes_namespace
+          - __meta_kubernetes_pod_label_app_kubernetes_io_name
+          targetLabel: job
+        scheme: http
+        scrapeTimeout: 10s
+        tlsConfig:
+          insecureSkipVerify: true
       podTargetLabels:
-        - app.kubernetes.io/name
-        - app.kubernetes.io/part-of
-        - app.kubernetes.io/component
-        - app.kubernetes.io/instance
-        - app.mintel.com/owner
+      - app.kubernetes.io/name
+      - app.kubernetes.io/part-of
+      - app.kubernetes.io/component
+      - app.kubernetes.io/instance
+      - app.mintel.com/owner
       selector:
         matchLabels:
           app.kubernetes.io/component: app
           app.kubernetes.io/name: test-app
       targetLabels:
-        - app.mintel.com/owner
-        - app.mintel.com/ignore_alerts
+      - app.mintel.com/owner
+      - app.mintel.com/ignore_alerts
   4: |
     apiVersion: monitoring.coreos.com/v1
     kind: ServiceMonitor
@@ -589,32 +589,32 @@ Check combined template with extra ports and monitors:
       namespace: test-namespace
     spec:
       endpoints:
-        - interval: 30s
-          path: /metrics-2
-          port: main-metrics-2
-          relabelings:
-            - separator: /
-              sourceLabels:
-                - __meta_kubernetes_namespace
-                - __meta_kubernetes_pod_label_app_kubernetes_io_name
-              targetLabel: job
-          scheme: http
-          scrapeTimeout: 10s
-          tlsConfig:
-            insecureSkipVerify: true
+      - interval: 30s
+        path: /metrics-2
+        port: main-metrics-2
+        relabelings:
+        - separator: /
+          sourceLabels:
+          - __meta_kubernetes_namespace
+          - __meta_kubernetes_pod_label_app_kubernetes_io_name
+          targetLabel: job
+        scheme: http
+        scrapeTimeout: 10s
+        tlsConfig:
+          insecureSkipVerify: true
       podTargetLabels:
-        - app.kubernetes.io/name
-        - app.kubernetes.io/part-of
-        - app.kubernetes.io/component
-        - app.kubernetes.io/instance
-        - app.mintel.com/owner
+      - app.kubernetes.io/name
+      - app.kubernetes.io/part-of
+      - app.kubernetes.io/component
+      - app.kubernetes.io/instance
+      - app.mintel.com/owner
       selector:
         matchLabels:
           app.kubernetes.io/component: metrics-2
           app.kubernetes.io/name: test-app-metrics-2
       targetLabels:
-        - app.mintel.com/owner
-        - app.mintel.com/ignore_alerts
+      - app.mintel.com/owner
+      - app.mintel.com/ignore_alerts
   5: |
     apiVersion: monitoring.coreos.com/v1
     kind: ServiceMonitor
@@ -633,32 +633,32 @@ Check combined template with extra ports and monitors:
       namespace: test-namespace
     spec:
       endpoints:
-        - interval: 20s
-          path: /metrics-3
-          port: main-metrics-3
-          relabelings:
-            - separator: /
-              sourceLabels:
-                - __meta_kubernetes_namespace
-                - __meta_kubernetes_pod_label_app_kubernetes_io_name
-              targetLabel: job
-          scheme: https
-          scrapeTimeout: 10s
-          tlsConfig:
-            insecureSkipVerify: true
+      - interval: 20s
+        path: /metrics-3
+        port: main-metrics-3
+        relabelings:
+        - separator: /
+          sourceLabels:
+          - __meta_kubernetes_namespace
+          - __meta_kubernetes_pod_label_app_kubernetes_io_name
+          targetLabel: job
+        scheme: https
+        scrapeTimeout: 10s
+        tlsConfig:
+          insecureSkipVerify: true
       podTargetLabels:
-        - app.kubernetes.io/name
-        - app.kubernetes.io/part-of
-        - app.kubernetes.io/component
-        - app.kubernetes.io/instance
-        - app.mintel.com/owner
+      - app.kubernetes.io/name
+      - app.kubernetes.io/part-of
+      - app.kubernetes.io/component
+      - app.kubernetes.io/instance
+      - app.mintel.com/owner
       selector:
         matchLabels:
           app.kubernetes.io/component: metrics-3
           app.kubernetes.io/name: test-app-metrics-3
       targetLabels:
-        - app.mintel.com/owner
-        - app.mintel.com/ignore_alerts
+      - app.mintel.com/owner
+      - app.mintel.com/ignore_alerts
 Check default endpoints:
   1: |
     apiVersion: monitoring.coreos.com/v1
@@ -678,32 +678,32 @@ Check default endpoints:
       namespace: test-namespace
     spec:
       endpoints:
-        - interval: 30s
-          path: /metrics
-          port: main-http
-          relabelings:
-            - separator: /
-              sourceLabels:
-                - __meta_kubernetes_namespace
-                - __meta_kubernetes_pod_label_app_kubernetes_io_name
-              targetLabel: job
-          scheme: http
-          scrapeTimeout: 10s
-          tlsConfig:
-            insecureSkipVerify: true
+      - interval: 30s
+        path: /metrics
+        port: main-http
+        relabelings:
+        - separator: /
+          sourceLabels:
+          - __meta_kubernetes_namespace
+          - __meta_kubernetes_pod_label_app_kubernetes_io_name
+          targetLabel: job
+        scheme: http
+        scrapeTimeout: 10s
+        tlsConfig:
+          insecureSkipVerify: true
       podTargetLabels:
-        - app.kubernetes.io/name
-        - app.kubernetes.io/part-of
-        - app.kubernetes.io/component
-        - app.kubernetes.io/instance
-        - app.mintel.com/owner
+      - app.kubernetes.io/name
+      - app.kubernetes.io/part-of
+      - app.kubernetes.io/component
+      - app.kubernetes.io/instance
+      - app.mintel.com/owner
       selector:
         matchLabels:
           app.kubernetes.io/component: app
           app.kubernetes.io/name: test-app
       targetLabels:
-        - app.mintel.com/owner
-        - app.mintel.com/ignore_alerts
+      - app.mintel.com/owner
+      - app.mintel.com/ignore_alerts
 Check default targetLabels:
   1: |
     apiVersion: monitoring.coreos.com/v1
@@ -723,32 +723,32 @@ Check default targetLabels:
       namespace: test-namespace
     spec:
       endpoints:
-        - interval: 30s
-          path: /metrics
-          port: main-http
-          relabelings:
-            - separator: /
-              sourceLabels:
-                - __meta_kubernetes_namespace
-                - __meta_kubernetes_pod_label_app_kubernetes_io_name
-              targetLabel: job
-          scheme: http
-          scrapeTimeout: 10s
-          tlsConfig:
-            insecureSkipVerify: true
+      - interval: 30s
+        path: /metrics
+        port: main-http
+        relabelings:
+        - separator: /
+          sourceLabels:
+          - __meta_kubernetes_namespace
+          - __meta_kubernetes_pod_label_app_kubernetes_io_name
+          targetLabel: job
+        scheme: http
+        scrapeTimeout: 10s
+        tlsConfig:
+          insecureSkipVerify: true
       podTargetLabels:
-        - app.kubernetes.io/name
-        - app.kubernetes.io/part-of
-        - app.kubernetes.io/component
-        - app.kubernetes.io/instance
-        - app.mintel.com/owner
+      - app.kubernetes.io/name
+      - app.kubernetes.io/part-of
+      - app.kubernetes.io/component
+      - app.kubernetes.io/instance
+      - app.mintel.com/owner
       selector:
         matchLabels:
           app.kubernetes.io/component: app
           app.kubernetes.io/name: test-app
       targetLabels:
-        - app.mintel.com/owner
-        - app.mintel.com/ignore_alerts
+      - app.mintel.com/owner
+      - app.mintel.com/ignore_alerts
 Check metric overrides:
   1: |
     apiVersion: monitoring.coreos.com/v1
@@ -768,32 +768,32 @@ Check metric overrides:
       namespace: test-namespace
     spec:
       endpoints:
-        - interval: 30s
-          path: /updated-metrics-path
-          port: main-another-named-port
-          relabelings:
-            - separator: /
-              sourceLabels:
-                - __meta_kubernetes_namespace
-                - __meta_kubernetes_pod_label_app_kubernetes_io_name
-              targetLabel: job
-          scheme: https
-          scrapeTimeout: 20s
-          tlsConfig:
-            insecureSkipVerify: true
+      - interval: 30s
+        path: /updated-metrics-path
+        port: main-another-named-port
+        relabelings:
+        - separator: /
+          sourceLabels:
+          - __meta_kubernetes_namespace
+          - __meta_kubernetes_pod_label_app_kubernetes_io_name
+          targetLabel: job
+        scheme: https
+        scrapeTimeout: 20s
+        tlsConfig:
+          insecureSkipVerify: true
       podTargetLabels:
-        - app.kubernetes.io/name
-        - app.kubernetes.io/part-of
-        - app.kubernetes.io/component
-        - app.kubernetes.io/instance
-        - app.mintel.com/owner
+      - app.kubernetes.io/name
+      - app.kubernetes.io/part-of
+      - app.kubernetes.io/component
+      - app.kubernetes.io/instance
+      - app.mintel.com/owner
       selector:
         matchLabels:
           app.kubernetes.io/component: app
           app.kubernetes.io/name: test-app
       targetLabels:
-        - app.mintel.com/owner
-        - app.mintel.com/ignore_alerts
+      - app.mintel.com/owner
+      - app.mintel.com/ignore_alerts
 Check name, namespace and labels:
   1: |
     apiVersion: monitoring.coreos.com/v1
@@ -813,29 +813,29 @@ Check name, namespace and labels:
       namespace: test-namespace
     spec:
       endpoints:
-        - interval: 30s
-          path: /metrics
-          port: main-http
-          relabelings:
-            - separator: /
-              sourceLabels:
-                - __meta_kubernetes_namespace
-                - __meta_kubernetes_pod_label_app_kubernetes_io_name
-              targetLabel: job
-          scheme: http
-          scrapeTimeout: 10s
-          tlsConfig:
-            insecureSkipVerify: true
+      - interval: 30s
+        path: /metrics
+        port: main-http
+        relabelings:
+        - separator: /
+          sourceLabels:
+          - __meta_kubernetes_namespace
+          - __meta_kubernetes_pod_label_app_kubernetes_io_name
+          targetLabel: job
+        scheme: http
+        scrapeTimeout: 10s
+        tlsConfig:
+          insecureSkipVerify: true
       podTargetLabels:
-        - app.kubernetes.io/name
-        - app.kubernetes.io/part-of
-        - app.kubernetes.io/component
-        - app.kubernetes.io/instance
-        - app.mintel.com/owner
+      - app.kubernetes.io/name
+      - app.kubernetes.io/part-of
+      - app.kubernetes.io/component
+      - app.kubernetes.io/instance
+      - app.mintel.com/owner
       selector:
         matchLabels:
           app.kubernetes.io/component: app
           app.kubernetes.io/name: test-app
       targetLabels:
-        - app.mintel.com/owner
-        - app.mintel.com/ignore_alerts
+      - app.mintel.com/owner
+      - app.mintel.com/ignore_alerts

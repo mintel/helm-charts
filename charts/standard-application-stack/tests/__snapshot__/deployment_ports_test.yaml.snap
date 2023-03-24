@@ -4,7 +4,7 @@ Check container extraPorts:
     kind: Deployment
     metadata:
       annotations:
-        helm.sh/chart: standard-application-stack-4.1.1
+        helm.sh/chart: standard-application-stack-4.2.0
         secret.reloader.stakater.com/reload: example-app-app
       labels:
         app.kubernetes.io/component: app
@@ -39,71 +39,71 @@ Check container extraPorts:
             name: example-app
         spec:
           containers:
-            - command:
-                - /app/docker-entrypoint.sh
-              env:
-                - name: KUBERNETES_POD_NAMESPACE
-                  valueFrom:
-                    fieldRef:
-                      fieldPath: metadata.namespace
-                - name: APP_ENVIRONMENT
-                  value: qa
-                - name: RUNTIME_ENVIRONMENT
-                  value: kubernetes
-              envFrom:
-                - secretRef:
-                    name: example-app-app
-              image: registry.gitlab.com/test:v0.1.0
-              imagePullPolicy: IfNotPresent
-              livenessProbe:
-                httpGet:
-                  path: /healthz
-                  port: http
-                  scheme: HTTP
-                initialDelaySeconds: 0
-                periodSeconds: 10
-                timeoutSeconds: 1
-              name: main
-              ports:
-                - containerPort: 8000
-                  name: http
-                - containerPort: 8001
-                  name: extra-port-1
-                - containerPort: 8002
-                  name: extra-port-2
-              readinessProbe:
-                httpGet:
-                  path: /readiness
-                  port: http
-                  scheme: HTTP
-                initialDelaySeconds: 0
-                periodSeconds: 10
-                timeoutSeconds: 1
-              resources:
-                limits: {}
-                requests: {}
-              startupProbe:
-                failureThreshold: 60
-                httpGet:
-                  path: /healthz
-                  port: http
-                  scheme: HTTP
-                periodSeconds: 5
+          - command:
+            - /app/docker-entrypoint.sh
+            env:
+            - name: KUBERNETES_POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: APP_ENVIRONMENT
+              value: qa
+            - name: RUNTIME_ENVIRONMENT
+              value: kubernetes
+            envFrom:
+            - secretRef:
+                name: example-app-app
+            image: registry.gitlab.com/test:v0.1.0
+            imagePullPolicy: IfNotPresent
+            livenessProbe:
+              httpGet:
+                path: /healthz
+                port: http
+                scheme: HTTP
+              initialDelaySeconds: 0
+              periodSeconds: 10
+              timeoutSeconds: 1
+            name: main
+            ports:
+            - containerPort: 8000
+              name: http
+            - containerPort: 8001
+              name: extra-port-1
+            - containerPort: 8002
+              name: extra-port-2
+            readinessProbe:
+              httpGet:
+                path: /readiness
+                port: http
+                scheme: HTTP
+              initialDelaySeconds: 0
+              periodSeconds: 10
+              timeoutSeconds: 1
+            resources:
+              limits: {}
+              requests: {}
+            startupProbe:
+              failureThreshold: 60
+              httpGet:
+                path: /healthz
+                port: http
+                scheme: HTTP
+              periodSeconds: 5
           imagePullSecrets:
-            - name: image-pull-gitlab
-            - name: image-pull-docker-hub
+          - name: image-pull-gitlab
+          - name: image-pull-docker-hub
           securityContext:
             runAsUser: 1000
           serviceAccountName: example-app
           terminationGracePeriodSeconds: 30
           topologySpreadConstraints:
-            - labelSelector:
-                matchLabels:
-                  app.kubernetes.io/component: app
-                  app.kubernetes.io/name: example-app
-              maxSkew: 1
-              topologyKey: topology.kubernetes.io/zone
-              whenUnsatisfiable: DoNotSchedule
+          - labelSelector:
+              matchLabels:
+                app.kubernetes.io/component: app
+                app.kubernetes.io/name: example-app
+            maxSkew: 1
+            topologyKey: topology.kubernetes.io/zone
+            whenUnsatisfiable: DoNotSchedule
           volumes: null
 Check container extraPorts are validated:
   1: |
@@ -111,7 +111,7 @@ Check container extraPorts are validated:
     kind: Deployment
     metadata:
       annotations:
-        helm.sh/chart: standard-application-stack-4.1.1
+        helm.sh/chart: standard-application-stack-4.2.0
         secret.reloader.stakater.com/reload: example-app-app
       labels:
         app.kubernetes.io/component: app
@@ -146,73 +146,73 @@ Check container extraPorts are validated:
             name: example-app
         spec:
           containers:
-            - command:
-                - /app/docker-entrypoint.sh
-              env:
-                - name: KUBERNETES_POD_NAMESPACE
-                  valueFrom:
-                    fieldRef:
-                      fieldPath: metadata.namespace
-                - name: APP_ENVIRONMENT
-                  value: qa
-                - name: RUNTIME_ENVIRONMENT
-                  value: kubernetes
-              envFrom:
-                - secretRef:
-                    name: example-app-app
-              image: registry.gitlab.com/test:v0.1.0
-              imagePullPolicy: IfNotPresent
-              livenessProbe:
-                httpGet:
-                  path: /healthz
-                  port: http
-                  scheme: HTTP
-                initialDelaySeconds: 0
-                periodSeconds: 10
-                timeoutSeconds: 1
-              name: main
-              ports:
-                - containerPort: 8000
-                  name: http
-                - containerPort: 8001
-                  name: extra-port-1
-                - containerPort: 8002
-                  name: extra-port-2
-                - containerPort: 8003
-                  name: extra-port-3
-              readinessProbe:
-                httpGet:
-                  path: /readiness
-                  port: http
-                  scheme: HTTP
-                initialDelaySeconds: 0
-                periodSeconds: 10
-                timeoutSeconds: 1
-              resources:
-                limits: {}
-                requests: {}
-              startupProbe:
-                failureThreshold: 60
-                httpGet:
-                  path: /healthz
-                  port: http
-                  scheme: HTTP
-                periodSeconds: 5
+          - command:
+            - /app/docker-entrypoint.sh
+            env:
+            - name: KUBERNETES_POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: APP_ENVIRONMENT
+              value: qa
+            - name: RUNTIME_ENVIRONMENT
+              value: kubernetes
+            envFrom:
+            - secretRef:
+                name: example-app-app
+            image: registry.gitlab.com/test:v0.1.0
+            imagePullPolicy: IfNotPresent
+            livenessProbe:
+              httpGet:
+                path: /healthz
+                port: http
+                scheme: HTTP
+              initialDelaySeconds: 0
+              periodSeconds: 10
+              timeoutSeconds: 1
+            name: main
+            ports:
+            - containerPort: 8000
+              name: http
+            - containerPort: 8001
+              name: extra-port-1
+            - containerPort: 8002
+              name: extra-port-2
+            - containerPort: 8003
+              name: extra-port-3
+            readinessProbe:
+              httpGet:
+                path: /readiness
+                port: http
+                scheme: HTTP
+              initialDelaySeconds: 0
+              periodSeconds: 10
+              timeoutSeconds: 1
+            resources:
+              limits: {}
+              requests: {}
+            startupProbe:
+              failureThreshold: 60
+              httpGet:
+                path: /healthz
+                port: http
+                scheme: HTTP
+              periodSeconds: 5
           imagePullSecrets:
-            - name: image-pull-gitlab
-            - name: image-pull-docker-hub
+          - name: image-pull-gitlab
+          - name: image-pull-docker-hub
           securityContext:
             runAsUser: 1000
           serviceAccountName: example-app
           terminationGracePeriodSeconds: 30
           topologySpreadConstraints:
-            - labelSelector:
-                matchLabels:
-                  app.kubernetes.io/component: app
-                  app.kubernetes.io/name: example-app
-              maxSkew: 1
-              topologyKey: topology.kubernetes.io/zone
-              whenUnsatisfiable: DoNotSchedule
+          - labelSelector:
+              matchLabels:
+                app.kubernetes.io/component: app
+                app.kubernetes.io/name: example-app
+            maxSkew: 1
+            topologyKey: topology.kubernetes.io/zone
+            whenUnsatisfiable: DoNotSchedule
           volumes: null
 Check container extraPorts protocol:
   1: |
@@ -220,7 +220,7 @@ Check container extraPorts protocol:
     kind: Deployment
     metadata:
       annotations:
-        helm.sh/chart: standard-application-stack-4.1.1
+        helm.sh/chart: standard-application-stack-4.2.0
         secret.reloader.stakater.com/reload: example-app-app
       labels:
         app.kubernetes.io/component: app
@@ -255,72 +255,72 @@ Check container extraPorts protocol:
             name: example-app
         spec:
           containers:
-            - command:
-                - /app/docker-entrypoint.sh
-              env:
-                - name: KUBERNETES_POD_NAMESPACE
-                  valueFrom:
-                    fieldRef:
-                      fieldPath: metadata.namespace
-                - name: APP_ENVIRONMENT
-                  value: qa
-                - name: RUNTIME_ENVIRONMENT
-                  value: kubernetes
-              envFrom:
-                - secretRef:
-                    name: example-app-app
-              image: registry.gitlab.com/test:v0.1.0
-              imagePullPolicy: IfNotPresent
-              livenessProbe:
-                httpGet:
-                  path: /healthz
-                  port: http
-                  scheme: HTTP
-                initialDelaySeconds: 0
-                periodSeconds: 10
-                timeoutSeconds: 1
-              name: main
-              ports:
-                - containerPort: 8000
-                  name: http
-                - containerPort: 8001
-                  name: extra-port-1
-                - containerPort: 8002
-                  name: extra-port-2
-                  protocol: UDP
-              readinessProbe:
-                httpGet:
-                  path: /readiness
-                  port: http
-                  scheme: HTTP
-                initialDelaySeconds: 0
-                periodSeconds: 10
-                timeoutSeconds: 1
-              resources:
-                limits: {}
-                requests: {}
-              startupProbe:
-                failureThreshold: 60
-                httpGet:
-                  path: /healthz
-                  port: http
-                  scheme: HTTP
-                periodSeconds: 5
+          - command:
+            - /app/docker-entrypoint.sh
+            env:
+            - name: KUBERNETES_POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: APP_ENVIRONMENT
+              value: qa
+            - name: RUNTIME_ENVIRONMENT
+              value: kubernetes
+            envFrom:
+            - secretRef:
+                name: example-app-app
+            image: registry.gitlab.com/test:v0.1.0
+            imagePullPolicy: IfNotPresent
+            livenessProbe:
+              httpGet:
+                path: /healthz
+                port: http
+                scheme: HTTP
+              initialDelaySeconds: 0
+              periodSeconds: 10
+              timeoutSeconds: 1
+            name: main
+            ports:
+            - containerPort: 8000
+              name: http
+            - containerPort: 8001
+              name: extra-port-1
+            - containerPort: 8002
+              name: extra-port-2
+              protocol: UDP
+            readinessProbe:
+              httpGet:
+                path: /readiness
+                port: http
+                scheme: HTTP
+              initialDelaySeconds: 0
+              periodSeconds: 10
+              timeoutSeconds: 1
+            resources:
+              limits: {}
+              requests: {}
+            startupProbe:
+              failureThreshold: 60
+              httpGet:
+                path: /healthz
+                port: http
+                scheme: HTTP
+              periodSeconds: 5
           imagePullSecrets:
-            - name: image-pull-gitlab
-            - name: image-pull-docker-hub
+          - name: image-pull-gitlab
+          - name: image-pull-docker-hub
           securityContext:
             runAsUser: 1000
           serviceAccountName: example-app
           terminationGracePeriodSeconds: 30
           topologySpreadConstraints:
-            - labelSelector:
-                matchLabels:
-                  app.kubernetes.io/component: app
-                  app.kubernetes.io/name: example-app
-              maxSkew: 1
-              topologyKey: topology.kubernetes.io/zone
-              whenUnsatisfiable: DoNotSchedule
+          - labelSelector:
+              matchLabels:
+                app.kubernetes.io/component: app
+                app.kubernetes.io/name: example-app
+            maxSkew: 1
+            topologyKey: topology.kubernetes.io/zone
+            whenUnsatisfiable: DoNotSchedule
           volumes: null
 Check container hybrid cloud ports:
   1: |
@@ -328,7 +328,7 @@ Check container hybrid cloud ports:
     kind: Deployment
     metadata:
       annotations:
-        helm.sh/chart: standard-application-stack-4.1.1
+        helm.sh/chart: standard-application-stack-4.2.0
         secret.reloader.stakater.com/reload: example-app-app
       labels:
         app.kubernetes.io/component: app
@@ -364,71 +364,71 @@ Check container hybrid cloud ports:
             name: example-app
         spec:
           containers:
-            - command:
-                - /app/docker-entrypoint.sh
-              env:
-                - name: KUBERNETES_POD_NAMESPACE
-                  valueFrom:
-                    fieldRef:
-                      fieldPath: metadata.namespace
-                - name: APP_ENVIRONMENT
-                  value: qa
-                - name: RUNTIME_ENVIRONMENT
-                  value: kubernetes
-              envFrom:
-                - secretRef:
-                    name: example-app-app
-              image: registry.gitlab.com/test:v0.1.0
-              imagePullPolicy: IfNotPresent
-              livenessProbe:
-                httpGet:
-                  path: /healthz
-                  port: http
-                  scheme: HTTP
-                initialDelaySeconds: 0
-                periodSeconds: 10
-                timeoutSeconds: 1
-              name: main
-              ports:
-                - containerPort: 8000
-                  name: http
-                - containerPort: 20200
-                  name: consul-metrics
-                - containerPort: 20000
-                  name: consul-proxy
-              readinessProbe:
-                httpGet:
-                  path: /readiness
-                  port: http
-                  scheme: HTTP
-                initialDelaySeconds: 0
-                periodSeconds: 10
-                timeoutSeconds: 1
-              resources:
-                limits: {}
-                requests: {}
-              startupProbe:
-                failureThreshold: 60
-                httpGet:
-                  path: /healthz
-                  port: http
-                  scheme: HTTP
-                periodSeconds: 5
+          - command:
+            - /app/docker-entrypoint.sh
+            env:
+            - name: KUBERNETES_POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: APP_ENVIRONMENT
+              value: qa
+            - name: RUNTIME_ENVIRONMENT
+              value: kubernetes
+            envFrom:
+            - secretRef:
+                name: example-app-app
+            image: registry.gitlab.com/test:v0.1.0
+            imagePullPolicy: IfNotPresent
+            livenessProbe:
+              httpGet:
+                path: /healthz
+                port: http
+                scheme: HTTP
+              initialDelaySeconds: 0
+              periodSeconds: 10
+              timeoutSeconds: 1
+            name: main
+            ports:
+            - containerPort: 8000
+              name: http
+            - containerPort: 20200
+              name: consul-metrics
+            - containerPort: 20000
+              name: consul-proxy
+            readinessProbe:
+              httpGet:
+                path: /readiness
+                port: http
+                scheme: HTTP
+              initialDelaySeconds: 0
+              periodSeconds: 10
+              timeoutSeconds: 1
+            resources:
+              limits: {}
+              requests: {}
+            startupProbe:
+              failureThreshold: 60
+              httpGet:
+                path: /healthz
+                port: http
+                scheme: HTTP
+              periodSeconds: 5
           imagePullSecrets:
-            - name: image-pull-gitlab
-            - name: image-pull-docker-hub
+          - name: image-pull-gitlab
+          - name: image-pull-docker-hub
           securityContext:
             runAsUser: 1000
           serviceAccountName: example-app
           terminationGracePeriodSeconds: 30
           topologySpreadConstraints:
-            - labelSelector:
-                matchLabels:
-                  app.kubernetes.io/component: app
-                  app.kubernetes.io/name: example-app
-              maxSkew: 1
-              topologyKey: topology.kubernetes.io/zone
-              whenUnsatisfiable: DoNotSchedule
+          - labelSelector:
+              matchLabels:
+                app.kubernetes.io/component: app
+                app.kubernetes.io/name: example-app
+            maxSkew: 1
+            topologyKey: topology.kubernetes.io/zone
+            whenUnsatisfiable: DoNotSchedule
           volumes: null
 Check default container main port:
   1: |
@@ -436,7 +436,7 @@ Check default container main port:
     kind: Deployment
     metadata:
       annotations:
-        helm.sh/chart: standard-application-stack-4.1.1
+        helm.sh/chart: standard-application-stack-4.2.0
         secret.reloader.stakater.com/reload: example-app-app
       labels:
         app.kubernetes.io/component: app
@@ -471,67 +471,67 @@ Check default container main port:
             name: example-app
         spec:
           containers:
-            - command:
-                - /app/docker-entrypoint.sh
-              env:
-                - name: KUBERNETES_POD_NAMESPACE
-                  valueFrom:
-                    fieldRef:
-                      fieldPath: metadata.namespace
-                - name: APP_ENVIRONMENT
-                  value: qa
-                - name: RUNTIME_ENVIRONMENT
-                  value: kubernetes
-              envFrom:
-                - secretRef:
-                    name: example-app-app
-              image: registry.gitlab.com/test:v0.1.0
-              imagePullPolicy: IfNotPresent
-              livenessProbe:
-                httpGet:
-                  path: /healthz
-                  port: http
-                  scheme: HTTP
-                initialDelaySeconds: 0
-                periodSeconds: 10
-                timeoutSeconds: 1
-              name: main
-              ports:
-                - containerPort: 8000
-                  name: http
-              readinessProbe:
-                httpGet:
-                  path: /readiness
-                  port: http
-                  scheme: HTTP
-                initialDelaySeconds: 0
-                periodSeconds: 10
-                timeoutSeconds: 1
-              resources:
-                limits: {}
-                requests: {}
-              startupProbe:
-                failureThreshold: 60
-                httpGet:
-                  path: /healthz
-                  port: http
-                  scheme: HTTP
-                periodSeconds: 5
+          - command:
+            - /app/docker-entrypoint.sh
+            env:
+            - name: KUBERNETES_POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: APP_ENVIRONMENT
+              value: qa
+            - name: RUNTIME_ENVIRONMENT
+              value: kubernetes
+            envFrom:
+            - secretRef:
+                name: example-app-app
+            image: registry.gitlab.com/test:v0.1.0
+            imagePullPolicy: IfNotPresent
+            livenessProbe:
+              httpGet:
+                path: /healthz
+                port: http
+                scheme: HTTP
+              initialDelaySeconds: 0
+              periodSeconds: 10
+              timeoutSeconds: 1
+            name: main
+            ports:
+            - containerPort: 8000
+              name: http
+            readinessProbe:
+              httpGet:
+                path: /readiness
+                port: http
+                scheme: HTTP
+              initialDelaySeconds: 0
+              periodSeconds: 10
+              timeoutSeconds: 1
+            resources:
+              limits: {}
+              requests: {}
+            startupProbe:
+              failureThreshold: 60
+              httpGet:
+                path: /healthz
+                port: http
+                scheme: HTTP
+              periodSeconds: 5
           imagePullSecrets:
-            - name: image-pull-gitlab
-            - name: image-pull-docker-hub
+          - name: image-pull-gitlab
+          - name: image-pull-docker-hub
           securityContext:
             runAsUser: 1000
           serviceAccountName: example-app
           terminationGracePeriodSeconds: 30
           topologySpreadConstraints:
-            - labelSelector:
-                matchLabels:
-                  app.kubernetes.io/component: app
-                  app.kubernetes.io/name: example-app
-              maxSkew: 1
-              topologyKey: topology.kubernetes.io/zone
-              whenUnsatisfiable: DoNotSchedule
+          - labelSelector:
+              matchLabels:
+                app.kubernetes.io/component: app
+                app.kubernetes.io/name: example-app
+            maxSkew: 1
+            topologyKey: topology.kubernetes.io/zone
+            whenUnsatisfiable: DoNotSchedule
           volumes: null
 Check overridden container main port:
   1: |
@@ -539,7 +539,7 @@ Check overridden container main port:
     kind: Deployment
     metadata:
       annotations:
-        helm.sh/chart: standard-application-stack-4.1.1
+        helm.sh/chart: standard-application-stack-4.2.0
         secret.reloader.stakater.com/reload: example-app-app
       labels:
         app.kubernetes.io/component: app
@@ -574,65 +574,65 @@ Check overridden container main port:
             name: example-app
         spec:
           containers:
-            - command:
-                - /app/docker-entrypoint.sh
-              env:
-                - name: KUBERNETES_POD_NAMESPACE
-                  valueFrom:
-                    fieldRef:
-                      fieldPath: metadata.namespace
-                - name: APP_ENVIRONMENT
-                  value: qa
-                - name: RUNTIME_ENVIRONMENT
-                  value: kubernetes
-              envFrom:
-                - secretRef:
-                    name: example-app-app
-              image: registry.gitlab.com/test:v0.1.0
-              imagePullPolicy: IfNotPresent
-              livenessProbe:
-                httpGet:
-                  path: /healthz
-                  port: http
-                  scheme: HTTP
-                initialDelaySeconds: 0
-                periodSeconds: 10
-                timeoutSeconds: 1
-              name: main
-              ports:
-                - containerPort: 9000
-                  name: http
-              readinessProbe:
-                httpGet:
-                  path: /readiness
-                  port: http
-                  scheme: HTTP
-                initialDelaySeconds: 0
-                periodSeconds: 10
-                timeoutSeconds: 1
-              resources:
-                limits: {}
-                requests: {}
-              startupProbe:
-                failureThreshold: 60
-                httpGet:
-                  path: /healthz
-                  port: http
-                  scheme: HTTP
-                periodSeconds: 5
+          - command:
+            - /app/docker-entrypoint.sh
+            env:
+            - name: KUBERNETES_POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: APP_ENVIRONMENT
+              value: qa
+            - name: RUNTIME_ENVIRONMENT
+              value: kubernetes
+            envFrom:
+            - secretRef:
+                name: example-app-app
+            image: registry.gitlab.com/test:v0.1.0
+            imagePullPolicy: IfNotPresent
+            livenessProbe:
+              httpGet:
+                path: /healthz
+                port: http
+                scheme: HTTP
+              initialDelaySeconds: 0
+              periodSeconds: 10
+              timeoutSeconds: 1
+            name: main
+            ports:
+            - containerPort: 9000
+              name: http
+            readinessProbe:
+              httpGet:
+                path: /readiness
+                port: http
+                scheme: HTTP
+              initialDelaySeconds: 0
+              periodSeconds: 10
+              timeoutSeconds: 1
+            resources:
+              limits: {}
+              requests: {}
+            startupProbe:
+              failureThreshold: 60
+              httpGet:
+                path: /healthz
+                port: http
+                scheme: HTTP
+              periodSeconds: 5
           imagePullSecrets:
-            - name: image-pull-gitlab
-            - name: image-pull-docker-hub
+          - name: image-pull-gitlab
+          - name: image-pull-docker-hub
           securityContext:
             runAsUser: 1000
           serviceAccountName: example-app
           terminationGracePeriodSeconds: 30
           topologySpreadConstraints:
-            - labelSelector:
-                matchLabels:
-                  app.kubernetes.io/component: app
-                  app.kubernetes.io/name: example-app
-              maxSkew: 1
-              topologyKey: topology.kubernetes.io/zone
-              whenUnsatisfiable: DoNotSchedule
+          - labelSelector:
+              matchLabels:
+                app.kubernetes.io/component: app
+                app.kubernetes.io/name: example-app
+            maxSkew: 1
+            topologyKey: topology.kubernetes.io/zone
+            whenUnsatisfiable: DoNotSchedule
           volumes: null
