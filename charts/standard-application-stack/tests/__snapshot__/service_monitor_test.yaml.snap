@@ -213,7 +213,7 @@ Check combined template defaults:
     kind: Deployment
     metadata:
       annotations:
-        helm.sh/chart: standard-application-stack-4.1.1
+        helm.sh/chart: standard-application-stack-4.2.0
         secret.reloader.stakater.com/reload: test-app-app
       labels:
         app.kubernetes.io/component: app
@@ -390,7 +390,7 @@ Check combined template with extra ports and monitors:
     kind: Deployment
     metadata:
       annotations:
-        helm.sh/chart: standard-application-stack-4.1.1
+        helm.sh/chart: standard-application-stack-4.2.0
         secret.reloader.stakater.com/reload: test-app-app
       labels:
         app.kubernetes.io/component: app
