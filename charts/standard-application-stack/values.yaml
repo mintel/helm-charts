@@ -1002,6 +1002,10 @@ mariadb:
         cpu: 100m
         memory: 64Mi
 
+memcached:
+  enabled: false
+  outputSecret: true
+
 postgresql:
   enabled: false
   postgresqlDatabase: "postgres"

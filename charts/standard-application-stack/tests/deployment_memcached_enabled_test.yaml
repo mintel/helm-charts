@@ -1,0 +1,70 @@
+suite: Test Memcached Enabled Deployment
+templates:
+  - deployment.yaml
+release:
+  namespace: test-namespace
+tests:
+  - it: Check Memcached envfrom secretRef is present
+    set:
+      global.clusterEnv: qa
+      global.name: test-app
+      memcached.enabled: true
+      # Disable default application secret
+      externalSecret.enabled: false
+    asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
+      - isKind:
+          of: Deployment
+      - equal:
+          path: metadata.namespace
+          value: test-namespace
+      - hasDocuments:
+          count: 1
+      - equal:
+          path: spec.template.spec.containers[0].envFrom[0].secretRef.name
+          value: test-app-memcached
+  - it: Check Memcached secretName Override
+    set:
+      global.clusterEnv: qa
+      global.name: test-app
+      memcached.enabled: true
+      memcached.secretNameOverride: overrideName
+      # Disable default application secret
+      externalSecret.enabled: false
+    asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
+      - isKind:
+          of: Deployment
+      - equal:
+          path: metadata.namespace
+          value: test-namespace
+      - hasDocuments:
+          count: 1
+      - equal:
+          path: spec.template.spec.containers[0].envFrom[0].secretRef.name
+          value: overrideName
+      - equal:
+          path: metadata.annotations["secret.reloader.stakater.com/reload"]
+          value: overrideName
+  - it: Check Memcached envfrom secretRef is present for local environment
+    set:
+      global.clusterEnv: local
+      global.name: test-app
+      memcached.enabled: true
+      # Disable default application secret
+      externalSecret.enabled: false
+    asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
+      - isKind:
+          of: Deployment
+      - equal:
+          path: metadata.namespace
+          value: test-namespace
+      - hasDocuments:
+          count: 1
+      - equal:
+          path: metadata.annotations["secret.reloader.stakater.com/reload"]
+          value: test-app-memcached
+      - equal:
+          path: spec.template.spec.containers[0].envFrom[0].secretRef.name
+          value: test-app-memcached

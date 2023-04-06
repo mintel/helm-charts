@@ -176,6 +176,14 @@ Create a default mariadb external secret name.
 {{- end -}}
 
 {{/*
+Create a default memcached external secret name.
+*/}}
+{{- define "mintel_common.defaultMemcachedSecretName" -}}
+{{- $fullname := include "mintel_common.fullname" . }}
+{{- printf "%s-memcached" $fullname }}
+{{- end -}}
+
+{{/*
 Create a default postgresql external secret name.
 */}}
 {{- define "mintel_common.defaultPostgresqlSecretName" -}}
@@ -275,11 +283,20 @@ Build comma separated list of secrets
      {{- end }}
   {{- end }}
 {{- else }}
+    {{- if (and .Values.dynamodb .Values.dynamodb.enabled) }}
+    {{- $secretList = append $secretList (.Values.dynamodb.secretNameOverride | default (include "mintel_common.defaultDynamodbSecretName" .)) -}}
+    {{- end }}
+    {{- if (and .Values.elasticsearch .Values.elasticsearch.enabled) }}
+    {{- $secretList = append $secretList (.Values.elasticsearch.secretNameOverride | default (include "mintel_common.defaultElasticsearchSecretName" .)) -}}
+    {{- end }}
     {{- if (and .Values.mariadb .Values.mariadb.enabled) }}
     {{- $secretList = append $secretList (.Values.mariadb.secretNameOverride | default (include "mintel_common.defaultMariadbSecretName" .)) -}}
     {{- end }}
-    {{- if (and .Values.dynamodb .Values.dynamodb.enabled) }}
-    {{- $secretList = append $secretList (.Values.dynamodb.secretNameOverride | default (include "mintel_common.defaultDynamodbSecretName" .)) -}}
+    {{- if (and .Values.memcached .Values.memcached.enabled) }}
+    {{- $secretList = append $secretList (.Values.memcached.secretNameOverride | default (include "mintel_common.defaultMemcachedSecretName" .)) -}}
+    {{- end }}
+    {{- if (and .Values.opensearch .Values.opensearch.enabled) }}
+    {{- $secretList = append $secretList (.Values.opensearch.secretNameOverride | default (include "mintel_common.defaultOpensearchSecretName" .)) -}}
     {{- end }}
     {{- if (and .Values.postgresql .Values.postgresql.enabled) }}
     {{- $secretList = append $secretList (.Values.postgresql.secretNameOverride | default (include "mintel_common.defaultPostgresqlSecretName" .)) -}}
@@ -289,12 +306,6 @@ Build comma separated list of secrets
     {{- end }}
     {{- if (and .Values.s3 .Values.s3.enabled) }}
     {{- $secretList = append $secretList (.Values.s3.secretNameOverride | default (include "mintel_common.defaultS3SecretName" .)) -}}
-    {{- end }}
-    {{- if (and .Values.elasticsearch .Values.elasticsearch.enabled) }}
-    {{- $secretList = append $secretList (.Values.elasticsearch.secretNameOverride | default (include "mintel_common.defaultElasticsearchSecretName" .)) -}}
-    {{- end }}
-    {{- if (and .Values.opensearch .Values.opensearch.enabled) }}
-    {{- $secretList = append $secretList (.Values.opensearch.secretNameOverride | default (include "mintel_common.defaultOpensearchSecretName" .)) -}}
     {{- end }}
     {{- if (and .Values.sqs .Values.sqs.enabled) }}
     {{- $secretList = append $secretList (.Values.sqs.secretNameOverride | default (include "mintel_common.defaultSqsSecretName" .)) -}}
@@ -501,7 +512,7 @@ topologySpreadConstraints:
 
 {{/* Supported resources */}}
 {{- define "mintel_common.terraformCloudResources" -}}
-{{- $terraformCloudResources := (list "opensearch" "postgresql" "redis" "s3" "mariadb" "dynamodb" "sqs") -}}
+{{- $terraformCloudResources := (list "dynamodb" "mariadb" "memcached" "opensearch" "postgresql" "redis" "s3" "sqs") -}}
 {{ $terraformCloudResources | sortAlpha | uniq | compact | join ","}}
 {{- end -}}
 
