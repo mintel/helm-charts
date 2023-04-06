@@ -326,7 +326,7 @@ Check EXTRA_ALLOWED_HOSTS env var extraHosts with extraIngresses:
     kind: Deployment
     metadata:
       annotations:
-        helm.sh/chart: standard-application-stack-4.3.0
+        helm.sh/chart: standard-application-stack-4.3.1
         secret.reloader.stakater.com/reload: example-app-app
       labels:
         app.kubernetes.io/component: app

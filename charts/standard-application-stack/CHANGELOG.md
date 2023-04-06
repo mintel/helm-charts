@@ -7,7 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [v4.3.0] - 2023-04-26
+## [v4.3.1] - 2023-04-06
+### Fixed
+- Chart now properly adds environment variables for memcached instances
+
+## [v4.3.0] - 2023-03-26
 ### Added
 - Added `main.env` option which allows main deployment/container access custom env-vars
 

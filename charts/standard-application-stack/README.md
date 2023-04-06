@@ -1,6 +1,6 @@
 # standard-application-stack
 
-![Version: 4.3.0](https://img.shields.io/badge/Version-4.3.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 4.3.1](https://img.shields.io/badge/Version-4.3.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A generic chart to support most common application requirements
 
@@ -193,6 +193,8 @@ A generic chart to support most common application requirements
 | mariadb.metrics.resources.requests.cpu | string | `"100m"` |  |
 | mariadb.metrics.resources.requests.memory | string | `"64Mi"` |  |
 | mariadb.outputSecret | bool | `true` | set outputSecret to true to allow TF Cloud chart create ExternalSecrets |
+| memcached.enabled | bool | `false` |  |
+| memcached.outputSecret | bool | `true` |  |
 | metrics | object | `{"additionalMonitors":[],"basicAuth":{"enabled":false,"passwordKey":"","secretName":"","usernameKey":""},"enabled":true}` | Prometheus Exporter / Metrics |
 | metrics.basicAuth | object | `{"enabled":false,"passwordKey":"","secretName":"","usernameKey":""}` | Scheme (HTTP ot HTTPS)  scheme: HTTP |
 | metrics.enabled | bool | `true` | Enable Prometheus to access aplpication metrics endpoints |

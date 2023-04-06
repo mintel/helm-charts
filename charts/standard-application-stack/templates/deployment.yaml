@@ -211,17 +211,29 @@ spec:
               {{- end }}
               {{- end }}
             {{- else }}
+              {{- if (and .Values.dynamodb .Values.dynamodb.enabled) }}
+            - secretRef:
+                name: {{ .Values.dynamodb.secretNameOverride | default (include "mintel_common.defaultDynamodbSecretName" .) }}
+              {{- end }}
+              {{- if (and .Values.elasticsearch .Values.elasticsearch.enabled) }}
+            - secretRef:
+                name: {{ .Values.elasticsearch.secretNameOverride | default (include "mintel_common.defaultElasticsearchSecretName" .) }}
+              {{- end }}
               {{- if (and .Values.mariadb .Values.mariadb.enabled) }}
             - secretRef:
                 name: {{ .Values.mariadb.secretNameOverride | default (include "mintel_common.defaultMariadbSecretName" .) }}
               {{- end }}
+              {{- if (and .Values.memcached .Values.memcached.enabled) }}
+            - secretRef:
+                name: {{ .Values.memcached.secretNameOverride | default (include "mintel_common.defaultMemcachedSecretName" .) }}
+              {{- end }}
+              {{- if (and .Values.opensearch .Values.opensearch.enabled) }}
+            - secretRef:
+                name: {{ .Values.opensearch.secretNameOverride | default (include "mintel_common.defaultOpensearchSecretName" .) }}
+              {{- end }}
               {{- if (and .Values.postgresql .Values.postgresql.enabled) }}
             - secretRef:
                 name: {{ .Values.postgresql.secretNameOverride | default (include "mintel_common.defaultPostgresqlSecretName" .) }}
-              {{- end }}
-              {{- if (and .Values.dynamodb .Values.dynamodb.enabled) }}
-            - secretRef:
-                name: {{ .Values.dynamodb.secretNameOverride | default (include "mintel_common.defaultDynamodbSecretName" .) }}
               {{- end }}
               {{- if (and .Values.redis .Values.redis.enabled) }}
             - secretRef:
@@ -234,14 +246,6 @@ spec:
               {{- if (and .Values.sqs .Values.sqs.enabled) }}
             - secretRef:
                 name: {{ .Values.sqs.secretNameOverride | default (include "mintel_common.defaultSqsSecretName" .) }}
-              {{- end }}
-              {{- if (and .Values.elasticsearch .Values.elasticsearch.enabled) }}
-            - secretRef:
-                name: {{ .Values.elasticsearch.secretNameOverride | default (include "mintel_common.defaultElasticsearchSecretName" .) }}
-              {{- end }}
-              {{- if (and .Values.opensearch .Values.opensearch.enabled) }}
-            - secretRef:
-                name: {{ .Values.opensearch.secretNameOverride | default (include "mintel_common.defaultOpensearchSecretName" .) }}
               {{- end }}
             {{- end }}
             {{- range .Values.extraSecrets }}

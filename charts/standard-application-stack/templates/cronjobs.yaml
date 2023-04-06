@@ -105,16 +105,34 @@ spec:
                   {{- end }}
                   {{- end }}
                 {{- else }}
+                {{- if (and $.Values.dynamodb $.Values.dynamodb.enabled) }}
+                {{- if .includeDynamodbSecret }}
+                - secretRef:
+                    name: {{ $.Values.dynamodb.secretNameOverride | default (include "mintel_common.defaultDynamodbSecretName" $) }}
+                {{- end }}
+                {{- end }}
+                {{- if (and $.Values.elasticsearch $.Values.elasticsearch.enabled) }}
+                {{- if .includeElasticsearchSecret }}
+                - secretRef:
+                    name: {{ $.Values.elasticsearch.secretNameOverride | default (include "mintel_common.defaultElasticsearchSecretName" $) }}
+                {{- end }}
+                {{- end }}
                 {{- if (and $.Values.mariadb $.Values.mariadb.enabled) }}
                 {{- if .includeMariadbSecret }}
                 - secretRef:
                     name: {{ $.Values.mariadb.secretNameOverride | default (include "mintel_common.defaultMariadbSecretName" $) }}
                 {{- end }}
                 {{- end }}
-                {{- if (and $.Values.dynamodb $.Values.dynamodb.enabled) }}
-                {{- if .includeDynamodbSecret }}
+                {{- if (and $.Values.memcached $.Values.memcached.enabled) }}
+                {{- if .includeMemcachedSecret }}
                 - secretRef:
-                    name: {{ $.Values.dynamodb.secretNameOverride | default (include "mintel_common.defaultDynamodbSecretName" $) }}
+                    name: {{ $.Values.memcached.secretNameOverride | default (include "mintel_common.defaultMemcachedSecretName" $) }}
+                {{- end }}
+                {{- end }}
+                {{- if (and $.Values.opensearch $.Values.opensearch.enabled) }}
+                {{- if .includeOpensearchSecret }}
+                - secretRef:
+                    name: {{ $.Values.opensearch.secretNameOverride | default (include "mintel_common.defaultOpensearchSecretName" $) }}
                 {{- end }}
                 {{- end }}
                 {{- if (and $.Values.postgresql $.Values.postgresql.enabled) }}
@@ -133,18 +151,6 @@ spec:
                 {{- if .includeS3Secret }}
                 - secretRef:
                     name: {{ $.Values.s3.secretNameOverride | default (include "mintel_common.defaultS3SecretName" $) }}
-                {{- end }}
-                {{- end }}
-                {{- if (and $.Values.elasticsearch $.Values.elasticsearch.enabled) }}
-                {{- if .includeElasticsearchSecret }}
-                - secretRef:
-                    name: {{ $.Values.elasticsearch.secretNameOverride | default (include "mintel_common.defaultElasticsearchSecretName" $) }}
-                {{- end }}
-                {{- end }}
-                {{- if (and $.Values.opensearch $.Values.opensearch.enabled) }}
-                {{- if .includeOpensearchSecret }}
-                - secretRef:
-                    name: {{ $.Values.opensearch.secretNameOverride | default (include "mintel_common.defaultOpensearchSecretName" $) }}
                 {{- end }}
                 {{- end }}
                 {{- end }}
