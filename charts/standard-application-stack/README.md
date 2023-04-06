@@ -1,6 +1,6 @@
 # standard-application-stack
 
-![Version: 4.2.0](https://img.shields.io/badge/Version-4.2.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 4.3.0](https://img.shields.io/badge/Version-4.3.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A generic chart to support most common application requirements
 
@@ -73,7 +73,7 @@ A generic chart to support most common application requirements
 | elasticsearch.enabled | bool | `false` |  |
 | elasticsearch.secretRefreshIntervalOverride | string | `""` | Optional: ExternalSecret refreshInterval override |
 | elasticsearch.secretStoreRefOverride | string | `""` | Optional: override the SecretStoreRef of the ExternalSecret |
-| env | list | `[]` | Optional environment variables injected into the container |
+| env | list | `[]` | Optional environment variables injected into the container(s) This will typically inject variabless into all containers |
 | envFrom | list | `[]` | Optional environment variables injected into the container using envFrom (secrets/configmaps) |
 | eventBus | object | `{"accountId":"","enabled":false,"interactiveApp":false,"maxWorkers":1,"region":"us-east-2","serviceName":""}` | Configure connection to the Event Bus |
 | eventBus.accountId | string | `""` | Required: AWS account ID where the Event Bus is located |
@@ -180,6 +180,7 @@ A generic chart to support most common application requirements
 | localstack.service.type | string | `"ClusterIP"` |  |
 | localstack.startServices | string | `"sns, sqs, s3"` |  |
 | mailhog.enabled | bool | `false` |  |
+| main | object | `{"env":[]}` | Optional environment variables injected into the 'main' container only |
 | mariadb.client.enabled | bool | `true` |  |
 | mariadb.client.resources.limits.cpu | string | `"300m"` |  |
 | mariadb.client.resources.limits.memory | string | `"128Mi"` |  |

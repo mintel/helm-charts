@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v4.3.0] - 2023-04-26
+### Added
+- Added `main.env` option which allows main deployment/container access custom env-vars
+
 ## [v4.2.0] - 2023-03-24
 ### Added
 - Added option to re-map extra secrets key values
