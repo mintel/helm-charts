@@ -193,6 +193,9 @@ spec:
             {{- with .Values.env }}
             {{- toYaml . | nindent 12 }}
             {{- end }}
+            {{- with .Values.main.env }}
+            {{- toYaml . | nindent 12 }}
+            {{- end }}
           envFrom:
             {{- if (and .Values.externalSecret .Values.externalSecret.enabled) }}
             {{- if (or (ne .Values.global.clusterEnv "local") (and (eq .Values.global.clusterEnv "local") .Values.externalSecret.localValues)) }}

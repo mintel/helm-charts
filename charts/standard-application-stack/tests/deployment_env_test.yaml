@@ -1,0 +1,69 @@
+suite: Test Deployment Environment
+templates:
+  - deployment.yaml
+  - deployment-celery.yaml
+release:
+  namespace: test-namespace
+tests:
+  - it: Check default env behavior
+    template: deployment.yaml
+    set:
+      global.clusterEnv: qa
+      env:
+        - name: TEST_ENV
+          value: test-value
+    asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
+      - contains:
+         path: spec.template.spec.containers[0].env
+         content:
+            name: TEST_ENV
+            value: 'test-value'
+  - it: Check main container combines default env and `main.env` values
+    template: deployment.yaml
+    set:
+      global.clusterEnv: qa
+      env:
+        - name: TEST_ENV
+          value: test-value
+      main:
+        env:
+        - name: TEST_ENV_IN_MAIN_CONTAINER_ONLY
+          value: test-value
+    asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
+      - contains:
+         path: spec.template.spec.containers[0].env
+         content:
+            name: TEST_ENV
+            value: 'test-value'
+      - contains:
+         path: spec.template.spec.containers[0].env
+         content:
+            name: TEST_ENV_IN_MAIN_CONTAINER_ONLY
+            value: 'test-value'
+  - it: Check celery does not pull in `main.env` values
+    template: deployment-celery.yaml
+    set:
+      global.clusterEnv: qa
+      celery:
+        enabled: true
+      env:
+      - name: TEST_ENV
+        value: test-value
+      main:
+        env:
+        - name: TEST_ENV_IN_MAIN_CONTAINER_ONLY
+          value: test-value
+    asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
+      - contains:
+         path: spec.template.spec.containers[0].env
+         content:
+            name: TEST_ENV
+            value: 'test-value'
+      - notContains:
+         path: spec.template.spec.containers[0].env
+         content:
+            name: TEST_ENV_IN_MAIN_CONTAINER_ONLY
+            value: 'test-value'

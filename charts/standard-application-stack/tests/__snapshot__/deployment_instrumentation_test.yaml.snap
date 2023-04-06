@@ -4,7 +4,7 @@ Check custom python otel extraEnv vars are added:
     kind: Deployment
     metadata:
       annotations:
-        helm.sh/chart: standard-application-stack-4.2.0
+        helm.sh/chart: standard-application-stack-4.3.0
         secret.reloader.stakater.com/reload: test-app-app
       labels:
         app.kubernetes.io/component: app
@@ -127,7 +127,7 @@ Check custom sampler settings:
     kind: Deployment
     metadata:
       annotations:
-        helm.sh/chart: standard-application-stack-4.2.0
+        helm.sh/chart: standard-application-stack-4.3.0
         secret.reloader.stakater.com/reload: test-app-app
       labels:
         app.kubernetes.io/component: app
@@ -250,7 +250,7 @@ Check default python otel envars are added:
     kind: Deployment
     metadata:
       annotations:
-        helm.sh/chart: standard-application-stack-4.2.0
+        helm.sh/chart: standard-application-stack-4.3.0
         secret.reloader.stakater.com/reload: test-app-app
       labels:
         app.kubernetes.io/component: app
@@ -371,7 +371,7 @@ Check global otel extraEnv vars are added:
     kind: Deployment
     metadata:
       annotations:
-        helm.sh/chart: standard-application-stack-4.2.0
+        helm.sh/chart: standard-application-stack-4.3.0
         secret.reloader.stakater.com/reload: test-app-app
       labels:
         app.kubernetes.io/component: app

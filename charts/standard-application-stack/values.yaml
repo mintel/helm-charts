@@ -92,11 +92,19 @@ args: []
 #   - 'gunicorn'
 #   - '--port=1234'
 
-# -- Optional environment variables injected into the container
+# -- Optional environment variables injected into container(s)
+# NOTE: This is used across multiple deployments.
 env: []
 # env:
 #   - name: APP_ENVIRONMENT
 #     value: dev
+
+# -- Optional environment variables injected into the 'main' container of the app-deployment
+main:
+  env: []
+  # env:
+  #   - name: CUSTOM_VAR
+  #     value: value
 
 # -- Optional environment variables injected into the container using envFrom (secrets/configmaps)
 envFrom: []
