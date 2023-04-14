@@ -144,7 +144,7 @@ app.mintel.com/terraform-cloud-tags: {{ .InstanceCfg.workspaceTags | default (in
 {{- $defaults | toJson -}}
 {{- end -}}
 
-{{/* Covert dict to hcl */}}
+{{/* Convert dict to hcl */}}
 {{- define "mintel_common.terraform_cloud.dict_to_hcl" -}}
 {{- range $key, $value := . }}
   {{- printf "  %s = \"%s\"\n" $key $value -}}
