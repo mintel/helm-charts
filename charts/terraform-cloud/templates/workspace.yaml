@@ -38,14 +38,14 @@
       {{ end }}
       # Set instance tags
       {{- if not (hasKey $instanceConfig "tags") }}
-       {{- $_ := set $instanceConfig "tags" $defaultTags }}
+       {{- $_ := set $instanceConfig "tags" (dict "key" "tags" "value" ( printf "{\n%s}" (include "mintel_common.terraform_cloud.dict_to_hcl" $defaultTags )) "hcl" true) }}
       {{- else }}      
-        {{- $customTags := dict }}
-        {{- range $key, $value := $instanceConfig.tags }}
-          {{- $_ := set $customTags $key $value }}
-        {{ end }}
-        {{- $mergedTags := merge $defaultTags $customTags }}
-        {{- $_ := set $instanceConfig "tags" ( printf "{\n%s}" (include "mintel_common.terraform_cloud.dict_to_hcl" $mergedTags)) }}
+        # {{- $customTags := dict }}
+        # {{- range $key, $value := $instanceConfig.tags }}
+        #   {{- $_ := set $customTags $key $value }}
+        # {{ end }}
+        {{- $mergedTags := merge $defaultTags $instanceConfig.tags }}
+        {{- $_ := set $instanceConfig "tags" (dict "key" "tags" "value" ( printf "{\n%s}" (include "mintel_common.terraform_cloud.dict_to_hcl" $mergedTags )) "hcl" true) }}
       {{ end }}
       {{- if not (hasKey $instanceConfig "tfcloud_agent") }}
         {{- $_ := set $instanceConfig "tfcloud_agent" "true" }}

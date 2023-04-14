@@ -66,14 +66,14 @@ Dev S3 module workspace:
           sensitive: false
           value: '{access-project = "test-namespace-ops"}'
         - environmentVariable: false
-          hcl: false
+          hcl: true
           key: tags
           sensitive: false
           value: |-
             {
-            Application=test-app
-            Owner=sre
-            Project=test-project
+              Application = "test-app"
+              Owner = "sre"
+              Project = "test-project"
             }
         - environmentVariable: false
           hcl: false
@@ -148,14 +148,14 @@ Dev S3 module workspace adds correct env override:
           sensitive: false
           value: '{access-project = "test-namespace-ops"}'
         - environmentVariable: false
-          hcl: false
+          hcl: true
           key: tags
           sensitive: false
           value: |-
             {
-            Application=mntl-test-app
-            Owner=sre
-            Project=test-project
+              Application = "mntl-test-app"
+              Owner = "sre"
+              Project = "test-project"
             }
         - environmentVariable: false
           hcl: false
@@ -230,14 +230,14 @@ Dev S3 module workspace name does not repeat mntl-prefix:
           sensitive: false
           value: '{access-project = "test-namespace-ops"}'
         - environmentVariable: false
-          hcl: false
+          hcl: true
           key: tags
           sensitive: false
           value: |-
             {
-            Application=mntl-test-app
-            Owner=sre
-            Project=test-project
+              Application = "mntl-test-app"
+              Owner = "sre"
+              Project = "test-project"
             }
         - environmentVariable: false
           hcl: false
@@ -312,14 +312,14 @@ Dev S3 module workspace name override:
           sensitive: false
           value: '{access-project = "test-namespace-ops"}'
         - environmentVariable: false
-          hcl: false
+          hcl: true
           key: tags
           sensitive: false
           value: |-
             {
-            Application=mntl-test-app
-            Owner=sre
-            Project=test-project
+              Application = "mntl-test-app"
+              Owner = "sre"
+              Project = "test-project"
             }
         - environmentVariable: false
           hcl: false
@@ -394,14 +394,14 @@ Dev S3 module workspace with default (0) syncWave:
           sensitive: false
           value: '{access-project = "test-namespace-ops"}'
         - environmentVariable: false
-          hcl: false
+          hcl: true
           key: tags
           sensitive: false
           value: |-
             {
-            Application=test-app
-            Owner=sre
-            Project=test-project
+              Application = "test-app"
+              Owner = "sre"
+              Project = "test-project"
             }
         - environmentVariable: false
           hcl: false
@@ -476,14 +476,14 @@ Dev S3 module workspace with modified syncWave:
           sensitive: false
           value: '{access-project = "test-namespace-ops"}'
         - environmentVariable: false
-          hcl: false
+          hcl: true
           key: tags
           sensitive: false
           value: |-
             {
-            Application=test-app
-            Owner=sre
-            Project=test-project
+              Application = "test-app"
+              Owner = "sre"
+              Project = "test-project"
             }
         - environmentVariable: false
           hcl: false
@@ -558,14 +558,14 @@ Dev S3 module workspace with multiple instances:
           sensitive: false
           value: '{access-project = "test-namespace-ops"}'
         - environmentVariable: false
-          hcl: false
+          hcl: true
           key: tags
           sensitive: false
           value: |-
             {
-            Application=test-app
-            Owner=sre
-            Project=test-project
+              Application = "test-app"
+              Owner = "sre"
+              Project = "test-project"
             }
         - environmentVariable: false
           hcl: false
@@ -639,14 +639,14 @@ Dev S3 module workspace with multiple instances:
           sensitive: false
           value: '{access-project = "test-namespace-ops"}'
         - environmentVariable: false
-          hcl: false
+          hcl: true
           key: tags
           sensitive: false
           value: |-
             {
-            Application=test-app
-            Owner=sre
-            Project=test-project
+              Application = "test-app"
+              Owner = "sre"
+              Project = "test-project"
             }
         - environmentVariable: false
           hcl: false
@@ -716,14 +716,16 @@ Dev S3 module workspace with multiple instances - tags:
           sensitive: false
           value: '{access-project = "test-namespace-ops"}'
         - environmentVariable: false
-          hcl: false
+          hcl: true
           key: tags
           sensitive: false
           value: |-
             {
-            Application=test-app
-            Owner=sre
-            Project=test-project
+              Application = "test-app"
+              ExtraTagTest = "testTagValue"
+              ExtraTagTest2 = "testTagValue2"
+              Owner = "sre"
+              Project = "test-project"
             }
         - environmentVariable: false
           hcl: false
@@ -798,14 +800,14 @@ Dev S3 module workspace with multiple instances and syncWave overrides:
           sensitive: false
           value: '{access-project = "test-namespace-ops"}'
         - environmentVariable: false
-          hcl: false
+          hcl: true
           key: tags
           sensitive: false
           value: |-
             {
-            Application=test-app
-            Owner=sre
-            Project=test-project
+              Application = "test-app"
+              Owner = "sre"
+              Project = "test-project"
             }
         - environmentVariable: false
           hcl: false
@@ -879,14 +881,14 @@ Dev S3 module workspace with multiple instances and syncWave overrides:
           sensitive: false
           value: '{access-project = "test-namespace-ops"}'
         - environmentVariable: false
-          hcl: false
+          hcl: true
           key: tags
           sensitive: false
           value: |-
             {
-            Application=test-app
-            Owner=sre
-            Project=test-project
+              Application = "test-app"
+              Owner = "sre"
+              Project = "test-project"
             }
         - environmentVariable: false
           hcl: false
@@ -956,14 +958,14 @@ Test workspace allow destroy env:
           sensitive: false
           value: '{access-project = "test-namespace-ops"}'
         - environmentVariable: false
-          hcl: false
+          hcl: true
           key: tags
           sensitive: false
           value: |-
             {
-            Application=test-app
-            Owner=sre
-            Project=test-project
+              Application = "test-app"
+              Owner = "sre"
+              Project = "test-project"
             }
         - environmentVariable: false
           hcl: false
@@ -1038,14 +1040,14 @@ Test workspace extra annotations:
           sensitive: false
           value: '{access-project = "test-namespace-ops"}'
         - environmentVariable: false
-          hcl: false
+          hcl: true
           key: tags
           sensitive: false
           value: |-
             {
-            Application=test-app
-            Owner=sre
-            Project=test-project
+              Application = "test-app"
+              Owner = "sre"
+              Project = "test-project"
             }
         - environmentVariable: false
           hcl: false
@@ -1120,14 +1122,14 @@ Test workspace extra annotations override:
           sensitive: false
           value: '{access-project = "test-namespace-ops"}'
         - environmentVariable: false
-          hcl: false
+          hcl: true
           key: tags
           sensitive: false
           value: |-
             {
-            Application=test-app
-            Owner=sre
-            Project=test-project
+              Application = "test-app"
+              Owner = "sre"
+              Project = "test-project"
             }
         - environmentVariable: false
           hcl: false

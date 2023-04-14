@@ -196,9 +196,9 @@ tests:
             sensitive: false
             value: |-
                 {
-                  Owner       = "sre"
-                  Project     = "test-project"
                   Application = "test-app"
+                  Owner = "sre"
+                  Project = "test-project"
                 }
   - it: Test workspace extra annotations
     set:
@@ -409,7 +409,8 @@ tests:
           instances:
             test-sqs: {
               tags: {
-                ExtraTagTest: "testTagValue"
+                ExtraTagTest: "testTagValue",
+                ExtraTagTest2: "testTagValue2"
               }
             }
     asserts:
@@ -422,9 +423,11 @@ tests:
             key: tags
             sensitive: false
             value: |-
-                {
-                  Application = "test-app"
-                  Owner       = "sre"
-                  Project     = "test-project"
-                }
+              {
+                Application = "test-app"
+                ExtraTagTest = "testTagValue"
+                ExtraTagTest2 = "testTagValue2"
+                Owner = "sre"
+                Project = "test-project"
+              }
 
