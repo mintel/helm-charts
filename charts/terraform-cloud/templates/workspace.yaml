@@ -36,6 +36,10 @@
       {{- if not (hasKey $instanceConfig "eks_cluster_name") }}
         {{- $_ := set $instanceConfig "eks_cluster_name" $global.clusterName }}
       {{ end }}
+      # Add MintelEventBus tag to defaults if enabled
+      {{- if and ( has $resourceType (list "sqs" "sns" ) ) $resourceConfig.eventBus.enabled  }}
+        {{- $_ :=  set $defaultTags "MintelEventBus" "true" }}
+      {{ end }}
       # Set instance tags
       {{- if not (hasKey $instanceConfig "tags") }}
        {{- $_ := set $instanceConfig "tags" (dict "key" "tags" "value" ( printf "{\n%s}" (include "mintel_common.terraform_cloud.dict_to_hcl" $defaultTags )) "hcl" true) }}

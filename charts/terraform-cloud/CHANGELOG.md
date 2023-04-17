@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v0.37.0] - 2023-04-17
+### Added
+- Add ability set MintelEventBus tags for SQS and SNS
+
 ## [v0.36.0] - 2023-04-14
 ### Added
 - Add ability to set custom tags for aws resources
