@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v0.36.0] - 2023-04-14
+### Added
+- Add ability to set custom tags for aws resources
+
 ## [v0.35.0] - 2023-02-09
 ### Changed
 - Update `opensearch` module to `v1.2.1`

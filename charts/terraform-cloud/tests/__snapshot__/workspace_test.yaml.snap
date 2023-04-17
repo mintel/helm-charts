@@ -10,7 +10,7 @@ Dev S3 module workspace:
         app.mintel.com/terraform-owner: sre
         argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
         argocd.argoproj.io/sync-wave: "-40"
-        helm.sh/chart: terraform-cloud-0.35.0
+        helm.sh/chart: terraform-cloud-0.36.0
       labels:
         app.kubernetes.io/name: mntl-test-app-s3
         app.mintel.com/env: dev
@@ -71,9 +71,9 @@ Dev S3 module workspace:
           sensitive: false
           value: |-
             {
-              Owner       = "sre"
-              Project     = "test-project"
               Application = "test-app"
+              Owner = "sre"
+              Project = "test-project"
             }
         - environmentVariable: false
           hcl: false
@@ -92,7 +92,7 @@ Dev S3 module workspace adds correct env override:
         app.mintel.com/terraform-owner: sre
         argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
         argocd.argoproj.io/sync-wave: "-40"
-        helm.sh/chart: terraform-cloud-0.35.0
+        helm.sh/chart: terraform-cloud-0.36.0
       labels:
         app.kubernetes.io/name: mntl-test-app-s3
         app.mintel.com/env: dev
@@ -153,9 +153,9 @@ Dev S3 module workspace adds correct env override:
           sensitive: false
           value: |-
             {
-              Owner       = "sre"
-              Project     = "test-project"
               Application = "mntl-test-app"
+              Owner = "sre"
+              Project = "test-project"
             }
         - environmentVariable: false
           hcl: false
@@ -174,7 +174,7 @@ Dev S3 module workspace name does not repeat mntl-prefix:
         app.mintel.com/terraform-owner: sre
         argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
         argocd.argoproj.io/sync-wave: "-40"
-        helm.sh/chart: terraform-cloud-0.35.0
+        helm.sh/chart: terraform-cloud-0.36.0
       labels:
         app.kubernetes.io/name: mntl-test-app-s3
         app.mintel.com/env: dev
@@ -235,9 +235,9 @@ Dev S3 module workspace name does not repeat mntl-prefix:
           sensitive: false
           value: |-
             {
-              Owner       = "sre"
-              Project     = "test-project"
               Application = "mntl-test-app"
+              Owner = "sre"
+              Project = "test-project"
             }
         - environmentVariable: false
           hcl: false
@@ -256,7 +256,7 @@ Dev S3 module workspace name override:
         app.mintel.com/terraform-owner: sre
         argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
         argocd.argoproj.io/sync-wave: "-40"
-        helm.sh/chart: terraform-cloud-0.35.0
+        helm.sh/chart: terraform-cloud-0.36.0
       labels:
         app.kubernetes.io/name: mntl-test-app-s3
         app.mintel.com/env: dev
@@ -317,9 +317,9 @@ Dev S3 module workspace name override:
           sensitive: false
           value: |-
             {
-              Owner       = "sre"
-              Project     = "test-project"
               Application = "mntl-test-app"
+              Owner = "sre"
+              Project = "test-project"
             }
         - environmentVariable: false
           hcl: false
@@ -338,7 +338,7 @@ Dev S3 module workspace with default (0) syncWave:
         app.mintel.com/terraform-owner: sre
         argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
         argocd.argoproj.io/sync-wave: "0"
-        helm.sh/chart: terraform-cloud-0.35.0
+        helm.sh/chart: terraform-cloud-0.36.0
       labels:
         app.kubernetes.io/name: mntl-test-app-s3
         app.mintel.com/env: dev
@@ -399,9 +399,9 @@ Dev S3 module workspace with default (0) syncWave:
           sensitive: false
           value: |-
             {
-              Owner       = "sre"
-              Project     = "test-project"
               Application = "test-app"
+              Owner = "sre"
+              Project = "test-project"
             }
         - environmentVariable: false
           hcl: false
@@ -420,7 +420,7 @@ Dev S3 module workspace with modified syncWave:
         app.mintel.com/terraform-owner: sre
         argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
         argocd.argoproj.io/sync-wave: "200"
-        helm.sh/chart: terraform-cloud-0.35.0
+        helm.sh/chart: terraform-cloud-0.36.0
       labels:
         app.kubernetes.io/name: mntl-test-app-s3
         app.mintel.com/env: dev
@@ -481,9 +481,9 @@ Dev S3 module workspace with modified syncWave:
           sensitive: false
           value: |-
             {
-              Owner       = "sre"
-              Project     = "test-project"
               Application = "test-app"
+              Owner = "sre"
+              Project = "test-project"
             }
         - environmentVariable: false
           hcl: false
@@ -502,7 +502,7 @@ Dev S3 module workspace with multiple instances:
         app.mintel.com/terraform-owner: sre
         argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
         argocd.argoproj.io/sync-wave: "-40"
-        helm.sh/chart: terraform-cloud-0.35.0
+        helm.sh/chart: terraform-cloud-0.36.0
       labels:
         app.kubernetes.io/name: mntl-test-bucket-s3
         app.mintel.com/env: dev
@@ -563,9 +563,9 @@ Dev S3 module workspace with multiple instances:
           sensitive: false
           value: |-
             {
-              Owner       = "sre"
-              Project     = "test-project"
               Application = "test-app"
+              Owner = "sre"
+              Project = "test-project"
             }
         - environmentVariable: false
           hcl: false
@@ -583,7 +583,7 @@ Dev S3 module workspace with multiple instances:
         app.mintel.com/terraform-owner: sre
         argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
         argocd.argoproj.io/sync-wave: "-40"
-        helm.sh/chart: terraform-cloud-0.35.0
+        helm.sh/chart: terraform-cloud-0.36.0
       labels:
         app.kubernetes.io/name: mntl-test-bucket-another-s3
         app.mintel.com/env: dev
@@ -644,9 +644,88 @@ Dev S3 module workspace with multiple instances:
           sensitive: false
           value: |-
             {
-              Owner       = "sre"
-              Project     = "test-project"
               Application = "test-app"
+              Owner = "sre"
+              Project = "test-project"
+            }
+        - environmentVariable: false
+          hcl: false
+          key: tfcloud_agent
+          sensitive: false
+          value: "true"
+Dev S3 module workspace with multiple instances - tags:
+  1: |
+    apiVersion: app.terraform.io/v1alpha1
+    kind: Workspace
+    metadata:
+      annotations:
+        app.mintel.com/altManifestFileSuffix: test-sqs-sqs
+        app.mintel.com/terraform-allow-destroy: "true"
+        app.mintel.com/terraform-cloud-tags: env:dev,owner:sre,mod:sqs
+        app.mintel.com/terraform-owner: sre
+        argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+        argocd.argoproj.io/sync-wave: "-40"
+        helm.sh/chart: terraform-cloud-0.36.0
+      labels:
+        app.kubernetes.io/name: test-sqs-sqs
+        app.mintel.com/env: dev
+        app.mintel.com/owner: sre
+        app.mintel.com/region: eu-west-1
+        name: test-sqs-sqs
+      name: dev-eu-west-1-cluster1-test-namespace-test-sqs-sqs
+      namespace: test-namespace
+    spec:
+      agentPoolID: ""
+      module:
+        source: app.terraform.io/Mintel/sqs/aws
+        version: 1.0.0
+      omitNamespacePrefix: true
+      organization: Mintel
+      secretsMountPath: /tmp/secrets
+      sshKeyID: mintel-ssh
+      terraformVersion: 1.0.7
+      variables:
+        - environmentVariable: false
+          hcl: false
+          key: aws_account_name
+          sensitive: false
+          value: dev
+        - environmentVariable: false
+          hcl: false
+          key: aws_region
+          sensitive: false
+          value: eu-west-1
+        - environmentVariable: false
+          hcl: false
+          key: eks_cluster_name
+          sensitive: false
+          value: cluster1
+        - environmentVariable: false
+          hcl: false
+          key: name
+          sensitive: false
+          value: test-sqs
+        - environmentVariable: false
+          hcl: false
+          key: output_secret_name
+          sensitive: false
+          value: test-namespace/test-sqs/sqs
+        - environmentVariable: false
+          hcl: true
+          key: secret_tags
+          sensitive: false
+          value: '{access-project = "test-namespace-ops"}'
+        - environmentVariable: false
+          hcl: true
+          key: tags
+          sensitive: false
+          value: |-
+            {
+              Application = "test-app"
+              ExtraTagTest = "testTagValue"
+              ExtraTagTest2 = "testTagValue2"
+              Owner = "sre"
+              Project = "test-project"
             }
         - environmentVariable: false
           hcl: false
@@ -665,7 +744,7 @@ Dev S3 module workspace with multiple instances and syncWave overrides:
         app.mintel.com/terraform-owner: sre
         argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
         argocd.argoproj.io/sync-wave: "200"
-        helm.sh/chart: terraform-cloud-0.35.0
+        helm.sh/chart: terraform-cloud-0.36.0
       labels:
         app.kubernetes.io/name: mntl-test-bucket-s3
         app.mintel.com/env: dev
@@ -726,9 +805,9 @@ Dev S3 module workspace with multiple instances and syncWave overrides:
           sensitive: false
           value: |-
             {
-              Owner       = "sre"
-              Project     = "test-project"
               Application = "test-app"
+              Owner = "sre"
+              Project = "test-project"
             }
         - environmentVariable: false
           hcl: false
@@ -746,7 +825,7 @@ Dev S3 module workspace with multiple instances and syncWave overrides:
         app.mintel.com/terraform-owner: sre
         argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
         argocd.argoproj.io/sync-wave: "300"
-        helm.sh/chart: terraform-cloud-0.35.0
+        helm.sh/chart: terraform-cloud-0.36.0
       labels:
         app.kubernetes.io/name: mntl-test-bucket-another-s3
         app.mintel.com/env: dev
@@ -807,9 +886,9 @@ Dev S3 module workspace with multiple instances and syncWave overrides:
           sensitive: false
           value: |-
             {
-              Owner       = "sre"
-              Project     = "test-project"
               Application = "test-app"
+              Owner = "sre"
+              Project = "test-project"
             }
         - environmentVariable: false
           hcl: false
@@ -828,7 +907,7 @@ Test workspace allow destroy env:
         app.mintel.com/terraform-owner: sre
         argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
         argocd.argoproj.io/sync-wave: "-40"
-        helm.sh/chart: terraform-cloud-0.35.0
+        helm.sh/chart: terraform-cloud-0.36.0
       labels:
         app.kubernetes.io/name: mntl-test-app-s3
         app.mintel.com/env: prod
@@ -884,9 +963,9 @@ Test workspace allow destroy env:
           sensitive: false
           value: |-
             {
-              Owner       = "sre"
-              Project     = "test-project"
               Application = "test-app"
+              Owner = "sre"
+              Project = "test-project"
             }
         - environmentVariable: false
           hcl: false
@@ -905,7 +984,7 @@ Test workspace extra annotations:
         app.mintel.com/terraform-owner: sre
         argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
         argocd.argoproj.io/sync-wave: "-40"
-        helm.sh/chart: terraform-cloud-0.35.0
+        helm.sh/chart: terraform-cloud-0.36.0
       labels:
         app.kubernetes.io/name: mntl-test-app-s3
         app.mintel.com/env: dev
@@ -966,9 +1045,9 @@ Test workspace extra annotations:
           sensitive: false
           value: |-
             {
-              Owner       = "sre"
-              Project     = "test-project"
               Application = "test-app"
+              Owner = "sre"
+              Project = "test-project"
             }
         - environmentVariable: false
           hcl: false
@@ -987,7 +1066,7 @@ Test workspace extra annotations override:
         app.mintel.com/terraform-owner: override
         argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
         argocd.argoproj.io/sync-wave: "-40"
-        helm.sh/chart: terraform-cloud-0.35.0
+        helm.sh/chart: terraform-cloud-0.36.0
       labels:
         app.kubernetes.io/name: mntl-test-app-s3
         app.mintel.com/env: dev
@@ -1048,9 +1127,9 @@ Test workspace extra annotations override:
           sensitive: false
           value: |-
             {
-              Owner       = "sre"
-              Project     = "test-project"
               Application = "test-app"
+              Owner = "sre"
+              Project = "test-project"
             }
         - environmentVariable: false
           hcl: false

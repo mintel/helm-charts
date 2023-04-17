@@ -196,9 +196,9 @@ tests:
             sensitive: false
             value: |-
                 {
-                  Owner       = "sre"
-                  Project     = "test-project"
                   Application = "test-app"
+                  Owner = "sre"
+                  Project = "test-project"
                 }
   - it: Test workspace extra annotations
     set:
@@ -395,3 +395,39 @@ tests:
           path: metadata.annotations["argocd.argoproj.io/sync-wave"]
           value: "300"
         documentIndex: 1
+  - it: Dev S3 module workspace with multiple instances - tags
+    set:
+      global.name: test-app
+      global.clusterEnv: dev
+      global.clusterName: cluster1
+      global.clusterRegion: eu-west-1
+      global.owner: sre
+      global.partOf: test-project
+      sqs:
+        enabled: true
+        terraform:
+          instances:
+            test-sqs: {
+              tags: {
+                ExtraTagTest: "testTagValue",
+                ExtraTagTest2: "testTagValue2"
+              }
+            }
+    asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
+      - contains:
+          path: spec.variables
+          content:
+            environmentVariable: false
+            hcl: true
+            key: tags
+            sensitive: false
+            value: |-
+              {
+                Application = "test-app"
+                ExtraTagTest = "testTagValue"
+                ExtraTagTest2 = "testTagValue2"
+                Owner = "sre"
+                Project = "test-project"
+              }
+

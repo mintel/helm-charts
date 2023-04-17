@@ -2,6 +2,8 @@
 # values.yaml file.
 {{- range include "mintel_common.terraformCloudResources" $ | split "," }}
   {{- $global := $.Values.global }}
+  # define default tags
+  {{- $defaultTags := dict "Owner" $global.owner "Project" $global.partOf "Application" $global.name }}
   # Get the config for the current resource in the loop (e.g. resourceType = "memcached", resourceConfig = everything
   # inside the memcached dict in values.yaml)
   {{- $resourceType := . }}
@@ -34,8 +36,11 @@
       {{- if not (hasKey $instanceConfig "eks_cluster_name") }}
         {{- $_ := set $instanceConfig "eks_cluster_name" $global.clusterName }}
       {{ end }}
+      # Set instance tags
       {{- if not (hasKey $instanceConfig "tags") }}
-        {{- $_ := set $instanceConfig "tags" (dict "key" "tags" "value" (printf "{\n  Owner       = \"%s\"\n  Project     = \"%s\"\n  Application = \"%s\"\n}" $global.owner $global.partOf $global.name ) "hcl" true) }}
+       {{- $_ := set $instanceConfig "tags" (dict "key" "tags" "value" ( printf "{\n%s}" (include "mintel_common.terraform_cloud.dict_to_hcl" $defaultTags )) "hcl" true) }}
+      {{- else }}      
+        {{- $_ := set $instanceConfig "tags" (dict "key" "tags" "value" ( printf "{\n%s}" (include "mintel_common.terraform_cloud.dict_to_hcl" (merge $defaultTags $instanceConfig.tags) )) "hcl" true) }}
       {{ end }}
       {{- if not (hasKey $instanceConfig "tfcloud_agent") }}
         {{- $_ := set $instanceConfig "tfcloud_agent" "true" }}
