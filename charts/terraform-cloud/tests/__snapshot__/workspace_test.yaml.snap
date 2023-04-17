@@ -80,6 +80,86 @@ Dev S3 module workspace:
           key: tfcloud_agent
           sensitive: false
           value: "true"
+Dev S3 module workspace - tags:
+  1: |
+    apiVersion: app.terraform.io/v1alpha1
+    kind: Workspace
+    metadata:
+      annotations:
+        app.mintel.com/altManifestFileSuffix: test-sqs-sqs
+        app.mintel.com/terraform-allow-destroy: "true"
+        app.mintel.com/terraform-cloud-tags: env:dev,owner:sre,mod:sqs
+        app.mintel.com/terraform-owner: sre
+        argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+        argocd.argoproj.io/sync-wave: "-40"
+        helm.sh/chart: terraform-cloud-0.36.0
+      labels:
+        app.kubernetes.io/name: test-sqs-sqs
+        app.mintel.com/env: dev
+        app.mintel.com/owner: sre
+        app.mintel.com/region: eu-west-1
+        name: test-sqs-sqs
+      name: dev-eu-west-1-cluster1-test-namespace-test-sqs-sqs
+      namespace: test-namespace
+    spec:
+      agentPoolID: ""
+      module:
+        source: app.terraform.io/Mintel/sqs/aws
+        version: 1.0.0
+      omitNamespacePrefix: true
+      organization: Mintel
+      secretsMountPath: /tmp/secrets
+      sshKeyID: mintel-ssh
+      terraformVersion: 1.0.7
+      variables:
+        - environmentVariable: false
+          hcl: false
+          key: aws_account_name
+          sensitive: false
+          value: dev
+        - environmentVariable: false
+          hcl: false
+          key: aws_region
+          sensitive: false
+          value: eu-west-1
+        - environmentVariable: false
+          hcl: false
+          key: eks_cluster_name
+          sensitive: false
+          value: cluster1
+        - environmentVariable: false
+          hcl: false
+          key: name
+          sensitive: false
+          value: test-sqs
+        - environmentVariable: false
+          hcl: false
+          key: output_secret_name
+          sensitive: false
+          value: test-namespace/test-sqs/sqs
+        - environmentVariable: false
+          hcl: true
+          key: secret_tags
+          sensitive: false
+          value: '{access-project = "test-namespace-ops"}'
+        - environmentVariable: false
+          hcl: true
+          key: tags
+          sensitive: false
+          value: |-
+            {
+              Application = "test-app"
+              ExtraTagOne = "testTagValueOne"
+              ExtraTagTwo = "testTagValueTwo"
+              MintelEventBus = "true"
+              Owner = "sre"
+              Project = "test-project"
+            }
+        - environmentVariable: false
+          hcl: false
+          key: tfcloud_agent
+          sensitive: false
+          value: "true"
 Dev S3 module workspace adds correct env override:
   1: |
     apiVersion: app.terraform.io/v1alpha1
@@ -659,7 +739,7 @@ Dev S3 module workspace with multiple instances - tags:
     kind: Workspace
     metadata:
       annotations:
-        app.mintel.com/altManifestFileSuffix: test-sqs-sqs
+        app.mintel.com/altManifestFileSuffix: test-instance-one-sqs
         app.mintel.com/terraform-allow-destroy: "true"
         app.mintel.com/terraform-cloud-tags: env:dev,owner:sre,mod:sqs
         app.mintel.com/terraform-owner: sre
@@ -667,12 +747,12 @@ Dev S3 module workspace with multiple instances - tags:
         argocd.argoproj.io/sync-wave: "-40"
         helm.sh/chart: terraform-cloud-0.36.0
       labels:
-        app.kubernetes.io/name: test-sqs-sqs
+        app.kubernetes.io/name: test-instance-one-sqs
         app.mintel.com/env: dev
         app.mintel.com/owner: sre
         app.mintel.com/region: eu-west-1
-        name: test-sqs-sqs
-      name: dev-eu-west-1-cluster1-test-namespace-test-sqs-sqs
+        name: test-instance-one-sqs
+      name: dev-eu-west-1-cluster1-test-namespace-test-instance-one-sqs
       namespace: test-namespace
     spec:
       agentPoolID: ""
@@ -704,12 +784,12 @@ Dev S3 module workspace with multiple instances - tags:
           hcl: false
           key: name
           sensitive: false
-          value: test-sqs
+          value: test-instance-one
         - environmentVariable: false
           hcl: false
           key: output_secret_name
           sensitive: false
-          value: test-namespace/test-sqs/sqs
+          value: test-namespace/test-instance-one/sqs
         - environmentVariable: false
           hcl: true
           key: secret_tags
@@ -722,8 +802,87 @@ Dev S3 module workspace with multiple instances - tags:
           value: |-
             {
               Application = "test-app"
-              ExtraTagTest = "testTagValue"
-              ExtraTagTest2 = "testTagValue2"
+              ExtraTagOne = "testTagValueOne"
+              MintelEventBus = "true"
+              Owner = "sre"
+              Project = "test-project"
+            }
+        - environmentVariable: false
+          hcl: false
+          key: tfcloud_agent
+          sensitive: false
+          value: "true"
+  2: |
+    apiVersion: app.terraform.io/v1alpha1
+    kind: Workspace
+    metadata:
+      annotations:
+        app.mintel.com/altManifestFileSuffix: test-instance-two-sqs
+        app.mintel.com/terraform-allow-destroy: "true"
+        app.mintel.com/terraform-cloud-tags: env:dev,owner:sre,mod:sqs
+        app.mintel.com/terraform-owner: sre
+        argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+        argocd.argoproj.io/sync-wave: "-40"
+        helm.sh/chart: terraform-cloud-0.36.0
+      labels:
+        app.kubernetes.io/name: test-instance-two-sqs
+        app.mintel.com/env: dev
+        app.mintel.com/owner: sre
+        app.mintel.com/region: eu-west-1
+        name: test-instance-two-sqs
+      name: dev-eu-west-1-cluster1-test-namespace-test-instance-two-sqs
+      namespace: test-namespace
+    spec:
+      agentPoolID: ""
+      module:
+        source: app.terraform.io/Mintel/sqs/aws
+        version: 1.0.0
+      omitNamespacePrefix: true
+      organization: Mintel
+      secretsMountPath: /tmp/secrets
+      sshKeyID: mintel-ssh
+      terraformVersion: 1.0.7
+      variables:
+        - environmentVariable: false
+          hcl: false
+          key: aws_account_name
+          sensitive: false
+          value: dev
+        - environmentVariable: false
+          hcl: false
+          key: aws_region
+          sensitive: false
+          value: eu-west-1
+        - environmentVariable: false
+          hcl: false
+          key: eks_cluster_name
+          sensitive: false
+          value: cluster1
+        - environmentVariable: false
+          hcl: false
+          key: name
+          sensitive: false
+          value: test-instance-two
+        - environmentVariable: false
+          hcl: false
+          key: output_secret_name
+          sensitive: false
+          value: test-namespace/test-instance-two/sqs
+        - environmentVariable: false
+          hcl: true
+          key: secret_tags
+          sensitive: false
+          value: '{access-project = "test-namespace-ops"}'
+        - environmentVariable: false
+          hcl: true
+          key: tags
+          sensitive: false
+          value: |-
+            {
+              Application = "test-app"
+              ExtraTagOne = "testTagValueOne"
+              ExtraTagTwo = "testTagValueTwo"
+              MintelEventBus = "true"
               Owner = "sre"
               Project = "test-project"
             }
