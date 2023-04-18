@@ -43,7 +43,7 @@
       # Set instance tags
       {{- if not (hasKey $instanceConfig "tags") }}
        {{- $_ := set $instanceConfig "tags" (dict "key" "tags" "value" ( printf "{\n%s}" (include "mintel_common.terraform_cloud.dict_to_hcl" $defaultTags )) "hcl" true) }}
-      {{- else }}      
+      {{- else }}
         {{- $_ := set $instanceConfig "tags" (dict "key" "tags" "value" ( printf "{\n%s}" (include "mintel_common.terraform_cloud.dict_to_hcl" (merge $defaultTags $instanceConfig.tags) )) "hcl" true) }}
       {{ end }}
       {{- if not (hasKey $instanceConfig "tfcloud_agent") }}
