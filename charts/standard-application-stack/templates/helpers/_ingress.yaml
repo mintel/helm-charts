@@ -107,7 +107,11 @@ alb.ingress.kubernetes.io/healthy-threshold-count: {{ .alb.healthcheck.healthyTh
 alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
 alb.ingress.kubernetes.io/ssl-redirect: "443"
 alb.ingress.kubernetes.io/success-codes: {{ include "mintel_common.ingress.alb.healthcheck.successCodes" .alb | quote }}
-alb.ingress.kubernetes.io/target-group-attributes: "deregistration_delay.timeout_seconds={{ .alb.deregistrationDelay.timeoutSeconds | default 10 }}"
+{{- $tgAttrs := list }}
+{{- range $k, $v := .alb.targetGroupAttributes -}}
+  {{- $tgAttrs = append $tgAttrs (printf "%s=%s" (toString $k) (toString $v)) }}
+{{- end }}
+alb.ingress.kubernetes.io/target-group-attributes: {{ join "," $tgAttrs | quote }}
 alb.ingress.kubernetes.io/target-type: "ip"
 alb.ingress.kubernetes.io/unhealthy-threshold-count: {{ .alb.healthcheck.unhealthyThresholdCount | default 2 | quote }}
 external-dns.alpha.kubernetes.io/hostname: {{ .defaultHost | quote }}

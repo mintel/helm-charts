@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v5.0.0] - 2023-04-18
+### Changed
+- Replace ALB `deregistrationDelay` to generic `targetGroupAttributes`
+
 ## [v4.3.1] - 2023-04-06
 ### Fixed
 - Chart now properly adds environment variables for memcached instances

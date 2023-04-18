@@ -4,7 +4,7 @@ Check AWS ALB lifecycle rule applied:
     kind: Deployment
     metadata:
       annotations:
-        helm.sh/chart: standard-application-stack-4.3.1
+        helm.sh/chart: standard-application-stack-5.0.0
         secret.reloader.stakater.com/reload: example-app-app
       labels:
         app.kubernetes.io/component: app
@@ -120,7 +120,7 @@ Check AWS ALB lifecycle rules applied with custom delay:
     kind: Deployment
     metadata:
       annotations:
-        helm.sh/chart: standard-application-stack-4.3.1
+        helm.sh/chart: standard-application-stack-5.0.0
         secret.reloader.stakater.com/reload: example-app-app
       labels:
         app.kubernetes.io/component: app
@@ -236,7 +236,7 @@ Check AWS ALB lifecycle rules are not applied when ALB disabled:
     kind: Deployment
     metadata:
       annotations:
-        helm.sh/chart: standard-application-stack-4.3.1
+        helm.sh/chart: standard-application-stack-5.0.0
         secret.reloader.stakater.com/reload: example-app-app
       labels:
         app.kubernetes.io/component: app
@@ -345,7 +345,7 @@ Check AWS ALB lifecycle rules are not applied when ALB enabled (but Ingress disa
     kind: Deployment
     metadata:
       annotations:
-        helm.sh/chart: standard-application-stack-4.3.1
+        helm.sh/chart: standard-application-stack-5.0.0
         secret.reloader.stakater.com/reload: example-app-app
       labels:
         app.kubernetes.io/component: app
@@ -448,7 +448,7 @@ Check lifecycle rules:
     kind: Deployment
     metadata:
       annotations:
-        helm.sh/chart: standard-application-stack-4.3.1
+        helm.sh/chart: standard-application-stack-5.0.0
         secret.reloader.stakater.com/reload: example-app-app
       labels:
         app.kubernetes.io/component: app
