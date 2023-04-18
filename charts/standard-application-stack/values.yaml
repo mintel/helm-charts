@@ -542,6 +542,7 @@ ingress:
     # -- Target group attributes (see: https://docs.aws.amazon.com/elasticloadbalancing/latest/application/load-balancer-target-groups.html#target-group-attributes)
     targetGroupAttributes:
       "deregistration_delay.timeout_seconds": 5
+      "load_balancing.algorithm.type": least_outstanding_requests
 
     # -- Enable and configure authentication using okta
     # aws-load-balancer-controller must be installed on the cluster for Okta integration to work
@@ -1176,6 +1177,7 @@ opensearch:
         # -- Target group attributes (see: https://docs.aws.amazon.com/elasticloadbalancing/latest/application/load-balancer-target-groups.html#target-group-attributes)
         targetGroupAttributes:
           "deregistration_delay.timeout_seconds": 5
+          "load_balancing.algorithm.type": least_outstanding_requests
 
         # -- Enable and configure authentication using okta
         # aws-load-balancer-controller must be installed on the cluster for Okta integration to work

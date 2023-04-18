@@ -15,7 +15,7 @@ Check ALB HTTP2 default settings:
         alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
         alb.ingress.kubernetes.io/ssl-redirect: "443"
         alb.ingress.kubernetes.io/success-codes: "200"
-        alb.ingress.kubernetes.io/target-group-attributes: deregistration_delay.timeout_seconds=5
+        alb.ingress.kubernetes.io/target-group-attributes: deregistration_delay.timeout_seconds=5,load_balancing.algorithm.type=least_outstanding_requests
         alb.ingress.kubernetes.io/target-type: ip
         alb.ingress.kubernetes.io/unhealthy-threshold-count: "2"
         external-dns.alpha.kubernetes.io/hostname: null
@@ -61,7 +61,7 @@ Check ALB className set by default:
         alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
         alb.ingress.kubernetes.io/ssl-redirect: "443"
         alb.ingress.kubernetes.io/success-codes: "200"
-        alb.ingress.kubernetes.io/target-group-attributes: deregistration_delay.timeout_seconds=5
+        alb.ingress.kubernetes.io/target-group-attributes: deregistration_delay.timeout_seconds=5,load_balancing.algorithm.type=least_outstanding_requests
         alb.ingress.kubernetes.io/target-type: ip
         alb.ingress.kubernetes.io/unhealthy-threshold-count: "2"
         external-dns.alpha.kubernetes.io/hostname: null
@@ -107,7 +107,7 @@ Check ALB custom health-check port:
         alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
         alb.ingress.kubernetes.io/ssl-redirect: "443"
         alb.ingress.kubernetes.io/success-codes: "200"
-        alb.ingress.kubernetes.io/target-group-attributes: deregistration_delay.timeout_seconds=5
+        alb.ingress.kubernetes.io/target-group-attributes: deregistration_delay.timeout_seconds=5,load_balancing.algorithm.type=least_outstanding_requests
         alb.ingress.kubernetes.io/target-type: ip
         alb.ingress.kubernetes.io/unhealthy-threshold-count: "2"
         external-dns.alpha.kubernetes.io/hostname: null
@@ -153,7 +153,7 @@ Check ALB default health-check port:
         alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
         alb.ingress.kubernetes.io/ssl-redirect: "443"
         alb.ingress.kubernetes.io/success-codes: "200"
-        alb.ingress.kubernetes.io/target-group-attributes: deregistration_delay.timeout_seconds=5
+        alb.ingress.kubernetes.io/target-group-attributes: deregistration_delay.timeout_seconds=5,load_balancing.algorithm.type=least_outstanding_requests
         alb.ingress.kubernetes.io/target-type: ip
         alb.ingress.kubernetes.io/unhealthy-threshold-count: "2"
         external-dns.alpha.kubernetes.io/hostname: null
@@ -199,7 +199,7 @@ Check ALB gRPC custom settings:
         alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
         alb.ingress.kubernetes.io/ssl-redirect: "443"
         alb.ingress.kubernetes.io/success-codes: "0"
-        alb.ingress.kubernetes.io/target-group-attributes: deregistration_delay.timeout_seconds=5
+        alb.ingress.kubernetes.io/target-group-attributes: deregistration_delay.timeout_seconds=5,load_balancing.algorithm.type=least_outstanding_requests
         alb.ingress.kubernetes.io/target-type: ip
         alb.ingress.kubernetes.io/unhealthy-threshold-count: "2"
         external-dns.alpha.kubernetes.io/hostname: null
@@ -245,7 +245,7 @@ Check ALB gRPC default settings:
         alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
         alb.ingress.kubernetes.io/ssl-redirect: "443"
         alb.ingress.kubernetes.io/success-codes: 0,12
-        alb.ingress.kubernetes.io/target-group-attributes: deregistration_delay.timeout_seconds=5
+        alb.ingress.kubernetes.io/target-group-attributes: deregistration_delay.timeout_seconds=5,load_balancing.algorithm.type=least_outstanding_requests
         alb.ingress.kubernetes.io/target-type: ip
         alb.ingress.kubernetes.io/unhealthy-threshold-count: "2"
         external-dns.alpha.kubernetes.io/hostname: null
@@ -291,7 +291,7 @@ Check ALB health-check port with oauthProxy enabled:
         alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
         alb.ingress.kubernetes.io/ssl-redirect: "443"
         alb.ingress.kubernetes.io/success-codes: "200"
-        alb.ingress.kubernetes.io/target-group-attributes: deregistration_delay.timeout_seconds=5
+        alb.ingress.kubernetes.io/target-group-attributes: deregistration_delay.timeout_seconds=5,load_balancing.algorithm.type=least_outstanding_requests
         alb.ingress.kubernetes.io/target-type: ip
         alb.ingress.kubernetes.io/unhealthy-threshold-count: "2"
         external-dns.alpha.kubernetes.io/hostname: null
@@ -487,7 +487,7 @@ Check TLS set if ingressTLSSecrets is not empty:
         alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
         alb.ingress.kubernetes.io/ssl-redirect: "443"
         alb.ingress.kubernetes.io/success-codes: "200"
-        alb.ingress.kubernetes.io/target-group-attributes: deregistration_delay.timeout_seconds=5
+        alb.ingress.kubernetes.io/target-group-attributes: deregistration_delay.timeout_seconds=5,load_balancing.algorithm.type=least_outstanding_requests
         alb.ingress.kubernetes.io/target-type: ip
         alb.ingress.kubernetes.io/unhealthy-threshold-count: "2"
         external-dns.alpha.kubernetes.io/hostname: test-app.example.org
@@ -537,7 +537,7 @@ Check extraHosts:
         alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
         alb.ingress.kubernetes.io/ssl-redirect: "443"
         alb.ingress.kubernetes.io/success-codes: "200"
-        alb.ingress.kubernetes.io/target-group-attributes: deregistration_delay.timeout_seconds=5
+        alb.ingress.kubernetes.io/target-group-attributes: deregistration_delay.timeout_seconds=5,load_balancing.algorithm.type=least_outstanding_requests
         alb.ingress.kubernetes.io/target-type: ip
         alb.ingress.kubernetes.io/unhealthy-threshold-count: "2"
         external-dns.alpha.kubernetes.io/hostname: test.default.com
@@ -593,7 +593,7 @@ Check extraHosts with TLS:
         alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
         alb.ingress.kubernetes.io/ssl-redirect: "443"
         alb.ingress.kubernetes.io/success-codes: "200"
-        alb.ingress.kubernetes.io/target-group-attributes: deregistration_delay.timeout_seconds=5
+        alb.ingress.kubernetes.io/target-group-attributes: deregistration_delay.timeout_seconds=5,load_balancing.algorithm.type=least_outstanding_requests
         alb.ingress.kubernetes.io/target-type: ip
         alb.ingress.kubernetes.io/unhealthy-threshold-count: "2"
         external-dns.alpha.kubernetes.io/hostname: test.default.com
@@ -654,7 +654,7 @@ Check extraHosts with TLS and oauthProxy.ingressHost (different):
         alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
         alb.ingress.kubernetes.io/ssl-redirect: "443"
         alb.ingress.kubernetes.io/success-codes: "200"
-        alb.ingress.kubernetes.io/target-group-attributes: deregistration_delay.timeout_seconds=5
+        alb.ingress.kubernetes.io/target-group-attributes: deregistration_delay.timeout_seconds=5,load_balancing.algorithm.type=least_outstanding_requests
         alb.ingress.kubernetes.io/target-type: ip
         alb.ingress.kubernetes.io/unhealthy-threshold-count: "2"
         external-dns.alpha.kubernetes.io/hostname: test.default.com
@@ -726,7 +726,7 @@ Check extraHosts with TLS and oauthProxy.ingressHost (same as extra host):
         alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
         alb.ingress.kubernetes.io/ssl-redirect: "443"
         alb.ingress.kubernetes.io/success-codes: "200"
-        alb.ingress.kubernetes.io/target-group-attributes: deregistration_delay.timeout_seconds=5
+        alb.ingress.kubernetes.io/target-group-attributes: deregistration_delay.timeout_seconds=5,load_balancing.algorithm.type=least_outstanding_requests
         alb.ingress.kubernetes.io/target-type: ip
         alb.ingress.kubernetes.io/unhealthy-threshold-count: "2"
         external-dns.alpha.kubernetes.io/hostname: test.default.com
@@ -788,7 +788,7 @@ Check extraHosts with oauthProxy.ingressHost (different):
         alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
         alb.ingress.kubernetes.io/ssl-redirect: "443"
         alb.ingress.kubernetes.io/success-codes: "200"
-        alb.ingress.kubernetes.io/target-group-attributes: deregistration_delay.timeout_seconds=5
+        alb.ingress.kubernetes.io/target-group-attributes: deregistration_delay.timeout_seconds=5,load_balancing.algorithm.type=least_outstanding_requests
         alb.ingress.kubernetes.io/target-type: ip
         alb.ingress.kubernetes.io/unhealthy-threshold-count: "2"
         external-dns.alpha.kubernetes.io/hostname: test.default.com
@@ -854,7 +854,7 @@ Check extraHosts with oauthProxy.ingressHost (same as extra host):
         alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
         alb.ingress.kubernetes.io/ssl-redirect: "443"
         alb.ingress.kubernetes.io/success-codes: "200"
-        alb.ingress.kubernetes.io/target-group-attributes: deregistration_delay.timeout_seconds=5
+        alb.ingress.kubernetes.io/target-group-attributes: deregistration_delay.timeout_seconds=5,load_balancing.algorithm.type=least_outstanding_requests
         alb.ingress.kubernetes.io/target-type: ip
         alb.ingress.kubernetes.io/unhealthy-threshold-count: "2"
         external-dns.alpha.kubernetes.io/hostname: test.default.com
@@ -910,7 +910,7 @@ Check ingress name override:
         alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
         alb.ingress.kubernetes.io/ssl-redirect: "443"
         alb.ingress.kubernetes.io/success-codes: "200"
-        alb.ingress.kubernetes.io/target-group-attributes: deregistration_delay.timeout_seconds=5
+        alb.ingress.kubernetes.io/target-group-attributes: deregistration_delay.timeout_seconds=5,load_balancing.algorithm.type=least_outstanding_requests
         alb.ingress.kubernetes.io/target-type: ip
         alb.ingress.kubernetes.io/unhealthy-threshold-count: "2"
         external-dns.alpha.kubernetes.io/hostname: null
@@ -956,7 +956,7 @@ Check ingress name suffix setting:
         alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
         alb.ingress.kubernetes.io/ssl-redirect: "443"
         alb.ingress.kubernetes.io/success-codes: "200"
-        alb.ingress.kubernetes.io/target-group-attributes: deregistration_delay.timeout_seconds=5
+        alb.ingress.kubernetes.io/target-group-attributes: deregistration_delay.timeout_seconds=5,load_balancing.algorithm.type=least_outstanding_requests
         alb.ingress.kubernetes.io/target-type: ip
         alb.ingress.kubernetes.io/unhealthy-threshold-count: "2"
         external-dns.alpha.kubernetes.io/hostname: null
@@ -1002,7 +1002,7 @@ Check no TLS set if ingressTLSSecrets and specificTlsHostsYaml is empty:
         alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
         alb.ingress.kubernetes.io/ssl-redirect: "443"
         alb.ingress.kubernetes.io/success-codes: "200"
-        alb.ingress.kubernetes.io/target-group-attributes: deregistration_delay.timeout_seconds=5
+        alb.ingress.kubernetes.io/target-group-attributes: deregistration_delay.timeout_seconds=5,load_balancing.algorithm.type=least_outstanding_requests
         alb.ingress.kubernetes.io/target-type: ip
         alb.ingress.kubernetes.io/unhealthy-threshold-count: "2"
         external-dns.alpha.kubernetes.io/hostname: test-app.example.org
@@ -1048,7 +1048,7 @@ Default ingress with path based routing:
         alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
         alb.ingress.kubernetes.io/ssl-redirect: "443"
         alb.ingress.kubernetes.io/success-codes: "200"
-        alb.ingress.kubernetes.io/target-group-attributes: deregistration_delay.timeout_seconds=5
+        alb.ingress.kubernetes.io/target-group-attributes: deregistration_delay.timeout_seconds=5,load_balancing.algorithm.type=least_outstanding_requests
         alb.ingress.kubernetes.io/target-type: ip
         alb.ingress.kubernetes.io/unhealthy-threshold-count: "2"
         external-dns.alpha.kubernetes.io/hostname: null
@@ -1101,7 +1101,7 @@ allows extraIngresses to override default values:
         alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
         alb.ingress.kubernetes.io/ssl-redirect: "443"
         alb.ingress.kubernetes.io/success-codes: "200"
-        alb.ingress.kubernetes.io/target-group-attributes: deregistration_delay.timeout_seconds=5
+        alb.ingress.kubernetes.io/target-group-attributes: deregistration_delay.timeout_seconds=5,load_balancing.algorithm.type=least_outstanding_requests
         alb.ingress.kubernetes.io/target-type: ip
         alb.ingress.kubernetes.io/unhealthy-threshold-count: "2"
         external-dns.alpha.kubernetes.io/hostname: media.mintel.com
