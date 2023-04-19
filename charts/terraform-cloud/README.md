@@ -1,6 +1,6 @@
 # terraform-cloud
 
-![Version: 0.37.0](https://img.shields.io/badge/Version-0.37.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.0](https://img.shields.io/badge/AppVersion-2.0.0-informational?style=flat-square)
+![Version: 0.38.0](https://img.shields.io/badge/Version-0.38.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.0](https://img.shields.io/badge/AppVersion-2.0.0-informational?style=flat-square)
 
 A Helm chart for provisioning resources using Terraform Cloud
 
@@ -127,11 +127,11 @@ A Helm chart for provisioning resources using Terraform Cloud
 | sqs.enabled | bool | `false` | Set to true to create an SQS resource |
 | sqs.eventBus | object | `{"enabled":false}` | Set to true to add the MintelEventBus tag |
 | sqs.outputSecret | bool | `true` | Set to true to create an AWS secret manager external secret with outputs |
-| sqs.terraform | object | `{"defaultVars":{},"instances":{},"module":{"source":"app.terraform.io/Mintel/sqs/aws","version":"1.0.0"}}` | Set ArgoCD syncWave for this resource (default -40) syncWave: -40 |
+| sqs.terraform | object | `{"defaultVars":{},"instances":{},"module":{"source":"app.terraform.io/Mintel/sqs/aws","version":"1.1.0"}}` | Set ArgoCD syncWave for this resource (default -40) syncWave: -40 |
 | sqs.terraform.defaultVars | object | `{}` | Vars to be applied to all instances defined below |
 | sqs.terraform.instances | object | `{}` | A map of instance names => variable key/value pairs to be sent to the terraform module. The values in `defaultVars` will be applied to every instance if not explicitly defined here. |
 | sqs.terraform.module.source | string | `"app.terraform.io/Mintel/sqs/aws"` | Registry path of the Terraform module used to create the resource (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/sqs/aws) |
-| sqs.terraform.module.version | string | `"1.0.0"` | Module version |
+| sqs.terraform.module.version | string | `"1.1.0"` | Module version |
 | sshKeyPairSecret.enabled | bool | `false` | Set to true to create AWS secret manager secrets for an SSH key pair |
 | sshKeyPairSecret.terraform | object | `{"defaultVars":{},"instances":{},"module":{"source":"app.terraform.io/Mintel/ssh-keypair-secret/aws","version":"0.0.5"}}` | Set ArgoCD syncWave for this resource (default -40) syncWave: -40 |
 | sshKeyPairSecret.terraform.defaultVars | object | `{}` | Vars to be applied to all instances defined below |
