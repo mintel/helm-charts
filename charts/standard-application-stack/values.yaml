@@ -539,6 +539,10 @@ ingress:
     backendProtocol: HTTP
     # -- Application Protocol Version (HTTP1 / HTTP2 / GRPC)
     backendProtocolVersion: HTTP1
+    # -- Target group attributes (see: https://docs.aws.amazon.com/elasticloadbalancing/latest/application/load-balancer-target-groups.html#target-group-attributes)
+    targetGroupAttributes:
+      "deregistration_delay.timeout_seconds": 5
+      "load_balancing.algorithm.type": least_outstanding_requests
 
     # -- Enable and configure authentication using okta
     # aws-load-balancer-controller must be installed on the cluster for Okta integration to work
@@ -557,9 +561,6 @@ ingress:
       # -- Specifies the behavior if the user is not authenticated.
       #    Possible values are 'authenticate' (defalt value, and used in most cases), 'allow', or 'deny'
       authOnUnauthenticated: 'authenticate'
-
-    deregistrationDelay:
-      timeoutSeconds: 5
 
     preStopDelay:
       # -- Enable an additional delay when the container is shutdown of delaySeconds.
@@ -1173,6 +1174,10 @@ opensearch:
         backendProtocol: HTTP
         # -- Application Protocol Version (HTTP1 / HTTP2 / GRPC)
         backendProtocolVersion: HTTP1
+        # -- Target group attributes (see: https://docs.aws.amazon.com/elasticloadbalancing/latest/application/load-balancer-target-groups.html#target-group-attributes)
+        targetGroupAttributes:
+          "deregistration_delay.timeout_seconds": 5
+          "load_balancing.algorithm.type": least_outstanding_requests
 
         # -- Enable and configure authentication using okta
         # aws-load-balancer-controller must be installed on the cluster for Okta integration to work
@@ -1191,9 +1196,6 @@ opensearch:
           # -- Specifies the behavior if the user is not authenticated.
           #    Possible values are 'authenticate' (defalt value, and used in most cases), 'allow', or 'deny'
           authOnUnauthenticated: 'authenticate'
-
-        deregistrationDelay:
-          timeoutSeconds: 5
 
         preStopDelay:
           # -- Enable an additional delay when the container is shutdown of delaySeconds.

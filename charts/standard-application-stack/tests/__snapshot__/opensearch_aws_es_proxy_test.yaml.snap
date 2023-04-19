@@ -15,7 +15,7 @@ Check awsEsProxy Ingress is created if enabled:
         alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
         alb.ingress.kubernetes.io/ssl-redirect: "443"
         alb.ingress.kubernetes.io/success-codes: "200"
-        alb.ingress.kubernetes.io/target-group-attributes: deregistration_delay.timeout_seconds=5
+        alb.ingress.kubernetes.io/target-group-attributes: deregistration_delay.timeout_seconds=5,load_balancing.algorithm.type=least_outstanding_requests
         alb.ingress.kubernetes.io/target-type: ip
         alb.ingress.kubernetes.io/unhealthy-threshold-count: "2"
         external-dns.alpha.kubernetes.io/hostname: null

@@ -96,22 +96,26 @@ ingress.kubernetes.io/config-backend: |
 {{- end }}
 
 {{- define "mintel_common.ingress.alb_annotations" -}}
+alb.ingress.kubernetes.io/backend-protocol-version: {{ include "mintel_common.ingress.alb.backendProtocolVersion" .alb | quote }}
+alb.ingress.kubernetes.io/backend-protocol: {{ include "mintel_common.ingress.alb.backendProtocol" .alb | quote }}
+alb.ingress.kubernetes.io/healthcheck-interval-seconds: {{ .alb.healthcheck.intervalSeconds | default 15 | quote }}
+alb.ingress.kubernetes.io/healthcheck-path: {{ include "mintel_common.ingress.alb.healthcheck.path" .alb | quote }}
+alb.ingress.kubernetes.io/healthcheck-port: {{ include "mintel_common.ingress.alb.healthcheck.port" $ | quote }}
+alb.ingress.kubernetes.io/healthcheck-protocol: {{ include "mintel_common.ingress.alb.healthcheck.protocol" .alb | quote }}
+alb.ingress.kubernetes.io/healthcheck-timeout-seconds: {{ .alb.healthcheck.timeoutSeconds | default 5 | quote }}
+alb.ingress.kubernetes.io/healthy-threshold-count: {{ .alb.healthcheck.healthyThresholdCount | default 2 | quote }}
 alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
 alb.ingress.kubernetes.io/ssl-redirect: "443"
-alb.ingress.kubernetes.io/target-group-attributes: "deregistration_delay.timeout_seconds={{ .alb.deregistrationDelay.timeoutSeconds | default 10 }}"
+alb.ingress.kubernetes.io/success-codes: {{ include "mintel_common.ingress.alb.healthcheck.successCodes" .alb | quote }}
+{{- $tgAttrs := list }}
+{{- range $k, $v := .alb.targetGroupAttributes -}}
+  {{- $tgAttrs = append $tgAttrs (printf "%s=%s" (toString $k) (toString $v)) }}
+{{- end }}
+alb.ingress.kubernetes.io/target-group-attributes: {{ join "," $tgAttrs | quote }}
 alb.ingress.kubernetes.io/target-type: "ip"
+alb.ingress.kubernetes.io/unhealthy-threshold-count: {{ .alb.healthcheck.unhealthyThresholdCount | default 2 | quote }}
+external-dns.alpha.kubernetes.io/hostname: {{ .defaultHost | quote }}
 external-dns.alpha.kubernetes.io/ttl: "60"
-external-dns.alpha.kubernetes.io/hostname: {{ .defaultHost }}
-alb.ingress.kubernetes.io/backend-protocol: {{ include "mintel_common.ingress.alb.backendProtocol" .alb }}
-alb.ingress.kubernetes.io/backend-protocol-version: {{ include "mintel_common.ingress.alb.backendProtocolVersion" .alb }}
-alb.ingress.kubernetes.io/success-codes: "{{ include "mintel_common.ingress.alb.healthcheck.successCodes" .alb }}"
-alb.ingress.kubernetes.io/healthcheck-path: {{ include "mintel_common.ingress.alb.healthcheck.path" .alb }}
-alb.ingress.kubernetes.io/healthcheck-interval-seconds: "{{ .alb.healthcheck.intervalSeconds | default 15 }}"
-alb.ingress.kubernetes.io/healthcheck-port: "{{ include "mintel_common.ingress.alb.healthcheck.port" $ }}"
-alb.ingress.kubernetes.io/healthcheck-protocol: {{ include "mintel_common.ingress.alb.healthcheck.protocol" .alb }}
-alb.ingress.kubernetes.io/healthcheck-timeout-seconds: "{{ .alb.healthcheck.timeoutSeconds | default 5 }}"
-alb.ingress.kubernetes.io/healthy-threshold-count: "{{ .alb.healthcheck.healthyThresholdCount | default 2 }}"
-alb.ingress.kubernetes.io/unhealthy-threshold-count: "{{ .alb.healthcheck.unhealthyThresholdCount | default 2 }}"
 {{- end -}}
 
 {{- define "mintel_common.ingress.ingressPath" -}}
