@@ -35,7 +35,7 @@ Generate the otel pod enivonrment vars
   value: {{ .sampler.arg }}
 {{- end }}
 - name: OTEL_RESOURCE_ATTRIBUTES
-  value: service.name=$(OTEL_SERVICE_NAME),ip=$(OTEL_RESOURCE_ATTRIBUTES_POD_IP)
+  value: service.name=$(OTEL_SERVICE_NAME),ip=$(OTEL_RESOURCE_ATTRIBUTES_POD_IP),container=main
 {{ if .extraEnv }}
 {{ toYaml .extraEnv }}
 {{ end }}

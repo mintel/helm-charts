@@ -44,7 +44,7 @@ tests:
             - name: OTEL_TRACES_SAMPLER
               value: parentbased_always_on
             - name: OTEL_RESOURCE_ATTRIBUTES
-              value: service.name=$(OTEL_SERVICE_NAME),ip=$(OTEL_RESOURCE_ATTRIBUTES_POD_IP)
+              value: service.name=$(OTEL_SERVICE_NAME),ip=$(OTEL_RESOURCE_ATTRIBUTES_POD_IP),container=main
             - name: OTEL_PYTHON_EXCLUDED_URLS
               value: /health[zy]?,/liveness,/ready[z]?,/readiness,/external-health-check,/metrics,/favicon.ico,/static.*
 
@@ -91,7 +91,7 @@ tests:
             - name: OTEL_TRACES_SAMPLER
               value: parentbased_always_on
             - name: OTEL_RESOURCE_ATTRIBUTES
-              value: service.name=$(OTEL_SERVICE_NAME),ip=$(OTEL_RESOURCE_ATTRIBUTES_POD_IP)
+              value: service.name=$(OTEL_SERVICE_NAME),ip=$(OTEL_RESOURCE_ATTRIBUTES_POD_IP),container=main
             - name: otel-global
               value: value
             - name: OTEL_PYTHON_EXCLUDED_URLS
@@ -140,7 +140,7 @@ tests:
             - name: OTEL_TRACES_SAMPLER
               value: parentbased_always_on
             - name: OTEL_RESOURCE_ATTRIBUTES
-              value: service.name=$(OTEL_SERVICE_NAME),ip=$(OTEL_RESOURCE_ATTRIBUTES_POD_IP)
+              value: service.name=$(OTEL_SERVICE_NAME),ip=$(OTEL_RESOURCE_ATTRIBUTES_POD_IP),container=main
             - name: python-specific
               value: value
             - name: OTEL_PYTHON_EXCLUDED_URLS
@@ -190,6 +190,6 @@ tests:
             - name: OTEL_TRACES_SAMPLER_ARG
               value: 0.001
             - name: OTEL_RESOURCE_ATTRIBUTES
-              value: service.name=$(OTEL_SERVICE_NAME),ip=$(OTEL_RESOURCE_ATTRIBUTES_POD_IP)
+              value: service.name=$(OTEL_SERVICE_NAME),ip=$(OTEL_RESOURCE_ATTRIBUTES_POD_IP),container=main
             - name: OTEL_PYTHON_EXCLUDED_URLS
               value: /health[zy]?,/liveness,/ready[z]?,/readiness,/external-health-check,/metrics,/favicon.ico,/static.*
