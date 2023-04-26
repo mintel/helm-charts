@@ -20,6 +20,10 @@ spec:
   schedule: {{ quote .schedule }}
   jobTemplate:
     spec:
+      {{- $ttl := (.ttlSecondsAfterFinished | default $.Values.cronjobs.defaults.ttlSecondsAfterFinished) | int }}
+      {{- if (gt $ttl 0) }}
+      ttlSecondsAfterFinished: {{ $ttl}}
+      {{- end }}
       template:
         metadata:
           labels: {{ include "mintel_common.labels" $data | nindent 12 }}

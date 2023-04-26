@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v5.2.0] - 2023-04-26
+### Changed
+- Added `ttlSecondsAfterFinished` to cleanup old Jobs (ttl defaults to 60 seconds)
+
 ## [v5.1.0] - 2023-04-24
 ### Changed
 - Update `OTEL_RESOURCE_ATTRIBUTES` to set container name on main deployment
