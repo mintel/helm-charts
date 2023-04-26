@@ -34,6 +34,9 @@ tests:
       - equal:
           path: spec.template.spec.containers[0].image
           value: registry.example.com/test/image/repo:v0.1.0
+      - equal:
+          path: spec.ttlSecondsAfterFinished
+          value: 60
   - it: Check all .job.* values can be set correctly, without overriding from main deployment
     set:
       global.clusterEnv: qa
@@ -48,6 +51,7 @@ tests:
             hookDeletePolicy: HookSucceeded
             syncWave: '-1'
           restartPolicy: OnFailure
+          ttlSecondsAfterFinished: 120
           image: registry.example.com/another/image/repo:anotherTag
           command:
             - echo
@@ -135,6 +139,9 @@ tests:
             requests:
               cpu: 1000m
               memory: 2Gi
+      - equal:
+          path: spec.ttlSecondsAfterFinished
+          value: 120
   - it: Check all overrides/additions from main deployment work if enabled
     set:
       global.clusterEnv: qa
@@ -154,6 +161,7 @@ tests:
           includeBaseEnv: true
           includeAppSecret: true
           includeBasePodSecurityContext: true
+          ttlSecondsAfterFinished: 120
           env:
             - name: TEST_VAR_3
               value: baz
@@ -203,3 +211,6 @@ tests:
       - equal:
           path: spec.template.spec.securityContext.runAsUser
           value: 1000
+      - equal:
+          path: spec.ttlSecondsAfterFinished
+          value: 120

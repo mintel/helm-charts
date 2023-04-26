@@ -874,15 +874,21 @@ cronjobsOnly: false
 cronjobs:
   # -- Defaults for all CronJob's
   defaults:
-    # -- Tells controller to suspend future executions
-    # ref: https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/cron-job-v1/#CronJobSpec
-    suspend: false
     # -- Tells controller how to handle concurrent executions of a CronJob
     # ref: https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/cron-job-v1/#CronJobSpec
     concurrencyPolicy: Forbid
+
     # -- Configure CronJob pod restart Policy
     # ref: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#restart-policy
     restartPolicy: Never
+
+    # -- Tells controller to suspend future executions
+    # ref: https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/cron-job-v1/#CronJobSpec
+    suspend: false
+
+    # -- If this field is set, ttlSecondsAfterFinished after the Job finishes, it is eligible to be automatically deleted.
+    # ref: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.20/#cronjob-v1beta1-batch
+    ttlSecondsAfterFinished: 60
   # -- List of Cronjob configurations to be defined
   jobs:
     []
@@ -891,6 +897,7 @@ cronjobs:
     #   suspend: false
     #   restartPolicy: Never
     #   schedule: "0 0 * * *"
+    #   ttlSecondsAfterFinished: 60
     #   image: ''
     #   command:
     #     - '/bin/sh'
@@ -932,19 +939,22 @@ jobs:
   #     # The name of the job. Required.
   # - name: ''
   #   argo:
-  #       # Phase ArgoCD should apply the manifest, such as PreSync, Sync, PostSync.
-  #       # See https://argo-cd.readthedocs.io/en/stable/user-guide/resource_hooks/#usage.
+  #     # Phase ArgoCD should apply the manifest, such as PreSync, Sync, PostSync.
+  #     # See https://argo-cd.readthedocs.io/en/stable/user-guide/resource_hooks/#usage.
   #     hook: 'Sync'
-  #       # When to delete the hook in an automated fashion, suck as HookSucceeded, HookFailed, etc.
-  #       # See https://argo-cd.readthedocs.io/en/stable/user-guide/resource_hooks/#hook-deletion-policies.
+  #     # When to delete the hook in an automated fashion, suck as HookSucceeded, HookFailed, etc.
+  #     # See https://argo-cd.readthedocs.io/en/stable/user-guide/resource_hooks/#hook-deletion-policies.
   #     hookDeletePolicy: 'BeforeHookCreation'
-  #       # Order ArgoCD should apply the manifest. Lower values are applied first, and negative values are allowed.
-  #       # See https://argo-cd.readthedocs.io/en/stable/user-guide/sync-waves/.
+  #     # Order ArgoCD should apply the manifest. Lower values are applied first, and negative values are allowed.
+  #     # See https://argo-cd.readthedocs.io/en/stable/user-guide/sync-waves/.
   #     syncWave: '0'
-  #     # Whether the pod should be restarted on failure.
-  #     # See https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#restart-policy.
+  #   # Whether the pod should be restarted on failure.
+  #   # See https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#restart-policy.
   #   restartPolicy: Never
-  #     # Configuration for the job image, command, arguments, environment variables, resources, etc. `resources` is required.
+  #   # If this field is set, ttlSecondsAfterFinished after the Job finishes, it is eligible to be automatically deleted.
+  #   # See https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.20/#cronjob-v1beta1-batch
+  #   ttlSecondsAfterFinished: 60
+  #   # Configuration for the job image, command, arguments, environment variables, resources, etc. `resources` is required.
   #   image: '${.image.registry + "/" + .image.repository + ":" + .image.tag}'
   #   command:
   #     - ''

@@ -1,0 +1,160 @@
+suite: Test Cronjobs
+templates:
+  - cronjobs.yaml
+release:
+  namespace: test-namespace
+tests:
+  - it: Check CronJob Defaults
+    set:
+      global.clusterEnv: qa
+      cronjobsOnly: true
+      cronjobs.jobs:
+        - name: daily
+          image: ""
+          schedule: "0 0 * * *"
+          command: [/bin/sh]
+          args:
+            - "-c"
+            - "/app/docker-entrypoint.sh"
+    asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
+      - isKind:
+          of: CronJob
+      - equal:
+          path: metadata.name
+          value: example-app-daily
+      - equal:
+          path: metadata.namespace
+          value: test-namespace
+      - hasDocuments:
+          count: 1
+      - equal:
+          path: spec.concurrencyPolicy
+          value: Forbid
+      - equal:
+          path: spec.jobTemplate.spec.template.spec.restartPolicy
+          value: Never
+      - equal:
+          path: spec.schedule
+          value: 0 0 * * *
+      - equal:
+          path: spec.suspend
+          value: false
+      - equal:
+          path: spec.jobTemplate.spec.ttlSecondsAfterFinished
+          value: 60
+  - it: Check CronJob Default Overrides
+    set:
+      global.clusterEnv: qa
+      cronjobsOnly: true
+      cronjobs.defaults:
+          concurrencyPolicy: Allow
+          suspend: true
+          restartPolicy: OnFailure
+          ttlSecondsAfterFinished: 120
+      cronjobs.jobs:
+        - name: daily
+          schedule: "0 1 * * *"
+          image: ""
+          command: [/bin/sh]
+          args:
+            - "-c"
+            - "/app/docker-entrypoint.sh"
+    asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
+      - isKind:
+          of: CronJob
+      - equal:
+          path: metadata.name
+          value: example-app-daily
+      - equal:
+          path: metadata.namespace
+          value: test-namespace
+      - hasDocuments:
+          count: 1
+      - equal:
+          path: spec.concurrencyPolicy
+          value: Allow
+      - equal:
+          path: spec.jobTemplate.spec.template.spec.restartPolicy
+          value: OnFailure
+      - equal:
+          path: spec.schedule
+          value: 0 1 * * *
+      - equal:
+          path: spec.suspend
+          value: true
+      - equal:
+          path: spec.jobTemplate.spec.ttlSecondsAfterFinished
+          value: 120
+  - it: Check CronJob Job Overrides
+    set:
+      global.clusterEnv: qa
+      cronjobsOnly: true
+      cronjobs.jobs:
+        - name: daily
+          concurrencyPolicy: Allow
+          suspend: true
+          restartPolicy: OnFailure
+          schedule: "0 1 * * *"
+          ttlSecondsAfterFinished: 120
+          image: ""
+          command: [/bin/sh]
+          args:
+            - "-c"
+            - "/app/docker-entrypoint.sh"
+    asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
+      - isKind:
+          of: CronJob
+      - equal:
+          path: metadata.name
+          value: example-app-daily
+      - equal:
+          path: metadata.namespace
+          value: test-namespace
+      - hasDocuments:
+          count: 1
+      - equal:
+          path: spec.concurrencyPolicy
+          value: Allow
+      - equal:
+          path: spec.jobTemplate.spec.template.spec.restartPolicy
+          value: OnFailure
+      - equal:
+          path: spec.schedule
+          value: 0 1 * * *
+      - equal:
+          path: spec.suspend
+          value: true
+      - equal:
+          path: spec.jobTemplate.spec.ttlSecondsAfterFinished
+          value: 120
+  - it: Check CronJob ttlSecondsAfterFinished zero value
+    set:
+      global.clusterEnv: qa
+      cronjobsOnly: true
+      cronjobs.defaults:
+          ttlSecondsAfterFinished: 0
+      cronjobs.jobs:
+        - name: daily
+          schedule: "0 1 * * *"
+          image: ""
+          command: [/bin/sh]
+          args:
+            - "-c"
+            - "/app/docker-entrypoint.sh"
+    asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
+      - isKind:
+          of: CronJob
+      - equal:
+          path: metadata.name
+          value: example-app-daily
+      - equal:
+          path: metadata.namespace
+          value: test-namespace
+      - hasDocuments:
+          count: 1
+      - isNull:
+          path: spec.jobTemplate.spec.ttlSecondsAfterFinished

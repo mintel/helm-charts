@@ -14,6 +14,10 @@ metadata:
     helm.sh/chart: {{ include "mintel_common.chart" $ }}
   namespace: {{ $.Release.Namespace }}
 spec:
+  {{- $ttl := (.ttlSecondsAfterFinished | default 60) | int }}
+  {{- if (gt $ttl 0) }}
+  ttlSecondsAfterFinished: {{ $ttl}}
+  {{- end }}
   template:
     spec:
       {{- include "mintel_common.imagePullSecrets" $ | nindent 6 }}
