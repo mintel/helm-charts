@@ -7,7 +7,7 @@ Check all .job.* values can be set correctly, without overriding from main deplo
         argocd.argoproj.io/hook: PreSync
         argocd.argoproj.io/hook-delete-policy: HookSucceeded
         argocd.argoproj.io/sync-wave: "-1"
-        helm.sh/chart: standard-application-stack-5.1.0
+        helm.sh/chart: standard-application-stack-5.2.0
       labels:
         app.kubernetes.io/component: testName
         app.kubernetes.io/managed-by: Helm
@@ -59,13 +59,14 @@ Check all .job.* values can be set correctly, without overriding from main deplo
           securityContext:
             runAsUser: 1001
           serviceAccountName: test-app
+      ttlSecondsAfterFinished: 120
 Check all overrides/additions from main deployment work if enabled:
   1: |
     apiVersion: batch/v1
     kind: Job
     metadata:
       annotations:
-        helm.sh/chart: standard-application-stack-5.1.0
+        helm.sh/chart: standard-application-stack-5.2.0
       labels:
         app.kubernetes.io/component: testName
         app.kubernetes.io/managed-by: Helm
@@ -116,13 +117,14 @@ Check all overrides/additions from main deployment work if enabled:
           securityContext:
             runAsUser: 1000
           serviceAccountName: test-app
+      ttlSecondsAfterFinished: 120
 Check default values are correct with minimal configuration:
   1: |
     apiVersion: batch/v1
     kind: Job
     metadata:
       annotations:
-        helm.sh/chart: standard-application-stack-5.1.0
+        helm.sh/chart: standard-application-stack-5.2.0
       labels:
         app.kubernetes.io/component: testName
         app.kubernetes.io/managed-by: Helm
@@ -161,3 +163,4 @@ Check default values are correct with minimal configuration:
             - name: image-pull-docker-hub
           restartPolicy: Never
           serviceAccountName: test-app
+      ttlSecondsAfterFinished: 60
