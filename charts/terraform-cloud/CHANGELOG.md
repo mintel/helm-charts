@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v0.39.1] - 2023-04-27
+### Fixed
+- Update `s3` module to `v1.4.1` for acl fix with additional dependency
+
 ## [v0.39.0] - 2023-04-24
 ### Changed
 - Update `s3` module to `v1.4.0` for acl fix
