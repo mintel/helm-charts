@@ -49,6 +49,28 @@ tests:
       - equal:
           path: spec.ports[0].port
           value: 1234
+      - equal:
+          path: spec.ports[0].targetPort
+          value: 1234
+
+  - it: Check port and targetPort can be set from Service
+    set:
+      global.name: test-app
+      component: exporter
+      port: 1234
+      service:
+        port: 22
+        targetPort: 2222
+    asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
+      - isKind:
+          of: Service
+      - equal:
+          path: spec.ports[0].port
+          value: 22
+      - equal:
+          path: spec.ports[0].targetPort
+          value: 2222
 
   - it: Check extraPorts
     set:

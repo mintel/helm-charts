@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v5.3.0] - 2023-05-2
+### Changed
+- Added `port` and `targetPort` options to `Service` resource
+
 ## [v5.2.0] - 2023-04-26
 ### Changed
 - Added `ttlSecondsAfterFinished` to cleanup old Jobs (ttl defaults to 60 seconds)
