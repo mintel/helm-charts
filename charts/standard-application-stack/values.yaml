@@ -217,6 +217,10 @@ service:
   annotations: {}
   # -- Provide any additional labels which may be required.
   labels: {}
+  # -- The port that will be exposed by this service
+  # targetPort: 8000  # defaults to Values.port
+  # -- Number or name of the port to access on the pods targeted by the service
+  # port: 8000  # defaults to Values.port
 
 # -- ServiceAccount parameters
 # ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/

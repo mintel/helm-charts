@@ -19,8 +19,8 @@ metadata:
 spec:
   ports:
     - name: main-http
-      port: {{ .Values.port }}
-      targetPort: {{ .Values.port }}
+      port: {{ .Values.service.port | default .Values.port }}
+      targetPort: {{ .Values.service.targetPort | default .Values.port }}
       {{- if .Values.nlb.enabled }}
       protocol: TCP
       {{- end }}
