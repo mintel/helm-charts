@@ -1,6 +1,0 @@
-dependencies:
-- name: standard-application-stack
-  repository: https://mintel.github.io/helm-charts
-  version: 3.58.0
-digest: sha256:2cce6d6b3a6bfb325d2dc6be23d92f651e9d621756cdcd9f0f9bd46fa7fea3bb
-generated: "2023-02-06T17:31:47.593725008-06:00"
