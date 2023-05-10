@@ -1,7 +1,7 @@
-Has a pod template that uses the host network:
+Check stateful set is rendered with volumeClaimTemplates:
   1: |
     apiVersion: apps/v1
-    kind: Deployment
+    kind: StatefulSet
     metadata:
       annotations:
         helm.sh/chart: standard-application-stack-5.4.0
@@ -16,17 +16,12 @@ Has a pod template that uses the host network:
       name: test-app
       namespace: test-namespace
     spec:
-      minReadySeconds: 10
       replicas: 2
       selector:
         matchLabels:
           app.kubernetes.io/component: app
           app.kubernetes.io/name: test-app
-      strategy:
-        rollingUpdate:
-          maxSurge: 15%
-          maxUnavailable: 10%
-        type: RollingUpdate
+      serviceName: test-app
       template:
         metadata:
           annotations: null
@@ -85,7 +80,6 @@ Has a pod template that uses the host network:
                   port: http
                   scheme: HTTP
                 periodSeconds: 5
-          hostNetwork: true
           imagePullSecrets:
             - name: image-pull-gitlab
             - name: image-pull-docker-hub
@@ -102,3 +96,14 @@ Has a pod template that uses the host network:
               topologyKey: topology.kubernetes.io/zone
               whenUnsatisfiable: DoNotSchedule
           volumes: null
+      updateStrategy:
+        type: RollingUpdate
+      volumeClaimTemplates:
+        - metadata:
+            name: test-app-vol1
+          spec:
+            accessModes:
+              - ReadWriteOnce
+            resources:
+              requests:
+                storage: 10Mi
