@@ -45,6 +45,24 @@ metadata:
     tier: frontend
     {{- end }}
 spec:
+{{- if .Values.statefulset }}
+  volumeClaimTemplates:
+  {{- if .Values.persistentVolumes }}
+  {{- range .Values.persistentVolumes }}
+  - metadata:
+      name: {{ printf "%s-%s" (include "mintel_common.fullname" $ ) .name }}
+    spec:
+      accessModes:
+      - {{ .mode | default "ReadWriteOnce" }}
+      {{- if .storageClass }}
+      storageClassName: {{ .storageClass }}
+      {{- end }}
+      resources:
+        requests:
+          storage: {{ .size }}
+    {{- end }}
+    {{- end }}
+  {{- end }}
   {{- if (eq .Values.statefulset false) }}
   {{- with .Values.minReadySeconds }}
   minReadySeconds: {{ . }}
@@ -431,11 +449,13 @@ spec:
               name: {{ include "mintel_common.fullname" . }}-git-sync
       {{- end }}
       volumes:
+        {{- if (eq .Values.statefulset false) }}
         {{- if .Values.persistentVolumes }}
         {{- range .Values.persistentVolumes }}
         - name: {{ printf "%s-%s" (include "mintel_common.fullname" $ ) .name }}
           persistentVolumeClaim:
             claimName: {{ printf "%s-%s" (include "mintel_common.fullname" $ ) .name }}
+        {{- end }}
         {{- end }}
         {{- end }}
         {{- with .Values.volumes }}

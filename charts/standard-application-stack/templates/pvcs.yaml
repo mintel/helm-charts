@@ -1,3 +1,6 @@
+{{- if .Values.statefulset }}
+---
+{{- else }}
 {{- range .Values.persistentVolumes }}
 {{- $pvcData := dict "Release" $.Release "Chart" $.Chart "Values" $.Values "component" .name }}
 ---
@@ -14,4 +17,5 @@ spec:
   resources:
     requests:
       storage: {{ .size }}
+{{- end }}
 {{- end }}
