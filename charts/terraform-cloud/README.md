@@ -35,6 +35,12 @@ A Helm chart for provisioning resources using Terraform Cloud
 | auroraPostgresql.terraform.instances | object | `{}` | A map of instance names => variable key/value pairs to be sent to the terraform module. The values in `defaultVars` will be applied to every instance if not explicitly defined here. |
 | auroraPostgresql.terraform.module.source | string | `"app.terraform.io/Mintel/rds-aurora/aws"` | Registry path of the Terraform module used to create the resource (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/rds-aurora/aws) |
 | auroraPostgresql.terraform.module.version | string | `"0.0.3"` | Module version |
+| cmsBackup.enabled | bool | `false` | Set to true to create a Step Function to backup an Alfresco CMS |
+| cmsBackup.terraform | object | `{"defaultVars":{},"instances":{},"module":{"source":"app.terraform.io/Mintel/cms-backup/aws","version":"0.1.0"}}` | Set ArgoCD syncWave for this resource (default -40) syncWave: -40 |
+| cmsBackup.terraform.defaultVars | object | `{}` | Vars to be applied to all instances defined below |
+| cmsBackup.terraform.instances | object | `{}` | A map of instance names => variable key/value pairs to be sent to the terraform module. The values in `defaultVars` will be applied to every instance if not explicitly defined here. |
+| cmsBackup.terraform.module.source | string | `"app.terraform.io/Mintel/cms-backup/aws"` | Registry path of the Terraform module used to create the resource (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/cms-backup/aws) |
+| cmsBackup.terraform.module.version | string | `"0.1.0"` | Module version |
 | dynamodb.enabled | bool | `false` | Set to true to create a DynamoDB instance |
 | dynamodb.outputSecret | bool | `true` | Set to true to create an AWS secret manager external secret with outputs |
 | dynamodb.terraform | object | `{"defaultVars":{},"instances":{},"module":{"source":"app.terraform.io/Mintel/dynamodb/aws","version":"1.0.0"}}` | Set ArgoCD syncWave for this resource (default -40) syncWave: -40 |

@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v0.40.0] - 2023-05-10
+### Added
+- Add `cms-backup` module
+
 ## [v0.39.1] - 2023-04-27
 ### Fixed
 - Update `s3` module to `v1.4.1` for acl fix with additional dependency
