@@ -47,7 +47,6 @@ metadata:
 spec:
 {{- if .Values.statefulset }}
   volumeClaimTemplates:
-  {{- if .Values.persistentVolumes }}
   {{- range .Values.persistentVolumes }}
   - metadata:
       name: {{ printf "%s-%s" (include "mintel_common.fullname" $ ) .name }}
@@ -60,7 +59,6 @@ spec:
       resources:
         requests:
           storage: {{ .size }}
-    {{- end }}
     {{- end }}
   {{- end }}
   {{- if (eq .Values.statefulset false) }}
