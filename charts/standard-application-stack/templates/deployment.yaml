@@ -447,7 +447,7 @@ spec:
               name: {{ include "mintel_common.fullname" . }}-git-sync
       {{- end }}
       volumes:
-        {{- if (eq .Values.statefulset false) }}
+        {{- if not .Values.statefulset }}
         {{- if .Values.persistentVolumes }}
         {{- range .Values.persistentVolumes }}
         - name: {{ printf "%s-%s" (include "mintel_common.fullname" $ ) .name }}
