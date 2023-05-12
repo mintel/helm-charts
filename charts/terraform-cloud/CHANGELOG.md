@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v0.40.1] - 2023-05-12
+### Changed
+- No-op release to trigger chart releaser action which didn't run for v0.40.0 release
+
 ## [v0.40.0] - 2023-05-10
 ### Added
 - Add `cms-backup` module
