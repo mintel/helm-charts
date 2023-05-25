@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v0.41.1] - 2023-05-25
+### Changed
+- Bump api-gateway module to 0.3.2
+
 ## [v0.41.0] - 2023-05-25
 ### Added
 - Added `api-gateway-http` module
