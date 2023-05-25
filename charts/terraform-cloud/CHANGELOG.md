@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v0.41.0] - 2023-05-25
+### Added
+- Added `api-gateway-http` module
+### Changed
+- Alphabetized resources in values.yaml
+
 ## [v0.40.1] - 2023-05-12
 ### Changed
 - No-op release to trigger chart releaser action which didn't run for v0.40.0 release
