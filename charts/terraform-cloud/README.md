@@ -17,11 +17,11 @@ A Helm chart for provisioning resources using Terraform Cloud
 | activeMQ.terraform.module.version | string | `"0.0.2"` | Module version |
 | apiGatewayHttp.enabled | bool | `false` | Set to true to create an AWS API Gateway |
 | apiGatewayHttp.outputSecret | bool | `true` | Set to true to create an AWS secret manager external secret with outputs |
-| apiGatewayHttp.terraform | object | `{"defaultVars":{"workspaceAllowDestroy":false},"instances":{},"module":{"source":"app.terraform.io/Mintel/api-gateway-http/aws","version":"0.3.1"},"terraformVersion":"1.4"}` | Set ArgoCD syncWave for this resource (default -40) syncWave: -40 |
+| apiGatewayHttp.terraform | object | `{"defaultVars":{"workspaceAllowDestroy":false},"instances":{},"module":{"source":"app.terraform.io/Mintel/api-gateway-http/aws","version":"0.3.2"},"terraformVersion":"1.4"}` | Set ArgoCD syncWave for this resource (default -40) syncWave: -40 |
 | apiGatewayHttp.terraform.defaultVars | object | `{"workspaceAllowDestroy":false}` | Vars to be applied to all instances defined below |
 | apiGatewayHttp.terraform.instances | object | `{}` | A map of instance names => variable key/value pairs to be sent to the terraform module. The values in `defaultVars` will be applied to every instance if not explicitly defined here. |
 | apiGatewayHttp.terraform.module.source | string | `"app.terraform.io/Mintel/api-gateway-http/aws"` | Registry path of the Terraform module used to create the resource (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/amazonmq/aws) |
-| apiGatewayHttp.terraform.module.version | string | `"0.3.1"` | Module version |
+| apiGatewayHttp.terraform.module.version | string | `"0.3.2"` | Module version |
 | auroraMySql.enabled | bool | `false` | Set to true to create a MySQL Aurora RDS cluster |
 | auroraMySql.outputSecret | bool | `true` | Set to true to create an AWS secret manager external secret with outputs |
 | auroraMySql.terraform.defaultVars | object | See below | Vars to be applied to all instances defined below |
