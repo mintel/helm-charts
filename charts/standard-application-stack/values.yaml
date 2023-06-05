@@ -531,6 +531,8 @@ ingress:
     enabled: true
     # -- Endpoint for blackboxes to hit
     probePath: /external-health-check
+    # -- Scheme (http/https) for blackboxes to hit
+    probeScheme: http
   # -- Optional ingress Rules Hosts Yaml that doesn't fit standard pattern
   specificRulesHostsYaml: {}
   # -- Optional ingress Tls Hosts Yaml that doesn't fit standard pattern
