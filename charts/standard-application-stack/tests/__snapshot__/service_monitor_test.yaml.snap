@@ -213,7 +213,7 @@ Check combined template defaults:
     kind: Deployment
     metadata:
       annotations:
-        helm.sh/chart: standard-application-stack-5.4.0
+        helm.sh/chart: standard-application-stack-5.5.0
         secret.reloader.stakater.com/reload: test-app-app
       labels:
         app.kubernetes.io/component: app
@@ -318,29 +318,6 @@ Check combined template defaults:
               whenUnsatisfiable: DoNotSchedule
           volumes: null
   2: |
-    apiVersion: v1
-    kind: Service
-    metadata:
-      annotations: null
-      labels:
-        app.kubernetes.io/component: app
-        app.kubernetes.io/managed-by: Helm
-        app.kubernetes.io/name: test-app
-        app.mintel.com/env: prod
-        app.mintel.com/region: ${CLUSTER_REGION}
-        name: test-app
-      name: test-app
-      namespace: test-namespace
-    spec:
-      ports:
-        - name: main-http
-          port: 8000
-          targetPort: 8000
-      selector:
-        app.kubernetes.io/component: app
-        app.kubernetes.io/name: test-app
-      type: ClusterIP
-  3: |
     apiVersion: monitoring.coreos.com/v1
     kind: ServiceMonitor
     metadata:
@@ -384,13 +361,36 @@ Check combined template defaults:
       targetLabels:
         - app.mintel.com/owner
         - app.mintel.com/ignore_alerts
+  3: |
+    apiVersion: v1
+    kind: Service
+    metadata:
+      annotations: null
+      labels:
+        app.kubernetes.io/component: app
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: test-app
+        app.mintel.com/env: prod
+        app.mintel.com/region: ${CLUSTER_REGION}
+        name: test-app
+      name: test-app
+      namespace: test-namespace
+    spec:
+      ports:
+        - name: main-http
+          port: 8000
+          targetPort: 8000
+      selector:
+        app.kubernetes.io/component: app
+        app.kubernetes.io/name: test-app
+      type: ClusterIP
 Check combined template with extra ports and monitors:
   1: |
     apiVersion: apps/v1
     kind: Deployment
     metadata:
       annotations:
-        helm.sh/chart: standard-application-stack-5.4.0
+        helm.sh/chart: standard-application-stack-5.5.0
         secret.reloader.stakater.com/reload: test-app-app
       labels:
         app.kubernetes.io/component: app
@@ -499,35 +499,6 @@ Check combined template with extra ports and monitors:
               whenUnsatisfiable: DoNotSchedule
           volumes: null
   2: |
-    apiVersion: v1
-    kind: Service
-    metadata:
-      annotations: null
-      labels:
-        app.kubernetes.io/component: app
-        app.kubernetes.io/managed-by: Helm
-        app.kubernetes.io/name: test-app
-        app.mintel.com/env: prod
-        app.mintel.com/region: ${CLUSTER_REGION}
-        name: test-app
-      name: test-app
-      namespace: test-namespace
-    spec:
-      ports:
-        - name: main-http
-          port: 8000
-          targetPort: 8000
-        - name: main-metrics-2
-          port: 9002
-          targetPort: 9002
-        - name: main-metrics-3
-          port: 9003
-          targetPort: 9003
-      selector:
-        app.kubernetes.io/component: app
-        app.kubernetes.io/name: test-app
-      type: ClusterIP
-  3: |
     apiVersion: monitoring.coreos.com/v1
     kind: ServiceMonitor
     metadata:
@@ -571,7 +542,7 @@ Check combined template with extra ports and monitors:
       targetLabels:
         - app.mintel.com/owner
         - app.mintel.com/ignore_alerts
-  4: |
+  3: |
     apiVersion: monitoring.coreos.com/v1
     kind: ServiceMonitor
     metadata:
@@ -615,7 +586,7 @@ Check combined template with extra ports and monitors:
       targetLabels:
         - app.mintel.com/owner
         - app.mintel.com/ignore_alerts
-  5: |
+  4: |
     apiVersion: monitoring.coreos.com/v1
     kind: ServiceMonitor
     metadata:
@@ -659,6 +630,35 @@ Check combined template with extra ports and monitors:
       targetLabels:
         - app.mintel.com/owner
         - app.mintel.com/ignore_alerts
+  5: |
+    apiVersion: v1
+    kind: Service
+    metadata:
+      annotations: null
+      labels:
+        app.kubernetes.io/component: app
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: test-app
+        app.mintel.com/env: prod
+        app.mintel.com/region: ${CLUSTER_REGION}
+        name: test-app
+      name: test-app
+      namespace: test-namespace
+    spec:
+      ports:
+        - name: main-http
+          port: 8000
+          targetPort: 8000
+        - name: main-metrics-2
+          port: 9002
+          targetPort: 9002
+        - name: main-metrics-3
+          port: 9003
+          targetPort: 9003
+      selector:
+        app.kubernetes.io/component: app
+        app.kubernetes.io/name: test-app
+      type: ClusterIP
 Check default endpoints:
   1: |
     apiVersion: monitoring.coreos.com/v1

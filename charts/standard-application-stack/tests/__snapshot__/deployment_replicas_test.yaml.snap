@@ -5,7 +5,7 @@ Check allowSingleReplica doesn't alter strategy:
     metadata:
       annotations:
         app.mintel.com/opa-allow-single-replica: "true"
-        helm.sh/chart: standard-application-stack-5.4.0
+        helm.sh/chart: standard-application-stack-5.5.0
         secret.reloader.stakater.com/reload: example-app-app
       labels:
         app.kubernetes.io/component: app
@@ -109,7 +109,7 @@ Check allowSingleReplica set annotations:
     metadata:
       annotations:
         app.mintel.com/opa-allow-single-replica: "true"
-        helm.sh/chart: standard-application-stack-5.4.0
+        helm.sh/chart: standard-application-stack-5.5.0
         secret.reloader.stakater.com/reload: example-app-app
       labels:
         app.kubernetes.io/component: app
@@ -212,7 +212,7 @@ Check replicas unset when autoscaling is enabled:
     kind: Deployment
     metadata:
       annotations:
-        helm.sh/chart: standard-application-stack-5.4.0
+        helm.sh/chart: standard-application-stack-5.5.0
         secret.reloader.stakater.com/reload: example-app-app
       labels:
         app.kubernetes.io/component: app
@@ -315,7 +315,7 @@ Check singleReplicaOnly applied:
     metadata:
       annotations:
         app.mintel.com/opa-allow-single-replica: "true"
-        helm.sh/chart: standard-application-stack-5.4.0
+        helm.sh/chart: standard-application-stack-5.5.0
         secret.reloader.stakater.com/reload: example-app-app
       labels:
         app.kubernetes.io/component: app
@@ -416,7 +416,7 @@ Check singleReplicaOnly ignore replicas value:
     metadata:
       annotations:
         app.mintel.com/opa-allow-single-replica: "true"
-        helm.sh/chart: standard-application-stack-5.4.0
+        helm.sh/chart: standard-application-stack-5.5.0
         secret.reloader.stakater.com/reload: example-app-app
       labels:
         app.kubernetes.io/component: app

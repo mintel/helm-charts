@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v5.5.0] - 2023-06-05
+### Added
+- Added `blackbox.probeScheme` value to standard-application-stack chart
+
 ## [v5.4.0] - 2023-05-10
 ### Changed
 - Updated template to use volume claim templates for stateful sets and normal volumes for deployments
