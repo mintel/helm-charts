@@ -1,6 +1,6 @@
 # terraform-cloud
 
-![Version: 0.41.1](https://img.shields.io/badge/Version-0.41.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.0](https://img.shields.io/badge/AppVersion-2.0.0-informational?style=flat-square)
+![Version: 0.42.0](https://img.shields.io/badge/Version-0.42.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.0](https://img.shields.io/badge/AppVersion-2.0.0-informational?style=flat-square)
 
 A Helm chart for provisioning resources using Terraform Cloud
 
@@ -80,6 +80,12 @@ A Helm chart for provisioning resources using Terraform Cloud
 | irsa.terraform.module.source | string | `"app.terraform.io/Mintel/app-iam/aws"` | Registry path of the Terraform module used to create the resource (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/app-iam/aws) |
 | irsa.terraform.module.version | string | `"2.1.2"` | Module version |
 | irsa.terraform.vars | object | See below | Vars to be applied to all instances defined below |
+| lambda.enabled | bool | `false` | Set to true to create a Lambda function |
+| lambda.terraform | object | `{"defaultVars":null,"instances":{},"module":{"source":"app.terraform.io/Mintel/lambda/aws","version":"0.2.0"},"terraformVersion":"1.4.3"}` | Set ArgoCD syncWave for this resource (default -40) syncWave: -40 |
+| lambda.terraform.defaultVars | string | See below | Vars to be applied to all instances defined below |
+| lambda.terraform.instances | object | `{}` | A map of instance names => variable key/value pairs to be sent to the terraform module. The values in `defaultVars` will be applied to every instance if not explicitly defined here. |
+| lambda.terraform.module.source | string | `"app.terraform.io/Mintel/lambda/aws"` | Registry path of the Terraform module used to create the resource (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/lambda/aws) |
+| lambda.terraform.module.version | string | `"0.2.0"` | Module version |
 | mariadb.enabled | bool | `false` | Set to true to create a MariaDB RDS instance |
 | mariadb.outputSecret | bool | `true` | Set to true to create an AWS secret manager external secret with outputs |
 | mariadb.terraform | object | `{"defaultVars":{"engine":"mariadb","engine_version":"10.5","port":3306},"instances":{},"module":{"source":"app.terraform.io/Mintel/rds/aws","version":"1.1.0"}}` | Set ArgoCD syncWave for this resource (default -40) syncWave: -40 |

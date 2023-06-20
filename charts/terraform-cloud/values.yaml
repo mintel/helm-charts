@@ -60,15 +60,13 @@ activeMQ:
     # -- Vars to be applied to all instances defined below
     defaultVars:
       {}
-      ### Set to override the generated workspace name for example if the generated name is above the char limit
+      ### Override the generated workspace name, for example if the generated name is above the char limit
       # workspaceNameOverride: string
-      ### Comma separated list of tags to add to workspace. Set to override the defaults which are:
-      ### the environment, the AWS region, the cluster name, the namespace, the resource type and the owner
+      ### Comma-separated list of tags to add to workspace. Default: "env:<environment>,owner:<owner>,mod:<module>"
       # workspaceTags: string
-      ### Boolean which when set to true disables destroy runs on the workspace and vice-versa. It serves as a form of
-      ### deletion protection. It defaults to false in prod and logs and true elsewhere
+      ### Set to true allows destroy runs on the workspace. Default: false in prod/logs, true in non-prod
       # workspaceAllowDestroy: bool
-      ### Used to map to the Terraform Cloud team(s) to give access to the workspace. Defaults to the global.owner value
+      ### Determines team ownership of the workspace. Default: Values.global.owner
       # workspaceOwner: string
       ### Use to map keys from AWS secret manager secrets to new key names. Map values should be in the form <new key>:<module secret key>
       # outputSecretMap: {}
@@ -99,12 +97,11 @@ apiGatewayHttp:
       ### Boolean which when set to true disables destroy runs on the workspace and vice-versa. It serves as a form of
       ### deletion protection. It defaults to false in prod and logs and true elsewhere
       workspaceAllowDestroy: false
-      ### Set to override the generated workspace name for example if the generated name is above the char limit
+      ### Override the generated workspace name, for example if the generated name is above the char limit
       # workspaceNameOverride: string
-      ### Comma separated list of tags to add to workspace. Set to override the defaults which are:
-      ### the environment, the AWS region, the cluster name, the namespace, the resource type and the owner
+      ### Comma-separated list of tags to add to workspace. Default: "env:<environment>,owner:<owner>,mod:<module>"
       # workspaceTags: string
-      ### Used to map to the Terraform Cloud team(s) to give access to the workspace. Defaults to the global.owner value
+      ### Determines team ownership of the workspace. Default: Values.global.owner
       # workspaceOwner: string
       ### Use to map keys from AWS secret manager secrets to new key names. Map values should be in the form <new key>:<module secret key>
       # outputSecretMap: {}
@@ -137,15 +134,13 @@ auroraMySql:
       engine_version: "5.7.mysql_aurora.2.10.2"
       # -- Aurora MySQL port
       port: 3306
-      ### Set to override the generated workspace name for example if the generated name is above the char limit
+      ### Override the generated workspace name, for example if the generated name is above the char limit
       # workspaceNameOverride: string
-      ### Comma separated list of tags to add to workspace. Set to override the defaults which are:
-      ### the environment, the AWS region, the cluster name, the namespace, the resource type and the owner
+      ### Comma-separated list of tags to add to workspace. Default: "env:<environment>,owner:<owner>,mod:<module>"
       # workspaceTags: string
-      ### Boolean which when set to true disables destroy runs on the workspace and vice-versa. It serves as a form of
-      ### deletion protection. It defaults to false in prod and logs and true elsewhere
+      ### Set to true allows destroy runs on the workspace. Default: false in prod/logs, true in non-prod
       # workspaceAllowDestroy: bool
-      ### Used to map to the Terraform Cloud team(s) to give access to the workspace. Defaults to the global.owner value
+      ### Determines team ownership of the workspace. Default: Values.global.owner
       # workspaceOwner: string
       ### Use to map keys from AWS secret manager secrets to new key names. Map values should be in the form <new key>:<module secret key>
       # outputSecretMap: {}
@@ -186,15 +181,13 @@ auroraPostgresql:
       port: 5432
       # -- Instance type
       instance_class: "db.t3.medium"
-      ### Set to override the generated workspace name for example if the generated name is above the char limit
+      ### Override the generated workspace name, for example if the generated name is above the char limit
       # workspaceNameOverride: string
-      ### Comma separated list of tags to add to workspace. Set to override the defaults which are:
-      ### the environment, the AWS region, the cluster name, the namespace, the resource type and the owner
+      ### Comma-separated list of tags to add to workspace. Default: "env:<environment>,owner:<owner>,mod:<module>"
       # workspaceTags: string
-      ### Boolean which when set to true disables destroy runs on the workspace and vice-versa. It serves as a form of
-      ### deletion protection. It defaults to false in prod and logs and true elsewhere
+      ### Set to true allows destroy runs on the workspace. Default: false in prod/logs, true in non-prod
       # workspaceAllowDestroy: bool
-      ### Used to map to the Terraform Cloud team(s) to give access to the workspace. Defaults to the global.owner value
+      ### Determines team ownership of the workspace. Default: Values.global.owner
       # workspaceOwner: string
       ### Use to map keys from AWS secret manager secrets to new key names. Map values should be in the form <new key>:<module secret key>
       # outputSecretMap: {}
@@ -224,15 +217,13 @@ cmsBackup:
     # -- Vars to be applied to all instances defined below
     defaultVars:
       {}
-      ### Set to override the generated workspace name for example if the generated name is above the char limit
+      ### Override the generated workspace name, for example if the generated name is above the char limit
       # workspaceNameOverride: string
-      ### Comma separated list of tags to add to workspace. Set to override the defaults which are:
-      ### the environment, the AWS region, the cluster name, the namespace, the resource type and the owner
+      ### Comma-separated list of tags to add to workspace. Default: "env:<environment>,owner:<owner>,mod:<module>"
       # workspaceTags: string
-      ### Boolean which when set to true disables destroy runs on the workspace and vice-versa. It serves as a form of
-      ### deletion protection. It defaults to false in prod and logs and true elsewhere
+      ### Set to true allows destroy runs on the workspace. Default: false in prod/logs, true in non-prod
       # workspaceAllowDestroy: bool
-      ### Used to map to the Terraform Cloud team(s) to give access to the workspace. Defaults to the global.owner value
+      ### Determines team ownership of the workspace. Default: Values.global.owner
       # workspaceOwner: string
       ### Use to map keys from AWS secret manager secrets to new key names. Map values should be in the form <new key>:<module secret key>
       # outputSecretMap: {}
@@ -259,15 +250,13 @@ dynamodb:
     # -- Vars to be applied to all instances defined below
     defaultVars:
       {}
-      ### Set to override the generated workspace name for example if the generated name is above the char limit
+      ### Override the generated workspace name, for example if the generated name is above the char limit
       # workspaceNameOverride: string
-      ### Comma separated list of tags to add to workspace. Set to override the defaults which are:
-      ### the environment, the AWS region, the cluster name, the namespace, the resource type and the owner
+      ### Comma-separated list of tags to add to workspace. Default: "env:<environment>,owner:<owner>,mod:<module>"
       # workspaceTags: string
-      ### Boolean which when set to true disables destroy runs on the workspace and vice-versa. It serves as a form of
-      ### deletion protection. It defaults to false in prod and logs and true elsewhere
+      ### Set to true allows destroy runs on the workspace. Default: false in prod/logs, true in non-prod
       # workspaceAllowDestroy: bool
-      ### Used to map to the Terraform Cloud team(s) to give access to the workspace. Defaults to the global.owner value
+      ### Determines team ownership of the workspace. Default: Values.global.owner
       # workspaceOwner: string
       ### Use to map keys from AWS secret manager secrets to new key names. Map values should be in the form <new key>:<module secret key>
       # outputSecretMap: {}
@@ -301,15 +290,13 @@ extraIAM:
     # -- Vars to be applied to all instances defined below
     defaultVars:
       {}
-      ### Set to override the generated workspace name for example if the generated name is above the char limit
+      ### Override the generated workspace name, for example if the generated name is above the char limit
       # workspaceNameOverride: string
-      ### Comma separated list of tags to add to workspace. Set to override the defaults which are:
-      ### the environment, the AWS region, the cluster name, the namespace, the resource type and the owner
+      ### Comma-separated list of tags to add to workspace. Default: "env:<environment>,owner:<owner>,mod:<module>"
       # workspaceTags: string
-      ### Boolean which when set to true disables destroy runs on the workspace and vice-versa. It serves as a form of
-      ### deletion protection. It defaults to false in prod and logs and true elsewhere
+      ### Set to true allows destroy runs on the workspace. Default: false in prod/logs, true in non-prod
       # workspaceAllowDestroy: bool
-      ### Used to map to the Terraform Cloud team(s) to give access to the workspace. Defaults to the global.owner value
+      ### Determines team ownership of the workspace. Default: Values.global.owner
       # workspaceOwner: string
       ### Use to map keys from AWS secret manager secrets to new key names. Map values should be in the form <new key>:<module secret key>
       # outputSecretMap: {}
@@ -338,16 +325,69 @@ irsa:
     # @default -- See below
     vars:
       {}
-      ### Set to override the generated workspace name for example if the generated name is above the char limit
+      ### Override the generated workspace name, for example if the generated name is above the char limit
       # workspaceNameOverride: string
-      ### Comma separated list of tags to add to workspace. Set to override the defaults which are:
-      ### the environment, the AWS region, the cluster name, the namespace, the resource type and the owner
+      ### Comma-separated list of tags to add to workspace. Default: "env:<environment>,owner:<owner>,mod:<module>"
       # workspaceTags: string
-      ### Boolean which when set to true disables destroy runs on the workspace and vice-versa. It serves as a form of
-      ### deletion protection. It defaults to false in prod and logs and true elsewhere
+      ### Set to true allows destroy runs on the workspace. Default: false in prod/logs, true in non-prod
       # workspaceAllowDestroy: bool
-      ### Used to map to the Terraform Cloud team(s) to give access to the workspace. Defaults to the global.owner value
+      ### Determines team ownership of the workspace. Default: Values.global.owner
       # workspaceOwner: string
+
+lambda:
+  # -- Set to true to create a Lambda function
+  enabled: false
+  # -- Set ArgoCD syncWave for this resource (default -40)
+  # syncWave: -40
+  terraform:
+    terraformVersion: 1.4.3
+    module:
+      # -- Registry path of the Terraform module used to create the resource
+      # (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/lambda/aws)
+      source: app.terraform.io/Mintel/lambda/aws
+      # -- Module version
+      version: 0.2.0
+    # -- Vars to be applied to all instances defined below
+    # @default -- See below
+    defaultVars:
+      ### The image to use for the lambda (e.g.
+      ### 551844124467.dkr.ecr.eu-west-1.amazonaws.com/gitlab/mintel/satoshi/tools/lambda-test)
+      # image_uri: string
+      ### The image entrypoint (typically this is set in the built image but you can override here if required)
+      # entry_point: list(string)
+      ### The image command (typically this is set in the built image but you can override here if required)
+      # command: list(string)
+      ### Environment variables to pass into the lambda function environment
+      # environment_variables: map(string)
+      ### The maximum amount of memory, in MB, your Lambda function will be able to use at runtime. Default: 128
+      # memory_size: number
+      ### Set to true if your Lambda function needs access to the internet. Default: false
+      # should_create_outbound_rule: bool
+      ### The maximum amount of time, in seconds, your Lambda function will be allowed to run. Must be between 1 and 900
+      ### seconds. Default: 3
+      # timeout: number
+      ### The directory inside the container from which your function will be run (typically this is set in the built
+      ### image but you can override here if required)
+      # working_directory: string
+      ### Override the generated workspace name, for example if the generated name is above the char limit
+      # workspaceNameOverride: string
+      ### Comma-separated list of tags to add to workspace. Default: "env:<environment>,owner:<owner>,mod:<module>"
+      # workspaceTags: string
+      ### Set to true allows destroy runs on the workspace. Default: false in prod/logs, true in non-prod
+      # workspaceAllowDestroy: bool
+      ### Determines team ownership of the workspace. Default: Values.global.owner
+      # workspaceOwner: string
+      ### Use to map keys from AWS secret manager secrets to new key names. Map values should be in the form <new key>:<module secret key>
+      # outputSecretMap: {}
+      ### Automatically set to true if prod and false if non-prod. Override this only if you know what you're doing.
+      # multi_az: bool
+      ### Automatically set to 14 in prod, 7 in qa and 0 in dev. Override this only if you know what you're doing.
+      # backup_retention_period: number
+      ### Automatically set to true in prod and qa but false in dev. Override this only if you know what you're doing.
+      # enable_deletion_protection: bool
+    # -- A map of instance names => variable key/value pairs to be sent to the terraform module. The values in
+    # `defaultVars` will be applied to every instance if not explicitly defined here.
+    instances: {}
 
 mariadb:
   # -- Set to true to create a MariaDB RDS instance
@@ -374,15 +414,13 @@ mariadb:
       engine_version: "10.5"
       # -- MariaDB port
       port: 3306
-      ### Set to override the generated workspace name for example if the generated name is above the char limit
+      ### Override the generated workspace name for example if the generated name is above the char limit
       # workspaceNameOverride: string
-      ### Comma separated list of tags to add to workspace. Set to override the defaults which are:
-      ### the environment, the AWS region, the cluster name, the namespace, the resource type and the owner
+      ### Comma-separated list of tags to add to workspace. Default: "env:<environment>,owner:<owner>,mod:<module>"
       # workspaceTags: string
-      ### Boolean which when set to true disables destroy runs on the workspace and vice-versa. It serves as a form of
-      ### deletion protection. It defaults to false in prod and logs and true elsewhere
+      ### Set to true allows destroy runs on the workspace. Default: false in prod/logs, true in non-prod
       # workspaceAllowDestroy: bool
-      ### Used to map to the Terraform Cloud team(s) to give access to the workspace. Defaults to the global.owner value
+      ### Determines team ownership of the workspace. Default: Values.global.owner
       # workspaceOwner: string
       ### Use to map keys from AWS secret manager secrets to new key names. Map values should be in the form <new key>:<module secret key>
       # outputSecretMap: {}
@@ -419,15 +457,13 @@ memcached:
       instance_type: cache.t4g.micro
       # -- Number of nodes to create in the cluster
       num_cache_nodes: 1
-      ### Set to override the generated workspace name for example if the generated name is above the char limit
+      ### Override the generated workspace name, for example if the generated name is above the char limit
       # workspaceNameOverride: string
-      ### Comma separated list of tags to add to workspace. Set to override the defaults which are:
-      ### the environment, the AWS region, the cluster name, the namespace, the resource type and the owner
+      ### Comma-separated list of tags to add to workspace. Default: "env:<environment>,owner:<owner>,mod:<module>"
       # workspaceTags: string
-      ### Boolean which when set to true allows destroy runs on the workspace and vice-versa. It serves as a form of
-      ### deletion protection. It defaults to false in prod and logs
+      ### Set to true allows destroy runs on the workspace. Default: false in prod/logs, true in non-prod
       # workspaceAllowDestroy: bool
-      ### Used to map to the Terraform Cloud team(s) to give access to the workspace. Defaults to the global.owner value
+      ### Determines team ownership of the workspace. Default: Values.global.owner
       # workspaceOwner: string
       ### Use to map keys from AWS secret manager secrets to new key names. Map values should be in the form <new key>:<module secret key>
       # outputSecretMap: {}
@@ -453,15 +489,13 @@ opensearch:
       version: "1.2.1"
     # -- Vars to be applied to all instances defined below
     defaultVars:
-      ### Set to override the generated workspace name for example if the generated name is above the char limit
+      ### Override the generated workspace name, for example if the generated name is above the char limit
       # workspaceNameOverride: string
-      ### Comma separated list of tags to add to workspace. Set to override the defaults which are:
-      ### the environment, the AWS region, the cluster name, the namespace, the resource type and the owner
+      ### Comma-separated list of tags to add to workspace. Default: "env:<environment>,owner:<owner>,mod:<module>"
       # workspaceTags: string
-      ### Boolean which when set to true disables destroy runs on the workspace and vice-versa. It serves as a form of
-      ### deletion protection. It defaults to false in prod and logs and true elsewhere
+      ### Set to true allows destroy runs on the workspace. Default: false in prod/logs, true in non-prod
       # workspaceAllowDestroy: bool
-      ### Used to map to the Terraform Cloud team(s) to give access to the workspace. Defaults to the global.owner value
+      ### Determines team ownership of the workspace. Default: Values.global.owner
       # workspaceOwner: string
       ### Use to map keys from AWS secret manager secrets to new key names. Map values should be in the form <new key>:<module secret key>
       # outputSecretMap: {}
@@ -498,15 +532,13 @@ postgresql:
       engine_version: "13"
       # -- PostgreSQL port
       port: 5432
-      ### Set to override the generated workspace name for example if the generated name is above the char limit
+      ### Override the generated workspace name, for example if the generated name is above the char limit
       # workspaceNameOverride: string
-      ### Comma separated list of tags to add to workspace. Set to override the defaults which are:
-      ### the environment, the AWS region, the cluster name, the namespace, the resource type and the owner
+      ### Comma-separated list of tags to add to workspace. Default: "env:<environment>,owner:<owner>,mod:<module>"
       # workspaceTags: string
-      ### Boolean which when set to true disables destroy runs on the workspace and vice-versa. It serves as a form of
-      ### deletion protection. It defaults to false in prod and logs and true elsewhere
+      ### Set to true allows destroy runs on the workspace. Default: false in prod/logs, true in non-prod
       # workspaceAllowDestroy: bool
-      ### Used to map to the Terraform Cloud team(s) to give access to the workspace. Defaults to the global.owner value
+      ### Determines team ownership of the workspace. Default: Values.global.owner
       # workspaceOwner: string
       ### Use to map keys from AWS secret manager secrets to new key names. Map values should be in the form <new key>:<module secret key>
       # outputSecretMap: {}
@@ -539,15 +571,13 @@ redis:
     # -- Vars to be applied to all instances defined below
     defaultVars:
       {}
-      ### Set to override the generated workspace name for example if the generated name is above the char limit
+      ### Override the generated workspace name, for example if the generated name is above the char limit
       # workspaceNameOverride: string
-      ### Comma separated list of tags to add to workspace. Set to override the defaults which are:
-      ### the environment, the AWS region, the cluster name, the namespace, the resource type and the owner
+      ### Comma-separated list of tags to add to workspace. Default: "env:<environment>,owner:<owner>,mod:<module>"
       # workspaceTags: string
-      ### Boolean which when set to true disables destroy runs on the workspace and vice-versa. It serves as a form of
-      ### deletion protection. It defaults to false in prod and logs and true elsewhere
+      ### Set to true allows destroy runs on the workspace. Default: false in prod/logs, true in non-prod
       # workspaceAllowDestroy: bool
-      ### Used to map to the Terraform Cloud team(s) to give access to the workspace. Defaults to the global.owner value
+      ### Determines team ownership of the workspace. Default: Values.global.owner
       # workspaceOwner: string
       ### Use to map keys from AWS secret manager secrets to new key names. Map values should be in the form <new key>:<module secret key>
       # outputSecretMap: {}
@@ -580,15 +610,13 @@ s3:
     # -- Vars to be applied to all instances defined below
     defaultVars:
       {}
-      ### Set to override the generated workspace name for example if the generated name is above the char limit
+      ### Override the generated workspace name, for example if the generated name is above the char limit
       # workspaceNameOverride: string
-      ### Comma separated list of tags to add to workspace. Set to override the defaults which are:
-      ### the environment, the AWS region, the cluster name, the namespace, the resource type and the owner
+      ### Comma-separated list of tags to add to workspace. Default: "env:<environment>,owner:<owner>,mod:<module>"
       # workspaceTags: string
-      ### Boolean which when set to true disables destroy runs on the workspace and vice-versa. It serves as a form of
-      ### deletion protection. It defaults to false in prod and logs and true elsewhere
+      ### Set to true allows destroy runs on the workspace. Default: false in prod/logs, true in non-prod
       # workspaceAllowDestroy: bool
-      ### Used to map to the Terraform Cloud team(s) to give access to the workspace. Defaults to the global.owner value
+      ### Determines team ownership of the workspace. Default: Values.global.owner
       # workspaceOwner: string
       ### Use to map keys from AWS secret manager secrets to new key names. Map values should be in the form <new key>:<module secret key>
       # outputSecretMap: {}
@@ -620,15 +648,13 @@ sns:
     # -- Vars to be applied to all instances defined below
     defaultVars:
       {}
-      ### Set to override the generated workspace name for example if the generated name is above the char limit
+      ### Override the generated workspace name, for example if the generated name is above the char limit
       # workspaceNameOverride: string
-      ### Comma separated list of tags to add to workspace. Set to override the defaults which are:
-      ### the environment, the AWS region, the cluster name, the namespace, the resource type and the owner
+      ### Comma-separated list of tags to add to workspace. Default: "env:<environment>,owner:<owner>,mod:<module>"
       # workspaceTags: string
-      ### Boolean which when set to true disables destroy runs on the workspace and vice-versa. It serves as a form of
-      ### deletion protection. It defaults to false in prod and logs and true elsewhere
+      ### Set to true allows destroy runs on the workspace. Default: false in prod/logs, true in non-prod
       # workspaceAllowDestroy: bool
-      ### Used to map to the Terraform Cloud team(s) to give access to the workspace. Defaults to the global.owner value
+      ### Determines team ownership of the workspace. Default: Values.global.owner
       # workspaceOwner: string
       ### Use to map keys from AWS secret manager secrets to new key names. Map values should be in the form <new key>:<module secret key>
       # outputSecretMap: {}
@@ -658,15 +684,13 @@ sqs:
     # -- Vars to be applied to all instances defined below
     defaultVars:
       {}
-      ### Set to override the generated workspace name for example if the generated name is above the char limit
+      ### Override the generated workspace name, for example if the generated name is above the char limit
       # workspaceNameOverride: string
-      ### Comma separated list of tags to add to workspace. Set to override the defaults which are:
-      ### the environment, the AWS region, the cluster name, the namespace, the resource type and the owner
+      ### Comma-separated list of tags to add to workspace. Default: "env:<environment>,owner:<owner>,mod:<module>"
       # workspaceTags: string
-      ### Boolean which when set to true disables destroy runs on the workspace and vice-versa. It serves as a form of
-      ### deletion protection. It defaults to false in prod and logs and true elsewhere
+      ### Set to true allows destroy runs on the workspace. Default: false in prod/logs, true in non-prod
       # workspaceAllowDestroy: bool
-      ### Used to map to the Terraform Cloud team(s) to give access to the workspace. Defaults to the global.owner value
+      ### Determines team ownership of the workspace. Default: Values.global.owner
       # workspaceOwner: string
       ### Use to map keys from AWS secret manager secrets to new key names. Map values should be in the form <new key>:<module secret key>
       # outputSecretMap: {}
@@ -693,15 +717,13 @@ staticWebsite:
     # -- Vars to be applied to all instances defined below
     defaultVars:
       {}
-      ### Set to override the generated workspace name for example if the generated name is above the char limit
+      ### Override the generated workspace name, for example if the generated name is above the char limit
       # workspaceNameOverride: string
-      ### Comma separated list of tags to add to workspace. Set to override the defaults which are:
-      ### the environment, the AWS region, the cluster name, the namespace, the resource type and the owner
+      ### Comma-separated list of tags to add to workspace. Default: "env:<environment>,owner:<owner>,mod:<module>"
       # workspaceTags: string
-      ### Boolean which when set to true disables destroy runs on the workspace and vice-versa. It serves as a form of
-      ### deletion protection. It defaults to false in prod and logs and true elsewhere
+      ### Set to true allows destroy runs on the workspace. Default: false in prod/logs, true in non-prod
       # workspaceAllowDestroy: bool
-      ### Used to map to the Terraform Cloud team(s) to give access to the workspace. Defaults to the global.owner value
+      ### Determines team ownership of the workspace. Default: Values.global.owner
       # workspaceOwner: string
       ### Use to map keys from AWS secret manager secrets to new key names. Map values should be in the form <new key>:<module secret key>
       # outputSecretMap: {}
@@ -726,15 +748,13 @@ stepFunctionEks:
     # -- Vars to be applied to all instances defined below
     defaultVars:
       {}
-      ### Set to override the generated workspace name for example if the generated name is above the char limit
+      ### Override the generated workspace name, for example if the generated name is above the char limit
       # workspaceNameOverride: string
-      ### Comma separated list of tags to add to workspace. Set to override the defaults which are:
-      ### the environment, the AWS region, the cluster name, the namespace, the resource type and the owner
+      ### Comma-separated list of tags to add to workspace. Default: "env:<environment>,owner:<owner>,mod:<module>"
       # workspaceTags: string
-      ### Boolean which when set to true disables destroy runs on the workspace and vice-versa. It serves as a form of
-      ### deletion protection. It defaults to false in prod and logs and true elsewhere
+      ### Set to true allows destroy runs on the workspace. Default: false in prod/logs, true in non-prod
       # workspaceAllowDestroy: bool
-      ### Used to map to the Terraform Cloud team(s) to give access to the workspace. Defaults to the global.owner value
+      ### Determines team ownership of the workspace. Default: Values.global.owner
       # workspaceOwner: string
       ### Use to map keys from AWS secret manager secrets to new key names. Map values should be in the form <new key>:<module secret key>
       # outputSecretMap: {}
@@ -758,15 +778,13 @@ sshKeyPairSecret:
     # -- Vars to be applied to all instances defined below
     defaultVars:
       {}
-      ### Set to override the generated workspace name for example if the generated name is above the char limit
+      ### Override the generated workspace name, for example if the generated name is above the char limit
       # workspaceNameOverride: string
-      ### Comma separated list of tags to add to workspace. Set to override the defaults which are:
-      ### the environment, the AWS region, the cluster name, the namespace, the resource type and the owner
+      ### Comma-separated list of tags to add to workspace. Default: "env:<environment>,owner:<owner>,mod:<module>"
       # workspaceTags: string
-      ### Boolean which when set to true disables destroy runs on the workspace and vice-versa. It serves as a form of
-      ### deletion protection. It defaults to false in prod and logs and true elsewhere
+      ### Set to true allows destroy runs on the workspace. Default: false in prod/logs, true in non-prod
       # workspaceAllowDestroy: bool
-      ### Used to map to the Terraform Cloud team(s) to give access to the workspace. Defaults to the global.owner value
+      ### Determines team ownership of the workspace. Default: Values.global.owner
       # workspaceOwner: string
       ### Use to map keys from AWS secret manager secrets to new key names. Map values should be in the form <new key>:<module secret key>
       # outputSecretMap: {}

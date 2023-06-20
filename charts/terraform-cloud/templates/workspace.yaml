@@ -23,6 +23,11 @@
       {{- if ( and ( has $resourceType (list "postgresql" "mariadb" "auroraMySql" "auroraPostgresql") ) ( not ( hasKey $instanceConfig "db_name" ) ) ) }}
         {{- $_ := set $instanceConfig "db_name" ( $instanceConfig.name | snakecase ) }}
       {{- end }}
+      # Add owner to the lambda variables if not defined. This is so that the PrometheusRule alerts created by the
+      # lambda module will have the correct app.mintel.com/owner label.
+      {{- if ( and ( has $resourceType (list "lambda") ) ( not ( hasKey $instanceConfig "owner" ) ) ) }}
+        {{- $_ := set $instanceConfig "owner" ( $global.owner ) }}
+      {{- end }}
       # Set instance.eks_namespace for stepFunctionEks if not provided
       {{- if ( and ( has $resourceType (list "stepFunctionEks" "sshKeyPairSecret") ) ( not ( hasKey $instanceConfig "eks_namespace" ) ) ) }}
         {{- $_ := set $instanceConfig "eks_namespace" $.Release.Namespace }}
@@ -33,7 +38,7 @@
       {{- if not (hasKey $instanceConfig "aws_region") }}
         {{- $_ := set $instanceConfig "aws_region" $global.clusterRegion }}
       {{ end }}
-      {{- if not (hasKey $instanceConfig "eks_cluster_name") }}
+      {{- if and (not (hasKey $instanceConfig "eks_cluster_name")) (not (eq $resourceType "lambda")) }}
         {{- $_ := set $instanceConfig "eks_cluster_name" $global.clusterName }}
       {{ end }}
       # Add MintelEventBus tag to defaults if enabled
