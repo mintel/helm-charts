@@ -60,6 +60,15 @@ entries:
     version: 0.1.0
   basic-config:
   - apiVersion: v2
+    created: "2023-06-28T10:40:32.919098369Z"
+    description: A Helm chart for defining basic k8s configuration res
+    digest: 04d684141361c5f0886aaa07052849fd8023cf15c32f4c2049b69cc0df762584
+    name: basic-config
+    type: application
+    urls:
+    - https://github.com/mintel/helm-charts/releases/download/basic-config-0.3.0/basic-config-0.3.0.tgz
+    version: 0.3.0
+  - apiVersion: v2
     created: "2023-02-28T15:40:28.261004333Z"
     description: A Helm chart for defining basic k8s configuration res
     digest: dfe2c2e5d48281dee0a8a641ec896452e64e304e9033275dfd13193408deffb2
@@ -168,6 +177,70 @@ entries:
     - https://github.com/mintel/helm-charts/releases/download/hybrid-consul-config-crds-0.0.1/hybrid-consul-config-crds-0.0.1.tgz
     version: 0.0.1
   standard-application-stack:
+  - apiVersion: v2
+    created: "2023-06-28T10:40:33.103049851Z"
+    dependencies:
+    - condition: (and redis.enabled (eq global.clusterEnv "local"))
+      name: redis
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - localRedis
+      version: 16.11.2
+    - condition: (and mariadb.enabled (eq global.clusterEnv "local"))
+      name: mariadb
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - localMariadb
+      version: 11.0.10
+    - condition: (and postgresql.enabled (eq global.clusterEnv "local"))
+      name: postgresql
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - localPostgresql
+      version: 11.6.3
+    - condition: (and mailhog.enabled (eq global.clusterEnv "local"))
+      name: mailhog
+      repository: https://codecentric.github.io/helm-charts
+      tags:
+      - localMailhog
+      version: 4.1.0
+    - condition: (and kibana.enabled (eq global.clusterEnv "local"))
+      name: kibana
+      repository: https://helm.elastic.co
+      tags:
+      - localKibana
+      version: 7.5.2
+    - condition: (and elasticsearch.enabled (eq global.clusterEnv "local"))
+      name: elasticsearch
+      repository: https://helm.elastic.co
+      tags:
+      - localElasticsearch
+      version: 7.5.2
+    - condition: (and opensearch.enabled (eq global.clusterEnv "local"))
+      name: opensearch
+      repository: https://opensearch-project.github.io/helm-charts
+      tags:
+      - localOpensearch
+      version: 1.4.2
+    - condition: (and opensearch.enabled (eq global.clusterEnv "local"))
+      name: opensearch-dashboards
+      repository: https://opensearch-project.github.io/helm-charts
+      tags:
+      - localOpensearch
+      version: 1.0.8
+    - condition: (and localstack.enabled (eq global.clusterEnv "local"))
+      name: localstack
+      repository: https://localstack.github.io/helm-charts
+      tags:
+      - localLocalstack
+      version: 0.3.5
+    description: A generic chart to support most common application requirements
+    digest: 625c3e2841bb6076b5c3a5e16356cee2a3b977f0af9ff8ade9ac562ae4452bdb
+    name: standard-application-stack
+    type: application
+    urls:
+    - https://github.com/mintel/helm-charts/releases/download/standard-application-stack-5.7.0/standard-application-stack-5.7.0.tgz
+    version: 5.7.0
   - apiVersion: v2
     created: "2023-06-09T14:29:41.868860206Z"
     dependencies:
@@ -10481,6 +10554,16 @@ entries:
   terraform-cloud:
   - apiVersion: v2
     appVersion: 2.0.0
+    created: "2023-06-28T10:40:33.233687337Z"
+    description: A Helm chart for provisioning resources using Terraform Cloud
+    digest: b8d22430fce8b2dd8cfb51b676dfbc5ffe73a56a6ad368bd3ae5672d6dd8a709
+    name: terraform-cloud
+    type: application
+    urls:
+    - https://github.com/mintel/helm-charts/releases/download/terraform-cloud-0.43.0/terraform-cloud-0.43.0.tgz
+    version: 0.43.0
+  - apiVersion: v2
+    appVersion: 2.0.0
     created: "2023-06-20T09:44:32.271296303Z"
     description: A Helm chart for provisioning resources using Terraform Cloud
     digest: 6d808a118ec442175eb2611c76d90d38abf87ba40f40e162e20de3e680a213b8
@@ -11190,4 +11273,4 @@ entries:
     urls:
     - https://github.com/mintel/helm-charts/releases/download/testchart-0.1.1/testchart-0.1.1.tgz
     version: 0.1.1
-generated: "2023-06-20T09:44:32.271868911Z"
+generated: "2023-06-28T10:40:33.234576455Z"
