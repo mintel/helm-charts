@@ -5,6 +5,7 @@ IRSA created explicitly:
     metadata:
       annotations:
         app.mintel.com/altManifestFileSuffix: test-app-irsa
+        app.mintel.com/placeholder: placeholder
         app.mintel.com/terraform-allow-destroy: "true"
         app.mintel.com/terraform-cloud-tags: env:dev,owner:sre,mod:irsa
         app.mintel.com/terraform-owner: sre
@@ -82,6 +83,7 @@ IRSA created for Dev S3 module workspace:
     metadata:
       annotations:
         app.mintel.com/altManifestFileSuffix: test-app-irsa
+        app.mintel.com/placeholder: placeholder
         app.mintel.com/terraform-allow-destroy: "true"
         app.mintel.com/terraform-cloud-tags: env:dev,owner:sre,mod:irsa
         app.mintel.com/terraform-owner: sre
@@ -160,6 +162,7 @@ IRSA created with default (0) syncWave:
     metadata:
       annotations:
         app.mintel.com/altManifestFileSuffix: test-app-irsa
+        app.mintel.com/placeholder: placeholder
         app.mintel.com/terraform-allow-destroy: "true"
         app.mintel.com/terraform-cloud-tags: env:dev,owner:sre,mod:irsa
         app.mintel.com/terraform-owner: sre
@@ -237,6 +240,7 @@ IRSA created with modified syncWave:
     metadata:
       annotations:
         app.mintel.com/altManifestFileSuffix: test-app-irsa
+        app.mintel.com/placeholder: placeholder
         app.mintel.com/terraform-allow-destroy: "true"
         app.mintel.com/terraform-cloud-tags: env:dev,owner:sre,mod:irsa
         app.mintel.com/terraform-owner: sre

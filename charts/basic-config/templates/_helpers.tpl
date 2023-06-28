@@ -23,6 +23,7 @@ Create chart name and version as used by the chart label.
 
 {{/* Common Annotations */}}
 {{- define "mintel_common.commonAnnotations" -}}
+app.mintel.com/placeholder: placeholder
 {{- end -}}
 
 {{/* Common labels */}}

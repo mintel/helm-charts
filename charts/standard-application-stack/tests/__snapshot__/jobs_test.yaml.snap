@@ -4,6 +4,7 @@ Check all .job.* values can be set correctly, without overriding from main deplo
     kind: Job
     metadata:
       annotations:
+        app.mintel.com/placeholder: placeholder
         argocd.argoproj.io/hook: PreSync
         argocd.argoproj.io/hook-delete-policy: HookSucceeded
         argocd.argoproj.io/sync-wave: "-1"
@@ -64,7 +65,8 @@ Check all overrides/additions from main deployment work if enabled:
     apiVersion: batch/v1
     kind: Job
     metadata:
-      annotations: null
+      annotations:
+        app.mintel.com/placeholder: placeholder
       labels:
         app.kubernetes.io/component: testName
         app.kubernetes.io/managed-by: Helm
@@ -121,7 +123,8 @@ Check default values are correct with minimal configuration:
     apiVersion: batch/v1
     kind: Job
     metadata:
-      annotations: null
+      annotations:
+        app.mintel.com/placeholder: placeholder
       labels:
         app.kubernetes.io/component: testName
         app.kubernetes.io/managed-by: Helm

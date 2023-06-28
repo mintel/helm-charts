@@ -3,7 +3,8 @@ Check Service defaults:
     apiVersion: v1
     kind: Service
     metadata:
-      annotations: null
+      annotations:
+        app.mintel.com/placeholder: placeholder
       labels:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
@@ -28,6 +29,7 @@ Check additional ServiceMonitor resources:
     kind: ServiceMonitor
     metadata:
       annotations:
+        app.mintel.com/placeholder: placeholder
         argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
       labels:
         app.kubernetes.io/component: app
@@ -72,6 +74,7 @@ Check additional ServiceMonitor resources:
     kind: ServiceMonitor
     metadata:
       annotations:
+        app.mintel.com/placeholder: placeholder
         argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
       labels:
         app.kubernetes.io/component: metrics-2
@@ -116,6 +119,7 @@ Check additional ServiceMonitor resources:
     kind: ServiceMonitor
     metadata:
       annotations:
+        app.mintel.com/placeholder: placeholder
         argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
       labels:
         app.kubernetes.io/component: metrics-3
@@ -161,6 +165,7 @@ Check basic-auth:
     kind: ServiceMonitor
     metadata:
       annotations:
+        app.mintel.com/placeholder: placeholder
         argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
       labels:
         app.kubernetes.io/component: app
@@ -213,6 +218,7 @@ Check combined template defaults:
     kind: Deployment
     metadata:
       annotations:
+        app.mintel.com/placeholder: placeholder
         secret.reloader.stakater.com/reload: test-app-app
       labels:
         app.kubernetes.io/component: app
@@ -320,7 +326,8 @@ Check combined template defaults:
     apiVersion: v1
     kind: Service
     metadata:
-      annotations: null
+      annotations:
+        app.mintel.com/placeholder: placeholder
       labels:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
@@ -344,6 +351,7 @@ Check combined template defaults:
     kind: ServiceMonitor
     metadata:
       annotations:
+        app.mintel.com/placeholder: placeholder
         argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
       labels:
         app.kubernetes.io/component: app
@@ -389,6 +397,7 @@ Check combined template with extra ports and monitors:
     kind: Deployment
     metadata:
       annotations:
+        app.mintel.com/placeholder: placeholder
         secret.reloader.stakater.com/reload: test-app-app
       labels:
         app.kubernetes.io/component: app
@@ -500,7 +509,8 @@ Check combined template with extra ports and monitors:
     apiVersion: v1
     kind: Service
     metadata:
-      annotations: null
+      annotations:
+        app.mintel.com/placeholder: placeholder
       labels:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
@@ -530,6 +540,7 @@ Check combined template with extra ports and monitors:
     kind: ServiceMonitor
     metadata:
       annotations:
+        app.mintel.com/placeholder: placeholder
         argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
       labels:
         app.kubernetes.io/component: app
@@ -574,6 +585,7 @@ Check combined template with extra ports and monitors:
     kind: ServiceMonitor
     metadata:
       annotations:
+        app.mintel.com/placeholder: placeholder
         argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
       labels:
         app.kubernetes.io/component: metrics-2
@@ -618,6 +630,7 @@ Check combined template with extra ports and monitors:
     kind: ServiceMonitor
     metadata:
       annotations:
+        app.mintel.com/placeholder: placeholder
         argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
       labels:
         app.kubernetes.io/component: metrics-3
@@ -663,6 +676,7 @@ Check default endpoints:
     kind: ServiceMonitor
     metadata:
       annotations:
+        app.mintel.com/placeholder: placeholder
         argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
       labels:
         app.kubernetes.io/component: app
@@ -708,6 +722,7 @@ Check default targetLabels:
     kind: ServiceMonitor
     metadata:
       annotations:
+        app.mintel.com/placeholder: placeholder
         argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
       labels:
         app.kubernetes.io/component: app
@@ -753,6 +768,7 @@ Check metric overrides:
     kind: ServiceMonitor
     metadata:
       annotations:
+        app.mintel.com/placeholder: placeholder
         argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
       labels:
         app.kubernetes.io/component: app
@@ -798,6 +814,7 @@ Check name, namespace and labels:
     kind: ServiceMonitor
     metadata:
       annotations:
+        app.mintel.com/placeholder: placeholder
         argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
       labels:
         app.kubernetes.io/component: app

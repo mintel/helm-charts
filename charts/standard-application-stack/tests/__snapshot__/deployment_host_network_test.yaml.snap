@@ -4,6 +4,7 @@ Has a pod template that uses the host network:
     kind: Deployment
     metadata:
       annotations:
+        app.mintel.com/placeholder: placeholder
         secret.reloader.stakater.com/reload: test-app-app
       labels:
         app.kubernetes.io/component: app

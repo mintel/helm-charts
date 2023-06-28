@@ -3,7 +3,8 @@ Creates a VerticalPodAutoscaler for a Deployment:
     apiVersion: autoscaling.k8s.io/v1
     kind: VerticalPodAutoscaler
     metadata:
-      annotations: null
+      annotations:
+        app.mintel.com/placeholder: placeholder
       labels:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
@@ -25,7 +26,8 @@ Creates a VerticalPodAutoscaler for a StatefulSet:
     apiVersion: autoscaling.k8s.io/v1
     kind: VerticalPodAutoscaler
     metadata:
-      annotations: null
+      annotations:
+        app.mintel.com/placeholder: placeholder
       labels:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
@@ -47,7 +49,8 @@ Only creates VerticalPodAutoscaler for CronJobs if cronjobsOnly is true:
     apiVersion: autoscaling.k8s.io/v1
     kind: VerticalPodAutoscaler
     metadata:
-      annotations: null
+      annotations:
+        app.mintel.com/placeholder: placeholder
       labels:
         app.kubernetes.io/component: daily
         app.kubernetes.io/managed-by: Helm

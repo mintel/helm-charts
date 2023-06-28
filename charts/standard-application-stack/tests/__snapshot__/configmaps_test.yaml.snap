@@ -4,7 +4,8 @@ Empty configmap:
     data: null
     kind: ConfigMap
     metadata:
-      annotations: null
+      annotations:
+        app.mintel.com/placeholder: placeholder
       labels:
         app.kubernetes.io/component: config
         app.kubernetes.io/managed-by: Helm
@@ -25,7 +26,8 @@ Mixed singleline and  multiline data entries:
       test2: even more test data
     kind: ConfigMap
     metadata:
-      annotations: null
+      annotations:
+        app.mintel.com/placeholder: placeholder
       labels:
         app.kubernetes.io/component: config
         app.kubernetes.io/managed-by: Helm
@@ -45,7 +47,8 @@ Single multiline data entry:
         test data line 3
     kind: ConfigMap
     metadata:
-      annotations: null
+      annotations:
+        app.mintel.com/placeholder: placeholder
       labels:
         app.kubernetes.io/component: config
         app.kubernetes.io/managed-by: Helm
@@ -62,7 +65,8 @@ Single singleline data entry:
       test1: test-data
     kind: ConfigMap
     metadata:
-      annotations: null
+      annotations:
+        app.mintel.com/placeholder: placeholder
       labels:
         app.kubernetes.io/component: config
         app.kubernetes.io/managed-by: Helm
@@ -79,6 +83,7 @@ ensures ArgoCD annotations are populated:
     kind: ConfigMap
     metadata:
       annotations:
+        app.mintel.com/placeholder: placeholder
         argocd.argoproj.io/hook: PreSync
         argocd.argoproj.io/hook-delete-policy: HookSucceeded
         argocd.argoproj.io/sync-wave: "-1"

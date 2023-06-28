@@ -18,6 +18,7 @@ Check awsEsProxy Ingress is created if enabled:
         alb.ingress.kubernetes.io/target-group-attributes: deregistration_delay.timeout_seconds=5,load_balancing.algorithm.type=least_outstanding_requests
         alb.ingress.kubernetes.io/target-type: ip
         alb.ingress.kubernetes.io/unhealthy-threshold-count: "2"
+        app.mintel.com/placeholder: placeholder
         external-dns.alpha.kubernetes.io/hostname: null
         external-dns.alpha.kubernetes.io/ttl: "60"
       labels:
@@ -47,7 +48,8 @@ Check awsEsProxy NetworkPolicy is created if enabled:
     apiVersion: networking.k8s.io/v1
     kind: NetworkPolicy
     metadata:
-      annotations: null
+      annotations:
+        app.mintel.com/placeholder: placeholder
       labels:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
@@ -77,7 +79,8 @@ Check awsEsProxy aws-load-balancer-controller okta role binding is created if en
     apiVersion: rbac.authorization.k8s.io/v1
     kind: RoleBinding
     metadata:
-      annotations: null
+      annotations:
+        app.mintel.com/placeholder: placeholder
       labels:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
@@ -100,7 +103,8 @@ Check awsEsProxy aws-load-balancer-controller okta role is created if enabled:
     apiVersion: rbac.authorization.k8s.io/v1
     kind: Role
     metadata:
-      annotations: null
+      annotations:
+        app.mintel.com/placeholder: placeholder
       labels:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
@@ -128,6 +132,7 @@ Check awsEsProxy deployment is created if enabled:
         app.mintel.com/opa-allow-single-replica: "true"
         app.mintel.com/opa-skip-readiness-probe-check.main: "true"
         app.mintel.com/opa-skip-security-context-check: "true"
+        app.mintel.com/placeholder: placeholder
         secret.reloader.stakater.com/reload: example-app-opensearch
       labels:
         app.kubernetes.io/component: aws-es-proxy
@@ -211,7 +216,8 @@ Check awsEsProxy service is created if enabled:
     apiVersion: v1
     kind: Service
     metadata:
-      annotations: null
+      annotations:
+        app.mintel.com/placeholder: placeholder
       labels:
         app.kubernetes.io/component: aws-es-proxy
         app.kubernetes.io/managed-by: Helm

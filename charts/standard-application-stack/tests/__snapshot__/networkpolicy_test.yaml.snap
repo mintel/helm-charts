@@ -3,7 +3,8 @@ Check ALB NetworkPolicy created if enabled:
     apiVersion: networking.k8s.io/v1
     kind: NetworkPolicy
     metadata:
-      annotations: null
+      annotations:
+        app.mintel.com/placeholder: placeholder
       labels:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
@@ -33,7 +34,8 @@ Check ALB NetworkPolicy created if internal alb selected:
     apiVersion: networking.k8s.io/v1
     kind: NetworkPolicy
     metadata:
-      annotations: null
+      annotations:
+        app.mintel.com/placeholder: placeholder
       labels:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
@@ -63,7 +65,8 @@ Check ALB NetworkPolicy ports are unique:
     apiVersion: networking.k8s.io/v1
     kind: NetworkPolicy
     metadata:
-      annotations: null
+      annotations:
+        app.mintel.com/placeholder: placeholder
       labels:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
@@ -93,7 +96,8 @@ Check ALB NetworkPolicy ports set for default conatiner:
     apiVersion: networking.k8s.io/v1
     kind: NetworkPolicy
     metadata:
-      annotations: null
+      annotations:
+        app.mintel.com/placeholder: placeholder
       labels:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
@@ -123,7 +127,8 @@ Check ALB NetworkPolicy ports set with oauth2proxy:
     apiVersion: networking.k8s.io/v1
     kind: NetworkPolicy
     metadata:
-      annotations: null
+      annotations:
+        app.mintel.com/placeholder: placeholder
       labels:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
@@ -153,7 +158,8 @@ Check ALB NetworkPolicy ports set with oauth2proxy and healthcheck:
     apiVersion: networking.k8s.io/v1
     kind: NetworkPolicy
     metadata:
-      annotations: null
+      annotations:
+        app.mintel.com/placeholder: placeholder
       labels:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
