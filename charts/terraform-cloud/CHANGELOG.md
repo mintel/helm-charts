@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v0.43.0] - 2023-06-28
+### Removed
+- Remove `helm.sh/chart` annotation from all remaining manifests.
+
 ## [v0.42.0] - 2023-06-20
 ## Added
 - Support for creating Lambda functions
