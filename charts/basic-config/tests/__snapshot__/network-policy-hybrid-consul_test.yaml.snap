@@ -4,7 +4,7 @@ Renders hybrid consul network policy:
     kind: NetworkPolicy
     metadata:
       annotations:
-        helm.sh/chart: basic-config-0.2.3
+        app.mintel.com/placeholder: placeholder
       labels:
         app.kubernetes.io/managed-by: Helm
         app.mintel.com/env: local

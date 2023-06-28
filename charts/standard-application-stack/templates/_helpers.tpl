@@ -41,6 +41,7 @@ matchExpressions:
 
 {{/* Common Annotations */}}
 {{- define "mintel_common.commonAnnotations" -}}
+app.mintel.com/placeholder: placeholder
 {{- end -}}
 
 {{/* Set up Argo annotations based on argo values block */}}
