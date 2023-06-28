@@ -5,12 +5,12 @@ IRSA created explicitly:
     metadata:
       annotations:
         app.mintel.com/altManifestFileSuffix: test-app-irsa
+        app.mintel.com/placeholder: placeholder
         app.mintel.com/terraform-allow-destroy: "true"
         app.mintel.com/terraform-cloud-tags: env:dev,owner:sre,mod:irsa
         app.mintel.com/terraform-owner: sre
         argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
         argocd.argoproj.io/sync-wave: "-20"
-        helm.sh/chart: terraform-cloud-0.42.0
       labels:
         app.kubernetes.io/name: test-app-irsa
         app.mintel.com/env: dev
@@ -83,12 +83,12 @@ IRSA created for Dev S3 module workspace:
     metadata:
       annotations:
         app.mintel.com/altManifestFileSuffix: test-app-irsa
+        app.mintel.com/placeholder: placeholder
         app.mintel.com/terraform-allow-destroy: "true"
         app.mintel.com/terraform-cloud-tags: env:dev,owner:sre,mod:irsa
         app.mintel.com/terraform-owner: sre
         argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
         argocd.argoproj.io/sync-wave: "-20"
-        helm.sh/chart: terraform-cloud-0.42.0
       labels:
         app.kubernetes.io/name: test-app-irsa
         app.mintel.com/env: dev
@@ -162,12 +162,12 @@ IRSA created with default (0) syncWave:
     metadata:
       annotations:
         app.mintel.com/altManifestFileSuffix: test-app-irsa
+        app.mintel.com/placeholder: placeholder
         app.mintel.com/terraform-allow-destroy: "true"
         app.mintel.com/terraform-cloud-tags: env:dev,owner:sre,mod:irsa
         app.mintel.com/terraform-owner: sre
         argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
         argocd.argoproj.io/sync-wave: "0"
-        helm.sh/chart: terraform-cloud-0.42.0
       labels:
         app.kubernetes.io/name: test-app-irsa
         app.mintel.com/env: dev
@@ -240,12 +240,12 @@ IRSA created with modified syncWave:
     metadata:
       annotations:
         app.mintel.com/altManifestFileSuffix: test-app-irsa
+        app.mintel.com/placeholder: placeholder
         app.mintel.com/terraform-allow-destroy: "true"
         app.mintel.com/terraform-cloud-tags: env:dev,owner:sre,mod:irsa
         app.mintel.com/terraform-owner: sre
         argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
         argocd.argoproj.io/sync-wave: "-100"
-        helm.sh/chart: terraform-cloud-0.42.0
       labels:
         app.kubernetes.io/name: test-app-irsa
         app.mintel.com/env: dev

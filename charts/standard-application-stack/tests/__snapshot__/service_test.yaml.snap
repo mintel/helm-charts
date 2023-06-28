@@ -5,6 +5,7 @@ Check ALB annotation can be set when enabled:
     metadata:
       annotations:
         alb.ingress.kubernetes.io/tags: Owner=my-team
+        app.mintel.com/placeholder: placeholder
       labels:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
@@ -30,6 +31,7 @@ Check ALB annotation not set when ALB Ingress is disabled:
     kind: Service
     metadata:
       annotations:
+        app.mintel.com/placeholder: placeholder
         k: v
       labels:
         app.kubernetes.io/component: app
@@ -56,6 +58,7 @@ Check ALB annotation not set when when Owner missing:
     kind: Service
     metadata:
       annotations:
+        app.mintel.com/placeholder: placeholder
         k: v
       labels:
         app.kubernetes.io/component: app
@@ -80,7 +83,8 @@ Check default port set:
     apiVersion: v1
     kind: Service
     metadata:
-      annotations: null
+      annotations:
+        app.mintel.com/placeholder: placeholder
       labels:
         app.kubernetes.io/component: exporter
         app.kubernetes.io/managed-by: Helm
@@ -104,7 +108,8 @@ Check extraPorts:
     apiVersion: v1
     kind: Service
     metadata:
-      annotations: null
+      annotations:
+        app.mintel.com/placeholder: placeholder
       labels:
         app.kubernetes.io/component: exporter
         app.kubernetes.io/managed-by: Helm
@@ -140,7 +145,8 @@ Check name, namespace and labels:
     apiVersion: v1
     kind: Service
     metadata:
-      annotations: null
+      annotations:
+        app.mintel.com/placeholder: placeholder
       labels:
         app.kubernetes.io/component: exporter
         app.kubernetes.io/managed-by: Helm
@@ -164,7 +170,8 @@ Check port and targetPort can be set from Service:
     apiVersion: v1
     kind: Service
     metadata:
-      annotations: null
+      annotations:
+        app.mintel.com/placeholder: placeholder
       labels:
         app.kubernetes.io/component: exporter
         app.kubernetes.io/managed-by: Helm
@@ -188,7 +195,8 @@ Check port can be overridden:
     apiVersion: v1
     kind: Service
     metadata:
-      annotations: null
+      annotations:
+        app.mintel.com/placeholder: placeholder
       labels:
         app.kubernetes.io/component: exporter
         app.kubernetes.io/managed-by: Helm

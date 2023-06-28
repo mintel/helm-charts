@@ -3,7 +3,8 @@ Creates a PDB when autoscaling is disabled and autoscaling.minReplicaCount is se
     apiVersion: policy/v1
     kind: PodDisruptionBudget
     metadata:
-      annotations: null
+      annotations:
+        app.mintel.com/placeholder: placeholder
       labels:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
@@ -24,7 +25,8 @@ Creates a PDB when replicas > 1:
     apiVersion: policy/v1
     kind: PodDisruptionBudget
     metadata:
-      annotations: null
+      annotations:
+        app.mintel.com/placeholder: placeholder
       labels:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm

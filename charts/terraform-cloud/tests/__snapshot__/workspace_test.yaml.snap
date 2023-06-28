@@ -5,12 +5,12 @@ Dev S3 module workspace:
     metadata:
       annotations:
         app.mintel.com/altManifestFileSuffix: mntl-test-app-s3
+        app.mintel.com/placeholder: placeholder
         app.mintel.com/terraform-allow-destroy: "true"
         app.mintel.com/terraform-cloud-tags: env:dev,owner:sre,mod:s3
         app.mintel.com/terraform-owner: sre
         argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
         argocd.argoproj.io/sync-wave: "-40"
-        helm.sh/chart: terraform-cloud-0.42.0
       labels:
         app.kubernetes.io/name: mntl-test-app-s3
         app.mintel.com/env: dev
@@ -87,12 +87,12 @@ Dev S3 module workspace - tags:
     metadata:
       annotations:
         app.mintel.com/altManifestFileSuffix: test-sqs-sqs
+        app.mintel.com/placeholder: placeholder
         app.mintel.com/terraform-allow-destroy: "true"
         app.mintel.com/terraform-cloud-tags: env:dev,owner:sre,mod:sqs
         app.mintel.com/terraform-owner: sre
         argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
         argocd.argoproj.io/sync-wave: "-40"
-        helm.sh/chart: terraform-cloud-0.42.0
       labels:
         app.kubernetes.io/name: test-sqs-sqs
         app.mintel.com/env: dev
@@ -167,12 +167,12 @@ Dev S3 module workspace adds correct env override:
     metadata:
       annotations:
         app.mintel.com/altManifestFileSuffix: mntl-test-app-s3
+        app.mintel.com/placeholder: placeholder
         app.mintel.com/terraform-allow-destroy: "true"
         app.mintel.com/terraform-cloud-tags: env:dev,owner:sre,mod:s3
         app.mintel.com/terraform-owner: sre
         argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
         argocd.argoproj.io/sync-wave: "-40"
-        helm.sh/chart: terraform-cloud-0.42.0
       labels:
         app.kubernetes.io/name: mntl-test-app-s3
         app.mintel.com/env: dev
@@ -249,12 +249,12 @@ Dev S3 module workspace name does not repeat mntl-prefix:
     metadata:
       annotations:
         app.mintel.com/altManifestFileSuffix: mntl-test-app-s3
+        app.mintel.com/placeholder: placeholder
         app.mintel.com/terraform-allow-destroy: "true"
         app.mintel.com/terraform-cloud-tags: env:dev,owner:sre,mod:s3
         app.mintel.com/terraform-owner: sre
         argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
         argocd.argoproj.io/sync-wave: "-40"
-        helm.sh/chart: terraform-cloud-0.42.0
       labels:
         app.kubernetes.io/name: mntl-test-app-s3
         app.mintel.com/env: dev
@@ -331,12 +331,12 @@ Dev S3 module workspace name override:
     metadata:
       annotations:
         app.mintel.com/altManifestFileSuffix: mntl-test-app-s3
+        app.mintel.com/placeholder: placeholder
         app.mintel.com/terraform-allow-destroy: "true"
         app.mintel.com/terraform-cloud-tags: env:dev,owner:sre,mod:s3
         app.mintel.com/terraform-owner: sre
         argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
         argocd.argoproj.io/sync-wave: "-40"
-        helm.sh/chart: terraform-cloud-0.42.0
       labels:
         app.kubernetes.io/name: mntl-test-app-s3
         app.mintel.com/env: dev
@@ -413,12 +413,12 @@ Dev S3 module workspace with default (0) syncWave:
     metadata:
       annotations:
         app.mintel.com/altManifestFileSuffix: mntl-test-app-s3
+        app.mintel.com/placeholder: placeholder
         app.mintel.com/terraform-allow-destroy: "true"
         app.mintel.com/terraform-cloud-tags: env:dev,owner:sre,mod:s3
         app.mintel.com/terraform-owner: sre
         argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
         argocd.argoproj.io/sync-wave: "0"
-        helm.sh/chart: terraform-cloud-0.42.0
       labels:
         app.kubernetes.io/name: mntl-test-app-s3
         app.mintel.com/env: dev
@@ -495,12 +495,12 @@ Dev S3 module workspace with modified syncWave:
     metadata:
       annotations:
         app.mintel.com/altManifestFileSuffix: mntl-test-app-s3
+        app.mintel.com/placeholder: placeholder
         app.mintel.com/terraform-allow-destroy: "true"
         app.mintel.com/terraform-cloud-tags: env:dev,owner:sre,mod:s3
         app.mintel.com/terraform-owner: sre
         argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
         argocd.argoproj.io/sync-wave: "200"
-        helm.sh/chart: terraform-cloud-0.42.0
       labels:
         app.kubernetes.io/name: mntl-test-app-s3
         app.mintel.com/env: dev
@@ -577,12 +577,12 @@ Dev S3 module workspace with multiple instances:
     metadata:
       annotations:
         app.mintel.com/altManifestFileSuffix: mntl-test-bucket-s3
+        app.mintel.com/placeholder: placeholder
         app.mintel.com/terraform-allow-destroy: "true"
         app.mintel.com/terraform-cloud-tags: env:dev,owner:sre,mod:s3
         app.mintel.com/terraform-owner: sre
         argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
         argocd.argoproj.io/sync-wave: "-40"
-        helm.sh/chart: terraform-cloud-0.42.0
       labels:
         app.kubernetes.io/name: mntl-test-bucket-s3
         app.mintel.com/env: dev
@@ -658,12 +658,12 @@ Dev S3 module workspace with multiple instances:
     metadata:
       annotations:
         app.mintel.com/altManifestFileSuffix: mntl-test-bucket-another-s3
+        app.mintel.com/placeholder: placeholder
         app.mintel.com/terraform-allow-destroy: "true"
         app.mintel.com/terraform-cloud-tags: env:dev,owner:sre,mod:s3
         app.mintel.com/terraform-owner: sre
         argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
         argocd.argoproj.io/sync-wave: "-40"
-        helm.sh/chart: terraform-cloud-0.42.0
       labels:
         app.kubernetes.io/name: mntl-test-bucket-another-s3
         app.mintel.com/env: dev
@@ -740,12 +740,12 @@ Dev S3 module workspace with multiple instances - tags:
     metadata:
       annotations:
         app.mintel.com/altManifestFileSuffix: test-instance-one-sqs
+        app.mintel.com/placeholder: placeholder
         app.mintel.com/terraform-allow-destroy: "true"
         app.mintel.com/terraform-cloud-tags: env:dev,owner:sre,mod:sqs
         app.mintel.com/terraform-owner: sre
         argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
         argocd.argoproj.io/sync-wave: "-40"
-        helm.sh/chart: terraform-cloud-0.42.0
       labels:
         app.kubernetes.io/name: test-instance-one-sqs
         app.mintel.com/env: dev
@@ -818,12 +818,12 @@ Dev S3 module workspace with multiple instances - tags:
     metadata:
       annotations:
         app.mintel.com/altManifestFileSuffix: test-instance-two-sqs
+        app.mintel.com/placeholder: placeholder
         app.mintel.com/terraform-allow-destroy: "true"
         app.mintel.com/terraform-cloud-tags: env:dev,owner:sre,mod:sqs
         app.mintel.com/terraform-owner: sre
         argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
         argocd.argoproj.io/sync-wave: "-40"
-        helm.sh/chart: terraform-cloud-0.42.0
       labels:
         app.kubernetes.io/name: test-instance-two-sqs
         app.mintel.com/env: dev
@@ -898,12 +898,12 @@ Dev S3 module workspace with multiple instances and syncWave overrides:
     metadata:
       annotations:
         app.mintel.com/altManifestFileSuffix: mntl-test-bucket-s3
+        app.mintel.com/placeholder: placeholder
         app.mintel.com/terraform-allow-destroy: "true"
         app.mintel.com/terraform-cloud-tags: env:dev,owner:sre,mod:s3
         app.mintel.com/terraform-owner: sre
         argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
         argocd.argoproj.io/sync-wave: "200"
-        helm.sh/chart: terraform-cloud-0.42.0
       labels:
         app.kubernetes.io/name: mntl-test-bucket-s3
         app.mintel.com/env: dev
@@ -979,12 +979,12 @@ Dev S3 module workspace with multiple instances and syncWave overrides:
     metadata:
       annotations:
         app.mintel.com/altManifestFileSuffix: mntl-test-bucket-another-s3
+        app.mintel.com/placeholder: placeholder
         app.mintel.com/terraform-allow-destroy: "true"
         app.mintel.com/terraform-cloud-tags: env:dev,owner:sre,mod:s3
         app.mintel.com/terraform-owner: sre
         argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
         argocd.argoproj.io/sync-wave: "300"
-        helm.sh/chart: terraform-cloud-0.42.0
       labels:
         app.kubernetes.io/name: mntl-test-bucket-another-s3
         app.mintel.com/env: dev
@@ -1061,12 +1061,12 @@ Test workspace allow destroy env:
     metadata:
       annotations:
         app.mintel.com/altManifestFileSuffix: mntl-test-app-s3
+        app.mintel.com/placeholder: placeholder
         app.mintel.com/terraform-allow-destroy: "false"
         app.mintel.com/terraform-cloud-tags: env:prod,owner:sre,mod:s3
         app.mintel.com/terraform-owner: sre
         argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
         argocd.argoproj.io/sync-wave: "-40"
-        helm.sh/chart: terraform-cloud-0.42.0
       labels:
         app.kubernetes.io/name: mntl-test-app-s3
         app.mintel.com/env: prod
@@ -1138,12 +1138,12 @@ Test workspace extra annotations:
     metadata:
       annotations:
         app.mintel.com/altManifestFileSuffix: mntl-test-app-s3
+        app.mintel.com/placeholder: placeholder
         app.mintel.com/terraform-allow-destroy: "true"
         app.mintel.com/terraform-cloud-tags: env:dev,owner:sre,mod:s3
         app.mintel.com/terraform-owner: sre
         argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
         argocd.argoproj.io/sync-wave: "-40"
-        helm.sh/chart: terraform-cloud-0.42.0
       labels:
         app.kubernetes.io/name: mntl-test-app-s3
         app.mintel.com/env: dev
@@ -1220,12 +1220,12 @@ Test workspace extra annotations override:
     metadata:
       annotations:
         app.mintel.com/altManifestFileSuffix: mntl-test-app-s3
+        app.mintel.com/placeholder: placeholder
         app.mintel.com/terraform-allow-destroy: "false"
         app.mintel.com/terraform-cloud-tags: test
         app.mintel.com/terraform-owner: override
         argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
         argocd.argoproj.io/sync-wave: "-40"
-        helm.sh/chart: terraform-cloud-0.42.0
       labels:
         app.kubernetes.io/name: mntl-test-app-s3
         app.mintel.com/env: dev

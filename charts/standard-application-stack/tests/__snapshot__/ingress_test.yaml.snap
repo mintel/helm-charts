@@ -18,6 +18,7 @@ Check ALB HTTP2 default settings:
         alb.ingress.kubernetes.io/target-group-attributes: deregistration_delay.timeout_seconds=5,load_balancing.algorithm.type=least_outstanding_requests
         alb.ingress.kubernetes.io/target-type: ip
         alb.ingress.kubernetes.io/unhealthy-threshold-count: "2"
+        app.mintel.com/placeholder: placeholder
         external-dns.alpha.kubernetes.io/hostname: null
         external-dns.alpha.kubernetes.io/ttl: "60"
         prometheus.io/probe: "true"
@@ -65,6 +66,7 @@ Check ALB className set by default:
         alb.ingress.kubernetes.io/target-group-attributes: deregistration_delay.timeout_seconds=5,load_balancing.algorithm.type=least_outstanding_requests
         alb.ingress.kubernetes.io/target-type: ip
         alb.ingress.kubernetes.io/unhealthy-threshold-count: "2"
+        app.mintel.com/placeholder: placeholder
         external-dns.alpha.kubernetes.io/hostname: null
         external-dns.alpha.kubernetes.io/ttl: "60"
         prometheus.io/probe: "true"
@@ -112,6 +114,7 @@ Check ALB custom health-check port:
         alb.ingress.kubernetes.io/target-group-attributes: deregistration_delay.timeout_seconds=5,load_balancing.algorithm.type=least_outstanding_requests
         alb.ingress.kubernetes.io/target-type: ip
         alb.ingress.kubernetes.io/unhealthy-threshold-count: "2"
+        app.mintel.com/placeholder: placeholder
         external-dns.alpha.kubernetes.io/hostname: null
         external-dns.alpha.kubernetes.io/ttl: "60"
         prometheus.io/probe: "true"
@@ -159,6 +162,7 @@ Check ALB default health-check port:
         alb.ingress.kubernetes.io/target-group-attributes: deregistration_delay.timeout_seconds=5,load_balancing.algorithm.type=least_outstanding_requests
         alb.ingress.kubernetes.io/target-type: ip
         alb.ingress.kubernetes.io/unhealthy-threshold-count: "2"
+        app.mintel.com/placeholder: placeholder
         external-dns.alpha.kubernetes.io/hostname: null
         external-dns.alpha.kubernetes.io/ttl: "60"
         prometheus.io/probe: "true"
@@ -206,6 +210,7 @@ Check ALB gRPC custom settings:
         alb.ingress.kubernetes.io/target-group-attributes: deregistration_delay.timeout_seconds=5,load_balancing.algorithm.type=least_outstanding_requests
         alb.ingress.kubernetes.io/target-type: ip
         alb.ingress.kubernetes.io/unhealthy-threshold-count: "2"
+        app.mintel.com/placeholder: placeholder
         external-dns.alpha.kubernetes.io/hostname: null
         external-dns.alpha.kubernetes.io/ttl: "60"
         prometheus.io/probe: "true"
@@ -253,6 +258,7 @@ Check ALB gRPC default settings:
         alb.ingress.kubernetes.io/target-group-attributes: deregistration_delay.timeout_seconds=5,load_balancing.algorithm.type=least_outstanding_requests
         alb.ingress.kubernetes.io/target-type: ip
         alb.ingress.kubernetes.io/unhealthy-threshold-count: "2"
+        app.mintel.com/placeholder: placeholder
         external-dns.alpha.kubernetes.io/hostname: null
         external-dns.alpha.kubernetes.io/ttl: "60"
         prometheus.io/probe: "true"
@@ -300,6 +306,7 @@ Check ALB health-check port with oauthProxy enabled:
         alb.ingress.kubernetes.io/target-group-attributes: deregistration_delay.timeout_seconds=5,load_balancing.algorithm.type=least_outstanding_requests
         alb.ingress.kubernetes.io/target-type: ip
         alb.ingress.kubernetes.io/unhealthy-threshold-count: "2"
+        app.mintel.com/placeholder: placeholder
         external-dns.alpha.kubernetes.io/hostname: null
         external-dns.alpha.kubernetes.io/ttl: "60"
         prometheus.io/probe: "true"
@@ -333,7 +340,7 @@ Check EXTRA_ALLOWED_HOSTS env var extraHosts with extraIngresses:
     kind: Deployment
     metadata:
       annotations:
-        helm.sh/chart: standard-application-stack-5.6.0
+        app.mintel.com/placeholder: placeholder
         secret.reloader.stakater.com/reload: example-app-app
       labels:
         app.kubernetes.io/component: app
@@ -449,6 +456,7 @@ Check HAProxy className set if ALB is disabled:
     kind: Ingress
     metadata:
       annotations:
+        app.mintel.com/placeholder: placeholder
         ingress.kubernetes.io/config-backend: |
           acl k8s-monitoring-endpoints path /healthz /metrics /readiness
           http-request deny if k8s-monitoring-endpoints
@@ -498,6 +506,7 @@ Check TLS set if ingressTLSSecrets is not empty:
         alb.ingress.kubernetes.io/target-group-attributes: deregistration_delay.timeout_seconds=5,load_balancing.algorithm.type=least_outstanding_requests
         alb.ingress.kubernetes.io/target-type: ip
         alb.ingress.kubernetes.io/unhealthy-threshold-count: "2"
+        app.mintel.com/placeholder: placeholder
         external-dns.alpha.kubernetes.io/hostname: test-app.example.org
         external-dns.alpha.kubernetes.io/ttl: "60"
         prometheus.io/probe: "true"
@@ -549,6 +558,7 @@ Check extraHosts:
         alb.ingress.kubernetes.io/target-group-attributes: deregistration_delay.timeout_seconds=5,load_balancing.algorithm.type=least_outstanding_requests
         alb.ingress.kubernetes.io/target-type: ip
         alb.ingress.kubernetes.io/unhealthy-threshold-count: "2"
+        app.mintel.com/placeholder: placeholder
         external-dns.alpha.kubernetes.io/hostname: test.default.com
         external-dns.alpha.kubernetes.io/ttl: "60"
         prometheus.io/probe: "true"
@@ -606,6 +616,7 @@ Check extraHosts with TLS:
         alb.ingress.kubernetes.io/target-group-attributes: deregistration_delay.timeout_seconds=5,load_balancing.algorithm.type=least_outstanding_requests
         alb.ingress.kubernetes.io/target-type: ip
         alb.ingress.kubernetes.io/unhealthy-threshold-count: "2"
+        app.mintel.com/placeholder: placeholder
         external-dns.alpha.kubernetes.io/hostname: test.default.com
         external-dns.alpha.kubernetes.io/ttl: "60"
         prometheus.io/probe: "true"
@@ -668,6 +679,7 @@ Check extraHosts with TLS and oauthProxy.ingressHost (different):
         alb.ingress.kubernetes.io/target-group-attributes: deregistration_delay.timeout_seconds=5,load_balancing.algorithm.type=least_outstanding_requests
         alb.ingress.kubernetes.io/target-type: ip
         alb.ingress.kubernetes.io/unhealthy-threshold-count: "2"
+        app.mintel.com/placeholder: placeholder
         external-dns.alpha.kubernetes.io/hostname: test.default.com
         external-dns.alpha.kubernetes.io/ttl: "60"
         prometheus.io/probe: "true"
@@ -741,6 +753,7 @@ Check extraHosts with TLS and oauthProxy.ingressHost (same as extra host):
         alb.ingress.kubernetes.io/target-group-attributes: deregistration_delay.timeout_seconds=5,load_balancing.algorithm.type=least_outstanding_requests
         alb.ingress.kubernetes.io/target-type: ip
         alb.ingress.kubernetes.io/unhealthy-threshold-count: "2"
+        app.mintel.com/placeholder: placeholder
         external-dns.alpha.kubernetes.io/hostname: test.default.com
         external-dns.alpha.kubernetes.io/ttl: "60"
         prometheus.io/probe: "true"
@@ -804,6 +817,7 @@ Check extraHosts with oauthProxy.ingressHost (different):
         alb.ingress.kubernetes.io/target-group-attributes: deregistration_delay.timeout_seconds=5,load_balancing.algorithm.type=least_outstanding_requests
         alb.ingress.kubernetes.io/target-type: ip
         alb.ingress.kubernetes.io/unhealthy-threshold-count: "2"
+        app.mintel.com/placeholder: placeholder
         external-dns.alpha.kubernetes.io/hostname: test.default.com
         external-dns.alpha.kubernetes.io/ttl: "60"
         prometheus.io/probe: "true"
@@ -871,6 +885,7 @@ Check extraHosts with oauthProxy.ingressHost (same as extra host):
         alb.ingress.kubernetes.io/target-group-attributes: deregistration_delay.timeout_seconds=5,load_balancing.algorithm.type=least_outstanding_requests
         alb.ingress.kubernetes.io/target-type: ip
         alb.ingress.kubernetes.io/unhealthy-threshold-count: "2"
+        app.mintel.com/placeholder: placeholder
         external-dns.alpha.kubernetes.io/hostname: test.default.com
         external-dns.alpha.kubernetes.io/ttl: "60"
         prometheus.io/probe: "true"
@@ -928,6 +943,7 @@ Check ingress name override:
         alb.ingress.kubernetes.io/target-group-attributes: deregistration_delay.timeout_seconds=5,load_balancing.algorithm.type=least_outstanding_requests
         alb.ingress.kubernetes.io/target-type: ip
         alb.ingress.kubernetes.io/unhealthy-threshold-count: "2"
+        app.mintel.com/placeholder: placeholder
         external-dns.alpha.kubernetes.io/hostname: null
         external-dns.alpha.kubernetes.io/ttl: "60"
         prometheus.io/probe: "true"
@@ -975,6 +991,7 @@ Check ingress name suffix setting:
         alb.ingress.kubernetes.io/target-group-attributes: deregistration_delay.timeout_seconds=5,load_balancing.algorithm.type=least_outstanding_requests
         alb.ingress.kubernetes.io/target-type: ip
         alb.ingress.kubernetes.io/unhealthy-threshold-count: "2"
+        app.mintel.com/placeholder: placeholder
         external-dns.alpha.kubernetes.io/hostname: null
         external-dns.alpha.kubernetes.io/ttl: "60"
         prometheus.io/probe: "true"
@@ -1022,6 +1039,7 @@ Check no TLS set if ingressTLSSecrets and specificTlsHostsYaml is empty:
         alb.ingress.kubernetes.io/target-group-attributes: deregistration_delay.timeout_seconds=5,load_balancing.algorithm.type=least_outstanding_requests
         alb.ingress.kubernetes.io/target-type: ip
         alb.ingress.kubernetes.io/unhealthy-threshold-count: "2"
+        app.mintel.com/placeholder: placeholder
         external-dns.alpha.kubernetes.io/hostname: test-app.example.org
         external-dns.alpha.kubernetes.io/ttl: "60"
         prometheus.io/probe: "true"
@@ -1069,6 +1087,7 @@ Default ingress with path based routing:
         alb.ingress.kubernetes.io/target-group-attributes: deregistration_delay.timeout_seconds=5,load_balancing.algorithm.type=least_outstanding_requests
         alb.ingress.kubernetes.io/target-type: ip
         alb.ingress.kubernetes.io/unhealthy-threshold-count: "2"
+        app.mintel.com/placeholder: placeholder
         external-dns.alpha.kubernetes.io/hostname: null
         external-dns.alpha.kubernetes.io/ttl: "60"
         prometheus.io/probe: "true"
@@ -1123,6 +1142,7 @@ allows extraIngresses to override default values:
         alb.ingress.kubernetes.io/target-group-attributes: deregistration_delay.timeout_seconds=5,load_balancing.algorithm.type=least_outstanding_requests
         alb.ingress.kubernetes.io/target-type: ip
         alb.ingress.kubernetes.io/unhealthy-threshold-count: "2"
+        app.mintel.com/placeholder: placeholder
         external-dns.alpha.kubernetes.io/hostname: media.mintel.com
         external-dns.alpha.kubernetes.io/ttl: "60"
         prometheus.io/probe: "true"
@@ -1155,6 +1175,7 @@ allows extraIngresses to override default values:
     kind: Ingress
     metadata:
       annotations:
+        app.mintel.com/placeholder: placeholder
         ingress.kubernetes.io/config-backend: |
           acl k8s-monitoring-endpoints path /healthz /metrics /readiness
           http-request deny if k8s-monitoring-endpoints
