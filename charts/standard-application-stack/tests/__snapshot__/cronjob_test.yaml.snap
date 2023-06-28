@@ -3,8 +3,7 @@ Check CronJob Default Overrides:
     apiVersion: batch/v1
     kind: CronJob
     metadata:
-      annotations:
-        helm.sh/chart: standard-application-stack-5.6.0
+      annotations: null
       labels:
         app.kubernetes.io/component: daily
         app.kubernetes.io/managed-by: Helm
@@ -60,8 +59,7 @@ Check CronJob Defaults:
     apiVersion: batch/v1
     kind: CronJob
     metadata:
-      annotations:
-        helm.sh/chart: standard-application-stack-5.6.0
+      annotations: null
       labels:
         app.kubernetes.io/component: daily
         app.kubernetes.io/managed-by: Helm
@@ -117,8 +115,7 @@ Check CronJob Job Overrides:
     apiVersion: batch/v1
     kind: CronJob
     metadata:
-      annotations:
-        helm.sh/chart: standard-application-stack-5.6.0
+      annotations: null
       labels:
         app.kubernetes.io/component: daily
         app.kubernetes.io/managed-by: Helm
@@ -174,8 +171,7 @@ Check CronJob ttlSecondsAfterFinished zero value:
     apiVersion: batch/v1
     kind: CronJob
     metadata:
-      annotations:
-        helm.sh/chart: standard-application-stack-5.6.0
+      annotations: null
       labels:
         app.kubernetes.io/component: daily
         app.kubernetes.io/managed-by: Helm
