@@ -41,7 +41,7 @@ Whenever making a change to a chart, you must update the version:
 # Remove old versions of the plugin
 helm plugin uninstall unittest
 
-helm plugin install https://github.com/helm-unittest/helm-unittest
+helm plugin install https://github.com/helm-unittest/helm-unittest.git
 helm unittest ./charts/standard-application-stack --strict
 ```
 
