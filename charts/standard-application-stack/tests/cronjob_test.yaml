@@ -158,3 +158,31 @@ tests:
           count: 1
       - isNull:
           path: spec.jobTemplate.spec.ttlSecondsAfterFinished
+  - it: CronJob can have a timezone
+    set:
+      global.clusterEnv: qa
+      cronjobsOnly: true
+      cronjobs.jobs:
+        - name: daily
+          schedule: "0 1 * * *"
+          timezone: "America/Chicago"
+          image: ""
+          command: [/bin/sh]
+          args:
+            - "-c"
+            - "/app/docker-entrypoint.sh"
+    asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
+      - isKind:
+          of: CronJob
+      - equal:
+          path: metadata.name
+          value: example-app-daily
+      - equal:
+          path: metadata.namespace
+          value: test-namespace
+      - hasDocuments:
+          count: 1
+      - equal:
+          path: spec.timeZone
+          value: "America/Chicago"

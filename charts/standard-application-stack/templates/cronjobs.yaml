@@ -17,6 +17,9 @@ spec:
   suspend: false
   {{- end }}
   schedule: {{ quote .schedule }}
+  {{- with .timezone | default $.Values.cronjobs.defaults.timezone }}
+  timeZone: {{ . | quote }}
+  {{- end }}
   jobTemplate:
     spec:
       {{- $ttl := (.ttlSecondsAfterFinished | default $.Values.cronjobs.defaults.ttlSecondsAfterFinished) | int }}

@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v5.8.0] - 2023-06-29
+### Added
+- Allow cronjobs to specify timezone
+
 ## [v5.7.0] - 2023-06-28
 ### Removed
 - Remove `helm.sh/chart` annotation from all remaining manifests.
