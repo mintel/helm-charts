@@ -1,6 +1,62 @@
 {{- range .Values.jobs }}
----
 {{- $data := dict "Release" $.Release "Chart" $.Chart "Values" $.Values "component" .name }}
+{{- $job := mergeOverwrite $.Values.jobDefaults . }}
+{{- with $job }}
+{{- if .hybridCloudEnabled }}
+# This is a dummy service that will only be used for envoy and Consul (part of hybrid cloud) if configured.
+---
+apiVersion: {{ include "common.capabilities.service.apiVersion" $ }}
+kind: Service
+metadata:
+  name: {{ include "mintel_common.fullname" $data }}
+  annotations:
+    {{- include "mintel_common.commonAnnotations" $ | nindent 4 }}
+    {{- if .argo }}
+    {{- include "mintel_common.argoAnnotations" .argo | nindent 4 }}
+    {{- end }}
+  labels: {{ include "mintel_common.labels" $data | nindent 4 }}
+  namespace: {{ $.Release.Namespace }}
+spec:
+  clusterIP: None
+  clusterIPs:
+  - None
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 8000
+  selector: {{ include "mintel_common.selectorLabels" $ | nindent 6 }}
+  sessionAffinity: None
+  type: ClusterIP
+{{- end }}
+---
+{{- if (or .serviceAccountEnabled .hybridCloudEnabled) }}
+apiVersion: {{ include "common.capabilities.serviceaccount.apiVersion" $ }}
+kind: ServiceAccount
+metadata:
+  name: {{ include "mintel_common.fullname" $data }}
+  annotations:
+    {{- include "mintel_common.commonAnnotations" $ | nindent 4 }}
+    {{- if .argo }}
+    {{- include "mintel_common.argoAnnotations" .argo | nindent 4 }}
+    {{- end }}
+    # We create one IAM role for all service accounts created by this Helm chart so the values here are the same as for
+    # the main service account.
+    {{ if (and $.Values.serviceAccount.irsa.enabled (ne $.Values.global.clusterEnv "local")) }}
+      {{ if $.Values.global.terraform.irsa }}
+    eks.amazonaws.com/role-arn: arn:aws:iam::{{ $.Values.global.cloudProvider.accountId }}:role/app-iam-{{ $.Values.global.clusterName }}-{{ $.Release.Namespace }}-{{ coalesce $.Values.serviceAccount.irsa.nameOverride $.Values.serviceAccount.name (include "mintel_common.fullname" $) }}
+      {{- else }}
+    eks.amazonaws.com/role-arn: arn:aws:iam::{{ $.Values.global.cloudProvider.accountId }}:role/{{ $.Values.global.clusterName }}-{{ $.Release.Namespace }}-{{ coalesce $.Values.serviceAccount.irsa.nameOverride $.Values.serviceAccount.name (include "mintel_common.fullname" $) }}
+      {{- end }}
+    {{- end }}
+  labels: {{ include "mintel_common.labels" $data | nindent 4 }}
+  namespace: {{ $.Release.Namespace }}
+automountServiceAccountToken: {{ $.Values.serviceAccount.automountServiceAccountToken }}
+{{- end }}
+---
 apiVersion: {{ include "common.capabilities.job.apiVersion" $ }}
 kind: Job
 metadata:
@@ -8,9 +64,9 @@ metadata:
   labels: {{ include "mintel_common.labels" $data | nindent 4 }}
   annotations:
     {{- include "mintel_common.commonAnnotations" $ | nindent 4 }}
-    {{ if .argo }}
-    {{ include "mintel_common.argoAnnotations" .argo | nindent 4 }}
-    {{ end }}
+    {{- if .argo }}
+    {{- include "mintel_common.argoAnnotations" .argo | nindent 4 }}
+    {{- end }}
   namespace: {{ $.Release.Namespace }}
 spec:
   {{- $ttl := (.ttlSecondsAfterFinished | default 60) | int }}
@@ -21,17 +77,25 @@ spec:
     spec:
       {{- include "mintel_common.imagePullSecrets" $ | nindent 6 }}
       {{- if .includeBasePodSecurityContext }}
-      {{- with $.Values.podSecurityContext }}
+        {{- with $.Values.podSecurityContext }}
       securityContext: {{- toYaml . | nindent 12 }}
+        {{- end }}
+      {{- else }}
+        {{- if .runAsUser }}
+      securityContext:
+        runAsUser: {{ .runAsUser | quote }}
       {{- end }}
       {{- end }}
       {{- with .podSecurityContext }}
       securityContext: {{ toYaml . | nindent 12 }}
+        {{- end }}
+      {{- with .podSecurityContext }}
+      securityContext: {{ toYaml . | nindent 12 }}
       {{- end }}
-      {{- if (and $.Values.serviceAccount (or $.Values.serviceAccount.create $.Values.serviceAccount.name)) }}
-      serviceAccountName: {{ $.Values.serviceAccount.name | default (include "mintel_common.fullname" $)}}
+      {{- if .serviceAccountEnabled }}
+      serviceAccountName: {{ .serviceAccountName | default (include "mintel_common.fullname" $data) }}
       {{- end }}
-      restartPolicy: {{ .restartPolicy | default "Never" }}
+      restartPolicy: {{ $job.restartPolicy }}
       {{- with .extraInitContainers }}
       initContainers:
       {{- toYaml . | nindent 12 }}
@@ -81,4 +145,30 @@ spec:
           {{- with .resources }}
           resources: {{- toYaml . | nindent 12 }}
           {{- end }}
+{{- end }}
+{{- if (and $.Values.externalSecret $.Values.externalSecret.enabled .includeAppSecret) }}
+---
+apiVersion: {{ include "common.capabilities.externalsecret.apiVersion" $ }}
+kind: ExternalSecret
+metadata:
+  name: {{ include "mintel_common.fullname" $data }}-app
+  labels: {{ include "mintel_common.labels" $ | nindent 4 }}
+  namespace: {{ $.Release.Namespace }}
+  annotations:
+    {{ include "mintel_common.commonAnnotations" $ | nindent 4 }}
+    {{- if .argo }}
+    {{- include "mintel_common.argoAnnotations" .argo | nindent 4 }}
+    {{- end }}
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+spec:
+  dataFrom:
+    - extract:
+        key: {{ $.Values.externalSecret.pathOverride | default (printf "%s/%s/app" ($.Release.Namespace) (include "mintel_common.fullname" $)) }}
+  refreshInterval: {{ $.Values.externalSecret.secretRefreshIntervalOverride | default "5m0s" }}
+  secretStoreRef:
+    name: {{ $.Values.externalSecret.secretStoreRefOverride | default "aws-secrets-manager-default" }}
+    kind: SecretStore
+  target:
+    creationPolicy: Owner
+{{- end }}
 {{- end }}

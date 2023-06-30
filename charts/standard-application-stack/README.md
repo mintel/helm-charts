@@ -161,7 +161,14 @@ A generic chart to support most common application requirements
 | ingress.specificRulesHostsYaml | object | `{}` | Optional ingress Rules Hosts Yaml that doesn't fit standard pattern |
 | ingress.specificTlsHostsYaml | object | `{}` | Optional ingress Tls Hosts Yaml that doesn't fit standard pattern |
 | ingress.tls | bool | `true` | Enable TLS configuration for the hostname defined at ingress.hostname parameter |
-| jobs | list | `[]` | Define and Configure Job's Each job has the following configuration options, and defaults to the values below if not set. |
+| jobDefaults | object | See below | Configure default values for all jobs as defined in $.Values.jobs |
+| jobDefaults.argo.hook | string | `nil` | Phase in which ArgoCD should apply the manifest ref: https://argo-cd.readthedocs.io/en/stable/user-guide/resource_hooks/#usage. |
+| jobDefaults.argo.hookDeletePolicy | string | `"HookSucceeded"` | When to delete the job resources in an automated fashion ref: https://argo-cd.readthedocs.io/en/stable/user-guide/resource_hooks/#hook-deletion-policies. |
+| jobDefaults.argo.syncWave | string | `nil` | Sync Wave in which ArgoCD should apply the manifest. ref: https://argo-cd.readthedocs.io/en/stable/user-guide/sync-waves/. |
+| jobDefaults.name | string | `nil` | The name of the job (required for all jobs) |
+| jobDefaults.restartPolicy | string | `"Never"` | Whether the pod should be restarted on failure ref: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#restart-policy) |
+| jobDefaults.ttlSecondsAfterFinished | int | `60` | If this field is set, ttlSecondsAfterFinished after the Job finishes, it is eligible to be automatically deleted. ref: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.20/#cronjob-v1beta1-batch |
+| jobs | list | `[]` | Define and configure jobs Add a map for each job in this list. Refer to $.Values.jobDefaults for a list of supported values (and the defaults that will be applied) |
 | kibana.elasticsearchHosts | string | `""` |  |
 | kibana.enabled | bool | `false` |  |
 | kubelock | object | `{"enabled":false}` | Configure the use of kubelock ref: https://github.com/mintel/kubelock |
