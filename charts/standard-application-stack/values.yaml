@@ -939,66 +939,63 @@ cronjobs:
     #   includeOpensearchSecret: false
 
 # -- Configure default values for all jobs as defined in $.Values.jobs
-# @default -- See below
+# @default -- See below.
 jobDefaults:
   # -- The name of the job (required for all jobs)
   name:
-  hybridCloudEnabled: false
+  # -- Resource requests/limits (required for all jobs)
+  resources: {}
+  # -- Whether you want the secrets used by the main app workload to be available to the Job
   includeAppSecret: false
+  # -- Whether you want the environment variables used by the main app workload to be available to the Job
   includeBaseEnv: false
+  # -- Whether you want the securityContext used by the main app workload to be the same in the Job
   includeBasePodSecurityContext: false
   # -- Whether the pod should be restarted on failure
   # ref: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#restart-policy)
   restartPolicy: Never
-  serviceAccountEnabled: true
   # -- If this field is set, ttlSecondsAfterFinished after the Job finishes, it is eligible to be automatically deleted.
   # ref: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.20/#cronjob-v1beta1-batch
   ttlSecondsAfterFinished: 60
-
+  # -- Any annotations you wish to add to the Job
   annotations: {}
+  # -- ArgoCD sync config
+  # @default -- See below.
   argo:
     # -- Phase in which ArgoCD should apply the manifest
     # ref: https://argo-cd.readthedocs.io/en/stable/user-guide/resource_hooks/#usage.
     hook:
     # -- When to delete the job resources in an automated fashion
     # ref: https://argo-cd.readthedocs.io/en/stable/user-guide/resource_hooks/#hook-deletion-policies.
-    hookDeletePolicy: HookSucceeded
+    hookDeletePolicy:
     # -- Sync Wave in which ArgoCD should apply the manifest.
     # ref: https://argo-cd.readthedocs.io/en/stable/user-guide/sync-waves/.
     syncWave:
+  # -- The command arguments for the main Job container.
   args:
+  # -- The command the main Job container will run.
   command:
+  # -- Any env entries you want to add. See includeBaseEnv to add all from main container.
+  # ref: https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/
   env: []
+  # -- Any envFrom entries you want to add. See includeBaseEnv to add all from main container.
+  # ref: https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/
   envFrom: []
+  # -- A list of initContainers you want to add to the Job.
   extraInitContainers: []
+  # -- The image to use in the main container for the Job.
+  # @default -- Same as `$.Values.image`
   image:
+  # -- Any labels you wish to add to the Job.
   labels: {}
-  resources: {}
+  # -- Change the user the container will run as.
   runAsUser:
-  serviceAccountName:
-  serviceName:
 
 # -- Define and configure jobs
-# Add a map for each job in this list. Refer to $.Values.jobDefaults for a list of supported values (and the defaults
-# that will be applied)
+# Add a map for each job in this list. Refer to `$.Values.jobDefaults` for a list of supported values (and the defaults
+# that will be applied to all jobs below).
 jobs:
   []
-  #   # Configuration for the job image, command, arguments, environment variables, resources, etc. `resources` is required.
-  #   image: '${.image.registry + "/" + .image.repository + ":" + .image.tag}'
-  #   command:
-  #     - ''
-  #   args:
-  #     - ''
-  #   env: if includeBaseEnv then '${.env}' else []
-  #   envFrom: if includeAppSecret then '${.envFrom}' else []
-  #   podSecurityContext:
-  #     runAsUser: if includeBasePodSecurityContext then '${podSecurityContext.rusAsUser}' else ''
-  #   extraInitContainers: []
-  #   resources: []
-  #     # Whether to use the main deployment values above
-  #   includeBaseEnv: false
-  #   includeAppSecret: false
-  #   includeBasePodSecurityContext: false
 
 dynamodb:
   enabled: false

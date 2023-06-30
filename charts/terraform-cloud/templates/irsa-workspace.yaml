@@ -37,13 +37,6 @@
         {{- $serviceAccounts = append $serviceAccounts (printf "%s-%s" $global.name .name) }}
       {{- end }}
     {{- end }}
-    {{- if $.Values.cronjobs }}
-      {{- if $.Values.cronjobs.jobs }}
-        {{- range $.Values.cronjobs.jobs }}
-          {{- $serviceAccounts = append $serviceAccounts (printf "%s-%s" $global.name .name) }}
-        {{- end }}
-      {{- end }}
-    {{- end }}
     {{- if gt (len $serviceAccounts) 0 }}
       {{- $_ := set $irsaConfig "k8s_extra_service_accounts" ( dict "key" "k8s_extra_service_accounts" "value" (printf "[\"%s\"]" (join "\",\"" $serviceAccounts)) "hcl" "true" ) }}
     {{- end }}
