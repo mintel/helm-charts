@@ -938,12 +938,12 @@ cronjobs:
     #   includeElasticsearchSecret: false
     #   includeOpensearchSecret: false
 
-# -- Configure default values for all jobs as defined in $.Values.jobs
+# -- Configure default values for all jobs as defined in `$.Values.jobs`
 # @default -- See below.
 jobDefaults:
-  # -- The name of the job (required for all jobs)
+  # -- REQUIRED FOR ALL JOBS. The name of the job.
   name:
-  # -- Resource requests/limits (required for all jobs)
+  # -- REQUIRED FOR ALL JOBS. Resource requests/limits.
   resources: {}
   # -- Whether you want the secrets used by the main app workload to be available to the Job
   includeAppSecret: false

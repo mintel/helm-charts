@@ -161,7 +161,7 @@ A generic chart to support most common application requirements
 | ingress.specificRulesHostsYaml | object | `{}` | Optional ingress Rules Hosts Yaml that doesn't fit standard pattern |
 | ingress.specificTlsHostsYaml | object | `{}` | Optional ingress Tls Hosts Yaml that doesn't fit standard pattern |
 | ingress.tls | bool | `true` | Enable TLS configuration for the hostname defined at ingress.hostname parameter |
-| jobDefaults | object | See below. | Configure default values for all jobs as defined in $.Values.jobs |
+| jobDefaults | object | See below. | Configure default values for all jobs as defined in `$.Values.jobs` |
 | jobDefaults.annotations | object | `{}` | Any annotations you wish to add to the Job |
 | jobDefaults.argo | object | See below. | ArgoCD sync config |
 | jobDefaults.argo.hook | string | `nil` | Phase in which ArgoCD should apply the manifest ref: https://argo-cd.readthedocs.io/en/stable/user-guide/resource_hooks/#usage. |
@@ -177,8 +177,8 @@ A generic chart to support most common application requirements
 | jobDefaults.includeBaseEnv | bool | `false` | Whether you want the environment variables used by the main app workload to be available to the Job |
 | jobDefaults.includeBasePodSecurityContext | bool | `false` | Whether you want the securityContext used by the main app workload to be the same in the Job |
 | jobDefaults.labels | object | `{}` | Any labels you wish to add to the Job. |
-| jobDefaults.name | string | `nil` | The name of the job (required for all jobs) |
-| jobDefaults.resources | object | `{}` | Resource requests/limits (required for all jobs) |
+| jobDefaults.name | string | `nil` | REQUIRED FOR ALL JOBS. The name of the job. |
+| jobDefaults.resources | object | `{}` | REQUIRED FOR ALL JOBS. Resource requests/limits. |
 | jobDefaults.restartPolicy | string | `"Never"` | Whether the pod should be restarted on failure ref: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#restart-policy) |
 | jobDefaults.runAsUser | string | `nil` | Change the user the container will run as. |
 | jobDefaults.ttlSecondsAfterFinished | int | `60` | If this field is set, ttlSecondsAfterFinished after the Job finishes, it is eligible to be automatically deleted. ref: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.20/#cronjob-v1beta1-batch |
