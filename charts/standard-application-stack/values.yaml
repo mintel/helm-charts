@@ -988,8 +988,8 @@ jobDefaults:
   image:
   # -- Any labels you wish to add to the Job.
   labels: {}
-  # -- Change the user the container will run as.
-  runAsUser:
+  # -- Add podSecurityContext config to the Job.
+  podSecurityContext: {}
 
 # -- Define and configure jobs
 # Add a map for each job in this list. Refer to `$.Values.jobDefaults` for a list of supported values (and the defaults

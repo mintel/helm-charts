@@ -178,9 +178,9 @@ A generic chart to support most common application requirements
 | jobDefaults.includeBasePodSecurityContext | bool | `false` | Whether you want the securityContext used by the main app workload to be the same in the Job |
 | jobDefaults.labels | object | `{}` | Any labels you wish to add to the Job. |
 | jobDefaults.name | string | `nil` | REQUIRED FOR ALL JOBS. The name of the job. |
+| jobDefaults.podSecurityContext | object | `{}` | Add podSecurityContext config to the Job. |
 | jobDefaults.resources | object | `{}` | REQUIRED FOR ALL JOBS. Resource requests/limits. |
 | jobDefaults.restartPolicy | string | `"Never"` | Whether the pod should be restarted on failure ref: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#restart-policy) |
-| jobDefaults.runAsUser | string | `nil` | Change the user the container will run as. |
 | jobDefaults.ttlSecondsAfterFinished | int | `60` | If this field is set, ttlSecondsAfterFinished after the Job finishes, it is eligible to be automatically deleted. ref: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.20/#cronjob-v1beta1-batch |
 | jobs | list | `[]` | Define and configure jobs Add a map for each job in this list. Refer to `$.Values.jobDefaults` for a list of supported values (and the defaults that will be applied to all jobs below). |
 | kibana.elasticsearchHosts | string | `""` |  |
