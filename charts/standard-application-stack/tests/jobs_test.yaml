@@ -2,16 +2,16 @@ suite: Test Jobs
 templates:
   - jobs.yaml
 release:
-  namespace: test-namespace
+  namespace: testNamespace
 tests:
   - it: Check default values are correct with minimal configuration
     set:
-      global.clusterEnv: qa
-      global.name: test-app
+      global.clusterEnv: testClusterEnv
+      global.name: testGlobalName
       image.registry: registry.example.com
       image.repository: test/image/repo
       jobs:
-        - name: testName
+        - name: testJobName
           resources:
             limits:
               cpu: 1000m
@@ -23,29 +23,46 @@ tests:
       - matchSnapshot: {} # Check for regressions and unexpected changes.
       - isKind:
           of: Job
+        documentIndex: 0
       - equal:
           path: metadata.namespace
-          value: test-namespace
+          value: testNamespace
+        documentIndex: 0
       - equal:
           path: metadata.name
-          value: test-app-testName
+          value: testGlobalName-testJobName
+        documentIndex: 0
       - hasDocuments:
-          count: 1
+          count: 2
       - equal:
           path: spec.template.spec.containers[0].image
           value: registry.example.com/test/image/repo:v0.1.0
+        documentIndex: 0
       - equal:
           path: spec.ttlSecondsAfterFinished
           value: 60
+        documentIndex: 0
+      # Check that ServiceAccount is created, that no ArgoCD or IRSA annotations are added and that it's referenced
+      # correctly in the Job.
+      - isKind:
+          of: ServiceAccount
+        documentIndex: 1
+      - isNull:
+          path: metadata.annotations["argocd.argoproj.io/hook", "argocd.argoproj.io/hook-delete-policy", "argocd.argoproj.io/sync-wave", "eks.amazonaws.com/role-arn"]
+        documentIndex: 1
+      - equal:
+          path: spec.template.spec.serviceAccountName
+          value: testGlobalName-testJobName
+        documentIndex: 0
   - it: Check all .job.* values can be set correctly, without overriding from main deployment
     set:
-      global.clusterEnv: qa
-      global.name: test-app
+      global.clusterEnv: testClusterEnv
+      global.name: testGlobalName
       image.registry: registry.example.com
       image.repository: test/image/repo
       image.tag: someTag
       jobs:
-        - name: testName
+        - name: testJobName
           argo:
             hook: PreSync
             hookDeletePolicy: HookSucceeded
@@ -75,12 +92,13 @@ tests:
             requests:
               cpu: 1000m
               memory: 2Gi
+    documentIndex: 0
     asserts:
       - matchSnapshot: {} # Check for regressions and unexpected changes.
       - isKind:
           of: Job
       - hasDocuments:
-          count: 1
+          count: 2
       - equal:
           path: metadata.annotations["argocd.argoproj.io/hook"]
           value: PreSync
@@ -112,7 +130,7 @@ tests:
                 fieldRef:
                   fieldPath: metadata.namespace
             - name: APP_ENVIRONMENT
-              value: qa
+              value: testClusterEnv
             - name: RUNTIME_ENVIRONMENT
               value: kubernetes
             - name: TEST_VAR
@@ -144,8 +162,8 @@ tests:
           value: 120
   - it: Check all overrides/additions from main deployment work if enabled
     set:
-      global.clusterEnv: qa
-      global.name: test-app
+      global.clusterEnv: testClusterEnv
+      global.name: testGlobalName
       image.registry: registry.example.com
       image.repository: test/image/repo
       image.tag: someTag
@@ -157,7 +175,7 @@ tests:
       podSecurityContext:
         runAsUser: 1000
       jobs:
-        - name: testName
+        - name: testJobName
           includeBaseEnv: true
           includeAppSecret: true
           includeBasePodSecurityContext: true
@@ -177,13 +195,15 @@ tests:
               memory: 2Gi
     asserts:
       - matchSnapshot: {} # Check for regressions and unexpected changes.
+      - hasDocuments:
+          count: 3
       - isKind:
           of: Job
-      - hasDocuments:
-          count: 1
+        documentIndex: 0
       - equal:
           path: spec.template.spec.containers[0].image
           value: registry.example.com/test/image/repo:someTag
+        documentIndex: 0
       - equal:
           path: spec.template.spec.containers[0].env
           value:
@@ -192,7 +212,7 @@ tests:
                 fieldRef:
                   fieldPath: metadata.namespace
             - name: APP_ENVIRONMENT
-              value: qa
+              value: testClusterEnv
             - name: RUNTIME_ENVIRONMENT
               value: kubernetes
             - name: TEST_VAR_1
@@ -201,16 +221,65 @@ tests:
               value: bar
             - name: TEST_VAR_3
               value: baz
+        documentIndex: 0
+      - equal:
+          path: spec.template.spec.securityContext.runAsUser
+          value: 1000
+        documentIndex: 0
+      - equal:
+          path: spec.ttlSecondsAfterFinished
+          value: 120
+        documentIndex: 0
+      # Check that additional ExternalSecret gets created and that it's referenced correctly in the Job
+      - isKind:
+          of: ExternalSecret
+        documentIndex: 2
+      - equal:
+          path: metadata.name
+          value: testGlobalName-testJobName-app
+        documentIndex: 2
       - equal:
           path: spec.template.spec.containers[0].envFrom
           value:
             - secretRef:
-                name: test-app-app
+                name: testGlobalName-testJobName-app
             - secretRef:
                 name: another-secret-ref
-      - equal:
-          path: spec.template.spec.securityContext.runAsUser
-          value: 1000
-      - equal:
-          path: spec.ttlSecondsAfterFinished
-          value: 120
+        documentIndex: 0
+  - it: checks that rbac is set up correctly for kubelock
+    set:
+      global.clusterEnv: testClusterEnv
+      global.name: testGlobalName
+      image.registry: registry.example.com
+      image.repository: test/image/repo
+      image.tag: someTag
+      kubelock:
+        enabled: true
+      jobs:
+        - name: testJobName
+    asserts:
+      # Test that the Job references the Job's Service Account
+      - documentIndex: 0
+        isKind:
+          of: Job
+      - documentIndex: 0
+        equal:
+          path: spec.template.spec.serviceAccountName
+          value: testGlobalName-testJobName
+      # Test that a ServiceAccount unique to the Job gets created
+      - documentIndex: 1
+        isKind:
+          of: ServiceAccount
+      - documentIndex: 1
+        equal:
+          path: metadata.name
+          value: testGlobalName-testJobName
+      # Test that a RoleBinding unique to the Job gets created and that it is binding the Job's ServiceAccount to the
+      # main app's Role (which includes the kubelock permissions),
+      - documentIndex: 2
+        isKind:
+          of: RoleBinding
+      - documentIndex: 2
+        equal:
+          path: roleRef.name
+          value: testGlobalName

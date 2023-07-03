@@ -2,58 +2,6 @@
 {{- $data := dict "Release" $.Release "Chart" $.Chart "Values" $.Values "component" .name }}
 {{- $job := mergeOverwrite $.Values.jobDefaults . }}
 {{- with $job }}
-
-{{- if (and $.Values.serviceAccount (or $.Values.serviceAccount.create $.Values.serviceAccount.name)) }}
----
-apiVersion: {{ include "common.capabilities.serviceaccount.apiVersion" $ }}
-kind: ServiceAccount
-metadata:
-  name: {{ include "mintel_common.fullname" $data }}
-  annotations:
-    {{- include "mintel_common.commonAnnotations" $ | nindent 4 }}
-    {{- if .argo }}
-    {{- include "mintel_common.argoAnnotations" .argo | nindent 4 }}
-    {{- end }}
-    # We create one IAM role for all service accounts created by this Helm chart so the values here are the same as for
-    # the main service account.
-    {{ if (and $.Values.serviceAccount.irsa.enabled (ne $.Values.global.clusterEnv "local")) }}
-      {{ if $.Values.global.terraform.irsa }}
-    eks.amazonaws.com/role-arn: arn:aws:iam::{{ $.Values.global.cloudProvider.accountId }}:role/app-iam-{{ $.Values.global.clusterName }}-{{ $.Release.Namespace }}-{{ coalesce $.Values.serviceAccount.irsa.nameOverride $.Values.serviceAccount.name (include "mintel_common.fullname" $) }}
-      {{- else }}
-    eks.amazonaws.com/role-arn: arn:aws:iam::{{ $.Values.global.cloudProvider.accountId }}:role/{{ $.Values.global.clusterName }}-{{ $.Release.Namespace }}-{{ coalesce $.Values.serviceAccount.irsa.nameOverride $.Values.serviceAccount.name (include "mintel_common.fullname" $) }}
-      {{- end }}
-    {{- end }}
-  labels: {{ include "mintel_common.labels" $data | nindent 4 }}
-  namespace: {{ $.Release.Namespace }}
-automountServiceAccountToken: {{ $.Values.serviceAccount.automountServiceAccountToken }}
-{{- end }}
-
-{{- if (and $.Values.externalSecret $.Values.externalSecret.enabled .includeAppSecret) }}
----
-apiVersion: {{ include "common.capabilities.externalsecret.apiVersion" $ }}
-kind: ExternalSecret
-metadata:
-  name: {{ include "mintel_common.fullname" $data }}-app
-  labels: {{ include "mintel_common.labels" $ | nindent 4 }}
-  namespace: {{ $.Release.Namespace }}
-  annotations:
-    {{ include "mintel_common.commonAnnotations" $ | nindent 4 }}
-    {{- if .argo }}
-    {{- include "mintel_common.argoAnnotations" .argo | nindent 4 }}
-    {{- end }}
-    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
-spec:
-  dataFrom:
-    - extract:
-        key: {{ $.Values.externalSecret.pathOverride | default (printf "%s/%s/app" ($.Release.Namespace) (include "mintel_common.fullname" $)) }}
-  refreshInterval: {{ $.Values.externalSecret.secretRefreshIntervalOverride | default "5m0s" }}
-  secretStoreRef:
-    name: {{ $.Values.externalSecret.secretStoreRefOverride | default "aws-secrets-manager-default" }}
-    kind: SecretStore
-  target:
-    creationPolicy: Owner
-{{- end }}
-
 ---
 apiVersion: {{ include "common.capabilities.job.apiVersion" $ }}
 kind: Job
@@ -140,5 +88,83 @@ spec:
           {{- with .resources }}
           resources: {{- toYaml . | nindent 12 }}
           {{- end }}
+
+
+{{- if (and $.Values.serviceAccount (or $.Values.serviceAccount.create $.Values.serviceAccount.name)) }}
+---
+apiVersion: {{ include "common.capabilities.serviceaccount.apiVersion" $ }}
+kind: ServiceAccount
+metadata:
+  name: {{ include "mintel_common.fullname" $data }}
+  annotations:
+    {{- include "mintel_common.commonAnnotations" $ | nindent 4 }}
+    {{- if .argo }}
+    {{- include "mintel_common.argoAnnotations" .argo | nindent 4 }}
+    {{- end }}
+    # We create one IAM role for all service accounts created by this Helm chart so the values here are the same as for
+    # the main service account.
+    {{ if (and $.Values.serviceAccount.irsa.enabled (ne $.Values.global.clusterEnv "local")) }}
+      {{ if $.Values.global.terraform.irsa }}
+    eks.amazonaws.com/role-arn: arn:aws:iam::{{ $.Values.global.cloudProvider.accountId }}:role/app-iam-{{ $.Values.global.clusterName }}-{{ $.Release.Namespace }}-{{ coalesce $.Values.serviceAccount.irsa.nameOverride $.Values.serviceAccount.name (include "mintel_common.fullname" $) }}
+      {{- else }}
+    eks.amazonaws.com/role-arn: arn:aws:iam::{{ $.Values.global.cloudProvider.accountId }}:role/{{ $.Values.global.clusterName }}-{{ $.Release.Namespace }}-{{ coalesce $.Values.serviceAccount.irsa.nameOverride $.Values.serviceAccount.name (include "mintel_common.fullname" $) }}
+      {{- end }}
+    {{- end }}
+  labels: {{ include "mintel_common.labels" $data | nindent 4 }}
+  namespace: {{ $.Release.Namespace }}
+automountServiceAccountToken: {{ $.Values.serviceAccount.automountServiceAccountToken }}
+
+{{- if (and $.Values.kubelock $.Values.kubelock.enabled) }}
+---
+apiVersion: {{ include "common.capabilities.rbac.apiVersion" $ }}
+kind: RoleBinding
+metadata:
+  name: {{ include "mintel_common.fullname" $data }}
+  namespace: {{ $.Release.Namespace }}
+  labels: {{ include "mintel_common.labels" $ | nindent 4 }}
+  annotations:
+    {{- include "mintel_common.commonAnnotations" $ | nindent 4 }}
+    {{- if .argo }}
+    {{- include "mintel_common.argoAnnotations" .argo | nindent 4 }}
+    {{- end }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: {{ include "mintel_common.fullname" $ }}
+subjects:
+- kind: ServiceAccount
+  name: {{ include "mintel_common.fullname" $data }}
+  namespace: {{ $.Release.Namespace }}
+{{- end }}
+{{- end }}
+
+
+{{- if (and $.Values.externalSecret $.Values.externalSecret.enabled .includeAppSecret) }}
+---
+apiVersion: {{ include "common.capabilities.externalsecret.apiVersion" $ }}
+kind: ExternalSecret
+metadata:
+  name: {{ include "mintel_common.fullname" $data }}-app
+  labels: {{ include "mintel_common.labels" $ | nindent 4 }}
+  namespace: {{ $.Release.Namespace }}
+  annotations:
+    {{ include "mintel_common.commonAnnotations" $ | nindent 4 }}
+    {{- if .argo }}
+    {{- include "mintel_common.argoAnnotations" .argo | nindent 4 }}
+    {{- end }}
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+spec:
+  dataFrom:
+    - extract:
+        key: {{ $.Values.externalSecret.pathOverride | default (printf "%s/%s/app" ($.Release.Namespace) (include "mintel_common.fullname" $)) }}
+  refreshInterval: {{ $.Values.externalSecret.secretRefreshIntervalOverride | default "5m0s" }}
+  secretStoreRef:
+    name: {{ $.Values.externalSecret.secretStoreRefOverride | default "aws-secrets-manager-default" }}
+    kind: SecretStore
+  target:
+    creationPolicy: Owner
+{{- end }}
+
+
 {{- end }}
 {{- end }}
