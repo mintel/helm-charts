@@ -34,7 +34,7 @@ spec:
       {{- if (and $.Values.serviceAccount (or $.Values.serviceAccount.create $.Values.serviceAccount.name)) }}
       serviceAccountName: {{ include "mintel_common.fullname" $data }}
       {{- end }}
-      restartPolicy: {{ $job.restartPolicy }}
+      restartPolicy: {{ .restartPolicy }}
       {{- with .extraInitContainers }}
       initContainers:
       {{- toYaml . | nindent 12 }}

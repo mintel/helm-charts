@@ -6,6 +6,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Added
+- Explicit default values for all Jobs have been added to the values.yaml file and are merged with each job at render
+  time.
+### Changed
+- Jobs now create their own RBAC resources and make copies of the main `-app` secret rather than using the main app
+  ones. This makes Jobs self-contained and mitigates issues with main app resources being deleted during whichever Argo
+  phase the Job is a part of.
+### Fixed
+- Fixed issue where setting `includeBasePodSecurityContext` to `true` and adding values to `podSecurityContext` would
+  result in a duplicate `securityContext` key
 
 ## [v5.7.0] - 2023-06-28
 ### Removed
