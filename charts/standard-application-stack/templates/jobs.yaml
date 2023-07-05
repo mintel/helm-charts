@@ -2,6 +2,7 @@
 {{- $data := dict "Release" $.Release "Chart" $.Chart "Values" $.Values "component" .name }}
 {{- $job := mergeOverwrite $.Values.jobDefaults . }}
 {{- with $job }}
+{{- $serviceAccountEnabled := or .kubelock.enabled .irsa.enabled }}
 ---
 apiVersion: {{ include "common.capabilities.job.apiVersion" $ }}
 kind: Job
@@ -86,29 +87,10 @@ spec:
           {{- end }}
 
 
-{{- if (and $.Values.serviceAccount (or $.Values.serviceAccount.create $.Values.serviceAccount.name)) }}
+{{- if $serviceAccountEnabled }}
 ---
-apiVersion: {{ include "common.capabilities.serviceaccount.apiVersion" $ }}
-kind: ServiceAccount
-metadata:
-  name: {{ include "mintel_common.fullname" $data }}
-  annotations:
-    {{- include "mintel_common.commonAnnotations" $ | nindent 4 }}
-    {{- if .argo }}
-    {{- include "mintel_common.argoAnnotations" .argo | nindent 4 }}
-    {{- end }}
-    # We create one IAM role for all service accounts created by this Helm chart so the values here are the same as for
-    # the main service account.
-    {{ if (and $.Values.serviceAccount.irsa.enabled (ne $.Values.global.clusterEnv "local")) }}
-      {{ if $.Values.global.terraform.irsa }}
-    eks.amazonaws.com/role-arn: arn:aws:iam::{{ $.Values.global.cloudProvider.accountId }}:role/app-iam-{{ $.Values.global.clusterName }}-{{ $.Release.Namespace }}-{{ coalesce $.Values.serviceAccount.irsa.nameOverride $.Values.serviceAccount.name (include "mintel_common.fullname" $) }}
-      {{- else }}
-    eks.amazonaws.com/role-arn: arn:aws:iam::{{ $.Values.global.cloudProvider.accountId }}:role/{{ $.Values.global.clusterName }}-{{ $.Release.Namespace }}-{{ coalesce $.Values.serviceAccount.irsa.nameOverride $.Values.serviceAccount.name (include "mintel_common.fullname" $) }}
-      {{- end }}
-    {{- end }}
-  labels: {{ include "mintel_common.labels" $data | nindent 4 }}
-  namespace: {{ $.Release.Namespace }}
-automountServiceAccountToken: {{ $.Values.serviceAccount.automountServiceAccountToken }}
+{{- $serviceAccountConfig := dict "name" (include "mintel_common.fullname" $data) "argo" .argo "irsa" .irsa }}
+{{- include "mintel_common.serviceAccount" (list $ $serviceAccountConfig) }}
 
 {{- if (and $.Values.kubelock $.Values.kubelock.enabled) }}
 ---

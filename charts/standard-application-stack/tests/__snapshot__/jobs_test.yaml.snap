@@ -119,22 +119,6 @@ Check all overrides/additions from main deployment work if enabled:
           serviceAccountName: testGlobalName-testJobName
       ttlSecondsAfterFinished: 120
   2: |
-    apiVersion: v1
-    automountServiceAccountToken: true
-    kind: ServiceAccount
-    metadata:
-      annotations:
-        app.mintel.com/placeholder: placeholder
-      labels:
-        app.kubernetes.io/component: testJobName
-        app.kubernetes.io/managed-by: Helm
-        app.kubernetes.io/name: testGlobalName-testJobName
-        app.mintel.com/env: testClusterEnv
-        app.mintel.com/region: ${CLUSTER_REGION}
-        name: testGlobalName-testJobName
-      name: testGlobalName-testJobName
-      namespace: testNamespace
-  3: |
     apiVersion: external-secrets.io/v1beta1
     kind: ExternalSecret
     metadata:
@@ -206,19 +190,3 @@ Check default values are correct with minimal configuration:
           restartPolicy: Never
           serviceAccountName: testGlobalName-testJobName
       ttlSecondsAfterFinished: 60
-  2: |
-    apiVersion: v1
-    automountServiceAccountToken: true
-    kind: ServiceAccount
-    metadata:
-      annotations:
-        app.mintel.com/placeholder: placeholder
-      labels:
-        app.kubernetes.io/component: testJobName
-        app.kubernetes.io/managed-by: Helm
-        app.kubernetes.io/name: testGlobalName-testJobName
-        app.mintel.com/env: testClusterEnv
-        app.mintel.com/region: ${CLUSTER_REGION}
-        name: testGlobalName-testJobName
-      name: testGlobalName-testJobName
-      namespace: testNamespace

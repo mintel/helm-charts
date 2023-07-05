@@ -23,37 +23,20 @@ tests:
       - matchSnapshot: {} # Check for regressions and unexpected changes.
       - isKind:
           of: Job
-        documentIndex: 0
       - equal:
           path: metadata.namespace
           value: testNamespace
-        documentIndex: 0
       - equal:
           path: metadata.name
           value: testGlobalName-testJobName
-        documentIndex: 0
       - hasDocuments:
-          count: 2
+          count: 1
       - equal:
           path: spec.template.spec.containers[0].image
           value: registry.example.com/test/image/repo:v0.1.0
-        documentIndex: 0
       - equal:
           path: spec.ttlSecondsAfterFinished
           value: 60
-        documentIndex: 0
-      # Check that ServiceAccount is created, that no ArgoCD or IRSA annotations are added and that it's referenced
-      # correctly in the Job.
-      - isKind:
-          of: ServiceAccount
-        documentIndex: 1
-      - isNull:
-          path: metadata.annotations["argocd.argoproj.io/hook", "argocd.argoproj.io/hook-delete-policy", "argocd.argoproj.io/sync-wave", "eks.amazonaws.com/role-arn"]
-        documentIndex: 1
-      - equal:
-          path: spec.template.spec.serviceAccountName
-          value: testGlobalName-testJobName
-        documentIndex: 0
   - it: Check all .job.* values can be set correctly, without overriding from main deployment
     set:
       global.clusterEnv: testClusterEnv
@@ -92,13 +75,12 @@ tests:
             requests:
               cpu: 1000m
               memory: 2Gi
-    documentIndex: 0
     asserts:
       - matchSnapshot: {} # Check for regressions and unexpected changes.
       - isKind:
           of: Job
       - hasDocuments:
-          count: 2
+          count: 1
       - equal:
           path: metadata.annotations["argocd.argoproj.io/hook"]
           value: PreSync
@@ -196,7 +178,7 @@ tests:
     asserts:
       - matchSnapshot: {} # Check for regressions and unexpected changes.
       - hasDocuments:
-          count: 3
+          count: 2
       - isKind:
           of: Job
         documentIndex: 0
@@ -233,11 +215,11 @@ tests:
       # Check that additional ExternalSecret gets created and that it's referenced correctly in the Job
       - isKind:
           of: ExternalSecret
-        documentIndex: 2
+        documentIndex: 1
       - equal:
           path: metadata.name
           value: testGlobalName-testJobName-app
-        documentIndex: 2
+        documentIndex: 1
       - equal:
           path: spec.template.spec.containers[0].envFrom
           value:
@@ -253,10 +235,10 @@ tests:
       image.registry: registry.example.com
       image.repository: test/image/repo
       image.tag: someTag
-      kubelock:
-        enabled: true
       jobs:
         - name: testJobName
+          kubelock:
+            enabled: true
     asserts:
       # Test that the Job references the Job's Service Account
       - documentIndex: 0
@@ -282,4 +264,4 @@ tests:
       - documentIndex: 2
         equal:
           path: roleRef.name
-          value: testGlobalName
+          value: testGlobalName-testJobName

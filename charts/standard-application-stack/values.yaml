@@ -957,6 +957,10 @@ jobDefaults:
   # -- If this field is set, ttlSecondsAfterFinished after the Job finishes, it is eligible to be automatically deleted.
   # ref: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.20/#cronjob-v1beta1-batch
   ttlSecondsAfterFinished: 60
+  kubelock:
+    enabled: false
+  irsa:
+    enabled: false
   # -- Any annotations you wish to add to the Job
   annotations: {}
   # -- ArgoCD sync config
