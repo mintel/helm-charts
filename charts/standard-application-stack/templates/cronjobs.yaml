@@ -36,9 +36,6 @@ spec:
           securityContext: {{- toYaml . | nindent 12 }}
           {{- end }}
           {{- end }}
-          {{- with .podSecurityContext }}
-          securityContext: {{ toYaml . | nindent 12 }}
-          {{- end }}
           {{- if (and $.Values.serviceAccount (or $.Values.serviceAccount.create $.Values.serviceAccount.name)) }}
           serviceAccountName: {{ $.Values.serviceAccount.name | default (include "mintel_common.fullname" $) }}
           {{- end }}
