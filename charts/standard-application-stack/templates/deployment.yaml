@@ -445,7 +445,7 @@ spec:
             - mountPath: {{ .Values.gitSyncSidecar.root }}
               name: {{ include "mintel_common.fullname" . }}-git-sync
       {{- end }}
-      {{- if .Values.volumes }}
+      {{- if or .Values.gitSyncSidecar.enabled .Values.filebeatSidecar.enabled .Values.volumes }}
       volumes:
         {{- if not .Values.statefulset }}
         {{- if .Values.persistentVolumes }}
