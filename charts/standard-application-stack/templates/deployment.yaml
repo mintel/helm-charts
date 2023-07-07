@@ -445,6 +445,7 @@ spec:
             - mountPath: {{ .Values.gitSyncSidecar.root }}
               name: {{ include "mintel_common.fullname" . }}-git-sync
       {{- end }}
+      {{- if .Values.volumes }}
       volumes:
         {{- if not .Values.statefulset }}
         {{- if .Values.persistentVolumes }}
@@ -455,6 +456,9 @@ spec:
         {{- end }}
         {{- end }}
         {{- end }}
+        {{- with .Values.volumes }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
         {{- if (and .Values.filebeatSidecar .Values.filebeatSidecar.enabled) }}
         - name: {{ include "mintel_common.fullname" . }}-filebeat
           configMap:
@@ -464,4 +468,5 @@ spec:
         - name: {{ include "mintel_common.fullname" . }}-git-sync
           emptyDir: {}
         {{- end }}
+      {{- end }}
 {{- end }}
