@@ -185,7 +185,6 @@ Check default env behavior:
               maxSkew: 1
               topologyKey: topology.kubernetes.io/zone
               whenUnsatisfiable: DoNotSchedule
-          volumes: null
 Check main container combines default env and `main.env` values:
   1: |
     apiVersion: apps/v1
@@ -292,4 +291,3 @@ Check main container combines default env and `main.env` values:
               maxSkew: 1
               topologyKey: topology.kubernetes.io/zone
               whenUnsatisfiable: DoNotSchedule
-          volumes: null

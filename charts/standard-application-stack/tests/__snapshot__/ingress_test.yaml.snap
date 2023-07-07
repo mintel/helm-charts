@@ -449,7 +449,6 @@ Check EXTRA_ALLOWED_HOSTS env var extraHosts with extraIngresses:
               maxSkew: 1
               topologyKey: topology.kubernetes.io/zone
               whenUnsatisfiable: DoNotSchedule
-          volumes: null
 Check HAProxy className set if ALB is disabled:
   1: |
     apiVersion: networking.k8s.io/v1

@@ -101,4 +101,3 @@ Has a pod template that uses the host network:
               maxSkew: 1
               topologyKey: topology.kubernetes.io/zone
               whenUnsatisfiable: DoNotSchedule
-          volumes: null

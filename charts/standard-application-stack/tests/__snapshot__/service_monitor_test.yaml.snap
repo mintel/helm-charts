@@ -321,7 +321,6 @@ Check combined template defaults:
               maxSkew: 1
               topologyKey: kubernetes.io/hostname
               whenUnsatisfiable: DoNotSchedule
-          volumes: null
   2: |
     apiVersion: monitoring.coreos.com/v1
     kind: ServiceMonitor
@@ -504,7 +503,6 @@ Check combined template with extra ports and monitors:
               maxSkew: 1
               topologyKey: kubernetes.io/hostname
               whenUnsatisfiable: DoNotSchedule
-          volumes: null
   2: |
     apiVersion: monitoring.coreos.com/v1
     kind: ServiceMonitor

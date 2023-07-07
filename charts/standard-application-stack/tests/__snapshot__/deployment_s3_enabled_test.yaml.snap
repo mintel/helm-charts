@@ -100,7 +100,6 @@ Check S3 envfrom secretRef is present:
               maxSkew: 1
               topologyKey: topology.kubernetes.io/zone
               whenUnsatisfiable: DoNotSchedule
-          volumes: null
 Check S3 envfrom secretRef is present for local environment:
   1: |
     apiVersion: apps/v1
@@ -201,7 +200,6 @@ Check S3 envfrom secretRef is present for local environment:
             runAsUser: 1000
           serviceAccountName: test-app
           terminationGracePeriodSeconds: 30
-          volumes: null
 Check S3 envfrom secretRef is present for multiple instances of TF Cloud helm chart:
   1: |
     apiVersion: apps/v1
@@ -312,7 +310,6 @@ Check S3 envfrom secretRef is present for multiple instances of TF Cloud helm ch
               maxSkew: 1
               topologyKey: topology.kubernetes.io/zone
               whenUnsatisfiable: DoNotSchedule
-          volumes: null
 Check S3 secretName Override:
   1: |
     apiVersion: apps/v1
@@ -415,7 +412,6 @@ Check S3 secretName Override:
               maxSkew: 1
               topologyKey: topology.kubernetes.io/zone
               whenUnsatisfiable: DoNotSchedule
-          volumes: null
 Check S3 stakater secret reloader annotation contains correct secrets for multiple instances of TF Cloud helm chart:
   1: |
     apiVersion: apps/v1
@@ -530,4 +526,3 @@ Check S3 stakater secret reloader annotation contains correct secrets for multip
               maxSkew: 1
               topologyKey: topology.kubernetes.io/zone
               whenUnsatisfiable: DoNotSchedule
-          volumes: null

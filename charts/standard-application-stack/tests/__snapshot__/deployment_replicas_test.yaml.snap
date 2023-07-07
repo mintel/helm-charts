@@ -101,7 +101,6 @@ Check allowSingleReplica doesn't alter strategy:
               maxSkew: 1
               topologyKey: topology.kubernetes.io/zone
               whenUnsatisfiable: DoNotSchedule
-          volumes: null
 Check allowSingleReplica set annotations:
   1: |
     apiVersion: apps/v1
@@ -205,7 +204,6 @@ Check allowSingleReplica set annotations:
               maxSkew: 1
               topologyKey: topology.kubernetes.io/zone
               whenUnsatisfiable: DoNotSchedule
-          volumes: null
 Check replicas unset when autoscaling is enabled:
   1: |
     apiVersion: apps/v1
@@ -307,7 +305,6 @@ Check replicas unset when autoscaling is enabled:
               maxSkew: 1
               topologyKey: topology.kubernetes.io/zone
               whenUnsatisfiable: DoNotSchedule
-          volumes: null
 Check singleReplicaOnly applied:
   1: |
     apiVersion: apps/v1
@@ -408,7 +405,6 @@ Check singleReplicaOnly applied:
               maxSkew: 1
               topologyKey: topology.kubernetes.io/zone
               whenUnsatisfiable: DoNotSchedule
-          volumes: null
 Check singleReplicaOnly ignore replicas value:
   1: |
     apiVersion: apps/v1
@@ -509,4 +505,3 @@ Check singleReplicaOnly ignore replicas value:
               maxSkew: 1
               topologyKey: topology.kubernetes.io/zone
               whenUnsatisfiable: DoNotSchedule
-          volumes: null
