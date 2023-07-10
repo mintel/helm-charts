@@ -95,7 +95,6 @@ Check stateful set is rendered with volumeClaimTemplates:
               maxSkew: 1
               topologyKey: topology.kubernetes.io/zone
               whenUnsatisfiable: DoNotSchedule
-          volumes: null
       updateStrategy:
         type: RollingUpdate
       volumeClaimTemplates:

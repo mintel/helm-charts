@@ -100,7 +100,6 @@ Check DynamoDB envfrom secretRef is present:
               maxSkew: 1
               topologyKey: topology.kubernetes.io/zone
               whenUnsatisfiable: DoNotSchedule
-          volumes: null
 Check DynamoDB envfrom secretRef is present for local environment:
   1: |
     apiVersion: apps/v1
@@ -201,7 +200,6 @@ Check DynamoDB envfrom secretRef is present for local environment:
             runAsUser: 1000
           serviceAccountName: test-app
           terminationGracePeriodSeconds: 30
-          volumes: null
 Check DynamoDB secretName Override:
   1: |
     apiVersion: apps/v1
@@ -304,4 +302,3 @@ Check DynamoDB secretName Override:
               maxSkew: 1
               topologyKey: topology.kubernetes.io/zone
               whenUnsatisfiable: DoNotSchedule
-          volumes: null

@@ -120,7 +120,6 @@ Check custom python otel extraEnv vars are added:
               maxSkew: 1
               topologyKey: topology.kubernetes.io/zone
               whenUnsatisfiable: DoNotSchedule
-          volumes: null
 Check custom sampler settings:
   1: |
     apiVersion: apps/v1
@@ -243,7 +242,6 @@ Check custom sampler settings:
               maxSkew: 1
               topologyKey: topology.kubernetes.io/zone
               whenUnsatisfiable: DoNotSchedule
-          volumes: null
 Check default python otel envars are added:
   1: |
     apiVersion: apps/v1
@@ -364,7 +362,6 @@ Check default python otel envars are added:
               maxSkew: 1
               topologyKey: topology.kubernetes.io/zone
               whenUnsatisfiable: DoNotSchedule
-          volumes: null
 Check global otel extraEnv vars are added:
   1: |
     apiVersion: apps/v1
@@ -487,4 +484,3 @@ Check global otel extraEnv vars are added:
               maxSkew: 1
               topologyKey: topology.kubernetes.io/zone
               whenUnsatisfiable: DoNotSchedule
-          volumes: null

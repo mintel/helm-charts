@@ -104,7 +104,6 @@ Check container extraPorts:
               maxSkew: 1
               topologyKey: topology.kubernetes.io/zone
               whenUnsatisfiable: DoNotSchedule
-          volumes: null
 Check container extraPorts are validated:
   1: |
     apiVersion: apps/v1
@@ -213,7 +212,6 @@ Check container extraPorts are validated:
               maxSkew: 1
               topologyKey: topology.kubernetes.io/zone
               whenUnsatisfiable: DoNotSchedule
-          volumes: null
 Check container extraPorts protocol:
   1: |
     apiVersion: apps/v1
@@ -321,7 +319,6 @@ Check container extraPorts protocol:
               maxSkew: 1
               topologyKey: topology.kubernetes.io/zone
               whenUnsatisfiable: DoNotSchedule
-          volumes: null
 Check container hybrid cloud ports:
   1: |
     apiVersion: apps/v1
@@ -429,7 +426,6 @@ Check container hybrid cloud ports:
               maxSkew: 1
               topologyKey: topology.kubernetes.io/zone
               whenUnsatisfiable: DoNotSchedule
-          volumes: null
 Check default container main port:
   1: |
     apiVersion: apps/v1
@@ -532,7 +528,6 @@ Check default container main port:
               maxSkew: 1
               topologyKey: topology.kubernetes.io/zone
               whenUnsatisfiable: DoNotSchedule
-          volumes: null
 Check overridden container main port:
   1: |
     apiVersion: apps/v1
@@ -635,4 +630,3 @@ Check overridden container main port:
               maxSkew: 1
               topologyKey: topology.kubernetes.io/zone
               whenUnsatisfiable: DoNotSchedule
-          volumes: null
