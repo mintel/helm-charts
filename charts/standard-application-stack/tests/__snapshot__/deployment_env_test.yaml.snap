@@ -67,6 +67,9 @@ Check celery does not pull in `main.env` values:
               resources:
                 limits: {}
                 requests: {}
+              securityContext:
+                apparmorProfile: unconfined
+                seccompProfile: null
           imagePullSecrets:
             - name: image-pull-gitlab
             - name: image-pull-docker-hub
@@ -163,6 +166,9 @@ Check default env behavior:
               resources:
                 limits: {}
                 requests: {}
+              securityContext:
+                apparmorProfile: unconfined
+                seccompProfile: null
               startupProbe:
                 failureThreshold: 60
                 httpGet:
@@ -269,6 +275,9 @@ Check main container combines default env and `main.env` values:
               resources:
                 limits: {}
                 requests: {}
+              securityContext:
+                apparmorProfile: unconfined
+                seccompProfile: null
               startupProbe:
                 failureThreshold: 60
                 httpGet:

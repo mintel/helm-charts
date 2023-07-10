@@ -98,6 +98,9 @@ Check custom python otel extraEnv vars are added:
               resources:
                 limits: {}
                 requests: {}
+              securityContext:
+                apparmorProfile: unconfined
+                seccompProfile: null
               startupProbe:
                 failureThreshold: 60
                 httpGet:
@@ -220,6 +223,9 @@ Check custom sampler settings:
               resources:
                 limits: {}
                 requests: {}
+              securityContext:
+                apparmorProfile: unconfined
+                seccompProfile: null
               startupProbe:
                 failureThreshold: 60
                 httpGet:
@@ -340,6 +346,9 @@ Check default python otel envars are added:
               resources:
                 limits: {}
                 requests: {}
+              securityContext:
+                apparmorProfile: unconfined
+                seccompProfile: null
               startupProbe:
                 failureThreshold: 60
                 httpGet:
@@ -462,6 +471,9 @@ Check global otel extraEnv vars are added:
               resources:
                 limits: {}
                 requests: {}
+              securityContext:
+                apparmorProfile: unconfined
+                seccompProfile: null
               startupProbe:
                 failureThreshold: 60
                 httpGet:

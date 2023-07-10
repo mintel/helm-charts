@@ -82,6 +82,9 @@ Check container extraPorts:
               resources:
                 limits: {}
                 requests: {}
+              securityContext:
+                apparmorProfile: unconfined
+                seccompProfile: null
               startupProbe:
                 failureThreshold: 60
                 httpGet:
@@ -190,6 +193,9 @@ Check container extraPorts are validated:
               resources:
                 limits: {}
                 requests: {}
+              securityContext:
+                apparmorProfile: unconfined
+                seccompProfile: null
               startupProbe:
                 failureThreshold: 60
                 httpGet:
@@ -297,6 +303,9 @@ Check container extraPorts protocol:
               resources:
                 limits: {}
                 requests: {}
+              securityContext:
+                apparmorProfile: unconfined
+                seccompProfile: null
               startupProbe:
                 failureThreshold: 60
                 httpGet:
@@ -404,6 +413,9 @@ Check container hybrid cloud ports:
               resources:
                 limits: {}
                 requests: {}
+              securityContext:
+                apparmorProfile: unconfined
+                seccompProfile: null
               startupProbe:
                 failureThreshold: 60
                 httpGet:
@@ -506,6 +518,9 @@ Check default container main port:
               resources:
                 limits: {}
                 requests: {}
+              securityContext:
+                apparmorProfile: unconfined
+                seccompProfile: null
               startupProbe:
                 failureThreshold: 60
                 httpGet:
@@ -608,6 +623,9 @@ Check overridden container main port:
               resources:
                 limits: {}
                 requests: {}
+              securityContext:
+                apparmorProfile: unconfined
+                seccompProfile: null
               startupProbe:
                 failureThreshold: 60
                 httpGet:

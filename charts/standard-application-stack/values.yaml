@@ -197,8 +197,10 @@ podDisruptionBudget:
 
 # -- Security context for the container
 # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
-securityContext: {}
-# securityContext:
+#securityContext: {}
+securityContext:
+  seccompProfile: null
+  apparmorProfile: unconfined
 #   allowPrivilegeEscalation: false
 #   readOnlyRootFilesystem: true
 #   capabilities:

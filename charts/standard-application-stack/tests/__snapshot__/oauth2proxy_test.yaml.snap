@@ -78,6 +78,9 @@ Check default container args:
               resources:
                 limits: {}
                 requests: {}
+              securityContext:
+                apparmorProfile: unconfined
+                seccompProfile: null
               startupProbe:
                 failureThreshold: 60
                 httpGet:
@@ -230,6 +233,9 @@ Check setting skip-auth-regex from extra passed in values:
               resources:
                 limits: {}
                 requests: {}
+              securityContext:
+                apparmorProfile: unconfined
+                seccompProfile: null
               startupProbe:
                 failureThreshold: 60
                 httpGet:
@@ -383,6 +389,9 @@ Check setting skip-auth-regex from extra passed in values when they already cont
               resources:
                 limits: {}
                 requests: {}
+              securityContext:
+                apparmorProfile: unconfined
+                seccompProfile: null
               startupProbe:
                 failureThreshold: 60
                 httpGet:
@@ -536,6 +545,9 @@ Check setting skip-auth-regex from overridden health-check values:
               resources:
                 limits: {}
                 requests: {}
+              securityContext:
+                apparmorProfile: unconfined
+                seccompProfile: null
               startupProbe:
                 failureThreshold: 60
                 httpGet:
@@ -688,6 +700,9 @@ Check sidecar present if enabled:
               resources:
                 limits: {}
                 requests: {}
+              securityContext:
+                apparmorProfile: unconfined
+                seccompProfile: null
               startupProbe:
                 failureThreshold: 60
                 httpGet:

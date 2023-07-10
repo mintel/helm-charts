@@ -78,6 +78,9 @@ Check S3 envfrom secretRef is present:
               resources:
                 limits: {}
                 requests: {}
+              securityContext:
+                apparmorProfile: unconfined
+                seccompProfile: null
               startupProbe:
                 failureThreshold: 60
                 httpGet:
@@ -186,6 +189,9 @@ Check S3 envfrom secretRef is present for local environment:
               resources:
                 limits: {}
                 requests: {}
+              securityContext:
+                apparmorProfile: unconfined
+                seccompProfile: null
               startupProbe:
                 failureThreshold: 60
                 httpGet:
@@ -287,6 +293,9 @@ Check S3 envfrom secretRef is present for multiple instances of TF Cloud helm ch
               resources:
                 limits: {}
                 requests: {}
+              securityContext:
+                apparmorProfile: unconfined
+                seccompProfile: null
               startupProbe:
                 failureThreshold: 60
                 httpGet:
@@ -390,6 +399,9 @@ Check S3 secretName Override:
               resources:
                 limits: {}
                 requests: {}
+              securityContext:
+                apparmorProfile: unconfined
+                seccompProfile: null
               startupProbe:
                 failureThreshold: 60
                 httpGet:
@@ -503,6 +515,9 @@ Check S3 stakater secret reloader annotation contains correct secrets for multip
               resources:
                 limits: {}
                 requests: {}
+              securityContext:
+                apparmorProfile: unconfined
+                seccompProfile: null
               startupProbe:
                 failureThreshold: 60
                 httpGet:

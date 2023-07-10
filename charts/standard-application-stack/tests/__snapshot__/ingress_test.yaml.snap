@@ -427,6 +427,9 @@ Check EXTRA_ALLOWED_HOSTS env var extraHosts with extraIngresses:
               resources:
                 limits: {}
                 requests: {}
+              securityContext:
+                apparmorProfile: unconfined
+                seccompProfile: null
               startupProbe:
                 failureThreshold: 60
                 httpGet:
