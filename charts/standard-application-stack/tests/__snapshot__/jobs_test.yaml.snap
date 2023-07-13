@@ -208,5 +208,17 @@ Check default values are correct with minimal configuration:
             - name: image-pull-gitlab
             - name: image-pull-docker-hub
           restartPolicy: Never
+          securityContext:
+            allowPrivilegeEscalation: false
+            apparmor:
+              enabled: false
+              profile: unconfined
+            capabilities:
+              drop:
+                - ALL
+            runAsNonRoot: true
+            runAsUser: 1000
+            seccompProfile:
+              type: RuntimeDefault
           serviceAccountName: test-app
       ttlSecondsAfterFinished: 60

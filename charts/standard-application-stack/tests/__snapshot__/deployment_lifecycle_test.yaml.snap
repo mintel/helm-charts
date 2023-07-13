@@ -113,6 +113,18 @@ Check AWS ALB lifecycle rule applied:
           imagePullSecrets:
             - name: image-pull-gitlab
             - name: image-pull-docker-hub
+          securityContext:
+            allowPrivilegeEscalation: false
+            apparmor:
+              enabled: false
+              profile: unconfined
+            capabilities:
+              drop:
+                - ALL
+            runAsNonRoot: true
+            runAsUser: 1000
+            seccompProfile:
+              type: RuntimeDefault
           serviceAccountName: example-app
           terminationGracePeriodSeconds: 30
           topologySpreadConstraints:
@@ -238,6 +250,18 @@ Check AWS ALB lifecycle rules applied with custom delay:
           imagePullSecrets:
             - name: image-pull-gitlab
             - name: image-pull-docker-hub
+          securityContext:
+            allowPrivilegeEscalation: false
+            apparmor:
+              enabled: false
+              profile: unconfined
+            capabilities:
+              drop:
+                - ALL
+            runAsNonRoot: true
+            runAsUser: 1000
+            seccompProfile:
+              type: RuntimeDefault
           serviceAccountName: example-app
           terminationGracePeriodSeconds: 30
           topologySpreadConstraints:
@@ -356,6 +380,18 @@ Check AWS ALB lifecycle rules are not applied when ALB disabled:
           imagePullSecrets:
             - name: image-pull-gitlab
             - name: image-pull-docker-hub
+          securityContext:
+            allowPrivilegeEscalation: false
+            apparmor:
+              enabled: false
+              profile: unconfined
+            capabilities:
+              drop:
+                - ALL
+            runAsNonRoot: true
+            runAsUser: 1000
+            seccompProfile:
+              type: RuntimeDefault
           serviceAccountName: example-app
           terminationGracePeriodSeconds: 30
           topologySpreadConstraints:
@@ -468,6 +504,18 @@ Check AWS ALB lifecycle rules are not applied when ALB enabled (but Ingress disa
           imagePullSecrets:
             - name: image-pull-gitlab
             - name: image-pull-docker-hub
+          securityContext:
+            allowPrivilegeEscalation: false
+            apparmor:
+              enabled: false
+              profile: unconfined
+            capabilities:
+              drop:
+                - ALL
+            runAsNonRoot: true
+            runAsUser: 1000
+            seccompProfile:
+              type: RuntimeDefault
           serviceAccountName: example-app
           terminationGracePeriodSeconds: 30
           topologySpreadConstraints:
@@ -585,6 +633,18 @@ Check lifecycle rules:
           imagePullSecrets:
             - name: image-pull-gitlab
             - name: image-pull-docker-hub
+          securityContext:
+            allowPrivilegeEscalation: false
+            apparmor:
+              enabled: false
+              profile: unconfined
+            capabilities:
+              drop:
+                - ALL
+            runAsNonRoot: true
+            runAsUser: 1000
+            seccompProfile:
+              type: RuntimeDefault
           serviceAccountName: example-app
           terminationGracePeriodSeconds: 30
           topologySpreadConstraints:

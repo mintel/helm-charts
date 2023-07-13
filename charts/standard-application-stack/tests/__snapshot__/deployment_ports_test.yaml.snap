@@ -104,6 +104,18 @@ Check container extraPorts:
           imagePullSecrets:
             - name: image-pull-gitlab
             - name: image-pull-docker-hub
+          securityContext:
+            allowPrivilegeEscalation: false
+            apparmor:
+              enabled: false
+              profile: unconfined
+            capabilities:
+              drop:
+                - ALL
+            runAsNonRoot: true
+            runAsUser: 1000
+            seccompProfile:
+              type: RuntimeDefault
           serviceAccountName: example-app
           terminationGracePeriodSeconds: 30
           topologySpreadConstraints:
@@ -222,6 +234,18 @@ Check container extraPorts are validated:
           imagePullSecrets:
             - name: image-pull-gitlab
             - name: image-pull-docker-hub
+          securityContext:
+            allowPrivilegeEscalation: false
+            apparmor:
+              enabled: false
+              profile: unconfined
+            capabilities:
+              drop:
+                - ALL
+            runAsNonRoot: true
+            runAsUser: 1000
+            seccompProfile:
+              type: RuntimeDefault
           serviceAccountName: example-app
           terminationGracePeriodSeconds: 30
           topologySpreadConstraints:
@@ -339,6 +363,18 @@ Check container extraPorts protocol:
           imagePullSecrets:
             - name: image-pull-gitlab
             - name: image-pull-docker-hub
+          securityContext:
+            allowPrivilegeEscalation: false
+            apparmor:
+              enabled: false
+              profile: unconfined
+            capabilities:
+              drop:
+                - ALL
+            runAsNonRoot: true
+            runAsUser: 1000
+            seccompProfile:
+              type: RuntimeDefault
           serviceAccountName: example-app
           terminationGracePeriodSeconds: 30
           topologySpreadConstraints:
@@ -456,6 +492,18 @@ Check container hybrid cloud ports:
           imagePullSecrets:
             - name: image-pull-gitlab
             - name: image-pull-docker-hub
+          securityContext:
+            allowPrivilegeEscalation: false
+            apparmor:
+              enabled: false
+              profile: unconfined
+            capabilities:
+              drop:
+                - ALL
+            runAsNonRoot: true
+            runAsUser: 1000
+            seccompProfile:
+              type: RuntimeDefault
           serviceAccountName: example-app
           terminationGracePeriodSeconds: 30
           topologySpreadConstraints:
@@ -568,6 +616,18 @@ Check default container main port:
           imagePullSecrets:
             - name: image-pull-gitlab
             - name: image-pull-docker-hub
+          securityContext:
+            allowPrivilegeEscalation: false
+            apparmor:
+              enabled: false
+              profile: unconfined
+            capabilities:
+              drop:
+                - ALL
+            runAsNonRoot: true
+            runAsUser: 1000
+            seccompProfile:
+              type: RuntimeDefault
           serviceAccountName: example-app
           terminationGracePeriodSeconds: 30
           topologySpreadConstraints:
@@ -680,6 +740,18 @@ Check overridden container main port:
           imagePullSecrets:
             - name: image-pull-gitlab
             - name: image-pull-docker-hub
+          securityContext:
+            allowPrivilegeEscalation: false
+            apparmor:
+              enabled: false
+              profile: unconfined
+            capabilities:
+              drop:
+                - ALL
+            runAsNonRoot: true
+            runAsUser: 1000
+            seccompProfile:
+              type: RuntimeDefault
           serviceAccountName: example-app
           terminationGracePeriodSeconds: 30
           topologySpreadConstraints:

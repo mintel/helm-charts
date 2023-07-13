@@ -150,6 +150,18 @@ Check default container args:
           imagePullSecrets:
             - name: image-pull-gitlab
             - name: image-pull-docker-hub
+          securityContext:
+            allowPrivilegeEscalation: false
+            apparmor:
+              enabled: false
+              profile: unconfined
+            capabilities:
+              drop:
+                - ALL
+            runAsNonRoot: true
+            runAsUser: 1000
+            seccompProfile:
+              type: RuntimeDefault
           serviceAccountName: test-app
           terminationGracePeriodSeconds: 30
           topologySpreadConstraints:
@@ -313,6 +325,18 @@ Check setting skip-auth-regex from extra passed in values:
           imagePullSecrets:
             - name: image-pull-gitlab
             - name: image-pull-docker-hub
+          securityContext:
+            allowPrivilegeEscalation: false
+            apparmor:
+              enabled: false
+              profile: unconfined
+            capabilities:
+              drop:
+                - ALL
+            runAsNonRoot: true
+            runAsUser: 1000
+            seccompProfile:
+              type: RuntimeDefault
           serviceAccountName: test-app
           terminationGracePeriodSeconds: 30
           topologySpreadConstraints:
@@ -476,6 +500,18 @@ Check setting skip-auth-regex from extra passed in values when they already cont
           imagePullSecrets:
             - name: image-pull-gitlab
             - name: image-pull-docker-hub
+          securityContext:
+            allowPrivilegeEscalation: false
+            apparmor:
+              enabled: false
+              profile: unconfined
+            capabilities:
+              drop:
+                - ALL
+            runAsNonRoot: true
+            runAsUser: 1000
+            seccompProfile:
+              type: RuntimeDefault
           serviceAccountName: test-app
           terminationGracePeriodSeconds: 30
           topologySpreadConstraints:
@@ -638,6 +674,18 @@ Check setting skip-auth-regex from overridden health-check values:
           imagePullSecrets:
             - name: image-pull-gitlab
             - name: image-pull-docker-hub
+          securityContext:
+            allowPrivilegeEscalation: false
+            apparmor:
+              enabled: false
+              profile: unconfined
+            capabilities:
+              drop:
+                - ALL
+            runAsNonRoot: true
+            runAsUser: 1000
+            seccompProfile:
+              type: RuntimeDefault
           serviceAccountName: test-app
           terminationGracePeriodSeconds: 30
           topologySpreadConstraints:
@@ -800,6 +848,18 @@ Check sidecar present if enabled:
           imagePullSecrets:
             - name: image-pull-gitlab
             - name: image-pull-docker-hub
+          securityContext:
+            allowPrivilegeEscalation: false
+            apparmor:
+              enabled: false
+              profile: unconfined
+            capabilities:
+              drop:
+                - ALL
+            runAsNonRoot: true
+            runAsUser: 1000
+            seccompProfile:
+              type: RuntimeDefault
           serviceAccountName: test-app
           terminationGracePeriodSeconds: 30
           topologySpreadConstraints:

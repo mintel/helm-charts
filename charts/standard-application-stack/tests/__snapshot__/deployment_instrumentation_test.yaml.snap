@@ -120,6 +120,18 @@ Check custom python otel extraEnv vars are added:
           imagePullSecrets:
             - name: image-pull-gitlab
             - name: image-pull-docker-hub
+          securityContext:
+            allowPrivilegeEscalation: false
+            apparmor:
+              enabled: false
+              profile: unconfined
+            capabilities:
+              drop:
+                - ALL
+            runAsNonRoot: true
+            runAsUser: 1000
+            seccompProfile:
+              type: RuntimeDefault
           serviceAccountName: test-app
           terminationGracePeriodSeconds: 30
           topologySpreadConstraints:
@@ -252,6 +264,18 @@ Check custom sampler settings:
           imagePullSecrets:
             - name: image-pull-gitlab
             - name: image-pull-docker-hub
+          securityContext:
+            allowPrivilegeEscalation: false
+            apparmor:
+              enabled: false
+              profile: unconfined
+            capabilities:
+              drop:
+                - ALL
+            runAsNonRoot: true
+            runAsUser: 1000
+            seccompProfile:
+              type: RuntimeDefault
           serviceAccountName: test-app
           terminationGracePeriodSeconds: 30
           topologySpreadConstraints:
@@ -382,6 +406,18 @@ Check default python otel envars are added:
           imagePullSecrets:
             - name: image-pull-gitlab
             - name: image-pull-docker-hub
+          securityContext:
+            allowPrivilegeEscalation: false
+            apparmor:
+              enabled: false
+              profile: unconfined
+            capabilities:
+              drop:
+                - ALL
+            runAsNonRoot: true
+            runAsUser: 1000
+            seccompProfile:
+              type: RuntimeDefault
           serviceAccountName: test-app
           terminationGracePeriodSeconds: 30
           topologySpreadConstraints:
@@ -514,6 +550,18 @@ Check global otel extraEnv vars are added:
           imagePullSecrets:
             - name: image-pull-gitlab
             - name: image-pull-docker-hub
+          securityContext:
+            allowPrivilegeEscalation: false
+            apparmor:
+              enabled: false
+              profile: unconfined
+            capabilities:
+              drop:
+                - ALL
+            runAsNonRoot: true
+            runAsUser: 1000
+            seccompProfile:
+              type: RuntimeDefault
           serviceAccountName: test-app
           terminationGracePeriodSeconds: 30
           topologySpreadConstraints:

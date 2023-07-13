@@ -24,13 +24,8 @@ spec:
       labels: {{ include "mintel_common.labels" $data | nindent 8 }}
     spec:
       {{- include "mintel_common.imagePullSecrets" . | nindent 6 }}
-      {{- if .includeBasePodSecurityContext }}
-      {{- with .Values.podSecurityContext }}
-      securityContext: {{- toYaml . | nindent 6 }}
-      {{- end }}
-      {{- end }}
-      {{- with .podSecurityContext }}
-      securityContext: {{ toYaml . | nindent 6 }}
+      {{- with .podSecurityContext | default .Values.podSecurityContext }}
+      securityContext: {{- toYaml . | nindent 8 }}
       {{- end }}
       {{- if (and .Values.serviceAccount (or .Values.serviceAccount.create .Values.serviceAccount.name)) }}
       serviceAccountName: {{ .Values.serviceAccount.name | default (include "mintel_common.fullname" .) }}

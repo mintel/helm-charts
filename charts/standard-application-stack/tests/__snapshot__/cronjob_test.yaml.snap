@@ -63,6 +63,18 @@ Check CronJob Default Overrides:
                 - name: image-pull-gitlab
                 - name: image-pull-docker-hub
               restartPolicy: OnFailure
+              securityContext:
+                allowPrivilegeEscalation: false
+                apparmor:
+                  enabled: false
+                  profile: unconfined
+                capabilities:
+                  drop:
+                    - ALL
+                runAsNonRoot: true
+                runAsUser: 1000
+                seccompProfile:
+                  type: RuntimeDefault
               serviceAccountName: example-app
           ttlSecondsAfterFinished: 120
       schedule: 0 1 * * *
@@ -132,6 +144,18 @@ Check CronJob Defaults:
                 - name: image-pull-gitlab
                 - name: image-pull-docker-hub
               restartPolicy: Never
+              securityContext:
+                allowPrivilegeEscalation: false
+                apparmor:
+                  enabled: false
+                  profile: unconfined
+                capabilities:
+                  drop:
+                    - ALL
+                runAsNonRoot: true
+                runAsUser: 1000
+                seccompProfile:
+                  type: RuntimeDefault
               serviceAccountName: example-app
           ttlSecondsAfterFinished: 60
       schedule: 0 0 * * *
@@ -201,6 +225,18 @@ Check CronJob Job Overrides:
                 - name: image-pull-gitlab
                 - name: image-pull-docker-hub
               restartPolicy: OnFailure
+              securityContext:
+                allowPrivilegeEscalation: false
+                apparmor:
+                  enabled: false
+                  profile: unconfined
+                capabilities:
+                  drop:
+                    - ALL
+                runAsNonRoot: true
+                runAsUser: 1000
+                seccompProfile:
+                  type: RuntimeDefault
               serviceAccountName: example-app
           ttlSecondsAfterFinished: 120
       schedule: 0 1 * * *
@@ -270,6 +306,18 @@ Check CronJob ttlSecondsAfterFinished zero value:
                 - name: image-pull-gitlab
                 - name: image-pull-docker-hub
               restartPolicy: Never
+              securityContext:
+                allowPrivilegeEscalation: false
+                apparmor:
+                  enabled: false
+                  profile: unconfined
+                capabilities:
+                  drop:
+                    - ALL
+                runAsNonRoot: true
+                runAsUser: 1000
+                seccompProfile:
+                  type: RuntimeDefault
               serviceAccountName: example-app
       schedule: 0 1 * * *
       suspend: false
@@ -338,6 +386,18 @@ CronJob can have a timezone:
                 - name: image-pull-gitlab
                 - name: image-pull-docker-hub
               restartPolicy: Never
+              securityContext:
+                allowPrivilegeEscalation: false
+                apparmor:
+                  enabled: false
+                  profile: unconfined
+                capabilities:
+                  drop:
+                    - ALL
+                runAsNonRoot: true
+                runAsUser: 1000
+                seccompProfile:
+                  type: RuntimeDefault
               serviceAccountName: example-app
           ttlSecondsAfterFinished: 60
       schedule: 0 1 * * *
