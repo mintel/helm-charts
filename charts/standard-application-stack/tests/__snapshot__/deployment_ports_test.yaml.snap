@@ -82,6 +82,18 @@ Check container extraPorts:
               resources:
                 limits: {}
                 requests: {}
+              securityContext:
+                allowPrivilegeEscalation: false
+                apparmor:
+                  enabled: false
+                  profile: unconfined
+                capabilities:
+                  drop:
+                    - ALL
+                runAsNonRoot: true
+                runAsUser: 1000
+                seccompProfile:
+                  type: RuntimeDefault
               startupProbe:
                 failureThreshold: 60
                 httpGet:
@@ -92,8 +104,6 @@ Check container extraPorts:
           imagePullSecrets:
             - name: image-pull-gitlab
             - name: image-pull-docker-hub
-          securityContext:
-            runAsUser: 1000
           serviceAccountName: example-app
           terminationGracePeriodSeconds: 30
           topologySpreadConstraints:
@@ -190,6 +200,18 @@ Check container extraPorts are validated:
               resources:
                 limits: {}
                 requests: {}
+              securityContext:
+                allowPrivilegeEscalation: false
+                apparmor:
+                  enabled: false
+                  profile: unconfined
+                capabilities:
+                  drop:
+                    - ALL
+                runAsNonRoot: true
+                runAsUser: 1000
+                seccompProfile:
+                  type: RuntimeDefault
               startupProbe:
                 failureThreshold: 60
                 httpGet:
@@ -200,8 +222,6 @@ Check container extraPorts are validated:
           imagePullSecrets:
             - name: image-pull-gitlab
             - name: image-pull-docker-hub
-          securityContext:
-            runAsUser: 1000
           serviceAccountName: example-app
           terminationGracePeriodSeconds: 30
           topologySpreadConstraints:
@@ -297,6 +317,18 @@ Check container extraPorts protocol:
               resources:
                 limits: {}
                 requests: {}
+              securityContext:
+                allowPrivilegeEscalation: false
+                apparmor:
+                  enabled: false
+                  profile: unconfined
+                capabilities:
+                  drop:
+                    - ALL
+                runAsNonRoot: true
+                runAsUser: 1000
+                seccompProfile:
+                  type: RuntimeDefault
               startupProbe:
                 failureThreshold: 60
                 httpGet:
@@ -307,8 +339,6 @@ Check container extraPorts protocol:
           imagePullSecrets:
             - name: image-pull-gitlab
             - name: image-pull-docker-hub
-          securityContext:
-            runAsUser: 1000
           serviceAccountName: example-app
           terminationGracePeriodSeconds: 30
           topologySpreadConstraints:
@@ -404,6 +434,18 @@ Check container hybrid cloud ports:
               resources:
                 limits: {}
                 requests: {}
+              securityContext:
+                allowPrivilegeEscalation: false
+                apparmor:
+                  enabled: false
+                  profile: unconfined
+                capabilities:
+                  drop:
+                    - ALL
+                runAsNonRoot: true
+                runAsUser: 1000
+                seccompProfile:
+                  type: RuntimeDefault
               startupProbe:
                 failureThreshold: 60
                 httpGet:
@@ -414,8 +456,6 @@ Check container hybrid cloud ports:
           imagePullSecrets:
             - name: image-pull-gitlab
             - name: image-pull-docker-hub
-          securityContext:
-            runAsUser: 1000
           serviceAccountName: example-app
           terminationGracePeriodSeconds: 30
           topologySpreadConstraints:
@@ -506,6 +546,18 @@ Check default container main port:
               resources:
                 limits: {}
                 requests: {}
+              securityContext:
+                allowPrivilegeEscalation: false
+                apparmor:
+                  enabled: false
+                  profile: unconfined
+                capabilities:
+                  drop:
+                    - ALL
+                runAsNonRoot: true
+                runAsUser: 1000
+                seccompProfile:
+                  type: RuntimeDefault
               startupProbe:
                 failureThreshold: 60
                 httpGet:
@@ -516,8 +568,6 @@ Check default container main port:
           imagePullSecrets:
             - name: image-pull-gitlab
             - name: image-pull-docker-hub
-          securityContext:
-            runAsUser: 1000
           serviceAccountName: example-app
           terminationGracePeriodSeconds: 30
           topologySpreadConstraints:
@@ -608,6 +658,18 @@ Check overridden container main port:
               resources:
                 limits: {}
                 requests: {}
+              securityContext:
+                allowPrivilegeEscalation: false
+                apparmor:
+                  enabled: false
+                  profile: unconfined
+                capabilities:
+                  drop:
+                    - ALL
+                runAsNonRoot: true
+                runAsUser: 1000
+                seccompProfile:
+                  type: RuntimeDefault
               startupProbe:
                 failureThreshold: 60
                 httpGet:
@@ -618,8 +680,6 @@ Check overridden container main port:
           imagePullSecrets:
             - name: image-pull-gitlab
             - name: image-pull-docker-hub
-          securityContext:
-            runAsUser: 1000
           serviceAccountName: example-app
           terminationGracePeriodSeconds: 30
           topologySpreadConstraints:

@@ -79,6 +79,18 @@ Check allowSingleReplica doesn't alter strategy:
               resources:
                 limits: {}
                 requests: {}
+              securityContext:
+                allowPrivilegeEscalation: false
+                apparmor:
+                  enabled: false
+                  profile: unconfined
+                capabilities:
+                  drop:
+                    - ALL
+                runAsNonRoot: true
+                runAsUser: 1000
+                seccompProfile:
+                  type: RuntimeDefault
               startupProbe:
                 failureThreshold: 60
                 httpGet:
@@ -89,8 +101,6 @@ Check allowSingleReplica doesn't alter strategy:
           imagePullSecrets:
             - name: image-pull-gitlab
             - name: image-pull-docker-hub
-          securityContext:
-            runAsUser: 1000
           serviceAccountName: example-app
           terminationGracePeriodSeconds: 30
           topologySpreadConstraints:
@@ -182,6 +192,18 @@ Check allowSingleReplica set annotations:
               resources:
                 limits: {}
                 requests: {}
+              securityContext:
+                allowPrivilegeEscalation: false
+                apparmor:
+                  enabled: false
+                  profile: unconfined
+                capabilities:
+                  drop:
+                    - ALL
+                runAsNonRoot: true
+                runAsUser: 1000
+                seccompProfile:
+                  type: RuntimeDefault
               startupProbe:
                 failureThreshold: 60
                 httpGet:
@@ -192,8 +214,6 @@ Check allowSingleReplica set annotations:
           imagePullSecrets:
             - name: image-pull-gitlab
             - name: image-pull-docker-hub
-          securityContext:
-            runAsUser: 1000
           serviceAccountName: example-app
           terminationGracePeriodSeconds: 30
           topologySpreadConstraints:
@@ -283,6 +303,18 @@ Check replicas unset when autoscaling is enabled:
               resources:
                 limits: {}
                 requests: {}
+              securityContext:
+                allowPrivilegeEscalation: false
+                apparmor:
+                  enabled: false
+                  profile: unconfined
+                capabilities:
+                  drop:
+                    - ALL
+                runAsNonRoot: true
+                runAsUser: 1000
+                seccompProfile:
+                  type: RuntimeDefault
               startupProbe:
                 failureThreshold: 60
                 httpGet:
@@ -293,8 +325,6 @@ Check replicas unset when autoscaling is enabled:
           imagePullSecrets:
             - name: image-pull-gitlab
             - name: image-pull-docker-hub
-          securityContext:
-            runAsUser: 1000
           serviceAccountName: example-app
           terminationGracePeriodSeconds: 30
           topologySpreadConstraints:
@@ -383,6 +413,18 @@ Check singleReplicaOnly applied:
               resources:
                 limits: {}
                 requests: {}
+              securityContext:
+                allowPrivilegeEscalation: false
+                apparmor:
+                  enabled: false
+                  profile: unconfined
+                capabilities:
+                  drop:
+                    - ALL
+                runAsNonRoot: true
+                runAsUser: 1000
+                seccompProfile:
+                  type: RuntimeDefault
               startupProbe:
                 failureThreshold: 60
                 httpGet:
@@ -393,8 +435,6 @@ Check singleReplicaOnly applied:
           imagePullSecrets:
             - name: image-pull-gitlab
             - name: image-pull-docker-hub
-          securityContext:
-            runAsUser: 1000
           serviceAccountName: example-app
           terminationGracePeriodSeconds: 30
           topologySpreadConstraints:
@@ -483,6 +523,18 @@ Check singleReplicaOnly ignore replicas value:
               resources:
                 limits: {}
                 requests: {}
+              securityContext:
+                allowPrivilegeEscalation: false
+                apparmor:
+                  enabled: false
+                  profile: unconfined
+                capabilities:
+                  drop:
+                    - ALL
+                runAsNonRoot: true
+                runAsUser: 1000
+                seccompProfile:
+                  type: RuntimeDefault
               startupProbe:
                 failureThreshold: 60
                 httpGet:
@@ -493,8 +545,6 @@ Check singleReplicaOnly ignore replicas value:
           imagePullSecrets:
             - name: image-pull-gitlab
             - name: image-pull-docker-hub
-          securityContext:
-            runAsUser: 1000
           serviceAccountName: example-app
           terminationGracePeriodSeconds: 30
           topologySpreadConstraints:

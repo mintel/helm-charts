@@ -78,6 +78,18 @@ Check DynamoDB envfrom secretRef is present:
               resources:
                 limits: {}
                 requests: {}
+              securityContext:
+                allowPrivilegeEscalation: false
+                apparmor:
+                  enabled: false
+                  profile: unconfined
+                capabilities:
+                  drop:
+                    - ALL
+                runAsNonRoot: true
+                runAsUser: 1000
+                seccompProfile:
+                  type: RuntimeDefault
               startupProbe:
                 failureThreshold: 60
                 httpGet:
@@ -88,8 +100,6 @@ Check DynamoDB envfrom secretRef is present:
           imagePullSecrets:
             - name: image-pull-gitlab
             - name: image-pull-docker-hub
-          securityContext:
-            runAsUser: 1000
           serviceAccountName: test-app
           terminationGracePeriodSeconds: 30
           topologySpreadConstraints:
@@ -186,6 +196,18 @@ Check DynamoDB envfrom secretRef is present for local environment:
               resources:
                 limits: {}
                 requests: {}
+              securityContext:
+                allowPrivilegeEscalation: false
+                apparmor:
+                  enabled: false
+                  profile: unconfined
+                capabilities:
+                  drop:
+                    - ALL
+                runAsNonRoot: true
+                runAsUser: 1000
+                seccompProfile:
+                  type: RuntimeDefault
               startupProbe:
                 failureThreshold: 60
                 httpGet:
@@ -196,8 +218,6 @@ Check DynamoDB envfrom secretRef is present for local environment:
           imagePullSecrets:
             - name: image-pull-gitlab
             - name: image-pull-docker-hub
-          securityContext:
-            runAsUser: 1000
           serviceAccountName: test-app
           terminationGracePeriodSeconds: 30
 Check DynamoDB secretName Override:
@@ -280,6 +300,18 @@ Check DynamoDB secretName Override:
               resources:
                 limits: {}
                 requests: {}
+              securityContext:
+                allowPrivilegeEscalation: false
+                apparmor:
+                  enabled: false
+                  profile: unconfined
+                capabilities:
+                  drop:
+                    - ALL
+                runAsNonRoot: true
+                runAsUser: 1000
+                seccompProfile:
+                  type: RuntimeDefault
               startupProbe:
                 failureThreshold: 60
                 httpGet:
@@ -290,8 +322,6 @@ Check DynamoDB secretName Override:
           imagePullSecrets:
             - name: image-pull-gitlab
             - name: image-pull-docker-hub
-          securityContext:
-            runAsUser: 1000
           serviceAccountName: test-app
           terminationGracePeriodSeconds: 30
           topologySpreadConstraints:

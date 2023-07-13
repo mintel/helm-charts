@@ -67,11 +67,21 @@ Check celery does not pull in `main.env` values:
               resources:
                 limits: {}
                 requests: {}
+              securityContext:
+                allowPrivilegeEscalation: false
+                apparmor:
+                  enabled: false
+                  profile: unconfined
+                capabilities:
+                  drop:
+                    - ALL
+                runAsNonRoot: true
+                runAsUser: 1000
+                seccompProfile:
+                  type: RuntimeDefault
           imagePullSecrets:
             - name: image-pull-gitlab
             - name: image-pull-docker-hub
-          securityContext:
-            runAsUser: 1000
           serviceAccountName: example-app
           topologySpreadConstraints:
             - labelSelector:
@@ -163,6 +173,18 @@ Check default env behavior:
               resources:
                 limits: {}
                 requests: {}
+              securityContext:
+                allowPrivilegeEscalation: false
+                apparmor:
+                  enabled: false
+                  profile: unconfined
+                capabilities:
+                  drop:
+                    - ALL
+                runAsNonRoot: true
+                runAsUser: 1000
+                seccompProfile:
+                  type: RuntimeDefault
               startupProbe:
                 failureThreshold: 60
                 httpGet:
@@ -173,8 +195,6 @@ Check default env behavior:
           imagePullSecrets:
             - name: image-pull-gitlab
             - name: image-pull-docker-hub
-          securityContext:
-            runAsUser: 1000
           serviceAccountName: example-app
           terminationGracePeriodSeconds: 30
           topologySpreadConstraints:
@@ -269,6 +289,18 @@ Check main container combines default env and `main.env` values:
               resources:
                 limits: {}
                 requests: {}
+              securityContext:
+                allowPrivilegeEscalation: false
+                apparmor:
+                  enabled: false
+                  profile: unconfined
+                capabilities:
+                  drop:
+                    - ALL
+                runAsNonRoot: true
+                runAsUser: 1000
+                seccompProfile:
+                  type: RuntimeDefault
               startupProbe:
                 failureThreshold: 60
                 httpGet:
@@ -279,8 +311,6 @@ Check main container combines default env and `main.env` values:
           imagePullSecrets:
             - name: image-pull-gitlab
             - name: image-pull-docker-hub
-          securityContext:
-            runAsUser: 1000
           serviceAccountName: example-app
           terminationGracePeriodSeconds: 30
           topologySpreadConstraints:

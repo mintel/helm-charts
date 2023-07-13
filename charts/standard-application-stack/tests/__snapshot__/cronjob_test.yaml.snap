@@ -47,12 +47,22 @@ Check CronJob Default Overrides:
                   image: registry.gitlab.com/test:v0.1.0
                   imagePullPolicy: IfNotPresent
                   name: main
+                  securityContext:
+                    allowPrivilegeEscalation: false
+                    apparmor:
+                      enabled: false
+                      profile: unconfined
+                    capabilities:
+                      drop:
+                        - ALL
+                    runAsNonRoot: true
+                    runAsUser: 1000
+                    seccompProfile:
+                      type: RuntimeDefault
               imagePullSecrets:
                 - name: image-pull-gitlab
                 - name: image-pull-docker-hub
               restartPolicy: OnFailure
-              securityContext:
-                runAsUser: 1000
               serviceAccountName: example-app
           ttlSecondsAfterFinished: 120
       schedule: 0 1 * * *
@@ -106,12 +116,22 @@ Check CronJob Defaults:
                   image: registry.gitlab.com/test:v0.1.0
                   imagePullPolicy: IfNotPresent
                   name: main
+                  securityContext:
+                    allowPrivilegeEscalation: false
+                    apparmor:
+                      enabled: false
+                      profile: unconfined
+                    capabilities:
+                      drop:
+                        - ALL
+                    runAsNonRoot: true
+                    runAsUser: 1000
+                    seccompProfile:
+                      type: RuntimeDefault
               imagePullSecrets:
                 - name: image-pull-gitlab
                 - name: image-pull-docker-hub
               restartPolicy: Never
-              securityContext:
-                runAsUser: 1000
               serviceAccountName: example-app
           ttlSecondsAfterFinished: 60
       schedule: 0 0 * * *
@@ -165,12 +185,22 @@ Check CronJob Job Overrides:
                   image: registry.gitlab.com/test:v0.1.0
                   imagePullPolicy: IfNotPresent
                   name: main
+                  securityContext:
+                    allowPrivilegeEscalation: false
+                    apparmor:
+                      enabled: false
+                      profile: unconfined
+                    capabilities:
+                      drop:
+                        - ALL
+                    runAsNonRoot: true
+                    runAsUser: 1000
+                    seccompProfile:
+                      type: RuntimeDefault
               imagePullSecrets:
                 - name: image-pull-gitlab
                 - name: image-pull-docker-hub
               restartPolicy: OnFailure
-              securityContext:
-                runAsUser: 1000
               serviceAccountName: example-app
           ttlSecondsAfterFinished: 120
       schedule: 0 1 * * *
@@ -224,12 +254,22 @@ Check CronJob ttlSecondsAfterFinished zero value:
                   image: registry.gitlab.com/test:v0.1.0
                   imagePullPolicy: IfNotPresent
                   name: main
+                  securityContext:
+                    allowPrivilegeEscalation: false
+                    apparmor:
+                      enabled: false
+                      profile: unconfined
+                    capabilities:
+                      drop:
+                        - ALL
+                    runAsNonRoot: true
+                    runAsUser: 1000
+                    seccompProfile:
+                      type: RuntimeDefault
               imagePullSecrets:
                 - name: image-pull-gitlab
                 - name: image-pull-docker-hub
               restartPolicy: Never
-              securityContext:
-                runAsUser: 1000
               serviceAccountName: example-app
       schedule: 0 1 * * *
       suspend: false
@@ -282,12 +322,22 @@ CronJob can have a timezone:
                   image: registry.gitlab.com/test:v0.1.0
                   imagePullPolicy: IfNotPresent
                   name: main
+                  securityContext:
+                    allowPrivilegeEscalation: false
+                    apparmor:
+                      enabled: false
+                      profile: unconfined
+                    capabilities:
+                      drop:
+                        - ALL
+                    runAsNonRoot: true
+                    runAsUser: 1000
+                    seccompProfile:
+                      type: RuntimeDefault
               imagePullSecrets:
                 - name: image-pull-gitlab
                 - name: image-pull-docker-hub
               restartPolicy: Never
-              securityContext:
-                runAsUser: 1000
               serviceAccountName: example-app
           ttlSecondsAfterFinished: 60
       schedule: 0 1 * * *

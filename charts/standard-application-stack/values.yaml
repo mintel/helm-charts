@@ -186,7 +186,32 @@ podAnnotations: {}
 # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
 podSecurityContext:
   runAsUser: 1000
+  allowPrivilegeEscalation: false
+  capabilities:
+    drop: ["ALL"]
+  runAsNonRoot: true
+  seccompProfile:
+    type: RuntimeDefault
+  apparmor:
+    enabled: false
+    profile: unconfined
+#  readOnlyRootFilesystem: true
 #  fsGroup: 2000
+
+# -- Security context for the container
+# ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
+securityContext:
+  allowPrivilegeEscalation: false
+#  readOnlyRootFilesystem: true
+  capabilities:
+    drop: ["ALL"]
+  runAsNonRoot: true
+  runAsUser: 1000
+  seccompProfile:
+    type: RuntimeDefault
+  apparmor:
+    enabled: false
+    profile: unconfined
 
 # -- Pod Disruption Budget
 # ref: https://kubernetes.io/docs/tasks/run-application/configure-pdb/
@@ -194,18 +219,6 @@ podDisruptionBudget:
   enabled: true
   minAvailable: 50%
 #  maxUnavailable: 50%
-
-# -- Security context for the container
-# ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
-securityContext: {}
-# securityContext:
-#   allowPrivilegeEscalation: false
-#   readOnlyRootFilesystem: true
-#   capabilities:
-#     drop: ["ALL"]
-#   readOnlyRootFilesystem: true
-#   runAsNonRoot: true
-#   runAsUser: 1000
 
 # -- Kubernetes svc configutarion
 service:

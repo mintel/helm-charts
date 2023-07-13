@@ -251,6 +251,18 @@ Check combined template defaults:
               resources:
                 limits: {}
                 requests: {}
+              securityContext:
+                allowPrivilegeEscalation: false
+                apparmor:
+                  enabled: false
+                  profile: unconfined
+                capabilities:
+                  drop:
+                    - ALL
+                runAsNonRoot: true
+                runAsUser: 1000
+                seccompProfile:
+                  type: RuntimeDefault
               startupProbe:
                 failureThreshold: 60
                 httpGet:
@@ -261,8 +273,6 @@ Check combined template defaults:
           imagePullSecrets:
             - name: image-pull-gitlab
             - name: image-pull-docker-hub
-          securityContext:
-            runAsUser: 1000
           serviceAccountName: test-app
           terminationGracePeriodSeconds: 30
           topologySpreadConstraints:
@@ -405,6 +415,18 @@ Check combined template with extra ports and monitors:
               resources:
                 limits: {}
                 requests: {}
+              securityContext:
+                allowPrivilegeEscalation: false
+                apparmor:
+                  enabled: false
+                  profile: unconfined
+                capabilities:
+                  drop:
+                    - ALL
+                runAsNonRoot: true
+                runAsUser: 1000
+                seccompProfile:
+                  type: RuntimeDefault
               startupProbe:
                 failureThreshold: 60
                 httpGet:
@@ -415,8 +437,6 @@ Check combined template with extra ports and monitors:
           imagePullSecrets:
             - name: image-pull-gitlab
             - name: image-pull-docker-hub
-          securityContext:
-            runAsUser: 1000
           serviceAccountName: test-app
           terminationGracePeriodSeconds: 30
           topologySpreadConstraints:
