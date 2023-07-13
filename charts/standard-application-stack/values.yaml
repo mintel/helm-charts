@@ -1196,6 +1196,8 @@ opensearch:
     # -- Port for aws-es-proxy to listen on
     port: 9200
     # -- Ingress for aws-es-proxy
+    securityContext:
+      runAsUser: 65534
     ingress:
       enabled: false
       # -- Path for the Ingress
