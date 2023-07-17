@@ -80,7 +80,6 @@ Check S3 envfrom secretRef is present:
                 requests: {}
               securityContext:
                 allowPrivilegeEscalation: false
-                apparmorProfile: localhost/*
                 capabilities:
                   add:
                     - NET_BIND_SERVICE
@@ -88,8 +87,6 @@ Check S3 envfrom secretRef is present:
                     - ALL
                 runAsNonRoot: true
                 runAsUser: 1000
-                seccompProfile:
-                  type: RuntimeDefault
                 volumes:
                   '[*].name':
                     notIn:
@@ -114,7 +111,6 @@ Check S3 envfrom secretRef is present:
             - name: image-pull-docker-hub
           securityContext:
             allowPrivilegeEscalation: false
-            apparmorProfile: localhost/*
             capabilities:
               add:
                 - NET_BIND_SERVICE
@@ -122,8 +118,6 @@ Check S3 envfrom secretRef is present:
                 - ALL
             runAsNonRoot: true
             runAsUser: 1000
-            seccompProfile:
-              type: RuntimeDefault
             volumes:
               '[*].name':
                 notIn:
@@ -234,7 +228,6 @@ Check S3 envfrom secretRef is present for local environment:
                 requests: {}
               securityContext:
                 allowPrivilegeEscalation: false
-                apparmorProfile: localhost/*
                 capabilities:
                   add:
                     - NET_BIND_SERVICE
@@ -242,8 +235,6 @@ Check S3 envfrom secretRef is present for local environment:
                     - ALL
                 runAsNonRoot: true
                 runAsUser: 1000
-                seccompProfile:
-                  type: RuntimeDefault
                 volumes:
                   '[*].name':
                     notIn:
@@ -268,7 +259,6 @@ Check S3 envfrom secretRef is present for local environment:
             - name: image-pull-docker-hub
           securityContext:
             allowPrivilegeEscalation: false
-            apparmorProfile: localhost/*
             capabilities:
               add:
                 - NET_BIND_SERVICE
@@ -276,8 +266,6 @@ Check S3 envfrom secretRef is present for local environment:
                 - ALL
             runAsNonRoot: true
             runAsUser: 1000
-            seccompProfile:
-              type: RuntimeDefault
             volumes:
               '[*].name':
                 notIn:
@@ -381,7 +369,6 @@ Check S3 envfrom secretRef is present for multiple instances of TF Cloud helm ch
                 requests: {}
               securityContext:
                 allowPrivilegeEscalation: false
-                apparmorProfile: localhost/*
                 capabilities:
                   add:
                     - NET_BIND_SERVICE
@@ -389,8 +376,6 @@ Check S3 envfrom secretRef is present for multiple instances of TF Cloud helm ch
                     - ALL
                 runAsNonRoot: true
                 runAsUser: 1000
-                seccompProfile:
-                  type: RuntimeDefault
                 volumes:
                   '[*].name':
                     notIn:
@@ -415,7 +400,6 @@ Check S3 envfrom secretRef is present for multiple instances of TF Cloud helm ch
             - name: image-pull-docker-hub
           securityContext:
             allowPrivilegeEscalation: false
-            apparmorProfile: localhost/*
             capabilities:
               add:
                 - NET_BIND_SERVICE
@@ -423,8 +407,6 @@ Check S3 envfrom secretRef is present for multiple instances of TF Cloud helm ch
                 - ALL
             runAsNonRoot: true
             runAsUser: 1000
-            seccompProfile:
-              type: RuntimeDefault
             volumes:
               '[*].name':
                 notIn:
@@ -530,7 +512,6 @@ Check S3 secretName Override:
                 requests: {}
               securityContext:
                 allowPrivilegeEscalation: false
-                apparmorProfile: localhost/*
                 capabilities:
                   add:
                     - NET_BIND_SERVICE
@@ -538,8 +519,6 @@ Check S3 secretName Override:
                     - ALL
                 runAsNonRoot: true
                 runAsUser: 1000
-                seccompProfile:
-                  type: RuntimeDefault
                 volumes:
                   '[*].name':
                     notIn:
@@ -564,7 +543,6 @@ Check S3 secretName Override:
             - name: image-pull-docker-hub
           securityContext:
             allowPrivilegeEscalation: false
-            apparmorProfile: localhost/*
             capabilities:
               add:
                 - NET_BIND_SERVICE
@@ -572,8 +550,6 @@ Check S3 secretName Override:
                 - ALL
             runAsNonRoot: true
             runAsUser: 1000
-            seccompProfile:
-              type: RuntimeDefault
             volumes:
               '[*].name':
                 notIn:
@@ -689,7 +665,6 @@ Check S3 stakater secret reloader annotation contains correct secrets for multip
                 requests: {}
               securityContext:
                 allowPrivilegeEscalation: false
-                apparmorProfile: localhost/*
                 capabilities:
                   add:
                     - NET_BIND_SERVICE
@@ -697,8 +672,6 @@ Check S3 stakater secret reloader annotation contains correct secrets for multip
                     - ALL
                 runAsNonRoot: true
                 runAsUser: 1000
-                seccompProfile:
-                  type: RuntimeDefault
                 volumes:
                   '[*].name':
                     notIn:
@@ -723,7 +696,6 @@ Check S3 stakater secret reloader annotation contains correct secrets for multip
             - name: image-pull-docker-hub
           securityContext:
             allowPrivilegeEscalation: false
-            apparmorProfile: localhost/*
             capabilities:
               add:
                 - NET_BIND_SERVICE
@@ -731,8 +703,6 @@ Check S3 stakater secret reloader annotation contains correct secrets for multip
                 - ALL
             runAsNonRoot: true
             runAsUser: 1000
-            seccompProfile:
-              type: RuntimeDefault
             volumes:
               '[*].name':
                 notIn:

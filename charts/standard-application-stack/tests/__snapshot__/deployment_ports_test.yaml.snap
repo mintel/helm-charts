@@ -84,7 +84,6 @@ Check container extraPorts:
                 requests: {}
               securityContext:
                 allowPrivilegeEscalation: false
-                apparmorProfile: localhost/*
                 capabilities:
                   add:
                     - NET_BIND_SERVICE
@@ -92,8 +91,6 @@ Check container extraPorts:
                     - ALL
                 runAsNonRoot: true
                 runAsUser: 1000
-                seccompProfile:
-                  type: RuntimeDefault
                 volumes:
                   '[*].name':
                     notIn:
@@ -118,7 +115,6 @@ Check container extraPorts:
             - name: image-pull-docker-hub
           securityContext:
             allowPrivilegeEscalation: false
-            apparmorProfile: localhost/*
             capabilities:
               add:
                 - NET_BIND_SERVICE
@@ -126,8 +122,6 @@ Check container extraPorts:
                 - ALL
             runAsNonRoot: true
             runAsUser: 1000
-            seccompProfile:
-              type: RuntimeDefault
             volumes:
               '[*].name':
                 notIn:
@@ -238,7 +232,6 @@ Check container extraPorts are validated:
                 requests: {}
               securityContext:
                 allowPrivilegeEscalation: false
-                apparmorProfile: localhost/*
                 capabilities:
                   add:
                     - NET_BIND_SERVICE
@@ -246,8 +239,6 @@ Check container extraPorts are validated:
                     - ALL
                 runAsNonRoot: true
                 runAsUser: 1000
-                seccompProfile:
-                  type: RuntimeDefault
                 volumes:
                   '[*].name':
                     notIn:
@@ -272,7 +263,6 @@ Check container extraPorts are validated:
             - name: image-pull-docker-hub
           securityContext:
             allowPrivilegeEscalation: false
-            apparmorProfile: localhost/*
             capabilities:
               add:
                 - NET_BIND_SERVICE
@@ -280,8 +270,6 @@ Check container extraPorts are validated:
                 - ALL
             runAsNonRoot: true
             runAsUser: 1000
-            seccompProfile:
-              type: RuntimeDefault
             volumes:
               '[*].name':
                 notIn:
@@ -391,7 +379,6 @@ Check container extraPorts protocol:
                 requests: {}
               securityContext:
                 allowPrivilegeEscalation: false
-                apparmorProfile: localhost/*
                 capabilities:
                   add:
                     - NET_BIND_SERVICE
@@ -399,8 +386,6 @@ Check container extraPorts protocol:
                     - ALL
                 runAsNonRoot: true
                 runAsUser: 1000
-                seccompProfile:
-                  type: RuntimeDefault
                 volumes:
                   '[*].name':
                     notIn:
@@ -425,7 +410,6 @@ Check container extraPorts protocol:
             - name: image-pull-docker-hub
           securityContext:
             allowPrivilegeEscalation: false
-            apparmorProfile: localhost/*
             capabilities:
               add:
                 - NET_BIND_SERVICE
@@ -433,8 +417,6 @@ Check container extraPorts protocol:
                 - ALL
             runAsNonRoot: true
             runAsUser: 1000
-            seccompProfile:
-              type: RuntimeDefault
             volumes:
               '[*].name':
                 notIn:
@@ -544,7 +526,6 @@ Check container hybrid cloud ports:
                 requests: {}
               securityContext:
                 allowPrivilegeEscalation: false
-                apparmorProfile: localhost/*
                 capabilities:
                   add:
                     - NET_BIND_SERVICE
@@ -552,8 +533,6 @@ Check container hybrid cloud ports:
                     - ALL
                 runAsNonRoot: true
                 runAsUser: 1000
-                seccompProfile:
-                  type: RuntimeDefault
                 volumes:
                   '[*].name':
                     notIn:
@@ -578,7 +557,6 @@ Check container hybrid cloud ports:
             - name: image-pull-docker-hub
           securityContext:
             allowPrivilegeEscalation: false
-            apparmorProfile: localhost/*
             capabilities:
               add:
                 - NET_BIND_SERVICE
@@ -586,8 +564,6 @@ Check container hybrid cloud ports:
                 - ALL
             runAsNonRoot: true
             runAsUser: 1000
-            seccompProfile:
-              type: RuntimeDefault
             volumes:
               '[*].name':
                 notIn:
@@ -692,7 +668,6 @@ Check default container main port:
                 requests: {}
               securityContext:
                 allowPrivilegeEscalation: false
-                apparmorProfile: localhost/*
                 capabilities:
                   add:
                     - NET_BIND_SERVICE
@@ -700,8 +675,6 @@ Check default container main port:
                     - ALL
                 runAsNonRoot: true
                 runAsUser: 1000
-                seccompProfile:
-                  type: RuntimeDefault
                 volumes:
                   '[*].name':
                     notIn:
@@ -726,7 +699,6 @@ Check default container main port:
             - name: image-pull-docker-hub
           securityContext:
             allowPrivilegeEscalation: false
-            apparmorProfile: localhost/*
             capabilities:
               add:
                 - NET_BIND_SERVICE
@@ -734,8 +706,6 @@ Check default container main port:
                 - ALL
             runAsNonRoot: true
             runAsUser: 1000
-            seccompProfile:
-              type: RuntimeDefault
             volumes:
               '[*].name':
                 notIn:
@@ -840,7 +810,6 @@ Check overridden container main port:
                 requests: {}
               securityContext:
                 allowPrivilegeEscalation: false
-                apparmorProfile: localhost/*
                 capabilities:
                   add:
                     - NET_BIND_SERVICE
@@ -848,8 +817,6 @@ Check overridden container main port:
                     - ALL
                 runAsNonRoot: true
                 runAsUser: 1000
-                seccompProfile:
-                  type: RuntimeDefault
                 volumes:
                   '[*].name':
                     notIn:
@@ -874,7 +841,6 @@ Check overridden container main port:
             - name: image-pull-docker-hub
           securityContext:
             allowPrivilegeEscalation: false
-            apparmorProfile: localhost/*
             capabilities:
               add:
                 - NET_BIND_SERVICE
@@ -882,8 +848,6 @@ Check overridden container main port:
                 - ALL
             runAsNonRoot: true
             runAsUser: 1000
-            seccompProfile:
-              type: RuntimeDefault
             volumes:
               '[*].name':
                 notIn:

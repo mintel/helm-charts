@@ -49,7 +49,6 @@ Check CronJob Default Overrides:
                   name: main
                   securityContext:
                     allowPrivilegeEscalation: false
-                    apparmorProfile: localhost/*
                     capabilities:
                       add:
                         - NET_BIND_SERVICE
@@ -57,8 +56,6 @@ Check CronJob Default Overrides:
                         - ALL
                     runAsNonRoot: true
                     runAsUser: 1000
-                    seccompProfile:
-                      type: RuntimeDefault
                     volumes:
                       '[*].name':
                         notIn:
@@ -77,7 +74,6 @@ Check CronJob Default Overrides:
               restartPolicy: OnFailure
               securityContext:
                 allowPrivilegeEscalation: false
-                apparmorProfile: localhost/*
                 capabilities:
                   add:
                     - NET_BIND_SERVICE
@@ -85,8 +81,6 @@ Check CronJob Default Overrides:
                     - ALL
                 runAsNonRoot: true
                 runAsUser: 1000
-                seccompProfile:
-                  type: RuntimeDefault
                 volumes:
                   '[*].name':
                     notIn:
@@ -154,7 +148,6 @@ Check CronJob Defaults:
                   name: main
                   securityContext:
                     allowPrivilegeEscalation: false
-                    apparmorProfile: localhost/*
                     capabilities:
                       add:
                         - NET_BIND_SERVICE
@@ -162,8 +155,6 @@ Check CronJob Defaults:
                         - ALL
                     runAsNonRoot: true
                     runAsUser: 1000
-                    seccompProfile:
-                      type: RuntimeDefault
                     volumes:
                       '[*].name':
                         notIn:
@@ -182,7 +173,6 @@ Check CronJob Defaults:
               restartPolicy: Never
               securityContext:
                 allowPrivilegeEscalation: false
-                apparmorProfile: localhost/*
                 capabilities:
                   add:
                     - NET_BIND_SERVICE
@@ -190,8 +180,6 @@ Check CronJob Defaults:
                     - ALL
                 runAsNonRoot: true
                 runAsUser: 1000
-                seccompProfile:
-                  type: RuntimeDefault
                 volumes:
                   '[*].name':
                     notIn:
@@ -259,7 +247,6 @@ Check CronJob Job Overrides:
                   name: main
                   securityContext:
                     allowPrivilegeEscalation: false
-                    apparmorProfile: localhost/*
                     capabilities:
                       add:
                         - NET_BIND_SERVICE
@@ -267,8 +254,6 @@ Check CronJob Job Overrides:
                         - ALL
                     runAsNonRoot: true
                     runAsUser: 1000
-                    seccompProfile:
-                      type: RuntimeDefault
                     volumes:
                       '[*].name':
                         notIn:
@@ -287,7 +272,6 @@ Check CronJob Job Overrides:
               restartPolicy: OnFailure
               securityContext:
                 allowPrivilegeEscalation: false
-                apparmorProfile: localhost/*
                 capabilities:
                   add:
                     - NET_BIND_SERVICE
@@ -295,8 +279,6 @@ Check CronJob Job Overrides:
                     - ALL
                 runAsNonRoot: true
                 runAsUser: 1000
-                seccompProfile:
-                  type: RuntimeDefault
                 volumes:
                   '[*].name':
                     notIn:
@@ -364,7 +346,6 @@ Check CronJob ttlSecondsAfterFinished zero value:
                   name: main
                   securityContext:
                     allowPrivilegeEscalation: false
-                    apparmorProfile: localhost/*
                     capabilities:
                       add:
                         - NET_BIND_SERVICE
@@ -372,8 +353,6 @@ Check CronJob ttlSecondsAfterFinished zero value:
                         - ALL
                     runAsNonRoot: true
                     runAsUser: 1000
-                    seccompProfile:
-                      type: RuntimeDefault
                     volumes:
                       '[*].name':
                         notIn:
@@ -392,7 +371,6 @@ Check CronJob ttlSecondsAfterFinished zero value:
               restartPolicy: Never
               securityContext:
                 allowPrivilegeEscalation: false
-                apparmorProfile: localhost/*
                 capabilities:
                   add:
                     - NET_BIND_SERVICE
@@ -400,8 +378,6 @@ Check CronJob ttlSecondsAfterFinished zero value:
                     - ALL
                 runAsNonRoot: true
                 runAsUser: 1000
-                seccompProfile:
-                  type: RuntimeDefault
                 volumes:
                   '[*].name':
                     notIn:
@@ -468,7 +444,6 @@ CronJob can have a timezone:
                   name: main
                   securityContext:
                     allowPrivilegeEscalation: false
-                    apparmorProfile: localhost/*
                     capabilities:
                       add:
                         - NET_BIND_SERVICE
@@ -476,8 +451,6 @@ CronJob can have a timezone:
                         - ALL
                     runAsNonRoot: true
                     runAsUser: 1000
-                    seccompProfile:
-                      type: RuntimeDefault
                     volumes:
                       '[*].name':
                         notIn:
@@ -496,7 +469,6 @@ CronJob can have a timezone:
               restartPolicy: Never
               securityContext:
                 allowPrivilegeEscalation: false
-                apparmorProfile: localhost/*
                 capabilities:
                   add:
                     - NET_BIND_SERVICE
@@ -504,8 +476,6 @@ CronJob can have a timezone:
                     - ALL
                 runAsNonRoot: true
                 runAsUser: 1000
-                seccompProfile:
-                  type: RuntimeDefault
                 volumes:
                   '[*].name':
                     notIn:

@@ -80,7 +80,6 @@ Check default container args:
                 requests: {}
               securityContext:
                 allowPrivilegeEscalation: false
-                apparmorProfile: localhost/*
                 capabilities:
                   add:
                     - NET_BIND_SERVICE
@@ -88,8 +87,6 @@ Check default container args:
                     - ALL
                 runAsNonRoot: true
                 runAsUser: 1000
-                seccompProfile:
-                  type: RuntimeDefault
                 volumes:
                   '[*].name':
                     notIn:
@@ -164,7 +161,6 @@ Check default container args:
             - name: image-pull-docker-hub
           securityContext:
             allowPrivilegeEscalation: false
-            apparmorProfile: localhost/*
             capabilities:
               add:
                 - NET_BIND_SERVICE
@@ -172,8 +168,6 @@ Check default container args:
                 - ALL
             runAsNonRoot: true
             runAsUser: 1000
-            seccompProfile:
-              type: RuntimeDefault
             volumes:
               '[*].name':
                 notIn:
@@ -278,7 +272,6 @@ Check setting skip-auth-regex from extra passed in values:
                 requests: {}
               securityContext:
                 allowPrivilegeEscalation: false
-                apparmorProfile: localhost/*
                 capabilities:
                   add:
                     - NET_BIND_SERVICE
@@ -286,8 +279,6 @@ Check setting skip-auth-regex from extra passed in values:
                     - ALL
                 runAsNonRoot: true
                 runAsUser: 1000
-                seccompProfile:
-                  type: RuntimeDefault
                 volumes:
                   '[*].name':
                     notIn:
@@ -363,7 +354,6 @@ Check setting skip-auth-regex from extra passed in values:
             - name: image-pull-docker-hub
           securityContext:
             allowPrivilegeEscalation: false
-            apparmorProfile: localhost/*
             capabilities:
               add:
                 - NET_BIND_SERVICE
@@ -371,8 +361,6 @@ Check setting skip-auth-regex from extra passed in values:
                 - ALL
             runAsNonRoot: true
             runAsUser: 1000
-            seccompProfile:
-              type: RuntimeDefault
             volumes:
               '[*].name':
                 notIn:
@@ -477,7 +465,6 @@ Check setting skip-auth-regex from extra passed in values when they already cont
                 requests: {}
               securityContext:
                 allowPrivilegeEscalation: false
-                apparmorProfile: localhost/*
                 capabilities:
                   add:
                     - NET_BIND_SERVICE
@@ -485,8 +472,6 @@ Check setting skip-auth-regex from extra passed in values when they already cont
                     - ALL
                 runAsNonRoot: true
                 runAsUser: 1000
-                seccompProfile:
-                  type: RuntimeDefault
                 volumes:
                   '[*].name':
                     notIn:
@@ -562,7 +547,6 @@ Check setting skip-auth-regex from extra passed in values when they already cont
             - name: image-pull-docker-hub
           securityContext:
             allowPrivilegeEscalation: false
-            apparmorProfile: localhost/*
             capabilities:
               add:
                 - NET_BIND_SERVICE
@@ -570,8 +554,6 @@ Check setting skip-auth-regex from extra passed in values when they already cont
                 - ALL
             runAsNonRoot: true
             runAsUser: 1000
-            seccompProfile:
-              type: RuntimeDefault
             volumes:
               '[*].name':
                 notIn:
@@ -676,7 +658,6 @@ Check setting skip-auth-regex from overridden health-check values:
                 requests: {}
               securityContext:
                 allowPrivilegeEscalation: false
-                apparmorProfile: localhost/*
                 capabilities:
                   add:
                     - NET_BIND_SERVICE
@@ -684,8 +665,6 @@ Check setting skip-auth-regex from overridden health-check values:
                     - ALL
                 runAsNonRoot: true
                 runAsUser: 1000
-                seccompProfile:
-                  type: RuntimeDefault
                 volumes:
                   '[*].name':
                     notIn:
@@ -760,7 +739,6 @@ Check setting skip-auth-regex from overridden health-check values:
             - name: image-pull-docker-hub
           securityContext:
             allowPrivilegeEscalation: false
-            apparmorProfile: localhost/*
             capabilities:
               add:
                 - NET_BIND_SERVICE
@@ -768,8 +746,6 @@ Check setting skip-auth-regex from overridden health-check values:
                 - ALL
             runAsNonRoot: true
             runAsUser: 1000
-            seccompProfile:
-              type: RuntimeDefault
             volumes:
               '[*].name':
                 notIn:
@@ -874,7 +850,6 @@ Check sidecar present if enabled:
                 requests: {}
               securityContext:
                 allowPrivilegeEscalation: false
-                apparmorProfile: localhost/*
                 capabilities:
                   add:
                     - NET_BIND_SERVICE
@@ -882,8 +857,6 @@ Check sidecar present if enabled:
                     - ALL
                 runAsNonRoot: true
                 runAsUser: 1000
-                seccompProfile:
-                  type: RuntimeDefault
                 volumes:
                   '[*].name':
                     notIn:
@@ -958,7 +931,6 @@ Check sidecar present if enabled:
             - name: image-pull-docker-hub
           securityContext:
             allowPrivilegeEscalation: false
-            apparmorProfile: localhost/*
             capabilities:
               add:
                 - NET_BIND_SERVICE
@@ -966,8 +938,6 @@ Check sidecar present if enabled:
                 - ALL
             runAsNonRoot: true
             runAsUser: 1000
-            seccompProfile:
-              type: RuntimeDefault
             volumes:
               '[*].name':
                 notIn:

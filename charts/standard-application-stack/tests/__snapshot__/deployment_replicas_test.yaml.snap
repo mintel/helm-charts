@@ -81,7 +81,6 @@ Check allowSingleReplica doesn't alter strategy:
                 requests: {}
               securityContext:
                 allowPrivilegeEscalation: false
-                apparmorProfile: localhost/*
                 capabilities:
                   add:
                     - NET_BIND_SERVICE
@@ -89,8 +88,6 @@ Check allowSingleReplica doesn't alter strategy:
                     - ALL
                 runAsNonRoot: true
                 runAsUser: 1000
-                seccompProfile:
-                  type: RuntimeDefault
                 volumes:
                   '[*].name':
                     notIn:
@@ -115,7 +112,6 @@ Check allowSingleReplica doesn't alter strategy:
             - name: image-pull-docker-hub
           securityContext:
             allowPrivilegeEscalation: false
-            apparmorProfile: localhost/*
             capabilities:
               add:
                 - NET_BIND_SERVICE
@@ -123,8 +119,6 @@ Check allowSingleReplica doesn't alter strategy:
                 - ALL
             runAsNonRoot: true
             runAsUser: 1000
-            seccompProfile:
-              type: RuntimeDefault
             volumes:
               '[*].name':
                 notIn:
@@ -230,7 +224,6 @@ Check allowSingleReplica set annotations:
                 requests: {}
               securityContext:
                 allowPrivilegeEscalation: false
-                apparmorProfile: localhost/*
                 capabilities:
                   add:
                     - NET_BIND_SERVICE
@@ -238,8 +231,6 @@ Check allowSingleReplica set annotations:
                     - ALL
                 runAsNonRoot: true
                 runAsUser: 1000
-                seccompProfile:
-                  type: RuntimeDefault
                 volumes:
                   '[*].name':
                     notIn:
@@ -264,7 +255,6 @@ Check allowSingleReplica set annotations:
             - name: image-pull-docker-hub
           securityContext:
             allowPrivilegeEscalation: false
-            apparmorProfile: localhost/*
             capabilities:
               add:
                 - NET_BIND_SERVICE
@@ -272,8 +262,6 @@ Check allowSingleReplica set annotations:
                 - ALL
             runAsNonRoot: true
             runAsUser: 1000
-            seccompProfile:
-              type: RuntimeDefault
             volumes:
               '[*].name':
                 notIn:
@@ -377,7 +365,6 @@ Check replicas unset when autoscaling is enabled:
                 requests: {}
               securityContext:
                 allowPrivilegeEscalation: false
-                apparmorProfile: localhost/*
                 capabilities:
                   add:
                     - NET_BIND_SERVICE
@@ -385,8 +372,6 @@ Check replicas unset when autoscaling is enabled:
                     - ALL
                 runAsNonRoot: true
                 runAsUser: 1000
-                seccompProfile:
-                  type: RuntimeDefault
                 volumes:
                   '[*].name':
                     notIn:
@@ -411,7 +396,6 @@ Check replicas unset when autoscaling is enabled:
             - name: image-pull-docker-hub
           securityContext:
             allowPrivilegeEscalation: false
-            apparmorProfile: localhost/*
             capabilities:
               add:
                 - NET_BIND_SERVICE
@@ -419,8 +403,6 @@ Check replicas unset when autoscaling is enabled:
                 - ALL
             runAsNonRoot: true
             runAsUser: 1000
-            seccompProfile:
-              type: RuntimeDefault
             volumes:
               '[*].name':
                 notIn:
@@ -523,7 +505,6 @@ Check singleReplicaOnly applied:
                 requests: {}
               securityContext:
                 allowPrivilegeEscalation: false
-                apparmorProfile: localhost/*
                 capabilities:
                   add:
                     - NET_BIND_SERVICE
@@ -531,8 +512,6 @@ Check singleReplicaOnly applied:
                     - ALL
                 runAsNonRoot: true
                 runAsUser: 1000
-                seccompProfile:
-                  type: RuntimeDefault
                 volumes:
                   '[*].name':
                     notIn:
@@ -557,7 +536,6 @@ Check singleReplicaOnly applied:
             - name: image-pull-docker-hub
           securityContext:
             allowPrivilegeEscalation: false
-            apparmorProfile: localhost/*
             capabilities:
               add:
                 - NET_BIND_SERVICE
@@ -565,8 +543,6 @@ Check singleReplicaOnly applied:
                 - ALL
             runAsNonRoot: true
             runAsUser: 1000
-            seccompProfile:
-              type: RuntimeDefault
             volumes:
               '[*].name':
                 notIn:
@@ -669,7 +645,6 @@ Check singleReplicaOnly ignore replicas value:
                 requests: {}
               securityContext:
                 allowPrivilegeEscalation: false
-                apparmorProfile: localhost/*
                 capabilities:
                   add:
                     - NET_BIND_SERVICE
@@ -677,8 +652,6 @@ Check singleReplicaOnly ignore replicas value:
                     - ALL
                 runAsNonRoot: true
                 runAsUser: 1000
-                seccompProfile:
-                  type: RuntimeDefault
                 volumes:
                   '[*].name':
                     notIn:
@@ -703,7 +676,6 @@ Check singleReplicaOnly ignore replicas value:
             - name: image-pull-docker-hub
           securityContext:
             allowPrivilegeEscalation: false
-            apparmorProfile: localhost/*
             capabilities:
               add:
                 - NET_BIND_SERVICE
@@ -711,8 +683,6 @@ Check singleReplicaOnly ignore replicas value:
                 - ALL
             runAsNonRoot: true
             runAsUser: 1000
-            seccompProfile:
-              type: RuntimeDefault
             volumes:
               '[*].name':
                 notIn:

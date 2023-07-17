@@ -93,7 +93,6 @@ Check AWS ALB lifecycle rule applied:
                 requests: {}
               securityContext:
                 allowPrivilegeEscalation: false
-                apparmorProfile: localhost/*
                 capabilities:
                   add:
                     - NET_BIND_SERVICE
@@ -101,8 +100,6 @@ Check AWS ALB lifecycle rule applied:
                     - ALL
                 runAsNonRoot: true
                 runAsUser: 1000
-                seccompProfile:
-                  type: RuntimeDefault
                 volumes:
                   '[*].name':
                     notIn:
@@ -127,7 +124,6 @@ Check AWS ALB lifecycle rule applied:
             - name: image-pull-docker-hub
           securityContext:
             allowPrivilegeEscalation: false
-            apparmorProfile: localhost/*
             capabilities:
               add:
                 - NET_BIND_SERVICE
@@ -135,8 +131,6 @@ Check AWS ALB lifecycle rule applied:
                 - ALL
             runAsNonRoot: true
             runAsUser: 1000
-            seccompProfile:
-              type: RuntimeDefault
             volumes:
               '[*].name':
                 notIn:
@@ -254,7 +248,6 @@ Check AWS ALB lifecycle rules applied with custom delay:
                 requests: {}
               securityContext:
                 allowPrivilegeEscalation: false
-                apparmorProfile: localhost/*
                 capabilities:
                   add:
                     - NET_BIND_SERVICE
@@ -262,8 +255,6 @@ Check AWS ALB lifecycle rules applied with custom delay:
                     - ALL
                 runAsNonRoot: true
                 runAsUser: 1000
-                seccompProfile:
-                  type: RuntimeDefault
                 volumes:
                   '[*].name':
                     notIn:
@@ -288,7 +279,6 @@ Check AWS ALB lifecycle rules applied with custom delay:
             - name: image-pull-docker-hub
           securityContext:
             allowPrivilegeEscalation: false
-            apparmorProfile: localhost/*
             capabilities:
               add:
                 - NET_BIND_SERVICE
@@ -296,8 +286,6 @@ Check AWS ALB lifecycle rules applied with custom delay:
                 - ALL
             runAsNonRoot: true
             runAsUser: 1000
-            seccompProfile:
-              type: RuntimeDefault
             volumes:
               '[*].name':
                 notIn:
@@ -408,7 +396,6 @@ Check AWS ALB lifecycle rules are not applied when ALB disabled:
                 requests: {}
               securityContext:
                 allowPrivilegeEscalation: false
-                apparmorProfile: localhost/*
                 capabilities:
                   add:
                     - NET_BIND_SERVICE
@@ -416,8 +403,6 @@ Check AWS ALB lifecycle rules are not applied when ALB disabled:
                     - ALL
                 runAsNonRoot: true
                 runAsUser: 1000
-                seccompProfile:
-                  type: RuntimeDefault
                 volumes:
                   '[*].name':
                     notIn:
@@ -442,7 +427,6 @@ Check AWS ALB lifecycle rules are not applied when ALB disabled:
             - name: image-pull-docker-hub
           securityContext:
             allowPrivilegeEscalation: false
-            apparmorProfile: localhost/*
             capabilities:
               add:
                 - NET_BIND_SERVICE
@@ -450,8 +434,6 @@ Check AWS ALB lifecycle rules are not applied when ALB disabled:
                 - ALL
             runAsNonRoot: true
             runAsUser: 1000
-            seccompProfile:
-              type: RuntimeDefault
             volumes:
               '[*].name':
                 notIn:
@@ -556,7 +538,6 @@ Check AWS ALB lifecycle rules are not applied when ALB enabled (but Ingress disa
                 requests: {}
               securityContext:
                 allowPrivilegeEscalation: false
-                apparmorProfile: localhost/*
                 capabilities:
                   add:
                     - NET_BIND_SERVICE
@@ -564,8 +545,6 @@ Check AWS ALB lifecycle rules are not applied when ALB enabled (but Ingress disa
                     - ALL
                 runAsNonRoot: true
                 runAsUser: 1000
-                seccompProfile:
-                  type: RuntimeDefault
                 volumes:
                   '[*].name':
                     notIn:
@@ -590,7 +569,6 @@ Check AWS ALB lifecycle rules are not applied when ALB enabled (but Ingress disa
             - name: image-pull-docker-hub
           securityContext:
             allowPrivilegeEscalation: false
-            apparmorProfile: localhost/*
             capabilities:
               add:
                 - NET_BIND_SERVICE
@@ -598,8 +576,6 @@ Check AWS ALB lifecycle rules are not applied when ALB enabled (but Ingress disa
                 - ALL
             runAsNonRoot: true
             runAsUser: 1000
-            seccompProfile:
-              type: RuntimeDefault
             volumes:
               '[*].name':
                 notIn:
@@ -709,7 +685,6 @@ Check lifecycle rules:
                 requests: {}
               securityContext:
                 allowPrivilegeEscalation: false
-                apparmorProfile: localhost/*
                 capabilities:
                   add:
                     - NET_BIND_SERVICE
@@ -717,8 +692,6 @@ Check lifecycle rules:
                     - ALL
                 runAsNonRoot: true
                 runAsUser: 1000
-                seccompProfile:
-                  type: RuntimeDefault
                 volumes:
                   '[*].name':
                     notIn:
@@ -743,7 +716,6 @@ Check lifecycle rules:
             - name: image-pull-docker-hub
           securityContext:
             allowPrivilegeEscalation: false
-            apparmorProfile: localhost/*
             capabilities:
               add:
                 - NET_BIND_SERVICE
@@ -751,8 +723,6 @@ Check lifecycle rules:
                 - ALL
             runAsNonRoot: true
             runAsUser: 1000
-            seccompProfile:
-              type: RuntimeDefault
             volumes:
               '[*].name':
                 notIn:
