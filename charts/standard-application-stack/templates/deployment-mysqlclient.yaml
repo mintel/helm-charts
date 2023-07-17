@@ -24,7 +24,7 @@ spec:
       labels: {{ include "mintel_common.labels" $data | nindent 8 }}
     spec:
       {{- include "mintel_common.imagePullSecrets" . | nindent 6 }}
-      {{- with .podSecurityContext | default .Values.podSecurityContext }}
+      {{- with .Values.podSecurityContext }}
       securityContext: {{- toYaml . | nindent 8 }}
       {{- end }}
       {{- if (and .Values.serviceAccount (or .Values.serviceAccount.create .Values.serviceAccount.name)) }}
@@ -48,7 +48,7 @@ spec:
           {{- with .Values.mariadb.client.resources }}
           resources: {{- toYaml . | nindent 12 }}
           {{- end }}
-          {{- with .Values.securityContext }}
+          {{- with .securityContext | default .Values.securityContext }}
           securityContext: {{- toYaml . | nindent 12 }}
           {{- end }}
 {{- end }}
