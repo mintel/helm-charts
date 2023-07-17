@@ -171,7 +171,7 @@ spec:
             timeoutSeconds: {{ .Values.celeryBeat.readiness.timeoutSeconds | default 1 }}
             periodSeconds: {{ .Values.celeryBeat.readiness.periodSeconds | default 10 }}
           {{- end }}
-          {{- with securityContext | default .Values.securityContext }}
+          {{- with .securityContext | default .Values.securityContext }}
           securityContext: {{ toYaml . | nindent 12 }}
           {{- end }}
           {{- with .Values.celeryBeat.resources }}
