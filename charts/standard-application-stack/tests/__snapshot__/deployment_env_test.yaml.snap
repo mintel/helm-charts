@@ -80,12 +80,6 @@ Check celery does not pull in `main.env` values:
             - name: image-pull-gitlab
             - name: image-pull-docker-hub
           securityContext:
-            allowPrivilegeEscalation: false
-            capabilities:
-              add:
-                - NET_BIND_SERVICE
-              drop:
-                - ALL
             runAsNonRoot: true
             runAsUser: 1000
           serviceAccountName: example-app
@@ -199,12 +193,6 @@ Check default env behavior:
             - name: image-pull-gitlab
             - name: image-pull-docker-hub
           securityContext:
-            allowPrivilegeEscalation: false
-            capabilities:
-              add:
-                - NET_BIND_SERVICE
-              drop:
-                - ALL
             runAsNonRoot: true
             runAsUser: 1000
           serviceAccountName: example-app
@@ -321,12 +309,6 @@ Check main container combines default env and `main.env` values:
             - name: image-pull-gitlab
             - name: image-pull-docker-hub
           securityContext:
-            allowPrivilegeEscalation: false
-            capabilities:
-              add:
-                - NET_BIND_SERVICE
-              drop:
-                - ALL
             runAsNonRoot: true
             runAsUser: 1000
           serviceAccountName: example-app

@@ -99,12 +99,6 @@ Has a pod template that uses the host network:
             - name: image-pull-gitlab
             - name: image-pull-docker-hub
           securityContext:
-            allowPrivilegeEscalation: false
-            capabilities:
-              add:
-                - NET_BIND_SERVICE
-              drop:
-                - ALL
             runAsNonRoot: true
             runAsUser: 1000
           serviceAccountName: test-app

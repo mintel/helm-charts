@@ -111,12 +111,6 @@ Check AWS ALB lifecycle rule applied:
             - name: image-pull-gitlab
             - name: image-pull-docker-hub
           securityContext:
-            allowPrivilegeEscalation: false
-            capabilities:
-              add:
-                - NET_BIND_SERVICE
-              drop:
-                - ALL
             runAsNonRoot: true
             runAsUser: 1000
           serviceAccountName: example-app
@@ -242,12 +236,6 @@ Check AWS ALB lifecycle rules applied with custom delay:
             - name: image-pull-gitlab
             - name: image-pull-docker-hub
           securityContext:
-            allowPrivilegeEscalation: false
-            capabilities:
-              add:
-                - NET_BIND_SERVICE
-              drop:
-                - ALL
             runAsNonRoot: true
             runAsUser: 1000
           serviceAccountName: example-app
@@ -366,12 +354,6 @@ Check AWS ALB lifecycle rules are not applied when ALB disabled:
             - name: image-pull-gitlab
             - name: image-pull-docker-hub
           securityContext:
-            allowPrivilegeEscalation: false
-            capabilities:
-              add:
-                - NET_BIND_SERVICE
-              drop:
-                - ALL
             runAsNonRoot: true
             runAsUser: 1000
           serviceAccountName: example-app
@@ -484,12 +466,6 @@ Check AWS ALB lifecycle rules are not applied when ALB enabled (but Ingress disa
             - name: image-pull-gitlab
             - name: image-pull-docker-hub
           securityContext:
-            allowPrivilegeEscalation: false
-            capabilities:
-              add:
-                - NET_BIND_SERVICE
-              drop:
-                - ALL
             runAsNonRoot: true
             runAsUser: 1000
           serviceAccountName: example-app
@@ -607,12 +583,6 @@ Check lifecycle rules:
             - name: image-pull-gitlab
             - name: image-pull-docker-hub
           securityContext:
-            allowPrivilegeEscalation: false
-            capabilities:
-              add:
-                - NET_BIND_SERVICE
-              drop:
-                - ALL
             runAsNonRoot: true
             runAsUser: 1000
           serviceAccountName: example-app

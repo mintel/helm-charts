@@ -271,12 +271,6 @@ Check combined template defaults:
             - name: image-pull-gitlab
             - name: image-pull-docker-hub
           securityContext:
-            allowPrivilegeEscalation: false
-            capabilities:
-              add:
-                - NET_BIND_SERVICE
-              drop:
-                - ALL
             runAsNonRoot: true
             runAsUser: 1000
           serviceAccountName: test-app
@@ -441,12 +435,6 @@ Check combined template with extra ports and monitors:
             - name: image-pull-gitlab
             - name: image-pull-docker-hub
           securityContext:
-            allowPrivilegeEscalation: false
-            capabilities:
-              add:
-                - NET_BIND_SERVICE
-              drop:
-                - ALL
             runAsNonRoot: true
             runAsUser: 1000
           serviceAccountName: test-app

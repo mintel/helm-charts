@@ -148,12 +148,6 @@ Check default container args:
             - name: image-pull-gitlab
             - name: image-pull-docker-hub
           securityContext:
-            allowPrivilegeEscalation: false
-            capabilities:
-              add:
-                - NET_BIND_SERVICE
-              drop:
-                - ALL
             runAsNonRoot: true
             runAsUser: 1000
           serviceAccountName: test-app
@@ -317,12 +311,6 @@ Check setting skip-auth-regex from extra passed in values:
             - name: image-pull-gitlab
             - name: image-pull-docker-hub
           securityContext:
-            allowPrivilegeEscalation: false
-            capabilities:
-              add:
-                - NET_BIND_SERVICE
-              drop:
-                - ALL
             runAsNonRoot: true
             runAsUser: 1000
           serviceAccountName: test-app
@@ -486,12 +474,6 @@ Check setting skip-auth-regex from extra passed in values when they already cont
             - name: image-pull-gitlab
             - name: image-pull-docker-hub
           securityContext:
-            allowPrivilegeEscalation: false
-            capabilities:
-              add:
-                - NET_BIND_SERVICE
-              drop:
-                - ALL
             runAsNonRoot: true
             runAsUser: 1000
           serviceAccountName: test-app
@@ -654,12 +636,6 @@ Check setting skip-auth-regex from overridden health-check values:
             - name: image-pull-gitlab
             - name: image-pull-docker-hub
           securityContext:
-            allowPrivilegeEscalation: false
-            capabilities:
-              add:
-                - NET_BIND_SERVICE
-              drop:
-                - ALL
             runAsNonRoot: true
             runAsUser: 1000
           serviceAccountName: test-app
@@ -822,12 +798,6 @@ Check sidecar present if enabled:
             - name: image-pull-gitlab
             - name: image-pull-docker-hub
           securityContext:
-            allowPrivilegeEscalation: false
-            capabilities:
-              add:
-                - NET_BIND_SERVICE
-              drop:
-                - ALL
             runAsNonRoot: true
             runAsUser: 1000
           serviceAccountName: test-app

@@ -61,12 +61,6 @@ Check CronJob Default Overrides:
                 - name: image-pull-docker-hub
               restartPolicy: OnFailure
               securityContext:
-                allowPrivilegeEscalation: false
-                capabilities:
-                  add:
-                    - NET_BIND_SERVICE
-                  drop:
-                    - ALL
                 runAsNonRoot: true
                 runAsUser: 1000
               serviceAccountName: example-app
@@ -136,12 +130,6 @@ Check CronJob Defaults:
                 - name: image-pull-docker-hub
               restartPolicy: Never
               securityContext:
-                allowPrivilegeEscalation: false
-                capabilities:
-                  add:
-                    - NET_BIND_SERVICE
-                  drop:
-                    - ALL
                 runAsNonRoot: true
                 runAsUser: 1000
               serviceAccountName: example-app
@@ -211,12 +199,6 @@ Check CronJob Job Overrides:
                 - name: image-pull-docker-hub
               restartPolicy: OnFailure
               securityContext:
-                allowPrivilegeEscalation: false
-                capabilities:
-                  add:
-                    - NET_BIND_SERVICE
-                  drop:
-                    - ALL
                 runAsNonRoot: true
                 runAsUser: 1000
               serviceAccountName: example-app
@@ -286,12 +268,6 @@ Check CronJob ttlSecondsAfterFinished zero value:
                 - name: image-pull-docker-hub
               restartPolicy: Never
               securityContext:
-                allowPrivilegeEscalation: false
-                capabilities:
-                  add:
-                    - NET_BIND_SERVICE
-                  drop:
-                    - ALL
                 runAsNonRoot: true
                 runAsUser: 1000
               serviceAccountName: example-app
@@ -360,12 +336,6 @@ CronJob can have a timezone:
                 - name: image-pull-docker-hub
               restartPolicy: Never
               securityContext:
-                allowPrivilegeEscalation: false
-                capabilities:
-                  add:
-                    - NET_BIND_SERVICE
-                  drop:
-                    - ALL
                 runAsNonRoot: true
                 runAsUser: 1000
               serviceAccountName: example-app
