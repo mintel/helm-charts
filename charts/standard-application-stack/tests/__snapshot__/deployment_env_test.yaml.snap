@@ -69,31 +69,55 @@ Check celery does not pull in `main.env` values:
                 requests: {}
               securityContext:
                 allowPrivilegeEscalation: false
-                apparmor:
-                  enabled: false
-                  profile: unconfined
+                apparmorProfile: localhost/*
                 capabilities:
+                  add:
+                    - NET_BIND_SERVICE
                   drop:
                     - ALL
                 runAsNonRoot: true
                 runAsUser: 1000
                 seccompProfile:
                   type: RuntimeDefault
+                volumes:
+                  '[*].name':
+                    notIn:
+                      - name
+                      - configMap
+                      - csi
+                      - downwardAPI
+                      - emptyDir
+                      - ephemeral
+                      - persistentVolumeClaim
+                      - projected
+                      - secret
           imagePullSecrets:
             - name: image-pull-gitlab
             - name: image-pull-docker-hub
           securityContext:
             allowPrivilegeEscalation: false
-            apparmor:
-              enabled: false
-              profile: unconfined
+            apparmorProfile: localhost/*
             capabilities:
+              add:
+                - NET_BIND_SERVICE
               drop:
                 - ALL
             runAsNonRoot: true
             runAsUser: 1000
             seccompProfile:
               type: RuntimeDefault
+            volumes:
+              '[*].name':
+                notIn:
+                  - name
+                  - configMap
+                  - csi
+                  - downwardAPI
+                  - emptyDir
+                  - ephemeral
+                  - persistentVolumeClaim
+                  - projected
+                  - secret
           serviceAccountName: example-app
           topologySpreadConstraints:
             - labelSelector:
@@ -187,16 +211,28 @@ Check default env behavior:
                 requests: {}
               securityContext:
                 allowPrivilegeEscalation: false
-                apparmor:
-                  enabled: false
-                  profile: unconfined
+                apparmorProfile: localhost/*
                 capabilities:
+                  add:
+                    - NET_BIND_SERVICE
                   drop:
                     - ALL
                 runAsNonRoot: true
                 runAsUser: 1000
                 seccompProfile:
                   type: RuntimeDefault
+                volumes:
+                  '[*].name':
+                    notIn:
+                      - name
+                      - configMap
+                      - csi
+                      - downwardAPI
+                      - emptyDir
+                      - ephemeral
+                      - persistentVolumeClaim
+                      - projected
+                      - secret
               startupProbe:
                 failureThreshold: 60
                 httpGet:
@@ -209,16 +245,28 @@ Check default env behavior:
             - name: image-pull-docker-hub
           securityContext:
             allowPrivilegeEscalation: false
-            apparmor:
-              enabled: false
-              profile: unconfined
+            apparmorProfile: localhost/*
             capabilities:
+              add:
+                - NET_BIND_SERVICE
               drop:
                 - ALL
             runAsNonRoot: true
             runAsUser: 1000
             seccompProfile:
               type: RuntimeDefault
+            volumes:
+              '[*].name':
+                notIn:
+                  - name
+                  - configMap
+                  - csi
+                  - downwardAPI
+                  - emptyDir
+                  - ephemeral
+                  - persistentVolumeClaim
+                  - projected
+                  - secret
           serviceAccountName: example-app
           terminationGracePeriodSeconds: 30
           topologySpreadConstraints:
@@ -315,16 +363,28 @@ Check main container combines default env and `main.env` values:
                 requests: {}
               securityContext:
                 allowPrivilegeEscalation: false
-                apparmor:
-                  enabled: false
-                  profile: unconfined
+                apparmorProfile: localhost/*
                 capabilities:
+                  add:
+                    - NET_BIND_SERVICE
                   drop:
                     - ALL
                 runAsNonRoot: true
                 runAsUser: 1000
                 seccompProfile:
                   type: RuntimeDefault
+                volumes:
+                  '[*].name':
+                    notIn:
+                      - name
+                      - configMap
+                      - csi
+                      - downwardAPI
+                      - emptyDir
+                      - ephemeral
+                      - persistentVolumeClaim
+                      - projected
+                      - secret
               startupProbe:
                 failureThreshold: 60
                 httpGet:
@@ -337,16 +397,28 @@ Check main container combines default env and `main.env` values:
             - name: image-pull-docker-hub
           securityContext:
             allowPrivilegeEscalation: false
-            apparmor:
-              enabled: false
-              profile: unconfined
+            apparmorProfile: localhost/*
             capabilities:
+              add:
+                - NET_BIND_SERVICE
               drop:
                 - ALL
             runAsNonRoot: true
             runAsUser: 1000
             seccompProfile:
               type: RuntimeDefault
+            volumes:
+              '[*].name':
+                notIn:
+                  - name
+                  - configMap
+                  - csi
+                  - downwardAPI
+                  - emptyDir
+                  - ephemeral
+                  - persistentVolumeClaim
+                  - projected
+                  - secret
           serviceAccountName: example-app
           terminationGracePeriodSeconds: 30
           topologySpreadConstraints:

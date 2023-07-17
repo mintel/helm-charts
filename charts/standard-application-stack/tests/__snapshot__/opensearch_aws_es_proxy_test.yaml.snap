@@ -200,16 +200,28 @@ Check awsEsProxy deployment is created if enabled:
                   memory: 64Mi
               securityContext:
                 allowPrivilegeEscalation: false
-                apparmor:
-                  enabled: false
-                  profile: unconfined
+                apparmorProfile: localhost/*
                 capabilities:
+                  add:
+                    - NET_BIND_SERVICE
                   drop:
                     - ALL
                 runAsNonRoot: true
                 runAsUser: 1000
                 seccompProfile:
                   type: RuntimeDefault
+                volumes:
+                  '[*].name':
+                    notIn:
+                      - name
+                      - configMap
+                      - csi
+                      - downwardAPI
+                      - emptyDir
+                      - ephemeral
+                      - persistentVolumeClaim
+                      - projected
+                      - secret
               startupProbe:
                 failureThreshold: 60
                 httpGet:
@@ -222,16 +234,28 @@ Check awsEsProxy deployment is created if enabled:
             - name: image-pull-docker-hub
           securityContext:
             allowPrivilegeEscalation: false
-            apparmor:
-              enabled: false
-              profile: unconfined
+            apparmorProfile: localhost/*
             capabilities:
+              add:
+                - NET_BIND_SERVICE
               drop:
                 - ALL
             runAsNonRoot: true
             runAsUser: 1000
             seccompProfile:
               type: RuntimeDefault
+            volumes:
+              '[*].name':
+                notIn:
+                  - name
+                  - configMap
+                  - csi
+                  - downwardAPI
+                  - emptyDir
+                  - ephemeral
+                  - persistentVolumeClaim
+                  - projected
+                  - secret
           serviceAccountName: example-app
 Check awsEsProxy service is created if enabled:
   1: |

@@ -100,16 +100,28 @@ Check custom python otel extraEnv vars are added:
                 requests: {}
               securityContext:
                 allowPrivilegeEscalation: false
-                apparmor:
-                  enabled: false
-                  profile: unconfined
+                apparmorProfile: localhost/*
                 capabilities:
+                  add:
+                    - NET_BIND_SERVICE
                   drop:
                     - ALL
                 runAsNonRoot: true
                 runAsUser: 1000
                 seccompProfile:
                   type: RuntimeDefault
+                volumes:
+                  '[*].name':
+                    notIn:
+                      - name
+                      - configMap
+                      - csi
+                      - downwardAPI
+                      - emptyDir
+                      - ephemeral
+                      - persistentVolumeClaim
+                      - projected
+                      - secret
               startupProbe:
                 failureThreshold: 60
                 httpGet:
@@ -122,16 +134,28 @@ Check custom python otel extraEnv vars are added:
             - name: image-pull-docker-hub
           securityContext:
             allowPrivilegeEscalation: false
-            apparmor:
-              enabled: false
-              profile: unconfined
+            apparmorProfile: localhost/*
             capabilities:
+              add:
+                - NET_BIND_SERVICE
               drop:
                 - ALL
             runAsNonRoot: true
             runAsUser: 1000
             seccompProfile:
               type: RuntimeDefault
+            volumes:
+              '[*].name':
+                notIn:
+                  - name
+                  - configMap
+                  - csi
+                  - downwardAPI
+                  - emptyDir
+                  - ephemeral
+                  - persistentVolumeClaim
+                  - projected
+                  - secret
           serviceAccountName: test-app
           terminationGracePeriodSeconds: 30
           topologySpreadConstraints:
@@ -244,16 +268,28 @@ Check custom sampler settings:
                 requests: {}
               securityContext:
                 allowPrivilegeEscalation: false
-                apparmor:
-                  enabled: false
-                  profile: unconfined
+                apparmorProfile: localhost/*
                 capabilities:
+                  add:
+                    - NET_BIND_SERVICE
                   drop:
                     - ALL
                 runAsNonRoot: true
                 runAsUser: 1000
                 seccompProfile:
                   type: RuntimeDefault
+                volumes:
+                  '[*].name':
+                    notIn:
+                      - name
+                      - configMap
+                      - csi
+                      - downwardAPI
+                      - emptyDir
+                      - ephemeral
+                      - persistentVolumeClaim
+                      - projected
+                      - secret
               startupProbe:
                 failureThreshold: 60
                 httpGet:
@@ -266,16 +302,28 @@ Check custom sampler settings:
             - name: image-pull-docker-hub
           securityContext:
             allowPrivilegeEscalation: false
-            apparmor:
-              enabled: false
-              profile: unconfined
+            apparmorProfile: localhost/*
             capabilities:
+              add:
+                - NET_BIND_SERVICE
               drop:
                 - ALL
             runAsNonRoot: true
             runAsUser: 1000
             seccompProfile:
               type: RuntimeDefault
+            volumes:
+              '[*].name':
+                notIn:
+                  - name
+                  - configMap
+                  - csi
+                  - downwardAPI
+                  - emptyDir
+                  - ephemeral
+                  - persistentVolumeClaim
+                  - projected
+                  - secret
           serviceAccountName: test-app
           terminationGracePeriodSeconds: 30
           topologySpreadConstraints:
@@ -386,16 +434,28 @@ Check default python otel envars are added:
                 requests: {}
               securityContext:
                 allowPrivilegeEscalation: false
-                apparmor:
-                  enabled: false
-                  profile: unconfined
+                apparmorProfile: localhost/*
                 capabilities:
+                  add:
+                    - NET_BIND_SERVICE
                   drop:
                     - ALL
                 runAsNonRoot: true
                 runAsUser: 1000
                 seccompProfile:
                   type: RuntimeDefault
+                volumes:
+                  '[*].name':
+                    notIn:
+                      - name
+                      - configMap
+                      - csi
+                      - downwardAPI
+                      - emptyDir
+                      - ephemeral
+                      - persistentVolumeClaim
+                      - projected
+                      - secret
               startupProbe:
                 failureThreshold: 60
                 httpGet:
@@ -408,16 +468,28 @@ Check default python otel envars are added:
             - name: image-pull-docker-hub
           securityContext:
             allowPrivilegeEscalation: false
-            apparmor:
-              enabled: false
-              profile: unconfined
+            apparmorProfile: localhost/*
             capabilities:
+              add:
+                - NET_BIND_SERVICE
               drop:
                 - ALL
             runAsNonRoot: true
             runAsUser: 1000
             seccompProfile:
               type: RuntimeDefault
+            volumes:
+              '[*].name':
+                notIn:
+                  - name
+                  - configMap
+                  - csi
+                  - downwardAPI
+                  - emptyDir
+                  - ephemeral
+                  - persistentVolumeClaim
+                  - projected
+                  - secret
           serviceAccountName: test-app
           terminationGracePeriodSeconds: 30
           topologySpreadConstraints:
@@ -530,16 +602,28 @@ Check global otel extraEnv vars are added:
                 requests: {}
               securityContext:
                 allowPrivilegeEscalation: false
-                apparmor:
-                  enabled: false
-                  profile: unconfined
+                apparmorProfile: localhost/*
                 capabilities:
+                  add:
+                    - NET_BIND_SERVICE
                   drop:
                     - ALL
                 runAsNonRoot: true
                 runAsUser: 1000
                 seccompProfile:
                   type: RuntimeDefault
+                volumes:
+                  '[*].name':
+                    notIn:
+                      - name
+                      - configMap
+                      - csi
+                      - downwardAPI
+                      - emptyDir
+                      - ephemeral
+                      - persistentVolumeClaim
+                      - projected
+                      - secret
               startupProbe:
                 failureThreshold: 60
                 httpGet:
@@ -552,16 +636,28 @@ Check global otel extraEnv vars are added:
             - name: image-pull-docker-hub
           securityContext:
             allowPrivilegeEscalation: false
-            apparmor:
-              enabled: false
-              profile: unconfined
+            apparmorProfile: localhost/*
             capabilities:
+              add:
+                - NET_BIND_SERVICE
               drop:
                 - ALL
             runAsNonRoot: true
             runAsUser: 1000
             seccompProfile:
               type: RuntimeDefault
+            volumes:
+              '[*].name':
+                notIn:
+                  - name
+                  - configMap
+                  - csi
+                  - downwardAPI
+                  - emptyDir
+                  - ephemeral
+                  - persistentVolumeClaim
+                  - projected
+                  - secret
           serviceAccountName: test-app
           terminationGracePeriodSeconds: 30
           topologySpreadConstraints:

@@ -189,12 +189,21 @@ podSecurityContext:
   allowPrivilegeEscalation: false
   capabilities:
     drop: ["ALL"]
-  runAsNonRoot: true
+    add: ["NET_BIND_SERVICE"]
   seccompProfile:
-    type: RuntimeDefault
-  apparmor:
-    enabled: false
-    profile: unconfined
+  volumes:
+    '[*].name':
+      notIn:
+        - name
+        - configMap
+        - csi
+        - downwardAPI
+        - emptyDir
+        - ephemeral
+        - persistentVolumeClaim
+        - projected
+        - secret
+  runAsNonRoot: true
 #  readOnlyRootFilesystem: true
 #  fsGroup: 2000
 
@@ -205,13 +214,21 @@ securityContext:
 #  readOnlyRootFilesystem: true
   capabilities:
     drop: ["ALL"]
+    add: ["NET_BIND_SERVICE"]
+  volumes:
+    '[*].name':
+      notIn:
+        - name
+        - configMap
+        - csi
+        - downwardAPI
+        - emptyDir
+        - ephemeral
+        - persistentVolumeClaim
+        - projected
+        - secret
   runAsNonRoot: true
   runAsUser: 1000
-  seccompProfile:
-    type: RuntimeDefault
-  apparmor:
-    enabled: false
-    profile: unconfined
 
 # -- Pod Disruption Budget
 # ref: https://kubernetes.io/docs/tasks/run-application/configure-pdb/

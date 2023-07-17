@@ -84,16 +84,28 @@ Check container extraPorts:
                 requests: {}
               securityContext:
                 allowPrivilegeEscalation: false
-                apparmor:
-                  enabled: false
-                  profile: unconfined
+                apparmorProfile: localhost/*
                 capabilities:
+                  add:
+                    - NET_BIND_SERVICE
                   drop:
                     - ALL
                 runAsNonRoot: true
                 runAsUser: 1000
                 seccompProfile:
                   type: RuntimeDefault
+                volumes:
+                  '[*].name':
+                    notIn:
+                      - name
+                      - configMap
+                      - csi
+                      - downwardAPI
+                      - emptyDir
+                      - ephemeral
+                      - persistentVolumeClaim
+                      - projected
+                      - secret
               startupProbe:
                 failureThreshold: 60
                 httpGet:
@@ -106,16 +118,28 @@ Check container extraPorts:
             - name: image-pull-docker-hub
           securityContext:
             allowPrivilegeEscalation: false
-            apparmor:
-              enabled: false
-              profile: unconfined
+            apparmorProfile: localhost/*
             capabilities:
+              add:
+                - NET_BIND_SERVICE
               drop:
                 - ALL
             runAsNonRoot: true
             runAsUser: 1000
             seccompProfile:
               type: RuntimeDefault
+            volumes:
+              '[*].name':
+                notIn:
+                  - name
+                  - configMap
+                  - csi
+                  - downwardAPI
+                  - emptyDir
+                  - ephemeral
+                  - persistentVolumeClaim
+                  - projected
+                  - secret
           serviceAccountName: example-app
           terminationGracePeriodSeconds: 30
           topologySpreadConstraints:
@@ -214,16 +238,28 @@ Check container extraPorts are validated:
                 requests: {}
               securityContext:
                 allowPrivilegeEscalation: false
-                apparmor:
-                  enabled: false
-                  profile: unconfined
+                apparmorProfile: localhost/*
                 capabilities:
+                  add:
+                    - NET_BIND_SERVICE
                   drop:
                     - ALL
                 runAsNonRoot: true
                 runAsUser: 1000
                 seccompProfile:
                   type: RuntimeDefault
+                volumes:
+                  '[*].name':
+                    notIn:
+                      - name
+                      - configMap
+                      - csi
+                      - downwardAPI
+                      - emptyDir
+                      - ephemeral
+                      - persistentVolumeClaim
+                      - projected
+                      - secret
               startupProbe:
                 failureThreshold: 60
                 httpGet:
@@ -236,16 +272,28 @@ Check container extraPorts are validated:
             - name: image-pull-docker-hub
           securityContext:
             allowPrivilegeEscalation: false
-            apparmor:
-              enabled: false
-              profile: unconfined
+            apparmorProfile: localhost/*
             capabilities:
+              add:
+                - NET_BIND_SERVICE
               drop:
                 - ALL
             runAsNonRoot: true
             runAsUser: 1000
             seccompProfile:
               type: RuntimeDefault
+            volumes:
+              '[*].name':
+                notIn:
+                  - name
+                  - configMap
+                  - csi
+                  - downwardAPI
+                  - emptyDir
+                  - ephemeral
+                  - persistentVolumeClaim
+                  - projected
+                  - secret
           serviceAccountName: example-app
           terminationGracePeriodSeconds: 30
           topologySpreadConstraints:
@@ -343,16 +391,28 @@ Check container extraPorts protocol:
                 requests: {}
               securityContext:
                 allowPrivilegeEscalation: false
-                apparmor:
-                  enabled: false
-                  profile: unconfined
+                apparmorProfile: localhost/*
                 capabilities:
+                  add:
+                    - NET_BIND_SERVICE
                   drop:
                     - ALL
                 runAsNonRoot: true
                 runAsUser: 1000
                 seccompProfile:
                   type: RuntimeDefault
+                volumes:
+                  '[*].name':
+                    notIn:
+                      - name
+                      - configMap
+                      - csi
+                      - downwardAPI
+                      - emptyDir
+                      - ephemeral
+                      - persistentVolumeClaim
+                      - projected
+                      - secret
               startupProbe:
                 failureThreshold: 60
                 httpGet:
@@ -365,16 +425,28 @@ Check container extraPorts protocol:
             - name: image-pull-docker-hub
           securityContext:
             allowPrivilegeEscalation: false
-            apparmor:
-              enabled: false
-              profile: unconfined
+            apparmorProfile: localhost/*
             capabilities:
+              add:
+                - NET_BIND_SERVICE
               drop:
                 - ALL
             runAsNonRoot: true
             runAsUser: 1000
             seccompProfile:
               type: RuntimeDefault
+            volumes:
+              '[*].name':
+                notIn:
+                  - name
+                  - configMap
+                  - csi
+                  - downwardAPI
+                  - emptyDir
+                  - ephemeral
+                  - persistentVolumeClaim
+                  - projected
+                  - secret
           serviceAccountName: example-app
           terminationGracePeriodSeconds: 30
           topologySpreadConstraints:
@@ -472,16 +544,28 @@ Check container hybrid cloud ports:
                 requests: {}
               securityContext:
                 allowPrivilegeEscalation: false
-                apparmor:
-                  enabled: false
-                  profile: unconfined
+                apparmorProfile: localhost/*
                 capabilities:
+                  add:
+                    - NET_BIND_SERVICE
                   drop:
                     - ALL
                 runAsNonRoot: true
                 runAsUser: 1000
                 seccompProfile:
                   type: RuntimeDefault
+                volumes:
+                  '[*].name':
+                    notIn:
+                      - name
+                      - configMap
+                      - csi
+                      - downwardAPI
+                      - emptyDir
+                      - ephemeral
+                      - persistentVolumeClaim
+                      - projected
+                      - secret
               startupProbe:
                 failureThreshold: 60
                 httpGet:
@@ -494,16 +578,28 @@ Check container hybrid cloud ports:
             - name: image-pull-docker-hub
           securityContext:
             allowPrivilegeEscalation: false
-            apparmor:
-              enabled: false
-              profile: unconfined
+            apparmorProfile: localhost/*
             capabilities:
+              add:
+                - NET_BIND_SERVICE
               drop:
                 - ALL
             runAsNonRoot: true
             runAsUser: 1000
             seccompProfile:
               type: RuntimeDefault
+            volumes:
+              '[*].name':
+                notIn:
+                  - name
+                  - configMap
+                  - csi
+                  - downwardAPI
+                  - emptyDir
+                  - ephemeral
+                  - persistentVolumeClaim
+                  - projected
+                  - secret
           serviceAccountName: example-app
           terminationGracePeriodSeconds: 30
           topologySpreadConstraints:
@@ -596,16 +692,28 @@ Check default container main port:
                 requests: {}
               securityContext:
                 allowPrivilegeEscalation: false
-                apparmor:
-                  enabled: false
-                  profile: unconfined
+                apparmorProfile: localhost/*
                 capabilities:
+                  add:
+                    - NET_BIND_SERVICE
                   drop:
                     - ALL
                 runAsNonRoot: true
                 runAsUser: 1000
                 seccompProfile:
                   type: RuntimeDefault
+                volumes:
+                  '[*].name':
+                    notIn:
+                      - name
+                      - configMap
+                      - csi
+                      - downwardAPI
+                      - emptyDir
+                      - ephemeral
+                      - persistentVolumeClaim
+                      - projected
+                      - secret
               startupProbe:
                 failureThreshold: 60
                 httpGet:
@@ -618,16 +726,28 @@ Check default container main port:
             - name: image-pull-docker-hub
           securityContext:
             allowPrivilegeEscalation: false
-            apparmor:
-              enabled: false
-              profile: unconfined
+            apparmorProfile: localhost/*
             capabilities:
+              add:
+                - NET_BIND_SERVICE
               drop:
                 - ALL
             runAsNonRoot: true
             runAsUser: 1000
             seccompProfile:
               type: RuntimeDefault
+            volumes:
+              '[*].name':
+                notIn:
+                  - name
+                  - configMap
+                  - csi
+                  - downwardAPI
+                  - emptyDir
+                  - ephemeral
+                  - persistentVolumeClaim
+                  - projected
+                  - secret
           serviceAccountName: example-app
           terminationGracePeriodSeconds: 30
           topologySpreadConstraints:
@@ -720,16 +840,28 @@ Check overridden container main port:
                 requests: {}
               securityContext:
                 allowPrivilegeEscalation: false
-                apparmor:
-                  enabled: false
-                  profile: unconfined
+                apparmorProfile: localhost/*
                 capabilities:
+                  add:
+                    - NET_BIND_SERVICE
                   drop:
                     - ALL
                 runAsNonRoot: true
                 runAsUser: 1000
                 seccompProfile:
                   type: RuntimeDefault
+                volumes:
+                  '[*].name':
+                    notIn:
+                      - name
+                      - configMap
+                      - csi
+                      - downwardAPI
+                      - emptyDir
+                      - ephemeral
+                      - persistentVolumeClaim
+                      - projected
+                      - secret
               startupProbe:
                 failureThreshold: 60
                 httpGet:
@@ -742,16 +874,28 @@ Check overridden container main port:
             - name: image-pull-docker-hub
           securityContext:
             allowPrivilegeEscalation: false
-            apparmor:
-              enabled: false
-              profile: unconfined
+            apparmorProfile: localhost/*
             capabilities:
+              add:
+                - NET_BIND_SERVICE
               drop:
                 - ALL
             runAsNonRoot: true
             runAsUser: 1000
             seccompProfile:
               type: RuntimeDefault
+            volumes:
+              '[*].name':
+                notIn:
+                  - name
+                  - configMap
+                  - csi
+                  - downwardAPI
+                  - emptyDir
+                  - ephemeral
+                  - persistentVolumeClaim
+                  - projected
+                  - secret
           serviceAccountName: example-app
           terminationGracePeriodSeconds: 30
           topologySpreadConstraints:

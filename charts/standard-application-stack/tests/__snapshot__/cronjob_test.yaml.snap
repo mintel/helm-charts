@@ -49,32 +49,56 @@ Check CronJob Default Overrides:
                   name: main
                   securityContext:
                     allowPrivilegeEscalation: false
-                    apparmor:
-                      enabled: false
-                      profile: unconfined
+                    apparmorProfile: localhost/*
                     capabilities:
+                      add:
+                        - NET_BIND_SERVICE
                       drop:
                         - ALL
                     runAsNonRoot: true
                     runAsUser: 1000
                     seccompProfile:
                       type: RuntimeDefault
+                    volumes:
+                      '[*].name':
+                        notIn:
+                          - name
+                          - configMap
+                          - csi
+                          - downwardAPI
+                          - emptyDir
+                          - ephemeral
+                          - persistentVolumeClaim
+                          - projected
+                          - secret
               imagePullSecrets:
                 - name: image-pull-gitlab
                 - name: image-pull-docker-hub
               restartPolicy: OnFailure
               securityContext:
                 allowPrivilegeEscalation: false
-                apparmor:
-                  enabled: false
-                  profile: unconfined
+                apparmorProfile: localhost/*
                 capabilities:
+                  add:
+                    - NET_BIND_SERVICE
                   drop:
                     - ALL
                 runAsNonRoot: true
                 runAsUser: 1000
                 seccompProfile:
                   type: RuntimeDefault
+                volumes:
+                  '[*].name':
+                    notIn:
+                      - name
+                      - configMap
+                      - csi
+                      - downwardAPI
+                      - emptyDir
+                      - ephemeral
+                      - persistentVolumeClaim
+                      - projected
+                      - secret
               serviceAccountName: example-app
           ttlSecondsAfterFinished: 120
       schedule: 0 1 * * *
@@ -130,32 +154,56 @@ Check CronJob Defaults:
                   name: main
                   securityContext:
                     allowPrivilegeEscalation: false
-                    apparmor:
-                      enabled: false
-                      profile: unconfined
+                    apparmorProfile: localhost/*
                     capabilities:
+                      add:
+                        - NET_BIND_SERVICE
                       drop:
                         - ALL
                     runAsNonRoot: true
                     runAsUser: 1000
                     seccompProfile:
                       type: RuntimeDefault
+                    volumes:
+                      '[*].name':
+                        notIn:
+                          - name
+                          - configMap
+                          - csi
+                          - downwardAPI
+                          - emptyDir
+                          - ephemeral
+                          - persistentVolumeClaim
+                          - projected
+                          - secret
               imagePullSecrets:
                 - name: image-pull-gitlab
                 - name: image-pull-docker-hub
               restartPolicy: Never
               securityContext:
                 allowPrivilegeEscalation: false
-                apparmor:
-                  enabled: false
-                  profile: unconfined
+                apparmorProfile: localhost/*
                 capabilities:
+                  add:
+                    - NET_BIND_SERVICE
                   drop:
                     - ALL
                 runAsNonRoot: true
                 runAsUser: 1000
                 seccompProfile:
                   type: RuntimeDefault
+                volumes:
+                  '[*].name':
+                    notIn:
+                      - name
+                      - configMap
+                      - csi
+                      - downwardAPI
+                      - emptyDir
+                      - ephemeral
+                      - persistentVolumeClaim
+                      - projected
+                      - secret
               serviceAccountName: example-app
           ttlSecondsAfterFinished: 60
       schedule: 0 0 * * *
@@ -211,32 +259,56 @@ Check CronJob Job Overrides:
                   name: main
                   securityContext:
                     allowPrivilegeEscalation: false
-                    apparmor:
-                      enabled: false
-                      profile: unconfined
+                    apparmorProfile: localhost/*
                     capabilities:
+                      add:
+                        - NET_BIND_SERVICE
                       drop:
                         - ALL
                     runAsNonRoot: true
                     runAsUser: 1000
                     seccompProfile:
                       type: RuntimeDefault
+                    volumes:
+                      '[*].name':
+                        notIn:
+                          - name
+                          - configMap
+                          - csi
+                          - downwardAPI
+                          - emptyDir
+                          - ephemeral
+                          - persistentVolumeClaim
+                          - projected
+                          - secret
               imagePullSecrets:
                 - name: image-pull-gitlab
                 - name: image-pull-docker-hub
               restartPolicy: OnFailure
               securityContext:
                 allowPrivilegeEscalation: false
-                apparmor:
-                  enabled: false
-                  profile: unconfined
+                apparmorProfile: localhost/*
                 capabilities:
+                  add:
+                    - NET_BIND_SERVICE
                   drop:
                     - ALL
                 runAsNonRoot: true
                 runAsUser: 1000
                 seccompProfile:
                   type: RuntimeDefault
+                volumes:
+                  '[*].name':
+                    notIn:
+                      - name
+                      - configMap
+                      - csi
+                      - downwardAPI
+                      - emptyDir
+                      - ephemeral
+                      - persistentVolumeClaim
+                      - projected
+                      - secret
               serviceAccountName: example-app
           ttlSecondsAfterFinished: 120
       schedule: 0 1 * * *
@@ -292,32 +364,56 @@ Check CronJob ttlSecondsAfterFinished zero value:
                   name: main
                   securityContext:
                     allowPrivilegeEscalation: false
-                    apparmor:
-                      enabled: false
-                      profile: unconfined
+                    apparmorProfile: localhost/*
                     capabilities:
+                      add:
+                        - NET_BIND_SERVICE
                       drop:
                         - ALL
                     runAsNonRoot: true
                     runAsUser: 1000
                     seccompProfile:
                       type: RuntimeDefault
+                    volumes:
+                      '[*].name':
+                        notIn:
+                          - name
+                          - configMap
+                          - csi
+                          - downwardAPI
+                          - emptyDir
+                          - ephemeral
+                          - persistentVolumeClaim
+                          - projected
+                          - secret
               imagePullSecrets:
                 - name: image-pull-gitlab
                 - name: image-pull-docker-hub
               restartPolicy: Never
               securityContext:
                 allowPrivilegeEscalation: false
-                apparmor:
-                  enabled: false
-                  profile: unconfined
+                apparmorProfile: localhost/*
                 capabilities:
+                  add:
+                    - NET_BIND_SERVICE
                   drop:
                     - ALL
                 runAsNonRoot: true
                 runAsUser: 1000
                 seccompProfile:
                   type: RuntimeDefault
+                volumes:
+                  '[*].name':
+                    notIn:
+                      - name
+                      - configMap
+                      - csi
+                      - downwardAPI
+                      - emptyDir
+                      - ephemeral
+                      - persistentVolumeClaim
+                      - projected
+                      - secret
               serviceAccountName: example-app
       schedule: 0 1 * * *
       suspend: false
@@ -372,32 +468,56 @@ CronJob can have a timezone:
                   name: main
                   securityContext:
                     allowPrivilegeEscalation: false
-                    apparmor:
-                      enabled: false
-                      profile: unconfined
+                    apparmorProfile: localhost/*
                     capabilities:
+                      add:
+                        - NET_BIND_SERVICE
                       drop:
                         - ALL
                     runAsNonRoot: true
                     runAsUser: 1000
                     seccompProfile:
                       type: RuntimeDefault
+                    volumes:
+                      '[*].name':
+                        notIn:
+                          - name
+                          - configMap
+                          - csi
+                          - downwardAPI
+                          - emptyDir
+                          - ephemeral
+                          - persistentVolumeClaim
+                          - projected
+                          - secret
               imagePullSecrets:
                 - name: image-pull-gitlab
                 - name: image-pull-docker-hub
               restartPolicy: Never
               securityContext:
                 allowPrivilegeEscalation: false
-                apparmor:
-                  enabled: false
-                  profile: unconfined
+                apparmorProfile: localhost/*
                 capabilities:
+                  add:
+                    - NET_BIND_SERVICE
                   drop:
                     - ALL
                 runAsNonRoot: true
                 runAsUser: 1000
                 seccompProfile:
                   type: RuntimeDefault
+                volumes:
+                  '[*].name':
+                    notIn:
+                      - name
+                      - configMap
+                      - csi
+                      - downwardAPI
+                      - emptyDir
+                      - ephemeral
+                      - persistentVolumeClaim
+                      - projected
+                      - secret
               serviceAccountName: example-app
           ttlSecondsAfterFinished: 60
       schedule: 0 1 * * *
