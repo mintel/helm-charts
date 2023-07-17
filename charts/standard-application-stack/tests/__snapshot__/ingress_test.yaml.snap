@@ -436,18 +436,6 @@ Check EXTRA_ALLOWED_HOSTS env var extraHosts with extraIngresses:
                     - ALL
                 runAsNonRoot: true
                 runAsUser: 1000
-                volumes:
-                  '[*].name':
-                    notIn:
-                      - name
-                      - configMap
-                      - csi
-                      - downwardAPI
-                      - emptyDir
-                      - ephemeral
-                      - persistentVolumeClaim
-                      - projected
-                      - secret
               startupProbe:
                 failureThreshold: 60
                 httpGet:
@@ -467,18 +455,6 @@ Check EXTRA_ALLOWED_HOSTS env var extraHosts with extraIngresses:
                 - ALL
             runAsNonRoot: true
             runAsUser: 1000
-            volumes:
-              '[*].name':
-                notIn:
-                  - name
-                  - configMap
-                  - csi
-                  - downwardAPI
-                  - emptyDir
-                  - ephemeral
-                  - persistentVolumeClaim
-                  - projected
-                  - secret
           serviceAccountName: example-app
           terminationGracePeriodSeconds: 30
           topologySpreadConstraints:

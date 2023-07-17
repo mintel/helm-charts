@@ -229,18 +229,6 @@ Check awsEsProxy deployment is created if enabled:
                 - ALL
             runAsNonRoot: true
             runAsUser: 1000
-            volumes:
-              '[*].name':
-                notIn:
-                  - name
-                  - configMap
-                  - csi
-                  - downwardAPI
-                  - emptyDir
-                  - ephemeral
-                  - persistentVolumeClaim
-                  - projected
-                  - secret
           serviceAccountName: example-app
 Check awsEsProxy service is created if enabled:
   1: |

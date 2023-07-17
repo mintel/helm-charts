@@ -91,18 +91,6 @@ Check container extraPorts:
                     - ALL
                 runAsNonRoot: true
                 runAsUser: 1000
-                volumes:
-                  '[*].name':
-                    notIn:
-                      - name
-                      - configMap
-                      - csi
-                      - downwardAPI
-                      - emptyDir
-                      - ephemeral
-                      - persistentVolumeClaim
-                      - projected
-                      - secret
               startupProbe:
                 failureThreshold: 60
                 httpGet:
@@ -122,18 +110,6 @@ Check container extraPorts:
                 - ALL
             runAsNonRoot: true
             runAsUser: 1000
-            volumes:
-              '[*].name':
-                notIn:
-                  - name
-                  - configMap
-                  - csi
-                  - downwardAPI
-                  - emptyDir
-                  - ephemeral
-                  - persistentVolumeClaim
-                  - projected
-                  - secret
           serviceAccountName: example-app
           terminationGracePeriodSeconds: 30
           topologySpreadConstraints:
@@ -239,18 +215,6 @@ Check container extraPorts are validated:
                     - ALL
                 runAsNonRoot: true
                 runAsUser: 1000
-                volumes:
-                  '[*].name':
-                    notIn:
-                      - name
-                      - configMap
-                      - csi
-                      - downwardAPI
-                      - emptyDir
-                      - ephemeral
-                      - persistentVolumeClaim
-                      - projected
-                      - secret
               startupProbe:
                 failureThreshold: 60
                 httpGet:
@@ -270,18 +234,6 @@ Check container extraPorts are validated:
                 - ALL
             runAsNonRoot: true
             runAsUser: 1000
-            volumes:
-              '[*].name':
-                notIn:
-                  - name
-                  - configMap
-                  - csi
-                  - downwardAPI
-                  - emptyDir
-                  - ephemeral
-                  - persistentVolumeClaim
-                  - projected
-                  - secret
           serviceAccountName: example-app
           terminationGracePeriodSeconds: 30
           topologySpreadConstraints:
@@ -386,18 +338,6 @@ Check container extraPorts protocol:
                     - ALL
                 runAsNonRoot: true
                 runAsUser: 1000
-                volumes:
-                  '[*].name':
-                    notIn:
-                      - name
-                      - configMap
-                      - csi
-                      - downwardAPI
-                      - emptyDir
-                      - ephemeral
-                      - persistentVolumeClaim
-                      - projected
-                      - secret
               startupProbe:
                 failureThreshold: 60
                 httpGet:
@@ -417,18 +357,6 @@ Check container extraPorts protocol:
                 - ALL
             runAsNonRoot: true
             runAsUser: 1000
-            volumes:
-              '[*].name':
-                notIn:
-                  - name
-                  - configMap
-                  - csi
-                  - downwardAPI
-                  - emptyDir
-                  - ephemeral
-                  - persistentVolumeClaim
-                  - projected
-                  - secret
           serviceAccountName: example-app
           terminationGracePeriodSeconds: 30
           topologySpreadConstraints:
@@ -533,18 +461,6 @@ Check container hybrid cloud ports:
                     - ALL
                 runAsNonRoot: true
                 runAsUser: 1000
-                volumes:
-                  '[*].name':
-                    notIn:
-                      - name
-                      - configMap
-                      - csi
-                      - downwardAPI
-                      - emptyDir
-                      - ephemeral
-                      - persistentVolumeClaim
-                      - projected
-                      - secret
               startupProbe:
                 failureThreshold: 60
                 httpGet:
@@ -564,18 +480,6 @@ Check container hybrid cloud ports:
                 - ALL
             runAsNonRoot: true
             runAsUser: 1000
-            volumes:
-              '[*].name':
-                notIn:
-                  - name
-                  - configMap
-                  - csi
-                  - downwardAPI
-                  - emptyDir
-                  - ephemeral
-                  - persistentVolumeClaim
-                  - projected
-                  - secret
           serviceAccountName: example-app
           terminationGracePeriodSeconds: 30
           topologySpreadConstraints:
@@ -675,18 +579,6 @@ Check default container main port:
                     - ALL
                 runAsNonRoot: true
                 runAsUser: 1000
-                volumes:
-                  '[*].name':
-                    notIn:
-                      - name
-                      - configMap
-                      - csi
-                      - downwardAPI
-                      - emptyDir
-                      - ephemeral
-                      - persistentVolumeClaim
-                      - projected
-                      - secret
               startupProbe:
                 failureThreshold: 60
                 httpGet:
@@ -706,18 +598,6 @@ Check default container main port:
                 - ALL
             runAsNonRoot: true
             runAsUser: 1000
-            volumes:
-              '[*].name':
-                notIn:
-                  - name
-                  - configMap
-                  - csi
-                  - downwardAPI
-                  - emptyDir
-                  - ephemeral
-                  - persistentVolumeClaim
-                  - projected
-                  - secret
           serviceAccountName: example-app
           terminationGracePeriodSeconds: 30
           topologySpreadConstraints:
@@ -817,18 +697,6 @@ Check overridden container main port:
                     - ALL
                 runAsNonRoot: true
                 runAsUser: 1000
-                volumes:
-                  '[*].name':
-                    notIn:
-                      - name
-                      - configMap
-                      - csi
-                      - downwardAPI
-                      - emptyDir
-                      - ephemeral
-                      - persistentVolumeClaim
-                      - projected
-                      - secret
               startupProbe:
                 failureThreshold: 60
                 httpGet:
@@ -848,18 +716,6 @@ Check overridden container main port:
                 - ALL
             runAsNonRoot: true
             runAsUser: 1000
-            volumes:
-              '[*].name':
-                notIn:
-                  - name
-                  - configMap
-                  - csi
-                  - downwardAPI
-                  - emptyDir
-                  - ephemeral
-                  - persistentVolumeClaim
-                  - projected
-                  - secret
           serviceAccountName: example-app
           terminationGracePeriodSeconds: 30
           topologySpreadConstraints:

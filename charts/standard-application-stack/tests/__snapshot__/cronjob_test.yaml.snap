@@ -56,18 +56,6 @@ Check CronJob Default Overrides:
                         - ALL
                     runAsNonRoot: true
                     runAsUser: 1000
-                    volumes:
-                      '[*].name':
-                        notIn:
-                          - name
-                          - configMap
-                          - csi
-                          - downwardAPI
-                          - emptyDir
-                          - ephemeral
-                          - persistentVolumeClaim
-                          - projected
-                          - secret
               imagePullSecrets:
                 - name: image-pull-gitlab
                 - name: image-pull-docker-hub
@@ -81,18 +69,6 @@ Check CronJob Default Overrides:
                     - ALL
                 runAsNonRoot: true
                 runAsUser: 1000
-                volumes:
-                  '[*].name':
-                    notIn:
-                      - name
-                      - configMap
-                      - csi
-                      - downwardAPI
-                      - emptyDir
-                      - ephemeral
-                      - persistentVolumeClaim
-                      - projected
-                      - secret
               serviceAccountName: example-app
           ttlSecondsAfterFinished: 120
       schedule: 0 1 * * *
@@ -155,18 +131,6 @@ Check CronJob Defaults:
                         - ALL
                     runAsNonRoot: true
                     runAsUser: 1000
-                    volumes:
-                      '[*].name':
-                        notIn:
-                          - name
-                          - configMap
-                          - csi
-                          - downwardAPI
-                          - emptyDir
-                          - ephemeral
-                          - persistentVolumeClaim
-                          - projected
-                          - secret
               imagePullSecrets:
                 - name: image-pull-gitlab
                 - name: image-pull-docker-hub
@@ -180,18 +144,6 @@ Check CronJob Defaults:
                     - ALL
                 runAsNonRoot: true
                 runAsUser: 1000
-                volumes:
-                  '[*].name':
-                    notIn:
-                      - name
-                      - configMap
-                      - csi
-                      - downwardAPI
-                      - emptyDir
-                      - ephemeral
-                      - persistentVolumeClaim
-                      - projected
-                      - secret
               serviceAccountName: example-app
           ttlSecondsAfterFinished: 60
       schedule: 0 0 * * *
@@ -254,18 +206,6 @@ Check CronJob Job Overrides:
                         - ALL
                     runAsNonRoot: true
                     runAsUser: 1000
-                    volumes:
-                      '[*].name':
-                        notIn:
-                          - name
-                          - configMap
-                          - csi
-                          - downwardAPI
-                          - emptyDir
-                          - ephemeral
-                          - persistentVolumeClaim
-                          - projected
-                          - secret
               imagePullSecrets:
                 - name: image-pull-gitlab
                 - name: image-pull-docker-hub
@@ -279,18 +219,6 @@ Check CronJob Job Overrides:
                     - ALL
                 runAsNonRoot: true
                 runAsUser: 1000
-                volumes:
-                  '[*].name':
-                    notIn:
-                      - name
-                      - configMap
-                      - csi
-                      - downwardAPI
-                      - emptyDir
-                      - ephemeral
-                      - persistentVolumeClaim
-                      - projected
-                      - secret
               serviceAccountName: example-app
           ttlSecondsAfterFinished: 120
       schedule: 0 1 * * *
@@ -353,18 +281,6 @@ Check CronJob ttlSecondsAfterFinished zero value:
                         - ALL
                     runAsNonRoot: true
                     runAsUser: 1000
-                    volumes:
-                      '[*].name':
-                        notIn:
-                          - name
-                          - configMap
-                          - csi
-                          - downwardAPI
-                          - emptyDir
-                          - ephemeral
-                          - persistentVolumeClaim
-                          - projected
-                          - secret
               imagePullSecrets:
                 - name: image-pull-gitlab
                 - name: image-pull-docker-hub
@@ -378,18 +294,6 @@ Check CronJob ttlSecondsAfterFinished zero value:
                     - ALL
                 runAsNonRoot: true
                 runAsUser: 1000
-                volumes:
-                  '[*].name':
-                    notIn:
-                      - name
-                      - configMap
-                      - csi
-                      - downwardAPI
-                      - emptyDir
-                      - ephemeral
-                      - persistentVolumeClaim
-                      - projected
-                      - secret
               serviceAccountName: example-app
       schedule: 0 1 * * *
       suspend: false
@@ -451,18 +355,6 @@ CronJob can have a timezone:
                         - ALL
                     runAsNonRoot: true
                     runAsUser: 1000
-                    volumes:
-                      '[*].name':
-                        notIn:
-                          - name
-                          - configMap
-                          - csi
-                          - downwardAPI
-                          - emptyDir
-                          - ephemeral
-                          - persistentVolumeClaim
-                          - projected
-                          - secret
               imagePullSecrets:
                 - name: image-pull-gitlab
                 - name: image-pull-docker-hub
@@ -476,18 +368,6 @@ CronJob can have a timezone:
                     - ALL
                 runAsNonRoot: true
                 runAsUser: 1000
-                volumes:
-                  '[*].name':
-                    notIn:
-                      - name
-                      - configMap
-                      - csi
-                      - downwardAPI
-                      - emptyDir
-                      - ephemeral
-                      - persistentVolumeClaim
-                      - projected
-                      - secret
               serviceAccountName: example-app
           ttlSecondsAfterFinished: 60
       schedule: 0 1 * * *

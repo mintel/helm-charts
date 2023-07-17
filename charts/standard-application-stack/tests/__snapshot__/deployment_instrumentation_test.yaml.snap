@@ -107,18 +107,6 @@ Check custom python otel extraEnv vars are added:
                     - ALL
                 runAsNonRoot: true
                 runAsUser: 1000
-                volumes:
-                  '[*].name':
-                    notIn:
-                      - name
-                      - configMap
-                      - csi
-                      - downwardAPI
-                      - emptyDir
-                      - ephemeral
-                      - persistentVolumeClaim
-                      - projected
-                      - secret
               startupProbe:
                 failureThreshold: 60
                 httpGet:
@@ -138,18 +126,6 @@ Check custom python otel extraEnv vars are added:
                 - ALL
             runAsNonRoot: true
             runAsUser: 1000
-            volumes:
-              '[*].name':
-                notIn:
-                  - name
-                  - configMap
-                  - csi
-                  - downwardAPI
-                  - emptyDir
-                  - ephemeral
-                  - persistentVolumeClaim
-                  - projected
-                  - secret
           serviceAccountName: test-app
           terminationGracePeriodSeconds: 30
           topologySpreadConstraints:
@@ -269,18 +245,6 @@ Check custom sampler settings:
                     - ALL
                 runAsNonRoot: true
                 runAsUser: 1000
-                volumes:
-                  '[*].name':
-                    notIn:
-                      - name
-                      - configMap
-                      - csi
-                      - downwardAPI
-                      - emptyDir
-                      - ephemeral
-                      - persistentVolumeClaim
-                      - projected
-                      - secret
               startupProbe:
                 failureThreshold: 60
                 httpGet:
@@ -300,18 +264,6 @@ Check custom sampler settings:
                 - ALL
             runAsNonRoot: true
             runAsUser: 1000
-            volumes:
-              '[*].name':
-                notIn:
-                  - name
-                  - configMap
-                  - csi
-                  - downwardAPI
-                  - emptyDir
-                  - ephemeral
-                  - persistentVolumeClaim
-                  - projected
-                  - secret
           serviceAccountName: test-app
           terminationGracePeriodSeconds: 30
           topologySpreadConstraints:
@@ -429,18 +381,6 @@ Check default python otel envars are added:
                     - ALL
                 runAsNonRoot: true
                 runAsUser: 1000
-                volumes:
-                  '[*].name':
-                    notIn:
-                      - name
-                      - configMap
-                      - csi
-                      - downwardAPI
-                      - emptyDir
-                      - ephemeral
-                      - persistentVolumeClaim
-                      - projected
-                      - secret
               startupProbe:
                 failureThreshold: 60
                 httpGet:
@@ -460,18 +400,6 @@ Check default python otel envars are added:
                 - ALL
             runAsNonRoot: true
             runAsUser: 1000
-            volumes:
-              '[*].name':
-                notIn:
-                  - name
-                  - configMap
-                  - csi
-                  - downwardAPI
-                  - emptyDir
-                  - ephemeral
-                  - persistentVolumeClaim
-                  - projected
-                  - secret
           serviceAccountName: test-app
           terminationGracePeriodSeconds: 30
           topologySpreadConstraints:
@@ -591,18 +519,6 @@ Check global otel extraEnv vars are added:
                     - ALL
                 runAsNonRoot: true
                 runAsUser: 1000
-                volumes:
-                  '[*].name':
-                    notIn:
-                      - name
-                      - configMap
-                      - csi
-                      - downwardAPI
-                      - emptyDir
-                      - ephemeral
-                      - persistentVolumeClaim
-                      - projected
-                      - secret
               startupProbe:
                 failureThreshold: 60
                 httpGet:
@@ -622,18 +538,6 @@ Check global otel extraEnv vars are added:
                 - ALL
             runAsNonRoot: true
             runAsUser: 1000
-            volumes:
-              '[*].name':
-                notIn:
-                  - name
-                  - configMap
-                  - csi
-                  - downwardAPI
-                  - emptyDir
-                  - ephemeral
-                  - persistentVolumeClaim
-                  - projected
-                  - secret
           serviceAccountName: test-app
           terminationGracePeriodSeconds: 30
           topologySpreadConstraints:

@@ -58,18 +58,6 @@ Check all .job.* values can be set correctly, without overriding from main deplo
                     - ALL
                 runAsNonRoot: true
                 runAsUser: 1000
-                volumes:
-                  '[*].name':
-                    notIn:
-                      - name
-                      - configMap
-                      - csi
-                      - downwardAPI
-                      - emptyDir
-                      - ephemeral
-                      - persistentVolumeClaim
-                      - projected
-                      - secret
           imagePullSecrets:
             - name: image-pull-gitlab
             - name: image-pull-docker-hub
@@ -140,18 +128,6 @@ Check all overrides/additions from main deployment work if enabled:
                     - ALL
                 runAsNonRoot: true
                 runAsUser: 1000
-                volumes:
-                  '[*].name':
-                    notIn:
-                      - name
-                      - configMap
-                      - csi
-                      - downwardAPI
-                      - emptyDir
-                      - ephemeral
-                      - persistentVolumeClaim
-                      - projected
-                      - secret
           imagePullSecrets:
             - name: image-pull-gitlab
             - name: image-pull-docker-hub
@@ -165,18 +141,6 @@ Check all overrides/additions from main deployment work if enabled:
                 - ALL
             runAsNonRoot: true
             runAsUser: 1000
-            volumes:
-              '[*].name':
-                notIn:
-                  - name
-                  - configMap
-                  - csi
-                  - downwardAPI
-                  - emptyDir
-                  - ephemeral
-                  - persistentVolumeClaim
-                  - projected
-                  - secret
           serviceAccountName: test-app
       ttlSecondsAfterFinished: 120
 Check default values are correct with minimal configuration:
@@ -228,18 +192,6 @@ Check default values are correct with minimal configuration:
                     - ALL
                 runAsNonRoot: true
                 runAsUser: 1000
-                volumes:
-                  '[*].name':
-                    notIn:
-                      - name
-                      - configMap
-                      - csi
-                      - downwardAPI
-                      - emptyDir
-                      - ephemeral
-                      - persistentVolumeClaim
-                      - projected
-                      - secret
           imagePullSecrets:
             - name: image-pull-gitlab
             - name: image-pull-docker-hub
@@ -253,17 +205,5 @@ Check default values are correct with minimal configuration:
                 - ALL
             runAsNonRoot: true
             runAsUser: 1000
-            volumes:
-              '[*].name':
-                notIn:
-                  - name
-                  - configMap
-                  - csi
-                  - downwardAPI
-                  - emptyDir
-                  - ephemeral
-                  - persistentVolumeClaim
-                  - projected
-                  - secret
           serviceAccountName: test-app
       ttlSecondsAfterFinished: 60

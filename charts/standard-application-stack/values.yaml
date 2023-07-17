@@ -190,18 +190,6 @@ podSecurityContext:
   capabilities:
     drop: ["ALL"]
     add: ["NET_BIND_SERVICE"]
-  volumes:
-    '[*].name':
-      notIn:
-        - name
-        - configMap
-        - csi
-        - downwardAPI
-        - emptyDir
-        - ephemeral
-        - persistentVolumeClaim
-        - projected
-        - secret
   runAsNonRoot: true
 #  readOnlyRootFilesystem: true
 #  fsGroup: 2000
@@ -214,18 +202,6 @@ securityContext:
   capabilities:
     drop: ["ALL"]
     add: ["NET_BIND_SERVICE"]
-  volumes:
-    '[*].name':
-      notIn:
-        - name
-        - configMap
-        - csi
-        - downwardAPI
-        - emptyDir
-        - ephemeral
-        - persistentVolumeClaim
-        - projected
-        - secret
   runAsNonRoot: true
   runAsUser: 1000
 
