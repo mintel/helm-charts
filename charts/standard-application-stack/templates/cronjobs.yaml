@@ -31,7 +31,7 @@ spec:
           labels: {{ include "mintel_common.labels" $data | nindent 12 }}
         spec:
           {{- include "mintel_common.imagePullSecrets" $ | nindent 10 }}
-          {{- with $.Values.podSecurityContext }}
+          {{- with .podSecurityContext | default $.Values.podSecurityContext }}
           securityContext: {{- toYaml . | nindent 12 }}
           {{- end }}
           {{- if (and $.Values.serviceAccount (or $.Values.serviceAccount.create $.Values.serviceAccount.name)) }}
