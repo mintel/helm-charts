@@ -144,6 +144,15 @@ Check default container args:
                 requests:
                   cpu: 100m
                   memory: 64Mi
+              securityContext:
+                allowPrivilegeEscalation: false
+                capabilities:
+                  add:
+                    - NET_BIND_SERVICE
+                  drop:
+                    - ALL
+                runAsNonRoot: true
+                runAsUser: 1000
           imagePullSecrets:
             - name: image-pull-gitlab
             - name: image-pull-docker-hub
@@ -307,6 +316,15 @@ Check setting skip-auth-regex from extra passed in values:
                 requests:
                   cpu: 100m
                   memory: 64Mi
+              securityContext:
+                allowPrivilegeEscalation: false
+                capabilities:
+                  add:
+                    - NET_BIND_SERVICE
+                  drop:
+                    - ALL
+                runAsNonRoot: true
+                runAsUser: 1000
           imagePullSecrets:
             - name: image-pull-gitlab
             - name: image-pull-docker-hub
@@ -470,6 +488,15 @@ Check setting skip-auth-regex from extra passed in values when they already cont
                 requests:
                   cpu: 100m
                   memory: 64Mi
+              securityContext:
+                allowPrivilegeEscalation: false
+                capabilities:
+                  add:
+                    - NET_BIND_SERVICE
+                  drop:
+                    - ALL
+                runAsNonRoot: true
+                runAsUser: 1000
           imagePullSecrets:
             - name: image-pull-gitlab
             - name: image-pull-docker-hub
@@ -632,6 +659,15 @@ Check setting skip-auth-regex from overridden health-check values:
                 requests:
                   cpu: 100m
                   memory: 64Mi
+              securityContext:
+                allowPrivilegeEscalation: false
+                capabilities:
+                  add:
+                    - NET_BIND_SERVICE
+                  drop:
+                    - ALL
+                runAsNonRoot: true
+                runAsUser: 1000
           imagePullSecrets:
             - name: image-pull-gitlab
             - name: image-pull-docker-hub
@@ -794,6 +830,15 @@ Check sidecar present if enabled:
                 requests:
                   cpu: 100m
                   memory: 64Mi
+              securityContext:
+                allowPrivilegeEscalation: false
+                capabilities:
+                  add:
+                    - NET_BIND_SERVICE
+                  drop:
+                    - ALL
+                runAsNonRoot: true
+                runAsUser: 1000
           imagePullSecrets:
             - name: image-pull-gitlab
             - name: image-pull-docker-hub
