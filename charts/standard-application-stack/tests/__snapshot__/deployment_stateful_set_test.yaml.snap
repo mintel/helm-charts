@@ -73,6 +73,15 @@ Check stateful set is rendered with volumeClaimTemplates:
               resources:
                 limits: {}
                 requests: {}
+              securityContext:
+                allowPrivilegeEscalation: false
+                capabilities:
+                  add:
+                    - NET_BIND_SERVICE
+                  drop:
+                    - ALL
+                runAsNonRoot: true
+                runAsUser: 1000
               startupProbe:
                 failureThreshold: 60
                 httpGet:
@@ -84,6 +93,7 @@ Check stateful set is rendered with volumeClaimTemplates:
             - name: image-pull-gitlab
             - name: image-pull-docker-hub
           securityContext:
+            runAsNonRoot: true
             runAsUser: 1000
           serviceAccountName: test-app
           terminationGracePeriodSeconds: 30

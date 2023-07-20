@@ -79,6 +79,15 @@ Check allowSingleReplica doesn't alter strategy:
               resources:
                 limits: {}
                 requests: {}
+              securityContext:
+                allowPrivilegeEscalation: false
+                capabilities:
+                  add:
+                    - NET_BIND_SERVICE
+                  drop:
+                    - ALL
+                runAsNonRoot: true
+                runAsUser: 1000
               startupProbe:
                 failureThreshold: 60
                 httpGet:
@@ -90,6 +99,7 @@ Check allowSingleReplica doesn't alter strategy:
             - name: image-pull-gitlab
             - name: image-pull-docker-hub
           securityContext:
+            runAsNonRoot: true
             runAsUser: 1000
           serviceAccountName: example-app
           terminationGracePeriodSeconds: 30
@@ -182,6 +192,15 @@ Check allowSingleReplica set annotations:
               resources:
                 limits: {}
                 requests: {}
+              securityContext:
+                allowPrivilegeEscalation: false
+                capabilities:
+                  add:
+                    - NET_BIND_SERVICE
+                  drop:
+                    - ALL
+                runAsNonRoot: true
+                runAsUser: 1000
               startupProbe:
                 failureThreshold: 60
                 httpGet:
@@ -193,6 +212,7 @@ Check allowSingleReplica set annotations:
             - name: image-pull-gitlab
             - name: image-pull-docker-hub
           securityContext:
+            runAsNonRoot: true
             runAsUser: 1000
           serviceAccountName: example-app
           terminationGracePeriodSeconds: 30
@@ -283,6 +303,15 @@ Check replicas unset when autoscaling is enabled:
               resources:
                 limits: {}
                 requests: {}
+              securityContext:
+                allowPrivilegeEscalation: false
+                capabilities:
+                  add:
+                    - NET_BIND_SERVICE
+                  drop:
+                    - ALL
+                runAsNonRoot: true
+                runAsUser: 1000
               startupProbe:
                 failureThreshold: 60
                 httpGet:
@@ -294,6 +323,7 @@ Check replicas unset when autoscaling is enabled:
             - name: image-pull-gitlab
             - name: image-pull-docker-hub
           securityContext:
+            runAsNonRoot: true
             runAsUser: 1000
           serviceAccountName: example-app
           terminationGracePeriodSeconds: 30
@@ -383,6 +413,15 @@ Check singleReplicaOnly applied:
               resources:
                 limits: {}
                 requests: {}
+              securityContext:
+                allowPrivilegeEscalation: false
+                capabilities:
+                  add:
+                    - NET_BIND_SERVICE
+                  drop:
+                    - ALL
+                runAsNonRoot: true
+                runAsUser: 1000
               startupProbe:
                 failureThreshold: 60
                 httpGet:
@@ -394,6 +433,7 @@ Check singleReplicaOnly applied:
             - name: image-pull-gitlab
             - name: image-pull-docker-hub
           securityContext:
+            runAsNonRoot: true
             runAsUser: 1000
           serviceAccountName: example-app
           terminationGracePeriodSeconds: 30
@@ -483,6 +523,15 @@ Check singleReplicaOnly ignore replicas value:
               resources:
                 limits: {}
                 requests: {}
+              securityContext:
+                allowPrivilegeEscalation: false
+                capabilities:
+                  add:
+                    - NET_BIND_SERVICE
+                  drop:
+                    - ALL
+                runAsNonRoot: true
+                runAsUser: 1000
               startupProbe:
                 failureThreshold: 60
                 httpGet:
@@ -494,6 +543,7 @@ Check singleReplicaOnly ignore replicas value:
             - name: image-pull-gitlab
             - name: image-pull-docker-hub
           securityContext:
+            runAsNonRoot: true
             runAsUser: 1000
           serviceAccountName: example-app
           terminationGracePeriodSeconds: 30

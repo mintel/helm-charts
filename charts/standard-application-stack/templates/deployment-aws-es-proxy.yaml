@@ -24,6 +24,9 @@ spec:
       labels: {{ include "mintel_common.labels" $data | nindent 8 }}
     spec:
       {{- include "mintel_common.imagePullSecrets" . | nindent 6 }}
+      {{- with .Values.opensearch.awsEsProxy.podSecurityContext | default $.Values.podSecurityContext }}
+      securityContext: {{- toYaml . | nindent 8 }}
+      {{- end }}
       {{- if (and .Values.serviceAccount (or .Values.serviceAccount.create .Values.serviceAccount.name)) }}
       serviceAccountName: {{ .Values.serviceAccount.name | default (include "mintel_common.fullname" .) }}
       {{- end }}
@@ -67,8 +70,11 @@ spec:
             initialDelaySeconds: 0
             periodSeconds: 10
             timeoutSeconds: 1
-          securityContext:
-            runAsUser: 65534
+          {{- with .Values.opensearch.awsEsProxy.securityContext | default .Values.securityContext }}
+          securityContext: {{- toYaml . | nindent 12 }}
+          {{- end }}
+            # Pin this UID to the container in values.yaml
+            #runAsUser: 65534
           {{- with .Values.opensearch.awsEsProxy.resources }}
           resources: {{- toYaml . | nindent 12 }}
           {{- end }}

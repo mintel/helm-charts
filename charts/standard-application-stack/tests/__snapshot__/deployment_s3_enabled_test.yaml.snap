@@ -78,6 +78,15 @@ Check S3 envfrom secretRef is present:
               resources:
                 limits: {}
                 requests: {}
+              securityContext:
+                allowPrivilegeEscalation: false
+                capabilities:
+                  add:
+                    - NET_BIND_SERVICE
+                  drop:
+                    - ALL
+                runAsNonRoot: true
+                runAsUser: 1000
               startupProbe:
                 failureThreshold: 60
                 httpGet:
@@ -89,6 +98,7 @@ Check S3 envfrom secretRef is present:
             - name: image-pull-gitlab
             - name: image-pull-docker-hub
           securityContext:
+            runAsNonRoot: true
             runAsUser: 1000
           serviceAccountName: test-app
           terminationGracePeriodSeconds: 30
@@ -186,6 +196,15 @@ Check S3 envfrom secretRef is present for local environment:
               resources:
                 limits: {}
                 requests: {}
+              securityContext:
+                allowPrivilegeEscalation: false
+                capabilities:
+                  add:
+                    - NET_BIND_SERVICE
+                  drop:
+                    - ALL
+                runAsNonRoot: true
+                runAsUser: 1000
               startupProbe:
                 failureThreshold: 60
                 httpGet:
@@ -197,6 +216,7 @@ Check S3 envfrom secretRef is present for local environment:
             - name: image-pull-gitlab
             - name: image-pull-docker-hub
           securityContext:
+            runAsNonRoot: true
             runAsUser: 1000
           serviceAccountName: test-app
           terminationGracePeriodSeconds: 30
@@ -287,6 +307,15 @@ Check S3 envfrom secretRef is present for multiple instances of TF Cloud helm ch
               resources:
                 limits: {}
                 requests: {}
+              securityContext:
+                allowPrivilegeEscalation: false
+                capabilities:
+                  add:
+                    - NET_BIND_SERVICE
+                  drop:
+                    - ALL
+                runAsNonRoot: true
+                runAsUser: 1000
               startupProbe:
                 failureThreshold: 60
                 httpGet:
@@ -298,6 +327,7 @@ Check S3 envfrom secretRef is present for multiple instances of TF Cloud helm ch
             - name: image-pull-gitlab
             - name: image-pull-docker-hub
           securityContext:
+            runAsNonRoot: true
             runAsUser: 1000
           serviceAccountName: test-app
           terminationGracePeriodSeconds: 30
@@ -390,6 +420,15 @@ Check S3 secretName Override:
               resources:
                 limits: {}
                 requests: {}
+              securityContext:
+                allowPrivilegeEscalation: false
+                capabilities:
+                  add:
+                    - NET_BIND_SERVICE
+                  drop:
+                    - ALL
+                runAsNonRoot: true
+                runAsUser: 1000
               startupProbe:
                 failureThreshold: 60
                 httpGet:
@@ -401,6 +440,7 @@ Check S3 secretName Override:
             - name: image-pull-gitlab
             - name: image-pull-docker-hub
           securityContext:
+            runAsNonRoot: true
             runAsUser: 1000
           serviceAccountName: test-app
           terminationGracePeriodSeconds: 30
@@ -503,6 +543,15 @@ Check S3 stakater secret reloader annotation contains correct secrets for multip
               resources:
                 limits: {}
                 requests: {}
+              securityContext:
+                allowPrivilegeEscalation: false
+                capabilities:
+                  add:
+                    - NET_BIND_SERVICE
+                  drop:
+                    - ALL
+                runAsNonRoot: true
+                runAsUser: 1000
               startupProbe:
                 failureThreshold: 60
                 httpGet:
@@ -514,6 +563,7 @@ Check S3 stakater secret reloader annotation contains correct secrets for multip
             - name: image-pull-gitlab
             - name: image-pull-docker-hub
           securityContext:
+            runAsNonRoot: true
             runAsUser: 1000
           serviceAccountName: test-app
           terminationGracePeriodSeconds: 30

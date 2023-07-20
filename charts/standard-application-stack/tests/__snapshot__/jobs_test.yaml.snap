@@ -49,6 +49,15 @@ Check all .job.* values can be set correctly, without overriding from main deplo
                 requests:
                   cpu: 1000m
                   memory: 2Gi
+              securityContext:
+                allowPrivilegeEscalation: false
+                capabilities:
+                  add:
+                    - NET_BIND_SERVICE
+                  drop:
+                    - ALL
+                runAsNonRoot: true
+                runAsUser: 1000
           imagePullSecrets:
             - name: image-pull-gitlab
             - name: image-pull-docker-hub
@@ -110,11 +119,21 @@ Check all overrides/additions from main deployment work if enabled:
                 requests:
                   cpu: 1000m
                   memory: 2Gi
+              securityContext:
+                allowPrivilegeEscalation: false
+                capabilities:
+                  add:
+                    - NET_BIND_SERVICE
+                  drop:
+                    - ALL
+                runAsNonRoot: true
+                runAsUser: 1000
           imagePullSecrets:
             - name: image-pull-gitlab
             - name: image-pull-docker-hub
           restartPolicy: Never
           securityContext:
+            runAsNonRoot: true
             runAsUser: 1000
           serviceAccountName: test-app
       ttlSecondsAfterFinished: 120
@@ -158,11 +177,21 @@ Check default values are correct with minimal configuration:
                 requests:
                   cpu: 1000m
                   memory: 2Gi
+              securityContext:
+                allowPrivilegeEscalation: false
+                capabilities:
+                  add:
+                    - NET_BIND_SERVICE
+                  drop:
+                    - ALL
+                runAsNonRoot: true
+                runAsUser: 1000
           imagePullSecrets:
             - name: image-pull-gitlab
             - name: image-pull-docker-hub
           restartPolicy: Never
           securityContext:
+            runAsNonRoot: true
             runAsUser: 1000
           serviceAccountName: test-app
       ttlSecondsAfterFinished: 60

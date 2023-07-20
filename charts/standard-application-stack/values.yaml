@@ -186,7 +186,20 @@ podAnnotations: {}
 # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
 podSecurityContext:
   runAsUser: 1000
+  runAsNonRoot: true
+#  readOnlyRootFilesystem: true
 #  fsGroup: 2000
+
+# -- Security context for the container
+# ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
+securityContext:
+  allowPrivilegeEscalation: false
+#  readOnlyRootFilesystem: true
+  capabilities:
+    drop: ["ALL"]
+    add: ["NET_BIND_SERVICE"]
+  runAsNonRoot: true
+  runAsUser: 1000
 
 # -- Pod Disruption Budget
 # ref: https://kubernetes.io/docs/tasks/run-application/configure-pdb/
@@ -194,18 +207,6 @@ podDisruptionBudget:
   enabled: true
   minAvailable: 50%
 #  maxUnavailable: 50%
-
-# -- Security context for the container
-# ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
-securityContext: {}
-# securityContext:
-#   allowPrivilegeEscalation: false
-#   readOnlyRootFilesystem: true
-#   capabilities:
-#     drop: ["ALL"]
-#   readOnlyRootFilesystem: true
-#   runAsNonRoot: true
-#   runAsUser: 1000
 
 # -- Kubernetes svc configutarion
 service:
@@ -1183,6 +1184,18 @@ opensearch:
     # -- Port for aws-es-proxy to listen on
     port: 9200
     # -- Ingress for aws-es-proxy
+    securityContext:
+      allowPrivilegeEscalation: false
+      apparmor:
+        enabled: false
+        profile: unconfined
+      capabilities:
+        drop:
+          - ALL
+      runAsNonRoot: true
+      runAsUser: 65534
+      seccompProfile:
+        type: RuntimeDefault
     ingress:
       enabled: false
       # -- Path for the Ingress

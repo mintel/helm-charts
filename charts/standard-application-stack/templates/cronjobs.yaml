@@ -166,8 +166,10 @@ spec:
               {{- with .resources }}
               resources: {{- toYaml . | nindent 16 }}
               {{- end }}
+              {{- with .securityContext | default $.Values.securityContext }}
+              securityContext: {{- toYaml . | nindent 16 }}
+              {{- end }}
               {{- with $.Values.cronjobs.volumeMounts }}
               volumeMounts: {{- toYaml . | nindent 16 }}
               {{- end }}
-
 {{- end }}
