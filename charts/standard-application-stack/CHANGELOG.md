@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v5.9.1] - 2023-07-21
+### Fixed
+- securityContext does not have an apparmor field
+
+## [v5.9.0] - 2023-07-20
+### Added
+- Add pod and container securityContexts
+
 ## [v5.8.0] - 2023-06-29
 ### Added
 - Allow cronjobs to specify timezone

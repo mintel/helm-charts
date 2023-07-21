@@ -200,9 +200,6 @@ Check awsEsProxy deployment is created if enabled:
                   memory: 64Mi
               securityContext:
                 allowPrivilegeEscalation: false
-                apparmor:
-                  enabled: false
-                  profile: unconfined
                 capabilities:
                   drop:
                     - ALL
