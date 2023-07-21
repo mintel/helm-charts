@@ -1186,9 +1186,6 @@ opensearch:
     # -- Ingress for aws-es-proxy
     securityContext:
       allowPrivilegeEscalation: false
-      apparmor:
-        enabled: false
-        profile: unconfined
       capabilities:
         drop:
           - ALL
