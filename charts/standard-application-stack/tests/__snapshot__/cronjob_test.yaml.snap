@@ -50,8 +50,6 @@ Check CronJob Default Overrides:
                   securityContext:
                     allowPrivilegeEscalation: false
                     capabilities:
-                      add:
-                        - NET_BIND_SERVICE
                       drop:
                         - ALL
                     runAsNonRoot: true
@@ -119,8 +117,6 @@ Check CronJob Defaults:
                   securityContext:
                     allowPrivilegeEscalation: false
                     capabilities:
-                      add:
-                        - NET_BIND_SERVICE
                       drop:
                         - ALL
                     runAsNonRoot: true
@@ -188,8 +184,6 @@ Check CronJob Job Overrides:
                   securityContext:
                     allowPrivilegeEscalation: false
                     capabilities:
-                      add:
-                        - NET_BIND_SERVICE
                       drop:
                         - ALL
                     runAsNonRoot: true
@@ -257,8 +251,6 @@ Check CronJob ttlSecondsAfterFinished zero value:
                   securityContext:
                     allowPrivilegeEscalation: false
                     capabilities:
-                      add:
-                        - NET_BIND_SERVICE
                       drop:
                         - ALL
                     runAsNonRoot: true
@@ -325,8 +317,6 @@ CronJob can have a timezone:
                   securityContext:
                     allowPrivilegeEscalation: false
                     capabilities:
-                      add:
-                        - NET_BIND_SERVICE
                       drop:
                         - ALL
                     runAsNonRoot: true
