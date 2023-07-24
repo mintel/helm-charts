@@ -52,8 +52,6 @@ Check all .job.* values can be set correctly, without overriding from main deplo
               securityContext:
                 allowPrivilegeEscalation: false
                 capabilities:
-                  add:
-                    - NET_BIND_SERVICE
                   drop:
                     - ALL
                 runAsNonRoot: true
@@ -122,8 +120,6 @@ Check all overrides/additions from main deployment work if enabled:
               securityContext:
                 allowPrivilegeEscalation: false
                 capabilities:
-                  add:
-                    - NET_BIND_SERVICE
                   drop:
                     - ALL
                 runAsNonRoot: true
@@ -180,8 +176,6 @@ Check default values are correct with minimal configuration:
               securityContext:
                 allowPrivilegeEscalation: false
                 capabilities:
-                  add:
-                    - NET_BIND_SERVICE
                   drop:
                     - ALL
                 runAsNonRoot: true

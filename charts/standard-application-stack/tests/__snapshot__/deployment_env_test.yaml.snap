@@ -70,8 +70,6 @@ Check celery does not pull in `main.env` values:
               securityContext:
                 allowPrivilegeEscalation: false
                 capabilities:
-                  add:
-                    - NET_BIND_SERVICE
                   drop:
                     - ALL
                 runAsNonRoot: true
@@ -176,8 +174,6 @@ Check default env behavior:
               securityContext:
                 allowPrivilegeEscalation: false
                 capabilities:
-                  add:
-                    - NET_BIND_SERVICE
                   drop:
                     - ALL
                 runAsNonRoot: true
@@ -292,8 +288,6 @@ Check main container combines default env and `main.env` values:
               securityContext:
                 allowPrivilegeEscalation: false
                 capabilities:
-                  add:
-                    - NET_BIND_SERVICE
                   drop:
                     - ALL
                 runAsNonRoot: true

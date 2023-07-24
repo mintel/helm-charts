@@ -85,8 +85,6 @@ Check container extraPorts:
               securityContext:
                 allowPrivilegeEscalation: false
                 capabilities:
-                  add:
-                    - NET_BIND_SERVICE
                   drop:
                     - ALL
                 runAsNonRoot: true
@@ -203,8 +201,6 @@ Check container extraPorts are validated:
               securityContext:
                 allowPrivilegeEscalation: false
                 capabilities:
-                  add:
-                    - NET_BIND_SERVICE
                   drop:
                     - ALL
                 runAsNonRoot: true
@@ -320,8 +316,6 @@ Check container extraPorts protocol:
               securityContext:
                 allowPrivilegeEscalation: false
                 capabilities:
-                  add:
-                    - NET_BIND_SERVICE
                   drop:
                     - ALL
                 runAsNonRoot: true
@@ -437,8 +431,6 @@ Check container hybrid cloud ports:
               securityContext:
                 allowPrivilegeEscalation: false
                 capabilities:
-                  add:
-                    - NET_BIND_SERVICE
                   drop:
                     - ALL
                 runAsNonRoot: true
@@ -549,8 +541,6 @@ Check default container main port:
               securityContext:
                 allowPrivilegeEscalation: false
                 capabilities:
-                  add:
-                    - NET_BIND_SERVICE
                   drop:
                     - ALL
                 runAsNonRoot: true
@@ -661,8 +651,6 @@ Check overridden container main port:
               securityContext:
                 allowPrivilegeEscalation: false
                 capabilities:
-                  add:
-                    - NET_BIND_SERVICE
                   drop:
                     - ALL
                 runAsNonRoot: true

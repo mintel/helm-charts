@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v5.9.2] - 2023-07-24
+### Removed
+- Remove the `NET_BIND_SERVICE` capability from the default securityContext
+
 ## [v5.9.1] - 2023-07-21
 ### Fixed
 - securityContext does not have an apparmor field

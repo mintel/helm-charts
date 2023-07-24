@@ -101,8 +101,6 @@ Check custom python otel extraEnv vars are added:
               securityContext:
                 allowPrivilegeEscalation: false
                 capabilities:
-                  add:
-                    - NET_BIND_SERVICE
                   drop:
                     - ALL
                 runAsNonRoot: true
@@ -233,8 +231,6 @@ Check custom sampler settings:
               securityContext:
                 allowPrivilegeEscalation: false
                 capabilities:
-                  add:
-                    - NET_BIND_SERVICE
                   drop:
                     - ALL
                 runAsNonRoot: true
@@ -363,8 +359,6 @@ Check default python otel envars are added:
               securityContext:
                 allowPrivilegeEscalation: false
                 capabilities:
-                  add:
-                    - NET_BIND_SERVICE
                   drop:
                     - ALL
                 runAsNonRoot: true
@@ -495,8 +489,6 @@ Check global otel extraEnv vars are added:
               securityContext:
                 allowPrivilegeEscalation: false
                 capabilities:
-                  add:
-                    - NET_BIND_SERVICE
                   drop:
                     - ALL
                 runAsNonRoot: true
