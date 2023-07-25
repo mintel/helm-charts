@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v5.9.3] - 2023-07-24
+### Fixed
+- Add missing securityContext to some sidecar containers
+
 ## [v5.9.2] - 2023-07-24
 ### Removed
 - Remove the `NET_BIND_SERVICE` capability from the default securityContext
