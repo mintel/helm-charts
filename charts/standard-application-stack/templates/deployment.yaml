@@ -386,11 +386,10 @@ spec:
           - containerPort: 5066
             name: beat-http
           {{- with .Values.filebeatSidecar.resources }}
-          resources:
-          {{- toYaml . | nindent 14 }}
+          resources: {{- toYaml . | nindent 14 }}
           {{- end }}
-          {{- with .securityContext | default $.Values.securityContext }}
-          securityContext: {{- toYaml . | nindent 14 }}
+          {{- with .Values.filebeatSidecar.securityContext | default $.Values.securityContext }}
+          securityContext: {{ toYaml . | nindent 14 }}
           {{- end }}
           volumeMounts:
             - mountPath: /config/
@@ -402,8 +401,10 @@ spec:
           - containerPort: 9479
             name: metrics
           {{- with .Values.filebeatSidecar.metrics.resources }}
-          resources:
-          {{- toYaml . | nindent 14 }}
+          resources: {{- toYaml . | nindent 14 }}
+          {{- end }}
+          {{- with .Values.filebeatSidecar.securityContext | default $.Values.securityContext }}
+          securityContext: {{ toYaml . | nindent 14 }}
           {{- end }}
         {{- end }}
         {{- end }}
@@ -441,10 +442,10 @@ spec:
           ports:
           - containerPort: 7000
             name: git-sync-http
-          {{- with .Values.resources }}
+          {{- with .Values.gitSyncSidecar.resources }}
           resources: {{- toYaml . | nindent 12 }}
           {{- end }}
-          {{- with .securityContext | default $.Values.securityContext }}
+          {{- with .Values.gitSyncSidecar.securityContext | default $.Values.securityContext }}
           securityContext: {{- toYaml . | nindent 12 }}
           {{- end }}
           volumeMounts:
