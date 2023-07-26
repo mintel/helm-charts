@@ -1,6 +1,6 @@
 # standard-application-stack
 
-![Version: 5.9.4](https://img.shields.io/badge/Version-5.9.4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 5.10.0](https://img.shields.io/badge/Version-5.10.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A generic chart to support most common application requirements
 
@@ -191,6 +191,7 @@ A generic chart to support most common application requirements
 | mariadb.client.resources.requests.cpu | string | `"100m"` |  |
 | mariadb.client.resources.requests.memory | string | `"64Mi"` |  |
 | mariadb.enabled | bool | `false` |  |
+| mariadb.extraUsers | object | `{"enabled":false,"users":[]}` | set up extra users for a database and table that already exist |
 | mariadb.metrics.enabled | bool | `false` |  |
 | mariadb.metrics.resources.limits.cpu | string | `"300m"` |  |
 | mariadb.metrics.resources.limits.memory | string | `"128Mi"` |  |

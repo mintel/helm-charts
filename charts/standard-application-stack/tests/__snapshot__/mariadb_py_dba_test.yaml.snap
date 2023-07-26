@@ -1,0 +1,160 @@
+adds correct config to configmap:
+  1: |
+    apiVersion: batch/v1
+    kind: Job
+    metadata:
+      annotations:
+        app.mintel.com/placeholder: placeholder
+        helm.sh/chart: standard-application-stack-5.10.0
+      labels:
+        app.kubernetes.io/component: app
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: test-app
+        app.mintel.com/env: local
+        app.mintel.com/region: local
+        name: test-app
+      name: test-app
+      namespace: test-namespace
+    spec:
+      template:
+        spec:
+          containers:
+            - env:
+                - name: CONFIG_FILE
+                  value: /etc/config/py-dba-config
+                - name: DB_ENGINE
+                  value: mariadb
+                - name: USER_SECRET_PREFIX
+                  value: test-namespace/test-app/mariadb
+              envFrom:
+                - secretRef:
+                    name: test-app-mariadb
+              image: 551844124467.dkr.ecr.us-east-2.amazonaws.com/gitlab/mintel/satoshi/tools/py-dba:v0.1.0
+              imagePullPolicy: IfNotPresent
+              name: main
+              resources:
+                limits:
+                  cpu: 200m
+                  memory: 64Mi
+                requests:
+                  cpu: 100m
+                  memory: 32Mi
+              volumeMounts:
+                - mountPath: /etc/config
+                  name: config-volume
+          imagePullSecrets:
+            - name: image-pull-gitlab
+            - name: image-pull-docker-hub
+          restartPolicy: Never
+          securityContext:
+            runAsUser: 1000
+          serviceAccountName: test-app
+          volumes:
+            - configMap:
+                name: test-app-py-dba-config
+              name: config-volume
+      ttlSecondsAfterFinished: 600
+  2: |
+    apiVersion: v1
+    data:
+      py-dba-config: |
+        users:
+        - database: test_db
+          tables:
+          - permissions:
+            - ALL
+            table: table1
+          username: user1
+    kind: ConfigMap
+    metadata:
+      annotations:
+        app.mintel.com/placeholder: placeholder
+      labels:
+        app.kubernetes.io/component: app
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: test-app
+        app.mintel.com/env: local
+        app.mintel.com/region: local
+        name: test-app
+      name: test-app-py-dba-config
+      namespace: test-namespace
+extraUsers adds job and configmap:
+  1: |
+    apiVersion: batch/v1
+    kind: Job
+    metadata:
+      annotations:
+        app.mintel.com/placeholder: placeholder
+        helm.sh/chart: standard-application-stack-5.10.0
+      labels:
+        app.kubernetes.io/component: app
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: test-app
+        app.mintel.com/env: local
+        app.mintel.com/region: local
+        name: test-app
+      name: test-app
+      namespace: test-namespace
+    spec:
+      template:
+        spec:
+          containers:
+            - env:
+                - name: CONFIG_FILE
+                  value: /etc/config/py-dba-config
+                - name: DB_ENGINE
+                  value: mariadb
+                - name: USER_SECRET_PREFIX
+                  value: test-namespace/test-app/mariadb
+              envFrom:
+                - secretRef:
+                    name: test-app-mariadb
+              image: 551844124467.dkr.ecr.us-east-2.amazonaws.com/gitlab/mintel/satoshi/tools/py-dba:v0.1.0
+              imagePullPolicy: IfNotPresent
+              name: main
+              resources:
+                limits:
+                  cpu: 200m
+                  memory: 64Mi
+                requests:
+                  cpu: 100m
+                  memory: 32Mi
+              volumeMounts:
+                - mountPath: /etc/config
+                  name: config-volume
+          imagePullSecrets:
+            - name: image-pull-gitlab
+            - name: image-pull-docker-hub
+          restartPolicy: Never
+          securityContext:
+            runAsUser: 1000
+          serviceAccountName: test-app
+          volumes:
+            - configMap:
+                name: test-app-py-dba-config
+              name: config-volume
+      ttlSecondsAfterFinished: 600
+  2: |
+    apiVersion: v1
+    data:
+      py-dba-config: |
+        users:
+        - database: test_db
+          tables:
+          - permissions:
+            - ALL
+            table: table1
+          username: user1
+    kind: ConfigMap
+    metadata:
+      annotations:
+        app.mintel.com/placeholder: placeholder
+      labels:
+        app.kubernetes.io/component: app
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: test-app
+        app.mintel.com/env: local
+        app.mintel.com/region: local
+        name: test-app
+      name: test-app-py-dba-config
+      namespace: test-namespace

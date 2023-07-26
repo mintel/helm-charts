@@ -1,0 +1,72 @@
+{{- if (and .Values.mariadb .Values.mariadb.enabled) }}
+{{- if (and .Values.mariadb.extraUsers .Values.mariadb.extraUsers.enabled) }}
+---
+{{- $data := dict "Release" $.Release "Chart" $.Chart "Values" $.Values "component" .name }}
+apiVersion: {{ include "common.capabilities.job.apiVersion" $ }}
+kind: Job
+metadata:
+  name: {{ include "mintel_common.fullname" $data }}
+  labels: {{ include "mintel_common.labels" $data | nindent 4 }}
+  annotations:
+    {{- include "mintel_common.commonAnnotations" $ | nindent 4 }}
+    {{ if .argo }}
+    {{ include "mintel_common.argoAnnotations" .argo | nindent 4 }}
+    {{ end }}
+    helm.sh/chart: {{ include "mintel_common.chart" $ }}
+  namespace: {{ $.Release.Namespace }}
+spec:
+  ttlSecondsAfterFinished: 600
+  template:
+    spec:
+      {{- include "mintel_common.imagePullSecrets" $ | nindent 6 }}
+      securityContext:
+        runAsUser: 1000
+      serviceAccountName: {{ $.Values.serviceAccount.name | default (include "mintel_common.fullname" $)}}
+      restartPolicy: "Never"
+      containers:
+      - name: main
+        image: 551844124467.dkr.ecr.us-east-2.amazonaws.com/gitlab/mintel/satoshi/tools/py-dba:v0.1.0
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: 'CONFIG_FILE'
+          value: '/etc/config/py-dba-config'
+        - name: DB_ENGINE
+          value: mariadb
+        - name: USER_SECRET_PREFIX
+          value: {{ (printf "%s/%s/mariadb" (.Release.Namespace) (include "mintel_common.fullname" .)) }}
+        envFrom:
+        - secretRef:
+            name: {{ (printf "%s-mariadb" (include "mintel_common.fullname" .)) }}
+        resources:
+          limits:
+            cpu: 200m
+            memory: 64Mi
+          requests:
+            cpu: 100m
+            memory: 32Mi
+        volumeMounts:
+        - name: config-volume
+          mountPath: /etc/config
+      volumes:
+      - name: config-volume
+        configMap:
+          name: {{ (printf "%s-py-dba-config" (include "mintel_common.fullname" .)) }}
+---
+{{- $data := dict "Release" $.Release "Chart" $.Chart "Values" $.Values "component" .name }}
+apiVersion: {{ include "common.capabilities.configmap.apiVersion" . }}
+kind: ConfigMap
+metadata:
+  name: {{ (printf "%s-py-dba-config" (include "mintel_common.fullname" .)) }}
+  labels: {{ include "mintel_common.labels" $data | nindent 4 }}
+  annotations:
+    {{ include "mintel_common.commonAnnotations" $data | nindent 4 }}
+    {{ if .argo }}
+    {{ include "mintel_common.argoAnnotations" .argo | nindent 4 }}
+    {{ end }}
+  namespace: {{ .Release.Namespace }}
+data:
+  {{- with .Values.mariadb.extraUsers.users }}
+  py-dba-config: | {{ (printf "users:\n%s" (toYaml .)) | nindent 10 }}
+  {{- end }}
+{{- end }}
+{{- end }}

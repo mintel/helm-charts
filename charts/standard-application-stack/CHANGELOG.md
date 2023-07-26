@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v5.10.0] - 2023-07-26
+### Added
+- Added `extraUsers` for mariadb
+
 ## [v5.9.4] - 2023-07-26
 ### Fixed
 - Updated README.md
