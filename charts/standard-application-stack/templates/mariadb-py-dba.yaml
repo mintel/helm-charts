@@ -21,6 +21,7 @@ spec:
       {{- include "mintel_common.imagePullSecrets" $ | nindent 6 }}
       securityContext:
         runAsUser: 1000
+        runAsNonRoot: true
       serviceAccountName: {{ $.Values.serviceAccount.name | default (include "mintel_common.fullname" $)}}
       restartPolicy: "Never"
       containers:
@@ -44,6 +45,13 @@ spec:
           requests:
             cpu: 100m
             memory: 32Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+          runAsNonRoot: true
+          runAsUser: 1000
         volumeMounts:
         - name: config-volume
           mountPath: /etc/config
