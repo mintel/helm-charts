@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v0.43.2] - 2023-07-28
+### Changed
+- Bump ssh key module (fixes key generation script)
+
 ## [v0.43.1] - 2023-06-28
 ### Fixed
 - Bump rds module version. Fixes an issue when using gp3 as the storage type (https://github.com/hashicorp/terraform-provider-aws/issues/28271)
