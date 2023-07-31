@@ -1,5 +1,5 @@
-{{- if (and .Values.mariadb .Values.mariadb.enabled) }}
-{{- if (and .Values.mariadb.extraUsers .Values.mariadb.extraUsers.enabled) }}
+{{- if (and .Values.postgresql .Values.postgresql.enabled) }}
+{{- if (and .Values.postgresql.extraUsers .Values.postgresql.extraUsers.enabled) }}
 ---
 {{- $data := dict "Release" $.Release "Chart" $.Chart "Values" $.Values "component" .name }}
 apiVersion: {{ include "common.capabilities.job.apiVersion" $ }}
@@ -32,12 +32,12 @@ spec:
         - name: 'CONFIG_FILE'
           value: '/etc/config/py-dba-config'
         - name: DB_ENGINE
-          value: mariadb
+          value: postgres
         - name: USER_SECRET_PREFIX
-          value: {{ (printf "%s/%s/mariadb" (.Release.Namespace) (include "mintel_common.fullname" .)) }}
+          value: {{ (printf "%s/%s/postgresql" (.Release.Namespace) (include "mintel_common.fullname" .)) }}
         envFrom:
         - secretRef:
-            name: {{ (printf "%s-mariadb" (include "mintel_common.fullname" .)) }}
+            name: {{ (printf "%s-postgresql" (include "mintel_common.fullname" .)) }}
         resources:
           limits:
             cpu: 200m
@@ -73,7 +73,7 @@ metadata:
     {{ end }}
   namespace: {{ .Release.Namespace }}
 data:
-  {{- with .Values.mariadb.extraUsers.users }}
+  {{- with .Values.postgresql.extraUsers.users }}
   py-dba-config: | {{ (printf "users:\n%s" (toYaml .)) | nindent 10 }}
   {{- end }}
 {{- end }}

@@ -1,6 +1,6 @@
 # standard-application-stack
 
-![Version: 5.10.0](https://img.shields.io/badge/Version-5.10.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 5.11.0](https://img.shields.io/badge/Version-5.11.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A generic chart to support most common application requirements
 
@@ -283,12 +283,14 @@ A generic chart to support most common application requirements
 | postgresql.client.resources.requests.cpu | string | `"100m"` |  |
 | postgresql.client.resources.requests.memory | string | `"64Mi"` |  |
 | postgresql.enabled | bool | `false` |  |
+| postgresql.extraUsers.enabled | bool | `false` |  |
+| postgresql.extraUsers.users | list | `[]` |  |
 | postgresql.image.tag | string | `"13.5.0-debian-10-r52"` |  |
 | postgresql.metrics.enabled | bool | `false` |  |
 | postgresql.metrics.resources.limits.cpu | string | `"300m"` |  |
 | postgresql.metrics.resources.limits.memory | string | `"128Mi"` |  |
 | postgresql.metrics.resources.requests.cpu | string | `"100m"` |  |
-| postgresql.metrics.resources.requests.memory | string | `"64Mi"` |  |
+| postgresql.metrics.resources.requests.memory | string | `"64M"` |  |
 | postgresql.outputSecret | bool | `true` | set outputSecret to true to allow TF Cloud chart create ExternalSecrets |
 | postgresql.postgresqlDatabase | string | `"postgres"` |  |
 | priorityClassName | string | `""` | Optional name of PriorityClass to run pods with |

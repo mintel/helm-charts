@@ -1089,7 +1089,30 @@ postgresql:
         memory: 128Mi
       requests:
         cpu: 100m
-        memory: 64Mi
+        memory: 64M
+  extraUsers:
+    enabled: false
+    users: []
+    # List of objects with format:
+    # username: "my_user"
+    # database: "my_db"
+    # tables:
+    # - table: "my_table"
+    #   permissions: ["ALL"]
+    #
+    # Example:
+    # - username: "user1"
+    #   database: "test_db"
+    #   tables:
+    #   - table: "table1"
+    #     permissions: ["SELECT", "UPDATE"]
+    #   - table: "table2"
+    #     permissions: ["INSERT"]
+    # - username: "user2"
+    #   database: "test_db"
+    #   tables:
+    #   - table: "table1"
+    #     permissions: ["DELETE"]
 
 redis:
   enabled: false
