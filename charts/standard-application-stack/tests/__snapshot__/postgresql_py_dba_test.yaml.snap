@@ -22,12 +22,12 @@ adds correct config to configmap:
                 - name: CONFIG_FILE
                   value: /etc/config/py-dba-config
                 - name: DB_ENGINE
-                  value: mariadb
+                  value: postgres
                 - name: USER_SECRET_PREFIX
-                  value: test-namespace/test-app/mariadb
+                  value: test-namespace/test-app/postgresql
               envFrom:
                 - secretRef:
-                    name: test-app-mariadb
+                    name: test-app-postgresql
               image: 551844124467.dkr.ecr.us-east-2.amazonaws.com/gitlab/mintel/satoshi/tools/py-dba:v0.1.1
               imagePullPolicy: IfNotPresent
               name: main
@@ -109,12 +109,12 @@ extraUsers adds job and configmap:
                 - name: CONFIG_FILE
                   value: /etc/config/py-dba-config
                 - name: DB_ENGINE
-                  value: mariadb
+                  value: postgres
                 - name: USER_SECRET_PREFIX
-                  value: test-namespace/test-app/mariadb
+                  value: test-namespace/test-app/postgresql
               envFrom:
                 - secretRef:
-                    name: test-app-mariadb
+                    name: test-app-postgresql
               image: 551844124467.dkr.ecr.us-east-2.amazonaws.com/gitlab/mintel/satoshi/tools/py-dba:v0.1.1
               imagePullPolicy: IfNotPresent
               name: main
