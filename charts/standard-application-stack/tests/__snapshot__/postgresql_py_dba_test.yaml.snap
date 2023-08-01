@@ -5,7 +5,6 @@ adds correct config to configmap:
     metadata:
       annotations:
         app.mintel.com/placeholder: placeholder
-        helm.sh/chart: standard-application-stack-5.11.0
       labels:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
@@ -93,7 +92,6 @@ extraUsers adds job and configmap:
     metadata:
       annotations:
         app.mintel.com/placeholder: placeholder
-        helm.sh/chart: standard-application-stack-5.11.0
       labels:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
