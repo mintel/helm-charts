@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v5.11.2] - 2023-08-02
+### Changed
+- bump `py-dba` version to v0.1.3
+
 ## [v5.11.1] - 2023-08-02
 ### Changed
 - bump `py-dba` version to v0.1.2

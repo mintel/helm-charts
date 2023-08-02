@@ -25,7 +25,7 @@ spec:
       restartPolicy: "Never"
       containers:
       - name: main
-        image: 551844124467.dkr.ecr.us-east-2.amazonaws.com/gitlab/mintel/satoshi/tools/py-dba:v0.1.2
+        image: 551844124467.dkr.ecr.us-east-2.amazonaws.com/gitlab/mintel/satoshi/tools/py-dba:v0.1.3
         imagePullPolicy: IfNotPresent
         env:
         - name: 'CONFIG_FILE'
