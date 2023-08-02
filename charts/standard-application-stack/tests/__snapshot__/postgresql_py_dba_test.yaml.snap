@@ -28,7 +28,7 @@ adds correct config to configmap:
               envFrom:
                 - secretRef:
                     name: test-app-postgresql
-              image: 551844124467.dkr.ecr.us-east-2.amazonaws.com/gitlab/mintel/satoshi/tools/py-dba:v0.1.1
+              image: 551844124467.dkr.ecr.us-east-2.amazonaws.com/gitlab/mintel/satoshi/tools/py-dba:v0.1.2
               imagePullPolicy: IfNotPresent
               name: main
               resources:
@@ -115,7 +115,7 @@ extraUsers adds job and configmap:
               envFrom:
                 - secretRef:
                     name: test-app-postgresql
-              image: 551844124467.dkr.ecr.us-east-2.amazonaws.com/gitlab/mintel/satoshi/tools/py-dba:v0.1.1
+              image: 551844124467.dkr.ecr.us-east-2.amazonaws.com/gitlab/mintel/satoshi/tools/py-dba:v0.1.2
               imagePullPolicy: IfNotPresent
               name: main
               resources:
