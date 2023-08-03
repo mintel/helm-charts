@@ -12,7 +12,7 @@ adds correct config to configmap:
         app.mintel.com/env: local
         app.mintel.com/region: local
         name: test-app
-      name: test-app
+      name: py-dba-test-app-mariadb
       namespace: test-namespace
     spec:
       template:
@@ -99,7 +99,7 @@ extraUsers adds job and configmap:
         app.mintel.com/env: local
         app.mintel.com/region: local
         name: test-app
-      name: test-app
+      name: py-dba-test-app-mariadb
       namespace: test-namespace
     spec:
       template:

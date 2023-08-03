@@ -5,7 +5,7 @@
 apiVersion: {{ include "common.capabilities.job.apiVersion" $ }}
 kind: Job
 metadata:
-  name: {{ include "mintel_common.fullname" $data }}
+  name: {{ (printf "py-dba-%s-mariadb" (include "mintel_common.fullname" $data)) }}
   labels: {{ include "mintel_common.labels" $data | nindent 4 }}
   annotations:
     {{- include "mintel_common.commonAnnotations" $ | nindent 4 }}
@@ -35,8 +35,10 @@ spec:
         - name: USER_SECRET_PREFIX
           value: {{ (printf "%s/%s/mariadb" (.Release.Namespace) (include "mintel_common.fullname" .)) }}
         envFrom:
+          {{- if (and .Values.mariadb .Values.mariadb.enabled) }}
         - secretRef:
-            name: {{ (printf "%s-mariadb" (include "mintel_common.fullname" .)) }}
+            name: {{ .Values.mariadb.secretNameOverride | default (include "mintel_common.defaultMariadbSecretName" .) }}
+          {{- end }}
         resources:
           limits:
             cpu: 200m
