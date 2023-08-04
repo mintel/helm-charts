@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v0.43.3] - 2023-8-04
+### Changed
+- Upgrade external-secrets api version from v1alpha1 to v1beta1.
+
 ## [v0.43.2] - 2023-07-28
 ### Changed
 - Bump ssh key module (fixes key generation script)
