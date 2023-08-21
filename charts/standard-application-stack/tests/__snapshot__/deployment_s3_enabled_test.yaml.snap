@@ -10,6 +10,7 @@ Check S3 envfrom secretRef is present:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: test-app
+        app.mintel.com/application: test-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
         name: test-app
@@ -34,6 +35,7 @@ Check S3 envfrom secretRef is present:
             app.kubernetes.io/component: app
             app.kubernetes.io/managed-by: Helm
             app.kubernetes.io/name: test-app
+            app.mintel.com/application: test-app
             app.mintel.com/env: qa
             app.mintel.com/region: ${CLUSTER_REGION}
             name: test-app
@@ -120,6 +122,7 @@ Check S3 envfrom secretRef is present for local environment:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: test-app
+        app.mintel.com/application: test-app
         app.mintel.com/env: local
         app.mintel.com/region: local
         name: test-app
@@ -144,6 +147,7 @@ Check S3 envfrom secretRef is present for local environment:
             app.kubernetes.io/component: app
             app.kubernetes.io/managed-by: Helm
             app.kubernetes.io/name: test-app
+            app.mintel.com/application: test-app
             app.mintel.com/env: local
             app.mintel.com/region: local
             name: test-app
@@ -229,6 +233,7 @@ Check S3 envfrom secretRef is present for multiple instances of TF Cloud helm ch
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: test-app
         app.kubernetes.io/part-of: test-project
+        app.mintel.com/application: test-app
         app.mintel.com/env: qa
         app.mintel.com/owner: sre
         app.mintel.com/region: eu-west-1
@@ -256,6 +261,7 @@ Check S3 envfrom secretRef is present for multiple instances of TF Cloud helm ch
             app.kubernetes.io/managed-by: Helm
             app.kubernetes.io/name: test-app
             app.kubernetes.io/part-of: test-project
+            app.mintel.com/application: test-app
             app.mintel.com/env: qa
             app.mintel.com/owner: sre
             app.mintel.com/region: eu-west-1
@@ -346,6 +352,7 @@ Check S3 secretName Override:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: test-app
+        app.mintel.com/application: test-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
         name: test-app
@@ -370,6 +377,7 @@ Check S3 secretName Override:
             app.kubernetes.io/component: app
             app.kubernetes.io/managed-by: Helm
             app.kubernetes.io/name: test-app
+            app.mintel.com/application: test-app
             app.mintel.com/env: qa
             app.mintel.com/region: ${CLUSTER_REGION}
             name: test-app
@@ -457,6 +465,7 @@ Check S3 stakater secret reloader annotation contains correct secrets for multip
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: test-app
         app.kubernetes.io/part-of: test-project
+        app.mintel.com/application: test-app
         app.mintel.com/env: qa
         app.mintel.com/owner: sre
         app.mintel.com/region: eu-west-1
@@ -484,6 +493,7 @@ Check S3 stakater secret reloader annotation contains correct secrets for multip
             app.kubernetes.io/managed-by: Helm
             app.kubernetes.io/name: test-app
             app.kubernetes.io/part-of: test-project
+            app.mintel.com/application: test-app
             app.mintel.com/env: qa
             app.mintel.com/owner: sre
             app.mintel.com/region: eu-west-1

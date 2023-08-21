@@ -10,6 +10,7 @@ Check AWS ALB lifecycle rule applied:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: example-app
+        app.mintel.com/application: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
         name: example-app
@@ -35,6 +36,7 @@ Check AWS ALB lifecycle rule applied:
             app.kubernetes.io/component: app
             app.kubernetes.io/managed-by: Helm
             app.kubernetes.io/name: example-app
+            app.mintel.com/application: example-app
             app.mintel.com/env: qa
             app.mintel.com/region: ${CLUSTER_REGION}
             name: example-app
@@ -133,6 +135,7 @@ Check AWS ALB lifecycle rules applied with custom delay:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: example-app
+        app.mintel.com/application: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
         name: example-app
@@ -158,6 +161,7 @@ Check AWS ALB lifecycle rules applied with custom delay:
             app.kubernetes.io/component: app
             app.kubernetes.io/managed-by: Helm
             app.kubernetes.io/name: example-app
+            app.mintel.com/application: example-app
             app.mintel.com/env: qa
             app.mintel.com/region: ${CLUSTER_REGION}
             name: example-app
@@ -256,6 +260,7 @@ Check AWS ALB lifecycle rules are not applied when ALB disabled:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: example-app
+        app.mintel.com/application: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
         name: example-app
@@ -281,6 +286,7 @@ Check AWS ALB lifecycle rules are not applied when ALB disabled:
             app.kubernetes.io/component: app
             app.kubernetes.io/managed-by: Helm
             app.kubernetes.io/name: example-app
+            app.mintel.com/application: example-app
             app.mintel.com/env: qa
             app.mintel.com/region: ${CLUSTER_REGION}
             name: example-app
@@ -372,6 +378,7 @@ Check AWS ALB lifecycle rules are not applied when ALB enabled (but Ingress disa
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: example-app
+        app.mintel.com/application: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
         name: example-app
@@ -396,6 +403,7 @@ Check AWS ALB lifecycle rules are not applied when ALB enabled (but Ingress disa
             app.kubernetes.io/component: app
             app.kubernetes.io/managed-by: Helm
             app.kubernetes.io/name: example-app
+            app.mintel.com/application: example-app
             app.mintel.com/env: qa
             app.mintel.com/region: ${CLUSTER_REGION}
             name: example-app
@@ -482,6 +490,7 @@ Check lifecycle rules:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: example-app
+        app.mintel.com/application: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
         name: example-app
@@ -506,6 +515,7 @@ Check lifecycle rules:
             app.kubernetes.io/component: app
             app.kubernetes.io/managed-by: Helm
             app.kubernetes.io/name: example-app
+            app.mintel.com/application: example-app
             app.mintel.com/env: qa
             app.mintel.com/region: ${CLUSTER_REGION}
             name: example-app

@@ -9,6 +9,7 @@ Check Service defaults:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: test-app
+        app.mintel.com/application: test-app
         app.mintel.com/env: prod
         app.mintel.com/region: ${CLUSTER_REGION}
         name: test-app
@@ -35,6 +36,7 @@ Check additional ServiceMonitor resources:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: test-app
+        app.mintel.com/application: test-app
         app.mintel.com/env: prod
         app.mintel.com/region: ${CLUSTER_REGION}
         k8s-app: test-app
@@ -67,6 +69,8 @@ Check additional ServiceMonitor resources:
           app.kubernetes.io/component: app
           app.kubernetes.io/name: test-app
       targetLabels:
+        - app.mintel.com/application
+        - app.mintel.com/component
         - app.mintel.com/owner
         - app.mintel.com/ignore_alerts
   2: |
@@ -80,6 +84,7 @@ Check additional ServiceMonitor resources:
         app.kubernetes.io/component: metrics-2
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: test-app-metrics-2
+        app.mintel.com/application: test-app
         app.mintel.com/env: prod
         app.mintel.com/region: ${CLUSTER_REGION}
         k8s-app: test-app-metrics-2
@@ -112,6 +117,8 @@ Check additional ServiceMonitor resources:
           app.kubernetes.io/component: metrics-2
           app.kubernetes.io/name: test-app-metrics-2
       targetLabels:
+        - app.mintel.com/application
+        - app.mintel.com/component
         - app.mintel.com/owner
         - app.mintel.com/ignore_alerts
   3: |
@@ -125,6 +132,7 @@ Check additional ServiceMonitor resources:
         app.kubernetes.io/component: metrics-3
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: test-app-metrics-3
+        app.mintel.com/application: test-app
         app.mintel.com/env: prod
         app.mintel.com/region: ${CLUSTER_REGION}
         k8s-app: test-app-metrics-3
@@ -157,6 +165,8 @@ Check additional ServiceMonitor resources:
           app.kubernetes.io/component: metrics-3
           app.kubernetes.io/name: test-app-metrics-3
       targetLabels:
+        - app.mintel.com/application
+        - app.mintel.com/component
         - app.mintel.com/owner
         - app.mintel.com/ignore_alerts
 Check basic-auth:
@@ -171,6 +181,7 @@ Check basic-auth:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: test-app
+        app.mintel.com/application: test-app
         app.mintel.com/env: prod
         app.mintel.com/region: ${CLUSTER_REGION}
         k8s-app: test-app
@@ -210,6 +221,8 @@ Check basic-auth:
           app.kubernetes.io/component: app
           app.kubernetes.io/name: test-app
       targetLabels:
+        - app.mintel.com/application
+        - app.mintel.com/component
         - app.mintel.com/owner
         - app.mintel.com/ignore_alerts
 Check combined template defaults:
@@ -224,6 +237,7 @@ Check combined template defaults:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: test-app
+        app.mintel.com/application: test-app
         app.mintel.com/env: prod
         app.mintel.com/region: ${CLUSTER_REGION}
         name: test-app
@@ -248,6 +262,7 @@ Check combined template defaults:
             app.kubernetes.io/component: app
             app.kubernetes.io/managed-by: Helm
             app.kubernetes.io/name: test-app
+            app.mintel.com/application: test-app
             app.mintel.com/env: prod
             app.mintel.com/region: ${CLUSTER_REGION}
             name: test-app
@@ -330,6 +345,31 @@ Check combined template defaults:
               topologyKey: kubernetes.io/hostname
               whenUnsatisfiable: DoNotSchedule
   2: |
+    apiVersion: v1
+    kind: Service
+    metadata:
+      annotations:
+        app.mintel.com/placeholder: placeholder
+      labels:
+        app.kubernetes.io/component: app
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: test-app
+        app.mintel.com/application: test-app
+        app.mintel.com/env: prod
+        app.mintel.com/region: ${CLUSTER_REGION}
+        name: test-app
+      name: test-app
+      namespace: test-namespace
+    spec:
+      ports:
+        - name: main-http
+          port: 8000
+          targetPort: 8000
+      selector:
+        app.kubernetes.io/component: app
+        app.kubernetes.io/name: test-app
+      type: ClusterIP
+  3: |
     apiVersion: monitoring.coreos.com/v1
     kind: ServiceMonitor
     metadata:
@@ -340,6 +380,7 @@ Check combined template defaults:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: test-app
+        app.mintel.com/application: test-app
         app.mintel.com/env: prod
         app.mintel.com/region: ${CLUSTER_REGION}
         k8s-app: test-app
@@ -372,32 +413,10 @@ Check combined template defaults:
           app.kubernetes.io/component: app
           app.kubernetes.io/name: test-app
       targetLabels:
+        - app.mintel.com/application
+        - app.mintel.com/component
         - app.mintel.com/owner
         - app.mintel.com/ignore_alerts
-  3: |
-    apiVersion: v1
-    kind: Service
-    metadata:
-      annotations:
-        app.mintel.com/placeholder: placeholder
-      labels:
-        app.kubernetes.io/component: app
-        app.kubernetes.io/managed-by: Helm
-        app.kubernetes.io/name: test-app
-        app.mintel.com/env: prod
-        app.mintel.com/region: ${CLUSTER_REGION}
-        name: test-app
-      name: test-app
-      namespace: test-namespace
-    spec:
-      ports:
-        - name: main-http
-          port: 8000
-          targetPort: 8000
-      selector:
-        app.kubernetes.io/component: app
-        app.kubernetes.io/name: test-app
-      type: ClusterIP
 Check combined template with extra ports and monitors:
   1: |
     apiVersion: apps/v1
@@ -410,6 +429,7 @@ Check combined template with extra ports and monitors:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: test-app
+        app.mintel.com/application: test-app
         app.mintel.com/env: prod
         app.mintel.com/region: ${CLUSTER_REGION}
         name: test-app
@@ -434,6 +454,7 @@ Check combined template with extra ports and monitors:
             app.kubernetes.io/component: app
             app.kubernetes.io/managed-by: Helm
             app.kubernetes.io/name: test-app
+            app.mintel.com/application: test-app
             app.mintel.com/env: prod
             app.mintel.com/region: ${CLUSTER_REGION}
             name: test-app
@@ -520,6 +541,37 @@ Check combined template with extra ports and monitors:
               topologyKey: kubernetes.io/hostname
               whenUnsatisfiable: DoNotSchedule
   2: |
+    apiVersion: v1
+    kind: Service
+    metadata:
+      annotations:
+        app.mintel.com/placeholder: placeholder
+      labels:
+        app.kubernetes.io/component: app
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: test-app
+        app.mintel.com/application: test-app
+        app.mintel.com/env: prod
+        app.mintel.com/region: ${CLUSTER_REGION}
+        name: test-app
+      name: test-app
+      namespace: test-namespace
+    spec:
+      ports:
+        - name: main-http
+          port: 8000
+          targetPort: 8000
+        - name: main-metrics-2
+          port: 9002
+          targetPort: 9002
+        - name: main-metrics-3
+          port: 9003
+          targetPort: 9003
+      selector:
+        app.kubernetes.io/component: app
+        app.kubernetes.io/name: test-app
+      type: ClusterIP
+  3: |
     apiVersion: monitoring.coreos.com/v1
     kind: ServiceMonitor
     metadata:
@@ -530,6 +582,7 @@ Check combined template with extra ports and monitors:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: test-app
+        app.mintel.com/application: test-app
         app.mintel.com/env: prod
         app.mintel.com/region: ${CLUSTER_REGION}
         k8s-app: test-app
@@ -562,9 +615,11 @@ Check combined template with extra ports and monitors:
           app.kubernetes.io/component: app
           app.kubernetes.io/name: test-app
       targetLabels:
+        - app.mintel.com/application
+        - app.mintel.com/component
         - app.mintel.com/owner
         - app.mintel.com/ignore_alerts
-  3: |
+  4: |
     apiVersion: monitoring.coreos.com/v1
     kind: ServiceMonitor
     metadata:
@@ -575,6 +630,7 @@ Check combined template with extra ports and monitors:
         app.kubernetes.io/component: metrics-2
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: test-app-metrics-2
+        app.mintel.com/application: test-app
         app.mintel.com/env: prod
         app.mintel.com/region: ${CLUSTER_REGION}
         k8s-app: test-app-metrics-2
@@ -607,9 +663,11 @@ Check combined template with extra ports and monitors:
           app.kubernetes.io/component: metrics-2
           app.kubernetes.io/name: test-app-metrics-2
       targetLabels:
+        - app.mintel.com/application
+        - app.mintel.com/component
         - app.mintel.com/owner
         - app.mintel.com/ignore_alerts
-  4: |
+  5: |
     apiVersion: monitoring.coreos.com/v1
     kind: ServiceMonitor
     metadata:
@@ -620,6 +678,7 @@ Check combined template with extra ports and monitors:
         app.kubernetes.io/component: metrics-3
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: test-app-metrics-3
+        app.mintel.com/application: test-app
         app.mintel.com/env: prod
         app.mintel.com/region: ${CLUSTER_REGION}
         k8s-app: test-app-metrics-3
@@ -652,38 +711,10 @@ Check combined template with extra ports and monitors:
           app.kubernetes.io/component: metrics-3
           app.kubernetes.io/name: test-app-metrics-3
       targetLabels:
+        - app.mintel.com/application
+        - app.mintel.com/component
         - app.mintel.com/owner
         - app.mintel.com/ignore_alerts
-  5: |
-    apiVersion: v1
-    kind: Service
-    metadata:
-      annotations:
-        app.mintel.com/placeholder: placeholder
-      labels:
-        app.kubernetes.io/component: app
-        app.kubernetes.io/managed-by: Helm
-        app.kubernetes.io/name: test-app
-        app.mintel.com/env: prod
-        app.mintel.com/region: ${CLUSTER_REGION}
-        name: test-app
-      name: test-app
-      namespace: test-namespace
-    spec:
-      ports:
-        - name: main-http
-          port: 8000
-          targetPort: 8000
-        - name: main-metrics-2
-          port: 9002
-          targetPort: 9002
-        - name: main-metrics-3
-          port: 9003
-          targetPort: 9003
-      selector:
-        app.kubernetes.io/component: app
-        app.kubernetes.io/name: test-app
-      type: ClusterIP
 Check default endpoints:
   1: |
     apiVersion: monitoring.coreos.com/v1
@@ -696,6 +727,7 @@ Check default endpoints:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: test-app
+        app.mintel.com/application: test-app
         app.mintel.com/env: prod
         app.mintel.com/region: ${CLUSTER_REGION}
         k8s-app: test-app
@@ -728,6 +760,8 @@ Check default endpoints:
           app.kubernetes.io/component: app
           app.kubernetes.io/name: test-app
       targetLabels:
+        - app.mintel.com/application
+        - app.mintel.com/component
         - app.mintel.com/owner
         - app.mintel.com/ignore_alerts
 Check default targetLabels:
@@ -742,6 +776,7 @@ Check default targetLabels:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: test-app
+        app.mintel.com/application: test-app
         app.mintel.com/env: prod
         app.mintel.com/region: ${CLUSTER_REGION}
         k8s-app: test-app
@@ -774,6 +809,8 @@ Check default targetLabels:
           app.kubernetes.io/component: app
           app.kubernetes.io/name: test-app
       targetLabels:
+        - app.mintel.com/application
+        - app.mintel.com/component
         - app.mintel.com/owner
         - app.mintel.com/ignore_alerts
 Check metric overrides:
@@ -788,6 +825,7 @@ Check metric overrides:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: test-app
+        app.mintel.com/application: test-app
         app.mintel.com/env: prod
         app.mintel.com/region: ${CLUSTER_REGION}
         k8s-app: test-app
@@ -820,6 +858,8 @@ Check metric overrides:
           app.kubernetes.io/component: app
           app.kubernetes.io/name: test-app
       targetLabels:
+        - app.mintel.com/application
+        - app.mintel.com/component
         - app.mintel.com/owner
         - app.mintel.com/ignore_alerts
 Check name, namespace and labels:
@@ -834,6 +874,7 @@ Check name, namespace and labels:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: test-app
+        app.mintel.com/application: test-app
         app.mintel.com/env: prod
         app.mintel.com/region: ${CLUSTER_REGION}
         k8s-app: test-app
@@ -866,5 +907,7 @@ Check name, namespace and labels:
           app.kubernetes.io/component: app
           app.kubernetes.io/name: test-app
       targetLabels:
+        - app.mintel.com/application
+        - app.mintel.com/component
         - app.mintel.com/owner
         - app.mintel.com/ignore_alerts

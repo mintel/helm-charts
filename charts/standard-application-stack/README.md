@@ -1,6 +1,6 @@
 # standard-application-stack
 
-![Version: 5.11.3](https://img.shields.io/badge/Version-5.11.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 5.12.0](https://img.shields.io/badge/Version-5.12.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A generic chart to support most common application requirements
 
@@ -101,14 +101,16 @@ A generic chart to support most common application requirements
 | filebeatSidecar.resources.requests.memory | string | `"100Mi"` |  |
 | gitSyncSidecar | object | `{"branch":"main","enabled":false,"resources":{"limits":{"cpu":"200m","memory":"200Mi"},"requests":{"cpu":"50m","memory":"50Mi"}},"root":"/data/git-sync"}` | Helper to sync a local directory with Git ref: https://github.com/kubernetes/git-sync |
 | gitSyncSidecar.branch | string | `"main"` | The git branch to check out |
-| global | object | `{"additionalLabels":{},"cloudProvider":{"accountId":"","region":""},"clusterDomain":"127.0.0.1.nip.io","clusterEnv":"local","clusterName":"","ingressTLSSecrets":{},"name":"example-app","owner":"","partOf":"","runtimeEnvironment":"kubernetes","terraform":{"externalSecrets":false,"irsa":false}}` | Global variables for us in all charts and sub charts |
+| global | object | `{"additionalLabels":{},"application":"","cloudProvider":{"accountId":"","region":""},"clusterDomain":"127.0.0.1.nip.io","clusterEnv":"local","clusterName":"","component":"","ingressTLSSecrets":{},"name":"example-app","owner":"","partOf":"","runtimeEnvironment":"kubernetes","terraform":{"externalSecrets":false,"irsa":false}}` | Global variables for us in all charts and sub charts |
 | global.additionalLabels | object | `{}` | Additional labels to apply to all resources |
+| global.application | string | `""` | Name of the application (defaults to global.name) |
 | global.cloudProvider | object | `{"accountId":"","region":""}` | Global variables relating to cloud provider |
 | global.cloudProvider.accountId | string | `""` | AWS Account Id |
 | global.cloudProvider.region | string | `""` | AWS region name |
 | global.clusterDomain | string | `"127.0.0.1.nip.io"` | Kubernetes cluster domain |
 | global.clusterEnv | string | `"local"` | Environment (local, dev, qa, prod) |
 | global.clusterName | string | `""` | Kubernetes cluster name |
+| global.component | string | `""` | Name of the application (defaults to global.partOf) |
 | global.ingressTLSSecrets | object | `{}` | Global dictionary of TLS secrets |
 | global.name | string | `"example-app"` | Name of the application |
 | global.owner | string | `""` | Team which "owns" the application |

@@ -12,6 +12,7 @@ Check celery does not pull in `main.env` values:
         app.kubernetes.io/component: celery
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: example-app-celery
+        app.mintel.com/application: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
         name: example-app-celery
@@ -35,6 +36,7 @@ Check celery does not pull in `main.env` values:
             app.kubernetes.io/component: celery
             app.kubernetes.io/managed-by: Helm
             app.kubernetes.io/name: example-app-celery
+            app.mintel.com/application: example-app
             app.mintel.com/env: qa
             app.mintel.com/region: ${CLUSTER_REGION}
             name: example-app-celery
@@ -101,6 +103,7 @@ Check default env behavior:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: example-app
+        app.mintel.com/application: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
         name: example-app
@@ -125,6 +128,7 @@ Check default env behavior:
             app.kubernetes.io/component: app
             app.kubernetes.io/managed-by: Helm
             app.kubernetes.io/name: example-app
+            app.mintel.com/application: example-app
             app.mintel.com/env: qa
             app.mintel.com/region: ${CLUSTER_REGION}
             name: example-app
@@ -213,6 +217,7 @@ Check main container combines default env and `main.env` values:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: example-app
+        app.mintel.com/application: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
         name: example-app
@@ -237,6 +242,7 @@ Check main container combines default env and `main.env` values:
             app.kubernetes.io/component: app
             app.kubernetes.io/managed-by: Helm
             app.kubernetes.io/name: example-app
+            app.mintel.com/application: example-app
             app.mintel.com/env: qa
             app.mintel.com/region: ${CLUSTER_REGION}
             name: example-app

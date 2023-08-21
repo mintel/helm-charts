@@ -10,6 +10,7 @@ Has a pod template that uses the host network:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: test-app
+        app.mintel.com/application: test-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
         name: test-app
@@ -34,6 +35,7 @@ Has a pod template that uses the host network:
             app.kubernetes.io/component: app
             app.kubernetes.io/managed-by: Helm
             app.kubernetes.io/name: test-app
+            app.mintel.com/application: test-app
             app.mintel.com/env: qa
             app.mintel.com/region: ${CLUSTER_REGION}
             name: test-app

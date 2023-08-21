@@ -28,6 +28,7 @@ Check ALB HTTP2 default settings:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: example-app
+        app.mintel.com/application: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
         name: example-app
@@ -76,6 +77,7 @@ Check ALB className set by default:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: example-app
+        app.mintel.com/application: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
         name: example-app
@@ -124,6 +126,7 @@ Check ALB custom health-check port:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: example-app
+        app.mintel.com/application: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
         name: example-app
@@ -172,6 +175,7 @@ Check ALB default health-check port:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: example-app
+        app.mintel.com/application: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
         name: example-app
@@ -220,6 +224,7 @@ Check ALB gRPC custom settings:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: example-app
+        app.mintel.com/application: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
         name: example-app
@@ -268,6 +273,7 @@ Check ALB gRPC default settings:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: example-app
+        app.mintel.com/application: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
         name: example-app
@@ -316,6 +322,7 @@ Check ALB health-check port with oauthProxy enabled:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: example-app
+        app.mintel.com/application: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
         name: example-app
@@ -346,6 +353,7 @@ Check EXTRA_ALLOWED_HOSTS env var extraHosts with extraIngresses:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: example-app
+        app.mintel.com/application: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
         name: example-app
@@ -371,6 +379,7 @@ Check EXTRA_ALLOWED_HOSTS env var extraHosts with extraIngresses:
             app.kubernetes.io/component: app
             app.kubernetes.io/managed-by: Helm
             app.kubernetes.io/name: example-app
+            app.mintel.com/application: example-app
             app.mintel.com/env: qa
             app.mintel.com/region: ${CLUSTER_REGION}
             name: example-app
@@ -475,6 +484,7 @@ Check HAProxy className set if ALB is disabled:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: example-app
+        app.mintel.com/application: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
         name: example-app
@@ -523,6 +533,7 @@ Check TLS set if ingressTLSSecrets is not empty:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: example-app
+        app.mintel.com/application: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
         name: example-app
@@ -575,6 +586,7 @@ Check extraHosts:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: AppyMcAppface
+        app.mintel.com/application: AppyMcAppface
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
         name: AppyMcAppface
@@ -633,6 +645,7 @@ Check extraHosts with TLS:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: example-app
+        app.mintel.com/application: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
         name: example-app
@@ -696,6 +709,7 @@ Check extraHosts with TLS and oauthProxy.ingressHost (different):
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: example-app
+        app.mintel.com/application: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
         name: example-app
@@ -770,6 +784,7 @@ Check extraHosts with TLS and oauthProxy.ingressHost (same as extra host):
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: example-app
+        app.mintel.com/application: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
         name: example-app
@@ -834,6 +849,7 @@ Check extraHosts with oauthProxy.ingressHost (different):
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: example-app
+        app.mintel.com/application: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
         name: example-app
@@ -902,6 +918,7 @@ Check extraHosts with oauthProxy.ingressHost (same as extra host):
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: example-app
+        app.mintel.com/application: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
         name: example-app
@@ -960,6 +977,7 @@ Check ingress name override:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: ingress-override
+        app.mintel.com/application: ingress-override
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
         name: ingress-override
@@ -1008,6 +1026,7 @@ Check ingress name suffix setting:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: example-app-suffix
+        app.mintel.com/application: example-app-suffix
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
         name: example-app-suffix
@@ -1056,6 +1075,7 @@ Check no TLS set if ingressTLSSecrets and specificTlsHostsYaml is empty:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: example-app
+        app.mintel.com/application: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
         name: example-app
@@ -1104,6 +1124,7 @@ Default ingress with path based routing:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: example-app
+        app.mintel.com/application: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
         name: example-app
@@ -1159,6 +1180,7 @@ allows extraIngresses to override default values:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: image-service-media
+        app.mintel.com/application: image-service-media
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
         name: image-service-media
@@ -1194,6 +1216,7 @@ allows extraIngresses to override default values:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: image-service-ops-media
+        app.mintel.com/application: image-service-ops-media
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
         name: image-service-ops-media

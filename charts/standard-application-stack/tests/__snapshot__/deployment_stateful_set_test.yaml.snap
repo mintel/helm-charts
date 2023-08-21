@@ -10,6 +10,7 @@ Check stateful set is rendered with volumeClaimTemplates:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: test-app
+        app.mintel.com/application: test-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
         name: test-app
@@ -29,6 +30,7 @@ Check stateful set is rendered with volumeClaimTemplates:
             app.kubernetes.io/component: app
             app.kubernetes.io/managed-by: Helm
             app.kubernetes.io/name: test-app
+            app.mintel.com/application: test-app
             app.mintel.com/env: qa
             app.mintel.com/region: ${CLUSTER_REGION}
             name: test-app

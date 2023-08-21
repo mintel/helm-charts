@@ -10,6 +10,7 @@ Check ALB annotation can be set when enabled:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: test-app
+        app.mintel.com/application: test-app
         app.mintel.com/env: qa
         app.mintel.com/owner: my-team
         app.mintel.com/region: ${CLUSTER_REGION}
@@ -37,6 +38,7 @@ Check ALB annotation not set when ALB Ingress is disabled:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: test-app
+        app.mintel.com/application: test-app
         app.mintel.com/env: local
         app.mintel.com/owner: my-team
         app.mintel.com/region: local
@@ -64,6 +66,7 @@ Check ALB annotation not set when when Owner missing:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: test-app
+        app.mintel.com/application: test-app
         app.mintel.com/env: local
         app.mintel.com/region: local
         name: test-app
@@ -89,6 +92,7 @@ Check default port set:
         app.kubernetes.io/component: exporter
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: test-app
+        app.mintel.com/application: test-app
         app.mintel.com/env: local
         app.mintel.com/region: local
         name: test-app
@@ -114,6 +118,7 @@ Check extraPorts:
         app.kubernetes.io/component: exporter
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: test-app
+        app.mintel.com/application: test-app
         app.mintel.com/env: local
         app.mintel.com/region: local
         name: test-app
@@ -151,6 +156,7 @@ Check name, namespace and labels:
         app.kubernetes.io/component: exporter
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: test-app
+        app.mintel.com/application: test-app
         app.mintel.com/env: local
         app.mintel.com/region: local
         name: test-app
@@ -176,6 +182,7 @@ Check port and targetPort can be set from Service:
         app.kubernetes.io/component: exporter
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: test-app
+        app.mintel.com/application: test-app
         app.mintel.com/env: local
         app.mintel.com/region: local
         name: test-app
@@ -201,6 +208,7 @@ Check port can be overridden:
         app.kubernetes.io/component: exporter
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: test-app
+        app.mintel.com/application: test-app
         app.mintel.com/env: local
         app.mintel.com/region: local
         name: test-app

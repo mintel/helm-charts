@@ -9,6 +9,7 @@ Creates a VerticalPodAutoscaler for a Deployment:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: example-app
+        app.mintel.com/application: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
         name: example-app
@@ -32,6 +33,7 @@ Creates a VerticalPodAutoscaler for a StatefulSet:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: example-app
+        app.mintel.com/application: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
         name: example-app
@@ -55,6 +57,7 @@ Only creates VerticalPodAutoscaler for CronJobs if cronjobsOnly is true:
         app.kubernetes.io/component: daily
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: example-app-daily
+        app.mintel.com/application: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
         name: example-app-daily

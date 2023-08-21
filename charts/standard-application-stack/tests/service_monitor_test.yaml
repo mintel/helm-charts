@@ -43,6 +43,8 @@ tests:
       - equal:
           path: spec.targetLabels
           value:
+            - app.mintel.com/application
+            - app.mintel.com/component
             - app.mintel.com/owner
             - app.mintel.com/ignore_alerts
       - equal:
