@@ -11,7 +11,7 @@ global:
   owner: ""
   # -- Name of the application (defaults to global.name)
   application: ""
-   # -- Name of the application (defaults to global.partOf)
+  # -- Component of the application
   component: ""
 
   # -- Top level application each deployment is a part of
