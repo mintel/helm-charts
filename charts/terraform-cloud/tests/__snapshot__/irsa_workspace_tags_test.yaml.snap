@@ -1,4 +1,4 @@
-IRSA created explicitly:
+Test IRSA application tag defaults to name:
   1: |
     apiVersion: app.terraform.io/v1alpha1
     kind: Workspace
@@ -26,7 +26,8 @@ IRSA created explicitly:
         version: 2.1.2
       omitNamespacePrefix: true
       organization: Mintel
-      runTriggers: null
+      runTriggers:
+        - sourceableName: dev-eu-west-1-cluster1-test-namespace-mntl-test-app-s3
       secretsMountPath: /tmp/secrets
       sshKeyID: mintel-ssh
       terraformVersion: 1.0.7
@@ -68,6 +69,7 @@ IRSA created explicitly:
           value: |-
             {
               Application = "test-app"
+              Component = "backend"
               Owner = "sre"
               Project = "test-project"
             }
@@ -76,7 +78,7 @@ IRSA created explicitly:
           key: tfcloud_agent
           sensitive: false
           value: "true"
-IRSA created for Dev S3 module workspace:
+Test IRSA component tag can be empty:
   1: |
     apiVersion: app.terraform.io/v1alpha1
     kind: Workspace
@@ -155,7 +157,7 @@ IRSA created for Dev S3 module workspace:
           key: tfcloud_agent
           sensitive: false
           value: "true"
-IRSA created with default (0) syncWave:
+Test IRSA default tags:
   1: |
     apiVersion: app.terraform.io/v1alpha1
     kind: Workspace
@@ -167,7 +169,7 @@ IRSA created with default (0) syncWave:
         app.mintel.com/terraform-cloud-tags: env:dev,owner:sre,mod:irsa
         app.mintel.com/terraform-owner: sre
         argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
-        argocd.argoproj.io/sync-wave: "0"
+        argocd.argoproj.io/sync-wave: "-20"
       labels:
         app.kubernetes.io/name: test-app-irsa
         app.mintel.com/env: dev
@@ -183,7 +185,8 @@ IRSA created with default (0) syncWave:
         version: 2.1.2
       omitNamespacePrefix: true
       organization: Mintel
-      runTriggers: null
+      runTriggers:
+        - sourceableName: dev-eu-west-1-cluster1-test-namespace-mntl-test-app-s3
       secretsMountPath: /tmp/secrets
       sshKeyID: mintel-ssh
       terraformVersion: 1.0.7
@@ -224,85 +227,8 @@ IRSA created with default (0) syncWave:
           sensitive: false
           value: |-
             {
-              Application = "test-app"
-              Owner = "sre"
-              Project = "test-project"
-            }
-        - environmentVariable: false
-          hcl: false
-          key: tfcloud_agent
-          sensitive: false
-          value: "true"
-IRSA created with modified syncWave:
-  1: |
-    apiVersion: app.terraform.io/v1alpha1
-    kind: Workspace
-    metadata:
-      annotations:
-        app.mintel.com/altManifestFileSuffix: test-app-irsa
-        app.mintel.com/placeholder: placeholder
-        app.mintel.com/terraform-allow-destroy: "true"
-        app.mintel.com/terraform-cloud-tags: env:dev,owner:sre,mod:irsa
-        app.mintel.com/terraform-owner: sre
-        argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
-        argocd.argoproj.io/sync-wave: "-100"
-      labels:
-        app.kubernetes.io/name: test-app-irsa
-        app.mintel.com/env: dev
-        app.mintel.com/owner: sre
-        app.mintel.com/region: eu-west-1
-        name: test-app-irsa
-      name: dev-eu-west-1-cluster1-test-namespace-test-app-irsa
-      namespace: test-namespace
-    spec:
-      agentPoolID: ""
-      module:
-        source: app.terraform.io/Mintel/app-iam/aws
-        version: 2.1.2
-      omitNamespacePrefix: true
-      organization: Mintel
-      runTriggers: null
-      secretsMountPath: /tmp/secrets
-      sshKeyID: mintel-ssh
-      terraformVersion: 1.0.7
-      variables:
-        - environmentVariable: false
-          hcl: false
-          key: aws_account_name
-          sensitive: false
-          value: dev
-        - environmentVariable: false
-          hcl: false
-          key: aws_region
-          sensitive: false
-          value: eu-west-1
-        - environmentVariable: false
-          hcl: false
-          key: eks_cluster_name
-          sensitive: false
-          value: cluster1
-        - environmentVariable: false
-          hcl: false
-          key: k8s_namespace
-          sensitive: false
-          value: test-namespace
-        - environmentVariable: false
-          hcl: false
-          key: k8s_service_account_name
-          sensitive: false
-          value: test-app
-        - environmentVariable: false
-          hcl: false
-          key: name
-          sensitive: false
-          value: test-app
-        - environmentVariable: false
-          hcl: true
-          key: tags
-          sensitive: false
-          value: |-
-            {
-              Application = "test-app"
+              Application = "test-app-override"
+              Component = "backend"
               Owner = "sre"
               Project = "test-project"
             }
