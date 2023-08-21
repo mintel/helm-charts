@@ -67,9 +67,9 @@ IRSA created explicitly:
           sensitive: false
           value: |-
             {
-              Owner       = "sre"
-              Project     = "test-project"
               Application = "test-app"
+              Owner = "sre"
+              Project = "test-project"
             }
         - environmentVariable: false
           hcl: false
@@ -146,9 +146,9 @@ IRSA created for Dev S3 module workspace:
           sensitive: false
           value: |-
             {
-              Owner       = "sre"
-              Project     = "test-project"
               Application = "test-app"
+              Owner = "sre"
+              Project = "test-project"
             }
         - environmentVariable: false
           hcl: false
@@ -224,9 +224,9 @@ IRSA created with default (0) syncWave:
           sensitive: false
           value: |-
             {
-              Owner       = "sre"
-              Project     = "test-project"
               Application = "test-app"
+              Owner = "sre"
+              Project = "test-project"
             }
         - environmentVariable: false
           hcl: false
@@ -302,9 +302,9 @@ IRSA created with modified syncWave:
           sensitive: false
           value: |-
             {
-              Owner       = "sre"
-              Project     = "test-project"
               Application = "test-app"
+              Owner = "sre"
+              Project = "test-project"
             }
         - environmentVariable: false
           hcl: false
