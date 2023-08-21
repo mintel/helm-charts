@@ -10,6 +10,7 @@ Empty configmap:
         app.kubernetes.io/component: config
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: test-app-config
+        app.mintel.com/application: test-app
         app.mintel.com/env: local
         app.mintel.com/region: local
         name: test-app-config
@@ -32,6 +33,7 @@ Mixed singleline and  multiline data entries:
         app.kubernetes.io/component: config
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: test-app-config
+        app.mintel.com/application: test-app
         app.mintel.com/env: local
         app.mintel.com/region: local
         name: test-app-config
@@ -53,6 +55,7 @@ Single multiline data entry:
         app.kubernetes.io/component: config
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: test-app-config
+        app.mintel.com/application: test-app
         app.mintel.com/env: local
         app.mintel.com/region: local
         name: test-app-config
@@ -71,6 +74,7 @@ Single singleline data entry:
         app.kubernetes.io/component: config
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: test-app-config
+        app.mintel.com/application: test-app
         app.mintel.com/env: local
         app.mintel.com/region: local
         name: test-app-config
@@ -91,6 +95,7 @@ ensures ArgoCD annotations are populated:
         app.kubernetes.io/component: config
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: example-app-config
+        app.mintel.com/application: example-app
         app.mintel.com/env: test
         app.mintel.com/region: ${CLUSTER_REGION}
         name: example-app-config

@@ -10,6 +10,7 @@ Check additional PodMonitor resources:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: test-app
+        app.mintel.com/application: test-app
         app.mintel.com/env: prod
         app.mintel.com/region: ${CLUSTER_REGION}
         name: test-app
@@ -51,6 +52,7 @@ Check additional PodMonitor resources:
         app.kubernetes.io/component: metrics-2
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: test-app-metrics-2
+        app.mintel.com/application: test-app
         app.mintel.com/env: prod
         app.mintel.com/region: ${CLUSTER_REGION}
         name: test-app-metrics-2
@@ -92,6 +94,7 @@ Check additional PodMonitor resources:
         app.kubernetes.io/component: metrics-3
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: test-app-metrics-3
+        app.mintel.com/application: test-app
         app.mintel.com/env: prod
         app.mintel.com/region: ${CLUSTER_REGION}
         name: test-app-metrics-3
@@ -134,6 +137,7 @@ Check basic-auth:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: test-app
+        app.mintel.com/application: test-app
         app.mintel.com/env: prod
         app.mintel.com/region: ${CLUSTER_REGION}
         name: test-app
@@ -183,6 +187,7 @@ Check combined template defaults:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: test-app
+        app.mintel.com/application: test-app
         app.mintel.com/env: prod
         app.mintel.com/region: ${CLUSTER_REGION}
         name: test-app
@@ -207,6 +212,7 @@ Check combined template defaults:
             app.kubernetes.io/component: app
             app.kubernetes.io/managed-by: Helm
             app.kubernetes.io/name: test-app
+            app.mintel.com/application: test-app
             app.mintel.com/env: prod
             app.mintel.com/region: ${CLUSTER_REGION}
             name: test-app
@@ -299,6 +305,7 @@ Check combined template defaults:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: test-app
+        app.mintel.com/application: test-app
         app.mintel.com/env: prod
         app.mintel.com/region: ${CLUSTER_REGION}
         name: test-app
@@ -341,6 +348,7 @@ Check combined template with extra ports and monitors:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: test-app
+        app.mintel.com/application: test-app
         app.mintel.com/env: prod
         app.mintel.com/region: ${CLUSTER_REGION}
         name: test-app
@@ -365,6 +373,7 @@ Check combined template with extra ports and monitors:
             app.kubernetes.io/component: app
             app.kubernetes.io/managed-by: Helm
             app.kubernetes.io/name: test-app
+            app.mintel.com/application: test-app
             app.mintel.com/env: prod
             app.mintel.com/region: ${CLUSTER_REGION}
             name: test-app
@@ -461,6 +470,7 @@ Check combined template with extra ports and monitors:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: test-app
+        app.mintel.com/application: test-app
         app.mintel.com/env: prod
         app.mintel.com/region: ${CLUSTER_REGION}
         name: test-app
@@ -502,6 +512,7 @@ Check combined template with extra ports and monitors:
         app.kubernetes.io/component: metrics-2
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: test-app-metrics-2
+        app.mintel.com/application: test-app
         app.mintel.com/env: prod
         app.mintel.com/region: ${CLUSTER_REGION}
         name: test-app-metrics-2
@@ -543,6 +554,7 @@ Check combined template with extra ports and monitors:
         app.kubernetes.io/component: metrics-3
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: test-app-metrics-3
+        app.mintel.com/application: test-app
         app.mintel.com/env: prod
         app.mintel.com/region: ${CLUSTER_REGION}
         name: test-app-metrics-3
@@ -585,6 +597,7 @@ Check default endpoints:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: test-app
+        app.mintel.com/application: test-app
         app.mintel.com/env: prod
         app.mintel.com/region: ${CLUSTER_REGION}
         name: test-app
@@ -627,6 +640,7 @@ Check default targetLabels:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: test-app
+        app.mintel.com/application: test-app
         app.mintel.com/env: prod
         app.mintel.com/region: ${CLUSTER_REGION}
         name: test-app
@@ -669,6 +683,7 @@ Check metric overrides:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: test-app
+        app.mintel.com/application: test-app
         app.mintel.com/env: prod
         app.mintel.com/region: ${CLUSTER_REGION}
         name: test-app
@@ -711,6 +726,7 @@ Check name, namespace and labels:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: test-app
+        app.mintel.com/application: test-app
         app.mintel.com/env: prod
         app.mintel.com/region: ${CLUSTER_REGION}
         name: test-app

@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+
+## [v5.12.0] - 2023-08-21
+### Added
+- Added support for new reporting labels `application` and `component`
+
 ## [v5.11.3] - 2023-08-03
 ### Fixed
 - Bugfix for py-dba when rds secret name is overridden

@@ -9,6 +9,7 @@ adds correct config to configmap:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: test-app
+        app.mintel.com/application: test-app
         app.mintel.com/env: local
         app.mintel.com/region: local
         name: test-app
@@ -80,6 +81,7 @@ adds correct config to configmap:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: test-app
+        app.mintel.com/application: test-app
         app.mintel.com/env: local
         app.mintel.com/region: local
         name: test-app
@@ -96,6 +98,7 @@ extraUsers adds job and configmap:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: test-app
+        app.mintel.com/application: test-app
         app.mintel.com/env: local
         app.mintel.com/region: local
         name: test-app
@@ -167,6 +170,7 @@ extraUsers adds job and configmap:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: test-app
+        app.mintel.com/application: test-app
         app.mintel.com/env: local
         app.mintel.com/region: local
         name: test-app
