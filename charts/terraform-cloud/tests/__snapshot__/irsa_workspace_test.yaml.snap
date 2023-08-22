@@ -68,6 +68,7 @@ IRSA created explicitly:
           value: |-
             {
               Application = "test-app"
+              Component = "test-app"
               Owner = "sre"
               Project = "test-project"
             }
@@ -147,6 +148,7 @@ IRSA created for Dev S3 module workspace:
           value: |-
             {
               Application = "test-app"
+              Component = "test-app"
               Owner = "sre"
               Project = "test-project"
             }
@@ -225,6 +227,7 @@ IRSA created with default (0) syncWave:
           value: |-
             {
               Application = "test-app"
+              Component = "test-app"
               Owner = "sre"
               Project = "test-project"
             }
@@ -303,6 +306,7 @@ IRSA created with modified syncWave:
           value: |-
             {
               Application = "test-app"
+              Component = "test-app"
               Owner = "sre"
               Project = "test-project"
             }

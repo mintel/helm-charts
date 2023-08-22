@@ -88,6 +88,7 @@ tests:
             value: |-
                 {
                   Application = "test-app"
+                  Component = "test-app"
                   Owner = "sre"
                   Project = "test-project"
                 }
