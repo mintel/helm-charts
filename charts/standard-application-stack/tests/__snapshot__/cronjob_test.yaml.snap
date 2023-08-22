@@ -10,6 +10,7 @@ Check CronJob Default Overrides:
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: example-app-daily
         app.mintel.com/application: example-app
+        app.mintel.com/component: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
         name: example-app-daily
@@ -26,6 +27,7 @@ Check CronJob Default Overrides:
                 app.kubernetes.io/managed-by: Helm
                 app.kubernetes.io/name: example-app-daily
                 app.mintel.com/application: example-app
+                app.mintel.com/component: example-app
                 app.mintel.com/env: qa
                 app.mintel.com/region: ${CLUSTER_REGION}
                 name: example-app-daily
@@ -79,6 +81,7 @@ Check CronJob Defaults:
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: example-app-daily
         app.mintel.com/application: example-app
+        app.mintel.com/component: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
         name: example-app-daily
@@ -95,6 +98,7 @@ Check CronJob Defaults:
                 app.kubernetes.io/managed-by: Helm
                 app.kubernetes.io/name: example-app-daily
                 app.mintel.com/application: example-app
+                app.mintel.com/component: example-app
                 app.mintel.com/env: qa
                 app.mintel.com/region: ${CLUSTER_REGION}
                 name: example-app-daily
@@ -148,6 +152,7 @@ Check CronJob Job Overrides:
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: example-app-daily
         app.mintel.com/application: example-app
+        app.mintel.com/component: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
         name: example-app-daily
@@ -164,6 +169,7 @@ Check CronJob Job Overrides:
                 app.kubernetes.io/managed-by: Helm
                 app.kubernetes.io/name: example-app-daily
                 app.mintel.com/application: example-app
+                app.mintel.com/component: example-app
                 app.mintel.com/env: qa
                 app.mintel.com/region: ${CLUSTER_REGION}
                 name: example-app-daily
@@ -217,6 +223,7 @@ Check CronJob ttlSecondsAfterFinished zero value:
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: example-app-daily
         app.mintel.com/application: example-app
+        app.mintel.com/component: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
         name: example-app-daily
@@ -233,6 +240,7 @@ Check CronJob ttlSecondsAfterFinished zero value:
                 app.kubernetes.io/managed-by: Helm
                 app.kubernetes.io/name: example-app-daily
                 app.mintel.com/application: example-app
+                app.mintel.com/component: example-app
                 app.mintel.com/env: qa
                 app.mintel.com/region: ${CLUSTER_REGION}
                 name: example-app-daily
@@ -285,6 +293,7 @@ CronJob can have a timezone:
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: example-app-daily
         app.mintel.com/application: example-app
+        app.mintel.com/component: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
         name: example-app-daily
@@ -301,6 +310,7 @@ CronJob can have a timezone:
                 app.kubernetes.io/managed-by: Helm
                 app.kubernetes.io/name: example-app-daily
                 app.mintel.com/application: example-app
+                app.mintel.com/component: example-app
                 app.mintel.com/env: qa
                 app.mintel.com/region: ${CLUSTER_REGION}
                 name: example-app-daily

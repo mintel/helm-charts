@@ -10,6 +10,7 @@ Check ALB NetworkPolicy created if enabled:
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: example-app
         app.mintel.com/application: example-app
+        app.mintel.com/component: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
         name: example-app
@@ -42,6 +43,7 @@ Check ALB NetworkPolicy created if internal alb selected:
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: example-app
         app.mintel.com/application: example-app
+        app.mintel.com/component: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
         name: example-app
@@ -74,6 +76,7 @@ Check ALB NetworkPolicy ports are unique:
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: example-app
         app.mintel.com/application: example-app
+        app.mintel.com/component: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
         name: example-app
@@ -106,6 +109,7 @@ Check ALB NetworkPolicy ports set for default conatiner:
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: example-app
         app.mintel.com/application: example-app
+        app.mintel.com/component: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
         name: example-app
@@ -138,6 +142,7 @@ Check ALB NetworkPolicy ports set with oauth2proxy:
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: example-app
         app.mintel.com/application: example-app
+        app.mintel.com/component: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
         name: example-app
@@ -170,6 +175,7 @@ Check ALB NetworkPolicy ports set with oauth2proxy and healthcheck:
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: example-app
         app.mintel.com/application: example-app
+        app.mintel.com/component: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
         name: example-app

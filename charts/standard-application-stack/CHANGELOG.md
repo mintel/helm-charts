@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v5.13.0] - 2023-08-22
+### Changed
+- Update `component` reporting label to default to application name (`global.name`)
 
 ## [v5.12.0] - 2023-08-21
 ### Added

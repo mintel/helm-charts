@@ -8,6 +8,7 @@ Check utilization takes precedence over average value when both specified:
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: example-app
         app.mintel.com/application: example-app
+        app.mintel.com/component: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
         name: example-app
@@ -45,6 +46,7 @@ Creates a ScaledObject for a Deployment:
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: example-app
         app.mintel.com/application: example-app
+        app.mintel.com/component: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
         name: example-app
@@ -73,6 +75,7 @@ Creates a ScaledObject for a StatefulSet:
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: example-app
         app.mintel.com/application: example-app
+        app.mintel.com/component: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
         name: example-app
@@ -101,6 +104,7 @@ Creates a ScaledObject for a custom scaleTargetRef:
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: example-app
         app.mintel.com/application: example-app
+        app.mintel.com/component: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
         name: example-app
@@ -129,6 +133,7 @@ Creates a ScaledObject with advanced settings:
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: example-app
         app.mintel.com/application: example-app
+        app.mintel.com/component: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
         name: example-app
@@ -167,6 +172,7 @@ Creates a ScaledObject with both targetCPUAverageValue and targetMemoryAverageVa
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: example-app
         app.mintel.com/application: example-app
+        app.mintel.com/component: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
         name: example-app
@@ -204,6 +210,7 @@ Creates a ScaledObject with both targetCPUAverageValue trigger:
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: example-app
         app.mintel.com/application: example-app
+        app.mintel.com/component: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
         name: example-app
@@ -237,6 +244,7 @@ Creates a ScaledObject with both targetCPUUtilizationPercentage and targetMemory
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: example-app
         app.mintel.com/application: example-app
+        app.mintel.com/component: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
         name: example-app
@@ -274,6 +282,7 @@ Creates a ScaledObject with custom triggers:
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: example-app
         app.mintel.com/application: example-app
+        app.mintel.com/component: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
         name: example-app
@@ -315,6 +324,7 @@ Creates a ScaledObject with fallback settings:
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: example-app
         app.mintel.com/application: example-app
+        app.mintel.com/component: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
         name: example-app
@@ -343,6 +353,7 @@ Creates a ScaledObject with targetCPUUtilizationPercentage trigger:
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: example-app
         app.mintel.com/application: example-app
+        app.mintel.com/component: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
         name: example-app
@@ -376,6 +387,7 @@ Creates a ScaledObject with targetMemoryAverageValue trigger:
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: example-app
         app.mintel.com/application: example-app
+        app.mintel.com/component: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
         name: example-app
@@ -409,6 +421,7 @@ Creates a ScaledObject with targetMemoryUtilizationPercentage trigger:
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: example-app
         app.mintel.com/application: example-app
+        app.mintel.com/component: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
         name: example-app

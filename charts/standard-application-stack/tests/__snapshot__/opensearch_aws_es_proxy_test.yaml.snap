@@ -26,6 +26,7 @@ Check awsEsProxy Ingress is created if enabled:
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: example-app-aws-es-proxy
         app.mintel.com/application: example-app
+        app.mintel.com/component: example-app
         app.mintel.com/env: local
         app.mintel.com/region: local
         name: example-app-aws-es-proxy
@@ -56,6 +57,7 @@ Check awsEsProxy NetworkPolicy is created if enabled:
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: example-app
         app.mintel.com/application: example-app
+        app.mintel.com/component: example-app
         app.mintel.com/env: local
         app.mintel.com/region: local
         name: example-app
@@ -88,6 +90,7 @@ Check awsEsProxy aws-load-balancer-controller okta role binding is created if en
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: example-app
         app.mintel.com/application: example-app
+        app.mintel.com/component: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
         name: example-app
@@ -113,6 +116,7 @@ Check awsEsProxy aws-load-balancer-controller okta role is created if enabled:
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: example-app
         app.mintel.com/application: example-app
+        app.mintel.com/component: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
         name: example-app
@@ -143,6 +147,7 @@ Check awsEsProxy deployment is created if enabled:
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: example-app-aws-es-proxy
         app.mintel.com/application: example-app
+        app.mintel.com/component: example-app
         app.mintel.com/env: local
         app.mintel.com/region: local
         name: example-app-aws-es-proxy
@@ -163,6 +168,7 @@ Check awsEsProxy deployment is created if enabled:
             app.kubernetes.io/managed-by: Helm
             app.kubernetes.io/name: example-app-aws-es-proxy
             app.mintel.com/application: example-app
+            app.mintel.com/component: example-app
             app.mintel.com/env: local
             app.mintel.com/region: local
             name: example-app-aws-es-proxy
@@ -239,6 +245,7 @@ Check awsEsProxy service is created if enabled:
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: example-app-aws-es-proxy
         app.mintel.com/application: example-app
+        app.mintel.com/component: example-app
         app.mintel.com/env: local
         app.mintel.com/region: local
         name: example-app-aws-es-proxy

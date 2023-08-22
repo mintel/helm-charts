@@ -12,6 +12,7 @@ Check allowSingleReplica doesn't alter strategy:
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: example-app
         app.mintel.com/application: example-app
+        app.mintel.com/component: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
         name: example-app
@@ -37,6 +38,7 @@ Check allowSingleReplica doesn't alter strategy:
             app.kubernetes.io/managed-by: Helm
             app.kubernetes.io/name: example-app
             app.mintel.com/application: example-app
+            app.mintel.com/component: example-app
             app.mintel.com/env: qa
             app.mintel.com/region: ${CLUSTER_REGION}
             name: example-app
@@ -125,6 +127,7 @@ Check allowSingleReplica set annotations:
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: example-app
         app.mintel.com/application: example-app
+        app.mintel.com/component: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
         name: example-app
@@ -150,6 +153,7 @@ Check allowSingleReplica set annotations:
             app.kubernetes.io/managed-by: Helm
             app.kubernetes.io/name: example-app
             app.mintel.com/application: example-app
+            app.mintel.com/component: example-app
             app.mintel.com/env: qa
             app.mintel.com/region: ${CLUSTER_REGION}
             name: example-app
@@ -237,6 +241,7 @@ Check replicas unset when autoscaling is enabled:
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: example-app
         app.mintel.com/application: example-app
+        app.mintel.com/component: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
         name: example-app
@@ -261,6 +266,7 @@ Check replicas unset when autoscaling is enabled:
             app.kubernetes.io/managed-by: Helm
             app.kubernetes.io/name: example-app
             app.mintel.com/application: example-app
+            app.mintel.com/component: example-app
             app.mintel.com/env: qa
             app.mintel.com/region: ${CLUSTER_REGION}
             name: example-app
@@ -349,6 +355,7 @@ Check singleReplicaOnly applied:
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: example-app
         app.mintel.com/application: example-app
+        app.mintel.com/component: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
         name: example-app
@@ -371,6 +378,7 @@ Check singleReplicaOnly applied:
             app.kubernetes.io/managed-by: Helm
             app.kubernetes.io/name: example-app
             app.mintel.com/application: example-app
+            app.mintel.com/component: example-app
             app.mintel.com/env: qa
             app.mintel.com/region: ${CLUSTER_REGION}
             name: example-app
@@ -459,6 +467,7 @@ Check singleReplicaOnly ignore replicas value:
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: example-app
         app.mintel.com/application: example-app
+        app.mintel.com/component: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
         name: example-app
@@ -481,6 +490,7 @@ Check singleReplicaOnly ignore replicas value:
             app.kubernetes.io/managed-by: Helm
             app.kubernetes.io/name: example-app
             app.mintel.com/application: example-app
+            app.mintel.com/component: example-app
             app.mintel.com/env: qa
             app.mintel.com/region: ${CLUSTER_REGION}
             name: example-app

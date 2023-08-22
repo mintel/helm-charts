@@ -11,6 +11,7 @@ Check container extraPorts:
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: example-app
         app.mintel.com/application: example-app
+        app.mintel.com/component: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
         name: example-app
@@ -36,6 +37,7 @@ Check container extraPorts:
             app.kubernetes.io/managed-by: Helm
             app.kubernetes.io/name: example-app
             app.mintel.com/application: example-app
+            app.mintel.com/component: example-app
             app.mintel.com/env: qa
             app.mintel.com/region: ${CLUSTER_REGION}
             name: example-app
@@ -127,6 +129,7 @@ Check container extraPorts are validated:
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: example-app
         app.mintel.com/application: example-app
+        app.mintel.com/component: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
         name: example-app
@@ -152,6 +155,7 @@ Check container extraPorts are validated:
             app.kubernetes.io/managed-by: Helm
             app.kubernetes.io/name: example-app
             app.mintel.com/application: example-app
+            app.mintel.com/component: example-app
             app.mintel.com/env: qa
             app.mintel.com/region: ${CLUSTER_REGION}
             name: example-app
@@ -245,6 +249,7 @@ Check container extraPorts protocol:
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: example-app
         app.mintel.com/application: example-app
+        app.mintel.com/component: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
         name: example-app
@@ -270,6 +275,7 @@ Check container extraPorts protocol:
             app.kubernetes.io/managed-by: Helm
             app.kubernetes.io/name: example-app
             app.mintel.com/application: example-app
+            app.mintel.com/component: example-app
             app.mintel.com/env: qa
             app.mintel.com/region: ${CLUSTER_REGION}
             name: example-app
@@ -362,6 +368,7 @@ Check container hybrid cloud ports:
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: example-app
         app.mintel.com/application: example-app
+        app.mintel.com/component: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
         name: example-app
@@ -388,6 +395,7 @@ Check container hybrid cloud ports:
             app.kubernetes.io/managed-by: Helm
             app.kubernetes.io/name: example-app
             app.mintel.com/application: example-app
+            app.mintel.com/component: example-app
             app.mintel.com/env: qa
             app.mintel.com/region: ${CLUSTER_REGION}
             name: example-app
@@ -479,6 +487,7 @@ Check default container main port:
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: example-app
         app.mintel.com/application: example-app
+        app.mintel.com/component: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
         name: example-app
@@ -504,6 +513,7 @@ Check default container main port:
             app.kubernetes.io/managed-by: Helm
             app.kubernetes.io/name: example-app
             app.mintel.com/application: example-app
+            app.mintel.com/component: example-app
             app.mintel.com/env: qa
             app.mintel.com/region: ${CLUSTER_REGION}
             name: example-app
@@ -591,6 +601,7 @@ Check overridden container main port:
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: example-app
         app.mintel.com/application: example-app
+        app.mintel.com/component: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
         name: example-app
@@ -616,6 +627,7 @@ Check overridden container main port:
             app.kubernetes.io/managed-by: Helm
             app.kubernetes.io/name: example-app
             app.mintel.com/application: example-app
+            app.mintel.com/component: example-app
             app.mintel.com/env: qa
             app.mintel.com/region: ${CLUSTER_REGION}
             name: example-app
