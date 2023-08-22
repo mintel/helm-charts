@@ -13,6 +13,7 @@ Check all .job.* values can be set correctly, without overriding from main deplo
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: test-app-testName
         app.mintel.com/application: test-app
+        app.mintel.com/component: test-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
         name: test-app-testName
@@ -80,6 +81,7 @@ Check all overrides/additions from main deployment work if enabled:
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: test-app-testName
         app.mintel.com/application: test-app
+        app.mintel.com/component: test-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
         name: test-app-testName
@@ -147,6 +149,7 @@ Check default values are correct with minimal configuration:
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: test-app-testName
         app.mintel.com/application: test-app
+        app.mintel.com/component: test-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
         name: test-app-testName

@@ -1,6 +1,6 @@
 # standard-application-stack
 
-![Version: 5.12.0](https://img.shields.io/badge/Version-5.12.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 5.13.0](https://img.shields.io/badge/Version-5.13.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A generic chart to support most common application requirements
 
@@ -110,7 +110,7 @@ A generic chart to support most common application requirements
 | global.clusterDomain | string | `"127.0.0.1.nip.io"` | Kubernetes cluster domain |
 | global.clusterEnv | string | `"local"` | Environment (local, dev, qa, prod) |
 | global.clusterName | string | `""` | Kubernetes cluster name |
-| global.component | string | `""` | Component of the application |
+| global.component | string | `""` | Component of the application (defaults to global.name) |
 | global.ingressTLSSecrets | object | `{}` | Global dictionary of TLS secrets |
 | global.name | string | `"example-app"` | Name of the application |
 | global.owner | string | `""` | Team which "owns" the application |

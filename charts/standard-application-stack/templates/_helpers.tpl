@@ -66,9 +66,7 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 app.mintel.com/owner: {{ .Values.global.owner }}
 {{- end }}
 app.mintel.com/application: {{ .Values.global.application | default .Values.global.name }}
-{{- if .Values.global.component }}
-app.mintel.com/component: {{ .Values.global.component}}
-{{- end }}
+app.mintel.com/component: {{ .Values.global.component | default .Values.global.name }}
 app.mintel.com/env: {{ .Values.global.clusterEnv }}
 {{- if (eq .Values.global.clusterEnv "local") }}
 app.mintel.com/region: {{ $.Values.global.clusterRegion | default "local" }}

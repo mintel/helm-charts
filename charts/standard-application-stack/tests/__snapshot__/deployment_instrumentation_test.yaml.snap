@@ -11,6 +11,7 @@ Check custom python otel extraEnv vars are added:
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: test-app
         app.mintel.com/application: test-app
+        app.mintel.com/component: test-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
         name: test-app
@@ -36,6 +37,7 @@ Check custom python otel extraEnv vars are added:
             app.kubernetes.io/managed-by: Helm
             app.kubernetes.io/name: test-app
             app.mintel.com/application: test-app
+            app.mintel.com/component: test-app
             app.mintel.com/env: qa
             app.mintel.com/region: ${CLUSTER_REGION}
             name: test-app
@@ -143,6 +145,7 @@ Check custom sampler settings:
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: test-app
         app.mintel.com/application: test-app
+        app.mintel.com/component: test-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
         name: test-app
@@ -168,6 +171,7 @@ Check custom sampler settings:
             app.kubernetes.io/managed-by: Helm
             app.kubernetes.io/name: test-app
             app.mintel.com/application: test-app
+            app.mintel.com/component: test-app
             app.mintel.com/env: qa
             app.mintel.com/region: ${CLUSTER_REGION}
             name: test-app
@@ -275,6 +279,7 @@ Check default python otel envars are added:
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: test-app
         app.mintel.com/application: test-app
+        app.mintel.com/component: test-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
         name: test-app
@@ -300,6 +305,7 @@ Check default python otel envars are added:
             app.kubernetes.io/managed-by: Helm
             app.kubernetes.io/name: test-app
             app.mintel.com/application: test-app
+            app.mintel.com/component: test-app
             app.mintel.com/env: qa
             app.mintel.com/region: ${CLUSTER_REGION}
             name: test-app
@@ -405,6 +411,7 @@ Check global otel extraEnv vars are added:
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: test-app
         app.mintel.com/application: test-app
+        app.mintel.com/component: test-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
         name: test-app
@@ -430,6 +437,7 @@ Check global otel extraEnv vars are added:
             app.kubernetes.io/managed-by: Helm
             app.kubernetes.io/name: test-app
             app.mintel.com/application: test-app
+            app.mintel.com/component: test-app
             app.mintel.com/env: qa
             app.mintel.com/region: ${CLUSTER_REGION}
             name: test-app
