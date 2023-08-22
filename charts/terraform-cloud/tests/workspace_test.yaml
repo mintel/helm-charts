@@ -197,6 +197,7 @@ tests:
             value: |-
               {
                 Application = "test-app"
+                Component = "test-app"
                 Owner = "sre"
                 Project = "test-project"
               }
@@ -425,6 +426,7 @@ tests:
             value: |-
               {
                 Application = "test-app"
+                Component = "test-app"
                 ExtraTagOne = "testTagValueOne"
                 ExtraTagTwo = "testTagValueTwo"
                 MintelEventBus = "true"
@@ -468,6 +470,7 @@ tests:
             value: |-
               {
                 Application = "test-app"
+                Component = "test-app"
                 ExtraTagOne = "testTagValueOne"
                 MintelEventBus = "true"
                 Owner = "sre"
@@ -484,6 +487,7 @@ tests:
             value: |-
               {
                 Application = "test-app"
+                Component = "test-app"
                 ExtraTagOne = "testTagValueOne"
                 ExtraTagTwo = "testTagValueTwo"
                 MintelEventBus = "true"

@@ -72,6 +72,7 @@ Dev S3 module name label override:
           value: |-
             {
               Application = "mntl-test-app"
+              Component = "mntl-test-app"
               Owner = "sre"
               Project = "test-project"
             }
@@ -154,6 +155,7 @@ Dev S3 module workspace:
           value: |-
             {
               Application = "test-app"
+              Component = "test-app"
               Owner = "sre"
               Project = "test-project"
             }
@@ -231,6 +233,7 @@ Dev S3 module workspace - tags:
           value: |-
             {
               Application = "test-app"
+              Component = "test-app"
               ExtraTagOne = "testTagValueOne"
               ExtraTagTwo = "testTagValueTwo"
               MintelEventBus = "true"
@@ -316,6 +319,7 @@ Dev S3 module workspace adds correct env override:
           value: |-
             {
               Application = "mntl-test-app"
+              Component = "mntl-test-app"
               Owner = "sre"
               Project = "test-project"
             }
@@ -398,6 +402,7 @@ Dev S3 module workspace ignores env override when added explicitly:
           value: |-
             {
               Application = "mntl-test-app"
+              Component = "mntl-test-app"
               Owner = "sre"
               Project = "test-project"
             }
@@ -480,6 +485,7 @@ Dev S3 module workspace name does not repeat mntl-prefix:
           value: |-
             {
               Application = "mntl-test-app"
+              Component = "mntl-test-app"
               Owner = "sre"
               Project = "test-project"
             }
@@ -562,6 +568,7 @@ Dev S3 module workspace name override:
           value: |-
             {
               Application = "mntl-test-app"
+              Component = "mntl-test-app"
               Owner = "sre"
               Project = "test-project"
             }
@@ -644,6 +651,7 @@ Dev S3 module workspace with default (0) syncWave:
           value: |-
             {
               Application = "test-app"
+              Component = "test-app"
               Owner = "sre"
               Project = "test-project"
             }
@@ -726,6 +734,7 @@ Dev S3 module workspace with modified syncWave:
           value: |-
             {
               Application = "test-app"
+              Component = "test-app"
               Owner = "sre"
               Project = "test-project"
             }
@@ -808,6 +817,7 @@ Dev S3 module workspace with multiple instances:
           value: |-
             {
               Application = "test-app"
+              Component = "test-app"
               Owner = "sre"
               Project = "test-project"
             }
@@ -889,6 +899,7 @@ Dev S3 module workspace with multiple instances:
           value: |-
             {
               Application = "test-app"
+              Component = "test-app"
               Owner = "sre"
               Project = "test-project"
             }
@@ -966,6 +977,7 @@ Dev S3 module workspace with multiple instances - tags:
           value: |-
             {
               Application = "test-app"
+              Component = "test-app"
               ExtraTagOne = "testTagValueOne"
               MintelEventBus = "true"
               Owner = "sre"
@@ -1044,6 +1056,7 @@ Dev S3 module workspace with multiple instances - tags:
           value: |-
             {
               Application = "test-app"
+              Component = "test-app"
               ExtraTagOne = "testTagValueOne"
               ExtraTagTwo = "testTagValueTwo"
               MintelEventBus = "true"
@@ -1129,6 +1142,7 @@ Dev S3 module workspace with multiple instances and syncWave overrides:
           value: |-
             {
               Application = "test-app"
+              Component = "test-app"
               Owner = "sre"
               Project = "test-project"
             }
@@ -1210,6 +1224,7 @@ Dev S3 module workspace with multiple instances and syncWave overrides:
           value: |-
             {
               Application = "test-app"
+              Component = "test-app"
               Owner = "sre"
               Project = "test-project"
             }
@@ -1287,6 +1302,7 @@ Test workspace allow destroy env:
           value: |-
             {
               Application = "test-app"
+              Component = "test-app"
               Owner = "sre"
               Project = "test-project"
             }
@@ -1369,6 +1385,7 @@ Test workspace extra annotations:
           value: |-
             {
               Application = "test-app"
+              Component = "test-app"
               Owner = "sre"
               Project = "test-project"
             }
@@ -1451,6 +1468,7 @@ Test workspace extra annotations override:
           value: |-
             {
               Application = "test-app"
+              Component = "test-app"
               Owner = "sre"
               Project = "test-project"
             }
