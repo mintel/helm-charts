@@ -7,15 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [v0.45.0] - 2023-8-22
+## [v0.46.0] - 2023-08-30
+### Added
+- Added tfcloud-auto-approver Lambda notifications to IRSA workspaces
+
+## [v0.45.0] - 2023-08-22
 ### Changed
 - Update `component` reporting label to default to application name (`global.name`)
 
-## [v0.44.0] - 2023-8-21
+## [v0.44.0] - 2023-08-21
 ### Added
 - Added support for new reporting labels `application` and `component`
 
-## [v0.43.3] - 2023-8-04
+## [v0.43.3] - 2023-08-04
 ### Changed
 - Upgrade external-secrets api version from v1alpha1 to v1beta1.
 

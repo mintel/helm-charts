@@ -6,6 +6,7 @@
 {{- $moduleVersion := index . 5 }}
 {{- $tfVersion := index . 6 }}
 {{- $resourceCfg := index . 7 }}
+{{- $notifications := index . 8 }}
 {{- $global := $.Values.global }}
 {{- $workspaceDict := dict "Global" $global "Release" $.Release "InstanceCfg" $instanceCfg "ResourceType" $resourceType }}
 {{- with index . 1 }}
@@ -59,6 +60,9 @@ spec:
     {{- else }}
       {{- include "mintel_common.terraform_cloud.tfVar" (dict "key" $varKey "value" $varVal) | indent 2 }}
     {{- end }}
+  {{- end }}
+  {{- with $notifications }}
+  notifications: {{ toYaml . | nindent 4 }}
   {{- end }}
 {{- end }}
 {{- end }}

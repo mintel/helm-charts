@@ -333,6 +333,14 @@ irsa:
       # workspaceAllowDestroy: bool
       ### Determines team ownership of the workspace. Default: Values.global.owner
       # workspaceOwner: string
+    # -- Configure Terraform Cloud notifications. This should not be changed unless you really know what you're doing.
+    notifications:
+      - name: tfcloud-auto-approver
+        enabled: true
+        type: generic
+        url: "${TFCLOUD_AUTO_APPROVER_URL}"
+        token: "${TFCLOUD_AUTO_APPROVER_SIGNATURE_KEY}"
+        triggers: ["run:needs_attention"]
 
 lambda:
   # -- Set to true to create a Lambda function

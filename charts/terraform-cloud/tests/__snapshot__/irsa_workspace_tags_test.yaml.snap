@@ -24,6 +24,14 @@ Test IRSA application and component tags default to name:
       module:
         source: app.terraform.io/Mintel/app-iam/aws
         version: 2.1.2
+      notifications:
+        - enabled: true
+          name: tfcloud-auto-approver
+          token: ${TFCLOUD_AUTO_APPROVER_SIGNATURE_KEY}
+          triggers:
+            - run:needs_attention
+          type: generic
+          url: ${TFCLOUD_AUTO_APPROVER_URL}
       omitNamespacePrefix: true
       organization: Mintel
       runTriggers:
@@ -104,6 +112,14 @@ Test IRSA default tags:
       module:
         source: app.terraform.io/Mintel/app-iam/aws
         version: 2.1.2
+      notifications:
+        - enabled: true
+          name: tfcloud-auto-approver
+          token: ${TFCLOUD_AUTO_APPROVER_SIGNATURE_KEY}
+          triggers:
+            - run:needs_attention
+          type: generic
+          url: ${TFCLOUD_AUTO_APPROVER_URL}
       omitNamespacePrefix: true
       organization: Mintel
       runTriggers:
