@@ -23,7 +23,7 @@ Test IRSA application and component tags default to name:
       agentPoolID: ""
       module:
         source: app.terraform.io/Mintel/app-iam/aws
-        version: 2.1.2
+        version: 2.3.1
       notifications:
         - enabled: true
           name: tfcloud-auto-approver
@@ -111,7 +111,7 @@ Test IRSA default tags:
       agentPoolID: ""
       module:
         source: app.terraform.io/Mintel/app-iam/aws
-        version: 2.1.2
+        version: 2.3.1
       notifications:
         - enabled: true
           name: tfcloud-auto-approver

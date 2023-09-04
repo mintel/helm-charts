@@ -23,7 +23,7 @@ IRSA created explicitly:
       agentPoolID: ""
       module:
         source: app.terraform.io/Mintel/app-iam/aws
-        version: 2.1.2
+        version: 2.3.1
       notifications:
         - enabled: true
           name: tfcloud-auto-approver
@@ -110,7 +110,7 @@ IRSA created for Dev S3 module workspace:
       agentPoolID: ""
       module:
         source: app.terraform.io/Mintel/app-iam/aws
-        version: 2.1.2
+        version: 2.3.1
       notifications:
         - enabled: true
           name: tfcloud-auto-approver
@@ -198,7 +198,7 @@ IRSA created with default (0) syncWave:
       agentPoolID: ""
       module:
         source: app.terraform.io/Mintel/app-iam/aws
-        version: 2.1.2
+        version: 2.3.1
       notifications:
         - enabled: true
           name: tfcloud-auto-approver
@@ -285,7 +285,7 @@ IRSA created with modified syncWave:
       agentPoolID: ""
       module:
         source: app.terraform.io/Mintel/app-iam/aws
-        version: 2.1.2
+        version: 2.3.1
       notifications:
         - enabled: true
           name: tfcloud-auto-approver
