@@ -10,6 +10,8 @@ Check S3 envfrom secretRef is present:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: test-app
+        app.mintel.com/application: test-app
+        app.mintel.com/component: test-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
         name: test-app
@@ -34,6 +36,8 @@ Check S3 envfrom secretRef is present:
             app.kubernetes.io/component: app
             app.kubernetes.io/managed-by: Helm
             app.kubernetes.io/name: test-app
+            app.mintel.com/application: test-app
+            app.mintel.com/component: test-app
             app.mintel.com/env: qa
             app.mintel.com/region: ${CLUSTER_REGION}
             name: test-app
@@ -78,6 +82,13 @@ Check S3 envfrom secretRef is present:
               resources:
                 limits: {}
                 requests: {}
+              securityContext:
+                allowPrivilegeEscalation: false
+                capabilities:
+                  drop:
+                    - ALL
+                runAsNonRoot: true
+                runAsUser: 1000
               startupProbe:
                 failureThreshold: 60
                 httpGet:
@@ -89,6 +100,7 @@ Check S3 envfrom secretRef is present:
             - name: image-pull-gitlab
             - name: image-pull-docker-hub
           securityContext:
+            runAsNonRoot: true
             runAsUser: 1000
           serviceAccountName: test-app
           terminationGracePeriodSeconds: 30
@@ -100,7 +112,6 @@ Check S3 envfrom secretRef is present:
               maxSkew: 1
               topologyKey: topology.kubernetes.io/zone
               whenUnsatisfiable: DoNotSchedule
-          volumes: null
 Check S3 envfrom secretRef is present for local environment:
   1: |
     apiVersion: apps/v1
@@ -113,6 +124,8 @@ Check S3 envfrom secretRef is present for local environment:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: test-app
+        app.mintel.com/application: test-app
+        app.mintel.com/component: test-app
         app.mintel.com/env: local
         app.mintel.com/region: local
         name: test-app
@@ -137,6 +150,8 @@ Check S3 envfrom secretRef is present for local environment:
             app.kubernetes.io/component: app
             app.kubernetes.io/managed-by: Helm
             app.kubernetes.io/name: test-app
+            app.mintel.com/application: test-app
+            app.mintel.com/component: test-app
             app.mintel.com/env: local
             app.mintel.com/region: local
             name: test-app
@@ -187,6 +202,13 @@ Check S3 envfrom secretRef is present for local environment:
               resources:
                 limits: {}
                 requests: {}
+              securityContext:
+                allowPrivilegeEscalation: false
+                capabilities:
+                  drop:
+                    - ALL
+                runAsNonRoot: true
+                runAsUser: 1000
               startupProbe:
                 failureThreshold: 60
                 httpGet:
@@ -198,10 +220,10 @@ Check S3 envfrom secretRef is present for local environment:
             - name: image-pull-gitlab
             - name: image-pull-docker-hub
           securityContext:
+            runAsNonRoot: true
             runAsUser: 1000
           serviceAccountName: test-app
           terminationGracePeriodSeconds: 30
-          volumes: null
 Check S3 envfrom secretRef is present for multiple instances of TF Cloud helm chart:
   1: |
     apiVersion: apps/v1
@@ -215,6 +237,8 @@ Check S3 envfrom secretRef is present for multiple instances of TF Cloud helm ch
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: test-app
         app.kubernetes.io/part-of: test-project
+        app.mintel.com/application: test-app
+        app.mintel.com/component: test-app
         app.mintel.com/env: qa
         app.mintel.com/owner: sre
         app.mintel.com/region: eu-west-1
@@ -242,6 +266,8 @@ Check S3 envfrom secretRef is present for multiple instances of TF Cloud helm ch
             app.kubernetes.io/managed-by: Helm
             app.kubernetes.io/name: test-app
             app.kubernetes.io/part-of: test-project
+            app.mintel.com/application: test-app
+            app.mintel.com/component: test-app
             app.mintel.com/env: qa
             app.mintel.com/owner: sre
             app.mintel.com/region: eu-west-1
@@ -289,6 +315,13 @@ Check S3 envfrom secretRef is present for multiple instances of TF Cloud helm ch
               resources:
                 limits: {}
                 requests: {}
+              securityContext:
+                allowPrivilegeEscalation: false
+                capabilities:
+                  drop:
+                    - ALL
+                runAsNonRoot: true
+                runAsUser: 1000
               startupProbe:
                 failureThreshold: 60
                 httpGet:
@@ -300,6 +333,7 @@ Check S3 envfrom secretRef is present for multiple instances of TF Cloud helm ch
             - name: image-pull-gitlab
             - name: image-pull-docker-hub
           securityContext:
+            runAsNonRoot: true
             runAsUser: 1000
           serviceAccountName: test-app
           terminationGracePeriodSeconds: 30
@@ -312,7 +346,6 @@ Check S3 envfrom secretRef is present for multiple instances of TF Cloud helm ch
               maxSkew: 1
               topologyKey: topology.kubernetes.io/zone
               whenUnsatisfiable: DoNotSchedule
-          volumes: null
 Check S3 secretName Override:
   1: |
     apiVersion: apps/v1
@@ -325,6 +358,8 @@ Check S3 secretName Override:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: test-app
+        app.mintel.com/application: test-app
+        app.mintel.com/component: test-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
         name: test-app
@@ -349,6 +384,8 @@ Check S3 secretName Override:
             app.kubernetes.io/component: app
             app.kubernetes.io/managed-by: Helm
             app.kubernetes.io/name: test-app
+            app.mintel.com/application: test-app
+            app.mintel.com/component: test-app
             app.mintel.com/env: qa
             app.mintel.com/region: ${CLUSTER_REGION}
             name: test-app
@@ -393,6 +430,13 @@ Check S3 secretName Override:
               resources:
                 limits: {}
                 requests: {}
+              securityContext:
+                allowPrivilegeEscalation: false
+                capabilities:
+                  drop:
+                    - ALL
+                runAsNonRoot: true
+                runAsUser: 1000
               startupProbe:
                 failureThreshold: 60
                 httpGet:
@@ -404,6 +448,7 @@ Check S3 secretName Override:
             - name: image-pull-gitlab
             - name: image-pull-docker-hub
           securityContext:
+            runAsNonRoot: true
             runAsUser: 1000
           serviceAccountName: test-app
           terminationGracePeriodSeconds: 30
@@ -415,7 +460,6 @@ Check S3 secretName Override:
               maxSkew: 1
               topologyKey: topology.kubernetes.io/zone
               whenUnsatisfiable: DoNotSchedule
-          volumes: null
 Check S3 stakater secret reloader annotation contains correct secrets for multiple instances of TF Cloud helm chart:
   1: |
     apiVersion: apps/v1
@@ -429,6 +473,8 @@ Check S3 stakater secret reloader annotation contains correct secrets for multip
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: test-app
         app.kubernetes.io/part-of: test-project
+        app.mintel.com/application: test-app
+        app.mintel.com/component: test-app
         app.mintel.com/env: qa
         app.mintel.com/owner: sre
         app.mintel.com/region: eu-west-1
@@ -456,6 +502,8 @@ Check S3 stakater secret reloader annotation contains correct secrets for multip
             app.kubernetes.io/managed-by: Helm
             app.kubernetes.io/name: test-app
             app.kubernetes.io/part-of: test-project
+            app.mintel.com/application: test-app
+            app.mintel.com/component: test-app
             app.mintel.com/env: qa
             app.mintel.com/owner: sre
             app.mintel.com/region: eu-west-1
@@ -507,6 +555,13 @@ Check S3 stakater secret reloader annotation contains correct secrets for multip
               resources:
                 limits: {}
                 requests: {}
+              securityContext:
+                allowPrivilegeEscalation: false
+                capabilities:
+                  drop:
+                    - ALL
+                runAsNonRoot: true
+                runAsUser: 1000
               startupProbe:
                 failureThreshold: 60
                 httpGet:
@@ -518,6 +573,7 @@ Check S3 stakater secret reloader annotation contains correct secrets for multip
             - name: image-pull-gitlab
             - name: image-pull-docker-hub
           securityContext:
+            runAsNonRoot: true
             runAsUser: 1000
           serviceAccountName: test-app
           terminationGracePeriodSeconds: 30
@@ -530,4 +586,3 @@ Check S3 stakater secret reloader annotation contains correct secrets for multip
               maxSkew: 1
               topologyKey: topology.kubernetes.io/zone
               whenUnsatisfiable: DoNotSchedule
-          volumes: null

@@ -62,11 +62,11 @@ argocd.argoproj.io/sync-wave: {{ toYaml .syncWave }}
 name: {{ include "mintel_common.fullname" . }}
 {{ include "mintel_common.selectorLabels" . }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
-{{- if .Values.owner }}
-app.mintel.com/owner: .Values.owner }}
-{{- else if (and .Values.global .Values.global.owner) }}
+{{- if .Values.global.owner }}
 app.mintel.com/owner: {{ .Values.global.owner }}
 {{- end }}
+app.mintel.com/application: {{ .Values.global.application | default .Values.global.name }}
+app.mintel.com/component: {{ .Values.global.component | default .Values.global.name }}
 app.mintel.com/env: {{ .Values.global.clusterEnv }}
 {{- if (eq .Values.global.clusterEnv "local") }}
 app.mintel.com/region: {{ $.Values.global.clusterRegion | default "local" }}
@@ -119,6 +119,8 @@ app.kubernetes.io/component: app
 
 {{/* Target Labels */}}
 {{- define "mintel_common.targetLabelNames" -}}
+- app.mintel.com/application
+- app.mintel.com/component
 - app.mintel.com/owner
 - app.mintel.com/ignore_alerts
 {{- end -}}

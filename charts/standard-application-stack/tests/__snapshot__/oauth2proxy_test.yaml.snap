@@ -10,6 +10,8 @@ Check default container args:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: test-app
+        app.mintel.com/application: test-app
+        app.mintel.com/component: test-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
         name: test-app
@@ -34,6 +36,8 @@ Check default container args:
             app.kubernetes.io/component: app
             app.kubernetes.io/managed-by: Helm
             app.kubernetes.io/name: test-app
+            app.mintel.com/application: test-app
+            app.mintel.com/component: test-app
             app.mintel.com/env: qa
             app.mintel.com/region: ${CLUSTER_REGION}
             name: test-app
@@ -78,6 +82,13 @@ Check default container args:
               resources:
                 limits: {}
                 requests: {}
+              securityContext:
+                allowPrivilegeEscalation: false
+                capabilities:
+                  drop:
+                    - ALL
+                runAsNonRoot: true
+                runAsUser: 1000
               startupProbe:
                 failureThreshold: 60
                 httpGet:
@@ -135,10 +146,18 @@ Check default container args:
                 requests:
                   cpu: 100m
                   memory: 64Mi
+              securityContext:
+                allowPrivilegeEscalation: false
+                capabilities:
+                  drop:
+                    - ALL
+                runAsNonRoot: true
+                runAsUser: 1000
           imagePullSecrets:
             - name: image-pull-gitlab
             - name: image-pull-docker-hub
           securityContext:
+            runAsNonRoot: true
             runAsUser: 1000
           serviceAccountName: test-app
           terminationGracePeriodSeconds: 30
@@ -150,7 +169,6 @@ Check default container args:
               maxSkew: 1
               topologyKey: topology.kubernetes.io/zone
               whenUnsatisfiable: DoNotSchedule
-          volumes: null
 Check setting skip-auth-regex from extra passed in values:
   1: |
     apiVersion: apps/v1
@@ -163,6 +181,8 @@ Check setting skip-auth-regex from extra passed in values:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: test-app
+        app.mintel.com/application: test-app
+        app.mintel.com/component: test-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
         name: test-app
@@ -187,6 +207,8 @@ Check setting skip-auth-regex from extra passed in values:
             app.kubernetes.io/component: app
             app.kubernetes.io/managed-by: Helm
             app.kubernetes.io/name: test-app
+            app.mintel.com/application: test-app
+            app.mintel.com/component: test-app
             app.mintel.com/env: qa
             app.mintel.com/region: ${CLUSTER_REGION}
             name: test-app
@@ -231,6 +253,13 @@ Check setting skip-auth-regex from extra passed in values:
               resources:
                 limits: {}
                 requests: {}
+              securityContext:
+                allowPrivilegeEscalation: false
+                capabilities:
+                  drop:
+                    - ALL
+                runAsNonRoot: true
+                runAsUser: 1000
               startupProbe:
                 failureThreshold: 60
                 httpGet:
@@ -289,10 +318,18 @@ Check setting skip-auth-regex from extra passed in values:
                 requests:
                   cpu: 100m
                   memory: 64Mi
+              securityContext:
+                allowPrivilegeEscalation: false
+                capabilities:
+                  drop:
+                    - ALL
+                runAsNonRoot: true
+                runAsUser: 1000
           imagePullSecrets:
             - name: image-pull-gitlab
             - name: image-pull-docker-hub
           securityContext:
+            runAsNonRoot: true
             runAsUser: 1000
           serviceAccountName: test-app
           terminationGracePeriodSeconds: 30
@@ -304,7 +341,6 @@ Check setting skip-auth-regex from extra passed in values:
               maxSkew: 1
               topologyKey: topology.kubernetes.io/zone
               whenUnsatisfiable: DoNotSchedule
-          volumes: null
 Check setting skip-auth-regex from extra passed in values when they already contain start/end meta-characters:
   1: |
     apiVersion: apps/v1
@@ -317,6 +353,8 @@ Check setting skip-auth-regex from extra passed in values when they already cont
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: test-app
+        app.mintel.com/application: test-app
+        app.mintel.com/component: test-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
         name: test-app
@@ -341,6 +379,8 @@ Check setting skip-auth-regex from extra passed in values when they already cont
             app.kubernetes.io/component: app
             app.kubernetes.io/managed-by: Helm
             app.kubernetes.io/name: test-app
+            app.mintel.com/application: test-app
+            app.mintel.com/component: test-app
             app.mintel.com/env: qa
             app.mintel.com/region: ${CLUSTER_REGION}
             name: test-app
@@ -385,6 +425,13 @@ Check setting skip-auth-regex from extra passed in values when they already cont
               resources:
                 limits: {}
                 requests: {}
+              securityContext:
+                allowPrivilegeEscalation: false
+                capabilities:
+                  drop:
+                    - ALL
+                runAsNonRoot: true
+                runAsUser: 1000
               startupProbe:
                 failureThreshold: 60
                 httpGet:
@@ -443,10 +490,18 @@ Check setting skip-auth-regex from extra passed in values when they already cont
                 requests:
                   cpu: 100m
                   memory: 64Mi
+              securityContext:
+                allowPrivilegeEscalation: false
+                capabilities:
+                  drop:
+                    - ALL
+                runAsNonRoot: true
+                runAsUser: 1000
           imagePullSecrets:
             - name: image-pull-gitlab
             - name: image-pull-docker-hub
           securityContext:
+            runAsNonRoot: true
             runAsUser: 1000
           serviceAccountName: test-app
           terminationGracePeriodSeconds: 30
@@ -458,7 +513,6 @@ Check setting skip-auth-regex from extra passed in values when they already cont
               maxSkew: 1
               topologyKey: topology.kubernetes.io/zone
               whenUnsatisfiable: DoNotSchedule
-          volumes: null
 Check setting skip-auth-regex from overridden health-check values:
   1: |
     apiVersion: apps/v1
@@ -471,6 +525,8 @@ Check setting skip-auth-regex from overridden health-check values:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: test-app
+        app.mintel.com/application: test-app
+        app.mintel.com/component: test-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
         name: test-app
@@ -495,6 +551,8 @@ Check setting skip-auth-regex from overridden health-check values:
             app.kubernetes.io/component: app
             app.kubernetes.io/managed-by: Helm
             app.kubernetes.io/name: test-app
+            app.mintel.com/application: test-app
+            app.mintel.com/component: test-app
             app.mintel.com/env: qa
             app.mintel.com/region: ${CLUSTER_REGION}
             name: test-app
@@ -539,6 +597,13 @@ Check setting skip-auth-regex from overridden health-check values:
               resources:
                 limits: {}
                 requests: {}
+              securityContext:
+                allowPrivilegeEscalation: false
+                capabilities:
+                  drop:
+                    - ALL
+                runAsNonRoot: true
+                runAsUser: 1000
               startupProbe:
                 failureThreshold: 60
                 httpGet:
@@ -596,10 +661,18 @@ Check setting skip-auth-regex from overridden health-check values:
                 requests:
                   cpu: 100m
                   memory: 64Mi
+              securityContext:
+                allowPrivilegeEscalation: false
+                capabilities:
+                  drop:
+                    - ALL
+                runAsNonRoot: true
+                runAsUser: 1000
           imagePullSecrets:
             - name: image-pull-gitlab
             - name: image-pull-docker-hub
           securityContext:
+            runAsNonRoot: true
             runAsUser: 1000
           serviceAccountName: test-app
           terminationGracePeriodSeconds: 30
@@ -611,7 +684,6 @@ Check setting skip-auth-regex from overridden health-check values:
               maxSkew: 1
               topologyKey: topology.kubernetes.io/zone
               whenUnsatisfiable: DoNotSchedule
-          volumes: null
 Check sidecar present if enabled:
   1: |
     apiVersion: apps/v1
@@ -624,6 +696,8 @@ Check sidecar present if enabled:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: test-app
+        app.mintel.com/application: test-app
+        app.mintel.com/component: test-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
         name: test-app
@@ -648,6 +722,8 @@ Check sidecar present if enabled:
             app.kubernetes.io/component: app
             app.kubernetes.io/managed-by: Helm
             app.kubernetes.io/name: test-app
+            app.mintel.com/application: test-app
+            app.mintel.com/component: test-app
             app.mintel.com/env: qa
             app.mintel.com/region: ${CLUSTER_REGION}
             name: test-app
@@ -692,6 +768,13 @@ Check sidecar present if enabled:
               resources:
                 limits: {}
                 requests: {}
+              securityContext:
+                allowPrivilegeEscalation: false
+                capabilities:
+                  drop:
+                    - ALL
+                runAsNonRoot: true
+                runAsUser: 1000
               startupProbe:
                 failureThreshold: 60
                 httpGet:
@@ -749,10 +832,18 @@ Check sidecar present if enabled:
                 requests:
                   cpu: 100m
                   memory: 64Mi
+              securityContext:
+                allowPrivilegeEscalation: false
+                capabilities:
+                  drop:
+                    - ALL
+                runAsNonRoot: true
+                runAsUser: 1000
           imagePullSecrets:
             - name: image-pull-gitlab
             - name: image-pull-docker-hub
           securityContext:
+            runAsNonRoot: true
             runAsUser: 1000
           serviceAccountName: test-app
           terminationGracePeriodSeconds: 30
@@ -764,4 +855,3 @@ Check sidecar present if enabled:
               maxSkew: 1
               topologyKey: topology.kubernetes.io/zone
               whenUnsatisfiable: DoNotSchedule
-          volumes: null

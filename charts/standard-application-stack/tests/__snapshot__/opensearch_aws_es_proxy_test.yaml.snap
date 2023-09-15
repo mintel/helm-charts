@@ -25,6 +25,8 @@ Check awsEsProxy Ingress is created if enabled:
         app.kubernetes.io/component: aws-es-proxy
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: example-app-aws-es-proxy
+        app.mintel.com/application: example-app
+        app.mintel.com/component: example-app
         app.mintel.com/env: local
         app.mintel.com/region: local
         name: example-app-aws-es-proxy
@@ -54,6 +56,8 @@ Check awsEsProxy NetworkPolicy is created if enabled:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: example-app
+        app.mintel.com/application: example-app
+        app.mintel.com/component: example-app
         app.mintel.com/env: local
         app.mintel.com/region: local
         name: example-app
@@ -85,6 +89,8 @@ Check awsEsProxy aws-load-balancer-controller okta role binding is created if en
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: example-app
+        app.mintel.com/application: example-app
+        app.mintel.com/component: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
         name: example-app
@@ -109,6 +115,8 @@ Check awsEsProxy aws-load-balancer-controller okta role is created if enabled:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: example-app
+        app.mintel.com/application: example-app
+        app.mintel.com/component: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
         name: example-app
@@ -138,6 +146,8 @@ Check awsEsProxy deployment is created if enabled:
         app.kubernetes.io/component: aws-es-proxy
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: example-app-aws-es-proxy
+        app.mintel.com/application: example-app
+        app.mintel.com/component: example-app
         app.mintel.com/env: local
         app.mintel.com/region: local
         name: example-app-aws-es-proxy
@@ -157,6 +167,8 @@ Check awsEsProxy deployment is created if enabled:
             app.kubernetes.io/component: aws-es-proxy
             app.kubernetes.io/managed-by: Helm
             app.kubernetes.io/name: example-app-aws-es-proxy
+            app.mintel.com/application: example-app
+            app.mintel.com/component: example-app
             app.mintel.com/env: local
             app.mintel.com/region: local
             name: example-app-aws-es-proxy
@@ -199,7 +211,14 @@ Check awsEsProxy deployment is created if enabled:
                   cpu: 100m
                   memory: 64Mi
               securityContext:
+                allowPrivilegeEscalation: false
+                capabilities:
+                  drop:
+                    - ALL
+                runAsNonRoot: true
                 runAsUser: 65534
+                seccompProfile:
+                  type: RuntimeDefault
               startupProbe:
                 failureThreshold: 60
                 httpGet:
@@ -210,6 +229,9 @@ Check awsEsProxy deployment is created if enabled:
           imagePullSecrets:
             - name: image-pull-gitlab
             - name: image-pull-docker-hub
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 1000
           serviceAccountName: example-app
 Check awsEsProxy service is created if enabled:
   1: |
@@ -222,6 +244,8 @@ Check awsEsProxy service is created if enabled:
         app.kubernetes.io/component: aws-es-proxy
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: example-app-aws-es-proxy
+        app.mintel.com/application: example-app
+        app.mintel.com/component: example-app
         app.mintel.com/env: local
         app.mintel.com/region: local
         name: example-app-aws-es-proxy

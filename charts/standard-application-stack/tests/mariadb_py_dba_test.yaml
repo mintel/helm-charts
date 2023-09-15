@@ -1,0 +1,56 @@
+suite: Test MariaDB py-dba configs
+templates:
+  - mariadb-py-dba.yaml
+release:
+  namespace: test-namespace
+tests:
+  - it: extraUsers adds job and configmap
+    set:
+      global.name: test-app
+      mariadb:
+        enabled: true
+        extraUsers:
+          enabled: true
+          users:
+          - username: user1
+            database: test_db
+            tables:
+            - table: table1
+              permissions: ["ALL"]
+
+    asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
+      - isKind:
+          of: ConfigMap
+        documentIndex: 1
+      - isKind:
+          of: Job
+        documentIndex: 0
+
+  - it: adds correct config to configmap
+    set:
+      global.name: test-app
+      mariadb:
+        enabled: true
+        extraUsers:
+          enabled: true
+          users:
+          - username: user1
+            database: test_db
+            tables:
+            - table: table1
+              permissions: ["ALL"]
+
+    asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
+      - equal:
+          path: data.py-dba-config
+          value: |
+            users:
+            - database: test_db
+              tables:
+              - permissions:
+                - ALL
+                table: table1
+              username: user1
+        documentIndex: 1

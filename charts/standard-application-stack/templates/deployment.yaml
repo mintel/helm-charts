@@ -116,8 +116,8 @@ spec:
         {{- end }}
     spec:
       {{- include "mintel_common.imagePullSecrets" . | nindent 6 }}
-      {{- with .Values.podSecurityContext }}
-      securityContext: {{ toYaml . | nindent 8 }}
+      {{- with .podSecurityContext | default $.Values.podSecurityContext }}
+      securityContext: {{- toYaml . | nindent 8 }}
       {{- end }}
       {{- if (and .Values.serviceAccount (or .Values.serviceAccount.create .Values.serviceAccount.name)) }}
       serviceAccountName: {{ .Values.serviceAccount.name | default (include "mintel_common.fullname" .) }}
@@ -342,7 +342,7 @@ spec:
             timeoutSeconds: {{ .Values.readiness.timeoutSeconds | default 1 }}
             periodSeconds: {{ .Values.readiness.periodSeconds | default 10 }}
           {{- end }}
-          {{- with .Values.securityContext }}
+          {{- with .securityContext | default $.Values.securityContext }}
           securityContext: {{ toYaml . | nindent 12 }}
           {{- end }}
           {{- with .Values.resources }}
@@ -386,8 +386,10 @@ spec:
           - containerPort: 5066
             name: beat-http
           {{- with .Values.filebeatSidecar.resources }}
-          resources:
-          {{- toYaml . | nindent 14 }}
+          resources: {{- toYaml . | nindent 14 }}
+          {{- end }}
+          {{- with .Values.filebeatSidecar.securityContext | default $.Values.securityContext }}
+          securityContext: {{ toYaml . | nindent 14 }}
           {{- end }}
           volumeMounts:
             - mountPath: /config/
@@ -399,8 +401,10 @@ spec:
           - containerPort: 9479
             name: metrics
           {{- with .Values.filebeatSidecar.metrics.resources }}
-          resources:
-          {{- toYaml . | nindent 14 }}
+          resources: {{- toYaml . | nindent 14 }}
+          {{- end }}
+          {{- with .Values.filebeatSidecar.securityContext | default $.Values.securityContext }}
+          securityContext: {{ toYaml . | nindent 14 }}
           {{- end }}
         {{- end }}
         {{- end }}
@@ -438,13 +442,17 @@ spec:
           ports:
           - containerPort: 7000
             name: git-sync-http
-          {{- with .Values.resources }}
+          {{- with .Values.gitSyncSidecar.resources }}
           resources: {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.gitSyncSidecar.securityContext | default $.Values.securityContext }}
+          securityContext: {{- toYaml . | nindent 12 }}
           {{- end }}
           volumeMounts:
             - mountPath: {{ .Values.gitSyncSidecar.root }}
               name: {{ include "mintel_common.fullname" . }}-git-sync
       {{- end }}
+      {{- if or (and .Values.filebeatSidecar .Values.filebeatSidecar.enabled) (and .Values.gitSyncSidecar .Values.gitSyncSidecar.enabled) (.Values.volumes) }}
       volumes:
         {{- if not .Values.statefulset }}
         {{- if .Values.persistentVolumes }}
@@ -467,4 +475,5 @@ spec:
         - name: {{ include "mintel_common.fullname" . }}-git-sync
           emptyDir: {}
         {{- end }}
+      {{- end }}
 {{- end }}

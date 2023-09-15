@@ -5,8 +5,14 @@
 global:
   # -- Name of the application
   name: "example-app"
+
+  # Labels for alerting and reporting
   # -- Team which "owns" the application
   owner: ""
+  # -- Name of the application (defaults to global.name)
+  application: ""
+  # -- Component of the application (defaults to global.name)
+  component: ""
   # -- Top level application each deployment is a part of
   partOf: ""
   # -- Additional labels to apply to all resources
@@ -186,7 +192,19 @@ podAnnotations: {}
 # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
 podSecurityContext:
   runAsUser: 1000
+  runAsNonRoot: true
+#  readOnlyRootFilesystem: true
 #  fsGroup: 2000
+
+# -- Security context for the container
+# ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
+securityContext:
+  allowPrivilegeEscalation: false
+#  readOnlyRootFilesystem: true
+  capabilities:
+    drop: ["ALL"]
+  runAsNonRoot: true
+  runAsUser: 1000
 
 # -- Pod Disruption Budget
 # ref: https://kubernetes.io/docs/tasks/run-application/configure-pdb/
@@ -194,18 +212,6 @@ podDisruptionBudget:
   enabled: true
   minAvailable: 50%
 #  maxUnavailable: 50%
-
-# -- Security context for the container
-# ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
-securityContext: {}
-# securityContext:
-#   allowPrivilegeEscalation: false
-#   readOnlyRootFilesystem: true
-#   capabilities:
-#     drop: ["ALL"]
-#   readOnlyRootFilesystem: true
-#   runAsNonRoot: true
-#   runAsUser: 1000
 
 # -- Kubernetes svc configutarion
 service:
@@ -895,6 +901,11 @@ cronjobs:
     # -- If this field is set, ttlSecondsAfterFinished after the Job finishes, it is eligible to be automatically deleted.
     # ref: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.20/#cronjob-v1beta1-batch
     ttlSecondsAfterFinished: 60
+
+    # -- CronJob schedule will run relative to this timezone.
+    # ref: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+    timezone: null
+
   # -- List of Cronjob configurations to be defined
   jobs:
     []
@@ -903,6 +914,7 @@ cronjobs:
     #   suspend: false
     #   restartPolicy: Never
     #   schedule: "0 0 * * *"
+    #   timezone: null # See: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
     #   ttlSecondsAfterFinished: 60
     #   image: ''
     #   command:
@@ -1042,6 +1054,31 @@ mariadb:
       requests:
         cpu: 100m
         memory: 64Mi
+  # -- set up extra users for a database and table that already exist
+  extraUsers:
+    enabled: false
+    users: []
+    # List of objects with format:
+    # username: "my_user"
+    # database: "my_db"
+    # tables:
+    # - table: "my_table"
+    #   permissions: ["ALL"]
+    #
+    # Example:
+    # - username: "user1"
+    #   database: "test_db"
+    #   tables:
+    #   - table: "table1"
+    #     permissions: ["SELECT", "UPDATE"]
+    #   - table: "table2"
+    #     permissions: ["INSERT"]
+    # - username: "user2"
+    #   database: "test_db"
+    #   tables:
+    #   - table: "table1"
+    #     permissions: ["DELETE"]
+
 
 memcached:
   enabled: false
@@ -1082,7 +1119,30 @@ postgresql:
         memory: 128Mi
       requests:
         cpu: 100m
-        memory: 64Mi
+        memory: 64M
+  extraUsers:
+    enabled: false
+    users: []
+    # List of objects with format:
+    # username: "my_user"
+    # database: "my_db"
+    # tables:
+    # - table: "my_table"
+    #   permissions: ["ALL"]
+    #
+    # Example:
+    # - username: "user1"
+    #   database: "test_db"
+    #   tables:
+    #   - table: "table1"
+    #     permissions: ["SELECT", "UPDATE"]
+    #   - table: "table2"
+    #     permissions: ["INSERT"]
+    # - username: "user2"
+    #   database: "test_db"
+    #   tables:
+    #   - table: "table1"
+    #     permissions: ["DELETE"]
 
 redis:
   enabled: false
@@ -1201,6 +1261,15 @@ opensearch:
     # -- Port for aws-es-proxy to listen on
     port: 9200
     # -- Ingress for aws-es-proxy
+    securityContext:
+      allowPrivilegeEscalation: false
+      capabilities:
+        drop:
+          - ALL
+      runAsNonRoot: true
+      runAsUser: 65534
+      seccompProfile:
+        type: RuntimeDefault
     ingress:
       enabled: false
       # -- Path for the Ingress

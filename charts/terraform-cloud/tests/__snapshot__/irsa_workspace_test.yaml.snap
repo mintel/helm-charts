@@ -23,7 +23,15 @@ IRSA created explicitly:
       agentPoolID: ""
       module:
         source: app.terraform.io/Mintel/app-iam/aws
-        version: 2.1.2
+        version: 2.3.1
+      notifications:
+        - enabled: true
+          name: tfcloud-auto-approver
+          token: ${TFCLOUD_AUTO_APPROVER_SIGNATURE_KEY}
+          triggers:
+            - run:needs_attention
+          type: generic
+          url: ${TFCLOUD_AUTO_APPROVER_URL}
       omitNamespacePrefix: true
       organization: Mintel
       runTriggers: null
@@ -67,9 +75,10 @@ IRSA created explicitly:
           sensitive: false
           value: |-
             {
-              Owner       = "sre"
-              Project     = "test-project"
               Application = "test-app"
+              Component = "test-app"
+              Owner = "sre"
+              Project = "test-project"
             }
         - environmentVariable: false
           hcl: false
@@ -101,7 +110,15 @@ IRSA created for Dev S3 module workspace:
       agentPoolID: ""
       module:
         source: app.terraform.io/Mintel/app-iam/aws
-        version: 2.1.2
+        version: 2.3.1
+      notifications:
+        - enabled: true
+          name: tfcloud-auto-approver
+          token: ${TFCLOUD_AUTO_APPROVER_SIGNATURE_KEY}
+          triggers:
+            - run:needs_attention
+          type: generic
+          url: ${TFCLOUD_AUTO_APPROVER_URL}
       omitNamespacePrefix: true
       organization: Mintel
       runTriggers:
@@ -146,9 +163,10 @@ IRSA created for Dev S3 module workspace:
           sensitive: false
           value: |-
             {
-              Owner       = "sre"
-              Project     = "test-project"
               Application = "test-app"
+              Component = "test-app"
+              Owner = "sre"
+              Project = "test-project"
             }
         - environmentVariable: false
           hcl: false
@@ -180,7 +198,15 @@ IRSA created with default (0) syncWave:
       agentPoolID: ""
       module:
         source: app.terraform.io/Mintel/app-iam/aws
-        version: 2.1.2
+        version: 2.3.1
+      notifications:
+        - enabled: true
+          name: tfcloud-auto-approver
+          token: ${TFCLOUD_AUTO_APPROVER_SIGNATURE_KEY}
+          triggers:
+            - run:needs_attention
+          type: generic
+          url: ${TFCLOUD_AUTO_APPROVER_URL}
       omitNamespacePrefix: true
       organization: Mintel
       runTriggers: null
@@ -224,9 +250,10 @@ IRSA created with default (0) syncWave:
           sensitive: false
           value: |-
             {
-              Owner       = "sre"
-              Project     = "test-project"
               Application = "test-app"
+              Component = "test-app"
+              Owner = "sre"
+              Project = "test-project"
             }
         - environmentVariable: false
           hcl: false
@@ -258,7 +285,15 @@ IRSA created with modified syncWave:
       agentPoolID: ""
       module:
         source: app.terraform.io/Mintel/app-iam/aws
-        version: 2.1.2
+        version: 2.3.1
+      notifications:
+        - enabled: true
+          name: tfcloud-auto-approver
+          token: ${TFCLOUD_AUTO_APPROVER_SIGNATURE_KEY}
+          triggers:
+            - run:needs_attention
+          type: generic
+          url: ${TFCLOUD_AUTO_APPROVER_URL}
       omitNamespacePrefix: true
       organization: Mintel
       runTriggers: null
@@ -302,9 +337,10 @@ IRSA created with modified syncWave:
           sensitive: false
           value: |-
             {
-              Owner       = "sre"
-              Project     = "test-project"
               Application = "test-app"
+              Component = "test-app"
+              Owner = "sre"
+              Project = "test-project"
             }
         - environmentVariable: false
           hcl: false

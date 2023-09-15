@@ -17,6 +17,9 @@ spec:
   suspend: false
   {{- end }}
   schedule: {{ quote .schedule }}
+  {{- with .timezone | default $.Values.cronjobs.defaults.timezone }}
+  timeZone: {{ . | quote }}
+  {{- end }}
   jobTemplate:
     spec:
       {{- $ttl := (.ttlSecondsAfterFinished | default $.Values.cronjobs.defaults.ttlSecondsAfterFinished) | int }}
@@ -28,13 +31,8 @@ spec:
           labels: {{ include "mintel_common.labels" $data | nindent 12 }}
         spec:
           {{- include "mintel_common.imagePullSecrets" $ | nindent 10 }}
-          {{- if .includeBasePodSecurityContext }}
-          {{- with $.Values.podSecurityContext }}
+          {{- with .podSecurityContext | default $.Values.podSecurityContext }}
           securityContext: {{- toYaml . | nindent 12 }}
-          {{- end }}
-          {{- end }}
-          {{- with .podSecurityContext }}
-          securityContext: {{ toYaml . | nindent 12 }}
           {{- end }}
           {{- if (and $.Values.serviceAccount (or $.Values.serviceAccount.create $.Values.serviceAccount.name)) }}
           serviceAccountName: {{ $.Values.serviceAccount.name | default (include "mintel_common.fullname" $) }}
@@ -168,8 +166,10 @@ spec:
               {{- with .resources }}
               resources: {{- toYaml . | nindent 16 }}
               {{- end }}
+              {{- with .securityContext | default $.Values.securityContext }}
+              securityContext: {{- toYaml . | nindent 16 }}
+              {{- end }}
               {{- with $.Values.cronjobs.volumeMounts }}
               volumeMounts: {{- toYaml . | nindent 16 }}
               {{- end }}
-
 {{- end }}

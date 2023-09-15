@@ -10,6 +10,8 @@ Check AWS ALB lifecycle rule applied:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: example-app
+        app.mintel.com/application: example-app
+        app.mintel.com/component: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
         name: example-app
@@ -35,6 +37,8 @@ Check AWS ALB lifecycle rule applied:
             app.kubernetes.io/component: app
             app.kubernetes.io/managed-by: Helm
             app.kubernetes.io/name: example-app
+            app.mintel.com/application: example-app
+            app.mintel.com/component: example-app
             app.mintel.com/env: qa
             app.mintel.com/region: ${CLUSTER_REGION}
             name: example-app
@@ -91,6 +95,13 @@ Check AWS ALB lifecycle rule applied:
               resources:
                 limits: {}
                 requests: {}
+              securityContext:
+                allowPrivilegeEscalation: false
+                capabilities:
+                  drop:
+                    - ALL
+                runAsNonRoot: true
+                runAsUser: 1000
               startupProbe:
                 failureThreshold: 60
                 httpGet:
@@ -102,6 +113,7 @@ Check AWS ALB lifecycle rule applied:
             - name: image-pull-gitlab
             - name: image-pull-docker-hub
           securityContext:
+            runAsNonRoot: true
             runAsUser: 1000
           serviceAccountName: example-app
           terminationGracePeriodSeconds: 30
@@ -113,7 +125,6 @@ Check AWS ALB lifecycle rule applied:
               maxSkew: 1
               topologyKey: topology.kubernetes.io/zone
               whenUnsatisfiable: DoNotSchedule
-          volumes: null
 Check AWS ALB lifecycle rules applied with custom delay:
   1: |
     apiVersion: apps/v1
@@ -126,6 +137,8 @@ Check AWS ALB lifecycle rules applied with custom delay:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: example-app
+        app.mintel.com/application: example-app
+        app.mintel.com/component: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
         name: example-app
@@ -151,6 +164,8 @@ Check AWS ALB lifecycle rules applied with custom delay:
             app.kubernetes.io/component: app
             app.kubernetes.io/managed-by: Helm
             app.kubernetes.io/name: example-app
+            app.mintel.com/application: example-app
+            app.mintel.com/component: example-app
             app.mintel.com/env: qa
             app.mintel.com/region: ${CLUSTER_REGION}
             name: example-app
@@ -207,6 +222,13 @@ Check AWS ALB lifecycle rules applied with custom delay:
               resources:
                 limits: {}
                 requests: {}
+              securityContext:
+                allowPrivilegeEscalation: false
+                capabilities:
+                  drop:
+                    - ALL
+                runAsNonRoot: true
+                runAsUser: 1000
               startupProbe:
                 failureThreshold: 60
                 httpGet:
@@ -218,6 +240,7 @@ Check AWS ALB lifecycle rules applied with custom delay:
             - name: image-pull-gitlab
             - name: image-pull-docker-hub
           securityContext:
+            runAsNonRoot: true
             runAsUser: 1000
           serviceAccountName: example-app
           terminationGracePeriodSeconds: 30
@@ -229,7 +252,6 @@ Check AWS ALB lifecycle rules applied with custom delay:
               maxSkew: 1
               topologyKey: topology.kubernetes.io/zone
               whenUnsatisfiable: DoNotSchedule
-          volumes: null
 Check AWS ALB lifecycle rules are not applied when ALB disabled:
   1: |
     apiVersion: apps/v1
@@ -242,6 +264,8 @@ Check AWS ALB lifecycle rules are not applied when ALB disabled:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: example-app
+        app.mintel.com/application: example-app
+        app.mintel.com/component: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
         name: example-app
@@ -267,6 +291,8 @@ Check AWS ALB lifecycle rules are not applied when ALB disabled:
             app.kubernetes.io/component: app
             app.kubernetes.io/managed-by: Helm
             app.kubernetes.io/name: example-app
+            app.mintel.com/application: example-app
+            app.mintel.com/component: example-app
             app.mintel.com/env: qa
             app.mintel.com/region: ${CLUSTER_REGION}
             name: example-app
@@ -316,6 +342,13 @@ Check AWS ALB lifecycle rules are not applied when ALB disabled:
               resources:
                 limits: {}
                 requests: {}
+              securityContext:
+                allowPrivilegeEscalation: false
+                capabilities:
+                  drop:
+                    - ALL
+                runAsNonRoot: true
+                runAsUser: 1000
               startupProbe:
                 failureThreshold: 60
                 httpGet:
@@ -327,6 +360,7 @@ Check AWS ALB lifecycle rules are not applied when ALB disabled:
             - name: image-pull-gitlab
             - name: image-pull-docker-hub
           securityContext:
+            runAsNonRoot: true
             runAsUser: 1000
           serviceAccountName: example-app
           terminationGracePeriodSeconds: 30
@@ -338,7 +372,6 @@ Check AWS ALB lifecycle rules are not applied when ALB disabled:
               maxSkew: 1
               topologyKey: topology.kubernetes.io/zone
               whenUnsatisfiable: DoNotSchedule
-          volumes: null
 Check AWS ALB lifecycle rules are not applied when ALB enabled (but Ingress disabled):
   1: |
     apiVersion: apps/v1
@@ -351,6 +384,8 @@ Check AWS ALB lifecycle rules are not applied when ALB enabled (but Ingress disa
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: example-app
+        app.mintel.com/application: example-app
+        app.mintel.com/component: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
         name: example-app
@@ -375,6 +410,8 @@ Check AWS ALB lifecycle rules are not applied when ALB enabled (but Ingress disa
             app.kubernetes.io/component: app
             app.kubernetes.io/managed-by: Helm
             app.kubernetes.io/name: example-app
+            app.mintel.com/application: example-app
+            app.mintel.com/component: example-app
             app.mintel.com/env: qa
             app.mintel.com/region: ${CLUSTER_REGION}
             name: example-app
@@ -419,6 +456,13 @@ Check AWS ALB lifecycle rules are not applied when ALB enabled (but Ingress disa
               resources:
                 limits: {}
                 requests: {}
+              securityContext:
+                allowPrivilegeEscalation: false
+                capabilities:
+                  drop:
+                    - ALL
+                runAsNonRoot: true
+                runAsUser: 1000
               startupProbe:
                 failureThreshold: 60
                 httpGet:
@@ -430,6 +474,7 @@ Check AWS ALB lifecycle rules are not applied when ALB enabled (but Ingress disa
             - name: image-pull-gitlab
             - name: image-pull-docker-hub
           securityContext:
+            runAsNonRoot: true
             runAsUser: 1000
           serviceAccountName: example-app
           terminationGracePeriodSeconds: 30
@@ -441,7 +486,6 @@ Check AWS ALB lifecycle rules are not applied when ALB enabled (but Ingress disa
               maxSkew: 1
               topologyKey: topology.kubernetes.io/zone
               whenUnsatisfiable: DoNotSchedule
-          volumes: null
 Check lifecycle rules:
   1: |
     apiVersion: apps/v1
@@ -454,6 +498,8 @@ Check lifecycle rules:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: example-app
+        app.mintel.com/application: example-app
+        app.mintel.com/component: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
         name: example-app
@@ -478,6 +524,8 @@ Check lifecycle rules:
             app.kubernetes.io/component: app
             app.kubernetes.io/managed-by: Helm
             app.kubernetes.io/name: example-app
+            app.mintel.com/application: example-app
+            app.mintel.com/component: example-app
             app.mintel.com/env: qa
             app.mintel.com/region: ${CLUSTER_REGION}
             name: example-app
@@ -527,6 +575,13 @@ Check lifecycle rules:
               resources:
                 limits: {}
                 requests: {}
+              securityContext:
+                allowPrivilegeEscalation: false
+                capabilities:
+                  drop:
+                    - ALL
+                runAsNonRoot: true
+                runAsUser: 1000
               startupProbe:
                 failureThreshold: 60
                 httpGet:
@@ -538,6 +593,7 @@ Check lifecycle rules:
             - name: image-pull-gitlab
             - name: image-pull-docker-hub
           securityContext:
+            runAsNonRoot: true
             runAsUser: 1000
           serviceAccountName: example-app
           terminationGracePeriodSeconds: 30
@@ -549,4 +605,3 @@ Check lifecycle rules:
               maxSkew: 1
               topologyKey: topology.kubernetes.io/zone
               whenUnsatisfiable: DoNotSchedule
-          volumes: null

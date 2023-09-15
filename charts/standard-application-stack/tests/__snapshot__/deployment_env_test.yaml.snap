@@ -12,6 +12,8 @@ Check celery does not pull in `main.env` values:
         app.kubernetes.io/component: celery
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: example-app-celery
+        app.mintel.com/application: example-app
+        app.mintel.com/component: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
         name: example-app-celery
@@ -35,6 +37,8 @@ Check celery does not pull in `main.env` values:
             app.kubernetes.io/component: celery
             app.kubernetes.io/managed-by: Helm
             app.kubernetes.io/name: example-app-celery
+            app.mintel.com/application: example-app
+            app.mintel.com/component: example-app
             app.mintel.com/env: qa
             app.mintel.com/region: ${CLUSTER_REGION}
             name: example-app-celery
@@ -67,10 +71,18 @@ Check celery does not pull in `main.env` values:
               resources:
                 limits: {}
                 requests: {}
+              securityContext:
+                allowPrivilegeEscalation: false
+                capabilities:
+                  drop:
+                    - ALL
+                runAsNonRoot: true
+                runAsUser: 1000
           imagePullSecrets:
             - name: image-pull-gitlab
             - name: image-pull-docker-hub
           securityContext:
+            runAsNonRoot: true
             runAsUser: 1000
           serviceAccountName: example-app
           topologySpreadConstraints:
@@ -93,6 +105,8 @@ Check default env behavior:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: example-app
+        app.mintel.com/application: example-app
+        app.mintel.com/component: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
         name: example-app
@@ -117,6 +131,8 @@ Check default env behavior:
             app.kubernetes.io/component: app
             app.kubernetes.io/managed-by: Helm
             app.kubernetes.io/name: example-app
+            app.mintel.com/application: example-app
+            app.mintel.com/component: example-app
             app.mintel.com/env: qa
             app.mintel.com/region: ${CLUSTER_REGION}
             name: example-app
@@ -163,6 +179,13 @@ Check default env behavior:
               resources:
                 limits: {}
                 requests: {}
+              securityContext:
+                allowPrivilegeEscalation: false
+                capabilities:
+                  drop:
+                    - ALL
+                runAsNonRoot: true
+                runAsUser: 1000
               startupProbe:
                 failureThreshold: 60
                 httpGet:
@@ -174,6 +197,7 @@ Check default env behavior:
             - name: image-pull-gitlab
             - name: image-pull-docker-hub
           securityContext:
+            runAsNonRoot: true
             runAsUser: 1000
           serviceAccountName: example-app
           terminationGracePeriodSeconds: 30
@@ -185,7 +209,6 @@ Check default env behavior:
               maxSkew: 1
               topologyKey: topology.kubernetes.io/zone
               whenUnsatisfiable: DoNotSchedule
-          volumes: null
 Check main container combines default env and `main.env` values:
   1: |
     apiVersion: apps/v1
@@ -198,6 +221,8 @@ Check main container combines default env and `main.env` values:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: example-app
+        app.mintel.com/application: example-app
+        app.mintel.com/component: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
         name: example-app
@@ -222,6 +247,8 @@ Check main container combines default env and `main.env` values:
             app.kubernetes.io/component: app
             app.kubernetes.io/managed-by: Helm
             app.kubernetes.io/name: example-app
+            app.mintel.com/application: example-app
+            app.mintel.com/component: example-app
             app.mintel.com/env: qa
             app.mintel.com/region: ${CLUSTER_REGION}
             name: example-app
@@ -270,6 +297,13 @@ Check main container combines default env and `main.env` values:
               resources:
                 limits: {}
                 requests: {}
+              securityContext:
+                allowPrivilegeEscalation: false
+                capabilities:
+                  drop:
+                    - ALL
+                runAsNonRoot: true
+                runAsUser: 1000
               startupProbe:
                 failureThreshold: 60
                 httpGet:
@@ -281,6 +315,7 @@ Check main container combines default env and `main.env` values:
             - name: image-pull-gitlab
             - name: image-pull-docker-hub
           securityContext:
+            runAsNonRoot: true
             runAsUser: 1000
           serviceAccountName: example-app
           terminationGracePeriodSeconds: 30
@@ -292,4 +327,3 @@ Check main container combines default env and `main.env` values:
               maxSkew: 1
               topologyKey: topology.kubernetes.io/zone
               whenUnsatisfiable: DoNotSchedule
-          volumes: null

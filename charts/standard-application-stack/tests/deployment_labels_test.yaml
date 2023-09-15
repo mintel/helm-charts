@@ -1,0 +1,49 @@
+suite: Test Deployment Labels
+release:
+  namespace: test-namespace
+tests:
+  - it: Check default label behavior
+    template: deployment.yaml
+    set:
+      global.name: app
+      global.owner: sre
+      global.application: application-name
+      global.component: component-name
+      global.clusterEnv: qa
+    asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
+      - equal:
+          path: metadata.name
+          value: app
+      - equal:
+          path: metadata.labels["app.kubernetes.io/name"]
+          value: app
+      - equal:
+          path: metadata.labels["app.mintel.com/owner"]
+          value: sre
+      - equal:
+          path: metadata.labels["app.mintel.com/application"]
+          value: application-name
+      - equal:
+          path: metadata.labels["app.mintel.com/component"]
+          value: component-name
+  - it: Check empty application and component labels both default to name
+    template: deployment.yaml
+    set:
+      global.name: app
+      global.owner: sre
+      global.clusterEnv: qa
+    asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
+      - equal:
+          path: metadata.name
+          value: app
+      - equal:
+          path: metadata.labels["app.kubernetes.io/name"]
+          value: app
+      - equal:
+          path: metadata.labels["app.mintel.com/application"]
+          value: app
+      - equal:
+          path: metadata.labels["app.mintel.com/application"]
+          value: app

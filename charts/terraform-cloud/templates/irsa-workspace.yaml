@@ -9,6 +9,8 @@
   {{- $moduleVersion := $irsa.terraform.module.version }}
   {{- $tfVersion := $irsa.terraform.terraformVersion }}
   {{- $irsaConfig := $irsa.terraform.vars }}
+  {{- $notifications := $irsa.terraform.notifications }}
+  {{- $defaultTags := dict "Owner" $global.owner "Project" $global.partOf "Application" ($global.application | default $global.name) "Component" ($global.component | default $global.name) }}
   {{- if not (hasKey $irsaConfig "name") }}
     {{- $_ := set $irsaConfig "name" (.Values.irsa.nameOverride | default $global.name) }}
   {{- end }}
@@ -22,8 +24,8 @@
     {{- $_ := set $irsaConfig "eks_cluster_name" $global.clusterName }}
   {{- end }}
   {{- if not (hasKey $irsaConfig "tags") }}
-    {{- $_ := set $irsaConfig "tags" (dict "key" "tags" "value" (printf "{\n  Owner       = \"%s\"\n  Project     = \"%s\"\n  Application = \"%s\"\n}" $global.owner $global.partOf $global.name ) "hcl" true) }}
-  {{- end }}
+    {{- $_ := set $irsaConfig "tags" (dict "key" "tags" "value" ( printf "{\n%s}" (include "mintel_common.terraform_cloud.dict_to_hcl" $defaultTags )) "hcl" true) }}
+  {{ end }}
   {{- if not (hasKey $irsaConfig "tfcloud_agent") }}
     {{- $_ := set $irsaConfig "tfcloud_agent" "true" }}
   {{- end }}
@@ -45,5 +47,5 @@
     {{- $_ := set $irsaConfig "k8s_namespace" $.Release.Namespace }}
   {{- end }}
   # Create the CRD
-  {{- include "mintel_common.terraform_cloud.workspace" (list $ . $irsaConfig "irsa" $moduleSource $moduleVersion $tfVersion $irsa) }}
+  {{- include "mintel_common.terraform_cloud.workspace" (list $ . $irsaConfig "irsa" $moduleSource $moduleVersion $tfVersion $irsa $notifications) }}
 {{- end }}

@@ -1,21 +1,22 @@
-Check MariaDB envfrom secretRef is present:
+Check default label behavior:
   1: |
     apiVersion: apps/v1
     kind: Deployment
     metadata:
       annotations:
         app.mintel.com/placeholder: placeholder
-        secret.reloader.stakater.com/reload: test-app-mariadb
+        secret.reloader.stakater.com/reload: app-app
       labels:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
-        app.kubernetes.io/name: test-app
-        app.mintel.com/application: test-app
-        app.mintel.com/component: test-app
+        app.kubernetes.io/name: app
+        app.mintel.com/application: application-name
+        app.mintel.com/component: component-name
         app.mintel.com/env: qa
+        app.mintel.com/owner: sre
         app.mintel.com/region: ${CLUSTER_REGION}
-        name: test-app
-      name: test-app
+        name: app
+      name: app
       namespace: test-namespace
     spec:
       minReadySeconds: 10
@@ -23,7 +24,7 @@ Check MariaDB envfrom secretRef is present:
       selector:
         matchLabels:
           app.kubernetes.io/component: app
-          app.kubernetes.io/name: test-app
+          app.kubernetes.io/name: app
       strategy:
         rollingUpdate:
           maxSurge: 15%
@@ -35,12 +36,13 @@ Check MariaDB envfrom secretRef is present:
           labels:
             app.kubernetes.io/component: app
             app.kubernetes.io/managed-by: Helm
-            app.kubernetes.io/name: test-app
-            app.mintel.com/application: test-app
-            app.mintel.com/component: test-app
+            app.kubernetes.io/name: app
+            app.mintel.com/application: application-name
+            app.mintel.com/component: component-name
             app.mintel.com/env: qa
+            app.mintel.com/owner: sre
             app.mintel.com/region: ${CLUSTER_REGION}
-            name: test-app
+            name: app
         spec:
           containers:
             - command:
@@ -56,7 +58,7 @@ Check MariaDB envfrom secretRef is present:
                   value: kubernetes
               envFrom:
                 - secretRef:
-                    name: test-app-mariadb
+                    name: app-app
               image: registry.gitlab.com/test:v0.1.0
               imagePullPolicy: IfNotPresent
               livenessProbe:
@@ -102,146 +104,35 @@ Check MariaDB envfrom secretRef is present:
           securityContext:
             runAsNonRoot: true
             runAsUser: 1000
-          serviceAccountName: test-app
+          serviceAccountName: app
           terminationGracePeriodSeconds: 30
           topologySpreadConstraints:
             - labelSelector:
                 matchLabels:
                   app.kubernetes.io/component: app
-                  app.kubernetes.io/name: test-app
+                  app.kubernetes.io/name: app
               maxSkew: 1
               topologyKey: topology.kubernetes.io/zone
               whenUnsatisfiable: DoNotSchedule
-Check MariaDB envfrom secretRef is present for local environment:
+Check empty application and component labels both default to name:
   1: |
     apiVersion: apps/v1
     kind: Deployment
     metadata:
       annotations:
         app.mintel.com/placeholder: placeholder
-        secret.reloader.stakater.com/reload: test-app-mariadb
+        secret.reloader.stakater.com/reload: app-app
       labels:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
-        app.kubernetes.io/name: test-app
-        app.mintel.com/application: test-app
-        app.mintel.com/component: test-app
-        app.mintel.com/env: local
-        app.mintel.com/region: local
-        name: test-app
-      name: test-app
-      namespace: test-namespace
-    spec:
-      minReadySeconds: 10
-      replicas: 2
-      selector:
-        matchLabels:
-          app.kubernetes.io/component: app
-          app.kubernetes.io/name: test-app
-      strategy:
-        rollingUpdate:
-          maxSurge: 15%
-          maxUnavailable: 10%
-        type: RollingUpdate
-      template:
-        metadata:
-          annotations: null
-          labels:
-            app.kubernetes.io/component: app
-            app.kubernetes.io/managed-by: Helm
-            app.kubernetes.io/name: test-app
-            app.mintel.com/application: test-app
-            app.mintel.com/component: test-app
-            app.mintel.com/env: local
-            app.mintel.com/region: local
-            name: test-app
-        spec:
-          containers:
-            - command:
-                - /app/docker-entrypoint.sh
-              env:
-                - name: KUBERNETES_POD_NAMESPACE
-                  valueFrom:
-                    fieldRef:
-                      fieldPath: metadata.namespace
-                - name: INIT_DB
-                  value: "1"
-                - name: SENTRY_DONT_SEND_EVENTS
-                  value: "1"
-                - name: DEBUG
-                  value: "1"
-                - name: APP_ENVIRONMENT
-                  value: local
-                - name: RUNTIME_ENVIRONMENT
-                  value: kubernetes
-              envFrom:
-                - secretRef:
-                    name: test-app-mariadb
-              image: k3d-default.localhost:5000/test:v0.1.0
-              imagePullPolicy: IfNotPresent
-              livenessProbe:
-                httpGet:
-                  path: /healthz
-                  port: http
-                  scheme: HTTP
-                initialDelaySeconds: 0
-                periodSeconds: 10
-                timeoutSeconds: 1
-              name: main
-              ports:
-                - containerPort: 8000
-                  name: http
-              readinessProbe:
-                httpGet:
-                  path: /readiness
-                  port: http
-                  scheme: HTTP
-                initialDelaySeconds: 0
-                periodSeconds: 10
-                timeoutSeconds: 1
-              resources:
-                limits: {}
-                requests: {}
-              securityContext:
-                allowPrivilegeEscalation: false
-                capabilities:
-                  drop:
-                    - ALL
-                runAsNonRoot: true
-                runAsUser: 1000
-              startupProbe:
-                failureThreshold: 60
-                httpGet:
-                  path: /healthz
-                  port: http
-                  scheme: HTTP
-                periodSeconds: 5
-          imagePullSecrets:
-            - name: image-pull-gitlab
-            - name: image-pull-docker-hub
-          securityContext:
-            runAsNonRoot: true
-            runAsUser: 1000
-          serviceAccountName: test-app
-          terminationGracePeriodSeconds: 30
-Check MariaDB secretName Override:
-  1: |
-    apiVersion: apps/v1
-    kind: Deployment
-    metadata:
-      annotations:
-        app.mintel.com/placeholder: placeholder
-        secret.reloader.stakater.com/reload: overrideName
-      labels:
-        app.kubernetes.io/component: app
-        app.kubernetes.io/managed-by: Helm
-        app.kubernetes.io/name: test-app
-        app.mintel.com/application: test-app
-        app.mintel.com/component: test-app
+        app.kubernetes.io/name: app
+        app.mintel.com/application: app
+        app.mintel.com/component: app
         app.mintel.com/env: qa
+        app.mintel.com/owner: sre
         app.mintel.com/region: ${CLUSTER_REGION}
-        name: test-app
-      name: test-app
+        name: app
+      name: app
       namespace: test-namespace
     spec:
       minReadySeconds: 10
@@ -249,7 +140,7 @@ Check MariaDB secretName Override:
       selector:
         matchLabels:
           app.kubernetes.io/component: app
-          app.kubernetes.io/name: test-app
+          app.kubernetes.io/name: app
       strategy:
         rollingUpdate:
           maxSurge: 15%
@@ -261,12 +152,13 @@ Check MariaDB secretName Override:
           labels:
             app.kubernetes.io/component: app
             app.kubernetes.io/managed-by: Helm
-            app.kubernetes.io/name: test-app
-            app.mintel.com/application: test-app
-            app.mintel.com/component: test-app
+            app.kubernetes.io/name: app
+            app.mintel.com/application: app
+            app.mintel.com/component: app
             app.mintel.com/env: qa
+            app.mintel.com/owner: sre
             app.mintel.com/region: ${CLUSTER_REGION}
-            name: test-app
+            name: app
         spec:
           containers:
             - command:
@@ -282,7 +174,7 @@ Check MariaDB secretName Override:
                   value: kubernetes
               envFrom:
                 - secretRef:
-                    name: overrideName
+                    name: app-app
               image: registry.gitlab.com/test:v0.1.0
               imagePullPolicy: IfNotPresent
               livenessProbe:
@@ -328,13 +220,13 @@ Check MariaDB secretName Override:
           securityContext:
             runAsNonRoot: true
             runAsUser: 1000
-          serviceAccountName: test-app
+          serviceAccountName: app
           terminationGracePeriodSeconds: 30
           topologySpreadConstraints:
             - labelSelector:
                 matchLabels:
                   app.kubernetes.io/component: app
-                  app.kubernetes.io/name: test-app
+                  app.kubernetes.io/name: app
               maxSkew: 1
               topologyKey: topology.kubernetes.io/zone
               whenUnsatisfiable: DoNotSchedule

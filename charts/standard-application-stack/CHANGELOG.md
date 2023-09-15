@@ -17,6 +17,58 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed issue where setting `includeBasePodSecurityContext` to `true` and adding values to `podSecurityContext` would
   result in a duplicate `securityContext` key
 
+## [v5.13.0] - 2023-08-22
+### Changed
+- Update `component` reporting label to default to application name (`global.name`)
+
+## [v5.12.0] - 2023-08-21
+### Added
+- Added support for new reporting labels `application` and `component`
+
+## [v5.11.3] - 2023-08-03
+### Fixed
+- Bugfix for py-dba when rds secret name is overridden
+
+## [v5.11.2] - 2023-08-02
+### Changed
+- bump `py-dba` version to v0.1.3
+
+## [v5.11.1] - 2023-08-02
+### Changed
+- bump `py-dba` version to v0.1.2
+
+## [v5.11.0] - 2023-07-31
+### Added
+- Added `extraUsers` for postgresql
+
+## [v5.10.0] - 2023-07-26
+### Added
+- Added `extraUsers` for mariadb
+
+## [v5.9.4] - 2023-07-26
+### Fixed
+- Updated README.md
+
+## [v5.9.3] - 2023-07-24
+### Fixed
+- Add missing securityContext to some sidecar containers
+
+## [v5.9.2] - 2023-07-24
+### Removed
+- Remove the `NET_BIND_SERVICE` capability from the default securityContext
+
+## [v5.9.1] - 2023-07-21
+### Fixed
+- securityContext does not have an apparmor field
+
+## [v5.9.0] - 2023-07-20
+### Added
+- Add pod and container securityContexts
+
+## [v5.8.0] - 2023-06-29
+### Added
+- Allow cronjobs to specify timezone
+
 ## [v5.7.0] - 2023-06-28
 ### Removed
 - Remove `helm.sh/chart` annotation from all remaining manifests.

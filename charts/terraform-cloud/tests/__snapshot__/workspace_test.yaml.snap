@@ -1,3 +1,86 @@
+Dev S3 module name label override:
+  1: |
+    apiVersion: app.terraform.io/v1alpha1
+    kind: Workspace
+    metadata:
+      annotations:
+        app.mintel.com/altManifestFileSuffix: mntl-test-app-s3
+        app.mintel.com/placeholder: placeholder
+        app.mintel.com/terraform-allow-destroy: "true"
+        app.mintel.com/terraform-cloud-tags: env:dev,owner:sre,mod:s3
+        app.mintel.com/terraform-owner: sre
+        argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+        argocd.argoproj.io/sync-wave: "-40"
+      labels:
+        app.kubernetes.io/name: mntl-test-app-s3
+        app.mintel.com/env: dev
+        app.mintel.com/owner: sre
+        app.mintel.com/region: eu-west-1
+        name: mntl-test-app-s3
+      name: dev-eu-west-1-cluster1-test-namespace-mntl-test-app-s3
+      namespace: test-namespace
+    spec:
+      agentPoolID: ""
+      module:
+        source: app.terraform.io/Mintel/private-s3-bucket/aws
+        version: 1.4.1
+      omitNamespacePrefix: true
+      organization: Mintel
+      secretsMountPath: /tmp/secrets
+      sshKeyID: mintel-ssh
+      terraformVersion: 1.0.7
+      variables:
+        - environmentVariable: false
+          hcl: false
+          key: aws_account_name
+          sensitive: false
+          value: dev
+        - environmentVariable: false
+          hcl: false
+          key: aws_region
+          sensitive: false
+          value: eu-west-1
+        - environmentVariable: false
+          hcl: false
+          key: eks_cluster_name
+          sensitive: false
+          value: cluster1
+        - environmentVariable: false
+          hcl: false
+          key: enable_versioning
+          sensitive: false
+          value: "false"
+        - environmentVariable: false
+          hcl: false
+          key: name
+          sensitive: false
+          value: mntl-test-app
+        - environmentVariable: false
+          hcl: false
+          key: output_secret_name
+          sensitive: false
+          value: test-namespace/mntl-test-app/s3
+        - environmentVariable: false
+          hcl: true
+          key: secret_tags
+          sensitive: false
+          value: '{access-project = "test-namespace-ops"}'
+        - environmentVariable: false
+          hcl: true
+          key: tags
+          sensitive: false
+          value: |-
+            {
+              Application = "mntl-test-app"
+              Component = "mntl-test-app"
+              Owner = "sre"
+              Project = "test-project"
+            }
+        - environmentVariable: false
+          hcl: false
+          key: tfcloud_agent
+          sensitive: false
+          value: "true"
 Dev S3 module workspace:
   1: |
     apiVersion: app.terraform.io/v1alpha1
@@ -72,6 +155,7 @@ Dev S3 module workspace:
           value: |-
             {
               Application = "test-app"
+              Component = "test-app"
               Owner = "sre"
               Project = "test-project"
             }
@@ -149,6 +233,7 @@ Dev S3 module workspace - tags:
           value: |-
             {
               Application = "test-app"
+              Component = "test-app"
               ExtraTagOne = "testTagValueOne"
               ExtraTagTwo = "testTagValueTwo"
               MintelEventBus = "true"
@@ -234,6 +319,90 @@ Dev S3 module workspace adds correct env override:
           value: |-
             {
               Application = "mntl-test-app"
+              Component = "mntl-test-app"
+              Owner = "sre"
+              Project = "test-project"
+            }
+        - environmentVariable: false
+          hcl: false
+          key: tfcloud_agent
+          sensitive: false
+          value: "true"
+Dev S3 module workspace ignores env override when added explicitly:
+  1: |
+    apiVersion: app.terraform.io/v1alpha1
+    kind: Workspace
+    metadata:
+      annotations:
+        app.mintel.com/altManifestFileSuffix: mntl-test-app-s3
+        app.mintel.com/placeholder: placeholder
+        app.mintel.com/terraform-allow-destroy: "true"
+        app.mintel.com/terraform-cloud-tags: env:dev,owner:sre,mod:s3
+        app.mintel.com/terraform-owner: sre
+        argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+        argocd.argoproj.io/sync-wave: "-40"
+      labels:
+        app.kubernetes.io/name: mntl-test-app-s3
+        app.mintel.com/env: dev
+        app.mintel.com/owner: sre
+        app.mintel.com/region: eu-west-1
+        name: mntl-test-app-s3
+      name: dev-eu-west-1-cluster1-test-namespace-mntl-test-app-s3
+      namespace: test-namespace
+    spec:
+      agentPoolID: ""
+      module:
+        source: app.terraform.io/Mintel/private-s3-bucket/aws
+        version: 1.4.1
+      omitNamespacePrefix: true
+      organization: Mintel
+      secretsMountPath: /tmp/secrets
+      sshKeyID: mintel-ssh
+      terraformVersion: 1.0.7
+      variables:
+        - environmentVariable: false
+          hcl: false
+          key: aws_account_name
+          sensitive: false
+          value: dev
+        - environmentVariable: false
+          hcl: false
+          key: aws_region
+          sensitive: false
+          value: eu-west-1
+        - environmentVariable: false
+          hcl: false
+          key: eks_cluster_name
+          sensitive: false
+          value: cluster1
+        - environmentVariable: false
+          hcl: false
+          key: enable_versioning
+          sensitive: false
+          value: "true"
+        - environmentVariable: false
+          hcl: false
+          key: name
+          sensitive: false
+          value: mntl-test-app
+        - environmentVariable: false
+          hcl: false
+          key: output_secret_name
+          sensitive: false
+          value: test-namespace/mntl-test-app/s3
+        - environmentVariable: false
+          hcl: true
+          key: secret_tags
+          sensitive: false
+          value: '{access-project = "test-namespace-ops"}'
+        - environmentVariable: false
+          hcl: true
+          key: tags
+          sensitive: false
+          value: |-
+            {
+              Application = "mntl-test-app"
+              Component = "mntl-test-app"
               Owner = "sre"
               Project = "test-project"
             }
@@ -316,6 +485,7 @@ Dev S3 module workspace name does not repeat mntl-prefix:
           value: |-
             {
               Application = "mntl-test-app"
+              Component = "mntl-test-app"
               Owner = "sre"
               Project = "test-project"
             }
@@ -398,6 +568,7 @@ Dev S3 module workspace name override:
           value: |-
             {
               Application = "mntl-test-app"
+              Component = "mntl-test-app"
               Owner = "sre"
               Project = "test-project"
             }
@@ -480,6 +651,7 @@ Dev S3 module workspace with default (0) syncWave:
           value: |-
             {
               Application = "test-app"
+              Component = "test-app"
               Owner = "sre"
               Project = "test-project"
             }
@@ -562,6 +734,7 @@ Dev S3 module workspace with modified syncWave:
           value: |-
             {
               Application = "test-app"
+              Component = "test-app"
               Owner = "sre"
               Project = "test-project"
             }
@@ -644,6 +817,7 @@ Dev S3 module workspace with multiple instances:
           value: |-
             {
               Application = "test-app"
+              Component = "test-app"
               Owner = "sre"
               Project = "test-project"
             }
@@ -725,6 +899,7 @@ Dev S3 module workspace with multiple instances:
           value: |-
             {
               Application = "test-app"
+              Component = "test-app"
               Owner = "sre"
               Project = "test-project"
             }
@@ -802,6 +977,7 @@ Dev S3 module workspace with multiple instances - tags:
           value: |-
             {
               Application = "test-app"
+              Component = "test-app"
               ExtraTagOne = "testTagValueOne"
               MintelEventBus = "true"
               Owner = "sre"
@@ -880,6 +1056,7 @@ Dev S3 module workspace with multiple instances - tags:
           value: |-
             {
               Application = "test-app"
+              Component = "test-app"
               ExtraTagOne = "testTagValueOne"
               ExtraTagTwo = "testTagValueTwo"
               MintelEventBus = "true"
@@ -965,6 +1142,7 @@ Dev S3 module workspace with multiple instances and syncWave overrides:
           value: |-
             {
               Application = "test-app"
+              Component = "test-app"
               Owner = "sre"
               Project = "test-project"
             }
@@ -1046,6 +1224,7 @@ Dev S3 module workspace with multiple instances and syncWave overrides:
           value: |-
             {
               Application = "test-app"
+              Component = "test-app"
               Owner = "sre"
               Project = "test-project"
             }
@@ -1123,6 +1302,7 @@ Test workspace allow destroy env:
           value: |-
             {
               Application = "test-app"
+              Component = "test-app"
               Owner = "sre"
               Project = "test-project"
             }
@@ -1205,6 +1385,7 @@ Test workspace extra annotations:
           value: |-
             {
               Application = "test-app"
+              Component = "test-app"
               Owner = "sre"
               Project = "test-project"
             }
@@ -1287,6 +1468,7 @@ Test workspace extra annotations override:
           value: |-
             {
               Application = "test-app"
+              Component = "test-app"
               Owner = "sre"
               Project = "test-project"
             }

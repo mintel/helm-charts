@@ -9,6 +9,8 @@ Check CronJob Default Overrides:
         app.kubernetes.io/component: daily
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: example-app-daily
+        app.mintel.com/application: example-app
+        app.mintel.com/component: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
         name: example-app-daily
@@ -24,6 +26,8 @@ Check CronJob Default Overrides:
                 app.kubernetes.io/component: daily
                 app.kubernetes.io/managed-by: Helm
                 app.kubernetes.io/name: example-app-daily
+                app.mintel.com/application: example-app
+                app.mintel.com/component: example-app
                 app.mintel.com/env: qa
                 app.mintel.com/region: ${CLUSTER_REGION}
                 name: example-app-daily
@@ -47,10 +51,20 @@ Check CronJob Default Overrides:
                   image: registry.gitlab.com/test:v0.1.0
                   imagePullPolicy: IfNotPresent
                   name: main
+                  securityContext:
+                    allowPrivilegeEscalation: false
+                    capabilities:
+                      drop:
+                        - ALL
+                    runAsNonRoot: true
+                    runAsUser: 1000
               imagePullSecrets:
                 - name: image-pull-gitlab
                 - name: image-pull-docker-hub
               restartPolicy: OnFailure
+              securityContext:
+                runAsNonRoot: true
+                runAsUser: 1000
               serviceAccountName: example-app
           ttlSecondsAfterFinished: 120
       schedule: 0 1 * * *
@@ -66,6 +80,8 @@ Check CronJob Defaults:
         app.kubernetes.io/component: daily
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: example-app-daily
+        app.mintel.com/application: example-app
+        app.mintel.com/component: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
         name: example-app-daily
@@ -81,6 +97,8 @@ Check CronJob Defaults:
                 app.kubernetes.io/component: daily
                 app.kubernetes.io/managed-by: Helm
                 app.kubernetes.io/name: example-app-daily
+                app.mintel.com/application: example-app
+                app.mintel.com/component: example-app
                 app.mintel.com/env: qa
                 app.mintel.com/region: ${CLUSTER_REGION}
                 name: example-app-daily
@@ -104,10 +122,20 @@ Check CronJob Defaults:
                   image: registry.gitlab.com/test:v0.1.0
                   imagePullPolicy: IfNotPresent
                   name: main
+                  securityContext:
+                    allowPrivilegeEscalation: false
+                    capabilities:
+                      drop:
+                        - ALL
+                    runAsNonRoot: true
+                    runAsUser: 1000
               imagePullSecrets:
                 - name: image-pull-gitlab
                 - name: image-pull-docker-hub
               restartPolicy: Never
+              securityContext:
+                runAsNonRoot: true
+                runAsUser: 1000
               serviceAccountName: example-app
           ttlSecondsAfterFinished: 60
       schedule: 0 0 * * *
@@ -123,6 +151,8 @@ Check CronJob Job Overrides:
         app.kubernetes.io/component: daily
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: example-app-daily
+        app.mintel.com/application: example-app
+        app.mintel.com/component: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
         name: example-app-daily
@@ -138,6 +168,8 @@ Check CronJob Job Overrides:
                 app.kubernetes.io/component: daily
                 app.kubernetes.io/managed-by: Helm
                 app.kubernetes.io/name: example-app-daily
+                app.mintel.com/application: example-app
+                app.mintel.com/component: example-app
                 app.mintel.com/env: qa
                 app.mintel.com/region: ${CLUSTER_REGION}
                 name: example-app-daily
@@ -161,10 +193,20 @@ Check CronJob Job Overrides:
                   image: registry.gitlab.com/test:v0.1.0
                   imagePullPolicy: IfNotPresent
                   name: main
+                  securityContext:
+                    allowPrivilegeEscalation: false
+                    capabilities:
+                      drop:
+                        - ALL
+                    runAsNonRoot: true
+                    runAsUser: 1000
               imagePullSecrets:
                 - name: image-pull-gitlab
                 - name: image-pull-docker-hub
               restartPolicy: OnFailure
+              securityContext:
+                runAsNonRoot: true
+                runAsUser: 1000
               serviceAccountName: example-app
           ttlSecondsAfterFinished: 120
       schedule: 0 1 * * *
@@ -180,6 +222,8 @@ Check CronJob ttlSecondsAfterFinished zero value:
         app.kubernetes.io/component: daily
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: example-app-daily
+        app.mintel.com/application: example-app
+        app.mintel.com/component: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
         name: example-app-daily
@@ -195,6 +239,8 @@ Check CronJob ttlSecondsAfterFinished zero value:
                 app.kubernetes.io/component: daily
                 app.kubernetes.io/managed-by: Helm
                 app.kubernetes.io/name: example-app-daily
+                app.mintel.com/application: example-app
+                app.mintel.com/component: example-app
                 app.mintel.com/env: qa
                 app.mintel.com/region: ${CLUSTER_REGION}
                 name: example-app-daily
@@ -218,10 +264,92 @@ Check CronJob ttlSecondsAfterFinished zero value:
                   image: registry.gitlab.com/test:v0.1.0
                   imagePullPolicy: IfNotPresent
                   name: main
+                  securityContext:
+                    allowPrivilegeEscalation: false
+                    capabilities:
+                      drop:
+                        - ALL
+                    runAsNonRoot: true
+                    runAsUser: 1000
               imagePullSecrets:
                 - name: image-pull-gitlab
                 - name: image-pull-docker-hub
               restartPolicy: Never
+              securityContext:
+                runAsNonRoot: true
+                runAsUser: 1000
               serviceAccountName: example-app
       schedule: 0 1 * * *
       suspend: false
+CronJob can have a timezone:
+  1: |
+    apiVersion: batch/v1
+    kind: CronJob
+    metadata:
+      annotations:
+        app.mintel.com/placeholder: placeholder
+      labels:
+        app.kubernetes.io/component: daily
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: example-app-daily
+        app.mintel.com/application: example-app
+        app.mintel.com/component: example-app
+        app.mintel.com/env: qa
+        app.mintel.com/region: ${CLUSTER_REGION}
+        name: example-app-daily
+      name: example-app-daily
+      namespace: test-namespace
+    spec:
+      concurrencyPolicy: Forbid
+      jobTemplate:
+        spec:
+          template:
+            metadata:
+              labels:
+                app.kubernetes.io/component: daily
+                app.kubernetes.io/managed-by: Helm
+                app.kubernetes.io/name: example-app-daily
+                app.mintel.com/application: example-app
+                app.mintel.com/component: example-app
+                app.mintel.com/env: qa
+                app.mintel.com/region: ${CLUSTER_REGION}
+                name: example-app-daily
+            spec:
+              containers:
+                - args:
+                    - -c
+                    - /app/docker-entrypoint.sh
+                  command:
+                    - /bin/sh
+                  env:
+                    - name: KUBERNETES_POD_NAMESPACE
+                      valueFrom:
+                        fieldRef:
+                          fieldPath: metadata.namespace
+                    - name: APP_ENVIRONMENT
+                      value: qa
+                    - name: RUNTIME_ENVIRONMENT
+                      value: kubernetes
+                  envFrom: null
+                  image: registry.gitlab.com/test:v0.1.0
+                  imagePullPolicy: IfNotPresent
+                  name: main
+                  securityContext:
+                    allowPrivilegeEscalation: false
+                    capabilities:
+                      drop:
+                        - ALL
+                    runAsNonRoot: true
+                    runAsUser: 1000
+              imagePullSecrets:
+                - name: image-pull-gitlab
+                - name: image-pull-docker-hub
+              restartPolicy: Never
+              securityContext:
+                runAsNonRoot: true
+                runAsUser: 1000
+              serviceAccountName: example-app
+          ttlSecondsAfterFinished: 60
+      schedule: 0 1 * * *
+      suspend: false
+      timeZone: America/Chicago

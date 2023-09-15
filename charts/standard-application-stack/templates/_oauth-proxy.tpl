@@ -79,5 +79,8 @@
       cpu: 100m
       memory: 64Mi
     {{- end }}
+  {{- with .proxiedService.oauthProxy.securityContext | default $.Values.securityContext }}
+  securityContext: {{- toYaml . | nindent 4 }}
+  {{- end }}
 {{- end }}
 {{- end -}}

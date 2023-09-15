@@ -87,9 +87,10 @@ tests:
             sensitive: false
             value: |-
                 {
-                  Owner       = "sre"
-                  Project     = "test-project"
                   Application = "test-app"
+                  Component = "test-app"
+                  Owner = "sre"
+                  Project = "test-project"
                 }
   - it: IRSA created explicitly
     set:

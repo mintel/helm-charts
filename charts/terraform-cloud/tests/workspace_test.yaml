@@ -14,11 +14,11 @@ tests:
       global.partOf: test-project
       s3:
         enabled: true
-      asserts:
-        - matchSnapshot: {} # Check for regressions and unexpected changes.
-        - equal:
-            path: metadata.labels.name
-            value: mntl-test-app-s3
+    asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
+      - equal:
+          path: metadata.labels.name
+          value: mntl-test-app-s3
   - it: Dev S3 module workspace name override
     set:
       global.name: mntl-test-app
@@ -72,16 +72,16 @@ tests:
         terraform:
           defaultVars:
             enable_versioning: true
-      asserts:
-        - matchSnapshot: {} # Check for regressions and unexpected changes.
-        - contains:
-            path: spec.variables
-            content:
-              environmentVariable: false
-              hcl: false
-              key: enable_versioning
-              sensitive: false
-              value: "true"
+    asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
+      - contains:
+          path: spec.variables
+          content:
+            environmentVariable: false
+            hcl: false
+            key: enable_versioning
+            sensitive: false
+            value: "true"
   - it: Dev S3 module workspace adds correct env override
     set:
       global.name: mntl-test-app
@@ -195,11 +195,12 @@ tests:
             key: tags
             sensitive: false
             value: |-
-                {
-                  Application = "test-app"
-                  Owner = "sre"
-                  Project = "test-project"
-                }
+              {
+                Application = "test-app"
+                Component = "test-app"
+                Owner = "sre"
+                Project = "test-project"
+              }
   - it: Test workspace extra annotations
     set:
       global.name: test-app
@@ -409,12 +410,10 @@ tests:
           enabled: true
         terraform:
           instances:
-            test-sqs: {
-              tags: {
-                ExtraTagOne: "testTagValueOne",
+            test-sqs:
+              tags:
+                ExtraTagOne: "testTagValueOne"
                 ExtraTagTwo: "testTagValueTwo"
-              }
-            }
     asserts:
       - matchSnapshot: {} # Check for regressions and unexpected changes.
       - contains:
@@ -427,6 +426,7 @@ tests:
             value: |-
               {
                 Application = "test-app"
+                Component = "test-app"
                 ExtraTagOne = "testTagValueOne"
                 ExtraTagTwo = "testTagValueTwo"
                 MintelEventBus = "true"
@@ -447,17 +447,15 @@ tests:
           enabled: true
         terraform:
           instances:
-            test-instance-one: {
-              tags: {
-                ExtraTagOne: "testTagValueOne",
+            test-instance-one: { tags: { ExtraTagOne: "testTagValueOne" } }
+            test-instance-two:
+              {
+                tags:
+                  {
+                    ExtraTagOne: "testTagValueOne",
+                    ExtraTagTwo: "testTagValueTwo",
+                  },
               }
-            }
-            test-instance-two: {
-              tags: {
-                ExtraTagOne: "testTagValueOne",
-                ExtraTagTwo: "testTagValueTwo"
-              }
-            }
     asserts:
       - matchSnapshot: {} # Check for regressions and unexpected changes.
       - hasDocuments:
@@ -472,6 +470,7 @@ tests:
             value: |-
               {
                 Application = "test-app"
+                Component = "test-app"
                 ExtraTagOne = "testTagValueOne"
                 MintelEventBus = "true"
                 Owner = "sre"
@@ -488,6 +487,7 @@ tests:
             value: |-
               {
                 Application = "test-app"
+                Component = "test-app"
                 ExtraTagOne = "testTagValueOne"
                 ExtraTagTwo = "testTagValueTwo"
                 MintelEventBus = "true"

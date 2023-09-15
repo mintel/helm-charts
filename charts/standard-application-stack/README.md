@@ -1,6 +1,6 @@
 # standard-application-stack
 
-![Version: 5.7.0](https://img.shields.io/badge/Version-5.7.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 5.13.0](https://img.shields.io/badge/Version-5.13.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A generic chart to support most common application requirements
 
@@ -61,11 +61,12 @@ A generic chart to support most common application requirements
 | celeryBeat.resources.requests | object | `{}` | The requested resources for the container |
 | command | list | `["/app/docker-entrypoint.sh"]` | Optional command to the container |
 | configMaps | list | `[]` | A list of configuration maps for this application |
-| cronjobs | object | `{"defaults":{"concurrencyPolicy":"Forbid","restartPolicy":"Never","suspend":false,"ttlSecondsAfterFinished":60},"jobs":[]}` | Define and Configure CronJob's Defaults to same image as main deployment but with defined arguments |
-| cronjobs.defaults | object | `{"concurrencyPolicy":"Forbid","restartPolicy":"Never","suspend":false,"ttlSecondsAfterFinished":60}` | Defaults for all CronJob's |
+| cronjobs | object | `{"defaults":{"concurrencyPolicy":"Forbid","restartPolicy":"Never","suspend":false,"timezone":null,"ttlSecondsAfterFinished":60},"jobs":[]}` | Define and Configure CronJob's Defaults to same image as main deployment but with defined arguments |
+| cronjobs.defaults | object | `{"concurrencyPolicy":"Forbid","restartPolicy":"Never","suspend":false,"timezone":null,"ttlSecondsAfterFinished":60}` | Defaults for all CronJob's |
 | cronjobs.defaults.concurrencyPolicy | string | `"Forbid"` | Tells controller how to handle concurrent executions of a CronJob ref: https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/cron-job-v1/#CronJobSpec |
 | cronjobs.defaults.restartPolicy | string | `"Never"` | Configure CronJob pod restart Policy ref: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#restart-policy |
 | cronjobs.defaults.suspend | bool | `false` | Tells controller to suspend future executions ref: https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/cron-job-v1/#CronJobSpec |
+| cronjobs.defaults.timezone | string | `nil` | CronJob schedule will run relative to this timezone. ref: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones |
 | cronjobs.defaults.ttlSecondsAfterFinished | int | `60` | If this field is set, ttlSecondsAfterFinished after the Job finishes, it is eligible to be automatically deleted. ref: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.20/#cronjob-v1beta1-batch |
 | cronjobs.jobs | list | `[]` | List of Cronjob configurations to be defined |
 | cronjobsOnly | bool | `false` | Only show cronjobs and relevant resources (i.e. if set to `true`, hide the main deployment resource) |
@@ -100,14 +101,16 @@ A generic chart to support most common application requirements
 | filebeatSidecar.resources.requests.memory | string | `"100Mi"` |  |
 | gitSyncSidecar | object | `{"branch":"main","enabled":false,"resources":{"limits":{"cpu":"200m","memory":"200Mi"},"requests":{"cpu":"50m","memory":"50Mi"}},"root":"/data/git-sync"}` | Helper to sync a local directory with Git ref: https://github.com/kubernetes/git-sync |
 | gitSyncSidecar.branch | string | `"main"` | The git branch to check out |
-| global | object | `{"additionalLabels":{},"cloudProvider":{"accountId":"","region":""},"clusterDomain":"127.0.0.1.nip.io","clusterEnv":"local","clusterName":"","ingressTLSSecrets":{},"name":"example-app","owner":"","partOf":"","runtimeEnvironment":"kubernetes","terraform":{"externalSecrets":false,"irsa":false}}` | Global variables for us in all charts and sub charts |
+| global | object | `{"additionalLabels":{},"application":"","cloudProvider":{"accountId":"","region":""},"clusterDomain":"127.0.0.1.nip.io","clusterEnv":"local","clusterName":"","component":"","ingressTLSSecrets":{},"name":"example-app","owner":"","partOf":"","runtimeEnvironment":"kubernetes","terraform":{"externalSecrets":false,"irsa":false}}` | Global variables for us in all charts and sub charts |
 | global.additionalLabels | object | `{}` | Additional labels to apply to all resources |
+| global.application | string | `""` | Name of the application (defaults to global.name) |
 | global.cloudProvider | object | `{"accountId":"","region":""}` | Global variables relating to cloud provider |
 | global.cloudProvider.accountId | string | `""` | AWS Account Id |
 | global.cloudProvider.region | string | `""` | AWS region name |
 | global.clusterDomain | string | `"127.0.0.1.nip.io"` | Kubernetes cluster domain |
 | global.clusterEnv | string | `"local"` | Environment (local, dev, qa, prod) |
 | global.clusterName | string | `""` | Kubernetes cluster name |
+| global.component | string | `""` | Component of the application (defaults to global.name) |
 | global.ingressTLSSecrets | object | `{}` | Global dictionary of TLS secrets |
 | global.name | string | `"example-app"` | Name of the application |
 | global.owner | string | `""` | Team which "owns" the application |
@@ -211,6 +214,7 @@ A generic chart to support most common application requirements
 | mariadb.client.resources.requests.cpu | string | `"100m"` |  |
 | mariadb.client.resources.requests.memory | string | `"64Mi"` |  |
 | mariadb.enabled | bool | `false` |  |
+| mariadb.extraUsers | object | `{"enabled":false,"users":[]}` | set up extra users for a database and table that already exist |
 | mariadb.metrics.enabled | bool | `false` |  |
 | mariadb.metrics.resources.limits.cpu | string | `"300m"` |  |
 | mariadb.metrics.resources.limits.memory | string | `"128Mi"` |  |
@@ -250,10 +254,9 @@ A generic chart to support most common application requirements
 | oauthProxy.skipAuthRegexes | list | `[]` | Optional: list of URL endpoints to bypass oauth-proxy for Health check and readiness urls are skipped automatically |
 | oauthProxy.type | string | `"portal"` | Identifies oauth-proxy as auth'ing with a mintel portal instance |
 | oauthProxy.userIdClaim | string | `""` | Optional: Claim contains the user ID |
-| opensearch | object | `{"awsEsProxy":{"enabled":false,"ingress":{"alb":{"backendProtocol":"HTTP","backendProtocolVersion":"HTTP1","enabled":true,"healthcheck":{"healthyThresholdCount":2,"intervalSeconds":15,"path":"/_cluster/health","protocol":"HTTP","timeoutSeconds":5,"unhealthyThresholdCount":2},"okta":{"authOnUnauthenticated":"authenticate","enabled":false,"extraRedirectPaths":[],"groups":"","ingressName":"","redirectPath":"","users":""},"preStopDelay":{"delaySeconds":15,"enabled":true},"scheme":"internet-facing","targetGroupAttributes":{"deregistration_delay.timeout_seconds":5,"load_balancing.algorithm.type":"least_outstanding_requests"}},"enabled":false,"extraAnnotations":{},"path":"/_dashboards"},"port":9200,"resources":{"limits":{"cpu":"200m","memory":"128Mi"},"requests":{"cpu":"100m","memory":"64Mi"}}},"enabled":false,"outputSecret":true,"secretRefreshIntervalOverride":"","secretStoreRefOverride":""}` | Configures AWS Opensearch deployment/connections |
-| opensearch.awsEsProxy | object | `{"enabled":false,"ingress":{"alb":{"backendProtocol":"HTTP","backendProtocolVersion":"HTTP1","enabled":true,"healthcheck":{"healthyThresholdCount":2,"intervalSeconds":15,"path":"/_cluster/health","protocol":"HTTP","timeoutSeconds":5,"unhealthyThresholdCount":2},"okta":{"authOnUnauthenticated":"authenticate","enabled":false,"extraRedirectPaths":[],"groups":"","ingressName":"","redirectPath":"","users":""},"preStopDelay":{"delaySeconds":15,"enabled":true},"scheme":"internet-facing","targetGroupAttributes":{"deregistration_delay.timeout_seconds":5,"load_balancing.algorithm.type":"least_outstanding_requests"}},"enabled":false,"extraAnnotations":{},"path":"/_dashboards"},"port":9200,"resources":{"limits":{"cpu":"200m","memory":"128Mi"},"requests":{"cpu":"100m","memory":"64Mi"}}}` | Configures aws-es-proxy to enable external access to opensearch |
+| opensearch | object | `{"awsEsProxy":{"enabled":false,"ingress":{"alb":{"backendProtocol":"HTTP","backendProtocolVersion":"HTTP1","enabled":true,"healthcheck":{"healthyThresholdCount":2,"intervalSeconds":15,"path":"/_cluster/health","protocol":"HTTP","timeoutSeconds":5,"unhealthyThresholdCount":2},"okta":{"authOnUnauthenticated":"authenticate","enabled":false,"extraRedirectPaths":[],"groups":"","ingressName":"","redirectPath":"","users":""},"preStopDelay":{"delaySeconds":15,"enabled":true},"scheme":"internet-facing","targetGroupAttributes":{"deregistration_delay.timeout_seconds":5,"load_balancing.algorithm.type":"least_outstanding_requests"}},"enabled":false,"extraAnnotations":{},"path":"/_dashboards"},"port":9200,"resources":{"limits":{"cpu":"200m","memory":"128Mi"},"requests":{"cpu":"100m","memory":"64Mi"}},"securityContext":{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"runAsNonRoot":true,"runAsUser":65534,"seccompProfile":{"type":"RuntimeDefault"}}},"enabled":false,"outputSecret":true,"secretRefreshIntervalOverride":"","secretStoreRefOverride":""}` | Configures AWS Opensearch deployment/connections |
+| opensearch.awsEsProxy | object | `{"enabled":false,"ingress":{"alb":{"backendProtocol":"HTTP","backendProtocolVersion":"HTTP1","enabled":true,"healthcheck":{"healthyThresholdCount":2,"intervalSeconds":15,"path":"/_cluster/health","protocol":"HTTP","timeoutSeconds":5,"unhealthyThresholdCount":2},"okta":{"authOnUnauthenticated":"authenticate","enabled":false,"extraRedirectPaths":[],"groups":"","ingressName":"","redirectPath":"","users":""},"preStopDelay":{"delaySeconds":15,"enabled":true},"scheme":"internet-facing","targetGroupAttributes":{"deregistration_delay.timeout_seconds":5,"load_balancing.algorithm.type":"least_outstanding_requests"}},"enabled":false,"extraAnnotations":{},"path":"/_dashboards"},"port":9200,"resources":{"limits":{"cpu":"200m","memory":"128Mi"},"requests":{"cpu":"100m","memory":"64Mi"}},"securityContext":{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"runAsNonRoot":true,"runAsUser":65534,"seccompProfile":{"type":"RuntimeDefault"}}}` | Configures aws-es-proxy to enable external access to opensearch |
 | opensearch.awsEsProxy.enabled | bool | `false` | Set to true to add an aws-es-proxy deployment in front of opensearch |
-| opensearch.awsEsProxy.ingress | object | `{"alb":{"backendProtocol":"HTTP","backendProtocolVersion":"HTTP1","enabled":true,"healthcheck":{"healthyThresholdCount":2,"intervalSeconds":15,"path":"/_cluster/health","protocol":"HTTP","timeoutSeconds":5,"unhealthyThresholdCount":2},"okta":{"authOnUnauthenticated":"authenticate","enabled":false,"extraRedirectPaths":[],"groups":"","ingressName":"","redirectPath":"","users":""},"preStopDelay":{"delaySeconds":15,"enabled":true},"scheme":"internet-facing","targetGroupAttributes":{"deregistration_delay.timeout_seconds":5,"load_balancing.algorithm.type":"least_outstanding_requests"}},"enabled":false,"extraAnnotations":{},"path":"/_dashboards"}` | Ingress for aws-es-proxy |
 | opensearch.awsEsProxy.ingress.alb.backendProtocol | string | `"HTTP"` | Application Version (HTTP / HTTPS) |
 | opensearch.awsEsProxy.ingress.alb.backendProtocolVersion | string | `"HTTP1"` | Application Protocol Version (HTTP1 / HTTP2 / GRPC) |
 | opensearch.awsEsProxy.ingress.alb.healthcheck.healthyThresholdCount | int | `2` | Success threshold |
@@ -276,6 +279,7 @@ A generic chart to support most common application requirements
 | opensearch.awsEsProxy.ingress.path | string | `"/_dashboards"` | Path for the Ingress |
 | opensearch.awsEsProxy.port | int | `9200` | Port for aws-es-proxy to listen on |
 | opensearch.awsEsProxy.resources | object | `{"limits":{"cpu":"200m","memory":"128Mi"},"requests":{"cpu":"100m","memory":"64Mi"}}` | Container resource requests and limits for aws-es-proxy sidecar ref: http://kubernetes.io/docs/user-guide/compute-resources |
+| opensearch.awsEsProxy.securityContext | object | `{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"runAsNonRoot":true,"runAsUser":65534,"seccompProfile":{"type":"RuntimeDefault"}}` | Ingress for aws-es-proxy |
 | opensearch.enabled | bool | `false` | Set to true if deployment makes use of AWS opensearch |
 | opensearch.outputSecret | bool | `true` | set outputSecret to true to allow TF Cloud chart create ExternalSecrets |
 | opensearch.secretRefreshIntervalOverride | string | `""` | Optional: ExternalSecret refreshInterval override |
@@ -294,7 +298,7 @@ A generic chart to support most common application requirements
 | persistentVolumes | string | `nil` | A list of persistent volume claims to be added to the pod |
 | podAnnotations | object | `{}` | Additional annotations to apply to the pod |
 | podDisruptionBudget | object | `{"enabled":true,"minAvailable":"50%"}` | Pod Disruption Budget ref: https://kubernetes.io/docs/tasks/run-application/configure-pdb/ |
-| podSecurityContext | object | `{"runAsUser":1000}` | Pod Security context for the container ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/ |
+| podSecurityContext | object | `{"runAsNonRoot":true,"runAsUser":1000}` | Pod Security context for the container ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/ |
 | port | int | `8000` | Set port to null to skip adding container Ports |
 | postgresql.client.enabled | bool | `true` |  |
 | postgresql.client.resources.limits.cpu | string | `"300m"` |  |
@@ -302,12 +306,14 @@ A generic chart to support most common application requirements
 | postgresql.client.resources.requests.cpu | string | `"100m"` |  |
 | postgresql.client.resources.requests.memory | string | `"64Mi"` |  |
 | postgresql.enabled | bool | `false` |  |
+| postgresql.extraUsers.enabled | bool | `false` |  |
+| postgresql.extraUsers.users | list | `[]` |  |
 | postgresql.image.tag | string | `"13.5.0-debian-10-r52"` |  |
 | postgresql.metrics.enabled | bool | `false` |  |
 | postgresql.metrics.resources.limits.cpu | string | `"300m"` |  |
 | postgresql.metrics.resources.limits.memory | string | `"128Mi"` |  |
 | postgresql.metrics.resources.requests.cpu | string | `"100m"` |  |
-| postgresql.metrics.resources.requests.memory | string | `"64Mi"` |  |
+| postgresql.metrics.resources.requests.memory | string | `"64M"` |  |
 | postgresql.outputSecret | bool | `true` | set outputSecret to true to allow TF Cloud chart create ExternalSecrets |
 | postgresql.postgresqlDatabase | string | `"postgres"` |  |
 | priorityClassName | string | `""` | Optional name of PriorityClass to run pods with |
@@ -322,7 +328,7 @@ A generic chart to support most common application requirements
 | resources.requests | object | `{}` | The requested resources for the container |
 | s3.enabled | bool | `false` |  |
 | s3.outputSecret | bool | `true` | set outputSecret to true to allow TF Cloud chart create ExternalSecrets |
-| securityContext | object | `{}` | Security context for the container ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/ |
+| securityContext | object | `{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"runAsNonRoot":true,"runAsUser":1000}` | Security context for the container ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/ |
 | service | object | `{"annotations":{},"enabled":true,"labels":{},"type":"ClusterIP"}` | Kubernetes svc configutarion |
 | service.annotations | object | `{}` | Annotations to add to service |
 | service.enabled | bool | `true` | Whether to create Service resource or not |
