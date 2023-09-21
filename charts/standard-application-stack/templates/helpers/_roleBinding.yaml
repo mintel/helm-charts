@@ -1,0 +1,38 @@
+{{/* vim: set filetype=mustache: */}}
+
+{{/*
+Template for creating a RoleBinding. Expects a list [$, config] as context where "config" is a dict containing the
+following optional kwargs:
+
+annotations:             dict    # Any extra custom annotations.
+argo:                    dict    # Standard argo object (as processed by mintel_common.argoAnnotations).
+name:                    string  # The name of the role binding. Defaults to global name if not provided.
+roleName:                string  # The name of the role to which the service account will be bound
+serviceAccountName:      string  # The name of the service account to which the role will be bound
+serviceAccountNamespace: string  # Namespace in which the service account lives
+
+*/}}
+{{- define "mintel_common.roleBinding" -}}
+{{ $ := index . 0 }}
+{{ $config := index . 1}}
+apiVersion: {{ include "common.capabilities.rbac.apiVersion" $ }}
+kind: RoleBinding
+metadata:
+  name: {{ $config.name | default (include "mintel_common.fullname" $)  }}
+  namespace: {{ $.Release.Namespace }}
+  labels: {{ include "mintel_common.labels" $ | nindent 4 }}
+  annotations:
+    {{ include "mintel_common.commonAnnotations" $ | nindent 4 }}
+    {{ if $config.annotations }}{{ $config.annotations | toYaml | nindent 4 }}{{ end }}
+    {{ if $config.argo }}
+    {{ include "mintel_common.argoAnnotations" $config.argo | nindent 4 }}
+    {{ end }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: {{ $config.roleName }}
+subjects:
+- kind: ServiceAccount
+  name: {{ $config.serviceAccountName }}
+  namespace: {{ $config.serviceAccountNamespace | default $.Release.Namespace }}
+{{- end -}}

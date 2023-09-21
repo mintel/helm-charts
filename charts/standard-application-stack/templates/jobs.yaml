@@ -3,11 +3,12 @@
 {{- $job := mergeOverwrite $.Values.jobDefaults . }}
 {{- with $job }}
 {{- $serviceAccountEnabled := or .kubelock.enabled .irsa.enabled }}
+{{- $jobName := (include "mintel_common.fullname" $data) -}}
 ---
 apiVersion: {{ include "common.capabilities.job.apiVersion" $ }}
 kind: Job
 metadata:
-  name: {{ include "mintel_common.fullname" $data }}
+  name: {{ $jobName }}
   labels: {{ include "mintel_common.labels" $data | nindent 4 }}
   annotations:
     {{- include "mintel_common.commonAnnotations" $ | nindent 4 }}
@@ -33,7 +34,7 @@ spec:
         {{- end }}
       {{- end }}
       {{- if (and $.Values.serviceAccount (or $.Values.serviceAccount.create $.Values.serviceAccount.name)) }}
-      serviceAccountName: {{ include "mintel_common.fullname" $data }}
+      serviceAccountName: {{ $jobName }}
       {{- end }}
       restartPolicy: {{ .restartPolicy }}
       {{- with .extraInitContainers }}
@@ -70,7 +71,7 @@ spec:
             {{- if (or (ne $.Values.global.clusterEnv "local") (and (eq $.Values.global.clusterEnv "local") $.Values.externalSecret.localValues)) }}
             {{- if .includeAppSecret }}
             - secretRef:
-                name: {{ include "mintel_common.fullname" $data }}-app
+                name: {{ $jobName }}-app
             {{- end }}
             {{- end }}
             {{- end }}
@@ -89,34 +90,20 @@ spec:
           resources: {{- toYaml . | nindent 12 }}
           {{- end }}
 
-
 {{- if $serviceAccountEnabled }}
 ---
-{{- $serviceAccountConfig := dict "name" (include "mintel_common.fullname" $data) "argo" .argo "irsa" .irsa }}
+{{- $serviceAccountConfig := dict "name" $jobName "argo" .argo "irsa" .irsa }}
 {{- include "mintel_common.serviceAccount" (list $ $serviceAccountConfig) }}
 
-{{- if (and $.Values.kubelock $.Values.kubelock.enabled) }}
+{{- if .kubelock.enabled }}
 ---
-apiVersion: {{ include "common.capabilities.rbac.apiVersion" $ }}
-kind: RoleBinding
-metadata:
-  name: {{ include "mintel_common.fullname" $data }}
-  namespace: {{ $.Release.Namespace }}
-  labels: {{ include "mintel_common.labels" $ | nindent 4 }}
-  annotations:
-    {{- include "mintel_common.commonAnnotations" $ | nindent 4 }}
-    {{- if .argo }}
-    {{- include "mintel_common.argoAnnotations" .argo | nindent 4 }}
-    {{- end }}
-roleRef:
-  apiGroup: rbac.authorization.k8s.io
-  kind: Role
-  name: {{ include "mintel_common.fullname" $ }}
-subjects:
-- kind: ServiceAccount
-  name: {{ include "mintel_common.fullname" $data }}
-  namespace: {{ $.Release.Namespace }}
+{{- $roleConfig := dict "name" $jobName "argo" .argo "rules" (list "kubelock") -}}
+{{- include "mintel_common.role" (list $ $roleConfig) }}
+---
+{{- $roleBindingConfig := dict "name" $jobName "argo" .argo "roleName" $jobName "serviceAccountName" $jobName -}}
+{{- include "mintel_common.roleBinding" (list $ $roleBindingConfig) }}
 {{- end }}
+
 {{- end }}
 
 
@@ -125,7 +112,7 @@ subjects:
 apiVersion: {{ include "common.capabilities.externalsecret.apiVersion" $ }}
 kind: ExternalSecret
 metadata:
-  name: {{ include "mintel_common.fullname" $data }}-app
+  name: {{ $jobName }}-app
   labels: {{ include "mintel_common.labels" $ | nindent 4 }}
   namespace: {{ $.Release.Namespace }}
   annotations:

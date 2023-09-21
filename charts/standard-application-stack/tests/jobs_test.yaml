@@ -240,6 +240,7 @@ tests:
           kubelock:
             enabled: true
     asserts:
+      - matchSnapshot: {}
       # Test that the Job references the Job's Service Account
       - documentIndex: 0
         isKind:
@@ -256,12 +257,27 @@ tests:
         equal:
           path: metadata.name
           value: testGlobalName-testJobName
-      # Test that a RoleBinding unique to the Job gets created and that it is binding the Job's ServiceAccount to the
-      # main app's Role (which includes the kubelock permissions),
+      # Test that a Role unique to the Job gets created
       - documentIndex: 2
         isKind:
-          of: RoleBinding
+          of: Role
       - documentIndex: 2
         equal:
+          path: metadata.name
+          value: testGlobalName-testJobName
+      # Test that a RoleBinding unique to the Job gets created and that it is being bound to the Job's Role
+      - documentIndex: 3
+        isKind:
+          of: RoleBinding
+      - documentIndex: 3
+        equal:
+          path: metadata.name
+          value: testGlobalName-testJobName
+      - documentIndex: 3
+        equal:
           path: roleRef.name
+          value: testGlobalName-testJobName
+      - documentIndex: 3
+        equal:
+          path: subjects[0].name
           value: testGlobalName-testJobName
