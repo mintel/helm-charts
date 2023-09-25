@@ -1,16 +1,20 @@
 {{- range .Values.jobs }}
----
 {{- $data := dict "Release" $.Release "Chart" $.Chart "Values" $.Values "component" .name }}
+{{- $job := mergeOverwrite $.Values.jobDefaults . }}
+{{- with $job }}
+{{- $serviceAccountEnabled := or .kubelock.enabled .irsa.enabled }}
+{{- $jobName := (include "mintel_common.fullname" $data) -}}
+---
 apiVersion: {{ include "common.capabilities.job.apiVersion" $ }}
 kind: Job
 metadata:
-  name: {{ include "mintel_common.fullname" $data }}
+  name: {{ $jobName }}
   labels: {{ include "mintel_common.labels" $data | nindent 4 }}
   annotations:
     {{- include "mintel_common.commonAnnotations" $ | nindent 4 }}
-    {{ if .argo }}
-    {{ include "mintel_common.argoAnnotations" .argo | nindent 4 }}
-    {{ end }}
+    {{- if .argo }}
+    {{- include "mintel_common.argoAnnotations" .argo | nindent 4 }}
+    {{- end }}
   namespace: {{ $.Release.Namespace }}
 spec:
   {{- $ttl := (.ttlSecondsAfterFinished | default 60) | int }}
@@ -20,13 +24,19 @@ spec:
   template:
     spec:
       {{- include "mintel_common.imagePullSecrets" $ | nindent 6 }}
-      {{- with .podSecurityContext | default $.Values.podSecurityContext }}
-      securityContext: {{- toYaml . | nindent 8 }}
+      {{- if (or .includeBasePodSecurityContext .podSecurityContext) }}
+      securityContext:
+        {{- if .includeBasePodSecurityContext }}
+        {{- toYaml $.Values.podSecurityContext | nindent 12 }}
+        {{- end }}
+        {{- if .podSecurityContext }}
+        {{- toYaml .podSecurityContext | nindent 12 }}
+        {{- end }}
       {{- end }}
       {{- if (and $.Values.serviceAccount (or $.Values.serviceAccount.create $.Values.serviceAccount.name)) }}
-      serviceAccountName: {{ $.Values.serviceAccount.name | default (include "mintel_common.fullname" $)}}
+      serviceAccountName: {{ $jobName }}
       {{- end }}
-      restartPolicy: {{ .restartPolicy | default "Never" }}
+      restartPolicy: {{ .restartPolicy }}
       {{- with .extraInitContainers }}
       initContainers:
       {{- toYaml . | nindent 12 }}
@@ -61,7 +71,7 @@ spec:
             {{- if (or (ne $.Values.global.clusterEnv "local") (and (eq $.Values.global.clusterEnv "local") $.Values.externalSecret.localValues)) }}
             {{- if .includeAppSecret }}
             - secretRef:
-                name: {{ $.Values.externalSecret.nameOverride | default (include "mintel_common.defaultAppSecretName" $) }}
+                name: {{ $jobName }}-app
             {{- end }}
             {{- end }}
             {{- end }}
@@ -79,4 +89,50 @@ spec:
           {{- end }}
           resources: {{- toYaml . | nindent 12 }}
           {{- end }}
+
+
+{{- if $serviceAccountEnabled }}
+---
+{{- $serviceAccountConfig := dict "name" $jobName "argo" .argo "irsa" .irsa }}
+{{- include "mintel_common.serviceAccount" (list $ $serviceAccountConfig) }}
+
+{{- if .kubelock.enabled }}
+---
+{{- $roleConfig := dict "name" $jobName "argo" .argo "rules" (list "kubelock") -}}
+{{- include "mintel_common.role" (list $ $roleConfig) }}
+---
+{{- $roleBindingConfig := dict "name" $jobName "argo" .argo "roleName" $jobName "serviceAccountName" $jobName -}}
+{{- include "mintel_common.roleBinding" (list $ $roleBindingConfig) }}
+{{- end }}
+{{- end }}
+
+
+{{- if (and $.Values.externalSecret $.Values.externalSecret.enabled .includeAppSecret) }}
+---
+apiVersion: {{ include "common.capabilities.externalsecret.apiVersion" $ }}
+kind: ExternalSecret
+metadata:
+  name: {{ $jobName }}-app
+  labels: {{ include "mintel_common.labels" $ | nindent 4 }}
+  namespace: {{ $.Release.Namespace }}
+  annotations:
+    {{ include "mintel_common.commonAnnotations" $ | nindent 4 }}
+    {{- if .argo }}
+    {{- include "mintel_common.argoAnnotations" .argo | nindent 4 }}
+    {{- end }}
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+spec:
+  dataFrom:
+    - extract:
+        key: {{ $.Values.externalSecret.pathOverride | default (printf "%s/%s/app" ($.Release.Namespace) (include "mintel_common.fullname" $)) }}
+  refreshInterval: {{ $.Values.externalSecret.secretRefreshIntervalOverride | default "5m0s" }}
+  secretStoreRef:
+    name: {{ $.Values.externalSecret.secretStoreRefOverride | default "aws-secrets-manager-default" }}
+    kind: SecretStore
+  target:
+    creationPolicy: Owner
+{{- end }}
+
+
+{{- end }}
 {{- end }}

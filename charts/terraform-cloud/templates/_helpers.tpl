@@ -1,3 +1,17 @@
+{{/*
+Create a default fully qualified app name.
+We truncate at 63 chars because sometimes Kubernetes name fields are limited to this (by the DNS naming spec).
+*/}}
+{{- define "mintel_common.fullname" -}}
+{{- if .Values.nameOverride -}}
+{{- .Values.nameOverride | trunc 63 | trimSuffix "-" -}}
+{{- else if .component }}
+{{- printf "%s-%s" .Values.global.name .component | trimSuffix .Chart.Name | trunc 63 | trimSuffix "-" -}}
+{{- else -}}
+{{- .Values.global.name | trunc 63 | trimSuffix "-" -}}
+{{- end -}}
+{{- end -}}
+
 {{/* Supported resources */}}
 {{- define "mintel_common.terraformCloudResources" -}}
 {{- $terraformCloudResources := (list "activeMQ" "apiGatewayHttp" "auroraMySql" "auroraPostgresql" "cmsBackup" "dynamodb" "extraIAM" "lambda" "mariadb" "memcached" "opensearch" "postgresql" "redis" "s3" "sns" "sqs" "sshKeyPairSecret" "staticWebsite" "stepFunctionEks") -}}

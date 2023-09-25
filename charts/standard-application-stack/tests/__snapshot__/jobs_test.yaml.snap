@@ -9,16 +9,16 @@ Check all .job.* values can be set correctly, without overriding from main deplo
         argocd.argoproj.io/hook-delete-policy: HookSucceeded
         argocd.argoproj.io/sync-wave: "-1"
       labels:
-        app.kubernetes.io/component: testName
+        app.kubernetes.io/component: testJobName
         app.kubernetes.io/managed-by: Helm
-        app.kubernetes.io/name: test-app-testName
-        app.mintel.com/application: test-app
-        app.mintel.com/component: test-app
-        app.mintel.com/env: qa
+        app.kubernetes.io/name: testGlobalName-testJobName
+        app.mintel.com/application: testGlobalName
+        app.mintel.com/component: testGlobalName
+        app.mintel.com/env: testClusterEnv
         app.mintel.com/region: ${CLUSTER_REGION}
-        name: test-app-testName
-      name: test-app-testName
-      namespace: test-namespace
+        name: testGlobalName-testJobName
+      name: testGlobalName-testJobName
+      namespace: testNamespace
     spec:
       template:
         spec:
@@ -33,7 +33,7 @@ Check all .job.* values can be set correctly, without overriding from main deplo
                     fieldRef:
                       fieldPath: metadata.namespace
                 - name: APP_ENVIRONMENT
-                  value: qa
+                  value: testClusterEnv
                 - name: RUNTIME_ENVIRONMENT
                   value: kubernetes
                 - name: TEST_VAR
@@ -67,7 +67,7 @@ Check all .job.* values can be set correctly, without overriding from main deplo
           restartPolicy: OnFailure
           securityContext:
             runAsUser: 1001
-          serviceAccountName: test-app
+          serviceAccountName: testGlobalName-testJobName
       ttlSecondsAfterFinished: 120
 Check all overrides/additions from main deployment work if enabled:
   1: |
@@ -77,16 +77,16 @@ Check all overrides/additions from main deployment work if enabled:
       annotations:
         app.mintel.com/placeholder: placeholder
       labels:
-        app.kubernetes.io/component: testName
+        app.kubernetes.io/component: testJobName
         app.kubernetes.io/managed-by: Helm
-        app.kubernetes.io/name: test-app-testName
-        app.mintel.com/application: test-app
-        app.mintel.com/component: test-app
-        app.mintel.com/env: qa
+        app.kubernetes.io/name: testGlobalName-testJobName
+        app.mintel.com/application: testGlobalName
+        app.mintel.com/component: testGlobalName
+        app.mintel.com/env: testClusterEnv
         app.mintel.com/region: ${CLUSTER_REGION}
-        name: test-app-testName
-      name: test-app-testName
-      namespace: test-namespace
+        name: testGlobalName-testJobName
+      name: testGlobalName-testJobName
+      namespace: testNamespace
     spec:
       template:
         spec:
@@ -97,7 +97,7 @@ Check all overrides/additions from main deployment work if enabled:
                     fieldRef:
                       fieldPath: metadata.namespace
                 - name: APP_ENVIRONMENT
-                  value: qa
+                  value: testClusterEnv
                 - name: RUNTIME_ENVIRONMENT
                   value: kubernetes
                 - name: TEST_VAR_1
@@ -108,7 +108,7 @@ Check all overrides/additions from main deployment work if enabled:
                   value: baz
               envFrom:
                 - secretRef:
-                    name: test-app-app
+                    name: testGlobalName-testJobName-app
                 - secretRef:
                     name: another-secret-ref
               image: registry.example.com/test/image/repo:someTag
@@ -135,8 +135,36 @@ Check all overrides/additions from main deployment work if enabled:
           securityContext:
             runAsNonRoot: true
             runAsUser: 1000
-          serviceAccountName: test-app
+          serviceAccountName: testGlobalName-testJobName
       ttlSecondsAfterFinished: 120
+  2: |
+    apiVersion: external-secrets.io/v1beta1
+    kind: ExternalSecret
+    metadata:
+      annotations:
+        app.mintel.com/placeholder: placeholder
+        argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+      labels:
+        app.kubernetes.io/component: app
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: testGlobalName
+        app.mintel.com/application: testGlobalName
+        app.mintel.com/component: testGlobalName
+        app.mintel.com/env: testClusterEnv
+        app.mintel.com/region: ${CLUSTER_REGION}
+        name: testGlobalName
+      name: testGlobalName-testJobName-app
+      namespace: testNamespace
+    spec:
+      dataFrom:
+        - extract:
+            key: testNamespace/testGlobalName/app
+      refreshInterval: 5m0s
+      secretStoreRef:
+        kind: SecretStore
+        name: aws-secrets-manager-default
+      target:
+        creationPolicy: Owner
 Check default values are correct with minimal configuration:
   1: |
     apiVersion: batch/v1
@@ -145,16 +173,16 @@ Check default values are correct with minimal configuration:
       annotations:
         app.mintel.com/placeholder: placeholder
       labels:
-        app.kubernetes.io/component: testName
+        app.kubernetes.io/component: testJobName
         app.kubernetes.io/managed-by: Helm
-        app.kubernetes.io/name: test-app-testName
-        app.mintel.com/application: test-app
-        app.mintel.com/component: test-app
-        app.mintel.com/env: qa
+        app.kubernetes.io/name: testGlobalName-testJobName
+        app.mintel.com/application: testGlobalName
+        app.mintel.com/component: testGlobalName
+        app.mintel.com/env: testClusterEnv
         app.mintel.com/region: ${CLUSTER_REGION}
-        name: test-app-testName
-      name: test-app-testName
-      namespace: test-namespace
+        name: testGlobalName-testJobName
+      name: testGlobalName-testJobName
+      namespace: testNamespace
     spec:
       template:
         spec:
@@ -165,7 +193,7 @@ Check default values are correct with minimal configuration:
                     fieldRef:
                       fieldPath: metadata.namespace
                 - name: APP_ENVIRONMENT
-                  value: qa
+                  value: testClusterEnv
                 - name: RUNTIME_ENVIRONMENT
                   value: kubernetes
               envFrom: null
@@ -190,8 +218,125 @@ Check default values are correct with minimal configuration:
             - name: image-pull-gitlab
             - name: image-pull-docker-hub
           restartPolicy: Never
-          securityContext:
-            runAsNonRoot: true
-            runAsUser: 1000
-          serviceAccountName: test-app
+          serviceAccountName: testGlobalName-testJobName
       ttlSecondsAfterFinished: 60
+checks that rbac is set up correctly for kubelock:
+  1: |
+    apiVersion: batch/v1
+    kind: Job
+    metadata:
+      annotations:
+        app.mintel.com/placeholder: placeholder
+      labels:
+        app.kubernetes.io/component: testJobName
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: testGlobalName-testJobName
+        app.mintel.com/application: testGlobalName
+        app.mintel.com/component: testGlobalName
+        app.mintel.com/env: testClusterEnv
+        app.mintel.com/region: ${CLUSTER_REGION}
+        name: testGlobalName-testJobName
+      name: testGlobalName-testJobName
+      namespace: testNamespace
+    spec:
+      template:
+        spec:
+          containers:
+            - env:
+                - name: KUBERNETES_POD_NAMESPACE
+                  valueFrom:
+                    fieldRef:
+                      fieldPath: metadata.namespace
+                - name: APP_ENVIRONMENT
+                  value: testClusterEnv
+                - name: RUNTIME_ENVIRONMENT
+                  value: kubernetes
+              envFrom: null
+              image: registry.example.com/test/image/repo:someTag
+              imagePullPolicy: IfNotPresent
+              name: main
+          imagePullSecrets:
+            - name: image-pull-gitlab
+            - name: image-pull-docker-hub
+          restartPolicy: Never
+          serviceAccountName: testGlobalName-testJobName
+      ttlSecondsAfterFinished: 60
+  2: |
+    apiVersion: v1
+    automountServiceAccountToken: true
+    kind: ServiceAccount
+    metadata:
+      annotations:
+        app.mintel.com/placeholder: placeholder
+      labels:
+        app.kubernetes.io/component: app
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: testGlobalName
+        app.mintel.com/application: testGlobalName
+        app.mintel.com/component: testGlobalName
+        app.mintel.com/env: testClusterEnv
+        app.mintel.com/region: ${CLUSTER_REGION}
+        name: testGlobalName
+      name: testGlobalName-testJobName
+      namespace: testNamespace
+  3: |
+    apiVersion: rbac.authorization.k8s.io/v1
+    kind: Role
+    metadata:
+      annotations:
+        app.mintel.com/placeholder: placeholder
+      labels:
+        app.kubernetes.io/component: app
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: testGlobalName
+        app.mintel.com/application: testGlobalName
+        app.mintel.com/component: testGlobalName
+        app.mintel.com/env: testClusterEnv
+        app.mintel.com/region: ${CLUSTER_REGION}
+        name: testGlobalName
+      name: testGlobalName-testJobName
+      namespace: testNamespace
+    rules:
+      - apiGroups:
+          - coordination.k8s.io
+        resources:
+          - leases
+        verbs:
+          - get
+          - list
+          - create
+          - update
+      - apiGroups:
+          - ""
+        resources:
+          - endpoints
+        verbs:
+          - get
+          - list
+          - create
+          - update
+  4: |
+    apiVersion: rbac.authorization.k8s.io/v1
+    kind: RoleBinding
+    metadata:
+      annotations:
+        app.mintel.com/placeholder: placeholder
+      labels:
+        app.kubernetes.io/component: app
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: testGlobalName
+        app.mintel.com/application: testGlobalName
+        app.mintel.com/component: testGlobalName
+        app.mintel.com/env: testClusterEnv
+        app.mintel.com/region: ${CLUSTER_REGION}
+        name: testGlobalName
+      name: testGlobalName-testJobName
+      namespace: testNamespace
+    roleRef:
+      apiGroup: rbac.authorization.k8s.io
+      kind: Role
+      name: testGlobalName-testJobName
+    subjects:
+      - kind: ServiceAccount
+        name: testGlobalName-testJobName
+        namespace: testNamespace

@@ -1,6 +1,7 @@
 # List the supported resource types here. These should map directly to the top-level fields of the same name in the
 # values.yaml file.
 {{- $global := $.Values.global }}
+{{- $data := dict "Values" $.Values "component" .name }}
 # check if any of the irsa dependent resources are enabled
 {{- if (or $.Values.irsa.enabled (eq "true" (include "mintel_common.terraform_cloud.irsaRequired" . | trim))) }}
   {{- $irsa := $.Values.irsa }}
@@ -15,21 +16,32 @@
   {{- end }}
   {{- if not (hasKey $irsaConfig "aws_account_name") }}
     {{- $_ := set $irsaConfig "aws_account_name" $global.clusterEnv }}
-  {{ end }}
+  {{- end }}
   {{- if not (hasKey $irsaConfig "aws_region") }}
     {{- $_ := set $irsaConfig "aws_region" $global.clusterRegion }}
-  {{ end }}
+  {{- end }}
   {{- if not (hasKey $irsaConfig "eks_cluster_name") }}
     {{- $_ := set $irsaConfig "eks_cluster_name" $global.clusterName }}
-  {{ end }}
+  {{- end }}
   {{- if not (hasKey $irsaConfig "tags") }}
     {{- $_ := set $irsaConfig "tags" (dict "key" "tags" "value" ( printf "{\n%s}" (include "mintel_common.terraform_cloud.dict_to_hcl" $defaultTags )) "hcl" true) }}
   {{ end }}
   {{- if not (hasKey $irsaConfig "tfcloud_agent") }}
     {{- $_ := set $irsaConfig "tfcloud_agent" "true" }}
-  {{ end }}
+  {{- end }}
   {{- if (not (hasKey $irsaConfig "k8s_service_account_name")) }}
     {{- $_ := set $irsaConfig "k8s_service_account_name" $global.name }}
+  {{- end }}
+  {{- if (not (hasKey $irsaConfig "k8s_extra_service_accounts")) }}
+    {{- $serviceAccounts := list }}
+    {{- if $.Values.jobs }}
+      {{- range $.Values.jobs }}
+        {{- $serviceAccounts = append $serviceAccounts (printf "%s-%s" $global.name .name) }}
+      {{- end }}
+    {{- end }}
+    {{- if gt (len $serviceAccounts) 0 }}
+      {{- $_ := set $irsaConfig "k8s_extra_service_accounts" ( dict "key" "k8s_extra_service_accounts" "value" (printf "[\"%s\"]" (join "\",\"" $serviceAccounts)) "hcl" "true" ) }}
+    {{- end }}
   {{- end }}
   {{- if (not (hasKey $irsaConfig "k8s_namespace")) }}
     {{- $_ := set $irsaConfig "k8s_namespace" $.Release.Namespace }}

@@ -249,7 +249,7 @@ serviceAccount:
   # # -- ArgoCD settings
   # argo:
   #   hook: PreSync
-  #   hookDeletePolicy: HookSucceeded
+  #   hookDeletePolicy: BeforeHookCreation
   #   syncWave: "-1"
 
   # -- Define list of Role's to create and bind to the service account
@@ -391,7 +391,7 @@ externalSecret:
   enabled: true
   #  argo:
   #   hook: PreSync
-  #   hookDeletePolicy: HookSucceeded
+  #   hookDeletePolicy: BeforeHookCreation
   #   syncWave: "-1"
   #  nameOverride: ""
   #  pathOverride: ""
@@ -404,7 +404,7 @@ extraSecrets: []
 #  - name: ""
 #    argo:
 #     hook: PreSync
-#     hookDeletePolicy: HookSucceeded
+#     hookDeletePolicy: BeforeHookCreation
 #     syncWave: "-1"
 #    pathOverride: ""
 ###  Use to map keys from AWS secret manager secrets to new key names. Map values should be in the form <new key>:<secret key>
@@ -424,7 +424,7 @@ configMaps: []
 #    # -- ArgoCD settings
 #    argo:
 #      hook: PreSync
-#      hookDeletePolicy: HookSucceeded
+#      hookDeletePolicy: BeforeHookCreation
 #      syncWave: "-1"
 #    # -- List of configs (files) within the configmap
 #    configs:
@@ -950,44 +950,68 @@ cronjobs:
     #   includeElasticsearchSecret: false
     #   includeOpensearchSecret: false
 
-# -- Define and Configure Job's
-# Each job has the following configuration options, and defaults to the values below if not set.
+# -- Configure default values for all jobs as defined in `$.Values.jobs`
+# @default -- See below.
+jobDefaults:
+  # -- REQUIRED FOR ALL JOBS. The name of the job.
+  name:
+  # -- REQUIRED FOR ALL JOBS. Resource requests/limits.
+  resources: {}
+  # -- Whether you want the secrets used by the main app workload to be available to the Job
+  includeAppSecret: false
+  # -- Whether you want the environment variables used by the main app workload to be available to the Job
+  includeBaseEnv: false
+  # -- Whether you want the securityContext used by the main app workload to be the same in the Job
+  includeBasePodSecurityContext: false
+  # -- Whether the pod should be restarted on failure
+  # ref: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#restart-policy)
+  restartPolicy: Never
+  # -- If this field is set, ttlSecondsAfterFinished after the Job finishes, it is eligible to be automatically deleted.
+  # ref: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.20/#cronjob-v1beta1-batch
+  ttlSecondsAfterFinished: 60
+  kubelock:
+    enabled: false
+  irsa:
+    enabled: false
+  # -- Any annotations you wish to add to the Job
+  annotations: {}
+  # -- ArgoCD sync config
+  # @default -- See below.
+  argo:
+    # -- Phase in which ArgoCD should apply the manifest
+    # ref: https://argo-cd.readthedocs.io/en/stable/user-guide/resource_hooks/#usage.
+    hook:
+    # -- When to delete the job resources in an automated fashion
+    # ref: https://argo-cd.readthedocs.io/en/stable/user-guide/resource_hooks/#hook-deletion-policies.
+    hookDeletePolicy:
+    # -- Sync Wave in which ArgoCD should apply the manifest.
+    # ref: https://argo-cd.readthedocs.io/en/stable/user-guide/sync-waves/.
+    syncWave:
+  # -- The command arguments for the main Job container.
+  args:
+  # -- The command the main Job container will run.
+  command:
+  # -- Any env entries you want to add. See includeBaseEnv to add all from main container.
+  # ref: https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/
+  env: []
+  # -- Any envFrom entries you want to add. See includeBaseEnv to add all from main container.
+  # ref: https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/
+  envFrom: []
+  # -- A list of initContainers you want to add to the Job.
+  extraInitContainers: []
+  # -- The image to use in the main container for the Job.
+  # @default -- Same as `$.Values.image`
+  image:
+  # -- Any labels you wish to add to the Job.
+  labels: {}
+  # -- Add podSecurityContext config to the Job.
+  podSecurityContext: {}
+
+# -- Define and configure jobs
+# Add a map for each job in this list. Refer to `$.Values.jobDefaults` for a list of supported values (and the defaults
+# that will be applied to all jobs below).
 jobs:
   []
-  #     # The name of the job. Required.
-  # - name: ''
-  #   argo:
-  #     # Phase ArgoCD should apply the manifest, such as PreSync, Sync, PostSync.
-  #     # See https://argo-cd.readthedocs.io/en/stable/user-guide/resource_hooks/#usage.
-  #     hook: 'Sync'
-  #     # When to delete the hook in an automated fashion, suck as HookSucceeded, HookFailed, etc.
-  #     # See https://argo-cd.readthedocs.io/en/stable/user-guide/resource_hooks/#hook-deletion-policies.
-  #     hookDeletePolicy: 'BeforeHookCreation'
-  #     # Order ArgoCD should apply the manifest. Lower values are applied first, and negative values are allowed.
-  #     # See https://argo-cd.readthedocs.io/en/stable/user-guide/sync-waves/.
-  #     syncWave: '0'
-  #   # Whether the pod should be restarted on failure.
-  #   # See https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#restart-policy.
-  #   restartPolicy: Never
-  #   # If this field is set, ttlSecondsAfterFinished after the Job finishes, it is eligible to be automatically deleted.
-  #   # See https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.20/#cronjob-v1beta1-batch
-  #   ttlSecondsAfterFinished: 60
-  #   # Configuration for the job image, command, arguments, environment variables, resources, etc. `resources` is required.
-  #   image: '${.image.registry + "/" + .image.repository + ":" + .image.tag}'
-  #   command:
-  #     - ''
-  #   args:
-  #     - ''
-  #   env: if includeBaseEnv then '${.env}' else []
-  #   envFrom: if includeAppSecret then '${.envFrom}' else []
-  #   podSecurityContext:
-  #     runAsUser: if includeBasePodSecurityContext then '${podSecurityContext.rusAsUser}' else ''
-  #   extraInitContainers: []
-  #   resources: []
-  #     # Whether to use the main deployment values above
-  #   includeBaseEnv: false
-  #   includeAppSecret: false
-  #   includeBasePodSecurityContext: false
 
 dynamodb:
   enabled: false

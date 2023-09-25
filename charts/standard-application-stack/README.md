@@ -1,6 +1,6 @@
 # standard-application-stack
 
-![Version: 5.13.0](https://img.shields.io/badge/Version-5.13.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 5.14.0](https://img.shields.io/badge/Version-5.14.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A generic chart to support most common application requirements
 
@@ -164,7 +164,28 @@ A generic chart to support most common application requirements
 | ingress.specificRulesHostsYaml | object | `{}` | Optional ingress Rules Hosts Yaml that doesn't fit standard pattern |
 | ingress.specificTlsHostsYaml | object | `{}` | Optional ingress Tls Hosts Yaml that doesn't fit standard pattern |
 | ingress.tls | bool | `true` | Enable TLS configuration for the hostname defined at ingress.hostname parameter |
-| jobs | list | `[]` | Define and Configure Job's Each job has the following configuration options, and defaults to the values below if not set. |
+| jobDefaults | object | See below. | Configure default values for all jobs as defined in `$.Values.jobs` |
+| jobDefaults.annotations | object | `{}` | Any annotations you wish to add to the Job |
+| jobDefaults.argo | object | See below. | ArgoCD sync config |
+| jobDefaults.argo.hook | string | `nil` | Phase in which ArgoCD should apply the manifest ref: https://argo-cd.readthedocs.io/en/stable/user-guide/resource_hooks/#usage. |
+| jobDefaults.argo.hookDeletePolicy | string | `nil` | When to delete the job resources in an automated fashion ref: https://argo-cd.readthedocs.io/en/stable/user-guide/resource_hooks/#hook-deletion-policies. |
+| jobDefaults.argo.syncWave | string | `nil` | Sync Wave in which ArgoCD should apply the manifest. ref: https://argo-cd.readthedocs.io/en/stable/user-guide/sync-waves/. |
+| jobDefaults.args | string | `nil` | The command arguments for the main Job container. |
+| jobDefaults.command | string | `nil` | The command the main Job container will run. |
+| jobDefaults.env | list | `[]` | Any env entries you want to add. See includeBaseEnv to add all from main container. ref: https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/ |
+| jobDefaults.envFrom | list | `[]` | Any envFrom entries you want to add. See includeBaseEnv to add all from main container. ref: https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/ |
+| jobDefaults.extraInitContainers | list | `[]` | A list of initContainers you want to add to the Job. |
+| jobDefaults.image | string | Same as `$.Values.image` | The image to use in the main container for the Job. |
+| jobDefaults.includeAppSecret | bool | `false` | Whether you want the secrets used by the main app workload to be available to the Job |
+| jobDefaults.includeBaseEnv | bool | `false` | Whether you want the environment variables used by the main app workload to be available to the Job |
+| jobDefaults.includeBasePodSecurityContext | bool | `false` | Whether you want the securityContext used by the main app workload to be the same in the Job |
+| jobDefaults.labels | object | `{}` | Any labels you wish to add to the Job. |
+| jobDefaults.name | string | `nil` | REQUIRED FOR ALL JOBS. The name of the job. |
+| jobDefaults.podSecurityContext | object | `{}` | Add podSecurityContext config to the Job. |
+| jobDefaults.resources | object | `{}` | REQUIRED FOR ALL JOBS. Resource requests/limits. |
+| jobDefaults.restartPolicy | string | `"Never"` | Whether the pod should be restarted on failure ref: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#restart-policy) |
+| jobDefaults.ttlSecondsAfterFinished | int | `60` | If this field is set, ttlSecondsAfterFinished after the Job finishes, it is eligible to be automatically deleted. ref: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.20/#cronjob-v1beta1-batch |
+| jobs | list | `[]` | Define and configure jobs Add a map for each job in this list. Refer to `$.Values.jobDefaults` for a list of supported values (and the defaults that will be applied to all jobs below). |
 | kibana.elasticsearchHosts | string | `""` |  |
 | kibana.enabled | bool | `false` |  |
 | kubelock | object | `{"enabled":false}` | Configure the use of kubelock ref: https://github.com/mintel/kubelock |

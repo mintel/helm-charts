@@ -5,7 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [v5.14.0] - 2023-09-25
+### Added
+- Explicit default values for all Jobs have been added to the values.yaml file and are merged with each job at render
+  time.
+- Templates now available for Roles, RoleBindings and ServiceAccounts.
+### Changed
+- Jobs now create their own RBAC resources and make copies of the main `-app` secret rather than using the main app
+  ones. This makes Jobs self-contained and mitigates issues with main app resources being deleted during whichever Argo
+  phase the Job is a part of.
+- Refactored some of the roles, rolebindings and service accounts to use the new templates (only those that are properly
+  unit tested).
+### Fixed
+- Fixed issue where setting `includeBasePodSecurityContext` to `true` and adding values to `podSecurityContext` would
+  result in a duplicate `securityContext` key
 
 ## [v5.13.0] - 2023-08-22
 ### Changed

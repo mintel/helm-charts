@@ -45,17 +45,17 @@ app.mintel.com/placeholder: placeholder
 {{- end -}}
 
 {{/* Set up Argo annotations based on argo values block */}}
-{{ define "mintel_common.argoAnnotations" }}
-  {{ if .hook }}
+{{- define "mintel_common.argoAnnotations" }}
+  {{- if .hook }}
 argocd.argoproj.io/hook: {{ toYaml .hook }}
-    {{ if .hookDeletePolicy }}
+    {{- if .hookDeletePolicy }}
 argocd.argoproj.io/hook-delete-policy: {{ toYaml .hookDeletePolicy }}
-    {{ end }}
-  {{ end }}
-  {{ if .syncWave }}
+    {{- end }}
+  {{- end }}
+  {{- if .syncWave }}
 argocd.argoproj.io/sync-wave: {{ toYaml .syncWave }}
-  {{ end }}
-{{ end }}
+  {{- end }}
+{{- end }}
 
 {{/* Common labels */}}
 {{- define "mintel_common.labels" -}}

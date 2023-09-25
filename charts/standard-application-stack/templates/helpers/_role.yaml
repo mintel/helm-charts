@@ -1,0 +1,60 @@
+{{/* vim: set filetype=mustache: */}}
+
+{{/*
+Template for creating a Role. Expects a list [$, config] as context where "config" is a dict containing the following
+optional kwargs:
+
+name:        string        # The name of the role. Defaults to global name if not provided.
+annotations: dict          # Any extra custom annotations.
+argo:        dict          # Standard argo object (as processed by mintel_common.argoAnnotations).
+rules:       list(string)  # A list of keywords that determine which rules get added to the role.
+                           # Example: list "kubelock" "aws-load-balancer-controller-okta"
+
+*/}}
+{{- define "mintel_common.role" -}}
+{{ $ := index . 0 }}
+{{ $config := index . 1}}
+apiVersion: {{ include "common.capabilities.rbac.apiVersion" $ }}
+kind: Role
+metadata:
+  name: {{ $config.name | default (include "mintel_common.fullname" $)  }}
+  namespace: {{ $.Release.Namespace }}
+  labels: {{ include "mintel_common.labels" $ | nindent 4 }}
+  annotations:
+    {{ include "mintel_common.commonAnnotations" $ | nindent 4 }}
+    {{ if $config.annotations }}{{ $config.annotations | toYaml | nindent 4 }}{{ end }}
+    {{ if $config.argo }}
+    {{ include "mintel_common.argoAnnotations" $config.argo | nindent 4 }}
+    {{ end }}
+rules:
+{{ if (has "kubelock" $config.rules) }}
+- apiGroups:
+  - coordination.k8s.io
+  resources:
+  - leases
+  verbs:
+  - get
+  - list
+  - create
+  - update
+- apiGroups:
+  - ""
+  resources:
+  - endpoints
+  verbs:
+  - get
+  - list
+  - create
+  - update
+{{- end -}}
+{{ if (has "aws-load-balancer-controller-okta" $config.rules) }}
+- apiGroups:
+  - ""
+  resources:
+  - secrets
+  verbs:
+  - get
+  - list
+  - watch
+{{- end -}}
+{{- end -}}
