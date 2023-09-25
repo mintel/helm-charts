@@ -90,6 +90,7 @@ spec:
           resources: {{- toYaml . | nindent 12 }}
           {{- end }}
 
+
 {{- if $serviceAccountEnabled }}
 ---
 {{- $serviceAccountConfig := dict "name" $jobName "argo" .argo "irsa" .irsa }}
@@ -103,7 +104,6 @@ spec:
 {{- $roleBindingConfig := dict "name" $jobName "argo" .argo "roleName" $jobName "serviceAccountName" $jobName -}}
 {{- include "mintel_common.roleBinding" (list $ $roleBindingConfig) }}
 {{- end }}
-
 {{- end }}
 
 
