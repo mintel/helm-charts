@@ -20,7 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed issue where setting `includeBasePodSecurityContext` to `true` and adding values to `podSecurityContext` would
   result in a duplicate `securityContext` key
 
-## [v6.0.0] - 2023-08-22
+## [v5.13.0] - 2023-08-22
 ### Changed
 - Update `component` reporting label to default to application name (`global.name`)
 

@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Extra Job service accounts now get added to the list of accounts that are granted access to AWS resources if required.
 
-## [v0.47.0] - 2023-09-04
+## [v0.46.1] - 2023-09-04
 ### Added
 - Bump IRSA module version. Fixes an issue with duplicate SIDs being created for S3 buckets with mixed sources.
 
