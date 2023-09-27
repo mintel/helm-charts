@@ -129,7 +129,7 @@ autoscaling:
   # by the Kubernetes Horizontal Pod Autoscaler.
   cooldownPeriod: 300  # min value allowed 60
 
-  maxReplicaCount: 5  # max value allowed 10
+  maxReplicaCount: 5  # max value allowed 30
   minReplicaCount: 2  # min value allowed 1
 
   # Enable zero replicas (sets idleReplicaCount=0)

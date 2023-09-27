@@ -9,10 +9,10 @@ Helpers for Keda objects
   {{- max 60 .cooldownPeriod }}
 {{- end }}
 
-# maxReplicaCount must be >1 and <= 10
+# maxReplicaCount must be >1 and <= 30
 {{- define "mintel_common.keda.scaledObject.maxReplicaCount" -}}
-{{- if (gt ( .maxReplicaCount | int) 10) }}
-  {{- 10 }}
+{{- if (gt ( .maxReplicaCount | int) 30) }}
+  {{- 30 }}
 {{- else }}
   {{- max 1 .maxReplicaCount }}
 {{- end }}
