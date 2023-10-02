@@ -1078,6 +1078,9 @@ mariadb:
     #   tables:
     #   - table: "table1"
     #     permissions: ["DELETE"]
+    job:
+      logLevel: "INFO"
+      # Log level for the py-dba job, must be one of ["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"]
 
 
 memcached:
@@ -1143,6 +1146,9 @@ postgresql:
     #   tables:
     #   - table: "table1"
     #     permissions: ["DELETE"]
+    job:
+      logLevel: "INFO"
+      # Log level for the py-dba job, must be one of ["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"]
 
 redis:
   enabled: false
