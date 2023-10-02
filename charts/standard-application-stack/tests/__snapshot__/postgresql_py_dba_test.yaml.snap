@@ -5,6 +5,7 @@ adds correct config to configmap:
     metadata:
       annotations:
         app.mintel.com/placeholder: placeholder
+        argocd.argoproj.io/hook: PreSync
       labels:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
@@ -21,6 +22,8 @@ adds correct config to configmap:
         spec:
           containers:
             - env:
+                - name: LOG_LEVEL
+                  value: INFO
                 - name: CONFIG_FILE
                   value: /etc/config/py-dba-config
                 - name: DB_ENGINE
@@ -30,7 +33,7 @@ adds correct config to configmap:
               envFrom:
                 - secretRef:
                     name: test-app-postgresql
-              image: 551844124467.dkr.ecr.us-east-2.amazonaws.com/gitlab/mintel/satoshi/tools/py-dba:v0.1.3
+              image: 551844124467.dkr.ecr.us-east-2.amazonaws.com/gitlab/mintel/satoshi/tools/py-dba:v0.2.0
               imagePullPolicy: IfNotPresent
               name: main
               resources:
@@ -96,6 +99,7 @@ extraUsers adds job and configmap:
     metadata:
       annotations:
         app.mintel.com/placeholder: placeholder
+        argocd.argoproj.io/hook: PreSync
       labels:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
@@ -112,6 +116,8 @@ extraUsers adds job and configmap:
         spec:
           containers:
             - env:
+                - name: LOG_LEVEL
+                  value: INFO
                 - name: CONFIG_FILE
                   value: /etc/config/py-dba-config
                 - name: DB_ENGINE
@@ -121,7 +127,7 @@ extraUsers adds job and configmap:
               envFrom:
                 - secretRef:
                     name: test-app-postgresql
-              image: 551844124467.dkr.ecr.us-east-2.amazonaws.com/gitlab/mintel/satoshi/tools/py-dba:v0.1.3
+              image: 551844124467.dkr.ecr.us-east-2.amazonaws.com/gitlab/mintel/satoshi/tools/py-dba:v0.2.0
               imagePullPolicy: IfNotPresent
               name: main
               resources:
