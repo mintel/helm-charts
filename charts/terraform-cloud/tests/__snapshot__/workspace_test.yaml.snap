@@ -189,7 +189,7 @@ Dev S3 module workspace - tags:
       agentPoolID: ""
       module:
         source: app.terraform.io/Mintel/sqs/aws
-        version: 1.1.0
+        version: 1.2.0
       omitNamespacePrefix: true
       organization: Mintel
       secretsMountPath: /tmp/secrets
@@ -933,7 +933,7 @@ Dev S3 module workspace with multiple instances - tags:
       agentPoolID: ""
       module:
         source: app.terraform.io/Mintel/sqs/aws
-        version: 1.1.0
+        version: 1.2.0
       omitNamespacePrefix: true
       organization: Mintel
       secretsMountPath: /tmp/secrets
@@ -1012,7 +1012,7 @@ Dev S3 module workspace with multiple instances - tags:
       agentPoolID: ""
       module:
         source: app.terraform.io/Mintel/sqs/aws
-        version: 1.1.0
+        version: 1.2.0
       omitNamespacePrefix: true
       organization: Mintel
       secretsMountPath: /tmp/secrets
