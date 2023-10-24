@@ -1,6 +1,6 @@
 # terraform-cloud
 
-![Version: 0.48.0](https://img.shields.io/badge/Version-0.48.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.0](https://img.shields.io/badge/AppVersion-2.0.0-informational?style=flat-square)
+![Version: 0.49.0](https://img.shields.io/badge/Version-0.49.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.0](https://img.shields.io/badge/AppVersion-2.0.0-informational?style=flat-square)
 
 A Helm chart for provisioning resources using Terraform Cloud
 
@@ -48,6 +48,13 @@ A Helm chart for provisioning resources using Terraform Cloud
 | cmsBackup.terraform.instances | object | `{}` | A map of instance names => variable key/value pairs to be sent to the terraform module. The values in `defaultVars` will be applied to every instance if not explicitly defined here. |
 | cmsBackup.terraform.module.source | string | `"app.terraform.io/Mintel/cms-backup/aws"` | Registry path of the Terraform module used to create the resource (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/cms-backup/aws) |
 | cmsBackup.terraform.module.version | string | `"0.1.0"` | Module version |
+| datasync.enabled | bool | `false` | Set to true to create an AWS Datasync instance |
+| datasync.outputSecret | bool | `true` | Set to true to create an AWS secret manager external secret with outputs |
+| datasync.terraform | object | `{"defaultVars":{},"instances":{},"module":{"source":"app.terraform.io/Mintel/datasync/aws","version":"0.2.0"}}` | Set ArgoCD syncWave for this resource (default -20) syncWave: -20 |
+| datasync.terraform.defaultVars | object | `{}` | Vars to be applied to all instances defined below |
+| datasync.terraform.instances | object | `{}` | A map of instance names => variable key/value pairs to be sent to the terraform module. The values in `defaultVars` will be applied to every instance if not explicitly defined here. |
+| datasync.terraform.module.source | string | `"app.terraform.io/Mintel/datasync/aws"` | Registry path of the Terraform module used to create the resource (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/amazonmq/aws) |
+| datasync.terraform.module.version | string | `"0.2.0"` | Module version |
 | dynamodb.enabled | bool | `false` | Set to true to create a DynamoDB instance |
 | dynamodb.outputSecret | bool | `true` | Set to true to create an AWS secret manager external secret with outputs |
 | dynamodb.terraform | object | `{"defaultVars":{},"instances":{},"module":{"source":"app.terraform.io/Mintel/dynamodb/aws","version":"1.0.0"}}` | Set ArgoCD syncWave for this resource (default -40) syncWave: -40 |
