@@ -28,7 +28,7 @@ Dev S3 module name label override:
       organization: Mintel
       secretsMountPath: /tmp/secrets
       sshKeyID: mintel-ssh
-      terraformVersion: 1.0.7
+      terraformVersion: 1.2.9
       variables:
         - environmentVariable: false
           hcl: false
@@ -111,7 +111,7 @@ Dev S3 module workspace:
       organization: Mintel
       secretsMountPath: /tmp/secrets
       sshKeyID: mintel-ssh
-      terraformVersion: 1.0.7
+      terraformVersion: 1.2.9
       variables:
         - environmentVariable: false
           hcl: false
@@ -194,7 +194,7 @@ Dev S3 module workspace - tags:
       organization: Mintel
       secretsMountPath: /tmp/secrets
       sshKeyID: mintel-ssh
-      terraformVersion: 1.0.7
+      terraformVersion: 1.2.9
       variables:
         - environmentVariable: false
           hcl: false
@@ -275,7 +275,7 @@ Dev S3 module workspace adds correct env override:
       organization: Mintel
       secretsMountPath: /tmp/secrets
       sshKeyID: mintel-ssh
-      terraformVersion: 1.0.7
+      terraformVersion: 1.2.9
       variables:
         - environmentVariable: false
           hcl: false
@@ -358,7 +358,7 @@ Dev S3 module workspace ignores env override when added explicitly:
       organization: Mintel
       secretsMountPath: /tmp/secrets
       sshKeyID: mintel-ssh
-      terraformVersion: 1.0.7
+      terraformVersion: 1.2.9
       variables:
         - environmentVariable: false
           hcl: false
@@ -441,7 +441,7 @@ Dev S3 module workspace name does not repeat mntl-prefix:
       organization: Mintel
       secretsMountPath: /tmp/secrets
       sshKeyID: mintel-ssh
-      terraformVersion: 1.0.7
+      terraformVersion: 1.2.9
       variables:
         - environmentVariable: false
           hcl: false
@@ -524,7 +524,7 @@ Dev S3 module workspace name override:
       organization: Mintel
       secretsMountPath: /tmp/secrets
       sshKeyID: mintel-ssh
-      terraformVersion: 1.0.7
+      terraformVersion: 1.2.9
       variables:
         - environmentVariable: false
           hcl: false
@@ -607,7 +607,7 @@ Dev S3 module workspace with default (0) syncWave:
       organization: Mintel
       secretsMountPath: /tmp/secrets
       sshKeyID: mintel-ssh
-      terraformVersion: 1.0.7
+      terraformVersion: 1.2.9
       variables:
         - environmentVariable: false
           hcl: false
@@ -690,7 +690,7 @@ Dev S3 module workspace with modified syncWave:
       organization: Mintel
       secretsMountPath: /tmp/secrets
       sshKeyID: mintel-ssh
-      terraformVersion: 1.0.7
+      terraformVersion: 1.2.9
       variables:
         - environmentVariable: false
           hcl: false
@@ -773,7 +773,7 @@ Dev S3 module workspace with multiple instances:
       organization: Mintel
       secretsMountPath: /tmp/secrets
       sshKeyID: mintel-ssh
-      terraformVersion: 1.0.7
+      terraformVersion: 1.2.9
       variables:
         - environmentVariable: false
           hcl: false
@@ -855,7 +855,7 @@ Dev S3 module workspace with multiple instances:
       organization: Mintel
       secretsMountPath: /tmp/secrets
       sshKeyID: mintel-ssh
-      terraformVersion: 1.0.7
+      terraformVersion: 1.2.9
       variables:
         - environmentVariable: false
           hcl: false
@@ -938,7 +938,7 @@ Dev S3 module workspace with multiple instances - tags:
       organization: Mintel
       secretsMountPath: /tmp/secrets
       sshKeyID: mintel-ssh
-      terraformVersion: 1.0.7
+      terraformVersion: 1.2.9
       variables:
         - environmentVariable: false
           hcl: false
@@ -1017,7 +1017,7 @@ Dev S3 module workspace with multiple instances - tags:
       organization: Mintel
       secretsMountPath: /tmp/secrets
       sshKeyID: mintel-ssh
-      terraformVersion: 1.0.7
+      terraformVersion: 1.2.9
       variables:
         - environmentVariable: false
           hcl: false
@@ -1098,7 +1098,7 @@ Dev S3 module workspace with multiple instances and syncWave overrides:
       organization: Mintel
       secretsMountPath: /tmp/secrets
       sshKeyID: mintel-ssh
-      terraformVersion: 1.0.7
+      terraformVersion: 1.2.9
       variables:
         - environmentVariable: false
           hcl: false
@@ -1180,7 +1180,7 @@ Dev S3 module workspace with multiple instances and syncWave overrides:
       organization: Mintel
       secretsMountPath: /tmp/secrets
       sshKeyID: mintel-ssh
-      terraformVersion: 1.0.7
+      terraformVersion: 1.2.9
       variables:
         - environmentVariable: false
           hcl: false
@@ -1263,7 +1263,7 @@ Test workspace allow destroy env:
       organization: Mintel
       secretsMountPath: /tmp/secrets
       sshKeyID: mintel-ssh
-      terraformVersion: 1.0.7
+      terraformVersion: 1.2.9
       variables:
         - environmentVariable: false
           hcl: false
@@ -1341,7 +1341,7 @@ Test workspace extra annotations:
       organization: Mintel
       secretsMountPath: /tmp/secrets
       sshKeyID: mintel-ssh
-      terraformVersion: 1.0.7
+      terraformVersion: 1.2.9
       variables:
         - environmentVariable: false
           hcl: false
@@ -1424,7 +1424,7 @@ Test workspace extra annotations override:
       organization: Mintel
       secretsMountPath: /tmp/secrets
       sshKeyID: mintel-ssh
-      terraformVersion: 1.0.7
+      terraformVersion: 1.2.9
       variables:
         - environmentVariable: false
           hcl: false
