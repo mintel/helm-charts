@@ -27,7 +27,7 @@ global:
     # -- Where secrets are mounted inside the Terraform Operator container
     secretsMountPath: /tmp/secrets
     # -- Global Terraform version for all modules
-    terraformVersion: 1.0.7
+    terraformVersion: "1.2.9"
     # -- Set to true as part of tf cloud migrations. When true, it stops standard-application-stack from creating AWS
     # related external secrets and passes that responsibility to the terraform-cloud chart
     externalSecrets: true
@@ -446,7 +446,7 @@ mariadb:
       # (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/rds/aws)
       source: app.terraform.io/Mintel/rds/aws
       # -- Module version
-      version: "1.1.2"
+      version: "1.3.0"
     # -- Vars to be applied to all instances defined below
     # @default -- See below
     defaultVars:
@@ -564,7 +564,7 @@ postgresql:
       # (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/rds/aws)
       source: app.terraform.io/Mintel/rds/aws
       # -- Module version
-      version: "1.1.2"
+      version: "1.3.0"
     # -- Vars to be applied to all instances defined below
     # @default -- See below
     defaultVars:
