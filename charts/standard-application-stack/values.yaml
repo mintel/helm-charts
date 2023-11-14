@@ -821,7 +821,7 @@ celery:
     # -- Period seconds for livenessProbe (frequency)
     #  periodSeconds: 10
     # -- Timeout seconds for livenessProbe
-    #  timeoutSeconds: 5
+    #  timeoutSeconds: 2
     # -- Failure threshold for livenessProbe
     #  failureThreshold: 3
     # -- Success threshold for livenessProbe
@@ -846,7 +846,7 @@ celery:
     # -- Period seconds for readinessProbe (frequency)
     #  periodSeconds: 10
     # -- Timeout seconds for readinessProbe
-    #  timeoutSeconds: 5
+    #  timeoutSeconds: 2
     # -- Failure threshold for readinessProbe
     #  failureThreshold: 3
     # -- Success threshold for readinessProbe

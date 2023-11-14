@@ -201,7 +201,7 @@ spec:
               command:
               - 'sh'
               - '-c'
-              - 'celery inspect ping -d celery@$(hostname) --timeout {{ coalesce .Values.celery.pingTimeout .Values.celery.liveness.timeoutSeconds 1 }}'
+              - 'celery inspect ping -d celery@$(hostname) --timeout {{ coalesce .Values.celery.pingTimeout .Values.celery.liveness.timeoutSeconds 2 }}'
             {{- end }}
             initialDelaySeconds: {{ .Values.celery.liveness.initialDelaySeconds | default 0 }}
             timeoutSeconds: {{ .Values.celery.liveness.timeoutSeconds | default 2 }}
@@ -220,7 +220,7 @@ spec:
             {{- end }}
             successThreshold: {{ .Values.celery.startup.successThreshold| default 1 }}
             failureThreshold: {{ .Values.celery.startup.failureThreshold | default 60 }}
-            timeoutSeconds: {{ coalesce .Values.celery.startup.timeoutSeconds .Values.celery.liveness.timeoutSeconds 1 }}
+            timeoutSeconds: {{ coalesce .Values.celery.startup.timeoutSeconds .Values.celery.liveness.timeoutSeconds 2 }}
             periodSeconds: {{ coalesce .Values.celery.startup.periodSeconds .Values.celery.liveness.periodSeconds 5 }}
           {{- end }}
           {{- if (and .Values.celery.readiness .Values.celery.readiness.enabled) }}
