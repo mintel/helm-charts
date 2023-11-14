@@ -794,6 +794,9 @@ celery:
   #  image: ""
   # -- Optional command to the celery container
   #  command: []
+  # -- Optional timeout (seconds) to pass to the 'celery inspect ping' command for health checks
+  #    Defaults to liveness.TimeSeconds
+  # pingTimeout: 1
   # -- Arguments to the celery container
   args:
     - "celery"
@@ -815,7 +818,14 @@ celery:
   liveness:
     # -- Enable liveness probe
     enabled: false
-
+    # -- Period seconds for livenessProbe (frequency)
+    #  periodSeconds: 10
+    # -- Timeout seconds for livenessProbe
+    #  timeoutSeconds: 5
+    # -- Failure threshold for livenessProbe
+    #  failureThreshold: 3
+    # -- Success threshold for livenessProbe
+    #  successThreshold: 1
   # -- Configure extra options for the start-up probe that is enabled when celery.liveness.enabled is set to true
   startup:
     # -- Allows a non-default startup probe implementation
@@ -831,6 +841,16 @@ celery:
   readiness:
     # -- Enable readiness probe
     enabled: false
+    # -- Initial delay seconds for readinessProbe
+    #  initialDelaySeconds: 0
+    # -- Period seconds for readinessProbe (frequency)
+    #  periodSeconds: 10
+    # -- Timeout seconds for readinessProbe
+    #  timeoutSeconds: 5
+    # -- Failure threshold for readinessProbe
+    #  failureThreshold: 3
+    # -- Success threshold for readinessProbe
+    #  successThreshold: 1
   # -- Prometheus Exporter / Metrics
   metrics:
     # -- Enable Prometheus to access application metrics endpoints
