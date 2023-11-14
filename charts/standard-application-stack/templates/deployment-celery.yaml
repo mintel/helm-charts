@@ -201,11 +201,13 @@ spec:
               command:
               - 'sh'
               - '-c'
-              - 'celery inspect ping -d celery@$(hostname)'
+              - 'celery inspect ping -d celery@$(hostname) --timeout {{ coalesce .Values.celery.pingTimeout .Values.celery.liveness.timeoutSeconds 2 }}'
             {{- end }}
             initialDelaySeconds: {{ .Values.celery.liveness.initialDelaySeconds | default 0 }}
             timeoutSeconds: {{ .Values.celery.liveness.timeoutSeconds | default 2 }}
             periodSeconds: {{ .Values.celery.liveness.periodSeconds | default 10 }}
+            successThreshold: {{ .Values.celery.liveness.successThreshold | default 1 }}
+            failureThreshold: {{ .Values.celery.liveness.failureThreshold | default 3 }}
           startupProbe:
             {{- if (and .Values.celery.startup .Values.celery.startup.methodOverride) }}
             {{- toYaml .Values.celery.startup.methodOverride | nindent 12 }}
@@ -216,8 +218,9 @@ spec:
               - '-c'
               - 'celery inspect ping -d celery@$(hostname)'
             {{- end }}
+            successThreshold: {{ .Values.celery.startup.successThreshold| default 1 }}
             failureThreshold: {{ .Values.celery.startup.failureThreshold | default 60 }}
-            timeoutSeconds: {{ coalesce .Values.celery.startup.timeoutSeconds .Values.celery.liveness.timeoutSeconds 1 }}
+            timeoutSeconds: {{ coalesce .Values.celery.startup.timeoutSeconds .Values.celery.liveness.timeoutSeconds 2 }}
             periodSeconds: {{ coalesce .Values.celery.startup.periodSeconds .Values.celery.liveness.periodSeconds 5 }}
           {{- end }}
           {{- if (and .Values.celery.readiness .Values.celery.readiness.enabled) }}
@@ -231,8 +234,10 @@ spec:
               scheme: {{ .Values.readiness.scheme | default "HTTP" }}
             {{- end }}
             initialDelaySeconds: {{ .Values.celery.readiness.initialDelaySeconds | default 0 }}
-            timeoutSeconds: {{ .Values.celery.readiness.timeoutSeconds | default 1 }}
+            timeoutSeconds: {{ .Values.celery.readiness.timeoutSeconds | default 2 }}
             periodSeconds: {{ .Values.celery.readiness.periodSeconds | default 10 }}
+            successThreshold: {{ .Values.celery.readiness.successThreshold | default 1 }}
+            failureThreshold: {{ .Values.celery.readiness.failureThreshold | default 3 }}
           {{- end }}
           {{- with .Values.celery.securityContext | default $.Values.securityContext }}
           securityContext: {{ toYaml . | nindent 12 }}
