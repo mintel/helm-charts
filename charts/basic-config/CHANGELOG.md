@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v0.3.1] - 2024-01-12
+### Fixed
+- Fix template for Service selector
+
 ## [v0.3.0] - 2023-06-28
 ### Removed
 - Remove `helm.sh/chart` annotation from all remaining manifests.
