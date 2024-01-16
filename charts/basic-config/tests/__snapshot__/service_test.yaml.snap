@@ -14,5 +14,7 @@ Renders headless service:
       namespace: test-namespace
     spec:
       clusterIP: None
-      selector: {}
+      selector: |-
+        app.kubernetes.io/name: test-app
+        app.kubernetes.io/component: app
       type: ClusterIP

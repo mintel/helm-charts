@@ -15,5 +15,5 @@ spec:
   clusterIP: None
   {{- end }}
   type: {{ .Values.service.type }}
-  selector: {{ toYaml .Values.service.selectorLabelsOverride | default (include "mintel_common.selectorLabels" .) | nindent 6 }}
+  selector: {{ .Values.service.selectorLabelsOverride | default (include "mintel_common.selectorLabels" .) | toYaml | nindent 6 }}
 {{- end }}
