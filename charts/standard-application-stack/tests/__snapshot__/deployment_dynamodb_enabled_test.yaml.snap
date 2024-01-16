@@ -57,7 +57,7 @@ Check DynamoDB envfrom secretRef is present:
               envFrom:
                 - secretRef:
                     name: test-app-dynamodb
-              image: registry.gitlab.com/test:v0.1.0
+              image: registry.gitlab.com/test:v0.0.0
               imagePullPolicy: IfNotPresent
               livenessProbe:
                 httpGet:
@@ -177,7 +177,7 @@ Check DynamoDB envfrom secretRef is present for local environment:
               envFrom:
                 - secretRef:
                     name: test-app-dynamodb
-              image: k3d-default.localhost:5000/test:v0.1.0
+              image: k3d-default.localhost:5000/test:v0.0.0
               imagePullPolicy: IfNotPresent
               livenessProbe:
                 httpGet:
@@ -283,7 +283,7 @@ Check DynamoDB secretName Override:
               envFrom:
                 - secretRef:
                     name: overrideName
-              image: registry.gitlab.com/test:v0.1.0
+              image: registry.gitlab.com/test:v0.0.0
               imagePullPolicy: IfNotPresent
               livenessProbe:
                 httpGet:

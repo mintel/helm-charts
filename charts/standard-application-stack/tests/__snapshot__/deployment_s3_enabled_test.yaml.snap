@@ -57,7 +57,7 @@ Check S3 envfrom secretRef is present:
               envFrom:
                 - secretRef:
                     name: test-app-s3
-              image: registry.gitlab.com/test:v0.1.0
+              image: registry.gitlab.com/test:v0.0.0
               imagePullPolicy: IfNotPresent
               livenessProbe:
                 httpGet:
@@ -177,7 +177,7 @@ Check S3 envfrom secretRef is present for local environment:
               envFrom:
                 - secretRef:
                     name: test-app-s3
-              image: k3d-default.localhost:5000/test:v0.1.0
+              image: k3d-default.localhost:5000/test:v0.0.0
               imagePullPolicy: IfNotPresent
               livenessProbe:
                 httpGet:
@@ -290,7 +290,7 @@ Check S3 envfrom secretRef is present for multiple instances of TF Cloud helm ch
                     name: mntl-test-bucket-another-s3
                 - secretRef:
                     name: mntl-test-bucket-s3
-              image: registry.gitlab.com/test:v0.1.0
+              image: registry.gitlab.com/test:v0.0.0
               imagePullPolicy: IfNotPresent
               livenessProbe:
                 httpGet:
@@ -405,7 +405,7 @@ Check S3 secretName Override:
               envFrom:
                 - secretRef:
                     name: overrideName
-              image: registry.gitlab.com/test:v0.1.0
+              image: registry.gitlab.com/test:v0.0.0
               imagePullPolicy: IfNotPresent
               livenessProbe:
                 httpGet:
@@ -530,7 +530,7 @@ Check S3 stakater secret reloader annotation contains correct secrets for multip
                     name: mntl-test-bucket-s3
                 - secretRef:
                     name: test-app-extra-secret-1
-              image: registry.gitlab.com/test:v0.1.0
+              image: registry.gitlab.com/test:v0.0.0
               imagePullPolicy: IfNotPresent
               livenessProbe:
                 httpGet:

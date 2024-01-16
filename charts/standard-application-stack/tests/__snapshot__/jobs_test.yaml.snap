@@ -197,7 +197,7 @@ Check default values are correct with minimal configuration:
                 - name: RUNTIME_ENVIRONMENT
                   value: kubernetes
               envFrom: null
-              image: registry.example.com/test/image/repo:v0.1.0
+              image: registry.example.com/test/image/repo:v0.0.0
               imagePullPolicy: IfNotPresent
               name: main
               resources:

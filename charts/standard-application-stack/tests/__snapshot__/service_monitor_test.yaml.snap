@@ -289,7 +289,7 @@ Check combined template defaults:
               envFrom:
                 - secretRef:
                     name: test-app-app
-              image: registry.gitlab.com/test:v0.1.0
+              image: registry.gitlab.com/test:v0.0.0
               imagePullPolicy: IfNotPresent
               livenessProbe:
                 httpGet:
@@ -485,7 +485,7 @@ Check combined template with extra ports and monitors:
               envFrom:
                 - secretRef:
                     name: test-app-app
-              image: registry.gitlab.com/test:v0.1.0
+              image: registry.gitlab.com/test:v0.0.0
               imagePullPolicy: IfNotPresent
               livenessProbe:
                 httpGet:

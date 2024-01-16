@@ -57,7 +57,7 @@ Check container extraPorts:
               envFrom:
                 - secretRef:
                     name: example-app-app
-              image: registry.gitlab.com/test:v0.1.0
+              image: registry.gitlab.com/test:v0.0.0
               imagePullPolicy: IfNotPresent
               livenessProbe:
                 httpGet:
@@ -175,7 +175,7 @@ Check container extraPorts are validated:
               envFrom:
                 - secretRef:
                     name: example-app-app
-              image: registry.gitlab.com/test:v0.1.0
+              image: registry.gitlab.com/test:v0.0.0
               imagePullPolicy: IfNotPresent
               livenessProbe:
                 httpGet:
@@ -295,7 +295,7 @@ Check container extraPorts protocol:
               envFrom:
                 - secretRef:
                     name: example-app-app
-              image: registry.gitlab.com/test:v0.1.0
+              image: registry.gitlab.com/test:v0.0.0
               imagePullPolicy: IfNotPresent
               livenessProbe:
                 httpGet:
@@ -415,7 +415,7 @@ Check container hybrid cloud ports:
               envFrom:
                 - secretRef:
                     name: example-app-app
-              image: registry.gitlab.com/test:v0.1.0
+              image: registry.gitlab.com/test:v0.0.0
               imagePullPolicy: IfNotPresent
               livenessProbe:
                 httpGet:
@@ -533,7 +533,7 @@ Check default container main port:
               envFrom:
                 - secretRef:
                     name: example-app-app
-              image: registry.gitlab.com/test:v0.1.0
+              image: registry.gitlab.com/test:v0.0.0
               imagePullPolicy: IfNotPresent
               livenessProbe:
                 httpGet:
@@ -647,7 +647,7 @@ Check overridden container main port:
               envFrom:
                 - secretRef:
                     name: example-app-app
-              image: registry.gitlab.com/test:v0.1.0
+              image: registry.gitlab.com/test:v0.0.0
               imagePullPolicy: IfNotPresent
               livenessProbe:
                 httpGet:
