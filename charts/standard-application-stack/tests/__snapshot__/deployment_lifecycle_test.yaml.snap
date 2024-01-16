@@ -63,7 +63,7 @@ Check AWS ALB lifecycle rule applied:
               envFrom:
                 - secretRef:
                     name: example-app-app
-              image: registry.gitlab.com/test:v0.1.0
+              image: registry.gitlab.com/test:v0.0.0
               imagePullPolicy: IfNotPresent
               lifecycle:
                 preStop:
@@ -190,7 +190,7 @@ Check AWS ALB lifecycle rules applied with custom delay:
               envFrom:
                 - secretRef:
                     name: example-app-app
-              image: registry.gitlab.com/test:v0.1.0
+              image: registry.gitlab.com/test:v0.0.0
               imagePullPolicy: IfNotPresent
               lifecycle:
                 preStop:
@@ -317,7 +317,7 @@ Check AWS ALB lifecycle rules are not applied when ALB disabled:
               envFrom:
                 - secretRef:
                     name: example-app-app
-              image: registry.gitlab.com/test:v0.1.0
+              image: registry.gitlab.com/test:v0.0.0
               imagePullPolicy: IfNotPresent
               livenessProbe:
                 httpGet:
@@ -431,7 +431,7 @@ Check AWS ALB lifecycle rules are not applied when ALB enabled (but Ingress disa
               envFrom:
                 - secretRef:
                     name: example-app-app
-              image: registry.gitlab.com/test:v0.1.0
+              image: registry.gitlab.com/test:v0.0.0
               imagePullPolicy: IfNotPresent
               livenessProbe:
                 httpGet:
@@ -545,7 +545,7 @@ Check lifecycle rules:
               envFrom:
                 - secretRef:
                     name: example-app-app
-              image: registry.gitlab.com/test:v0.1.0
+              image: registry.gitlab.com/test:v0.0.0
               imagePullPolicy: IfNotPresent
               lifecycle:
                 preStop:

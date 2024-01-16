@@ -57,7 +57,7 @@ Check default container args:
               envFrom:
                 - secretRef:
                     name: test-app-app
-              image: registry.gitlab.com/test:v0.1.0
+              image: registry.gitlab.com/test:v0.0.0
               imagePullPolicy: IfNotPresent
               livenessProbe:
                 httpGet:
@@ -228,7 +228,7 @@ Check setting skip-auth-regex from extra passed in values:
               envFrom:
                 - secretRef:
                     name: test-app-app
-              image: registry.gitlab.com/test:v0.1.0
+              image: registry.gitlab.com/test:v0.0.0
               imagePullPolicy: IfNotPresent
               livenessProbe:
                 httpGet:
@@ -400,7 +400,7 @@ Check setting skip-auth-regex from extra passed in values when they already cont
               envFrom:
                 - secretRef:
                     name: test-app-app
-              image: registry.gitlab.com/test:v0.1.0
+              image: registry.gitlab.com/test:v0.0.0
               imagePullPolicy: IfNotPresent
               livenessProbe:
                 httpGet:
@@ -572,7 +572,7 @@ Check setting skip-auth-regex from overridden health-check values:
               envFrom:
                 - secretRef:
                     name: test-app-app
-              image: registry.gitlab.com/test:v0.1.0
+              image: registry.gitlab.com/test:v0.0.0
               imagePullPolicy: IfNotPresent
               livenessProbe:
                 httpGet:
@@ -743,7 +743,7 @@ Check sidecar present if enabled:
               envFrom:
                 - secretRef:
                     name: test-app-app
-              image: registry.gitlab.com/test:v0.1.0
+              image: registry.gitlab.com/test:v0.0.0
               imagePullPolicy: IfNotPresent
               livenessProbe:
                 httpGet:

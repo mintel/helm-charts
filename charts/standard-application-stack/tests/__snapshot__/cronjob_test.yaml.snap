@@ -48,7 +48,7 @@ Check CronJob Default Overrides:
                     - name: RUNTIME_ENVIRONMENT
                       value: kubernetes
                   envFrom: null
-                  image: registry.gitlab.com/test:v0.1.0
+                  image: registry.gitlab.com/test:v0.0.0
                   imagePullPolicy: IfNotPresent
                   name: main
                   securityContext:
@@ -119,7 +119,7 @@ Check CronJob Defaults:
                     - name: RUNTIME_ENVIRONMENT
                       value: kubernetes
                   envFrom: null
-                  image: registry.gitlab.com/test:v0.1.0
+                  image: registry.gitlab.com/test:v0.0.0
                   imagePullPolicy: IfNotPresent
                   name: main
                   securityContext:
@@ -190,7 +190,7 @@ Check CronJob Job Overrides:
                     - name: RUNTIME_ENVIRONMENT
                       value: kubernetes
                   envFrom: null
-                  image: registry.gitlab.com/test:v0.1.0
+                  image: registry.gitlab.com/test:v0.0.0
                   imagePullPolicy: IfNotPresent
                   name: main
                   securityContext:
@@ -261,7 +261,7 @@ Check CronJob ttlSecondsAfterFinished zero value:
                     - name: RUNTIME_ENVIRONMENT
                       value: kubernetes
                   envFrom: null
-                  image: registry.gitlab.com/test:v0.1.0
+                  image: registry.gitlab.com/test:v0.0.0
                   imagePullPolicy: IfNotPresent
                   name: main
                   securityContext:
@@ -331,7 +331,7 @@ CronJob can have a timezone:
                     - name: RUNTIME_ENVIRONMENT
                       value: kubernetes
                   envFrom: null
-                  image: registry.gitlab.com/test:v0.1.0
+                  image: registry.gitlab.com/test:v0.0.0
                   imagePullPolicy: IfNotPresent
                   name: main
                   securityContext:

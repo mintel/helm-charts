@@ -58,7 +58,7 @@ Check allowSingleReplica doesn't alter strategy:
               envFrom:
                 - secretRef:
                     name: example-app-app
-              image: registry.gitlab.com/test:v0.1.0
+              image: registry.gitlab.com/test:v0.0.0
               imagePullPolicy: IfNotPresent
               livenessProbe:
                 httpGet:
@@ -173,7 +173,7 @@ Check allowSingleReplica set annotations:
               envFrom:
                 - secretRef:
                     name: example-app-app
-              image: registry.gitlab.com/test:v0.1.0
+              image: registry.gitlab.com/test:v0.0.0
               imagePullPolicy: IfNotPresent
               livenessProbe:
                 httpGet:
@@ -286,7 +286,7 @@ Check replicas unset when autoscaling is enabled:
               envFrom:
                 - secretRef:
                     name: example-app-app
-              image: registry.gitlab.com/test:v0.1.0
+              image: registry.gitlab.com/test:v0.0.0
               imagePullPolicy: IfNotPresent
               livenessProbe:
                 httpGet:
@@ -398,7 +398,7 @@ Check singleReplicaOnly applied:
               envFrom:
                 - secretRef:
                     name: example-app-app
-              image: registry.gitlab.com/test:v0.1.0
+              image: registry.gitlab.com/test:v0.0.0
               imagePullPolicy: IfNotPresent
               livenessProbe:
                 httpGet:
@@ -510,7 +510,7 @@ Check singleReplicaOnly ignore replicas value:
               envFrom:
                 - secretRef:
                     name: example-app-app
-              image: registry.gitlab.com/test:v0.1.0
+              image: registry.gitlab.com/test:v0.0.0
               imagePullPolicy: IfNotPresent
               livenessProbe:
                 httpGet:

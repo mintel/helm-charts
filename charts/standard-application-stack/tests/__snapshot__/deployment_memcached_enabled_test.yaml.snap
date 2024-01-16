@@ -57,7 +57,7 @@ Check Memcached envfrom secretRef is present:
               envFrom:
                 - secretRef:
                     name: test-app-memcached
-              image: registry.gitlab.com/test:v0.1.0
+              image: registry.gitlab.com/test:v0.0.0
               imagePullPolicy: IfNotPresent
               livenessProbe:
                 httpGet:
@@ -177,7 +177,7 @@ Check Memcached envfrom secretRef is present for local environment:
               envFrom:
                 - secretRef:
                     name: test-app-memcached
-              image: k3d-default.localhost:5000/test:v0.1.0
+              image: k3d-default.localhost:5000/test:v0.0.0
               imagePullPolicy: IfNotPresent
               livenessProbe:
                 httpGet:
@@ -283,7 +283,7 @@ Check Memcached secretName Override:
               envFrom:
                 - secretRef:
                     name: overrideName
-              image: registry.gitlab.com/test:v0.1.0
+              image: registry.gitlab.com/test:v0.0.0
               imagePullPolicy: IfNotPresent
               livenessProbe:
                 httpGet:
