@@ -60,3 +60,9 @@ jobs:
           exec: "unit-tests"
           charts: "${{ steps.list-changed.outputs.changed_charts }}"
         if: steps.list-changed.outputs.changed == 'true'
+
+      - name: Check docs updated
+        uses: mintel/helm-docs-action@v0.0.2
+        with:
+          working-chart: "${{ steps.list-changed.outputs.changed_charts }}"
+          fail-on-diff: true
