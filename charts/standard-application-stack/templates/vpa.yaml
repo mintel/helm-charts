@@ -26,7 +26,7 @@ spec:
 {{ end }}
     name: {{ include "mintel_common.fullname" . }}
   updatePolicy:
-    updateMode: "Off"
+    updateMode: {{ if $.Values.verticalPodAutoscaler.autoscalingEnabled }}"Auto"{{ else }}"Off"{{ end }}
 {{- end }}
 
 {{- range .Values.cronjobs.jobs }}
@@ -46,7 +46,7 @@ spec:
     kind: CronJob
     name: {{ include "mintel_common.fullname" $data }}
   updatePolicy:
-    updateMode: "Off"
+    updateMode: {{ if $.Values.verticalPodAutoscaler.autoscalingEnabled }}"Auto"{{ else }}"Off"{{ end }}
 {{- end }}
 
 {{- end }}
