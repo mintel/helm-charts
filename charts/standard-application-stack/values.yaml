@@ -1382,3 +1382,5 @@ localstack:
 verticalPodAutoscaler:
   # -- Set to true to create a VerticalPodAutoscaler.
   enabled: true
+  # -- Set to true to automatically apply the resource recommendations of VerticalPodAutoscaler.
+  autoscalingEnabled: false

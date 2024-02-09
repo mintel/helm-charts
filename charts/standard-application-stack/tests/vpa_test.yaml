@@ -4,10 +4,20 @@ templates:
 release:
   namespace: test-namespace
 tests:
+  - it: Doesn't create a VerticalPodAutoscaler
+    set:
+      global.clusterEnv: qa
+      verticalPodAutoscaler.enabled: false
+      statefulset: false
+      cronjobsOnly: false
+    asserts:
+      - hasDocuments:
+          count: 0
+
   - it: Creates a VerticalPodAutoscaler for a Deployment
     set:
       global.clusterEnv: qa
-      vpa.enabled: true
+      verticalPodAutoscaler.enabled: true
       statefulset: false
       cronjobsOnly: false
     asserts:
@@ -31,11 +41,14 @@ tests:
       - equal:
           path: spec.targetRef.name
           value: example-app
+      - equal:
+          path: spec.updatePolicy.updateMode
+          value: "Off"
 
   - it: Creates a VerticalPodAutoscaler for a StatefulSet
     set:
       global.clusterEnv: qa
-      vpa.enabled: true
+      verticalPodAutoscaler.enabled: true
       statefulset: true
       cronjobsOnly: false
     asserts:
@@ -59,11 +72,14 @@ tests:
       - equal:
           path: spec.targetRef.name
           value: example-app
+      - equal:
+          path: spec.updatePolicy.updateMode
+          value: "Off"
 
   - it: Only creates VerticalPodAutoscaler for CronJobs if cronjobsOnly is true
     set:
       global.clusterEnv: qa
-      vpa.enabled: true
+      verticalPodAutoscaler.enabled: true
       cronjobsOnly: true
       cronjobs.jobs:
         - name: daily
@@ -100,3 +116,38 @@ tests:
       - equal:
           path: spec.targetRef.name
           value: example-app-daily
+      - equal:
+          path: spec.updatePolicy.updateMode
+          value: "Off"
+
+  - it: Creates a VerticalPodAutoscaler with autoscaling enabled
+    set:
+      global.clusterEnv: qa
+      verticalPodAutoscaler.enabled: true
+      verticalPodAutoscaler.autoscalingEnabled: true
+      statefulset: false
+      cronjobsOnly: false
+    asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
+      - isKind:
+          of: VerticalPodAutoscaler
+      - equal:
+          path: metadata.namespace
+          value: test-namespace
+      - hasDocuments:
+          count: 1
+      - equal:
+          path: metadata.name
+          value: deployment-example-app
+      - equal:
+          path: spec.targetRef.apiVersion
+          value: apps/v1
+      - equal:
+          path: spec.targetRef.kind
+          value: Deployment
+      - equal:
+          path: spec.targetRef.name
+          value: example-app
+      - equal:
+          path: spec.updatePolicy.updateMode
+          value: Auto
