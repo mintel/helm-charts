@@ -23,7 +23,7 @@ Dev S3 module name label override:
       agentPoolID: ""
       module:
         source: app.terraform.io/Mintel/private-s3-bucket/aws
-        version: 1.4.1
+        version: 2.0.5
       omitNamespacePrefix: true
       organization: Mintel
       secretsMountPath: /tmp/secrets
@@ -106,7 +106,7 @@ Dev S3 module workspace:
       agentPoolID: ""
       module:
         source: app.terraform.io/Mintel/private-s3-bucket/aws
-        version: 1.4.1
+        version: 2.0.5
       omitNamespacePrefix: true
       organization: Mintel
       secretsMountPath: /tmp/secrets
@@ -270,7 +270,7 @@ Dev S3 module workspace adds correct env override:
       agentPoolID: ""
       module:
         source: app.terraform.io/Mintel/private-s3-bucket/aws
-        version: 1.4.1
+        version: 2.0.5
       omitNamespacePrefix: true
       organization: Mintel
       secretsMountPath: /tmp/secrets
@@ -353,7 +353,7 @@ Dev S3 module workspace ignores env override when added explicitly:
       agentPoolID: ""
       module:
         source: app.terraform.io/Mintel/private-s3-bucket/aws
-        version: 1.4.1
+        version: 2.0.5
       omitNamespacePrefix: true
       organization: Mintel
       secretsMountPath: /tmp/secrets
@@ -436,7 +436,7 @@ Dev S3 module workspace name does not repeat mntl-prefix:
       agentPoolID: ""
       module:
         source: app.terraform.io/Mintel/private-s3-bucket/aws
-        version: 1.4.1
+        version: 2.0.5
       omitNamespacePrefix: true
       organization: Mintel
       secretsMountPath: /tmp/secrets
@@ -519,7 +519,7 @@ Dev S3 module workspace name override:
       agentPoolID: ""
       module:
         source: app.terraform.io/Mintel/private-s3-bucket/aws
-        version: 1.4.1
+        version: 2.0.5
       omitNamespacePrefix: true
       organization: Mintel
       secretsMountPath: /tmp/secrets
@@ -602,7 +602,7 @@ Dev S3 module workspace with default (0) syncWave:
       agentPoolID: ""
       module:
         source: app.terraform.io/Mintel/private-s3-bucket/aws
-        version: 1.4.1
+        version: 2.0.5
       omitNamespacePrefix: true
       organization: Mintel
       secretsMountPath: /tmp/secrets
@@ -685,7 +685,7 @@ Dev S3 module workspace with modified syncWave:
       agentPoolID: ""
       module:
         source: app.terraform.io/Mintel/private-s3-bucket/aws
-        version: 1.4.1
+        version: 2.0.5
       omitNamespacePrefix: true
       organization: Mintel
       secretsMountPath: /tmp/secrets
@@ -768,7 +768,7 @@ Dev S3 module workspace with multiple instances:
       agentPoolID: ""
       module:
         source: app.terraform.io/Mintel/private-s3-bucket/aws
-        version: 1.4.1
+        version: 2.0.5
       omitNamespacePrefix: true
       organization: Mintel
       secretsMountPath: /tmp/secrets
@@ -850,7 +850,7 @@ Dev S3 module workspace with multiple instances:
       agentPoolID: ""
       module:
         source: app.terraform.io/Mintel/private-s3-bucket/aws
-        version: 1.4.1
+        version: 2.0.5
       omitNamespacePrefix: true
       organization: Mintel
       secretsMountPath: /tmp/secrets
@@ -1093,7 +1093,7 @@ Dev S3 module workspace with multiple instances and syncWave overrides:
       agentPoolID: ""
       module:
         source: app.terraform.io/Mintel/private-s3-bucket/aws
-        version: 1.4.1
+        version: 2.0.5
       omitNamespacePrefix: true
       organization: Mintel
       secretsMountPath: /tmp/secrets
@@ -1175,7 +1175,7 @@ Dev S3 module workspace with multiple instances and syncWave overrides:
       agentPoolID: ""
       module:
         source: app.terraform.io/Mintel/private-s3-bucket/aws
-        version: 1.4.1
+        version: 2.0.5
       omitNamespacePrefix: true
       organization: Mintel
       secretsMountPath: /tmp/secrets
@@ -1258,7 +1258,7 @@ Test workspace allow destroy env:
       agentPoolID: ""
       module:
         source: app.terraform.io/Mintel/private-s3-bucket/aws
-        version: 1.4.1
+        version: 2.0.5
       omitNamespacePrefix: true
       organization: Mintel
       secretsMountPath: /tmp/secrets
@@ -1336,7 +1336,7 @@ Test workspace extra annotations:
       agentPoolID: ""
       module:
         source: app.terraform.io/Mintel/private-s3-bucket/aws
-        version: 1.4.1
+        version: 2.0.5
       omitNamespacePrefix: true
       organization: Mintel
       secretsMountPath: /tmp/secrets
@@ -1419,7 +1419,7 @@ Test workspace extra annotations override:
       agentPoolID: ""
       module:
         source: app.terraform.io/Mintel/private-s3-bucket/aws
-        version: 1.4.1
+        version: 2.0.5
       omitNamespacePrefix: true
       organization: Mintel
       secretsMountPath: /tmp/secrets
