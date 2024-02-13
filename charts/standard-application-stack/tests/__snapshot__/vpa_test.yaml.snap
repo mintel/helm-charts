@@ -48,6 +48,206 @@ Creates a VerticalPodAutoscaler for a StatefulSet:
         name: example-app
       updatePolicy:
         updateMode: "Off"
+Creates a VerticalPodAutoscaler for aws-es-proxy:
+  1: |
+    apiVersion: autoscaling.k8s.io/v1
+    kind: VerticalPodAutoscaler
+    metadata:
+      annotations:
+        app.mintel.com/placeholder: placeholder
+      labels:
+        app.kubernetes.io/component: aws-es-proxy
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: example-app-aws-es-proxy
+        app.mintel.com/application: example-app
+        app.mintel.com/component: example-app
+        app.mintel.com/env: qa
+        app.mintel.com/region: ${CLUSTER_REGION}
+        name: example-app-aws-es-proxy
+      name: deployment-example-app-aws-es-proxy
+      namespace: test-namespace
+    spec:
+      targetRef:
+        apiVersion: apps/v1
+        kind: Deployment
+        name: example-app-aws-es-proxy
+      updatePolicy:
+        updateMode: "Off"
+Creates a VerticalPodAutoscaler for celery:
+  1: |
+    apiVersion: autoscaling.k8s.io/v1
+    kind: VerticalPodAutoscaler
+    metadata:
+      annotations:
+        app.mintel.com/placeholder: placeholder
+      labels:
+        app.kubernetes.io/component: celery
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: example-app-celery
+        app.mintel.com/application: example-app
+        app.mintel.com/component: example-app
+        app.mintel.com/env: qa
+        app.mintel.com/region: ${CLUSTER_REGION}
+        name: example-app-celery
+      name: deployment-example-app-celery
+      namespace: test-namespace
+    spec:
+      targetRef:
+        apiVersion: apps/v1
+        kind: Deployment
+        name: example-app-celery
+      updatePolicy:
+        updateMode: "Off"
+Creates a VerticalPodAutoscaler for celery-beat:
+  1: |
+    apiVersion: autoscaling.k8s.io/v1
+    kind: VerticalPodAutoscaler
+    metadata:
+      annotations:
+        app.mintel.com/placeholder: placeholder
+      labels:
+        app.kubernetes.io/component: celery-beat
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: example-app-celery-beat
+        app.mintel.com/application: example-app
+        app.mintel.com/component: example-app
+        app.mintel.com/env: qa
+        app.mintel.com/region: ${CLUSTER_REGION}
+        name: example-app-celery-beat
+      name: deployment-example-app-celery-beat
+      namespace: test-namespace
+    spec:
+      targetRef:
+        apiVersion: apps/v1
+        kind: Deployment
+        name: example-app-celery-beat
+      updatePolicy:
+        updateMode: "Off"
+Creates a VerticalPodAutoscaler for celery-exporter:
+  1: |
+    apiVersion: autoscaling.k8s.io/v1
+    kind: VerticalPodAutoscaler
+    metadata:
+      annotations:
+        app.mintel.com/placeholder: placeholder
+      labels:
+        app.kubernetes.io/component: celery-exporter
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: example-app-celery-exporter
+        app.mintel.com/application: example-app
+        app.mintel.com/component: example-app
+        app.mintel.com/env: qa
+        app.mintel.com/region: ${CLUSTER_REGION}
+        name: example-app-celery-exporter
+      name: deployment-example-app-celery-exporter
+      namespace: test-namespace
+    spec:
+      targetRef:
+        apiVersion: apps/v1
+        kind: Deployment
+        name: example-app-celery-exporter
+      updatePolicy:
+        updateMode: "Off"
+Creates a VerticalPodAutoscaler for mysqlclient:
+  1: |
+    apiVersion: autoscaling.k8s.io/v1
+    kind: VerticalPodAutoscaler
+    metadata:
+      annotations:
+        app.mintel.com/placeholder: placeholder
+      labels:
+        app.kubernetes.io/component: mysqlclient
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: example-app-mysqlclient
+        app.mintel.com/application: example-app
+        app.mintel.com/component: example-app
+        app.mintel.com/env: qa
+        app.mintel.com/region: ${CLUSTER_REGION}
+        name: example-app-mysqlclient
+      name: deployment-example-app-mysqlclient
+      namespace: test-namespace
+    spec:
+      targetRef:
+        apiVersion: apps/v1
+        kind: Deployment
+        name: example-app-mysqlclient
+      updatePolicy:
+        updateMode: "Off"
+Creates a VerticalPodAutoscaler for mysqldexporter:
+  1: |
+    apiVersion: autoscaling.k8s.io/v1
+    kind: VerticalPodAutoscaler
+    metadata:
+      annotations:
+        app.mintel.com/placeholder: placeholder
+      labels:
+        app.kubernetes.io/component: mysqldexporter
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: example-app-mysqldexporter
+        app.mintel.com/application: example-app
+        app.mintel.com/component: example-app
+        app.mintel.com/env: qa
+        app.mintel.com/region: ${CLUSTER_REGION}
+        name: example-app-mysqldexporter
+      name: deployment-example-app-mysqldexporter
+      namespace: test-namespace
+    spec:
+      targetRef:
+        apiVersion: apps/v1
+        kind: Deployment
+        name: example-app-mysqldexporter
+      updatePolicy:
+        updateMode: "Off"
+Creates a VerticalPodAutoscaler for postgresqlclient:
+  1: |
+    apiVersion: autoscaling.k8s.io/v1
+    kind: VerticalPodAutoscaler
+    metadata:
+      annotations:
+        app.mintel.com/placeholder: placeholder
+      labels:
+        app.kubernetes.io/component: postgresqlclient
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: example-app-postgresqlclient
+        app.mintel.com/application: example-app
+        app.mintel.com/component: example-app
+        app.mintel.com/env: qa
+        app.mintel.com/region: ${CLUSTER_REGION}
+        name: example-app-postgresqlclient
+      name: deployment-example-app-postgresqlclient
+      namespace: test-namespace
+    spec:
+      targetRef:
+        apiVersion: apps/v1
+        kind: Deployment
+        name: example-app-postgresqlclient
+      updatePolicy:
+        updateMode: "Off"
+Creates a VerticalPodAutoscaler for postgresqlexporter:
+  1: |
+    apiVersion: autoscaling.k8s.io/v1
+    kind: VerticalPodAutoscaler
+    metadata:
+      annotations:
+        app.mintel.com/placeholder: placeholder
+      labels:
+        app.kubernetes.io/component: postgresqlexporter
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: example-app-postgresqlexporter
+        app.mintel.com/application: example-app
+        app.mintel.com/component: example-app
+        app.mintel.com/env: qa
+        app.mintel.com/region: ${CLUSTER_REGION}
+        name: example-app-postgresqlexporter
+      name: deployment-example-app-postgresqlexporter
+      namespace: test-namespace
+    spec:
+      targetRef:
+        apiVersion: apps/v1
+        kind: Deployment
+        name: example-app-postgresqlexporter
+      updatePolicy:
+        updateMode: "Off"
 Creates a VerticalPodAutoscaler with autoscaling enabled:
   1: |
     apiVersion: autoscaling.k8s.io/v1

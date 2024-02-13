@@ -151,3 +151,267 @@ tests:
       - equal:
           path: spec.updatePolicy.updateMode
           value: Auto
+
+  - it: Creates a VerticalPodAutoscaler for aws-es-proxy
+    set:
+      global.clusterEnv: qa
+      verticalPodAutoscaler.enabled: true
+      cronjobsOnly: false
+      opensearch.enabled: true
+      opensearch.awsEsProxy.enabled: true
+    documentSelector:
+      path: metadata.name
+      value: deployment-example-app-aws-es-proxy
+    asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
+      - isKind:
+          of: VerticalPodAutoscaler
+      - equal:
+          path: metadata.namespace
+          value: test-namespace
+      - equal:
+          path: metadata.name
+          value: deployment-example-app-aws-es-proxy
+      - equal:
+          path: spec.targetRef.apiVersion
+          value: apps/v1
+      - equal:
+          path: spec.targetRef.kind
+          value: Deployment
+      - equal:
+          path: spec.targetRef.name
+          value: example-app-aws-es-proxy
+      - equal:
+          path: spec.updatePolicy.updateMode
+          value: Off
+
+  - it: Creates a VerticalPodAutoscaler for celery
+    set:
+      global.clusterEnv: qa
+      verticalPodAutoscaler.enabled: true
+      cronjobsOnly: false
+      celery.enabled: true
+    documentSelector:
+      path: metadata.name
+      value: deployment-example-app-celery
+    asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
+      - isKind:
+          of: VerticalPodAutoscaler
+      - equal:
+          path: metadata.namespace
+          value: test-namespace
+      - equal:
+          path: metadata.name
+          value: deployment-example-app-celery
+      - equal:
+          path: spec.targetRef.apiVersion
+          value: apps/v1
+      - equal:
+          path: spec.targetRef.kind
+          value: Deployment
+      - equal:
+          path: spec.targetRef.name
+          value: example-app-celery
+      - equal:
+          path: spec.updatePolicy.updateMode
+          value: Off
+
+  - it: Creates a VerticalPodAutoscaler for celery-beat
+    set:
+      global.clusterEnv: qa
+      verticalPodAutoscaler.enabled: true
+      cronjobsOnly: false
+      celery.enabled: true
+      celeryBeat.enabled: true
+    documentSelector:
+      path: metadata.name
+      value: deployment-example-app-celery-beat
+    asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
+      - isKind:
+          of: VerticalPodAutoscaler
+      - equal:
+          path: metadata.namespace
+          value: test-namespace
+      - equal:
+          path: metadata.name
+          value: deployment-example-app-celery-beat
+      - equal:
+          path: spec.targetRef.apiVersion
+          value: apps/v1
+      - equal:
+          path: spec.targetRef.kind
+          value: Deployment
+      - equal:
+          path: spec.targetRef.name
+          value: example-app-celery-beat
+      - equal:
+          path: spec.updatePolicy.updateMode
+          value: Off
+
+  - it: Creates a VerticalPodAutoscaler for celery-exporter
+    set:
+      global.clusterEnv: qa
+      verticalPodAutoscaler.enabled: true
+      cronjobsOnly: false
+      celery.enabled: true
+      redis.enabled: true
+      celery.metrics.enabled: true
+    documentSelector:
+      path: metadata.name
+      value: deployment-example-app-celery-exporter
+    asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
+      - isKind:
+          of: VerticalPodAutoscaler
+      - equal:
+          path: metadata.namespace
+          value: test-namespace
+      - equal:
+          path: metadata.name
+          value: deployment-example-app-celery-exporter
+      - equal:
+          path: spec.targetRef.apiVersion
+          value: apps/v1
+      - equal:
+          path: spec.targetRef.kind
+          value: Deployment
+      - equal:
+          path: spec.targetRef.name
+          value: example-app-celery-exporter
+      - equal:
+          path: spec.updatePolicy.updateMode
+          value: Off
+
+  - it: Creates a VerticalPodAutoscaler for mysqlclient
+    set:
+      global.clusterEnv: qa
+      verticalPodAutoscaler.enabled: true
+      cronjobsOnly: false
+      mariadb.enabled: true
+      mariadb.client.enabled: true
+    documentSelector:
+      path: metadata.name
+      value: deployment-example-app-mysqlclient
+    asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
+      - isKind:
+          of: VerticalPodAutoscaler
+      - equal:
+          path: metadata.namespace
+          value: test-namespace
+      - equal:
+          path: metadata.name
+          value: deployment-example-app-mysqlclient
+      - equal:
+          path: spec.targetRef.apiVersion
+          value: apps/v1
+      - equal:
+          path: spec.targetRef.kind
+          value: Deployment
+      - equal:
+          path: spec.targetRef.name
+          value: example-app-mysqlclient
+      - equal:
+          path: spec.updatePolicy.updateMode
+          value: Off
+
+  - it: Creates a VerticalPodAutoscaler for mysqldexporter
+    set:
+      global.clusterEnv: qa
+      verticalPodAutoscaler.enabled: true
+      cronjobsOnly: false
+      mariadb.enabled: true
+      mariadb.metrics.enabled: true
+    documentSelector:
+      path: metadata.name
+      value: deployment-example-app-mysqldexporter
+    asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
+      - isKind:
+          of: VerticalPodAutoscaler
+      - equal:
+          path: metadata.namespace
+          value: test-namespace
+      - equal:
+          path: metadata.name
+          value: deployment-example-app-mysqldexporter
+      - equal:
+          path: spec.targetRef.apiVersion
+          value: apps/v1
+      - equal:
+          path: spec.targetRef.kind
+          value: Deployment
+      - equal:
+          path: spec.targetRef.name
+          value: example-app-mysqldexporter
+      - equal:
+          path: spec.updatePolicy.updateMode
+          value: Off
+
+  - it: Creates a VerticalPodAutoscaler for postgresqlexporter
+    set:
+      global.clusterEnv: qa
+      verticalPodAutoscaler.enabled: true
+      cronjobsOnly: false
+      postgresql.enabled: true
+      postgresql.metrics.enabled: true
+    documentSelector:
+      path: metadata.name
+      value: deployment-example-app-postgresqlexporter
+    asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
+      - isKind:
+          of: VerticalPodAutoscaler
+      - equal:
+          path: metadata.namespace
+          value: test-namespace
+      - equal:
+          path: metadata.name
+          value: deployment-example-app-postgresqlexporter
+      - equal:
+          path: spec.targetRef.apiVersion
+          value: apps/v1
+      - equal:
+          path: spec.targetRef.kind
+          value: Deployment
+      - equal:
+          path: spec.targetRef.name
+          value: example-app-postgresqlexporter
+      - equal:
+          path: spec.updatePolicy.updateMode
+          value: Off
+
+  - it: Creates a VerticalPodAutoscaler for postgresqlclient
+    set:
+      global.clusterEnv: qa
+      verticalPodAutoscaler.enabled: true
+      cronjobsOnly: false
+      postgresql.enabled: true
+      postgresql.metrics.enabled: true
+    documentSelector:
+      path: metadata.name
+      value: deployment-example-app-postgresqlclient
+    asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
+      - isKind:
+          of: VerticalPodAutoscaler
+      - equal:
+          path: metadata.namespace
+          value: test-namespace
+      - equal:
+          path: metadata.name
+          value: deployment-example-app-postgresqlclient
+      - equal:
+          path: spec.targetRef.apiVersion
+          value: apps/v1
+      - equal:
+          path: spec.targetRef.kind
+          value: Deployment
+      - equal:
+          path: spec.targetRef.name
+          value: example-app-postgresqlclient
+      - equal:
+          path: spec.updatePolicy.updateMode
+          value: Off

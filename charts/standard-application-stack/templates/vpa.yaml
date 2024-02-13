@@ -1,27 +1,21 @@
-{{- if .Values.verticalPodAutoscaler.enabled }}
-
-{{- if (ne .Values.global.clusterEnv "local") }}
+{{- if (ne .Values.global.clusterEnv "local") | and .Values.verticalPodAutoscaler.enabled }}
 
 {{- if (eq .Values.cronjobsOnly false) }}
 ---
 apiVersion: {{ include "common.capabilities.verticalPodAutoscaler.apiVersion" . }}
 kind: VerticalPodAutoscaler
 metadata:
-{{- if .Values.statefulset }}
-  name: statefulset-{{ include "mintel_common.fullname" . }}
-{{ else }}
-  name: deployment-{{ include "mintel_common.fullname" . }}
-{{ end }}
+  name: {{ if .Values.statefulset }}statefulset{{ else }}deployment{{ end }}-{{ include "mintel_common.fullname" . }}
   namespace: {{ .Release.Namespace }}
-  annotations:
-    {{ include "mintel_common.commonAnnotations" . | nindent 4 }}
+  annotations: {{ include "mintel_common.commonAnnotations" . | nindent 4 }}
   labels: {{ include "mintel_common.labels" . | nindent 4 }}
 spec:
   targetRef:
-    apiVersion: apps/v1
 {{- if .Values.statefulset }}
+    apiVersion: {{ include "common.capabilities.statefulset.apiVersion" . }}
     kind: StatefulSet
 {{ else }}
+    apiVersion: {{ include "common.capabilities.deployment.apiVersion" . }}
     kind: Deployment
 {{ end }}
     name: {{ include "mintel_common.fullname" . }}
@@ -37,18 +31,175 @@ kind: VerticalPodAutoscaler
 metadata:
   name: cronjob-{{ include "mintel_common.fullname" $data }}
   namespace: {{ $.Release.Namespace }}
-  annotations:
-    {{ include "mintel_common.commonAnnotations" $data | nindent 4 }}
+  annotations: {{ include "mintel_common.commonAnnotations" $data | nindent 4 }}
   labels: {{ include "mintel_common.labels" $data | nindent 4 }}
 spec:
   targetRef:
-    apiVersion: batch/v1
+    apiVersion: {{ include "common.capabilities.cronjob.apiVersion" $ }}
     kind: CronJob
     name: {{ include "mintel_common.fullname" $data }}
   updatePolicy:
     updateMode: {{ if $.Values.verticalPodAutoscaler.autoscalingEnabled }}"Auto"{{ else }}"Off"{{ end }}
 {{- end }}
 
+{{- if (and .Values.opensearch .Values.opensearch.enabled) }}
+{{- if (and .Values.opensearch.awsEsProxy .Values.opensearch.awsEsProxy.enabled) }}
+{{- $data := dict "Release" .Release "Chart" .Chart "Values" .Values "component" "aws-es-proxy" }}
+---
+apiVersion: {{ include "common.capabilities.verticalPodAutoscaler.apiVersion" . }}
+kind: VerticalPodAutoscaler
+metadata:
+  name: deployment-{{ include "mintel_common.fullname" $data }}
+  namespace: {{ $.Release.Namespace }}
+  annotations: {{ include "mintel_common.commonAnnotations" $data | nindent 4 }}
+  labels: {{ include "mintel_common.labels" $data | nindent 4 }}
+spec:
+  targetRef:
+    apiVersion: {{ include "common.capabilities.deployment.apiVersion" . }}
+    kind: Deployment
+    name: {{ include "mintel_common.fullname" $data }}
+  updatePolicy:
+    updateMode: {{ if $.Values.verticalPodAutoscaler.autoscalingEnabled }}"Auto"{{ else }}"Off"{{ end }}
+{{- end }}
+{{- end }}
+
+{{- if (and .Values.celery .Values.celery.enabled) }}
+{{- $data := dict "Release" .Release "Chart" .Chart "Values" .Values "component" "celery" }}
+---
+apiVersion: {{ include "common.capabilities.verticalPodAutoscaler.apiVersion" . }}
+kind: VerticalPodAutoscaler
+metadata:
+  name: deployment-{{ include "mintel_common.fullname" $data }}
+  namespace: {{ $.Release.Namespace }}
+  annotations: {{ include "mintel_common.commonAnnotations" $data | nindent 4 }}
+  labels: {{ include "mintel_common.labels" $data | nindent 4 }}
+spec:
+  targetRef:
+    apiVersion: {{ include "common.capabilities.deployment.apiVersion" . }}
+    kind: Deployment
+    name: {{ include "mintel_common.fullname" $data }}
+  updatePolicy:
+    updateMode: {{ if $.Values.verticalPodAutoscaler.autoscalingEnabled }}"Auto"{{ else }}"Off"{{ end }}
+
+{{- if (and .Values.celeryBeat .Values.celeryBeat.enabled) }}
+{{- $data := dict "Release" .Release "Chart" .Chart "Values" .Values "component" "celery-beat" }}
+---
+apiVersion: {{ include "common.capabilities.verticalPodAutoscaler.apiVersion" . }}
+kind: VerticalPodAutoscaler
+metadata:
+  name: deployment-{{ include "mintel_common.fullname" $data }}
+  namespace: {{ $.Release.Namespace }}
+  annotations: {{ include "mintel_common.commonAnnotations" $data | nindent 4 }}
+  labels: {{ include "mintel_common.labels" $data | nindent 4 }}
+spec:
+  targetRef:
+    apiVersion: {{ include "common.capabilities.deployment.apiVersion" . }}
+    kind: Deployment
+    name: {{ include "mintel_common.fullname" $data }}
+  updatePolicy:
+    updateMode: {{ if $.Values.verticalPodAutoscaler.autoscalingEnabled }}"Auto"{{ else }}"Off"{{ end }}
+{{- end }}
+
+{{- if (and .Values.redis .Values.redis.enabled) }}
+{{- if (and .Values.celery.metrics .Values.celery.metrics.enabled) }}
+{{- $data := dict "Release" .Release "Chart" .Chart "Values" .Values "component" "celery-exporter" }}
+---
+apiVersion: {{ include "common.capabilities.verticalPodAutoscaler.apiVersion" . }}
+kind: VerticalPodAutoscaler
+metadata:
+  name: deployment-{{ include "mintel_common.fullname" $data }}
+  namespace: {{ $.Release.Namespace }}
+  annotations: {{ include "mintel_common.commonAnnotations" $data | nindent 4 }}
+  labels: {{ include "mintel_common.labels" $data | nindent 4 }}
+spec:
+  targetRef:
+    apiVersion: {{ include "common.capabilities.deployment.apiVersion" . }}
+    kind: Deployment
+    name: {{ include "mintel_common.fullname" $data }}
+  updatePolicy:
+    updateMode: {{ if $.Values.verticalPodAutoscaler.autoscalingEnabled }}"Auto"{{ else }}"Off"{{ end }}
+{{- end }}
+{{- end }}
+{{- end }}
+
+{{- if (and .Values.mariadb .Values.mariadb.enabled) }}
+{{- if (and .Values.mariadb.client .Values.mariadb.client.enabled) }}
+{{- $data := dict "Release" .Release "Chart" .Chart "Values" .Values "component" "mysqlclient" }}
+---
+apiVersion: {{ include "common.capabilities.verticalPodAutoscaler.apiVersion" . }}
+kind: VerticalPodAutoscaler
+metadata:
+  name: deployment-{{ include "mintel_common.fullname" $data }}
+  namespace: {{ $.Release.Namespace }}
+  annotations: {{ include "mintel_common.commonAnnotations" $data | nindent 4 }}
+  labels: {{ include "mintel_common.labels" $data | nindent 4 }}
+spec:
+  targetRef:
+    apiVersion: {{ include "common.capabilities.deployment.apiVersion" . }}
+    kind: Deployment
+    name: {{ include "mintel_common.fullname" $data }}
+  updatePolicy:
+    updateMode: {{ if $.Values.verticalPodAutoscaler.autoscalingEnabled }}"Auto"{{ else }}"Off"{{ end }}
+{{- end }}
+
+{{- if (and .Values.mariadb.metrics .Values.mariadb.metrics.enabled) }}
+{{- $data := dict "Release" .Release "Chart" .Chart "Values" .Values "component" "mysqldexporter" }}
+---
+apiVersion: {{ include "common.capabilities.verticalPodAutoscaler.apiVersion" . }}
+kind: VerticalPodAutoscaler
+metadata:
+  name: deployment-{{ include "mintel_common.fullname" $data }}
+  namespace: {{ $.Release.Namespace }}
+  annotations: {{ include "mintel_common.commonAnnotations" $data | nindent 4 }}
+  labels: {{ include "mintel_common.labels" $data | nindent 4 }}
+spec:
+  targetRef:
+    apiVersion: {{ include "common.capabilities.deployment.apiVersion" . }}
+    kind: Deployment
+    name: {{ include "mintel_common.fullname" $data }}
+  updatePolicy:
+    updateMode: {{ if $.Values.verticalPodAutoscaler.autoscalingEnabled }}"Auto"{{ else }}"Off"{{ end }}
+{{- end }}
+{{- end }}
+
+{{- if (and .Values.postgresql .Values.postgresql.enabled) }}
+{{- if (and .Values.postgresql.metrics .Values.postgresql.metrics.enabled) }}
+{{- $data := dict "Release" .Release "Chart" .Chart "Values" .Values "component" "postgresqlexporter" }}
+---
+apiVersion: {{ include "common.capabilities.verticalPodAutoscaler.apiVersion" . }}
+kind: VerticalPodAutoscaler
+metadata:
+  name: deployment-{{ include "mintel_common.fullname" $data }}
+  namespace: {{ $.Release.Namespace }}
+  annotations: {{ include "mintel_common.commonAnnotations" $data | nindent 4 }}
+  labels: {{ include "mintel_common.labels" $data | nindent 4 }}
+spec:
+  targetRef:
+    apiVersion: {{ include "common.capabilities.deployment.apiVersion" . }}
+    kind: Deployment
+    name: {{ include "mintel_common.fullname" $data }}
+  updatePolicy:
+    updateMode: {{ if $.Values.verticalPodAutoscaler.autoscalingEnabled }}"Auto"{{ else }}"Off"{{ end }}
+{{- end }}
+
+{{- if (and .Values.postgresql.client .Values.postgresql.client.enabled) }}
+{{- $data := dict "Release" .Release "Chart" .Chart "Values" .Values "component" "postgresqlclient" }}
+---
+apiVersion: {{ include "common.capabilities.verticalPodAutoscaler.apiVersion" . }}
+kind: VerticalPodAutoscaler
+metadata:
+  name: deployment-{{ include "mintel_common.fullname" $data }}
+  namespace: {{ $.Release.Namespace }}
+  annotations: {{ include "mintel_common.commonAnnotations" $data | nindent 4 }}
+  labels: {{ include "mintel_common.labels" $data | nindent 4 }}
+spec:
+  targetRef:
+    apiVersion: {{ include "common.capabilities.deployment.apiVersion" . }}
+    kind: Deployment
+    name: {{ include "mintel_common.fullname" $data }}
+  updatePolicy:
+    updateMode: {{ if $.Values.verticalPodAutoscaler.autoscalingEnabled }}"Auto"{{ else }}"Off"{{ end }}
+{{- end }}
 {{- end }}
 
 {{- end }}
