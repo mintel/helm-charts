@@ -32,7 +32,6 @@ Check default label behavior:
         type: RollingUpdate
       template:
         metadata:
-          annotations: null
           labels:
             app.kubernetes.io/component: app
             app.kubernetes.io/managed-by: Helm
@@ -148,7 +147,6 @@ Check empty application and component labels both default to name:
         type: RollingUpdate
       template:
         metadata:
-          annotations: null
           labels:
             app.kubernetes.io/component: app
             app.kubernetes.io/managed-by: Helm

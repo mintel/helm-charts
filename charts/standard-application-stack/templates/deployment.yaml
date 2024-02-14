@@ -102,13 +102,6 @@ spec:
   {{- end }}
   template:
     metadata:
-      annotations:
-        {{- if (and .Values.hybridCloud .Values.hybridCloud.enabled) }}
-        consul.hashicorp.com/connect-inject: "true"
-          {{- with .Values.hybridCloud.upstreamServices }}
-        consul.hashicorp.com/connect-service-upstreams: {{ . | sortAlpha | uniq | compact | join "," | quote }}
-          {{- end }}
-        {{- end }}
       labels:
         {{- include "mintel_common.labels" . | nindent 8 }}
         {{- if (or (and .Values.ingress .Values.ingress.enabled) .Values.ingress.allowFrontendAccess) }}
@@ -276,12 +269,6 @@ spec:
           ports:
             - containerPort: {{ .Values.port }}
               name: http
-            {{- if .Values.hybridCloud.enabled }}
-            - containerPort: {{ .Values.hybridCloud.metrics.port | default "20200" }}
-              name: consul-metrics
-            - containerPort: {{ .Values.hybridCloud.proxyPort | default "20000" }}
-              name: consul-proxy
-            {{- end }}
             {{- range .Values.extraPorts }}
             - name: {{ .name }}
               containerPort: {{ .containerPort }}

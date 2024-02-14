@@ -263,7 +263,6 @@ Check combined template defaults:
         type: RollingUpdate
       template:
         metadata:
-          annotations: null
           labels:
             app.kubernetes.io/component: app
             app.kubernetes.io/managed-by: Helm
@@ -459,7 +458,6 @@ Check combined template with extra ports and monitors:
         type: RollingUpdate
       template:
         metadata:
-          annotations: null
           labels:
             app.kubernetes.io/component: app
             app.kubernetes.io/managed-by: Helm

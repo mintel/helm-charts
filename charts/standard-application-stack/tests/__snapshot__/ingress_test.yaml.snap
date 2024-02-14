@@ -382,7 +382,6 @@ Check EXTRA_ALLOWED_HOSTS env var extraHosts with extraIngresses:
         type: RollingUpdate
       template:
         metadata:
-          annotations: null
           labels:
             app.kubernetes.io/component: app
             app.kubernetes.io/managed-by: Helm

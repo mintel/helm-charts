@@ -51,8 +51,8 @@ spec:
       tlsConfig:
         insecureSkipVerify: true
   selector:
-    # If target labels require some adjustment: if component is either .name, consul-proxy, oauth-metrics, filebeat or celery-filebeat
-    {{- if (has .component (list .Values.global.name "consul-proxy" "oauth-metrics" "filebeat" "celery-filebeat" )) }}
+    # If target labels require some adjustment: if component is either .name, oauth-metrics, filebeat or celery-filebeat
+    {{- if (has .component (list .Values.global.name "oauth-metrics" "filebeat" "celery-filebeat" )) }}
       # Celery filebeat needs target label component to be celery
       {{- if (eq .component "celery-filebeat" ) }}
       {{- $_ := set . "component" "celery" }}
