@@ -1384,3 +1384,33 @@ verticalPodAutoscaler:
   enabled: true
   # -- Set to true to automatically apply the resource recommendations of VerticalPodAutoscaler.
   autoscalingEnabled: false
+  # -- The minimum number of replicas a workload needs to have for VPA to consider evicting pods.
+  minReplicas: 1
+  # -- Set policies for containers within each pod.
+  containerPolicies:
+    # - containerName: '*'
+    #   mode: 'Auto'
+    #   minAllowed:
+    #     cpu: '100m'
+    #     memory: '100Mi'
+    #   maxAllowed:
+    #     cpu: '1'
+    #     memory: '1Gi'
+    #   controlledResources: [cpu, memory]
+    #   controlledValues: 'RequestsAndLimits' # or "RequestsOnly"
+  # -- Set requirements for VPA to evict pods, if autoscaling is enabled.
+  evictionRequirements:
+    # - resources: [cpu, memory]
+    #   changeRequirement: "TargetHigherThanRequests" # or "TargetLowerThanRequests"
+  # -- The settings above are defaults for all VPAs. You can override the
+  # settings for specific VPAs here.
+  instances: {}
+    # workload:
+    # aws-es-proxy:
+    # celery:
+    # celery-beat:
+    # celery-exporter:
+    # mysqlclient:
+    # mysqldexporter:
+    # postgresqlexporter:
+    # postgresqlclient:
