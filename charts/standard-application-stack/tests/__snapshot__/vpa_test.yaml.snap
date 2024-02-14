@@ -1,3 +1,64 @@
+Can have per-VerticalPodAutoscaler overrides:
+  1: |
+    apiVersion: autoscaling.k8s.io/v1
+    kind: VerticalPodAutoscaler
+    metadata:
+      annotations:
+        app.mintel.com/placeholder: placeholder
+      labels:
+        app.kubernetes.io/component: app
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: example-app
+        app.mintel.com/application: example-app
+        app.mintel.com/component: example-app
+        app.mintel.com/env: qa
+        app.mintel.com/region: ${CLUSTER_REGION}
+        name: example-app
+      name: deployment-example-app
+      namespace: test-namespace
+    spec:
+      targetRef:
+        apiVersion: apps/v1
+        kind: Deployment
+        name: example-app
+      updatePolicy:
+        minReplicas: 1
+        updateMode: "Off"
+Can set container policies:
+  1: |
+    apiVersion: autoscaling.k8s.io/v1
+    kind: VerticalPodAutoscaler
+    metadata:
+      annotations:
+        app.mintel.com/placeholder: placeholder
+      labels:
+        app.kubernetes.io/component: app
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: example-app
+        app.mintel.com/application: example-app
+        app.mintel.com/component: example-app
+        app.mintel.com/env: qa
+        app.mintel.com/region: ${CLUSTER_REGION}
+        name: example-app
+      name: deployment-example-app
+      namespace: test-namespace
+    spec:
+      resourcePolicy:
+        containerPolicies:
+          - containerName: '*'
+            maxAllowed:
+              cpu: "1"
+              memory: 1Gi
+            minAllowed:
+              cpu: 100m
+              memory: 100Mi
+      targetRef:
+        apiVersion: apps/v1
+        kind: Deployment
+        name: example-app
+      updatePolicy:
+        minReplicas: 1
+        updateMode: "Off"
 Creates a VerticalPodAutoscaler for a Deployment:
   1: |
     apiVersion: autoscaling.k8s.io/v1
@@ -22,6 +83,7 @@ Creates a VerticalPodAutoscaler for a Deployment:
         kind: Deployment
         name: example-app
       updatePolicy:
+        minReplicas: 1
         updateMode: "Off"
 Creates a VerticalPodAutoscaler for a StatefulSet:
   1: |
@@ -47,6 +109,7 @@ Creates a VerticalPodAutoscaler for a StatefulSet:
         kind: StatefulSet
         name: example-app
       updatePolicy:
+        minReplicas: 1
         updateMode: "Off"
 Creates a VerticalPodAutoscaler for aws-es-proxy:
   1: |
@@ -72,6 +135,7 @@ Creates a VerticalPodAutoscaler for aws-es-proxy:
         kind: Deployment
         name: example-app-aws-es-proxy
       updatePolicy:
+        minReplicas: 1
         updateMode: "Off"
 Creates a VerticalPodAutoscaler for celery:
   1: |
@@ -97,6 +161,7 @@ Creates a VerticalPodAutoscaler for celery:
         kind: Deployment
         name: example-app-celery
       updatePolicy:
+        minReplicas: 1
         updateMode: "Off"
 Creates a VerticalPodAutoscaler for celery-beat:
   1: |
@@ -122,6 +187,7 @@ Creates a VerticalPodAutoscaler for celery-beat:
         kind: Deployment
         name: example-app-celery-beat
       updatePolicy:
+        minReplicas: 1
         updateMode: "Off"
 Creates a VerticalPodAutoscaler for celery-exporter:
   1: |
@@ -147,6 +213,7 @@ Creates a VerticalPodAutoscaler for celery-exporter:
         kind: Deployment
         name: example-app-celery-exporter
       updatePolicy:
+        minReplicas: 1
         updateMode: "Off"
 Creates a VerticalPodAutoscaler for mysqlclient:
   1: |
@@ -172,6 +239,7 @@ Creates a VerticalPodAutoscaler for mysqlclient:
         kind: Deployment
         name: example-app-mysqlclient
       updatePolicy:
+        minReplicas: 1
         updateMode: "Off"
 Creates a VerticalPodAutoscaler for mysqldexporter:
   1: |
@@ -197,6 +265,7 @@ Creates a VerticalPodAutoscaler for mysqldexporter:
         kind: Deployment
         name: example-app-mysqldexporter
       updatePolicy:
+        minReplicas: 1
         updateMode: "Off"
 Creates a VerticalPodAutoscaler for postgresqlclient:
   1: |
@@ -222,6 +291,7 @@ Creates a VerticalPodAutoscaler for postgresqlclient:
         kind: Deployment
         name: example-app-postgresqlclient
       updatePolicy:
+        minReplicas: 1
         updateMode: "Off"
 Creates a VerticalPodAutoscaler for postgresqlexporter:
   1: |
@@ -247,6 +317,7 @@ Creates a VerticalPodAutoscaler for postgresqlexporter:
         kind: Deployment
         name: example-app-postgresqlexporter
       updatePolicy:
+        minReplicas: 1
         updateMode: "Off"
 Creates a VerticalPodAutoscaler with autoscaling enabled:
   1: |
@@ -272,6 +343,7 @@ Creates a VerticalPodAutoscaler with autoscaling enabled:
         kind: Deployment
         name: example-app
       updatePolicy:
+        minReplicas: 1
         updateMode: Auto
 Only creates VerticalPodAutoscaler for CronJobs if cronjobsOnly is true:
   1: |
@@ -297,4 +369,5 @@ Only creates VerticalPodAutoscaler for CronJobs if cronjobsOnly is true:
         kind: CronJob
         name: example-app-daily
       updatePolicy:
+        minReplicas: 1
         updateMode: "Off"

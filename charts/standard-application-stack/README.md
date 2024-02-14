@@ -1,6 +1,6 @@
 # standard-application-stack
 
-![Version: 5.20.0](https://img.shields.io/badge/Version-5.20.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 5.21.0](https://img.shields.io/badge/Version-5.21.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A generic chart to support most common application requirements
 
@@ -361,9 +361,13 @@ A generic chart to support most common application requirements
 | topologySpreadConstraints.zone.enabled | bool | `true` |  |
 | topologySpreadConstraints.zone.maxSkew | int | `1` |  |
 | useHostNetwork | bool | `false` | If true, use the host network for the main deployment. |
-| verticalPodAutoscaler | object | `{"autoscalingEnabled":false,"enabled":true}` | Configuration for creating a VerticalPodAutoscaler for this app. Currently only supports recommendations-only mode. |
+| verticalPodAutoscaler | object | `{"autoscalingEnabled":false,"containerPolicies":null,"enabled":true,"evictionRequirements":null,"instances":{},"minReplicas":1}` | Configuration for creating a VerticalPodAutoscaler for this app. Currently only supports recommendations-only mode. |
 | verticalPodAutoscaler.autoscalingEnabled | bool | `false` | Set to true to automatically apply the resource recommendations of VerticalPodAutoscaler. |
+| verticalPodAutoscaler.containerPolicies | string | `nil` | Set policies for containers within each pod. |
 | verticalPodAutoscaler.enabled | bool | `true` | Set to true to create a VerticalPodAutoscaler. |
+| verticalPodAutoscaler.evictionRequirements | string | `nil` | Set requirements for VPA to evict pods, if autoscaling is enabled. |
+| verticalPodAutoscaler.instances | object | `{}` | The settings above are defaults for all VPAs. You can override the settings for specific VPAs here. |
+| verticalPodAutoscaler.minReplicas | int | `1` | The minimum number of replicas a workload needs to have for VPA to consider evicting pods. |
 | volumeMounts | list | `[]` | A list of volume mounts to be added to the pod |
 | volumes | string | `nil` | A list of volumes to be added to the pod |
 

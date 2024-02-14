@@ -44,6 +44,9 @@ tests:
       - equal:
           path: spec.updatePolicy.updateMode
           value: "Off"
+      - equal:
+          path: spec.updatePolicy.minReplicas
+          value: 1
 
   - it: Creates a VerticalPodAutoscaler for a StatefulSet
     set:
@@ -75,6 +78,9 @@ tests:
       - equal:
           path: spec.updatePolicy.updateMode
           value: "Off"
+      - equal:
+          path: spec.updatePolicy.minReplicas
+          value: 1
 
   - it: Only creates VerticalPodAutoscaler for CronJobs if cronjobsOnly is true
     set:
@@ -119,6 +125,9 @@ tests:
       - equal:
           path: spec.updatePolicy.updateMode
           value: "Off"
+      - equal:
+          path: spec.updatePolicy.minReplicas
+          value: 1
 
   - it: Creates a VerticalPodAutoscaler with autoscaling enabled
     set:
@@ -151,6 +160,9 @@ tests:
       - equal:
           path: spec.updatePolicy.updateMode
           value: Auto
+      - equal:
+          path: spec.updatePolicy.minReplicas
+          value: 1
 
   - it: Creates a VerticalPodAutoscaler for aws-es-proxy
     set:
@@ -184,6 +196,9 @@ tests:
       - equal:
           path: spec.updatePolicy.updateMode
           value: Off
+      - equal:
+          path: spec.updatePolicy.minReplicas
+          value: 1
 
   - it: Creates a VerticalPodAutoscaler for celery
     set:
@@ -216,6 +231,9 @@ tests:
       - equal:
           path: spec.updatePolicy.updateMode
           value: Off
+      - equal:
+          path: spec.updatePolicy.minReplicas
+          value: 1
 
   - it: Creates a VerticalPodAutoscaler for celery-beat
     set:
@@ -249,6 +267,9 @@ tests:
       - equal:
           path: spec.updatePolicy.updateMode
           value: Off
+      - equal:
+          path: spec.updatePolicy.minReplicas
+          value: 1
 
   - it: Creates a VerticalPodAutoscaler for celery-exporter
     set:
@@ -283,6 +304,9 @@ tests:
       - equal:
           path: spec.updatePolicy.updateMode
           value: Off
+      - equal:
+          path: spec.updatePolicy.minReplicas
+          value: 1
 
   - it: Creates a VerticalPodAutoscaler for mysqlclient
     set:
@@ -316,6 +340,9 @@ tests:
       - equal:
           path: spec.updatePolicy.updateMode
           value: Off
+      - equal:
+          path: spec.updatePolicy.minReplicas
+          value: 1
 
   - it: Creates a VerticalPodAutoscaler for mysqldexporter
     set:
@@ -349,6 +376,9 @@ tests:
       - equal:
           path: spec.updatePolicy.updateMode
           value: Off
+      - equal:
+          path: spec.updatePolicy.minReplicas
+          value: 1
 
   - it: Creates a VerticalPodAutoscaler for postgresqlexporter
     set:
@@ -382,6 +412,9 @@ tests:
       - equal:
           path: spec.updatePolicy.updateMode
           value: Off
+      - equal:
+          path: spec.updatePolicy.minReplicas
+          value: 1
 
   - it: Creates a VerticalPodAutoscaler for postgresqlclient
     set:
@@ -415,3 +448,56 @@ tests:
       - equal:
           path: spec.updatePolicy.updateMode
           value: Off
+      - equal:
+          path: spec.updatePolicy.minReplicas
+          value: 1
+
+  - it: Can have per-VerticalPodAutoscaler overrides
+    set:
+      global.clusterEnv: qa
+      verticalPodAutoscaler.enabled: true
+      cronjobsOnly: false
+      postgresql.enabled: true
+      postgresql.metrics.enabled: true
+      verticalPodAutoscaler.instances.postgresqlexporter.enabled: false
+      verticalPodAutoscaler.instances.postgresqlclient.enabled: false
+    asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
+      - isKind:
+          of: VerticalPodAutoscaler
+      - hasDocuments:
+          count: 1
+
+  - it: Can set container policies
+    set:
+      global.clusterEnv: qa
+      verticalPodAutoscaler.enabled: true
+      verticalPodAutoscaler.containerPolicies:
+        - containerName: '*'
+          minAllowed:
+            cpu: '100m'
+            memory: '100Mi'
+          maxAllowed:
+            cpu: '1'
+            memory: '1Gi'
+    asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
+      - isKind:
+          of: VerticalPodAutoscaler
+      - hasDocuments:
+          count: 1
+      - equal:
+          path: spec.resourcePolicy.containerPolicies[0].containerName
+          value: "*"
+      - equal:
+          path: spec.resourcePolicy.containerPolicies[0].minAllowed.cpu
+          value: "100m"
+      - equal:
+          path: spec.resourcePolicy.containerPolicies[0].minAllowed.memory
+          value: "100Mi"
+      - equal:
+          path: spec.resourcePolicy.containerPolicies[0].maxAllowed.cpu
+          value: "1"
+      - equal:
+          path: spec.resourcePolicy.containerPolicies[0].maxAllowed.memory
+          value: "1Gi"
