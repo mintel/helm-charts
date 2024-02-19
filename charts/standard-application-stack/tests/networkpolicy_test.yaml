@@ -28,6 +28,40 @@ tests:
             - ipBlock:
                 cidr: ${AWS_PUBLIC_SUBNET_CIDR_BLOCKS_2}
 
+  - it: Check ALB NetworkPolicy created if enabled in extraIngresses
+    set:
+      global.clusterEnv: qa
+      ingress.extraIngresses:
+      - ingressNameOverride: $.data.appValues.global.name + '-api-gateway'
+        defaultHost: 'qa-api.mintel.com'
+        extraHosts: []
+        pathBasedRouting:
+        - targetService: test-service
+          targetPort: 9999
+          path: '/test/path'
+          pathType: 'Prefix'
+        alb:
+          enabled: true
+          scheme: 'internet-facing'
+      # Disable default app networkpolicy
+      networkPolicy.enabled: false
+    asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
+      - isKind:
+          of: NetworkPolicy
+      - equal:
+          path: metadata.name
+          value: allow-aws-alb-to-example-app
+      - equal:
+          path: spec.ingress[0].from
+          value:
+            - ipBlock:
+                cidr: ${AWS_PUBLIC_SUBNET_CIDR_BLOCKS_0}
+            - ipBlock:
+                cidr: ${AWS_PUBLIC_SUBNET_CIDR_BLOCKS_1}
+            - ipBlock:
+                cidr: ${AWS_PUBLIC_SUBNET_CIDR_BLOCKS_2}
+
   - it: Check ALB NetworkPolicy created if internal alb selected
     set:
       global.clusterEnv: qa
@@ -36,6 +70,40 @@ tests:
       networkPolicy.enabled: false
       ingress.alb.enabled: true
       ingress.alb.scheme: internal
+    asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
+      - isKind:
+          of: NetworkPolicy
+      - equal:
+          path: metadata.name
+          value: allow-aws-alb-internal-to-example-app
+      - equal:
+          path: spec.ingress[0].from
+          value:
+            - ipBlock:
+                cidr: ${AWS_PRIVATE_APP_SUBNET_CIDR_BLOCKS_0}
+            - ipBlock:
+                cidr: ${AWS_PRIVATE_APP_SUBNET_CIDR_BLOCKS_1}
+            - ipBlock:
+                cidr: ${AWS_PRIVATE_APP_SUBNET_CIDR_BLOCKS_2}
+
+  - it: Check ALB NetworkPolicy created if internal alb enabled in extraIngresses
+    set:
+      global.clusterEnv: qa
+      ingress.extraIngresses:
+      - ingressNameOverride: $.data.appValues.global.name + '-api-gateway'
+        defaultHost: 'qa-api.mintel.com'
+        extraHosts: []
+        pathBasedRouting:
+        - targetService: test-service
+          targetPort: 9999
+          path: '/test/path'
+          pathType: 'Prefix'
+        alb:
+          enabled: true
+          scheme: 'internal'
+      # Disable default app networkpolicy
+      networkPolicy.enabled: false
     asserts:
       - matchSnapshot: {} # Check for regressions and unexpected changes.
       - isKind:
