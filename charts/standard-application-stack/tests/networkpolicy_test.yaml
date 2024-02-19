@@ -32,7 +32,7 @@ tests:
     set:
       global.clusterEnv: qa
       ingress.extraIngresses:
-      - ingressNameOverride: $.data.appValues.global.name + '-api-gateway'
+      - ingressNameOverride: test-ingress
         defaultHost: 'qa-api.mintel.com'
         extraHosts: []
         pathBasedRouting:
@@ -91,7 +91,7 @@ tests:
     set:
       global.clusterEnv: qa
       ingress.extraIngresses:
-      - ingressNameOverride: $.data.appValues.global.name + '-api-gateway'
+      - ingressNameOverride: test-ingress
         defaultHost: 'qa-api.mintel.com'
         extraHosts: []
         pathBasedRouting:
