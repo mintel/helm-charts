@@ -32,7 +32,6 @@ Check AWS ALB lifecycle rule applied:
         type: RollingUpdate
       template:
         metadata:
-          annotations: null
           labels:
             app.kubernetes.io/component: app
             app.kubernetes.io/managed-by: Helm
@@ -159,7 +158,6 @@ Check AWS ALB lifecycle rules applied with custom delay:
         type: RollingUpdate
       template:
         metadata:
-          annotations: null
           labels:
             app.kubernetes.io/component: app
             app.kubernetes.io/managed-by: Helm
@@ -286,7 +284,6 @@ Check AWS ALB lifecycle rules are not applied when ALB disabled:
         type: RollingUpdate
       template:
         metadata:
-          annotations: null
           labels:
             app.kubernetes.io/component: app
             app.kubernetes.io/managed-by: Helm
@@ -405,7 +402,6 @@ Check AWS ALB lifecycle rules are not applied when ALB enabled (but Ingress disa
         type: RollingUpdate
       template:
         metadata:
-          annotations: null
           labels:
             app.kubernetes.io/component: app
             app.kubernetes.io/managed-by: Helm
@@ -519,7 +515,6 @@ Check lifecycle rules:
         type: RollingUpdate
       template:
         metadata:
-          annotations: null
           labels:
             app.kubernetes.io/component: app
             app.kubernetes.io/managed-by: Helm

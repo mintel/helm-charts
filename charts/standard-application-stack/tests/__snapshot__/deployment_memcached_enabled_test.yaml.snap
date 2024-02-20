@@ -31,7 +31,6 @@ Check Memcached envfrom secretRef is present:
         type: RollingUpdate
       template:
         metadata:
-          annotations: null
           labels:
             app.kubernetes.io/component: app
             app.kubernetes.io/managed-by: Helm
@@ -145,7 +144,6 @@ Check Memcached envfrom secretRef is present for local environment:
         type: RollingUpdate
       template:
         metadata:
-          annotations: null
           labels:
             app.kubernetes.io/component: app
             app.kubernetes.io/managed-by: Helm
@@ -257,7 +255,6 @@ Check Memcached secretName Override:
         type: RollingUpdate
       template:
         metadata:
-          annotations: null
           labels:
             app.kubernetes.io/component: app
             app.kubernetes.io/managed-by: Helm

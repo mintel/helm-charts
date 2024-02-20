@@ -32,7 +32,6 @@ Check allowSingleReplica doesn't alter strategy:
         type: RollingUpdate
       template:
         metadata:
-          annotations: null
           labels:
             app.kubernetes.io/component: app
             app.kubernetes.io/managed-by: Helm
@@ -147,7 +146,6 @@ Check allowSingleReplica set annotations:
         type: RollingUpdate
       template:
         metadata:
-          annotations: null
           labels:
             app.kubernetes.io/component: app
             app.kubernetes.io/managed-by: Helm
@@ -260,7 +258,6 @@ Check replicas unset when autoscaling is enabled:
         type: RollingUpdate
       template:
         metadata:
-          annotations: null
           labels:
             app.kubernetes.io/component: app
             app.kubernetes.io/managed-by: Helm
@@ -372,7 +369,6 @@ Check singleReplicaOnly applied:
         type: Recreate
       template:
         metadata:
-          annotations: null
           labels:
             app.kubernetes.io/component: app
             app.kubernetes.io/managed-by: Helm
@@ -484,7 +480,6 @@ Check singleReplicaOnly ignore replicas value:
         type: Recreate
       template:
         metadata:
-          annotations: null
           labels:
             app.kubernetes.io/component: app
             app.kubernetes.io/managed-by: Helm

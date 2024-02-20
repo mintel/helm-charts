@@ -26,7 +26,6 @@ Check stateful set is rendered with volumeClaimTemplates:
       serviceName: test-app
       template:
         metadata:
-          annotations: null
           labels:
             app.kubernetes.io/component: app
             app.kubernetes.io/managed-by: Helm
