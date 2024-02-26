@@ -1,6 +1,6 @@
 # standard-application-stack
 
-![Version: 6.0.0](https://img.shields.io/badge/Version-6.0.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 6.0.1](https://img.shields.io/badge/Version-6.0.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A generic chart to support most common application requirements
 
@@ -150,7 +150,7 @@ A generic chart to support most common application requirements
 | ingress.blackbox.probeScheme | string | `"https"` | Scheme (http/https) for blackboxes to hit |
 | ingress.enabled | bool | `false` | Set to true to enable ingress record generation |
 | ingress.extraAnnotations | object | `{}` | Additional Ingress annotations For a full list of possible ingress annotations, please see ref: https://github.com/kubernetes/ingress-nginx/blob/master/docs/user-guide/nginx-configuration/annotations.md |
-| ingress.extraHosts | list | `[]` | List of extra ingress hosts to setup |
+| ingress.extraHosts | list | `[]` | List of extra ingress hosts to setup. The CNAMEs for these hosts must already exist, please reach out to the Infrastructure team to create them if needed. |
 | ingress.extraIngresses | list | `[]` | Optional: ability to construct multiple ingresses with different settings (names, cache headers, etc) This accepts all the same values as the top-level ingress. It also inherits its default values from the top-level ingress, so all differences must be overridden per-instance. |
 | ingress.setNoCacheHeaders | bool | `false` | Only applies for 'haproxy' ingresses; Sets no-cache headers |
 | ingress.setXForwardedForHeaders | bool | `false` | Only applies for 'haproxy' ingresses; Sets X-Forwarded-For headers |

@@ -517,7 +517,8 @@ ingress:
   setNoCacheHeaders: false
   # -- Enable TLS configuration for the hostname defined at ingress.hostname parameter
   tls: true
-  # -- List of extra ingress hosts to setup
+  # -- List of extra ingress hosts to setup.
+  # The CNAMEs for these hosts must already exist, please reach out to the Infrastructure team to create them if needed.
   extraHosts: []
   #  extraHosts:
   #    - name: ""
