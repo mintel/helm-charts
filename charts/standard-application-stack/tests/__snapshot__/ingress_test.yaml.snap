@@ -1113,6 +1113,68 @@ Check no TLS set if ingressTLSSecrets and specificTlsHostsYaml is empty:
                       number: 8000
                 path: /
                 pathType: Prefix
+Checks a default local ingress renders properly:
+  1: |
+    apiVersion: networking.k8s.io/v1
+    kind: Ingress
+    metadata:
+      annotations:
+        app.mintel.com/placeholder: placeholder
+        ingress.kubernetes.io/ssl-redirect: "false"
+      labels:
+        app.kubernetes.io/component: app
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: example-app
+        app.mintel.com/application: example-app
+        app.mintel.com/component: example-app
+        app.mintel.com/env: local
+        app.mintel.com/region: local
+        name: example-app
+      name: example-app
+      namespace: test-namespace
+    spec:
+      rules:
+        - host: example.com
+          http:
+            paths:
+              - backend:
+                  service:
+                    name: example-app
+                    port:
+                      number: 8000
+                path: /
+                pathType: Prefix
+Checks an oauthProxy local ingress renders properly:
+  1: |
+    apiVersion: networking.k8s.io/v1
+    kind: Ingress
+    metadata:
+      annotations:
+        app.mintel.com/placeholder: placeholder
+        ingress.kubernetes.io/ssl-redirect: "false"
+      labels:
+        app.kubernetes.io/component: app
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: example-app
+        app.mintel.com/application: example-app
+        app.mintel.com/component: example-app
+        app.mintel.com/env: local
+        app.mintel.com/region: local
+        name: example-app
+      name: example-app
+      namespace: test-namespace
+    spec:
+      rules:
+        - host: example.com
+          http:
+            paths:
+              - backend:
+                  service:
+                    name: example-app
+                    port:
+                      number: 4180
+                path: /
+                pathType: Prefix
 Default ingress with path based routing:
   1: |
     apiVersion: networking.k8s.io/v1

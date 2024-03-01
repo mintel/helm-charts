@@ -5,6 +5,59 @@ templates:
 release:
   namespace: test-namespace
 tests:
+  - it: Checks a default local ingress renders properly
+    template: ingress.yaml
+    set:
+      global.clusterEnv: local
+      global.name: example-app
+      ingress.enabled: true
+      ingress.defaultHost: example.com
+      port: 8000
+    asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
+      - equal:
+          path: spec.rules[0].host
+          value: example.com
+      - equal:
+          path: spec.rules[0].http.paths[0].path
+          value: /
+      - equal:
+          path: spec.rules[0].http.paths[0].pathType
+          value: Prefix
+      - equal:
+          path: spec.rules[0].http.paths[0].backend.service.name
+          value: example-app
+      - equal:
+          path: spec.rules[0].http.paths[0].backend.service.port.number
+          value: 8000
+
+  - it: Checks an oauthProxy local ingress renders properly
+    template: ingress.yaml
+    set:
+      global.clusterEnv: local
+      global.name: example-app
+      ingress.enabled: true
+      ingress.defaultHost: example.com
+      oauthProxy.enabled: true
+      port: 8000
+    asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
+      - equal:
+          path: spec.rules[0].host
+          value: example.com
+      - equal:
+          path: spec.rules[0].http.paths[0].path
+          value: /
+      - equal:
+          path: spec.rules[0].http.paths[0].pathType
+          value: Prefix
+      - equal:
+          path: spec.rules[0].http.paths[0].backend.service.name
+          value: example-app
+      - equal:
+          path: spec.rules[0].http.paths[0].backend.service.port.number
+          value: 4180
+
   - it: Check ALB className set by default
     template: ingress.yaml
     set:
