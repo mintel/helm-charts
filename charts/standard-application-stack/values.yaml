@@ -496,6 +496,12 @@ nlb:
     # -- Success threshold
     healthyThresholdCount: 2
 
+apiGateway:
+  # -- Whether to configure the app to receive traffic from an API gateway. Note that this only exposes your endpoint; further configuration of the API gateway itself is required (speak to Infra).
+  enabled: false
+  # -- The app name portion of the API URL as decided between you and the Architecture team. For instance, for https://api.mintel.com/content/generative-answer/docs this would be "generative-answer".
+  appName: ""
+
 # -- Configure the ingress resource that allows you to access the application from public-internet
 # ref: http://kubernetes.io/docs/user-guide/ingress/
 ingress:
@@ -544,6 +550,9 @@ ingress:
   specificRulesHostsYaml: {}
   # -- Optional ingress Tls Hosts Yaml that doesn't fit standard pattern
   specificTlsHostsYaml: {}
+  pathBasedRouting:
+  - path: /
+    pathType: Prefix
   alb:
     enabled: true
     # -- Public or private alb (internet-facing / internal)
@@ -556,7 +565,10 @@ ingress:
     targetGroupAttributes:
       "deregistration_delay.timeout_seconds": 5
       "load_balancing.algorithm.type": least_outstanding_requests
-
+    # -- For specifying routing conditions in addition to the standard host/path condition (see https://kubernetes-sigs.github.io/aws-load-balancer-controller/v2.7/guide/ingress/annotations/#conditions)
+    conditions:
+    - targetService: ""
+      condition: ""
     # -- Enable and configure authentication using okta
     # aws-load-balancer-controller must be installed on the cluster for Okta integration to work
     okta:
@@ -574,7 +586,6 @@ ingress:
       # -- Specifies the behavior if the user is not authenticated.
       #    Possible values are 'authenticate' (defalt value, and used in most cases), 'allow', or 'deny'
       authOnUnauthenticated: 'authenticate'
-
     preStopDelay:
       # -- Enable an additional delay when the container is shutdown of delaySeconds.
       # This allows ALB to fully de-register the pod (allows zero-downtime rollouts)
@@ -582,7 +593,6 @@ ingress:
       # -- The delay (sleep) to wait for.
       # IMPORTANT: The terminationGracePeriodSeconds must be greater than this.
       delaySeconds: 15
-
     healthcheck:
       # -- Healthcheck protocol
       protocol: HTTP
