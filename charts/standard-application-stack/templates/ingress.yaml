@@ -16,7 +16,7 @@ metadata:
     ingress.kubernetes.io/ssl-redirect: "false"
 spec:
   rules:
-    - host: {{ .Values.ingress.defaultHost }}
+    - host: {{ include "mintel_common.ingress.defaultHost" $ingressData }}
       http:
         paths:
           - path: /
@@ -65,7 +65,7 @@ metadata:
 spec:
   ingressClassName: {{ $ingressClass }}
   rules:
-    - host: {{ .defaultHost }}
+    - host: {{ include "mintel_common.ingress.defaultHost" $ingressData }}
       http:
         paths:
           # 10

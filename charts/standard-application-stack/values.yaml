@@ -546,7 +546,7 @@ ingress:
   specificTlsHostsYaml: {}
   alb:
     enabled: true
-    # -- Public or private alb (internet-facing / internal)
+    # -- Public, private or api-specific alb (internet-facing / internal / api)
     scheme: internet-facing
     # -- Application Version (HTTP / HTTPS)
     backendProtocol: HTTP
@@ -556,6 +556,8 @@ ingress:
     targetGroupAttributes:
       "deregistration_delay.timeout_seconds": 5
       "load_balancing.algorithm.type": least_outstanding_requests
+    apiAppName: ''
+    apiTargetService: ''
 
     # -- Enable and configure authentication using okta
     # aws-load-balancer-controller must be installed on the cluster for Okta integration to work

@@ -5,7 +5,7 @@
 {{- if (and .Values.ingress.alb .ingress.alb.enabled) -}}
   {{- if eq .ingress.alb.scheme "internet-facing" -}}
   alb-public-apps-default
-  {{- else if eq .ingress.alb.scheme "internal" -}}
+  {{- else if or (eq .ingress.alb.scheme "internal") (eq .ingress.alb.scheme "api") -}}
   alb-internal-apps-default
   {{- end -}}
 {{- else -}}
@@ -98,6 +98,10 @@ ingress.kubernetes.io/config-backend: |
 {{- define "mintel_common.ingress.alb_annotations" -}}
 alb.ingress.kubernetes.io/backend-protocol-version: {{ include "mintel_common.ingress.alb.backendProtocolVersion" .alb | quote }}
 alb.ingress.kubernetes.io/backend-protocol: {{ include "mintel_common.ingress.alb.backendProtocol" .alb | quote }}
+{{ if eq .alb.scheme "api" }}
+alb.ingress.kubernetes.io/conditions.{{ .alb.apiTargetService | default (include "mintel_common.fullname" .) }}: |
+  [{"field":"http-header","httpHeaderConfig":{"httpHeaderName": "x-app-path", "values":["/{{ .alb.apiAppName | default (include "mintel_common.fullname" .) }}/*"]}}]
+{{ end }}
 alb.ingress.kubernetes.io/healthcheck-interval-seconds: {{ .alb.healthcheck.intervalSeconds | default 15 | quote }}
 alb.ingress.kubernetes.io/healthcheck-path: {{ include "mintel_common.ingress.alb.healthcheck.path" .alb | quote }}
 alb.ingress.kubernetes.io/healthcheck-port: {{ include "mintel_common.ingress.alb.healthcheck.port" $ | quote }}
@@ -157,14 +161,30 @@ external-dns.alpha.kubernetes.io/ttl: "60"
 
 {{/* Create a fully qualified app name, but with ability to override it for ingress */}}
 {{- define "mintel_common.ingressName" -}}
-{{- if .ingress.ingressNameSuffix }}
-{{- printf "%s-%s" (coalesce .ingress.ingressNameOverride (include "mintel_common.fullname" .)) .ingress.ingressNameSuffix -}}
-{{- else -}}
-{{- coalesce .ingress.ingressNameOverride (include "mintel_common.fullname" .) -}}
+{{- $ingressName := coalesce .ingress.ingressNameOverride (include "mintel_common.fullname" .) -}}
+{{- if eq .ingress.alb.scheme "api" }}
+{{- $ingressName = printf "%s-%s" $ingressName "api-gw" -}}
 {{- end -}}
+{{- if .ingress.ingressNameSuffix }}
+{{- $ingressName = printf "%s-%s" $ingressName .ingress.ingressNameSuffix -}}
+{{- end -}}
+{{ print $ingressName }}
 {{- end -}}
 
 {{/* Ingress labels */}}
 {{- define "mintel_common.ingressLabels" -}}
 {{ include "mintel_common.labels" . | replace (include "mintel_common.fullname" .) (include "mintel_common.ingressName" .)}}
+{{- end -}}
+
+{{/* Ingress default host */}}
+{{- define "mintel_common.ingress.defaultHost" -}}
+{{- if eq .ingress.alb.scheme "api" -}}
+{{- if ne .Values.global.clusterEnv "prod" -}}
+{{- printf "%s-%s" .Values.global.clusterEnv "api.mintel.com" -}}
+{{- else -}}
+{{- print "api.mintel.com" -}}
+{{- end -}}
+{{- else -}}
+{{ print .ingress.defaultHost }}
+{{- end -}}
 {{- end -}}
