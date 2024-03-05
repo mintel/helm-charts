@@ -57,7 +57,7 @@ metadata:
       {{- include "mintel_common.ingress.alb_annotations" $albData | nindent 4 }}
     {{- end }}
 
-    {{- if (and .blackbox .blackbox.enabled) }}
+    {{- if and .blackbox .blackbox.enabled (ne .alb.scheme "api") }}
     prometheus.io/probe: "true"
     prometheus.io/probepath: {{ .blackbox.probePath }}
     prometheus.io/probescheme: {{ .blackbox.probeScheme }}
