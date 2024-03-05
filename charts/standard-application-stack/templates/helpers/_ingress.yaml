@@ -178,8 +178,8 @@ external-dns.alpha.kubernetes.io/ttl: "60"
 
 {{/* Ingress default host */}}
 {{- define "mintel_common.ingress.defaultHost" -}}
-{{- if eq .ingress.alb.scheme "api" -}}
-{{- if ne .Values.global.clusterEnv "prod" -}}
+{{- if and ((.ingress.alb).scheme) (eq .ingress.alb.scheme "api") -}}
+{{- if and .Values.global.clusterEnv (ne .Values.global.clusterEnv "prod") -}}
 {{- printf "%s-%s" .Values.global.clusterEnv "api.mintel.com" -}}
 {{- else -}}
 {{- print "api.mintel.com" -}}

@@ -522,6 +522,13 @@ tests:
       - equal:
           path: spec.rules[0].host
           value: qa-api.mintel.com
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: EXTRA_ALLOWED_HOSTS
+            value: 'qa-api.mintel.com'
+          count: 1
+        template: deployment.yaml
 
   - it: adds prod api-gateway ingress as an extraIngress with custom fields
     template: ingress.yaml
@@ -529,6 +536,7 @@ tests:
       global.clusterEnv: prod
       ingress.enabled: true
       ingress.alb.enabled: true
+      ingress.defaultHost: example.com
       ingress.extraIngresses:
       - alb:
           enabled: true
@@ -562,3 +570,10 @@ tests:
           path: spec.rules[0].host
           value: api.mintel.com
         documentIndex: 1
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: EXTRA_ALLOWED_HOSTS
+            value: 'api.mintel.com,example.com'
+          count: 1
+        template: deployment.yaml

@@ -1243,7 +1243,7 @@ adds prod api-gateway ingress as an extraIngress with custom fields:
         alb.ingress.kubernetes.io/target-type: ip
         alb.ingress.kubernetes.io/unhealthy-threshold-count: "2"
         app.mintel.com/placeholder: placeholder
-        external-dns.alpha.kubernetes.io/hostname: null
+        external-dns.alpha.kubernetes.io/hostname: example.com
         external-dns.alpha.kubernetes.io/ttl: "60"
         prometheus.io/probe: "true"
         prometheus.io/probepath: /external-health-check
@@ -1262,7 +1262,7 @@ adds prod api-gateway ingress as an extraIngress with custom fields:
     spec:
       ingressClassName: alb-public-apps-default
       rules:
-        - host: <nil>
+        - host: example.com
           http:
             paths:
               - backend:
@@ -1294,7 +1294,7 @@ adds prod api-gateway ingress as an extraIngress with custom fields:
         alb.ingress.kubernetes.io/target-type: ip
         alb.ingress.kubernetes.io/unhealthy-threshold-count: "2"
         app.mintel.com/placeholder: placeholder
-        external-dns.alpha.kubernetes.io/hostname: null
+        external-dns.alpha.kubernetes.io/hostname: example.com
         external-dns.alpha.kubernetes.io/ttl: "60"
         prometheus.io/probe: "true"
         prometheus.io/probepath: /external-health-check
