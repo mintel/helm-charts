@@ -19,7 +19,7 @@ Check awsEsProxy Ingress is created if enabled:
         alb.ingress.kubernetes.io/target-type: ip
         alb.ingress.kubernetes.io/unhealthy-threshold-count: "2"
         app.mintel.com/placeholder: placeholder
-        external-dns.alpha.kubernetes.io/hostname: null
+        external-dns.alpha.kubernetes.io/hostname: <nil>
         external-dns.alpha.kubernetes.io/ttl: "60"
       labels:
         app.kubernetes.io/component: aws-es-proxy

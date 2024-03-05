@@ -19,7 +19,7 @@ Check ALB HTTP2 default settings:
         alb.ingress.kubernetes.io/target-type: ip
         alb.ingress.kubernetes.io/unhealthy-threshold-count: "2"
         app.mintel.com/placeholder: placeholder
-        external-dns.alpha.kubernetes.io/hostname: null
+        external-dns.alpha.kubernetes.io/hostname: <nil>
         external-dns.alpha.kubernetes.io/ttl: "60"
         prometheus.io/probe: "true"
         prometheus.io/probepath: /external-health-check
@@ -69,7 +69,7 @@ Check ALB className set by default:
         alb.ingress.kubernetes.io/target-type: ip
         alb.ingress.kubernetes.io/unhealthy-threshold-count: "2"
         app.mintel.com/placeholder: placeholder
-        external-dns.alpha.kubernetes.io/hostname: null
+        external-dns.alpha.kubernetes.io/hostname: <nil>
         external-dns.alpha.kubernetes.io/ttl: "60"
         prometheus.io/probe: "true"
         prometheus.io/probepath: /external-health-check
@@ -119,7 +119,7 @@ Check ALB custom health-check port:
         alb.ingress.kubernetes.io/target-type: ip
         alb.ingress.kubernetes.io/unhealthy-threshold-count: "2"
         app.mintel.com/placeholder: placeholder
-        external-dns.alpha.kubernetes.io/hostname: null
+        external-dns.alpha.kubernetes.io/hostname: <nil>
         external-dns.alpha.kubernetes.io/ttl: "60"
         prometheus.io/probe: "true"
         prometheus.io/probepath: /external-health-check
@@ -169,7 +169,7 @@ Check ALB default health-check port:
         alb.ingress.kubernetes.io/target-type: ip
         alb.ingress.kubernetes.io/unhealthy-threshold-count: "2"
         app.mintel.com/placeholder: placeholder
-        external-dns.alpha.kubernetes.io/hostname: null
+        external-dns.alpha.kubernetes.io/hostname: <nil>
         external-dns.alpha.kubernetes.io/ttl: "60"
         prometheus.io/probe: "true"
         prometheus.io/probepath: /external-health-check
@@ -219,7 +219,7 @@ Check ALB gRPC custom settings:
         alb.ingress.kubernetes.io/target-type: ip
         alb.ingress.kubernetes.io/unhealthy-threshold-count: "2"
         app.mintel.com/placeholder: placeholder
-        external-dns.alpha.kubernetes.io/hostname: null
+        external-dns.alpha.kubernetes.io/hostname: <nil>
         external-dns.alpha.kubernetes.io/ttl: "60"
         prometheus.io/probe: "true"
         prometheus.io/probepath: /external-health-check
@@ -269,7 +269,7 @@ Check ALB gRPC default settings:
         alb.ingress.kubernetes.io/target-type: ip
         alb.ingress.kubernetes.io/unhealthy-threshold-count: "2"
         app.mintel.com/placeholder: placeholder
-        external-dns.alpha.kubernetes.io/hostname: null
+        external-dns.alpha.kubernetes.io/hostname: <nil>
         external-dns.alpha.kubernetes.io/ttl: "60"
         prometheus.io/probe: "true"
         prometheus.io/probepath: /external-health-check
@@ -319,7 +319,7 @@ Check ALB health-check port with oauthProxy enabled:
         alb.ingress.kubernetes.io/target-type: ip
         alb.ingress.kubernetes.io/unhealthy-threshold-count: "2"
         app.mintel.com/placeholder: placeholder
-        external-dns.alpha.kubernetes.io/hostname: null
+        external-dns.alpha.kubernetes.io/hostname: <nil>
         external-dns.alpha.kubernetes.io/ttl: "60"
         prometheus.io/probe: "true"
         prometheus.io/probepath: /external-health-check
@@ -984,7 +984,7 @@ Check ingress name override:
         alb.ingress.kubernetes.io/target-type: ip
         alb.ingress.kubernetes.io/unhealthy-threshold-count: "2"
         app.mintel.com/placeholder: placeholder
-        external-dns.alpha.kubernetes.io/hostname: null
+        external-dns.alpha.kubernetes.io/hostname: <nil>
         external-dns.alpha.kubernetes.io/ttl: "60"
         prometheus.io/probe: "true"
         prometheus.io/probepath: /external-health-check
@@ -1034,7 +1034,7 @@ Check ingress name suffix setting:
         alb.ingress.kubernetes.io/target-type: ip
         alb.ingress.kubernetes.io/unhealthy-threshold-count: "2"
         app.mintel.com/placeholder: placeholder
-        external-dns.alpha.kubernetes.io/hostname: null
+        external-dns.alpha.kubernetes.io/hostname: <nil>
         external-dns.alpha.kubernetes.io/ttl: "60"
         prometheus.io/probe: "true"
         prometheus.io/probepath: /external-health-check
@@ -1134,7 +1134,7 @@ Default ingress with path based routing:
         alb.ingress.kubernetes.io/target-type: ip
         alb.ingress.kubernetes.io/unhealthy-threshold-count: "2"
         app.mintel.com/placeholder: placeholder
-        external-dns.alpha.kubernetes.io/hostname: null
+        external-dns.alpha.kubernetes.io/hostname: <nil>
         external-dns.alpha.kubernetes.io/ttl: "60"
         prometheus.io/probe: "true"
         prometheus.io/probepath: /external-health-check
@@ -1193,7 +1193,7 @@ adds default qa api-gateway ingress:
         alb.ingress.kubernetes.io/target-type: ip
         alb.ingress.kubernetes.io/unhealthy-threshold-count: "2"
         app.mintel.com/placeholder: placeholder
-        external-dns.alpha.kubernetes.io/hostname: null
+        external-dns.alpha.kubernetes.io/hostname: qa-api.mintel.com
         external-dns.alpha.kubernetes.io/ttl: "60"
         prometheus.io/probe: "true"
         prometheus.io/probepath: /external-health-check
@@ -1294,7 +1294,7 @@ adds prod api-gateway ingress as an extraIngress with custom fields:
         alb.ingress.kubernetes.io/target-type: ip
         alb.ingress.kubernetes.io/unhealthy-threshold-count: "2"
         app.mintel.com/placeholder: placeholder
-        external-dns.alpha.kubernetes.io/hostname: example.com
+        external-dns.alpha.kubernetes.io/hostname: api.mintel.com
         external-dns.alpha.kubernetes.io/ttl: "60"
         prometheus.io/probe: "true"
         prometheus.io/probepath: /external-health-check
