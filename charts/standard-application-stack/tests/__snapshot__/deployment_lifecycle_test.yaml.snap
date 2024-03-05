@@ -58,7 +58,7 @@ Check AWS ALB lifecycle rule applied:
                 - name: USE_SSL
                   value: "1"
                 - name: EXTRA_ALLOWED_HOSTS
-                  value: null
+                  value: <nil>
               envFrom:
                 - secretRef:
                     name: example-app-app
@@ -184,7 +184,7 @@ Check AWS ALB lifecycle rules applied with custom delay:
                 - name: USE_SSL
                   value: "1"
                 - name: EXTRA_ALLOWED_HOSTS
-                  value: null
+                  value: <nil>
               envFrom:
                 - secretRef:
                     name: example-app-app
@@ -310,7 +310,7 @@ Check AWS ALB lifecycle rules are not applied when ALB disabled:
                 - name: USE_SSL
                   value: "1"
                 - name: EXTRA_ALLOWED_HOSTS
-                  value: null
+                  value: <nil>
               envFrom:
                 - secretRef:
                     name: example-app-app

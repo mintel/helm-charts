@@ -19,7 +19,7 @@ Check ALB HTTP2 default settings:
         alb.ingress.kubernetes.io/target-type: ip
         alb.ingress.kubernetes.io/unhealthy-threshold-count: "2"
         app.mintel.com/placeholder: placeholder
-        external-dns.alpha.kubernetes.io/hostname: null
+        external-dns.alpha.kubernetes.io/hostname: <nil>
         external-dns.alpha.kubernetes.io/ttl: "60"
         prometheus.io/probe: "true"
         prometheus.io/probepath: /external-health-check
@@ -38,7 +38,7 @@ Check ALB HTTP2 default settings:
     spec:
       ingressClassName: alb-public-apps-default
       rules:
-        - host: null
+        - host: <nil>
           http:
             paths:
               - backend:
@@ -69,7 +69,7 @@ Check ALB className set by default:
         alb.ingress.kubernetes.io/target-type: ip
         alb.ingress.kubernetes.io/unhealthy-threshold-count: "2"
         app.mintel.com/placeholder: placeholder
-        external-dns.alpha.kubernetes.io/hostname: null
+        external-dns.alpha.kubernetes.io/hostname: <nil>
         external-dns.alpha.kubernetes.io/ttl: "60"
         prometheus.io/probe: "true"
         prometheus.io/probepath: /external-health-check
@@ -88,7 +88,7 @@ Check ALB className set by default:
     spec:
       ingressClassName: alb-public-apps-default
       rules:
-        - host: null
+        - host: <nil>
           http:
             paths:
               - backend:
@@ -119,7 +119,7 @@ Check ALB custom health-check port:
         alb.ingress.kubernetes.io/target-type: ip
         alb.ingress.kubernetes.io/unhealthy-threshold-count: "2"
         app.mintel.com/placeholder: placeholder
-        external-dns.alpha.kubernetes.io/hostname: null
+        external-dns.alpha.kubernetes.io/hostname: <nil>
         external-dns.alpha.kubernetes.io/ttl: "60"
         prometheus.io/probe: "true"
         prometheus.io/probepath: /external-health-check
@@ -138,7 +138,7 @@ Check ALB custom health-check port:
     spec:
       ingressClassName: alb-public-apps-default
       rules:
-        - host: null
+        - host: <nil>
           http:
             paths:
               - backend:
@@ -169,7 +169,7 @@ Check ALB default health-check port:
         alb.ingress.kubernetes.io/target-type: ip
         alb.ingress.kubernetes.io/unhealthy-threshold-count: "2"
         app.mintel.com/placeholder: placeholder
-        external-dns.alpha.kubernetes.io/hostname: null
+        external-dns.alpha.kubernetes.io/hostname: <nil>
         external-dns.alpha.kubernetes.io/ttl: "60"
         prometheus.io/probe: "true"
         prometheus.io/probepath: /external-health-check
@@ -188,7 +188,7 @@ Check ALB default health-check port:
     spec:
       ingressClassName: alb-public-apps-default
       rules:
-        - host: null
+        - host: <nil>
           http:
             paths:
               - backend:
@@ -219,7 +219,7 @@ Check ALB gRPC custom settings:
         alb.ingress.kubernetes.io/target-type: ip
         alb.ingress.kubernetes.io/unhealthy-threshold-count: "2"
         app.mintel.com/placeholder: placeholder
-        external-dns.alpha.kubernetes.io/hostname: null
+        external-dns.alpha.kubernetes.io/hostname: <nil>
         external-dns.alpha.kubernetes.io/ttl: "60"
         prometheus.io/probe: "true"
         prometheus.io/probepath: /external-health-check
@@ -238,7 +238,7 @@ Check ALB gRPC custom settings:
     spec:
       ingressClassName: alb-public-apps-default
       rules:
-        - host: null
+        - host: <nil>
           http:
             paths:
               - backend:
@@ -269,7 +269,7 @@ Check ALB gRPC default settings:
         alb.ingress.kubernetes.io/target-type: ip
         alb.ingress.kubernetes.io/unhealthy-threshold-count: "2"
         app.mintel.com/placeholder: placeholder
-        external-dns.alpha.kubernetes.io/hostname: null
+        external-dns.alpha.kubernetes.io/hostname: <nil>
         external-dns.alpha.kubernetes.io/ttl: "60"
         prometheus.io/probe: "true"
         prometheus.io/probepath: /external-health-check
@@ -288,7 +288,7 @@ Check ALB gRPC default settings:
     spec:
       ingressClassName: alb-public-apps-default
       rules:
-        - host: null
+        - host: <nil>
           http:
             paths:
               - backend:
@@ -319,7 +319,7 @@ Check ALB health-check port with oauthProxy enabled:
         alb.ingress.kubernetes.io/target-type: ip
         alb.ingress.kubernetes.io/unhealthy-threshold-count: "2"
         app.mintel.com/placeholder: placeholder
-        external-dns.alpha.kubernetes.io/hostname: null
+        external-dns.alpha.kubernetes.io/hostname: <nil>
         external-dns.alpha.kubernetes.io/ttl: "60"
         prometheus.io/probe: "true"
         prometheus.io/probepath: /external-health-check
@@ -338,7 +338,7 @@ Check ALB health-check port with oauthProxy enabled:
     spec:
       ingressClassName: alb-public-apps-default
       rules:
-        - host: null
+        - host: <nil>
           http:
             paths:
               - backend:
@@ -502,7 +502,7 @@ Check HAProxy className set if ALB is disabled:
     spec:
       ingressClassName: haproxy
       rules:
-        - host: null
+        - host: <nil>
           http:
             paths:
               - backend:
@@ -984,7 +984,7 @@ Check ingress name override:
         alb.ingress.kubernetes.io/target-type: ip
         alb.ingress.kubernetes.io/unhealthy-threshold-count: "2"
         app.mintel.com/placeholder: placeholder
-        external-dns.alpha.kubernetes.io/hostname: null
+        external-dns.alpha.kubernetes.io/hostname: <nil>
         external-dns.alpha.kubernetes.io/ttl: "60"
         prometheus.io/probe: "true"
         prometheus.io/probepath: /external-health-check
@@ -1003,7 +1003,7 @@ Check ingress name override:
     spec:
       ingressClassName: alb-public-apps-default
       rules:
-        - host: null
+        - host: <nil>
           http:
             paths:
               - backend:
@@ -1034,7 +1034,7 @@ Check ingress name suffix setting:
         alb.ingress.kubernetes.io/target-type: ip
         alb.ingress.kubernetes.io/unhealthy-threshold-count: "2"
         app.mintel.com/placeholder: placeholder
-        external-dns.alpha.kubernetes.io/hostname: null
+        external-dns.alpha.kubernetes.io/hostname: <nil>
         external-dns.alpha.kubernetes.io/ttl: "60"
         prometheus.io/probe: "true"
         prometheus.io/probepath: /external-health-check
@@ -1053,7 +1053,7 @@ Check ingress name suffix setting:
     spec:
       ingressClassName: alb-public-apps-default
       rules:
-        - host: null
+        - host: <nil>
           http:
             paths:
               - backend:
@@ -1134,7 +1134,7 @@ Default ingress with path based routing:
         alb.ingress.kubernetes.io/target-type: ip
         alb.ingress.kubernetes.io/unhealthy-threshold-count: "2"
         app.mintel.com/placeholder: placeholder
-        external-dns.alpha.kubernetes.io/hostname: null
+        external-dns.alpha.kubernetes.io/hostname: <nil>
         external-dns.alpha.kubernetes.io/ttl: "60"
         prometheus.io/probe: "true"
         prometheus.io/probepath: /external-health-check
@@ -1153,7 +1153,7 @@ Default ingress with path based routing:
     spec:
       ingressClassName: alb-public-apps-default
       rules:
-        - host: null
+        - host: <nil>
           http:
             paths:
               - backend:
@@ -1169,6 +1169,159 @@ Default ingress with path based routing:
                     port:
                       number: 5678
                 path: /i02
+                pathType: Prefix
+adds default qa api-gateway ingress:
+  1: |
+    apiVersion: networking.k8s.io/v1
+    kind: Ingress
+    metadata:
+      annotations:
+        alb.ingress.kubernetes.io/backend-protocol: HTTP
+        alb.ingress.kubernetes.io/backend-protocol-version: HTTP1
+        alb.ingress.kubernetes.io/conditions.example-app: |
+          [{"field":"http-header","httpHeaderConfig":{"httpHeaderName": "x-app-path", "values":["/example-app/*"]}}]
+        alb.ingress.kubernetes.io/healthcheck-interval-seconds: "15"
+        alb.ingress.kubernetes.io/healthcheck-path: /readiness
+        alb.ingress.kubernetes.io/healthcheck-port: "8000"
+        alb.ingress.kubernetes.io/healthcheck-protocol: HTTP
+        alb.ingress.kubernetes.io/healthcheck-timeout-seconds: "5"
+        alb.ingress.kubernetes.io/healthy-threshold-count: "2"
+        alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
+        alb.ingress.kubernetes.io/ssl-redirect: "443"
+        alb.ingress.kubernetes.io/success-codes: "200"
+        alb.ingress.kubernetes.io/target-group-attributes: deregistration_delay.timeout_seconds=5,load_balancing.algorithm.type=least_outstanding_requests
+        alb.ingress.kubernetes.io/target-type: ip
+        alb.ingress.kubernetes.io/unhealthy-threshold-count: "2"
+        app.mintel.com/placeholder: placeholder
+        external-dns.alpha.kubernetes.io/hostname: qa-api.mintel.com
+        external-dns.alpha.kubernetes.io/ttl: "60"
+        prometheus.io/probe: "true"
+        prometheus.io/probepath: /external-health-check
+        prometheus.io/probescheme: https
+      labels:
+        app.kubernetes.io/component: app
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: example-app-api-gw
+        app.mintel.com/application: example-app-api-gw
+        app.mintel.com/component: example-app-api-gw
+        app.mintel.com/env: qa
+        app.mintel.com/region: ${CLUSTER_REGION}
+        name: example-app-api-gw
+      name: example-app-api-gw
+      namespace: test-namespace
+    spec:
+      ingressClassName: alb-internal-apps-default
+      rules:
+        - host: qa-api.mintel.com
+          http:
+            paths:
+              - backend:
+                  service:
+                    name: example-app
+                    port:
+                      number: 8000
+                path: /
+                pathType: Prefix
+adds prod api-gateway ingress as an extraIngress with custom fields:
+  1: |
+    apiVersion: networking.k8s.io/v1
+    kind: Ingress
+    metadata:
+      annotations:
+        alb.ingress.kubernetes.io/backend-protocol: HTTP
+        alb.ingress.kubernetes.io/backend-protocol-version: HTTP1
+        alb.ingress.kubernetes.io/healthcheck-interval-seconds: "15"
+        alb.ingress.kubernetes.io/healthcheck-path: /readiness
+        alb.ingress.kubernetes.io/healthcheck-port: "8000"
+        alb.ingress.kubernetes.io/healthcheck-protocol: HTTP
+        alb.ingress.kubernetes.io/healthcheck-timeout-seconds: "5"
+        alb.ingress.kubernetes.io/healthy-threshold-count: "2"
+        alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
+        alb.ingress.kubernetes.io/ssl-redirect: "443"
+        alb.ingress.kubernetes.io/success-codes: "200"
+        alb.ingress.kubernetes.io/target-group-attributes: deregistration_delay.timeout_seconds=5,load_balancing.algorithm.type=least_outstanding_requests
+        alb.ingress.kubernetes.io/target-type: ip
+        alb.ingress.kubernetes.io/unhealthy-threshold-count: "2"
+        app.mintel.com/placeholder: placeholder
+        external-dns.alpha.kubernetes.io/hostname: example.com
+        external-dns.alpha.kubernetes.io/ttl: "60"
+        prometheus.io/probe: "true"
+        prometheus.io/probepath: /external-health-check
+        prometheus.io/probescheme: https
+      labels:
+        app.kubernetes.io/component: app
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: example-app
+        app.mintel.com/application: example-app
+        app.mintel.com/component: example-app
+        app.mintel.com/env: prod
+        app.mintel.com/region: ${CLUSTER_REGION}
+        name: example-app
+      name: example-app
+      namespace: test-namespace
+    spec:
+      ingressClassName: alb-public-apps-default
+      rules:
+        - host: example.com
+          http:
+            paths:
+              - backend:
+                  service:
+                    name: example-app
+                    port:
+                      number: 8000
+                path: /
+                pathType: Prefix
+  2: |
+    apiVersion: networking.k8s.io/v1
+    kind: Ingress
+    metadata:
+      annotations:
+        alb.ingress.kubernetes.io/backend-protocol: HTTP
+        alb.ingress.kubernetes.io/backend-protocol-version: HTTP1
+        alb.ingress.kubernetes.io/conditions.custom-api-target-service: |
+          [{"field":"http-header","httpHeaderConfig":{"httpHeaderName": "x-app-path", "values":["/custom-api-app-name/*"]}}]
+        alb.ingress.kubernetes.io/healthcheck-interval-seconds: "15"
+        alb.ingress.kubernetes.io/healthcheck-path: /readiness
+        alb.ingress.kubernetes.io/healthcheck-port: "8000"
+        alb.ingress.kubernetes.io/healthcheck-protocol: HTTP
+        alb.ingress.kubernetes.io/healthcheck-timeout-seconds: "5"
+        alb.ingress.kubernetes.io/healthy-threshold-count: "2"
+        alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
+        alb.ingress.kubernetes.io/ssl-redirect: "443"
+        alb.ingress.kubernetes.io/success-codes: "200"
+        alb.ingress.kubernetes.io/target-group-attributes: deregistration_delay.timeout_seconds=5,load_balancing.algorithm.type=least_outstanding_requests
+        alb.ingress.kubernetes.io/target-type: ip
+        alb.ingress.kubernetes.io/unhealthy-threshold-count: "2"
+        app.mintel.com/placeholder: placeholder
+        external-dns.alpha.kubernetes.io/hostname: api.mintel.com
+        external-dns.alpha.kubernetes.io/ttl: "60"
+        prometheus.io/probe: "true"
+        prometheus.io/probepath: /external-health-check
+        prometheus.io/probescheme: https
+      labels:
+        app.kubernetes.io/component: app
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: example-app-api-gw
+        app.mintel.com/application: example-app-api-gw
+        app.mintel.com/component: example-app-api-gw
+        app.mintel.com/env: prod
+        app.mintel.com/region: ${CLUSTER_REGION}
+        name: example-app-api-gw
+      name: example-app-api-gw
+      namespace: test-namespace
+    spec:
+      ingressClassName: alb-internal-apps-default
+      rules:
+        - host: api.mintel.com
+          http:
+            paths:
+              - backend:
+                  service:
+                    name: example-app
+                    port:
+                      number: 8000
+                path: /
                 pathType: Prefix
 allows extraIngresses to override default values:
   1: |

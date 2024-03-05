@@ -101,11 +101,11 @@ spec:
 # container port. Healthchecks can be on a different port to the main application port, so we allow this to be specified
 # as well.
 {{- $privateALB := false }}
-{{- if and .Values.ingress.enabled .Values.ingress.alb.enabled (eq .Values.ingress.alb.scheme "internal") }}
+{{- if and .Values.ingress.enabled .Values.ingress.alb.enabled (or (eq .Values.ingress.alb.scheme "internal") (eq .Values.ingress.alb.scheme "api")) }}
 {{- $privateALB = true }}
 {{- end }}
 {{- range .Values.ingress.extraIngresses }}
-{{- if eq .alb.scheme "internal" }}
+{{- if or (eq .alb.scheme "internal") (eq .alb.scheme "api") }}
 {{- $privateALB = true }}
 {{- end }}
 {{- end }}

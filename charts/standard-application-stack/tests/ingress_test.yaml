@@ -439,7 +439,6 @@ tests:
             - targetService: mock-service
               targetPort: mock-port
               path: /mock-path
-
     asserts:
       - matchSnapshot: {} # Check for regressions and unexpected changes.
       - hasDocuments:
@@ -494,3 +493,87 @@ tests:
       - isNull:
           path: metadata.annotations["alb.ingress.kubernetes.io/backend-protocol"]
         documentIndex: 1
+
+  - it: adds default qa api-gateway ingress
+    template: ingress.yaml
+    set:
+      global.clusterEnv: qa
+      ingress.enabled: true
+      ingress.alb.enabled: true
+      ingress.alb.scheme: api
+    asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
+      - equal:
+          path: metadata.annotations["alb.ingress.kubernetes.io/conditions.example-app"]
+          value: |
+            [{"field":"http-header","httpHeaderConfig":{"httpHeaderName": "x-app-path", "values":["/example-app/*"]}}]
+      - equal:
+          path: metadata.labels["app.kubernetes.io/name"]
+          value: example-app-api-gw
+      - equal:
+          path: metadata.labels["app.mintel.com/application"]
+          value: example-app-api-gw
+      - equal:
+          path: metadata.labels["app.mintel.com/component"]
+          value: example-app-api-gw
+      - equal:
+          path: metadata.name
+          value: example-app-api-gw
+      - equal:
+          path: spec.rules[0].host
+          value: qa-api.mintel.com
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: EXTRA_ALLOWED_HOSTS
+            value: 'qa-api.mintel.com'
+          count: 1
+        template: deployment.yaml
+
+  - it: adds prod api-gateway ingress as an extraIngress with custom fields
+    template: ingress.yaml
+    set:
+      global.clusterEnv: prod
+      ingress.enabled: true
+      ingress.alb.enabled: true
+      ingress.defaultHost: example.com
+      ingress.extraIngresses:
+      - alb:
+          enabled: true
+          scheme: api
+          apiAppName: custom-api-app-name
+          apiTargetService: custom-api-target-service
+    asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
+      - equal:
+          path: metadata.annotations["alb.ingress.kubernetes.io/conditions.custom-api-target-service"]
+          value: |
+            [{"field":"http-header","httpHeaderConfig":{"httpHeaderName": "x-app-path", "values":["/custom-api-app-name/*"]}}]
+        documentIndex: 1
+      - equal:
+          path: metadata.labels["app.kubernetes.io/name"]
+          value: example-app-api-gw
+        documentIndex: 1
+      - equal:
+          path: metadata.labels["app.mintel.com/application"]
+          value: example-app-api-gw
+        documentIndex: 1
+      - equal:
+          path: metadata.labels["app.mintel.com/component"]
+          value: example-app-api-gw
+        documentIndex: 1
+      - equal:
+          path: metadata.name
+          value: example-app-api-gw
+        documentIndex: 1
+      - equal:
+          path: spec.rules[0].host
+          value: api.mintel.com
+        documentIndex: 1
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: EXTRA_ALLOWED_HOSTS
+            value: 'api.mintel.com,example.com'
+          count: 1
+        template: deployment.yaml

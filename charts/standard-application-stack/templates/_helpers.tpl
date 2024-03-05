@@ -460,15 +460,17 @@ Build comma separated list of configmaps
 {{- define "mintel_common.extraHostsEnv" -}}
 {{- if (and .Values.ingress .Values.ingress.enabled) }}
 - name: EXTRA_ALLOWED_HOSTS
-  {{- $hosts := list .Values.ingress.defaultHost -}}
+  {{- $hosts := list (include "mintel_common.ingress.defaultHost" (dict "Values" $.Values "ingress" .Values.ingress) ) -}}
   {{- range .Values.ingress.extraHosts }}
   {{- $hosts = append $hosts .name -}}
   {{- end }}
   {{- if (and .Values.oauthProxy.enabled .Values.oauthProxy.ingressHost) -}}
   {{- $hosts = append $hosts .Values.oauthProxy.ingressHost }}
   {{- end }}
+  {{/* Need to define Values var since it's needed in the loop below */}}
+  {{- $Values := .Values -}}
   {{- range .Values.ingress.extraIngresses }}
-    {{- $hosts = append $hosts .defaultHost -}}
+    {{- $hosts = append $hosts (include "mintel_common.ingress.defaultHost" (dict "Values" $Values "ingress" .) ) -}}
     {{- range .extraHosts }}
     {{- $hosts = append $hosts .name -}}
     {{- end }}
