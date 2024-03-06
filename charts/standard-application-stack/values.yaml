@@ -146,7 +146,8 @@ autoscaling:
   # ref: https://keda.sh/docs/2.8/concepts/scaling-deployments/#fallback
   fallback:
     failureThreshold: 3
-    replicas: 2
+     # fallback.replicas will default to minReplicaCount unless explicitly set
+     # replicas: 2
 
   # ref: https://keda.sh/docs/2.8/concepts/scaling-deployments/#advanced
   advanced: {}

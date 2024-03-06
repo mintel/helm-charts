@@ -30,7 +30,7 @@ spec:
     {{- toYaml .advanced | nindent 4 }}
   fallback:
     failureThreshold: {{ .fallback.failureThreshold }}
-    replicas: {{ .fallback.replicas }}
+    replicas: {{ .fallback.replicas | default (include "mintel_common.keda.scaledObject.minReplicaCount" .) }}
   {{- with .triggers }}
   triggers:
   {{- if .targetCPUUtilizationPercentage }}
