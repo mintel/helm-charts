@@ -314,7 +314,36 @@ Creates a ScaledObject with custom triggers:
             serverAddress: http://prometheus-k8s.monitoring.svc:9090
             threshold: "10"
           type: prometheus
-Creates a ScaledObject with fallback settings:
+Creates a ScaledObject with default fallback based on minReplicaCount:
+  1: |
+    apiVersion: keda.sh/v1alpha1
+    kind: ScaledObject
+    metadata:
+      labels:
+        app.kubernetes.io/component: app
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: example-app
+        app.mintel.com/application: example-app
+        app.mintel.com/component: example-app
+        app.mintel.com/env: qa
+        app.mintel.com/region: ${CLUSTER_REGION}
+        name: example-app
+      name: example-app
+      namespace: test-namespace
+    spec:
+      advanced: {}
+      cooldownPeriod: 300
+      fallback:
+        failureThreshold: 1
+        replicas: 3
+      maxReplicaCount: 5
+      minReplicaCount: 3
+      pollingInterval: 30
+      scaleTargetRef:
+        apiVersion: apps/v1
+        kind: Deployment
+        name: example-app
+Creates a ScaledObject with explicit fallback settings:
   1: |
     apiVersion: keda.sh/v1alpha1
     kind: ScaledObject
