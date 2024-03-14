@@ -179,7 +179,6 @@ autoscaling:
     #      queueLength: "20"
     #  - type: 'prometheus'
     #    metadata:
-    #      metricName: 'http_requests_total',
     #      query: 'sum(rate(http_requests_total{service="podinfo-http"}[2m]))',
     #      threshold: '5',
 

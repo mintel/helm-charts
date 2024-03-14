@@ -303,13 +303,11 @@ Creates a ScaledObject with custom triggers:
         name: example-app
       triggers:
         - metadata:
-            metricName: http_requests_total
             query: sum(rate(http_requests_total{service="podinfo-http"}[2m]))
             serverAddress: http://prometheus-k8s.monitoring.svc:9090
             threshold: "5"
           type: prometheus
         - metadata:
-            metricName: http_requests_total
             query: sum(rate(http_requests_total{service="podinfo-grpc"}[5m]))
             serverAddress: http://prometheus-k8s.monitoring.svc:9090
             threshold: "10"
