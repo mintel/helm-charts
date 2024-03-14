@@ -109,13 +109,11 @@ tests:
       autoscaling.triggers.custom:
         - type: 'prometheus'
           metadata:
-            metricName: 'http_requests_total'
             query: 'sum(rate(http_requests_total{service="podinfo-http"}[2m]))'
             serverAddress: 'http://prometheus-k8s.monitoring.svc:9090'
             threshold: '5'
         - type: 'prometheus'
           metadata:
-            metricName: 'http_requests_total'
             query: 'sum(rate(http_requests_total{service="podinfo-grpc"}[5m]))'
             serverAddress: 'http://prometheus-k8s.monitoring.svc:9090'
             threshold: '10'
@@ -136,13 +134,11 @@ tests:
           value:
             - type: 'prometheus'
               metadata:
-                metricName: 'http_requests_total'
                 query: 'sum(rate(http_requests_total{service="podinfo-http"}[2m]))'
                 serverAddress: 'http://prometheus-k8s.monitoring.svc:9090'
                 threshold: '5'
             - type: 'prometheus'
               metadata:
-                metricName: 'http_requests_total'
                 query: 'sum(rate(http_requests_total{service="podinfo-grpc"}[5m]))'
                 serverAddress: 'http://prometheus-k8s.monitoring.svc:9090'
                 threshold: '10'
@@ -602,8 +598,6 @@ tests:
             queueURL: test-queue
             queueLength: 2
         - type: prometheus
-          metadata:
-            metricName: http_requests_total
     asserts:
       - matchSnapshot: {} # Check for regressions and unexpected changes.
       - isKind:
@@ -644,7 +638,6 @@ tests:
               queueLength: "2"
           - type: prometheus
             metadata:
-              metricName: http_requests_total
               serverAddress: http://prometheus-k8s.monitoring.svc:9090
 
   - it: Check trigger vars can be overriden
@@ -669,7 +662,6 @@ tests:
             queueLength: 2
         - type: prometheus
           metadata:
-            metricName: http_requests_total
             serverAddress: http://alt-prometheus-k8s.monitoring.svc:9090
     asserts:
       - matchSnapshot: {} # Check for regressions and unexpected changes.
@@ -711,5 +703,4 @@ tests:
               queueLength: "2"
           - type: prometheus
             metadata:
-              metricName: http_requests_total
               serverAddress: http://alt-prometheus-k8s.monitoring.svc:9090
