@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [v6.4.0] - 2024-03-21
 ### Added
 - Added `enableDoNotDisrupt` flag to CronJobs and Jobs. Sets the `karpenter.sh/do-not-disrupt` annotation.
+### Fixed
+- Use of `documentSelector` in test cases now need to specify `templates` in latest version of `helm-unittest`
 
 ## [v6.3.0] - 2024-03-14
 ### Removed
