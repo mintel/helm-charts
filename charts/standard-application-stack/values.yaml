@@ -897,6 +897,9 @@ cronjobs:
     # ref: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
     timezone: null
 
+    # -- Whether to set the `karpenter.sh/do-not-disrupt`annotation on the CronJob
+    enableDoNotDisrupt: true
+
   # -- List of Cronjob configurations to be defined
   jobs:
     []
@@ -941,6 +944,7 @@ cronjobs:
     #   includeElasticsearchSecret: false
     #   includeOpensearchSecret: false
 
+
 # -- Configure default values for all jobs as defined in `$.Values.jobs`
 # @default -- See below.
 jobDefaults:
@@ -954,6 +958,8 @@ jobDefaults:
   includeBaseEnv: false
   # -- Whether you want the securityContext used by the main app workload to be the same in the Job
   includeBasePodSecurityContext: false
+  # -- Whether to set the `karpenter.sh/do-not-disrupt`annotation on the Job
+  enableDoNotDisrupt: true
   # -- Whether the pod should be restarted on failure
   # ref: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#restart-policy)
   restartPolicy: Never

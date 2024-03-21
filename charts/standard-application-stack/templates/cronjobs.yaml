@@ -29,6 +29,10 @@ spec:
       template:
         metadata:
           labels: {{ include "mintel_common.labels" $data | nindent 12 }}
+          {{- if ($.Values.cronjobs.defaults.enableDoNotDisrupt) }}
+          annotations:
+            karpenter.sh/do-not-disrupt: "true"
+          {{- end }}
         spec:
           {{- include "mintel_common.imagePullSecrets" $ | nindent 10 }}
           {{- with .podSecurityContext | default $.Values.podSecurityContext }}

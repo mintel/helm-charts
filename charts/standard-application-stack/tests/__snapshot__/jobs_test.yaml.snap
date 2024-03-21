@@ -89,6 +89,9 @@ Check all overrides/additions from main deployment work if enabled:
       namespace: testNamespace
     spec:
       template:
+        metadata:
+          annotations:
+            karpenter.sh/do-not-disrupt: "true"
         spec:
           containers:
             - env:
@@ -185,6 +188,9 @@ Check default values are correct with minimal configuration:
       namespace: testNamespace
     spec:
       template:
+        metadata:
+          annotations:
+            karpenter.sh/do-not-disrupt: "true"
         spec:
           containers:
             - env:
@@ -220,7 +226,7 @@ Check default values are correct with minimal configuration:
           restartPolicy: Never
           serviceAccountName: testGlobalName-testJobName
       ttlSecondsAfterFinished: 60
-checks that rbac is set up correctly for kubelock:
+Checks that RBAC is set up correctly for kubelock:
   1: |
     apiVersion: batch/v1
     kind: Job
@@ -240,6 +246,9 @@ checks that rbac is set up correctly for kubelock:
       namespace: testNamespace
     spec:
       template:
+        metadata:
+          annotations:
+            karpenter.sh/do-not-disrupt: "true"
         spec:
           containers:
             - env:

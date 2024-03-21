@@ -37,6 +37,10 @@ tests:
       - equal:
           path: spec.ttlSecondsAfterFinished
           value: 60
+      - equal:
+          path: spec.template.metadata.annotations["karpenter.sh/do-not-disrupt"]
+          value: "true"
+
   - it: Check all .job.* values can be set correctly, without overriding from main deployment
     set:
       global.clusterEnv: testClusterEnv
@@ -52,6 +56,7 @@ tests:
             syncWave: '-1'
           restartPolicy: OnFailure
           ttlSecondsAfterFinished: 120
+          enableDoNotDisrupt: false
           image: registry.example.com/another/image/repo:anotherTag
           command:
             - echo
@@ -142,6 +147,9 @@ tests:
       - equal:
           path: spec.ttlSecondsAfterFinished
           value: 120
+      - isNull:
+          path: spec.template.metadata.annotations["karpenter.sh/do-not-disrupt"]
+
   - it: Check all overrides/additions from main deployment work if enabled
     set:
       global.clusterEnv: testClusterEnv
@@ -228,7 +236,7 @@ tests:
             - secretRef:
                 name: another-secret-ref
         documentIndex: 0
-  - it: checks that rbac is set up correctly for kubelock
+  - it: Checks that RBAC is set up correctly for kubelock
     set:
       global.clusterEnv: testClusterEnv
       global.name: testGlobalName

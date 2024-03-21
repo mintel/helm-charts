@@ -43,6 +43,10 @@ tests:
       - equal:
           path: spec.jobTemplate.spec.ttlSecondsAfterFinished
           value: 60
+      - equal:
+          path: spec.jobTemplate.spec.template.metadata.annotations["karpenter.sh/do-not-disrupt"]
+          value: "true"
+
   - it: Check CronJob Default Overrides
     set:
       global.clusterEnv: qa
@@ -52,6 +56,7 @@ tests:
           suspend: true
           restartPolicy: OnFailure
           ttlSecondsAfterFinished: 120
+          enableDoNotDisrupt: false
       cronjobs.jobs:
         - name: daily
           schedule: "0 1 * * *"
@@ -87,6 +92,9 @@ tests:
       - equal:
           path: spec.jobTemplate.spec.ttlSecondsAfterFinished
           value: 120
+      - isNull:
+          path: spec.jobTemplate.spec.template.metadata.annotations["karpenter.sh/do-not-disrupt"]
+
   - it: Check CronJob Job Overrides
     set:
       global.clusterEnv: qa

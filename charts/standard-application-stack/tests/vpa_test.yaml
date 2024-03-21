@@ -171,6 +171,8 @@ tests:
       cronjobsOnly: false
       opensearch.enabled: true
       opensearch.awsEsProxy.enabled: true
+    templates:
+      - vpa.yaml
     documentSelector:
       path: metadata.name
       value: deployment-example-app-aws-es-proxy
@@ -206,6 +208,8 @@ tests:
       verticalPodAutoscaler.enabled: true
       cronjobsOnly: false
       celery.enabled: true
+    templates:
+      - vpa.yaml
     documentSelector:
       path: metadata.name
       value: deployment-example-app-celery
@@ -242,6 +246,8 @@ tests:
       cronjobsOnly: false
       celery.enabled: true
       celeryBeat.enabled: true
+    templates:
+      - vpa.yaml
     documentSelector:
       path: metadata.name
       value: deployment-example-app-celery-beat
@@ -279,6 +285,8 @@ tests:
       celery.enabled: true
       redis.enabled: true
       celery.metrics.enabled: true
+    templates:
+      - vpa.yaml
     documentSelector:
       path: metadata.name
       value: deployment-example-app-celery-exporter
@@ -315,6 +323,8 @@ tests:
       cronjobsOnly: false
       mariadb.enabled: true
       mariadb.client.enabled: true
+    templates:
+      - vpa.yaml
     documentSelector:
       path: metadata.name
       value: deployment-example-app-mysqlclient
@@ -351,6 +361,8 @@ tests:
       cronjobsOnly: false
       mariadb.enabled: true
       mariadb.metrics.enabled: true
+    templates:
+      - vpa.yaml
     documentSelector:
       path: metadata.name
       value: deployment-example-app-mysqldexporter
@@ -387,6 +399,8 @@ tests:
       cronjobsOnly: false
       postgresql.enabled: true
       postgresql.metrics.enabled: true
+    templates:
+      - vpa.yaml
     documentSelector:
       path: metadata.name
       value: deployment-example-app-postgresqlexporter
@@ -423,6 +437,8 @@ tests:
       cronjobsOnly: false
       postgresql.enabled: true
       postgresql.metrics.enabled: true
+    templates:
+      - vpa.yaml
     documentSelector:
       path: metadata.name
       value: deployment-example-app-postgresqlclient
