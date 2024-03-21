@@ -1,6 +1,6 @@
 # standard-application-stack
 
-![Version: 6.3.0](https://img.shields.io/badge/Version-6.3.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 6.7.0](https://img.shields.io/badge/Version-6.7.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A generic chart to support most common application requirements
 
@@ -61,9 +61,10 @@ A generic chart to support most common application requirements
 | celeryBeat.resources.requests | object | `{}` | The requested resources for the container |
 | command | list | `["/app/docker-entrypoint.sh"]` | Optional command to the container |
 | configMaps | list | `[]` | A list of configuration maps for this application |
-| cronjobs | object | `{"defaults":{"concurrencyPolicy":"Forbid","restartPolicy":"Never","suspend":false,"timezone":null,"ttlSecondsAfterFinished":60},"jobs":[]}` | Define and Configure CronJob's Defaults to same image as main deployment but with defined arguments |
-| cronjobs.defaults | object | `{"concurrencyPolicy":"Forbid","restartPolicy":"Never","suspend":false,"timezone":null,"ttlSecondsAfterFinished":60}` | Defaults for all CronJob's |
+| cronjobs | object | `{"defaults":{"concurrencyPolicy":"Forbid","enableDoNotDisrupt":true,"restartPolicy":"Never","suspend":false,"timezone":null,"ttlSecondsAfterFinished":60},"jobs":[]}` | Define and Configure CronJob's Defaults to same image as main deployment but with defined arguments |
+| cronjobs.defaults | object | `{"concurrencyPolicy":"Forbid","enableDoNotDisrupt":true,"restartPolicy":"Never","suspend":false,"timezone":null,"ttlSecondsAfterFinished":60}` | Defaults for all CronJob's |
 | cronjobs.defaults.concurrencyPolicy | string | `"Forbid"` | Tells controller how to handle concurrent executions of a CronJob ref: https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/cron-job-v1/#CronJobSpec |
+| cronjobs.defaults.enableDoNotDisrupt | bool | `true` | Whether to set the `karpenter.sh/do-not-disrupt`annotation on the CronJob |
 | cronjobs.defaults.restartPolicy | string | `"Never"` | Configure CronJob pod restart Policy ref: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#restart-policy |
 | cronjobs.defaults.suspend | bool | `false` | Tells controller to suspend future executions ref: https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/cron-job-v1/#CronJobSpec |
 | cronjobs.defaults.timezone | string | `nil` | CronJob schedule will run relative to this timezone. ref: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones |
@@ -165,6 +166,7 @@ A generic chart to support most common application requirements
 | jobDefaults.argo.syncWave | string | `nil` | Sync Wave in which ArgoCD should apply the manifest. ref: https://argo-cd.readthedocs.io/en/stable/user-guide/sync-waves/. |
 | jobDefaults.args | string | `nil` | The command arguments for the main Job container. |
 | jobDefaults.command | string | `nil` | The command the main Job container will run. |
+| jobDefaults.enableDoNotDisrupt | bool | `true` | Whether to set the `karpenter.sh/do-not-disrupt`annotation on the Job |
 | jobDefaults.env | list | `[]` | Any env entries you want to add. See includeBaseEnv to add all from main container. ref: https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/ |
 | jobDefaults.envFrom | list | `[]` | Any envFrom entries you want to add. See includeBaseEnv to add all from main container. ref: https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/ |
 | jobDefaults.extraInitContainers | list | `[]` | A list of initContainers you want to add to the Job. |

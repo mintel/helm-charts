@@ -93,6 +93,8 @@ Check CronJob Defaults:
         spec:
           template:
             metadata:
+              annotations:
+                karpenter.sh/do-not-disrupt: "true"
               labels:
                 app.kubernetes.io/component: daily
                 app.kubernetes.io/managed-by: Helm
@@ -164,6 +166,8 @@ Check CronJob Job Overrides:
         spec:
           template:
             metadata:
+              annotations:
+                karpenter.sh/do-not-disrupt: "true"
               labels:
                 app.kubernetes.io/component: daily
                 app.kubernetes.io/managed-by: Helm
@@ -235,6 +239,8 @@ Check CronJob ttlSecondsAfterFinished zero value:
         spec:
           template:
             metadata:
+              annotations:
+                karpenter.sh/do-not-disrupt: "true"
               labels:
                 app.kubernetes.io/component: daily
                 app.kubernetes.io/managed-by: Helm
@@ -305,6 +311,8 @@ CronJob can have a timezone:
         spec:
           template:
             metadata:
+              annotations:
+                karpenter.sh/do-not-disrupt: "true"
               labels:
                 app.kubernetes.io/component: daily
                 app.kubernetes.io/managed-by: Helm
