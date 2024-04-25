@@ -27,7 +27,7 @@ global:
     # -- Where secrets are mounted inside the Terraform Operator container
     secretsMountPath: /tmp/secrets
     # -- Global Terraform version for all modules
-    terraformVersion: "1.2.9"
+    terraformVersion: "1.3"
     # -- Set to true as part of tf cloud migrations. When true, it stops standard-application-stack from creating AWS
     # related external secrets and passes that responsibility to the terraform-cloud chart
     externalSecrets: true
@@ -56,7 +56,7 @@ activeMQ:
       # (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/amazonmq/aws)
       source: app.terraform.io/Mintel/amazonmq/aws
       # -- Module version
-      version: "0.0.2"
+      version: "0.0.3"
     # -- Vars to be applied to all instances defined below
     defaultVars:
       {}
@@ -91,7 +91,7 @@ apiGatewayHttp:
       # (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/amazonmq/aws)
       source: app.terraform.io/Mintel/api-gateway-http/aws
       # -- Module version
-      version: "0.3.2"
+      version: "9.2.0"
     # -- Vars to be applied to all instances defined below
     defaultVars:
       ### Boolean which when set to true disables destroy runs on the workspace and vice-versa. It serves as a form of
@@ -124,7 +124,7 @@ auroraMySql:
       # (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/rds-aurora/aws)
       source: app.terraform.io/Mintel/rds-aurora/aws
       # -- Module version
-      version: "0.0.3"
+      version: "0.0.4"
     # -- Vars to be applied to all instances defined below
     # @default -- See below
     defaultVars:
@@ -169,7 +169,7 @@ auroraPostgresql:
       # (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/rds-aurora/aws)
       source: app.terraform.io/Mintel/rds-aurora/aws
       # -- Module version
-      version: "0.0.3"
+      version: "0.0.4"
     # -- Vars to be applied to all instances defined below
     # @default -- See below
     defaultVars:
@@ -213,7 +213,7 @@ cmsBackup:
       # (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/cms-backup/aws)
       source: app.terraform.io/Mintel/cms-backup/aws
       # -- Module version
-      version: "0.1.0"
+      version: "0.1.1"
     # -- Vars to be applied to all instances defined below
     defaultVars:
       {}
@@ -244,7 +244,7 @@ datasync:
       # (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/amazonmq/aws)
       source: app.terraform.io/Mintel/datasync/aws
       # -- Module version
-      version: "0.2.0"
+      version: "0.2.1"
     # -- Vars to be applied to all instances defined below
     defaultVars:
       {}
@@ -280,7 +280,7 @@ dynamodb:
       # (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/dynamodb/aws)
       source: app.terraform.io/Mintel/dynamodb/aws
       # -- Module version
-      version: "1.0.0"
+      version: "1.2.0"
     # -- Vars to be applied to all instances defined below
     defaultVars:
       {}
@@ -320,7 +320,7 @@ extraIAM:
       # (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/app-iam/aws)
       source: app.terraform.io/Mintel/app-iam/aws
       # -- Module version
-      version: "2.3.0"
+      version: "2.5.1"
     # -- Vars to be applied to all instances defined below
     defaultVars:
       {}
@@ -354,7 +354,7 @@ irsa:
       # (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/app-iam/aws)
       source: app.terraform.io/Mintel/app-iam/aws
       # -- Module version
-      version: "2.3.1"
+      version: "2.5.1"
     # -- Vars to be applied to all instances defined below
     # @default -- See below
     vars:
@@ -388,7 +388,7 @@ lambda:
       # (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/lambda/aws)
       source: app.terraform.io/Mintel/lambda/aws
       # -- Module version
-      version: 0.2.0
+      version: 5.0.1
     # -- Vars to be applied to all instances defined below
     # @default -- See below
     defaultVars:
@@ -446,7 +446,7 @@ mariadb:
       # (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/rds/aws)
       source: app.terraform.io/Mintel/rds/aws
       # -- Module version
-      version: "1.3.0"
+      version: "2.0.1"
     # -- Vars to be applied to all instances defined below
     # @default -- See below
     defaultVars:
@@ -491,7 +491,7 @@ memcached:
       # (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/memcached/aws)
       source: app.terraform.io/Mintel/memcached/aws
       # -- Module version
-      version: "1.0.1"
+      version: "1.0.2"
     # -- Vars to be applied to all instances defined below
     # @default -- See below
     defaultVars:
@@ -528,7 +528,7 @@ opensearch:
       # (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/opensearch/aws)
       source: app.terraform.io/Mintel/opensearch/aws
       # -- Module version
-      version: "1.2.1"
+      version: "1.4.1"
     # -- Vars to be applied to all instances defined below
     defaultVars:
       ### Override the generated workspace name, for example if the generated name is above the char limit
@@ -564,7 +564,7 @@ postgresql:
       # (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/rds/aws)
       source: app.terraform.io/Mintel/rds/aws
       # -- Module version
-      version: "1.3.0"
+      version: "2.0.1"
     # -- Vars to be applied to all instances defined below
     # @default -- See below
     defaultVars:
@@ -609,7 +609,7 @@ redis:
       # (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/redis/aws)
       source: app.terraform.io/Mintel/redis/aws
       # -- Module version
-      version: "1.1.0"
+      version: "1.1.1"
     # -- Vars to be applied to all instances defined below
     defaultVars:
       {}
@@ -648,7 +648,7 @@ s3:
       # (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/private-s3-bucket/aws)
       source: app.terraform.io/Mintel/private-s3-bucket/aws
       # -- Module version
-      version: "2.0.5"
+      version: "3.0.2"
     # -- Vars to be applied to all instances defined below
     defaultVars:
       {}
@@ -686,7 +686,7 @@ sns:
       # (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/sns/aws)
       source: app.terraform.io/Mintel/sns/aws
       # -- Module version
-      version: "1.0.0"
+      version: "1.3.1"
     # -- Vars to be applied to all instances defined below
     defaultVars:
       {}
@@ -722,7 +722,7 @@ sqs:
       # (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/sqs/aws)
       source: app.terraform.io/Mintel/sqs/aws
       # -- Module version
-      version: "1.2.0"
+      version: "1.3.0"
     # -- Vars to be applied to all instances defined below
     defaultVars:
       {}
@@ -755,7 +755,7 @@ staticWebsite:
       # (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/public-static-website/aws)
       source: app.terraform.io/Mintel/public-static-website/aws
       # -- Module version
-      version: "1.1.0"
+      version: "1.1.1"
     # -- Vars to be applied to all instances defined below
     defaultVars:
       {}
@@ -786,7 +786,7 @@ stepFunctionEks:
       # (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/step-function-eks/aws)
       source: app.terraform.io/Mintel/step-functions-eks/aws
       # -- Module version
-      version: "1.0.0"
+      version: "1.0.1"
     # -- Vars to be applied to all instances defined below
     defaultVars:
       {}
@@ -816,7 +816,7 @@ sshKeyPairSecret:
       # (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/ssh-keypair-secret/aws)
       source: app.terraform.io/Mintel/ssh-keypair-secret/aws
       # -- Module version
-      version: "0.0.7"
+      version: "0.1.0"
     # -- Vars to be applied to all instances defined below
     defaultVars:
       {}
