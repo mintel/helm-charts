@@ -38,7 +38,7 @@ Test IRSA application and component tags default to name:
         - sourceableName: dev-eu-west-1-cluster1-test-namespace-mntl-test-app-s3
       secretsMountPath: /tmp/secrets
       sshKeyID: mintel-ssh
-      terraformVersion: "1.3"
+      terraformVersion: 1.3.0
       variables:
         - environmentVariable: false
           hcl: false
@@ -126,7 +126,7 @@ Test IRSA default tags:
         - sourceableName: dev-eu-west-1-cluster1-test-namespace-mntl-test-app-s3
       secretsMountPath: /tmp/secrets
       sshKeyID: mintel-ssh
-      terraformVersion: "1.3"
+      terraformVersion: 1.3.0
       variables:
         - environmentVariable: false
           hcl: false
