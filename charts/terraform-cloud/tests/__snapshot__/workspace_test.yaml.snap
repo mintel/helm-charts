@@ -23,12 +23,12 @@ Dev S3 module name label override:
       agentPoolID: ""
       module:
         source: app.terraform.io/Mintel/private-s3-bucket/aws
-        version: 2.0.5
+        version: 3.0.2
       omitNamespacePrefix: true
       organization: Mintel
       secretsMountPath: /tmp/secrets
       sshKeyID: mintel-ssh
-      terraformVersion: 1.2.9
+      terraformVersion: 1.3.10
       variables:
         - environmentVariable: false
           hcl: false
@@ -106,12 +106,12 @@ Dev S3 module workspace:
       agentPoolID: ""
       module:
         source: app.terraform.io/Mintel/private-s3-bucket/aws
-        version: 2.0.5
+        version: 3.0.2
       omitNamespacePrefix: true
       organization: Mintel
       secretsMountPath: /tmp/secrets
       sshKeyID: mintel-ssh
-      terraformVersion: 1.2.9
+      terraformVersion: 1.3.10
       variables:
         - environmentVariable: false
           hcl: false
@@ -189,12 +189,12 @@ Dev S3 module workspace - tags:
       agentPoolID: ""
       module:
         source: app.terraform.io/Mintel/sqs/aws
-        version: 1.2.0
+        version: 1.3.0
       omitNamespacePrefix: true
       organization: Mintel
       secretsMountPath: /tmp/secrets
       sshKeyID: mintel-ssh
-      terraformVersion: 1.2.9
+      terraformVersion: 1.3.10
       variables:
         - environmentVariable: false
           hcl: false
@@ -270,12 +270,12 @@ Dev S3 module workspace adds correct env override:
       agentPoolID: ""
       module:
         source: app.terraform.io/Mintel/private-s3-bucket/aws
-        version: 2.0.5
+        version: 3.0.2
       omitNamespacePrefix: true
       organization: Mintel
       secretsMountPath: /tmp/secrets
       sshKeyID: mintel-ssh
-      terraformVersion: 1.2.9
+      terraformVersion: 1.3.10
       variables:
         - environmentVariable: false
           hcl: false
@@ -353,12 +353,12 @@ Dev S3 module workspace ignores env override when added explicitly:
       agentPoolID: ""
       module:
         source: app.terraform.io/Mintel/private-s3-bucket/aws
-        version: 2.0.5
+        version: 3.0.2
       omitNamespacePrefix: true
       organization: Mintel
       secretsMountPath: /tmp/secrets
       sshKeyID: mintel-ssh
-      terraformVersion: 1.2.9
+      terraformVersion: 1.3.10
       variables:
         - environmentVariable: false
           hcl: false
@@ -436,12 +436,12 @@ Dev S3 module workspace name does not repeat mntl-prefix:
       agentPoolID: ""
       module:
         source: app.terraform.io/Mintel/private-s3-bucket/aws
-        version: 2.0.5
+        version: 3.0.2
       omitNamespacePrefix: true
       organization: Mintel
       secretsMountPath: /tmp/secrets
       sshKeyID: mintel-ssh
-      terraformVersion: 1.2.9
+      terraformVersion: 1.3.10
       variables:
         - environmentVariable: false
           hcl: false
@@ -519,12 +519,12 @@ Dev S3 module workspace name override:
       agentPoolID: ""
       module:
         source: app.terraform.io/Mintel/private-s3-bucket/aws
-        version: 2.0.5
+        version: 3.0.2
       omitNamespacePrefix: true
       organization: Mintel
       secretsMountPath: /tmp/secrets
       sshKeyID: mintel-ssh
-      terraformVersion: 1.2.9
+      terraformVersion: 1.3.10
       variables:
         - environmentVariable: false
           hcl: false
@@ -602,12 +602,12 @@ Dev S3 module workspace with default (0) syncWave:
       agentPoolID: ""
       module:
         source: app.terraform.io/Mintel/private-s3-bucket/aws
-        version: 2.0.5
+        version: 3.0.2
       omitNamespacePrefix: true
       organization: Mintel
       secretsMountPath: /tmp/secrets
       sshKeyID: mintel-ssh
-      terraformVersion: 1.2.9
+      terraformVersion: 1.3.10
       variables:
         - environmentVariable: false
           hcl: false
@@ -685,12 +685,12 @@ Dev S3 module workspace with modified syncWave:
       agentPoolID: ""
       module:
         source: app.terraform.io/Mintel/private-s3-bucket/aws
-        version: 2.0.5
+        version: 3.0.2
       omitNamespacePrefix: true
       organization: Mintel
       secretsMountPath: /tmp/secrets
       sshKeyID: mintel-ssh
-      terraformVersion: 1.2.9
+      terraformVersion: 1.3.10
       variables:
         - environmentVariable: false
           hcl: false
@@ -768,12 +768,12 @@ Dev S3 module workspace with multiple instances:
       agentPoolID: ""
       module:
         source: app.terraform.io/Mintel/private-s3-bucket/aws
-        version: 2.0.5
+        version: 3.0.2
       omitNamespacePrefix: true
       organization: Mintel
       secretsMountPath: /tmp/secrets
       sshKeyID: mintel-ssh
-      terraformVersion: 1.2.9
+      terraformVersion: 1.3.10
       variables:
         - environmentVariable: false
           hcl: false
@@ -850,12 +850,12 @@ Dev S3 module workspace with multiple instances:
       agentPoolID: ""
       module:
         source: app.terraform.io/Mintel/private-s3-bucket/aws
-        version: 2.0.5
+        version: 3.0.2
       omitNamespacePrefix: true
       organization: Mintel
       secretsMountPath: /tmp/secrets
       sshKeyID: mintel-ssh
-      terraformVersion: 1.2.9
+      terraformVersion: 1.3.10
       variables:
         - environmentVariable: false
           hcl: false
@@ -933,12 +933,12 @@ Dev S3 module workspace with multiple instances - tags:
       agentPoolID: ""
       module:
         source: app.terraform.io/Mintel/sqs/aws
-        version: 1.2.0
+        version: 1.3.0
       omitNamespacePrefix: true
       organization: Mintel
       secretsMountPath: /tmp/secrets
       sshKeyID: mintel-ssh
-      terraformVersion: 1.2.9
+      terraformVersion: 1.3.10
       variables:
         - environmentVariable: false
           hcl: false
@@ -1012,12 +1012,12 @@ Dev S3 module workspace with multiple instances - tags:
       agentPoolID: ""
       module:
         source: app.terraform.io/Mintel/sqs/aws
-        version: 1.2.0
+        version: 1.3.0
       omitNamespacePrefix: true
       organization: Mintel
       secretsMountPath: /tmp/secrets
       sshKeyID: mintel-ssh
-      terraformVersion: 1.2.9
+      terraformVersion: 1.3.10
       variables:
         - environmentVariable: false
           hcl: false
@@ -1093,12 +1093,12 @@ Dev S3 module workspace with multiple instances and syncWave overrides:
       agentPoolID: ""
       module:
         source: app.terraform.io/Mintel/private-s3-bucket/aws
-        version: 2.0.5
+        version: 3.0.2
       omitNamespacePrefix: true
       organization: Mintel
       secretsMountPath: /tmp/secrets
       sshKeyID: mintel-ssh
-      terraformVersion: 1.2.9
+      terraformVersion: 1.3.10
       variables:
         - environmentVariable: false
           hcl: false
@@ -1175,12 +1175,12 @@ Dev S3 module workspace with multiple instances and syncWave overrides:
       agentPoolID: ""
       module:
         source: app.terraform.io/Mintel/private-s3-bucket/aws
-        version: 2.0.5
+        version: 3.0.2
       omitNamespacePrefix: true
       organization: Mintel
       secretsMountPath: /tmp/secrets
       sshKeyID: mintel-ssh
-      terraformVersion: 1.2.9
+      terraformVersion: 1.3.10
       variables:
         - environmentVariable: false
           hcl: false
@@ -1258,12 +1258,12 @@ Test workspace allow destroy env:
       agentPoolID: ""
       module:
         source: app.terraform.io/Mintel/private-s3-bucket/aws
-        version: 2.0.5
+        version: 3.0.2
       omitNamespacePrefix: true
       organization: Mintel
       secretsMountPath: /tmp/secrets
       sshKeyID: mintel-ssh
-      terraformVersion: 1.2.9
+      terraformVersion: 1.3.10
       variables:
         - environmentVariable: false
           hcl: false
@@ -1336,12 +1336,12 @@ Test workspace extra annotations:
       agentPoolID: ""
       module:
         source: app.terraform.io/Mintel/private-s3-bucket/aws
-        version: 2.0.5
+        version: 3.0.2
       omitNamespacePrefix: true
       organization: Mintel
       secretsMountPath: /tmp/secrets
       sshKeyID: mintel-ssh
-      terraformVersion: 1.2.9
+      terraformVersion: 1.3.10
       variables:
         - environmentVariable: false
           hcl: false
@@ -1419,12 +1419,12 @@ Test workspace extra annotations override:
       agentPoolID: ""
       module:
         source: app.terraform.io/Mintel/private-s3-bucket/aws
-        version: 2.0.5
+        version: 3.0.2
       omitNamespacePrefix: true
       organization: Mintel
       secretsMountPath: /tmp/secrets
       sshKeyID: mintel-ssh
-      terraformVersion: 1.2.9
+      terraformVersion: 1.3.10
       variables:
         - environmentVariable: false
           hcl: false

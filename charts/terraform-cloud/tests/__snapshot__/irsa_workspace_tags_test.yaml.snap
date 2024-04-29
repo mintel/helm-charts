@@ -23,7 +23,7 @@ Test IRSA application and component tags default to name:
       agentPoolID: ""
       module:
         source: app.terraform.io/Mintel/app-iam/aws
-        version: 2.3.1
+        version: 2.5.1
       notifications:
         - enabled: true
           name: tfcloud-auto-approver
@@ -38,7 +38,7 @@ Test IRSA application and component tags default to name:
         - sourceableName: dev-eu-west-1-cluster1-test-namespace-mntl-test-app-s3
       secretsMountPath: /tmp/secrets
       sshKeyID: mintel-ssh
-      terraformVersion: 1.2.9
+      terraformVersion: 1.3.10
       variables:
         - environmentVariable: false
           hcl: false
@@ -111,7 +111,7 @@ Test IRSA default tags:
       agentPoolID: ""
       module:
         source: app.terraform.io/Mintel/app-iam/aws
-        version: 2.3.1
+        version: 2.5.1
       notifications:
         - enabled: true
           name: tfcloud-auto-approver
@@ -126,7 +126,7 @@ Test IRSA default tags:
         - sourceableName: dev-eu-west-1-cluster1-test-namespace-mntl-test-app-s3
       secretsMountPath: /tmp/secrets
       sshKeyID: mintel-ssh
-      terraformVersion: 1.2.9
+      terraformVersion: 1.3.10
       variables:
         - environmentVariable: false
           hcl: false
