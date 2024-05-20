@@ -40,7 +40,7 @@ spec:
     name: {{ $instanceCfg.workspaceNameOverride | default (include "mintel_common.terraform_cloud.workspaceName" $workspaceDict) | trim | quote }}
   token:
     secretKeyRef:
-      name: tfc-operator-token
+      name: terraformrc
       key: token
   terraformVersion: {{ $tfVersion | default $global.terraform.terraformVersion | quote }}
   variables:

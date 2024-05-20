@@ -38,6 +38,10 @@ spec:
     id: {{ $global.terraform.agentPoolID | quote }}
   executionMode: {{ $global.terraform.executionMode | quote }}
   organization: {{ $global.terraform.organization | quote }}
+  token:
+    secretKeyRef:
+      name: terraformrc
+      key: token
   sshKey:
     name: "mintel-ssh"
   terraformVersion: {{ $tfVersion | default $global.terraform.terraformVersion | quote }}
