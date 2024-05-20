@@ -36,7 +36,8 @@ global:
     irsa: true
     # -- ID of the Terraform Cloud Agent Pool to use for the run. Passed in from cluster-env-jsonnet
     agentPoolID: ""
-
+    # -- Operator version to use (v1 or v2)
+    operatorVersion: "v1"
 ###
 ## Resources
 ###

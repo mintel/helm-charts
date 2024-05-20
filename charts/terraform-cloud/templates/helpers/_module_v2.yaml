@@ -1,0 +1,69 @@
+{{- define "mintel_common.terraform_cloud.module_v2" }}
+{{- $ := index . 0 }}
+{{- $instanceCfg := index . 2 }}
+{{- $resourceType := index . 3 }}
+{{- $moduleSource := index . 4 }}
+{{- $moduleVersion := index . 5 }}
+{{- $tfVersion := index . 6 }}
+{{- $resourceCfg := index . 7 }}
+{{- $global := $.Values.global }}
+{{- $workspaceDict := dict "Global" $global "Release" $.Release "InstanceCfg" $instanceCfg "ResourceType" $resourceType }}
+{{- with index . 1 }}
+apiVersion: app.terraform.io/v1alpha2
+kind: Module
+metadata:
+  name: {{ $instanceCfg.workspaceNameOverride | default (include "mintel_common.terraform_cloud.workspaceName" $workspaceDict) | trim | quote }}
+  namespace: {{ $.Release.Namespace | quote }}
+  labels:
+    {{ include "mintel_common.labels" $ | nindent 4 }}
+    name: {{ printf "%s-%s" ($instanceCfg.name | kebabcase) ($resourceType | kebabcase) | trunc 63 }}
+    app.kubernetes.io/name: {{ printf "%s-%s" ($instanceCfg.name | kebabcase) ($resourceType | kebabcase) | trunc 63 }}
+  annotations:
+    {{ include "mintel_common.commonAnnotations" $ | nindent 4 }}
+    {{ include "mintel_common.terraform_cloud.operatorAnnotations" $workspaceDict | nindent 4 }}
+    {{- if (eq $resourceType "irsa") }}
+    app.mintel.com/altManifestFileSuffix: "{{ $global.name }}-{{ $resourceType | kebabcase }}"
+    {{- else }}
+    app.mintel.com/altManifestFileSuffix: "{{ $instanceCfg.name }}-{{ $resourceType | kebabcase }}"
+    {{- end }}
+    {{- if (has $resourceType (list "irsa" "extraIAM" "datasync" )) }}
+    argocd.argoproj.io/sync-wave: "{{ coalesce $instanceCfg.syncWave $resourceCfg.syncWave -20 }}"
+    {{- else }}
+    argocd.argoproj.io/sync-wave: "{{ coalesce $instanceCfg.syncWave $resourceCfg.syncWave -40 }}"
+    {{- end }}
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+spec:
+  module:
+    source: {{ $moduleSource | quote }}
+    version: {{ $moduleVersion | quote }}
+  workspace:
+    name: {{ $instanceCfg.workspaceNameOverride | default (include "mintel_common.terraform_cloud.workspaceName" $workspaceDict) | trim | quote }}
+  token:
+    secretKeyRef:
+      name: tfc-operator-token
+      key: token
+  terraformVersion: {{ $tfVersion | default $global.terraform.terraformVersion | quote }}
+  variables:
+  {{- $_ := unset $instanceCfg "workspaceNameOverride" }}
+  {{- $_ := unset $instanceCfg "workspaceAllowDestroy" }}
+  {{- $_ := unset $instanceCfg "workspaceOwner" }}
+  {{- $_ := unset $instanceCfg "workspaceTags" }}
+  {{- $_ := unset $instanceCfg "outputSecretMap" }}
+  {{- $_ := unset $instanceCfg "syncWave" }}
+  {{- range $varKey, $varVal := $instanceCfg }}
+    {{- if kindIs "map" $varVal }}
+      {{- include "mintel_common.terraform_cloud.tf_module_var" (merge (dict "key" $varKey) $varVal) | indent 2 }}
+    {{- else }}
+      {{- include "mintel_common.terraform_cloud.tf_module_var" (dict "key" $varKey "value" $varVal) | indent 2 }}
+    {{- end }}
+  {{- end }}
+{{- end }}
+{{- end }}
+
+{{- define "mintel_common.terraform_cloud.tf_module_var" }}
+- name: {{ .key | quote }}
+{{- end }}
+
+{{- define "mintel_common.terraform_cloud.workspaceName"}}
+{{ printf "%s-%s-%s-%s-%s-%s" .Global.clusterEnv .Global.clusterRegion .Global.clusterName .Release.Namespace (.InstanceCfg.name | kebabcase) (.ResourceType | kebabcase) }}
+{{- end -}}
