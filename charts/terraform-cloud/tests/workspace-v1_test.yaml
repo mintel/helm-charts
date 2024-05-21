@@ -12,6 +12,7 @@ tests:
       global.clusterRegion: eu-west-1
       global.owner: sre
       global.partOf: test-project
+      global.terraform.operatorVersion: v1
       s3:
         enabled: true
     asserts:
@@ -27,6 +28,7 @@ tests:
       global.clusterRegion: eu-west-1
       global.owner: sre
       global.partOf: test-project
+      global.terraform.operatorVersion: v1
       s3:
         enabled: true
         terraform:
@@ -53,6 +55,7 @@ tests:
       global.clusterRegion: eu-west-1
       global.owner: sre
       global.partOf: test-project
+      global.terraform.operatorVersion: v1
       s3.enabled: true
     asserts:
       - matchSnapshot: {} # Check for regressions and unexpected changes.
@@ -67,6 +70,7 @@ tests:
       global.clusterRegion: eu-west-1
       global.owner: sre
       global.partOf: test-project
+      global.terraform.operatorVersion: v1
       s3:
         enabled: true
         terraform:
@@ -90,6 +94,7 @@ tests:
       global.clusterRegion: eu-west-1
       global.owner: sre
       global.partOf: test-project
+      global.terraform.operatorVersion: v1
       s3.enabled: true
     asserts:
       - matchSnapshot: {} # Check for regressions and unexpected changes.
@@ -109,6 +114,7 @@ tests:
       global.clusterRegion: eu-west-1
       global.owner: sre
       global.partOf: test-project
+      global.terraform.operatorVersion: v1
       s3.enabled: true
     asserts:
       - matchSnapshot: {} # Check for regressions and unexpected changes.
@@ -209,6 +215,7 @@ tests:
       global.clusterRegion: eu-west-1
       global.owner: sre
       global.partOf: test-project
+      global.terraform.operatorVersion: v1
       s3.enabled: true
     asserts:
       - matchSnapshot: {} # Check for regressions and unexpected changes.
@@ -229,7 +236,8 @@ tests:
       global.clusterRegion: eu-west-1
       global.owner: sre
       global.partOf: test-project
-      s3:
+      global.terraform.operatorVersion: v1
+      s3: 
         enabled: true
         terraform:
           defaultVars:
@@ -273,6 +281,8 @@ tests:
       global.clusterRegion: eu-west-1
       global.owner: sre
       global.partOf: test-project
+      global.terraform.operatorVersion: v1
+
       s3:
         enabled: true
     asserts:
@@ -314,6 +324,7 @@ tests:
       global.clusterRegion: eu-west-1
       global.owner: sre
       global.partOf: test-project
+      global.terraform.operatorVersion: v1
       s3.enabled: true
       s3.syncWave: "200"
     asserts:
@@ -345,6 +356,7 @@ tests:
       global.clusterRegion: eu-west-1
       global.owner: sre
       global.partOf: test-project
+      global.terraform.operatorVersion: v1
       s3.enabled: true
       s3.syncWave: "0"
     asserts:
@@ -376,6 +388,7 @@ tests:
       global.clusterRegion: eu-west-1
       global.owner: sre
       global.partOf: test-project
+      global.terraform.operatorVersion: v1
       s3:
         enabled: true
         terraform:
@@ -441,6 +454,7 @@ tests:
       global.clusterRegion: eu-west-1
       global.owner: sre
       global.partOf: test-project
+      global.terraform.operatorVersion: v1
       sqs:
         enabled: true
         eventBus:
