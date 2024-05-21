@@ -4,7 +4,7 @@ templates:
 release:
   namespace: test-namespace
 tests:
-  - it: Test simple workspace
+  - it: Test workspace defaults
     set:
       global.name: mntl-test-workspace
       global.clusterEnv: dev
@@ -57,4 +57,45 @@ tests:
       - equal:
           path: spec.token.secretKeyRef.name
           value: terraformrc
+        documentIndex: 0
+  - it: Test workspace overrides
+    set:
+      global.name: mntl-test-workspace
+      global.clusterEnv: dev
+      global.clusterName: cluster1
+      global.clusterRegion: eu-west-1
+      global.owner: sre
+      global.partOf: test-project
+      global.terraform.operatorVersion: v2
+      global.terraform.agentPoolID: test-agent-pool
+      global.terraform.allowDestroyPlan: false
+      global.terraform.applyMethod: manual
+      global.terraform.executionMode: remote
+      s3:
+        enabled: true
+    asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
+      - equal:
+          path: metadata.labels.name
+          value: mntl-test-workspace-s3
+        documentIndex: 0
+      - equal:
+          path: spec.name
+          value: dev-eu-west-1-cluster1-test-namespace-mntl-test-workspace-s3
+        documentIndex: 0
+      - equal:
+          path: spec.organization
+          value: Mintel
+        documentIndex: 0
+      - equal:
+          path: spec.executionMode
+          value: remote
+        documentIndex: 0
+      - equal:
+          path: spec.applyMethod
+          value: manual
+        documentIndex: 0
+      - equal:
+          path: spec.allowDestroyPlan
+          value: false
         documentIndex: 0
