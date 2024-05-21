@@ -34,8 +34,11 @@ metadata:
     {{- end }}
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
+  name: {{ $instanceCfg.workspaceNameOverride | default (include "mintel_common.terraform_cloud.workspaceName" $workspaceDict) | trim | quote }}
   agentPool:
     id: {{ $global.terraform.agentPoolID | quote }}
+  applyMethod: {{ $global.terraform.applyMethod| quote }}
+  allowDestroyPlan: {{ $global.terraform.allowDestroyPlan }}
   executionMode: {{ $global.terraform.executionMode | quote }}
   organization: {{ $global.terraform.organization | quote }}
   token:

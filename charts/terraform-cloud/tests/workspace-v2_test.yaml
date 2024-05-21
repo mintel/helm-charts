@@ -1,0 +1,60 @@
+suite: Test Workspaces V2
+templates:
+  - workspace.yaml
+release:
+  namespace: test-namespace
+tests:
+  - it: Test simple workspace
+    set:
+      global.name: mntl-test-workspace
+      global.clusterEnv: dev
+      global.clusterName: cluster1
+      global.clusterRegion: eu-west-1
+      global.owner: sre
+      global.partOf: test-project
+      global.terraform.operatorVersion: v2
+      global.terraform.agentPoolID: test-agent-pool
+      s3:
+        enabled: true
+    asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
+      - equal:
+          path: metadata.labels.name
+          value: mntl-test-workspace-s3
+        documentIndex: 0
+      - equal:
+          path: spec.name
+          value: dev-eu-west-1-cluster1-test-namespace-mntl-test-workspace-s3
+        documentIndex: 0
+      - equal:
+          path: spec.organization
+          value: Mintel
+        documentIndex: 0
+      - equal:
+          path: spec.executionMode
+          value: agent
+        documentIndex: 0
+      - equal:
+          path: spec.applyMethod
+          value: auto 
+        documentIndex: 0
+      - equal:
+          path: spec.allowDestroyPlan
+          value: true
+        documentIndex: 0
+      - equal:
+          path: spec.agentPool.id
+          value: test-agent-pool
+        documentIndex: 0
+      - equal:
+          path: spec.sshKey.name
+          value: mintel-ssh
+        documentIndex: 0
+      - equal:
+          path: spec.token.secretKeyRef.key
+          value: token
+        documentIndex: 0
+      - equal:
+          path: spec.token.secretKeyRef.name
+          value: terraformrc
+        documentIndex: 0
