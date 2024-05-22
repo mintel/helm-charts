@@ -1,6 +1,6 @@
 # terraform-cloud
 
-![Version: 1.0.0](https://img.shields.io/badge/Version-1.0.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.0](https://img.shields.io/badge/AppVersion-2.0.0-informational?style=flat-square)
+![Version: 1.1.0](https://img.shields.io/badge/Version-1.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.0](https://img.shields.io/badge/AppVersion-2.0.0-informational?style=flat-square)
 
 A Helm chart for provisioning resources using Terraform Cloud
 
@@ -79,7 +79,8 @@ A Helm chart for provisioning resources using Terraform Cloud
 | global.terraform.agentPoolID | string | `""` | ID of the Terraform Cloud Agent Pool to use for the run. Passed in from cluster-env-jsonnet |
 | global.terraform.allowDestroyPlan | bool | `true` | Allows a destroy plan to be created and applied. |
 | global.terraform.applyMethod | string | `"auto"` | Define either change will be applied automatically(auto) or require an operator to confirm(manual). |
-| global.terraform.destroyOnDeletion | bool | `true` | Specify whether or not to execute a Destroy run when the object is deleted from the Kubernetes. This has further protection using policy-enforcement See https://developer.hashicorp.com/terraform/cloud-docs/policy-enforcement/sentinel |
+| global.terraform.destroyOnDeletion | bool | `true` | Specify whether or not to execute a Destroy run when the object is deleted from the Kubernetes. Note that deletions are also protected by sentinel policy-enforcement rules in non-development environments See https://developer.hashicorp.com/terraform/cloud-docs/policy-enforcement/sentinel |
+| global.terraform.enableRestartedAt | bool | `true` | Adds the restartedAt value (see restartedAt).     Ensures that any configuration changes (i.e. input vars) result in the operator attempting a new plan/apply |
 | global.terraform.executionMode | string | `"agent"` | Define where the Terraform code will be executed. |
 | global.terraform.externalSecrets | bool | `true` | Set to true as part of tf cloud migrations. When true, it stops standard-application-stack from creating AWS related external secrets and passes that responsibility to the terraform-cloud chart |
 | global.terraform.irsa | bool | `true` | Set to true as part of tf cloud migrations. When true, standard-application-stack sets the service account eks annotation to match the new IAM roles created by the app-iam module |
