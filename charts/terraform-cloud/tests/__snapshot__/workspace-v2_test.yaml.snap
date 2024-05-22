@@ -102,8 +102,8 @@ Test workspace defaults:
       module:
         source: app.terraform.io/Mintel/private-s3-bucket/aws
         version: 3.0.2
+      name: operator
       organization: Mintel
-      terraformVersion: 1.3.10
       token:
         secretKeyRef:
           key: token
@@ -224,8 +224,8 @@ Test workspace overrides:
       module:
         source: app.terraform.io/Mintel/private-s3-bucket/aws
         version: 3.0.2
+      name: operator
       organization: Mintel
-      terraformVersion: 1.3.10
       token:
         secretKeyRef:
           key: token

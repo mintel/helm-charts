@@ -12,8 +12,8 @@ tests:
       global.clusterRegion: eu-west-1
       global.owner: sre
       global.partOf: test-project
-      global.terraform.operatorVersion: v2
       global.terraform.agentPoolID: test-agent-pool
+      global.terraform.operatorVersion: v2
       s3:
         enabled: true
     asserts:
@@ -27,16 +27,16 @@ tests:
           value: Mintel
         documentIndex: 1
       - equal:
+          path: spec.name
+          value: operator
+        documentIndex: 1
+      - equal:
           path: spec.destroyOnDeletion
           value: true
         documentIndex: 1
       - equal:
           path: spec.module.source
           value: app.terraform.io/Mintel/private-s3-bucket/aws
-        documentIndex: 1
-      - equal:
-          path: spec.terraformVersion
-          value: 1.3.10
         documentIndex: 1
       - equal:
           path: spec.module.version
@@ -58,9 +58,8 @@ tests:
       global.clusterRegion: eu-west-1
       global.owner: sre
       global.partOf: test-project
-      global.terraform.operatorVersion: v2
       global.terraform.agentPoolID: test-agent-pool
-      global.terraform.terraformVersion: 1.3.12
+      global.terraform.operatorVersion: v2
       global.terraform.destroyOnDeletion: false
       s3:
         enabled: true
@@ -72,10 +71,6 @@ tests:
       - equal:
           path: metadata.labels.name
           value: mntl-test-workspace-s3
-        documentIndex: 1
-      - equal:
-          path: spec.terraformVersion
-          value: 1.3.12
         documentIndex: 1
       - equal:
           path: spec.module.version
