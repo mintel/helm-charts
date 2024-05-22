@@ -42,6 +42,10 @@ global:
     executionMode: agent
     # -- Allows a destroy plan to be created and applied.
     allowDestroyPlan: true
+    # -- Specify whether or not to execute a Destroy run when the object is deleted from the Kubernetes.
+    # This has further protection using policy-enforcement
+    # See https://developer.hashicorp.com/terraform/cloud-docs/policy-enforcement/sentinel
+    destroyOnDeletion: true
     # -- Operator version to use (v1 or v2)
     operatorVersion: "v1"
 ###

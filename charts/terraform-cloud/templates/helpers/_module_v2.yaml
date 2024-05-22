@@ -33,6 +33,7 @@ metadata:
     {{- end }}
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
+  organization: {{ $global.terraform.organization | quote }}
   module:
     source: {{ $moduleSource | quote }}
     version: {{ $moduleVersion | quote }}
@@ -43,6 +44,7 @@ spec:
       name: terraformrc
       key: token
   terraformVersion: {{ $tfVersion | default $global.terraform.terraformVersion | quote }}
+  destroyOnDeletion: {{ $global.terraform.destroyOnDeletion }}
   variables:
   {{- $_ := unset $instanceCfg "workspaceNameOverride" }}
   {{- $_ := unset $instanceCfg "workspaceAllowDestroy" }}
