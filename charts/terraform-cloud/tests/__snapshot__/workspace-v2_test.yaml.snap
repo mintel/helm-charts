@@ -104,6 +104,7 @@ Test workspace defaults:
         version: 3.0.2
       name: operator
       organization: Mintel
+      restartedAt: 3c1404dc864aba34232dc34880ae567e3b6d92bfa68885c7104fe44dedec924b
       token:
         secretKeyRef:
           key: token
@@ -226,6 +227,7 @@ Test workspace overrides:
         version: 3.0.2
       name: operator
       organization: Mintel
+      restartedAt: 3c1404dc864aba34232dc34880ae567e3b6d92bfa68885c7104fe44dedec924b
       token:
         secretKeyRef:
           key: token

@@ -48,6 +48,11 @@ global:
     destroyOnDeletion: true
     # -- Operator version to use (v1 or v2)
     operatorVersion: "v1"
+    # -- Allows executing a new Run without changing any Workspace or Module attributes.
+    #    Defaults to a hash of the instanceCfg specification
+    # restartedAt: ""
+    # -- Adds the restartedAt value (see restartedAt)
+    enableRestartedAt: true
 ###
 ## Resources
 ###

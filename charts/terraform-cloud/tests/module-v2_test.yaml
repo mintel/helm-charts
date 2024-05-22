@@ -61,6 +61,8 @@ tests:
       global.terraform.agentPoolID: test-agent-pool
       global.terraform.operatorVersion: v2
       global.terraform.destroyOnDeletion: false
+      global.terraform.enableRestartedAt: true
+      global.terraform.restartedAt: restarted-at-value
       s3:
         enabled: true
         terraform:
@@ -79,5 +81,9 @@ tests:
       - equal:
           path: spec.destroyOnDeletion
           value: false 
+        documentIndex: 1
+      - equal:
+          path: spec.restartedAt
+          value: restarted-at-value
         documentIndex: 1
  

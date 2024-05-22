@@ -35,6 +35,13 @@ metadata:
 spec:
   organization: {{ $global.terraform.organization | quote }}
   name: operator
+  {{- if $global.terraform.enableRestartedAt }}
+  {{- if $global.terraform.restartedAt }}
+  restartedAt: {{ $global.terraform.restartedAt }}
+  {{- else }}
+  restartedAt: {{ $instanceCfg | toJson | sha256sum }}
+  {{- end }}
+  {{- end }}
   module:
     source: {{ $moduleSource | quote }}
     version: {{ $moduleVersion | quote }}
