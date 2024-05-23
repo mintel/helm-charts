@@ -32,7 +32,7 @@ tests:
         documentIndex: 1
       - equal:
           path: spec.destroyOnDeletion
-          value: false 
+          value: false
         documentIndex: 1
       - equal:
           path: spec.module.source
@@ -115,4 +115,3 @@ tests:
       - isNull:
           path: spec.restartedAt
         documentIndex: 1
- 

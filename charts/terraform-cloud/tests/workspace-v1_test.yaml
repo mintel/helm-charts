@@ -237,7 +237,7 @@ tests:
       global.owner: sre
       global.partOf: test-project
       global.terraform.operatorVersion: v1
-      s3: 
+      s3:
         enabled: true
         terraform:
           defaultVars:

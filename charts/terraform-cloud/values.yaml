@@ -43,7 +43,7 @@ global:
     # --  Define where the Terraform code will be executed.
     executionMode: agent
     # -- Allows a destroy plan to be created and applied.
-    allowDestroyPlan: false 
+    allowDestroyPlan: false
     # -- Specify whether or not to execute a Destroy run when the object is deleted from the Kubernetes.
     # Note that deletions are also protected by sentinel policy-enforcement rules in non-development environments
     # See https://developer.hashicorp.com/terraform/cloud-docs/policy-enforcement/sentinel
