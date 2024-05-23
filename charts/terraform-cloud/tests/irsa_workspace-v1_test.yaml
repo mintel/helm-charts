@@ -12,6 +12,7 @@ tests:
       global.clusterRegion: eu-west-1
       global.owner: sre
       global.partOf: test-project
+      global.terraform.operatorVersion: v1
       s3.enabled: true
     asserts:
       - matchSnapshot: {} # Check for regressions and unexpected changes.
@@ -100,6 +101,7 @@ tests:
       global.clusterRegion: eu-west-1
       global.owner: sre
       global.partOf: test-project
+      global.terraform.operatorVersion: v1
       irsa.enabled: true
     asserts:
       - matchSnapshot: {} # Check for regressions and unexpected changes.
@@ -121,6 +123,7 @@ tests:
       global.clusterRegion: eu-west-1
       global.owner: sre
       global.partOf: test-project
+      global.terraform.operatorVersion: v1
       irsa.enabled: true
       irsa.syncWave: "-100"
     asserts:
@@ -149,6 +152,7 @@ tests:
       global.clusterRegion: eu-west-1
       global.owner: sre
       global.partOf: test-project
+      global.terraform.operatorVersion: v1
       irsa.enabled: true
       irsa.syncWave: "0"
     asserts:

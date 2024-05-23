@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v1.1.0] - 2024-05-22
+### Added
+- Added support for terraform-cloud-operator v2. v1 is still the default and would result in a noop for appliations consuming this chart.
+
 ## [v1.0.0] - 2024-04-25
 ### Changed
 - Bumped all module versions to the current latest

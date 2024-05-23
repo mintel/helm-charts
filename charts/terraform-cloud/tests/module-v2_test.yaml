@@ -1,0 +1,117 @@
+suite: Test Module V2
+templates:
+  - workspace.yaml
+release:
+  namespace: test-namespace
+tests:
+  - it: Test module defaults
+    set:
+      global.name: mntl-test-workspace
+      global.clusterEnv: dev
+      global.clusterName: cluster1
+      global.clusterRegion: eu-west-1
+      global.owner: sre
+      global.partOf: test-project
+      global.terraform.agentPoolID: test-agent-pool
+      global.terraform.operatorVersion: v2
+      s3:
+        enabled: true
+    asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
+      - equal:
+          path: metadata.labels.name
+          value: mntl-test-workspace-s3
+        documentIndex: 1
+      - equal:
+          path: spec.organization
+          value: Mintel
+        documentIndex: 1
+      - equal:
+          path: spec.name
+          value: operator
+        documentIndex: 1
+      - equal:
+          path: spec.destroyOnDeletion
+          value: false
+        documentIndex: 1
+      - equal:
+          path: spec.module.source
+          value: app.terraform.io/Mintel/private-s3-bucket/aws
+        documentIndex: 1
+      - equal:
+          path: spec.module.version
+          value: 3.0.2
+        documentIndex: 1
+      - equal:
+          path: spec.token.secretKeyRef.key
+          value: token
+        documentIndex: 1
+      - equal:
+          path: spec.token.secretKeyRef.name
+          value: terraformrc
+        documentIndex: 1
+  - it: Test module overrides
+    set:
+      global.name: mntl-test-workspace
+      global.clusterEnv: dev
+      global.clusterName: cluster1
+      global.clusterRegion: eu-west-1
+      global.owner: sre
+      global.partOf: test-project
+      global.terraform.agentPoolID: test-agent-pool
+      global.terraform.operatorVersion: v2
+      global.terraform.destroyOnDeletion: true
+      global.terraform.enableRestartedAt: true
+      global.terraform.restartedAt: restarted-at-value
+      s3:
+        enabled: true
+        terraform:
+          module:
+            version: 0.0.1
+    asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
+      - equal:
+          path: metadata.labels.name
+          value: mntl-test-workspace-s3
+        documentIndex: 1
+      - equal:
+          path: spec.module.version
+          value: 0.0.1
+        documentIndex: 1
+      - equal:
+          path: spec.destroyOnDeletion
+          value: true
+        documentIndex: 1
+      - equal:
+          path: spec.restartedAt
+          value: restarted-at-value
+        documentIndex: 1
+  - it: Test module restartedAt disabled
+    set:
+      global.name: mntl-test-workspace
+      global.clusterEnv: dev
+      global.clusterName: cluster1
+      global.clusterRegion: eu-west-1
+      global.owner: sre
+      global.partOf: test-project
+      global.terraform.agentPoolID: test-agent-pool
+      global.terraform.operatorVersion: v2
+      global.terraform.enableRestartedAt: false
+      s3:
+        enabled: true
+        terraform:
+          module:
+            version: 0.0.1
+    asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
+      - equal:
+          path: metadata.labels.name
+          value: mntl-test-workspace-s3
+        documentIndex: 1
+      - equal:
+          path: spec.module.version
+          value: 0.0.1
+        documentIndex: 1
+      - isNull:
+          path: spec.restartedAt
+        documentIndex: 1
