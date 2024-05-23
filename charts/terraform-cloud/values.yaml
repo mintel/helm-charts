@@ -37,17 +37,17 @@ global:
     # -- Operator version to use (v1 or v2)
     operatorVersion: "v1"
     # -- Define either change will be applied automatically(auto) or require an operator to confirm(manual).
-    applyMethod: auto
+    applyMethod: manual
     # -- ID of the Terraform Cloud Agent Pool to use for the run. Passed in from cluster-env-jsonnet
     agentPoolID: ""
     # --  Define where the Terraform code will be executed.
     executionMode: agent
     # -- Allows a destroy plan to be created and applied.
-    allowDestroyPlan: true
+    allowDestroyPlan: false 
     # -- Specify whether or not to execute a Destroy run when the object is deleted from the Kubernetes.
     # Note that deletions are also protected by sentinel policy-enforcement rules in non-development environments
     # See https://developer.hashicorp.com/terraform/cloud-docs/policy-enforcement/sentinel
-    destroyOnDeletion: true
+    destroyOnDeletion: false
     # -- Allows executing a new Run without changing any Workspace or Module attributes.
     # Defaults to a hash of the instanceCfg specification
     # restartedAt: ""

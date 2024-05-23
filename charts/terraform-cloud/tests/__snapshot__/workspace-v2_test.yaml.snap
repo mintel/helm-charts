@@ -22,8 +22,8 @@ Test workspace defaults:
     spec:
       agentPool:
         id: test-agent-pool
-      allowDestroyPlan: true
-      applyMethod: auto
+      allowDestroyPlan: false
+      applyMethod: manual
       executionMode: agent
       name: dev-eu-west-1-cluster1-test-namespace-mntl-test-workspace-s3
       organization: Mintel
@@ -98,7 +98,7 @@ Test workspace defaults:
       name: dev-eu-west-1-cluster1-test-namespace-mntl-test-workspace-s3
       namespace: test-namespace
     spec:
-      destroyOnDeletion: true
+      destroyOnDeletion: false
       module:
         source: app.terraform.io/Mintel/private-s3-bucket/aws
         version: 3.0.2
@@ -145,8 +145,8 @@ Test workspace overrides:
     spec:
       agentPool:
         id: test-agent-pool
-      allowDestroyPlan: false
-      applyMethod: manual
+      allowDestroyPlan: true
+      applyMethod: auto
       executionMode: remote
       name: dev-eu-west-1-cluster1-test-namespace-mntl-test-workspace-s3
       organization: Mintel
@@ -221,7 +221,7 @@ Test workspace overrides:
       name: dev-eu-west-1-cluster1-test-namespace-mntl-test-workspace-s3
       namespace: test-namespace
     spec:
-      destroyOnDeletion: true
+      destroyOnDeletion: false
       module:
         source: app.terraform.io/Mintel/private-s3-bucket/aws
         version: 3.0.2

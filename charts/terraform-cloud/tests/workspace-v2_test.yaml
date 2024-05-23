@@ -36,11 +36,11 @@ tests:
         documentIndex: 0
       - equal:
           path: spec.applyMethod
-          value: auto 
+          value: manual
         documentIndex: 0
       - equal:
           path: spec.allowDestroyPlan
-          value: true
+          value: false
         documentIndex: 0
       - equal:
           path: spec.agentPool.id
@@ -68,8 +68,8 @@ tests:
       global.partOf: test-project
       global.terraform.operatorVersion: v2
       global.terraform.agentPoolID: test-agent-pool
-      global.terraform.allowDestroyPlan: false
-      global.terraform.applyMethod: manual
+      global.terraform.allowDestroyPlan: true
+      global.terraform.applyMethod: auto
       global.terraform.executionMode: remote
       s3:
         enabled: true
@@ -93,9 +93,9 @@ tests:
         documentIndex: 0
       - equal:
           path: spec.applyMethod
-          value: manual
+          value: auto
         documentIndex: 0
       - equal:
           path: spec.allowDestroyPlan
-          value: false
+          value: true
         documentIndex: 0
