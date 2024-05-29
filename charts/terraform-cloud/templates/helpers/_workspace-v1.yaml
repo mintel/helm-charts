@@ -54,6 +54,9 @@ spec:
   {{- $_ := unset $instanceCfg "workspaceTags" }}
   {{- $_ := unset $instanceCfg "outputSecretMap" }}
   {{- $_ := unset $instanceCfg "syncWave" }}
+  {{- $_ := unset $instanceCfg "workspaceAllowDestroyPlan" }}
+  {{- $_ := unset $instanceCfg "workspaceApplyMethod" }}
+  {{- $_ := unset $instanceCfg "moduleDestroyOnDeletion" }}
   {{- range $varKey, $varVal := $instanceCfg }}
     {{- if kindIs "map" $varVal }}
       {{- include "mintel_common.terraform_cloud.tfVar" (merge (dict "key" $varKey) $varVal) | indent 2 }}

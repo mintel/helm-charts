@@ -32,7 +32,7 @@ tests:
         documentIndex: 1
       - equal:
           path: spec.destroyOnDeletion
-          value: false
+          value: true
         documentIndex: 1
       - equal:
           path: spec.module.source
@@ -60,9 +60,9 @@ tests:
       global.partOf: test-project
       global.terraform.agentPoolID: test-agent-pool
       global.terraform.operatorVersion: v2
-      global.terraform.destroyOnDeletion: true
       global.terraform.enableRestartedAt: true
       global.terraform.restartedAt: restarted-at-value
+      global.terraform.destroyOnDeletion: true
       s3:
         enabled: true
         terraform:
