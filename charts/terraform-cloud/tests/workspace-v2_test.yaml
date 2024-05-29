@@ -36,11 +36,11 @@ tests:
         documentIndex: 0
       - equal:
           path: spec.applyMethod
-          value: manual
+          value: auto
         documentIndex: 0
       - equal:
           path: spec.allowDestroyPlan
-          value: false
+          value: true 
         documentIndex: 0
       - equal:
           path: spec.agentPool.id
@@ -68,8 +68,6 @@ tests:
       global.partOf: test-project
       global.terraform.operatorVersion: v2
       global.terraform.agentPoolID: test-agent-pool
-      global.terraform.allowDestroyPlan: true
-      global.terraform.applyMethod: auto
       global.terraform.executionMode: remote
       s3:
         enabled: true
@@ -99,3 +97,101 @@ tests:
           path: spec.allowDestroyPlan
           value: true
         documentIndex: 0
+
+  - it: Test workspace defaults in prod-like environment (prod)
+    set:
+      global.name: mntl-test-workspace
+      global.clusterEnv: prod
+      global.clusterName: cluster1
+      global.clusterRegion: eu-west-1
+      global.owner: sre
+      global.partOf: test-project
+      global.terraform.operatorVersion: v2
+      global.terraform.agentPoolID: test-agent-pool
+      global.terraform.executionMode: remote
+      s3:
+        enabled: true
+    asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
+      - equal:
+          path: spec.allowDestroyPlan
+          value: false
+        documentIndex: 0
+
+  - it: Test workspace defaults in prod-like environment (logs)
+    set:
+      global.name: mntl-test-workspace
+      global.clusterEnv: logs
+      global.clusterName: cluster1
+      global.clusterRegion: eu-west-1
+      global.owner: sre
+      global.partOf: test-project
+      global.terraform.operatorVersion: v2
+      global.terraform.agentPoolID: test-agent-pool
+      global.terraform.executionMode: remote
+      s3:
+        enabled: true
+    asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
+      - equal:
+          path: spec.allowDestroyPlan
+          value: false
+        documentIndex: 0
+ 
+  - it: Test workspace overrides at resource-config level
+    set:
+      global.name: mntl-test-workspace
+      global.clusterEnv: prod
+      global.clusterName: cluster1
+      global.clusterRegion: eu-west-1
+      global.owner: sre
+      global.partOf: test-project
+      global.terraform.operatorVersion: v2
+      global.terraform.agentPoolID: test-agent-pool
+      global.terraform.executionMode: remote
+      s3:
+        terraform:
+          defaultVars: 
+            workspaceAllowDestroy: true
+            workspaceApplyMethod: manual
+        enabled: true
+    asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
+      - equal:
+          path: spec.allowDestroyPlan
+          value: true 
+        documentIndex: 0
+      - equal:
+          path: spec.applyMethod
+          value: manual
+        documentIndex: 0
+
+
+  - it: Test workspace instance overrides
+    set:
+      global.name: mntl-test-workspace
+      global.clusterEnv: dev
+      global.clusterName: cluster1
+      global.clusterRegion: eu-west-1
+      global.owner: sre
+      global.partOf: test-project
+      global.terraform.operatorVersion: v2
+      global.terraform.agentPoolID: test-agent-pool
+      global.terraform.executionMode: remote
+      s3:
+        enabled: true
+        terraform:
+          instances:
+            test-bucket: {}
+            test-bucket-another: {}
+    asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
+      - equal:
+          path: metadata.name
+          value: dev-eu-west-1-cluster1-test-namespace-mntl-test-bucket-s3
+        documentIndex: 0
+      - equal:
+          path: metadata.name
+          value: dev-eu-west-1-cluster1-test-namespace-mntl-test-bucket-another-s3
+        documentIndex: 2
+

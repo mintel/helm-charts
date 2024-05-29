@@ -21,7 +21,7 @@ metadata:
     app.kubernetes.io/name: {{ printf "%s-%s" ($instanceCfg.name | kebabcase) ($resourceType | kebabcase) | trunc 63 }}
   annotations:
     {{ include "mintel_common.commonAnnotations" $ | nindent 4 }}
-    {{ include "mintel_common.terraform_cloud.operatorAnnotations" $workspaceDict | nindent 4 }}
+    {{ include "mintel_common.terraform_cloud.tfCloudOperatorExtentionAnnotations" $workspaceDict | nindent 4 }}
     {{- if (eq $resourceType "irsa") }}
     app.mintel.com/altManifestFileSuffix: "{{ $global.name }}-{{ $resourceType | kebabcase }}"
     {{- else }}
@@ -37,8 +37,8 @@ spec:
   name: {{ $instanceCfg.workspaceNameOverride | default (include "mintel_common.terraform_cloud.workspaceName" $workspaceDict) | trim | quote }}
   agentPool:
     id: {{ $global.terraform.agentPoolID | quote }}
-  applyMethod: {{ $global.terraform.applyMethod| quote }}
-  allowDestroyPlan: {{ $global.terraform.allowDestroyPlan }}
+  applyMethod: {{  $instanceCfg.workspaceApplyMethod | default "auto" }}
+  allowDestroyPlan: {{ hasKey $instanceCfg "workspaceAllowDestroy" | ternary $instanceCfg.workspaceAllowDestroy (include "mintel_common.terraform_cloud.allow_destroy_default" $workspaceDict) }}
   executionMode: {{ $global.terraform.executionMode | quote }}
   organization: {{ $global.terraform.organization | quote }}
   token:
@@ -59,6 +59,9 @@ spec:
   {{- $_ := unset $instanceCfg "workspaceTags" }}
   {{- $_ := unset $instanceCfg "outputSecretMap" }}
   {{- $_ := unset $instanceCfg "syncWave" }}
+  {{- $_ := unset $instanceCfg "workspaceAllowDestroyPlan" }}
+  {{- $_ := unset $instanceCfg "workspaceApplyMethod" }}
+  {{- $_ := unset $instanceCfg "moduleDestroyOnDeletion" }}
   {{- range $varKey, $varVal := $instanceCfg }}
     {{- if kindIs "map" $varVal }}
       {{- include "mintel_common.terraform_cloud.tfVar_v2" (merge (dict "key" $varKey) $varVal) | indent 2 }}

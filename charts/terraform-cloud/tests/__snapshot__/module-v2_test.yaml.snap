@@ -22,8 +22,8 @@ Test module defaults:
     spec:
       agentPool:
         id: test-agent-pool
-      allowDestroyPlan: false
-      applyMethod: manual
+      allowDestroyPlan: true
+      applyMethod: auto
       executionMode: agent
       name: dev-eu-west-1-cluster1-test-namespace-mntl-test-workspace-s3
       organization: Mintel
@@ -84,9 +84,6 @@ Test module defaults:
       annotations:
         app.mintel.com/altManifestFileSuffix: mntl-test-workspace-s3
         app.mintel.com/placeholder: placeholder
-        app.mintel.com/terraform-allow-destroy: "true"
-        app.mintel.com/terraform-cloud-tags: env:dev,owner:sre,mod:s3
-        app.mintel.com/terraform-owner: sre
         argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
         argocd.argoproj.io/sync-wave: "-40"
       labels:
@@ -98,7 +95,7 @@ Test module defaults:
       name: dev-eu-west-1-cluster1-test-namespace-mntl-test-workspace-s3
       namespace: test-namespace
     spec:
-      destroyOnDeletion: false
+      destroyOnDeletion: true
       module:
         source: app.terraform.io/Mintel/private-s3-bucket/aws
         version: 3.0.2
@@ -145,8 +142,8 @@ Test module overrides:
     spec:
       agentPool:
         id: test-agent-pool
-      allowDestroyPlan: false
-      applyMethod: manual
+      allowDestroyPlan: true
+      applyMethod: auto
       executionMode: agent
       name: dev-eu-west-1-cluster1-test-namespace-mntl-test-workspace-s3
       organization: Mintel
@@ -207,9 +204,6 @@ Test module overrides:
       annotations:
         app.mintel.com/altManifestFileSuffix: mntl-test-workspace-s3
         app.mintel.com/placeholder: placeholder
-        app.mintel.com/terraform-allow-destroy: "true"
-        app.mintel.com/terraform-cloud-tags: env:dev,owner:sre,mod:s3
-        app.mintel.com/terraform-owner: sre
         argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
         argocd.argoproj.io/sync-wave: "-40"
       labels:
@@ -268,8 +262,8 @@ Test module restartedAt disabled:
     spec:
       agentPool:
         id: test-agent-pool
-      allowDestroyPlan: false
-      applyMethod: manual
+      allowDestroyPlan: true
+      applyMethod: auto
       executionMode: agent
       name: dev-eu-west-1-cluster1-test-namespace-mntl-test-workspace-s3
       organization: Mintel
@@ -330,9 +324,6 @@ Test module restartedAt disabled:
       annotations:
         app.mintel.com/altManifestFileSuffix: mntl-test-workspace-s3
         app.mintel.com/placeholder: placeholder
-        app.mintel.com/terraform-allow-destroy: "true"
-        app.mintel.com/terraform-cloud-tags: env:dev,owner:sre,mod:s3
-        app.mintel.com/terraform-owner: sre
         argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
         argocd.argoproj.io/sync-wave: "-40"
       labels:
@@ -344,7 +335,7 @@ Test module restartedAt disabled:
       name: dev-eu-west-1-cluster1-test-namespace-mntl-test-workspace-s3
       namespace: test-namespace
     spec:
-      destroyOnDeletion: false
+      destroyOnDeletion: true
       module:
         source: app.terraform.io/Mintel/private-s3-bucket/aws
         version: 0.0.1
