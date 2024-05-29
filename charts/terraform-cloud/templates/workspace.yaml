@@ -73,6 +73,11 @@
       {{- $instanceConfig = mergeOverwrite (include "mintel_common.terraform_cloud.defaultVarValues" $instanceDict | fromJson ) $instanceConfig }}
       # Create the CRD
 ---
+{{- if eq $global.terraform.operatorVersion "migrate" }}
+      {{- include "mintel_common.terraform_cloud.workspace_v1" (list $ . $instanceConfig $resourceType $moduleSource $moduleVersion $tfVersion $resourceConfig "") }}
+---
+      {{- include "mintel_common.terraform_cloud.module_v2" (list $ . $instanceConfig $resourceType $moduleSource $moduleVersion $tfVersion $resourceConfig "") }}
+{{- end }}
 {{- if eq $global.terraform.operatorVersion "v1" }}
       {{- include "mintel_common.terraform_cloud.workspace_v1" (list $ . $instanceConfig $resourceType $moduleSource $moduleVersion $tfVersion $resourceConfig "") }}
 {{- end }}
