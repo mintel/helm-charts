@@ -42,12 +42,6 @@ global:
     agentPoolID: ""
     # --  Define where the Terraform code will be executed.
     executionMode: agent
-    # -- Allows a destroy plan to be created and applied.
-    allowDestroyPlan: false
-    # -- Specify whether or not to execute a Destroy run when the object is deleted from the Kubernetes.
-    # Note that deletions are also protected by sentinel policy-enforcement rules in non-development environments
-    # See https://developer.hashicorp.com/terraform/cloud-docs/policy-enforcement/sentinel
-    destroyOnDeletion: false
     # -- Allows executing a new Run without changing any Workspace or Module attributes.
     # Defaults to a hash of the instanceCfg specification
     # restartedAt: ""
@@ -83,6 +77,8 @@ activeMQ:
       # workspaceTags: string
       ### Set to true allows destroy runs on the workspace. Default: false in prod/logs, true in non-prod
       # workspaceAllowDestroy: bool
+      #### Specify whether or not to execute a Destroy run when the object is deleted from the Kubernetes. Default: true
+      # moduleDestroyOnDeletion: false
       ### Determines team ownership of the workspace. Default: Values.global.owner
       # workspaceOwner: string
       ### Use to map keys from AWS secret manager secrets to new key names. Map values should be in the form <new key>:<module secret key>
@@ -114,6 +110,8 @@ apiGatewayHttp:
       ### Boolean which when set to true disables destroy runs on the workspace and vice-versa. It serves as a form of
       ### deletion protection. It defaults to false in prod and logs and true elsewhere
       workspaceAllowDestroy: false
+      #### Specify whether or not to execute a Destroy run when the object is deleted from the Kubernetes. Default: true
+      # moduleDestroyOnDeletion: false
       ### Override the generated workspace name, for example if the generated name is above the char limit
       # workspaceNameOverride: string
       ### Comma-separated list of tags to add to workspace. Default: "env:<environment>,owner:<owner>,mod:<module>"
@@ -157,6 +155,8 @@ auroraMySql:
       # workspaceTags: string
       ### Set to true allows destroy runs on the workspace. Default: false in prod/logs, true in non-prod
       # workspaceAllowDestroy: bool
+      #### Specify whether or not to execute a Destroy run when the object is deleted from the Kubernetes. Default: true
+      # moduleDestroyOnDeletion: false
       ### Determines team ownership of the workspace. Default: Values.global.owner
       # workspaceOwner: string
       ### Use to map keys from AWS secret manager secrets to new key names. Map values should be in the form <new key>:<module secret key>
@@ -204,6 +204,8 @@ auroraPostgresql:
       # workspaceTags: string
       ### Set to true allows destroy runs on the workspace. Default: false in prod/logs, true in non-prod
       # workspaceAllowDestroy: bool
+      #### Specify whether or not to execute a Destroy run when the object is deleted from the Kubernetes. Default: true
+      # moduleDestroyOnDeletion: false
       ### Determines team ownership of the workspace. Default: Values.global.owner
       # workspaceOwner: string
       ### Use to map keys from AWS secret manager secrets to new key names. Map values should be in the form <new key>:<module secret key>
@@ -240,6 +242,8 @@ cmsBackup:
       # workspaceTags: string
       ### Set to true allows destroy runs on the workspace. Default: false in prod/logs, true in non-prod
       # workspaceAllowDestroy: bool
+      ### Specify whether or not to execute a Destroy run when the object is deleted from the Kubernetes. Default: true
+      # moduleDestroyOnDeletion: false
       ### Determines team ownership of the workspace. Default: Values.global.owner
       # workspaceOwner: string
       ### Use to map keys from AWS secret manager secrets to new key names. Map values should be in the form <new key>:<module secret key>
@@ -268,6 +272,8 @@ datasync:
       ### Boolean which when set to true disables destroy runs on the workspace and vice-versa. It serves as a form of
       ### deletion protection. It defaults to false in prod and logs and true elsewhere
       # workspaceAllowDestroy: false
+      ### Specify whether or not to execute a Destroy run when the object is deleted from the Kubernetes. Default: true
+      # moduleDestroyOnDeletion: false
       ### Override the generated workspace name, for example if the generated name is above the char limit
       # workspaceNameOverride: string
       ### Comma-separated list of tags to add to workspace. Default: "env:<environment>,owner:<owner>,mod:<module>"
@@ -307,6 +313,8 @@ dynamodb:
       # workspaceTags: string
       ### Set to true allows destroy runs on the workspace. Default: false in prod/logs, true in non-prod
       # workspaceAllowDestroy: bool
+      ### Specify whether or not to execute a Destroy run when the object is deleted from the Kubernetes. Default: true
+      # moduleDestroyOnDeletion: false
       ### Determines team ownership of the workspace. Default: Values.global.owner
       # workspaceOwner: string
       ### Use to map keys from AWS secret manager secrets to new key names. Map values should be in the form <new key>:<module secret key>
@@ -347,6 +355,8 @@ extraIAM:
       # workspaceTags: string
       ### Set to true allows destroy runs on the workspace. Default: false in prod/logs, true in non-prod
       # workspaceAllowDestroy: bool
+      ### Specify whether or not to execute a Destroy run when the object is deleted from the Kubernetes. Default: true
+      # moduleDestroyOnDeletion: false
       ### Determines team ownership of the workspace. Default: Values.global.owner
       # workspaceOwner: string
       ### Use to map keys from AWS secret manager secrets to new key names. Map values should be in the form <new key>:<module secret key>
@@ -382,6 +392,8 @@ irsa:
       # workspaceTags: string
       ### Set to true allows destroy runs on the workspace. Default: false in prod/logs, true in non-prod
       # workspaceAllowDestroy: bool
+      ### Specify whether or not to execute a Destroy run when the object is deleted from the Kubernetes. Default: true
+      # moduleDestroyOnDeletion: false
       ### Determines team ownership of the workspace. Default: Values.global.owner
       # workspaceOwner: string
     # -- Configure Terraform Cloud notifications. This should not be changed unless you really know what you're doing.
@@ -434,6 +446,8 @@ lambda:
       # workspaceTags: string
       ### Set to true allows destroy runs on the workspace. Default: false in prod/logs, true in non-prod
       # workspaceAllowDestroy: bool
+      ### Specify whether or not to execute a Destroy run when the object is deleted from the Kubernetes. Default: true
+      # moduleDestroyOnDeletion: false
       ### Determines team ownership of the workspace. Default: Values.global.owner
       # workspaceOwner: string
       ### Use to map keys from AWS secret manager secrets to new key names. Map values should be in the form <new key>:<module secret key>
@@ -479,6 +493,8 @@ mariadb:
       # workspaceTags: string
       ### Set to true allows destroy runs on the workspace. Default: false in prod/logs, true in non-prod
       # workspaceAllowDestroy: bool
+      ### Specify whether or not to execute a Destroy run when the object is deleted from the Kubernetes. Default: true
+      # moduleDestroyOnDeletion: false
       ### Determines team ownership of the workspace. Default: Values.global.owner
       # workspaceOwner: string
       ### Use to map keys from AWS secret manager secrets to new key names. Map values should be in the form <new key>:<module secret key>
@@ -522,6 +538,8 @@ memcached:
       # workspaceTags: string
       ### Set to true allows destroy runs on the workspace. Default: false in prod/logs, true in non-prod
       # workspaceAllowDestroy: bool
+      ### Specify whether or not to execute a Destroy run when the object is deleted from the Kubernetes. Default: true
+      # moduleDestroyOnDeletion: false
       ### Determines team ownership of the workspace. Default: Values.global.owner
       # workspaceOwner: string
       ### Use to map keys from AWS secret manager secrets to new key names. Map values should be in the form <new key>:<module secret key>
@@ -554,6 +572,8 @@ opensearch:
       # workspaceTags: string
       ### Set to true allows destroy runs on the workspace. Default: false in prod/logs, true in non-prod
       # workspaceAllowDestroy: bool
+      ### Specify whether or not to execute a Destroy run when the object is deleted from the Kubernetes. Default: true
+      # moduleDestroyOnDeletion: false
       ### Determines team ownership of the workspace. Default: Values.global.owner
       # workspaceOwner: string
       ### Use to map keys from AWS secret manager secrets to new key names. Map values should be in the form <new key>:<module secret key>
@@ -597,6 +617,8 @@ postgresql:
       # workspaceTags: string
       ### Set to true allows destroy runs on the workspace. Default: false in prod/logs, true in non-prod
       # workspaceAllowDestroy: bool
+      ### Specify whether or not to execute a Destroy run when the object is deleted from the Kubernetes. Default: true
+      # moduleDestroyOnDeletion: false
       ### Determines team ownership of the workspace. Default: Values.global.owner
       # workspaceOwner: string
       ### Use to map keys from AWS secret manager secrets to new key names. Map values should be in the form <new key>:<module secret key>
@@ -636,6 +658,8 @@ redis:
       # workspaceTags: string
       ### Set to true allows destroy runs on the workspace. Default: false in prod/logs, true in non-prod
       # workspaceAllowDestroy: bool
+      ### Specify whether or not to execute a Destroy run when the object is deleted from the Kubernetes. Default: true
+      # moduleDestroyOnDeletion: false
       ### Determines team ownership of the workspace. Default: Values.global.owner
       # workspaceOwner: string
       ### Use to map keys from AWS secret manager secrets to new key names. Map values should be in the form <new key>:<module secret key>
@@ -675,6 +699,8 @@ s3:
       # workspaceTags: string
       ### Set to true allows destroy runs on the workspace. Default: false in prod/logs, true in non-prod
       # workspaceAllowDestroy: bool
+      ### Specify whether or not to execute a Destroy run when the object is deleted from the Kubernetes. Default: true
+      # moduleDestroyOnDeletion: false
       ### Determines team ownership of the workspace. Default: Values.global.owner
       # workspaceOwner: string
       ### Use to map keys from AWS secret manager secrets to new key names. Map values should be in the form <new key>:<module secret key>
@@ -713,6 +739,8 @@ sns:
       # workspaceTags: string
       ### Set to true allows destroy runs on the workspace. Default: false in prod/logs, true in non-prod
       # workspaceAllowDestroy: bool
+      ### Specify whether or not to execute a Destroy run when the object is deleted from the Kubernetes. Default: true
+      # moduleDestroyOnDeletion: false
       ### Determines team ownership of the workspace. Default: Values.global.owner
       # workspaceOwner: string
       ### Use to map keys from AWS secret manager secrets to new key names. Map values should be in the form <new key>:<module secret key>
@@ -749,6 +777,8 @@ sqs:
       # workspaceTags: string
       ### Set to true allows destroy runs on the workspace. Default: false in prod/logs, true in non-prod
       # workspaceAllowDestroy: bool
+      ### Specify whether or not to execute a Destroy run when the object is deleted from the Kubernetes. Default: true
+      # moduleDestroyOnDeletion: false
       ### Determines team ownership of the workspace. Default: Values.global.owner
       # workspaceOwner: string
       ### Use to map keys from AWS secret manager secrets to new key names. Map values should be in the form <new key>:<module secret key>
@@ -782,6 +812,8 @@ staticWebsite:
       # workspaceTags: string
       ### Set to true allows destroy runs on the workspace. Default: false in prod/logs, true in non-prod
       # workspaceAllowDestroy: bool
+      ### Specify whether or not to execute a Destroy run when the object is deleted from the Kubernetes. Default: true
+      # moduleDestroyOnDeletion: false
       ### Determines team ownership of the workspace. Default: Values.global.owner
       # workspaceOwner: string
       ### Use to map keys from AWS secret manager secrets to new key names. Map values should be in the form <new key>:<module secret key>
@@ -813,6 +845,8 @@ stepFunctionEks:
       # workspaceTags: string
       ### Set to true allows destroy runs on the workspace. Default: false in prod/logs, true in non-prod
       # workspaceAllowDestroy: bool
+      ### Specify whether or not to execute a Destroy run when the object is deleted from the Kubernetes. Default: true
+      # moduleDestroyOnDeletion: false
       ### Determines team ownership of the workspace. Default: Values.global.owner
       # workspaceOwner: string
       ### Use to map keys from AWS secret manager secrets to new key names. Map values should be in the form <new key>:<module secret key>
@@ -843,6 +877,8 @@ sshKeyPairSecret:
       # workspaceTags: string
       ### Set to true allows destroy runs on the workspace. Default: false in prod/logs, true in non-prod
       # workspaceAllowDestroy: bool
+      ### Specify whether or not to execute a Destroy run when the object is deleted from the Kubernetes. Default: true
+      # moduleDestroyOnDeletion: false
       ### Determines team ownership of the workspace. Default: Values.global.owner
       # workspaceOwner: string
       ### Use to map keys from AWS secret manager secrets to new key names. Map values should be in the form <new key>:<module secret key>
