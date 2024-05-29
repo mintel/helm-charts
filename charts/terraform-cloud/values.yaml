@@ -36,8 +36,6 @@ global:
     irsa: true
     # -- Operator version to use (v1 or v2)
     operatorVersion: "v1"
-    # -- Define either change will be applied automatically(auto) or require an operator to confirm(manual).
-    applyMethod: manual
     # -- ID of the Terraform Cloud Agent Pool to use for the run. Passed in from cluster-env-jsonnet
     agentPoolID: ""
     # --  Define where the Terraform code will be executed.
@@ -77,6 +75,8 @@ activeMQ:
       # workspaceTags: string
       ### Set to true allows destroy runs on the workspace. Default: false in prod/logs, true in non-prod
       # workspaceAllowDestroy: bool
+      ### Define either change will be applied automatically(auto) or require an operator to confirm(manual). Default: auto
+      # workspaceApplyMethod: auto
       #### Specify whether or not to execute a Destroy run when the object is deleted from the Kubernetes. Default: true
       # moduleDestroyOnDeletion: false
       ### Determines team ownership of the workspace. Default: Values.global.owner
@@ -110,6 +110,8 @@ apiGatewayHttp:
       ### Boolean which when set to true disables destroy runs on the workspace and vice-versa. It serves as a form of
       ### deletion protection. It defaults to false in prod and logs and true elsewhere
       workspaceAllowDestroy: false
+      ### Define either change will be applied automatically(auto) or require an operator to confirm(manual). Default: auto
+      # workspaceApplyMethod: auto
       #### Specify whether or not to execute a Destroy run when the object is deleted from the Kubernetes. Default: true
       # moduleDestroyOnDeletion: false
       ### Override the generated workspace name, for example if the generated name is above the char limit
@@ -155,6 +157,8 @@ auroraMySql:
       # workspaceTags: string
       ### Set to true allows destroy runs on the workspace. Default: false in prod/logs, true in non-prod
       # workspaceAllowDestroy: bool
+      ### Define either change will be applied automatically(auto) or require an operator to confirm(manual). Default: auto
+      # workspaceApplyMethod: auto
       #### Specify whether or not to execute a Destroy run when the object is deleted from the Kubernetes. Default: true
       # moduleDestroyOnDeletion: false
       ### Determines team ownership of the workspace. Default: Values.global.owner
@@ -204,6 +208,8 @@ auroraPostgresql:
       # workspaceTags: string
       ### Set to true allows destroy runs on the workspace. Default: false in prod/logs, true in non-prod
       # workspaceAllowDestroy: bool
+      ### Define either change will be applied automatically(auto) or require an operator to confirm(manual). Default: auto
+      # workspaceApplyMethod: auto
       #### Specify whether or not to execute a Destroy run when the object is deleted from the Kubernetes. Default: true
       # moduleDestroyOnDeletion: false
       ### Determines team ownership of the workspace. Default: Values.global.owner
@@ -242,6 +248,8 @@ cmsBackup:
       # workspaceTags: string
       ### Set to true allows destroy runs on the workspace. Default: false in prod/logs, true in non-prod
       # workspaceAllowDestroy: bool
+      ### Define either change will be applied automatically(auto) or require an operator to confirm(manual). Default: auto
+      # workspaceApplyMethod: auto
       ### Specify whether or not to execute a Destroy run when the object is deleted from the Kubernetes. Default: true
       # moduleDestroyOnDeletion: false
       ### Determines team ownership of the workspace. Default: Values.global.owner
@@ -313,6 +321,8 @@ dynamodb:
       # workspaceTags: string
       ### Set to true allows destroy runs on the workspace. Default: false in prod/logs, true in non-prod
       # workspaceAllowDestroy: bool
+      ### Define either change will be applied automatically(auto) or require an operator to confirm(manual). Default: auto
+      # workspaceApplyMethod: auto
       ### Specify whether or not to execute a Destroy run when the object is deleted from the Kubernetes. Default: true
       # moduleDestroyOnDeletion: false
       ### Determines team ownership of the workspace. Default: Values.global.owner
@@ -355,6 +365,8 @@ extraIAM:
       # workspaceTags: string
       ### Set to true allows destroy runs on the workspace. Default: false in prod/logs, true in non-prod
       # workspaceAllowDestroy: bool
+      ### Define either change will be applied automatically(auto) or require an operator to confirm(manual). Default: auto
+      # workspaceApplyMethod: auto
       ### Specify whether or not to execute a Destroy run when the object is deleted from the Kubernetes. Default: true
       # moduleDestroyOnDeletion: false
       ### Determines team ownership of the workspace. Default: Values.global.owner
@@ -392,6 +404,8 @@ irsa:
       # workspaceTags: string
       ### Set to true allows destroy runs on the workspace. Default: false in prod/logs, true in non-prod
       # workspaceAllowDestroy: bool
+      ### Define either change will be applied automatically(auto) or require an operator to confirm(manual). Default: auto
+      # workspaceApplyMethod: auto
       ### Specify whether or not to execute a Destroy run when the object is deleted from the Kubernetes. Default: true
       # moduleDestroyOnDeletion: false
       ### Determines team ownership of the workspace. Default: Values.global.owner
@@ -446,6 +460,8 @@ lambda:
       # workspaceTags: string
       ### Set to true allows destroy runs on the workspace. Default: false in prod/logs, true in non-prod
       # workspaceAllowDestroy: bool
+      ### Define either change will be applied automatically(auto) or require an operator to confirm(manual). Default: auto
+      # workspaceApplyMethod: auto
       ### Specify whether or not to execute a Destroy run when the object is deleted from the Kubernetes. Default: true
       # moduleDestroyOnDeletion: false
       ### Determines team ownership of the workspace. Default: Values.global.owner
@@ -493,6 +509,8 @@ mariadb:
       # workspaceTags: string
       ### Set to true allows destroy runs on the workspace. Default: false in prod/logs, true in non-prod
       # workspaceAllowDestroy: bool
+      ### Define either change will be applied automatically(auto) or require an operator to confirm(manual). Default: auto
+      # workspaceApplyMethod: auto
       ### Specify whether or not to execute a Destroy run when the object is deleted from the Kubernetes. Default: true
       # moduleDestroyOnDeletion: false
       ### Determines team ownership of the workspace. Default: Values.global.owner
@@ -538,6 +556,8 @@ memcached:
       # workspaceTags: string
       ### Set to true allows destroy runs on the workspace. Default: false in prod/logs, true in non-prod
       # workspaceAllowDestroy: bool
+      ### Define either change will be applied automatically(auto) or require an operator to confirm(manual). Default: auto
+      # workspaceApplyMethod: auto
       ### Specify whether or not to execute a Destroy run when the object is deleted from the Kubernetes. Default: true
       # moduleDestroyOnDeletion: false
       ### Determines team ownership of the workspace. Default: Values.global.owner
@@ -572,6 +592,8 @@ opensearch:
       # workspaceTags: string
       ### Set to true allows destroy runs on the workspace. Default: false in prod/logs, true in non-prod
       # workspaceAllowDestroy: bool
+      ### Define either change will be applied automatically(auto) or require an operator to confirm(manual). Default: auto
+      # workspaceApplyMethod: auto
       ### Specify whether or not to execute a Destroy run when the object is deleted from the Kubernetes. Default: true
       # moduleDestroyOnDeletion: false
       ### Determines team ownership of the workspace. Default: Values.global.owner
@@ -617,6 +639,8 @@ postgresql:
       # workspaceTags: string
       ### Set to true allows destroy runs on the workspace. Default: false in prod/logs, true in non-prod
       # workspaceAllowDestroy: bool
+      ### Define either change will be applied automatically(auto) or require an operator to confirm(manual). Default: auto
+      # workspaceApplyMethod: auto
       ### Specify whether or not to execute a Destroy run when the object is deleted from the Kubernetes. Default: true
       # moduleDestroyOnDeletion: false
       ### Determines team ownership of the workspace. Default: Values.global.owner
@@ -658,6 +682,8 @@ redis:
       # workspaceTags: string
       ### Set to true allows destroy runs on the workspace. Default: false in prod/logs, true in non-prod
       # workspaceAllowDestroy: bool
+      ### Define either change will be applied automatically(auto) or require an operator to confirm(manual). Default: auto
+      # workspaceApplyMethod: auto
       ### Specify whether or not to execute a Destroy run when the object is deleted from the Kubernetes. Default: true
       # moduleDestroyOnDeletion: false
       ### Determines team ownership of the workspace. Default: Values.global.owner
@@ -699,6 +725,8 @@ s3:
       # workspaceTags: string
       ### Set to true allows destroy runs on the workspace. Default: false in prod/logs, true in non-prod
       # workspaceAllowDestroy: bool
+      ### Define either change will be applied automatically(auto) or require an operator to confirm(manual). Default: auto
+      # workspaceApplyMethod: auto
       ### Specify whether or not to execute a Destroy run when the object is deleted from the Kubernetes. Default: true
       # moduleDestroyOnDeletion: false
       ### Determines team ownership of the workspace. Default: Values.global.owner
@@ -739,6 +767,8 @@ sns:
       # workspaceTags: string
       ### Set to true allows destroy runs on the workspace. Default: false in prod/logs, true in non-prod
       # workspaceAllowDestroy: bool
+      ### Define either change will be applied automatically(auto) or require an operator to confirm(manual). Default: auto
+      # workspaceApplyMethod: auto
       ### Specify whether or not to execute a Destroy run when the object is deleted from the Kubernetes. Default: true
       # moduleDestroyOnDeletion: false
       ### Determines team ownership of the workspace. Default: Values.global.owner
@@ -777,6 +807,8 @@ sqs:
       # workspaceTags: string
       ### Set to true allows destroy runs on the workspace. Default: false in prod/logs, true in non-prod
       # workspaceAllowDestroy: bool
+      ### Define either change will be applied automatically(auto) or require an operator to confirm(manual). Default: auto
+      # workspaceApplyMethod: auto
       ### Specify whether or not to execute a Destroy run when the object is deleted from the Kubernetes. Default: true
       # moduleDestroyOnDeletion: false
       ### Determines team ownership of the workspace. Default: Values.global.owner
@@ -812,6 +844,8 @@ staticWebsite:
       # workspaceTags: string
       ### Set to true allows destroy runs on the workspace. Default: false in prod/logs, true in non-prod
       # workspaceAllowDestroy: bool
+      ### Define either change will be applied automatically(auto) or require an operator to confirm(manual). Default: auto
+      # workspaceApplyMethod: auto
       ### Specify whether or not to execute a Destroy run when the object is deleted from the Kubernetes. Default: true
       # moduleDestroyOnDeletion: false
       ### Determines team ownership of the workspace. Default: Values.global.owner
@@ -845,6 +879,8 @@ stepFunctionEks:
       # workspaceTags: string
       ### Set to true allows destroy runs on the workspace. Default: false in prod/logs, true in non-prod
       # workspaceAllowDestroy: bool
+      ### Define either change will be applied automatically(auto) or require an operator to confirm(manual). Default: auto
+      # workspaceApplyMethod: auto
       ### Specify whether or not to execute a Destroy run when the object is deleted from the Kubernetes. Default: true
       # moduleDestroyOnDeletion: false
       ### Determines team ownership of the workspace. Default: Values.global.owner
@@ -877,6 +913,8 @@ sshKeyPairSecret:
       # workspaceTags: string
       ### Set to true allows destroy runs on the workspace. Default: false in prod/logs, true in non-prod
       # workspaceAllowDestroy: bool
+      ### Define either change will be applied automatically(auto) or require an operator to confirm(manual). Default: auto
+      # workspaceApplyMethod: auto
       ### Specify whether or not to execute a Destroy run when the object is deleted from the Kubernetes. Default: true
       # moduleDestroyOnDeletion: false
       ### Determines team ownership of the workspace. Default: Values.global.owner

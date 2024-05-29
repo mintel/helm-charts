@@ -77,7 +77,6 @@ A Helm chart for provisioning resources using Terraform Cloud
 | global.owner | string | `""` | Team which "owns" the application |
 | global.partOf | string | `""` | Top level application each deployment is a part of |
 | global.terraform.agentPoolID | string | `""` | ID of the Terraform Cloud Agent Pool to use for the run. Passed in from cluster-env-jsonnet |
-| global.terraform.applyMethod | string | `"manual"` | Define either change will be applied automatically(auto) or require an operator to confirm(manual). |
 | global.terraform.enableRestartedAt | bool | `true` | Adds the restartedAt value (see restartedAt). Ensures that any configuration changes (i.e. input vars) result in the operator attempting a new plan/apply |
 | global.terraform.executionMode | string | `"agent"` | Define where the Terraform code will be executed. |
 | global.terraform.externalSecrets | bool | `true` | Set to true as part of tf cloud migrations. When true, it stops standard-application-stack from creating AWS related external secrets and passes that responsibility to the terraform-cloud chart |
