@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v1.4.0] - 2024-05-30
+### Added
+- Add global default for setting Workspace `workspaceAllowDestroy`
+- Add global default for setting Workspace `applyMethod`
+
+## [v1.3.0] - 2024-05-29
+### Added
+- Add support for `app.terraform.io/v1alpha2` API version
+
 ## [v1.2.0] - 2024-05-29
 ### Changed
 - Update v2 configuration to use same defaults for allowing workspace-destroy in prod/logs account. Also allow overrides at resource-config layer.
