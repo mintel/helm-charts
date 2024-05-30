@@ -46,6 +46,11 @@ global:
     # -- Adds the restartedAt value (see restartedAt).
     # Ensures that any configuration changes (i.e. input vars) result in the operator attempting a new plan/apply
     enableRestartedAt: true
+    # -- Default if Workspaces should allow destroy plans.
+    # Null defaults to false in "prod" and "logs" accounts, otherwise true.
+    defaultWorkspaceAllowDestroy: null
+    # -- Default which apply method Workspaces should use.
+    defaultApplyMethod: auto
 ###
 ## Resources
 ###
