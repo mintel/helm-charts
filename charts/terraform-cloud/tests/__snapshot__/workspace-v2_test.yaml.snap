@@ -715,7 +715,7 @@ Test workspace overrides at global-config level:
       annotations:
         app.mintel.com/altManifestFileSuffix: mntl-test-workspace-s3
         app.mintel.com/placeholder: placeholder
-        app.mintel.com/terraform-allow-destroy: "false"
+        app.mintel.com/terraform-allow-destroy: "true"
         app.mintel.com/terraform-cloud-tags: env:prod,owner:sre,mod:s3
         app.mintel.com/terraform-owner: sre
         argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true

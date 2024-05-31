@@ -38,7 +38,7 @@ spec:
   agentPool:
     id: {{ $global.terraform.agentPoolID | quote }}
   applyMethod: {{  $instanceCfg.workspaceApplyMethod | default $global.terraform.defaultApplyMethod }}
-  allowDestroyPlan: {{ $instanceCfg.workspaceAllowDestroy | default $global.terraform.defaultWorkspaceAllowDestroy | default (include "mintel_common.terraform_cloud.allow_destroy_default" $workspaceDict) }}
+  allowDestroyPlan: {{ (include "mintel_common.terraform_cloud.allow_destroy" $workspaceDict) }}
   executionMode: {{ $global.terraform.executionMode | quote }}
   organization: {{ $global.terraform.organization | quote }}
   token:
