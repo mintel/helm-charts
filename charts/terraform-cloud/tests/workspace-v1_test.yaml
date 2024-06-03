@@ -282,7 +282,6 @@ tests:
       global.owner: sre
       global.partOf: test-project
       global.terraform.operatorVersion: v1
-
       s3:
         enabled: true
     asserts:
@@ -290,6 +289,43 @@ tests:
       - equal:
           path: metadata.annotations["app.mintel.com/terraform-allow-destroy"]
           value: "false"
+  - it: Test workspace allow destroy env resource-override
+    set:
+      global.name: test-app
+      global.clusterEnv: prod
+      global.clusterName: cluster1
+      global.clusterRegion: eu-west-1
+      global.owner: sre
+      global.partOf: test-project
+      global.terraform.operatorVersion: v1
+      s3:
+        terraform:
+          defaultVars:
+            workspaceAllowDestroy: true
+        enabled: true
+    asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
+      - equal:
+          path: metadata.annotations["app.mintel.com/terraform-allow-destroy"]
+          value: "true"
+  - it: Test workspace allow destroy env global-override
+    set:
+      global.name: test-app
+      global.clusterEnv: prod
+      global.clusterName: cluster1
+      global.clusterRegion: eu-west-1
+      global.owner: sre
+      global.partOf: test-project
+      global.terraform.operatorVersion: v1
+      global.terraform.defaultWorkspaceAllowDestroy: true
+      s3:
+        enabled: true
+    asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
+      - equal:
+          path: metadata.annotations["app.mintel.com/terraform-allow-destroy"]
+          value: "true"
+ 
   - it: Dev S3 module workspace with multiple instances
     set:
       global.name: test-app

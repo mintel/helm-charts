@@ -1,6 +1,6 @@
 # terraform-cloud
 
-![Version: 1.4.0](https://img.shields.io/badge/Version-1.4.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.0](https://img.shields.io/badge/AppVersion-2.0.0-informational?style=flat-square)
+![Version: 1.5.0](https://img.shields.io/badge/Version-1.5.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.0](https://img.shields.io/badge/AppVersion-2.0.0-informational?style=flat-square)
 
 A Helm chart for provisioning resources using Terraform Cloud
 
@@ -78,7 +78,6 @@ A Helm chart for provisioning resources using Terraform Cloud
 | global.partOf | string | `""` | Top level application each deployment is a part of |
 | global.terraform.agentPoolID | string | `""` | ID of the Terraform Cloud Agent Pool to use for the run. Passed in from cluster-env-jsonnet |
 | global.terraform.defaultApplyMethod | string | `"auto"` | Default which apply method Workspaces should use. |
-| global.terraform.defaultWorkspaceAllowDestroy | string | `nil` | Default if Workspaces should allow destroy plans. Null defaults to false in "prod" and "logs" accounts, otherwise true. |
 | global.terraform.enableRestartedAt | bool | `true` | Adds the restartedAt value (see restartedAt). Ensures that any configuration changes (i.e. input vars) result in the operator attempting a new plan/apply |
 | global.terraform.executionMode | string | `"agent"` | Define where the Terraform code will be executed. |
 | global.terraform.externalSecrets | bool | `true` | Set to true as part of tf cloud migrations. When true, it stops standard-application-stack from creating AWS related external secrets and passes that responsibility to the terraform-cloud chart |
