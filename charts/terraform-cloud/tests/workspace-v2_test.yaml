@@ -220,3 +220,62 @@ tests:
           path: metadata.name
           value: dev-eu-west-1-cluster1-test-namespace-mntl-test-bucket-another-s3
         documentIndex: 2
+
+  - it: Test workspace allow destroy env
+    set:
+      global.name: test-app
+      global.clusterEnv: prod
+      global.clusterName: cluster1
+      global.clusterRegion: eu-west-1
+      global.owner: sre
+      global.partOf: test-project
+      global.terraform.operatorVersion: v2
+      s3:
+        enabled: true
+    asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
+      - equal:
+          path: metadata.annotations["app.mintel.com/terraform-allow-destroy"]
+          value: "false"
+        documentIndex: 0
+
+  - it: Test workspace allow destroy env resource-override
+    set:
+      global.name: test-app
+      global.clusterEnv: prod
+      global.clusterName: cluster1
+      global.clusterRegion: eu-west-1
+      global.owner: sre
+      global.partOf: test-project
+      global.terraform.operatorVersion: v2
+      s3:
+        terraform:
+          defaultVars:
+            workspaceAllowDestroy: true
+        enabled: true
+    asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
+      - equal:
+          path: metadata.annotations["app.mintel.com/terraform-allow-destroy"]
+          value: "true"
+        documentIndex: 0
+
+  - it: Test workspace allow destroy env global-override
+    set:
+      global.name: test-app
+      global.clusterEnv: prod
+      global.clusterName: cluster1
+      global.clusterRegion: eu-west-1
+      global.owner: sre
+      global.partOf: test-project
+      global.terraform.operatorVersion: v2
+      global.terraform.defaultWorkspaceAllowDestroy: true
+      s3:
+        enabled: true
+    asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
+      - equal:
+          path: metadata.annotations["app.mintel.com/terraform-allow-destroy"]
+          value: "true"
+        documentIndex: 0
+ 
