@@ -325,7 +325,7 @@ tests:
       - equal:
           path: metadata.annotations["app.mintel.com/terraform-allow-destroy"]
           value: "true"
- 
+
   - it: Dev S3 module workspace with multiple instances
     set:
       global.name: test-app

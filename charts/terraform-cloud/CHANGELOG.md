@@ -12,7 +12,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Fix call to `irsaRunTriggers` for v2 workspace (was rendering v1 version)
 
-#
 ## [v1.5.0] - 2024-05-31
 ### Changed
 - Update logic around default destroy mode. Same function is now used to handle the custom `app.mintel.com/terraform-allow-destroy` and  the v2 `spec.allowDestroyPlan`
