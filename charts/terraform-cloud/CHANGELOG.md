@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v1.6.0] - 2024-06-06
+### Added
+- Added IRSA tests for workspace-v2 (copied and adjust v1 version)
+
+### Fixed
+- Fix call to `irsaRunTriggers` for v2 workspace (was rendering v1 version)
+
+#
 ## [v1.5.0] - 2024-05-31
 ### Changed
 - Update logic around default destroy mode. Same function is now used to handle the custom `app.mintel.com/terraform-allow-destroy` and  the v2 `spec.allowDestroyPlan`

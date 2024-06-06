@@ -50,7 +50,7 @@ spec:
   terraformVersion: {{ $tfVersion | default $global.terraform.terraformVersion | quote }}
   {{- if (has $resourceType (list "irsa" "extraIAM" )) }}
   runTriggers:
-  {{ include "mintel_common.terraform_cloud.irsaRunTriggers" $| indent 4 }}
+  {{ include "mintel_common.terraform_cloud.irsaRunTriggers_v2" $| indent 4 }}
   {{- end }}
   terraformVariables:
   {{- $_ := unset $instanceCfg "workspaceNameOverride" }}
@@ -86,7 +86,7 @@ spec:
 {{ printf "%s-%s-%s-%s-%s-%s" .Global.clusterEnv .Global.clusterRegion .Global.clusterName .Release.Namespace (.InstanceCfg.name | kebabcase) (.ResourceType | kebabcase) }}
 {{- end -}}
 
-{{- define "mintel_common.terraform_cloud.irsaRunTriggers"}}
+{{- define "mintel_common.terraform_cloud.irsaRunTriggers_v2"}}
 {{- range include "mintel_common.terraformCloudResources" $ | split "," }}
   {{- $global := $.Values.global }}
   {{- $resourceType := . }}
