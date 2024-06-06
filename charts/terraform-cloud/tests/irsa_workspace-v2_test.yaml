@@ -1,0 +1,183 @@
+suite: Test IRSA Workspaces
+templates:
+  - irsa-workspace.yaml
+release:
+  namespace: test-namespace
+tests:
+  - it: IRSA created for Dev S3 module workspace
+    set:
+      global.name: test-app
+      global.clusterEnv: dev
+      global.clusterName: cluster1
+      global.clusterRegion: eu-west-1
+      global.owner: sre
+      global.partOf: test-project
+      global.terraform.operatorVersion: v2
+      s3.enabled: true
+    asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
+      - isKind:
+          of: Workspace
+        documentIndex: 0
+      - equal:
+          path: metadata.namespace
+          value: test-namespace
+        documentIndex: 0
+      - equal:
+          path: metadata.name
+          value: dev-eu-west-1-cluster1-test-namespace-test-app-irsa
+        documentIndex: 0
+      - hasDocuments:
+          count: 2
+      - equal:
+          path: metadata.annotations["app.mintel.com/altManifestFileSuffix"]
+          value: test-app-irsa
+        documentIndex: 0
+      - equal:
+          path: metadata.annotations["argocd.argoproj.io/sync-wave"]
+          value: "-20"
+        documentIndex: 0
+      - contains:
+          path: spec.runTriggers
+          content:
+            name: dev-eu-west-1-cluster1-test-namespace-mntl-test-app-s3
+        documentIndex: 0
+      - contains:
+          path: spec.terraformVariables
+          content:
+              hcl: false
+              name: name
+              sensitive: false
+              value: test-app
+        documentIndex: 0
+      - contains:
+          path: spec.terraformVariables
+          content:
+            hcl: false
+            name: tfcloud_agent
+            sensitive: false
+            value: "true"
+        documentIndex: 0
+      - contains:
+          path: spec.terraformVariables
+          content:
+            hcl: false
+            name: eks_cluster_name
+            sensitive: false
+            value: cluster1
+        documentIndex: 0
+      - contains:
+          path: spec.terraformVariables
+          content:
+            hcl: false
+            name: aws_region
+            sensitive: false
+            value: eu-west-1
+        documentIndex: 0
+      - contains:
+          path: spec.terraformVariables
+          content:
+            hcl: false
+            name: aws_account_name
+            sensitive: false
+            value: dev
+        documentIndex: 0
+      - contains:
+          path: spec.terraformVariables
+          content:
+            hcl: true
+            name: tags
+            sensitive: false
+            value: |-
+                {
+                  Application = "test-app"
+                  Component = "test-app"
+                  Owner = "sre"
+                  Project = "test-project"
+                }
+        documentIndex: 0
+  - it: IRSA created explicitly
+    set:
+      global.name: test-app
+      global.clusterEnv: dev
+      global.clusterName: cluster1
+      global.clusterRegion: eu-west-1
+      global.owner: sre
+      global.partOf: test-project
+      global.terraform.operatorVersion: v2
+      irsa.enabled: true
+    asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
+      - isKind:
+          of: Workspace
+        documentIndex: 0
+      - equal:
+          path: metadata.namespace
+          value: test-namespace
+        documentIndex: 0
+      - equal:
+          path: metadata.name
+          value: dev-eu-west-1-cluster1-test-namespace-test-app-irsa
+        documentIndex: 0
+      - hasDocuments:
+          count: 2
+  - it: IRSA created with modified syncWave
+    set:
+      global.name: test-app
+      global.clusterEnv: dev
+      global.clusterName: cluster1
+      global.clusterRegion: eu-west-1
+      global.owner: sre
+      global.partOf: test-project
+      global.terraform.operatorVersion: v2
+      irsa.enabled: true
+      irsa.syncWave: "-100"
+    asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
+      - isKind:
+          of: Workspace
+        documentIndex: 0
+      - equal:
+          path: metadata.namespace
+          value: test-namespace
+        documentIndex: 0
+      - equal:
+          path: metadata.name
+          value: dev-eu-west-1-cluster1-test-namespace-test-app-irsa
+        documentIndex: 0
+      - hasDocuments:
+          count: 2
+      - equal:
+          path: metadata.annotations["argocd.argoproj.io/sync-wave"]
+          value: "-100"
+        documentIndex: 0
+  - it: IRSA created with default (0) syncWave
+    set:
+      global.name: test-app
+      global.clusterEnv: dev
+      global.clusterName: cluster1
+      global.clusterRegion: eu-west-1
+      global.owner: sre
+      global.partOf: test-project
+      global.terraform.operatorVersion: v2
+      irsa.enabled: true
+      irsa.syncWave: "0"
+    asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
+      - isKind:
+          of: Workspace
+        documentIndex: 0
+      - equal:
+          path: metadata.namespace
+          value: test-namespace
+        documentIndex: 0
+      - equal:
+          path: metadata.name
+          value: dev-eu-west-1-cluster1-test-namespace-test-app-irsa
+        documentIndex: 0
+      - hasDocuments:
+          count: 2
+      - equal:
+          path: metadata.annotations["argocd.argoproj.io/sync-wave"]
+          value: "0"
+        documentIndex: 0

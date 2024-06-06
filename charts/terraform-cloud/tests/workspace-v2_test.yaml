@@ -278,4 +278,3 @@ tests:
           path: metadata.annotations["app.mintel.com/terraform-allow-destroy"]
           value: "true"
         documentIndex: 0
- 
