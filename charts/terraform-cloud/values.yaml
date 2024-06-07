@@ -51,6 +51,8 @@ global:
     # defaultWorkspaceAllowDestroy: false
     # -- Default which apply method Workspaces should use.
     defaultApplyMethod: auto
+    # -- teamAccess configuration for the workspace
+    # teamAccess: []
 ###
 ## Resources
 ###

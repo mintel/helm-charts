@@ -325,3 +325,34 @@ tests:
             - allow-destroy:false
             - kubernetes-managed
         documentIndex: 0
+
+  - it: Test teamAccess can be configured
+    set:
+      global.name: test-app
+      global.clusterEnv: logs
+      global.clusterName: cluster1
+      global.clusterRegion: eu-west-1
+      global.owner: sre
+      global.partOf: test-project
+      global.terraform.operatorVersion: v2
+      global.terraform.teamAccess:
+        - access: admin
+          team:
+            name: test-admin-team
+        - access: write
+          team:
+            name: test-app-team
+      s3:
+        enabled: true
+    asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
+      - equal:
+          path: spec.teamAccess
+          value:
+            - access: admin
+              team:
+                name: test-admin-team
+            - access: write
+              team:
+                name: test-app-team
+        documentIndex: 0

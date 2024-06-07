@@ -52,6 +52,14 @@ spec:
     - mod:{{ $resourceType }}
     - allow-destroy:{{ (include "mintel_common.terraform_cloud.allow_destroy" $workspaceDict) }}
     - kubernetes-managed
+  {{- with $global.terraform.teamAccess}}
+  teamAccess:
+  {{- range $teamEntry := . }}
+    - access: {{ $teamEntry.access }}
+      team:
+        name: {{ $teamEntry.team.name }}
+  {{- end }}
+  {{- end }}
   terraformVersion: {{ $tfVersion | default $global.terraform.terraformVersion | quote }}
   {{- if (has $resourceType (list "irsa" "extraIAM" )) }}
   runTriggers:
