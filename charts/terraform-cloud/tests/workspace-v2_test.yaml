@@ -235,8 +235,8 @@ tests:
     asserts:
       - matchSnapshot: {} # Check for regressions and unexpected changes.
       - equal:
-          path: metadata.annotations["app.mintel.com/terraform-allow-destroy"]
-          value: "false"
+          path: spec.allowDestroyPlan
+          value: false
         documentIndex: 0
 
   - it: Test workspace allow destroy env resource-override
@@ -256,8 +256,8 @@ tests:
     asserts:
       - matchSnapshot: {} # Check for regressions and unexpected changes.
       - equal:
-          path: metadata.annotations["app.mintel.com/terraform-allow-destroy"]
-          value: "true"
+          path: spec.allowDestroyPlan
+          value: true
         documentIndex: 0
 
   - it: Test workspace allow destroy env global-override
@@ -275,6 +275,53 @@ tests:
     asserts:
       - matchSnapshot: {} # Check for regressions and unexpected changes.
       - equal:
-          path: metadata.annotations["app.mintel.com/terraform-allow-destroy"]
-          value: "true"
+          path: spec.allowDestroyPlan
+          value: true
+        documentIndex: 0
+
+  - it: Test tags
+    set:
+      global.name: test-app
+      global.clusterEnv: prod
+      global.clusterName: cluster1
+      global.clusterRegion: eu-west-1
+      global.owner: sre
+      global.partOf: test-project
+      global.terraform.operatorVersion: v2
+      global.terraform.defaultWorkspaceAllowDestroy: true
+      s3:
+        enabled: true
+    asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
+      - equal:
+          path: spec.tags
+          value:
+            - env:prod
+            - owner:sre
+            - mod:s3
+            - allow-destroy:true
+            - kubernetes-managed
+        documentIndex: 0
+
+  - it: Test tags with env/allow-destroy flags changed
+    set:
+      global.name: test-app
+      global.clusterEnv: logs
+      global.clusterName: cluster1
+      global.clusterRegion: eu-west-1
+      global.owner: sre
+      global.partOf: test-project
+      global.terraform.operatorVersion: v2
+      s3:
+        enabled: true
+    asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
+      - equal:
+          path: spec.tags
+          value:
+            - env:logs
+            - owner:sre
+            - mod:s3
+            - allow-destroy:false
+            - kubernetes-managed
         documentIndex: 0

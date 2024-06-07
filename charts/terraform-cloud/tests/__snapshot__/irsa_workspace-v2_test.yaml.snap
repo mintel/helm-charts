@@ -6,9 +6,6 @@ IRSA created explicitly:
       annotations:
         app.mintel.com/altManifestFileSuffix: test-app-irsa
         app.mintel.com/placeholder: placeholder
-        app.mintel.com/terraform-allow-destroy: "true"
-        app.mintel.com/terraform-cloud-tags: env:dev,owner:sre,mod:irsa
-        app.mintel.com/terraform-owner: sre
         argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
         argocd.argoproj.io/sync-wave: "-20"
       labels:
@@ -38,6 +35,12 @@ IRSA created explicitly:
       runTriggers: null
       sshKey:
         name: mintel-ssh
+      tags:
+        - env:dev
+        - owner:sre
+        - mod:irsa
+        - allow-destroy:true
+        - kubernetes-managed
       terraformVariables:
         - hcl: false
           name: aws_account_name
@@ -130,9 +133,6 @@ IRSA created for Dev S3 module workspace:
       annotations:
         app.mintel.com/altManifestFileSuffix: test-app-irsa
         app.mintel.com/placeholder: placeholder
-        app.mintel.com/terraform-allow-destroy: "true"
-        app.mintel.com/terraform-cloud-tags: env:dev,owner:sre,mod:irsa
-        app.mintel.com/terraform-owner: sre
         argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
         argocd.argoproj.io/sync-wave: "-20"
       labels:
@@ -163,6 +163,12 @@ IRSA created for Dev S3 module workspace:
         - name: dev-eu-west-1-cluster1-test-namespace-mntl-test-app-s3
       sshKey:
         name: mintel-ssh
+      tags:
+        - env:dev
+        - owner:sre
+        - mod:irsa
+        - allow-destroy:true
+        - kubernetes-managed
       terraformVariables:
         - hcl: false
           name: aws_account_name
@@ -255,9 +261,6 @@ IRSA created with default (0) syncWave:
       annotations:
         app.mintel.com/altManifestFileSuffix: test-app-irsa
         app.mintel.com/placeholder: placeholder
-        app.mintel.com/terraform-allow-destroy: "true"
-        app.mintel.com/terraform-cloud-tags: env:dev,owner:sre,mod:irsa
-        app.mintel.com/terraform-owner: sre
         argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
         argocd.argoproj.io/sync-wave: "0"
       labels:
@@ -287,6 +290,12 @@ IRSA created with default (0) syncWave:
       runTriggers: null
       sshKey:
         name: mintel-ssh
+      tags:
+        - env:dev
+        - owner:sre
+        - mod:irsa
+        - allow-destroy:true
+        - kubernetes-managed
       terraformVariables:
         - hcl: false
           name: aws_account_name
@@ -379,9 +388,6 @@ IRSA created with modified syncWave:
       annotations:
         app.mintel.com/altManifestFileSuffix: test-app-irsa
         app.mintel.com/placeholder: placeholder
-        app.mintel.com/terraform-allow-destroy: "true"
-        app.mintel.com/terraform-cloud-tags: env:dev,owner:sre,mod:irsa
-        app.mintel.com/terraform-owner: sre
         argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
         argocd.argoproj.io/sync-wave: "-100"
       labels:
@@ -411,6 +417,12 @@ IRSA created with modified syncWave:
       runTriggers: null
       sshKey:
         name: mintel-ssh
+      tags:
+        - env:dev
+        - owner:sre
+        - mod:irsa
+        - allow-destroy:true
+        - kubernetes-managed
       terraformVariables:
         - hcl: false
           name: aws_account_name

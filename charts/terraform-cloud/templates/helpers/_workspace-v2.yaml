@@ -21,7 +21,6 @@ metadata:
     app.kubernetes.io/name: {{ printf "%s-%s" ($instanceCfg.name | kebabcase) ($resourceType | kebabcase) | trunc 63 }}
   annotations:
     {{ include "mintel_common.commonAnnotations" $ | nindent 4 }}
-    {{ include "mintel_common.terraform_cloud.tfCloudOperatorExtentionAnnotations" $workspaceDict | nindent 4 }}
     {{- if (eq $resourceType "irsa") }}
     app.mintel.com/altManifestFileSuffix: "{{ $global.name }}-{{ $resourceType | kebabcase }}"
     {{- else }}
@@ -47,6 +46,12 @@ spec:
       key: token
   sshKey:
     name: "mintel-ssh"
+  tags:
+    - env:{{ $global.clusterEnv }}
+    - owner:{{ $global.owner | lower }}
+    - mod:{{ $resourceType }}
+    - allow-destroy:{{ (include "mintel_common.terraform_cloud.allow_destroy" $workspaceDict) }}
+    - kubernetes-managed
   terraformVersion: {{ $tfVersion | default $global.terraform.terraformVersion | quote }}
   {{- if (has $resourceType (list "irsa" "extraIAM" )) }}
   runTriggers:
