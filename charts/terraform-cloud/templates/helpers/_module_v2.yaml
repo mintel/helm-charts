@@ -52,16 +52,17 @@ spec:
       key: token
   destroyOnDeletion: {{  $instanceCfg.moduleDestroyOnDeletion| default "true" }}
   variables:
-  {{- $_ := unset $instanceCfg "workspaceNameOverride" }}
-  {{- $_ := unset $instanceCfg "workspaceAllowDestroy" }}
-  {{- $_ := unset $instanceCfg "workspaceOwner" }}
-  {{- $_ := unset $instanceCfg "workspaceTags" }}
-  {{- $_ := unset $instanceCfg "outputSecretMap" }}
-  {{- $_ := unset $instanceCfg "syncWave" }}
-  {{- $_ := unset $instanceCfg "workspaceAllowDestroyPlan" }}
-  {{- $_ := unset $instanceCfg "workspaceApplyMethod" }}
-  {{- $_ := unset $instanceCfg "moduleDestroyOnDeletion" }}
-  {{- range $varKey, $varVal := $instanceCfg }}
+  {{- $instanceCfgCopy := omit $instanceCfg "workspaceNameOverride" }}
+  {{- $instanceCfgCopy = omit $instanceCfgCopy "workspaceAllowDestroy" }}
+  {{- $instanceCfgCopy = omit $instanceCfgCopy "workspaceOwner" }}
+  {{- $instanceCfgCopy = omit $instanceCfgCopy "workspaceTags" }}
+  {{- $instanceCfgCopy = omit $instanceCfgCopy "outputSecretMap" }}
+  {{- $instanceCfgCopy = omit $instanceCfgCopy "syncWave" }}
+  {{- $instanceCfgCopy = omit $instanceCfgCopy "workspaceAllowDestroyPlan" }}
+  {{- $instanceCfgCopy = omit $instanceCfgCopy "workspaceApplyMethod" }}
+  {{- $instanceCfgCopy = omit $instanceCfgCopy "moduleDestroyOnDeletion" }}
+
+  {{- range $varKey, $varVal := $instanceCfgCopy }}
     {{- if kindIs "map" $varVal }}
       {{- include "mintel_common.terraform_cloud.tf_module_var" (merge (dict "key" $varKey) $varVal) | indent 2 }}
     {{- else }}

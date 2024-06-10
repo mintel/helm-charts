@@ -697,7 +697,7 @@ Test workspace allow destroy env resource-override:
         version: 3.0.2
       name: operator
       organization: Mintel
-      restartedAt: 6c781edcb3060b66cf8e41e49cb262104c2381bd331c01105f22327bc4ebf08f
+      restartedAt: de30324b0e070c6adeb8c406bbeb5fa1212a68b7e389ae32d15fc423ef027293
       token:
         secretKeyRef:
           key: token
@@ -1660,7 +1660,7 @@ Test workspace overrides at resource-config level:
         version: 3.0.2
       name: operator
       organization: Mintel
-      restartedAt: 2866f1e5d7f6db683ef1bba053adef8766e39314187bc830bc6d97e9a68e73a5
+      restartedAt: b867126e587da27fc212b062254934d2da9b74242cc83fc6d73a53a7dcd9cef5
       token:
         secretKeyRef:
           key: token
