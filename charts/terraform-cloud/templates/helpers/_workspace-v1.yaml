@@ -48,16 +48,16 @@ spec:
   {{ include "mintel_common.terraform_cloud.irsaRunTriggers" $| indent 4 }}
   {{- end }}
   variables:
-  {{- $_ := unset $instanceCfg "workspaceNameOverride" }}
-  {{- $_ := unset $instanceCfg "workspaceAllowDestroy" }}
-  {{- $_ := unset $instanceCfg "workspaceOwner" }}
-  {{- $_ := unset $instanceCfg "workspaceTags" }}
-  {{- $_ := unset $instanceCfg "outputSecretMap" }}
-  {{- $_ := unset $instanceCfg "syncWave" }}
-  {{- $_ := unset $instanceCfg "workspaceAllowDestroyPlan" }}
-  {{- $_ := unset $instanceCfg "workspaceApplyMethod" }}
-  {{- $_ := unset $instanceCfg "moduleDestroyOnDeletion" }}
-  {{- range $varKey, $varVal := $instanceCfg }}
+  {{- $instanceCfgCopyV1 := omit $instanceCfg "workspaceNameOverride" }}
+  {{- $instanceCfgCopyV1 = omit $instanceCfgCopyV1 "workspaceAllowDestroy" }}
+  {{- $instanceCfgCopyV1 = omit $instanceCfgCopyV1 "workspaceOwner" }}
+  {{- $instanceCfgCopyV1 = omit $instanceCfgCopyV1 "workspaceTags" }}
+  {{- $instanceCfgCopyV1 = omit $instanceCfgCopyV1 "outputSecretMap" }}
+  {{- $instanceCfgCopyV1 = omit $instanceCfgCopyV1 "syncWave" }}
+  {{- $instanceCfgCopyV1 = omit $instanceCfgCopyV1 "workspaceAllowDestroyPlan" }}
+  {{- $instanceCfgCopyV1 = omit $instanceCfgCopyV1 "workspaceApplyMethod" }}
+  {{- $instanceCfgCopyV1 = omit $instanceCfgCopyV1 "moduleDestroyOnDeletion" }}
+  {{- range $varKey, $varVal := $instanceCfgCopyV1 }}
     {{- if kindIs "map" $varVal }}
       {{- include "mintel_common.terraform_cloud.tfVar" (merge (dict "key" $varKey) $varVal) | indent 2 }}
     {{- else }}
