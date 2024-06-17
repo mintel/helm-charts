@@ -34,8 +34,6 @@ global:
     # -- Set to true as part of tf cloud migrations. When true, standard-application-stack sets the service account
     # eks annotation to match the new IAM roles created by the app-iam module
     irsa: true
-    # -- Operator version to use (v1 or v2)
-    operatorVersion: "v1"
     # -- ID of the Terraform Cloud Agent Pool to use for the run. Passed in from cluster-env-jsonnet
     agentPoolID: ""
     # --  Define where the Terraform code will be executed.

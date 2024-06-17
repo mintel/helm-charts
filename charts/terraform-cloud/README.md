@@ -1,6 +1,6 @@
 # terraform-cloud
 
-![Version: 1.8.2](https://img.shields.io/badge/Version-1.8.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.0](https://img.shields.io/badge/AppVersion-2.0.0-informational?style=flat-square)
+![Version: 1.9.0](https://img.shields.io/badge/Version-1.9.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.0](https://img.shields.io/badge/AppVersion-2.0.0-informational?style=flat-square)
 
 A Helm chart for provisioning resources using Terraform Cloud
 
@@ -82,7 +82,6 @@ A Helm chart for provisioning resources using Terraform Cloud
 | global.terraform.executionMode | string | `"agent"` | Define where the Terraform code will be executed. |
 | global.terraform.externalSecrets | bool | `true` | Set to true as part of tf cloud migrations. When true, it stops standard-application-stack from creating AWS related external secrets and passes that responsibility to the terraform-cloud chart |
 | global.terraform.irsa | bool | `true` | Set to true as part of tf cloud migrations. When true, standard-application-stack sets the service account eks annotation to match the new IAM roles created by the app-iam module |
-| global.terraform.operatorVersion | string | `"v1"` | Operator version to use (v1 or v2) |
 | global.terraform.organization | string | `"Mintel"` | Name of our Terraform Cloud org |
 | global.terraform.secretsMountPath | string | `"/tmp/secrets"` | Where secrets are mounted inside the Terraform Operator container |
 | global.terraform.terraformVersion | string | `"1.3.10"` | Global Terraform version for all modules |

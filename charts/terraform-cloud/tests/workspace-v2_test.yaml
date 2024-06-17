@@ -12,7 +12,6 @@ tests:
       global.clusterRegion: eu-west-1
       global.owner: sre
       global.partOf: test-project
-      global.terraform.operatorVersion: v2
       global.terraform.agentPoolID: test-agent-pool
       s3:
         enabled: true
@@ -66,7 +65,6 @@ tests:
       global.clusterRegion: eu-west-1
       global.owner: sre
       global.partOf: test-project
-      global.terraform.operatorVersion: v2
       global.terraform.agentPoolID: test-agent-pool
       global.terraform.executionMode: remote
       s3:
@@ -106,7 +104,6 @@ tests:
       global.clusterRegion: eu-west-1
       global.owner: sre
       global.partOf: test-project
-      global.terraform.operatorVersion: v2
       global.terraform.agentPoolID: test-agent-pool
       global.terraform.executionMode: remote
       s3:
@@ -126,7 +123,6 @@ tests:
       global.clusterRegion: eu-west-1
       global.owner: sre
       global.partOf: test-project
-      global.terraform.operatorVersion: v2
       global.terraform.agentPoolID: test-agent-pool
       global.terraform.executionMode: remote
       s3:
@@ -146,7 +142,6 @@ tests:
       global.clusterRegion: eu-west-1
       global.owner: sre
       global.partOf: test-project
-      global.terraform.operatorVersion: v2
       global.terraform.agentPoolID: test-agent-pool
       global.terraform.executionMode: remote
       global.terraform.defaultWorkspaceAllowDestroy: true
@@ -172,7 +167,6 @@ tests:
       global.clusterRegion: eu-west-1
       global.owner: sre
       global.partOf: test-project
-      global.terraform.operatorVersion: v2
       global.terraform.agentPoolID: test-agent-pool
       global.terraform.executionMode: remote
       s3:
@@ -201,7 +195,6 @@ tests:
       global.clusterRegion: eu-west-1
       global.owner: sre
       global.partOf: test-project
-      global.terraform.operatorVersion: v2
       global.terraform.agentPoolID: test-agent-pool
       global.terraform.executionMode: remote
       s3:
@@ -229,7 +222,6 @@ tests:
       global.clusterRegion: eu-west-1
       global.owner: sre
       global.partOf: test-project
-      global.terraform.operatorVersion: v2
       s3:
         enabled: true
     asserts:
@@ -247,7 +239,6 @@ tests:
       global.clusterRegion: eu-west-1
       global.owner: sre
       global.partOf: test-project
-      global.terraform.operatorVersion: v2
       s3:
         terraform:
           defaultVars:
@@ -268,7 +259,6 @@ tests:
       global.clusterRegion: eu-west-1
       global.owner: sre
       global.partOf: test-project
-      global.terraform.operatorVersion: v2
       global.terraform.defaultWorkspaceAllowDestroy: true
       s3:
         enabled: true
@@ -287,7 +277,6 @@ tests:
       global.clusterRegion: eu-west-1
       global.owner: sre
       global.partOf: test-project
-      global.terraform.operatorVersion: v2
       global.terraform.defaultWorkspaceAllowDestroy: true
       s3:
         enabled: true
@@ -311,7 +300,6 @@ tests:
       global.clusterRegion: eu-west-1
       global.owner: sre
       global.partOf: test-project
-      global.terraform.operatorVersion: v2
       s3:
         enabled: true
     asserts:
@@ -334,7 +322,6 @@ tests:
       global.clusterRegion: eu-west-1
       global.owner: sre
       global.partOf: test-project
-      global.terraform.operatorVersion: v2
       global.terraform.teamAccess:
         - access: admin
           team:
