@@ -13,7 +13,6 @@ tests:
       global.owner: sre
       global.partOf: test-project
       global.terraform.agentPoolID: test-agent-pool
-      global.terraform.operatorVersion: v2
       s3:
         enabled: true
     asserts:
@@ -59,7 +58,6 @@ tests:
       global.owner: sre
       global.partOf: test-project
       global.terraform.agentPoolID: test-agent-pool
-      global.terraform.operatorVersion: v2
       global.terraform.enableRestartedAt: true
       global.terraform.restartedAt: restarted-at-value
       global.terraform.destroyOnDeletion: true
@@ -95,7 +93,6 @@ tests:
       global.owner: sre
       global.partOf: test-project
       global.terraform.agentPoolID: test-agent-pool
-      global.terraform.operatorVersion: v2
       global.terraform.enableRestartedAt: false
       s3:
         enabled: true
