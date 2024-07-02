@@ -615,7 +615,7 @@ Check setting skip-auth-regex from overridden health-check values:
                 - --skip-auth-regex=^/ping$
                 - --skip-auth-regex=^/healthz-overridden$
                 - --skip-auth-regex=^/readiness-overridden$
-                - --skip-auth-regex=^/external-health-check-overridden$
+                - --skip-auth-regex=^/external-health-check$
                 - --skip-provider-button=true
                 - --skip-jwt-bearer-tokens=true
                 - --ssl-insecure-skip-verify=true

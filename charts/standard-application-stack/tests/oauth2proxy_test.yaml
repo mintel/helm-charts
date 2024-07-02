@@ -123,7 +123,6 @@ tests:
       oauthProxy.enabled: true
       liveness.path: /healthz-overridden
       readiness.path: /readiness-overridden
-      ingress.blackbox.probePath: /external-health-check-overridden
     asserts:
       - matchSnapshot: {} # Check for regressions and unexpected changes.
       - equal:
@@ -136,7 +135,7 @@ tests:
             - --skip-auth-regex=^/ping$
             - --skip-auth-regex=^/healthz-overridden$
             - --skip-auth-regex=^/readiness-overridden$
-            - --skip-auth-regex=^/external-health-check-overridden$
+            - --skip-auth-regex=^/external-health-check$
             - --skip-provider-button=true
             - --skip-jwt-bearer-tokens=true
             - --ssl-insecure-skip-verify=true
