@@ -12,7 +12,7 @@
     - --skip-auth-regex=^/ping$
     - --skip-auth-regex=^{{ .Values.liveness.path | default "/healthz" }}$
     - --skip-auth-regex=^{{ .Values.readiness.path | default "/readiness" }}$
-    - --skip-auth-regex=^{{ .Values.ingress.blackbox.probePath | default "/external-health-check" }}$
+    - --skip-auth-regex=^/external-health-check$
     {{- range .proxiedService.oauthProxy.skipAuthRegexes }}
     - --skip-auth-regex={{ if not (hasPrefix "^" . )}}^{{ end }}{{ . }}{{ if not (hasSuffix "$" . )}}${{ end }}
     {{- end }}
