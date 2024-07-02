@@ -134,11 +134,11 @@ A Helm chart for provisioning resources using Terraform Cloud
 | postgresql.terraform.module.version | string | `"2.0.1"` | Module version |
 | redis.enabled | bool | `false` | Set to true to create a Redis Elasticache resource |
 | redis.outputSecret | bool | `true` | Set to true to create an AWS secret manager external secret with outputs |
-| redis.terraform | object | `{"defaultVars":{},"instances":{},"module":{"source":"app.terraform.io/Mintel/redis/aws","version":"1.1.1"}}` | Set ArgoCD syncWave for this resource (default -40) syncWave: -40 |
+| redis.terraform | object | `{"defaultVars":{},"instances":{},"module":{"source":"app.terraform.io/Mintel/redis/aws","version":"1.2.0"}}` | Set ArgoCD syncWave for this resource (default -40) syncWave: -40 |
 | redis.terraform.defaultVars | object | `{}` | Vars to be applied to all instances defined below |
 | redis.terraform.instances | object | `{}` | A map of instance names => variable key/value pairs to be sent to the terraform module. The values in `defaultVars` will be applied to every instance if not explicitly defined here. |
 | redis.terraform.module.source | string | `"app.terraform.io/Mintel/redis/aws"` | Registry path of the Terraform module used to create the resource (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/redis/aws) |
-| redis.terraform.module.version | string | `"1.1.1"` | Module version |
+| redis.terraform.module.version | string | `"1.2.0"` | Module version |
 | s3.enabled | bool | `false` | Set to true to create an S3 bucket |
 | s3.outputSecret | bool | `true` | Set to true to create an AWS secret manager external secret with outputs |
 | s3.terraform | object | `{"defaultVars":{},"instances":{},"module":{"source":"app.terraform.io/Mintel/private-s3-bucket/aws","version":"3.0.2"}}` | Set ArgoCD syncWave for this resource (default -40) syncWave: -40 |
