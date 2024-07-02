@@ -1,6 +1,6 @@
 # standard-application-stack
 
-![Version: 6.4.0](https://img.shields.io/badge/Version-6.4.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 6.5.0](https://img.shields.io/badge/Version-6.5.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A generic chart to support most common application requirements
 
@@ -123,7 +123,7 @@ A generic chart to support most common application requirements
 | image.repository | string | `"test"` | Docker repository |
 | image.tag | string | `"v0.0.0"` | Container image tag |
 | imagePullSecrets | list | `[]` | Optional array of imagePullSecrets ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/ |
-| ingress | object | `{"alb":{"apiAppName":"","apiTargetService":"","backendProtocol":"HTTP","backendProtocolVersion":"HTTP1","enabled":true,"healthcheck":{"healthyThresholdCount":2,"intervalSeconds":15,"protocol":"HTTP","timeoutSeconds":5,"unhealthyThresholdCount":2},"okta":{"authOnUnauthenticated":"authenticate","enabled":false,"extraRedirectPaths":[],"groups":"","ingressName":"","redirectPath":"","users":""},"preStopDelay":{"delaySeconds":15,"enabled":true},"scheme":"internet-facing","targetGroupAttributes":{"deregistration_delay.timeout_seconds":5,"load_balancing.algorithm.type":"least_outstanding_requests"}},"allowFrontendAccess":false,"allowLivenessUrl":false,"allowReadinessUrl":false,"blackbox":{"enabled":true,"probePath":"/external-health-check","probeScheme":"https"},"enabled":false,"extraAnnotations":{},"extraHosts":[],"extraIngresses":[],"setNoCacheHeaders":false,"setXForwardedForHeaders":false,"specificRulesHostsYaml":{},"specificTlsHostsYaml":{},"tls":true}` | Configure the ingress resource that allows you to access the application from public-internet ref: http://kubernetes.io/docs/user-guide/ingress/ |
+| ingress | object | `{"alb":{"apiAppName":"","apiTargetService":"","backendProtocol":"HTTP","backendProtocolVersion":"HTTP1","enabled":true,"healthcheck":{"healthyThresholdCount":2,"intervalSeconds":15,"protocol":"HTTP","timeoutSeconds":5,"unhealthyThresholdCount":2},"okta":{"authOnUnauthenticated":"authenticate","enabled":false,"extraRedirectPaths":[],"groups":"","ingressName":"","redirectPath":"","users":""},"preStopDelay":{"delaySeconds":15,"enabled":true},"scheme":"internet-facing","targetGroupAttributes":{"deregistration_delay.timeout_seconds":5,"load_balancing.algorithm.type":"least_outstanding_requests"}},"allowFrontendAccess":false,"allowLivenessUrl":false,"allowReadinessUrl":false,"enabled":false,"extraAnnotations":{},"extraHosts":[],"extraIngresses":[],"specificRulesHostsYaml":{},"specificTlsHostsYaml":{},"tls":true}` | Configure the ingress resource that allows you to access the application from public-internet ref: http://kubernetes.io/docs/user-guide/ingress/ |
 | ingress.alb.backendProtocol | string | `"HTTP"` | Application Version (HTTP / HTTPS) |
 | ingress.alb.backendProtocolVersion | string | `"HTTP1"` | Application Protocol Version (HTTP1 / HTTP2 / GRPC) |
 | ingress.alb.healthcheck.healthyThresholdCount | int | `2` | Success threshold |
@@ -145,16 +145,10 @@ A generic chart to support most common application requirements
 | ingress.allowFrontendAccess | bool | `false` | Explicitly set the 'tier: frontend' label on deployments even if ingress is disabled |
 | ingress.allowLivenessUrl | bool | `false` | Set to true to allow the liveness URL through the ingress |
 | ingress.allowReadinessUrl | bool | `false` | Set to true to allow the readiness URL through the ingress |
-| ingress.blackbox | object | `{"enabled":true,"probePath":"/external-health-check","probeScheme":"https"}` | Configures annotations defining blackbox endpoints |
-| ingress.blackbox.enabled | bool | `true` | Set to true to tell blackboxes to hit endpoint |
-| ingress.blackbox.probePath | string | `"/external-health-check"` | Endpoint for blackboxes to hit |
-| ingress.blackbox.probeScheme | string | `"https"` | Scheme (http/https) for blackboxes to hit |
 | ingress.enabled | bool | `false` | Set to true to enable ingress record generation |
 | ingress.extraAnnotations | object | `{}` | Additional Ingress annotations For a full list of possible ingress annotations, please see ref: https://github.com/kubernetes/ingress-nginx/blob/master/docs/user-guide/nginx-configuration/annotations.md |
 | ingress.extraHosts | list | `[]` | List of extra ingress hosts to setup. The CNAMEs for these hosts must already exist, please reach out to the Infrastructure team to create them if needed. |
 | ingress.extraIngresses | list | `[]` | Optional: ability to construct multiple ingresses with different settings (names, cache headers, etc) This accepts all the same values as the top-level ingress. It also inherits its default values from the top-level ingress, so all differences must be overridden per-instance. |
-| ingress.setNoCacheHeaders | bool | `false` | Only applies for 'haproxy' ingresses; Sets no-cache headers |
-| ingress.setXForwardedForHeaders | bool | `false` | Only applies for 'haproxy' ingresses; Sets X-Forwarded-For headers |
 | ingress.specificRulesHostsYaml | object | `{}` | Optional ingress Rules Hosts Yaml that doesn't fit standard pattern |
 | ingress.specificTlsHostsYaml | object | `{}` | Optional ingress Tls Hosts Yaml that doesn't fit standard pattern |
 | ingress.tls | bool | `true` | Enable TLS configuration for the hostname defined at ingress.hostname parameter |

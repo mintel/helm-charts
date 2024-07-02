@@ -16,18 +16,6 @@ tests:
           path: spec.ingressClassName
           value: alb-public-apps-default
 
-  - it: Check HAProxy className set if ALB is disabled
-    template: ingress.yaml
-    set:
-      global.clusterEnv: qa
-      ingress.enabled: true
-      ingress.alb.enabled: false
-    asserts:
-      - matchSnapshot: {} # Check for regressions and unexpected changes.
-      - equal:
-          path: spec.ingressClassName
-          value: haproxy
-
   - it: Check ALB default health-check port
     template: ingress.yaml
     set:
@@ -455,9 +443,6 @@ tests:
           path: spec.ingressClassName
           value: alb-public-apps-default
         documentIndex: 0
-      - isNull:
-          path: metadata.annotations["ingress.kubernetes.io/rewrite-target"]
-        documentIndex: 0
       - equal:
           path: metadata.annotations["alb.ingress.kubernetes.io/backend-protocol"]
           value: HTTP
@@ -484,11 +469,7 @@ tests:
         documentIndex: 1
       - equal:
           path: spec.ingressClassName
-          value: haproxy
-        documentIndex: 1
-      - equal:
-          path: metadata.annotations["ingress.kubernetes.io/rewrite-target"]
-          value: /
+          value: alb-public-apps-default
         documentIndex: 1
       - isNull:
           path: metadata.annotations["alb.ingress.kubernetes.io/backend-protocol"]

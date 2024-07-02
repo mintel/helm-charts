@@ -511,10 +511,6 @@ ingress:
   extraIngresses: []
   # -- Explicitly set the 'tier: frontend' label on deployments even if ingress is disabled
   allowFrontendAccess: false
-  # -- Only applies for 'haproxy' ingresses; Sets X-Forwarded-For headers
-  setXForwardedForHeaders: false
-  # -- Only applies for 'haproxy' ingresses; Sets no-cache headers
-  setNoCacheHeaders: false
   # -- Enable TLS configuration for the hostname defined at ingress.hostname parameter
   tls: true
   # -- List of extra ingress hosts to setup.
@@ -532,14 +528,6 @@ ingress:
   allowLivenessUrl: false
   # -- Set to true to allow the readiness URL through the ingress
   allowReadinessUrl: false
-  # -- Configures annotations defining blackbox endpoints
-  blackbox:
-    # -- Set to true to tell blackboxes to hit endpoint
-    enabled: true
-    # -- Endpoint for blackboxes to hit
-    probePath: /external-health-check
-    # -- Scheme (http/https) for blackboxes to hit
-    probeScheme: https
   # -- Optional ingress Rules Hosts Yaml that doesn't fit standard pattern
   specificRulesHostsYaml: {}
   # -- Optional ingress Tls Hosts Yaml that doesn't fit standard pattern
