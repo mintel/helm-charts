@@ -1,0 +1,211 @@
+Check idleReplicaCount is equal to 0 when enableZeroReplicas is set:
+  1: |
+    apiVersion: keda.sh/v1alpha1
+    kind: ScaledObject
+    metadata:
+      labels:
+        app.kubernetes.io/component: app
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: example-app
+        app.mintel.com/application: example-app
+        app.mintel.com/component: example-app
+        app.mintel.com/env: qa
+        app.mintel.com/region: ${CLUSTER_REGION}
+        name: example-app
+      name: example-app
+      namespace: test-namespace
+    spec:
+      advanced: {}
+      cooldownPeriod: 300
+      fallback:
+        failureThreshold: 3
+        replicas: 2
+      idleReplicaCount: 0
+      maxReplicaCount: 5
+      minReplicaCount: 2
+      pollingInterval: 30
+      scaleTargetRef:
+        apiVersion: apps/v1
+        kind: Deployment
+        name: example-app
+Check trigger vars automatically populated:
+  1: |
+    apiVersion: keda.sh/v1alpha1
+    kind: ScaledObject
+    metadata:
+      labels:
+        app.kubernetes.io/component: app
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: example-app
+        app.mintel.com/application: example-app
+        app.mintel.com/component: example-app
+        app.mintel.com/env: qa
+        app.mintel.com/region: eu-west-2
+        name: example-app
+      name: example-app
+      namespace: test-namespace
+    spec:
+      advanced: {}
+      cooldownPeriod: 300
+      fallback:
+        failureThreshold: 3
+        replicas: 2
+      maxReplicaCount: 5
+      minReplicaCount: 2
+      pollingInterval: 30
+      scaleTargetRef:
+        apiVersion: apps/v1
+        kind: Deployment
+        name: example-app
+      triggers:
+        - metadata:
+            awsRegion: eu-west-2
+            dimensionName: QueueName
+            dimensionValue: test-queue
+            identityOwner: operator
+            metricName: ApproximateNumberOfMessagesVisible
+            namespace: AWS/SQS
+          type: aws-cloudwatch
+        - metadata:
+            awsRegion: eu-west-2
+            identityOwner: operator
+            queueLength: "2"
+            queueURL: test-queue
+          type: aws-sqs-queue
+        - metadata:
+            serverAddress: http://prometheus-k8s.monitoring.svc:9090
+          type: prometheus
+Check trigger vars can be overriden:
+  1: |
+    apiVersion: keda.sh/v1alpha1
+    kind: ScaledObject
+    metadata:
+      labels:
+        app.kubernetes.io/component: app
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: example-app
+        app.mintel.com/application: example-app
+        app.mintel.com/component: example-app
+        app.mintel.com/env: qa
+        app.mintel.com/region: eu-west-2
+        name: example-app
+      name: example-app
+      namespace: test-namespace
+    spec:
+      advanced: {}
+      cooldownPeriod: 300
+      fallback:
+        failureThreshold: 3
+        replicas: 2
+      maxReplicaCount: 5
+      minReplicaCount: 2
+      pollingInterval: 30
+      scaleTargetRef:
+        apiVersion: apps/v1
+        kind: Deployment
+        name: example-app
+      triggers:
+        - metadata:
+            awsRegion: us-east-2
+            dimensionName: QueueName
+            dimensionValue: test-queue
+            identityOwner: pod
+            metricName: ApproximateNumberOfMessagesVisible
+            namespace: AWS/SQS
+          type: aws-cloudwatch
+        - metadata:
+            awsRegion: us-east-2
+            identityOwner: pod
+            queueLength: "2"
+            queueURL: test-queue
+          type: aws-sqs-queue
+        - metadata:
+            serverAddress: http://alt-prometheus-k8s.monitoring.svc:9090
+          type: prometheus
+Creates a ScaledObject with constrained settings:
+  1: |
+    apiVersion: keda.sh/v1alpha1
+    kind: ScaledObject
+    metadata:
+      labels:
+        app.kubernetes.io/component: app
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: example-app
+        app.mintel.com/application: example-app
+        app.mintel.com/component: example-app
+        app.mintel.com/env: qa
+        app.mintel.com/region: ${CLUSTER_REGION}
+        name: example-app
+      name: example-app
+      namespace: test-namespace
+    spec:
+      advanced: {}
+      cooldownPeriod: 60
+      fallback:
+        failureThreshold: 3
+        replicas: 1
+      maxReplicaCount: 30
+      minReplicaCount: 1
+      pollingInterval: 10
+      scaleTargetRef:
+        apiVersion: apps/v1
+        kind: Deployment
+        name: example-app
+Creates a ScaledObject with non-constrained settings:
+  1: |
+    apiVersion: keda.sh/v1alpha1
+    kind: ScaledObject
+    metadata:
+      labels:
+        app.kubernetes.io/component: app
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: example-app
+        app.mintel.com/application: example-app
+        app.mintel.com/component: example-app
+        app.mintel.com/env: qa
+        app.mintel.com/region: ${CLUSTER_REGION}
+        name: example-app
+      name: example-app
+      namespace: test-namespace
+    spec:
+      advanced: {}
+      cooldownPeriod: 500
+      fallback:
+        failureThreshold: 3
+        replicas: 5
+      maxReplicaCount: 30
+      minReplicaCount: 5
+      pollingInterval: 60
+      scaleTargetRef:
+        apiVersion: apps/v1
+        kind: Deployment
+        name: example-app
+Ensure minReplicaCount cannot be greater than 10:
+  1: |
+    apiVersion: keda.sh/v1alpha1
+    kind: ScaledObject
+    metadata:
+      labels:
+        app.kubernetes.io/component: app
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: example-app
+        app.mintel.com/application: example-app
+        app.mintel.com/component: example-app
+        app.mintel.com/env: qa
+        app.mintel.com/region: ${CLUSTER_REGION}
+        name: example-app
+      name: example-app
+      namespace: test-namespace
+    spec:
+      advanced: {}
+      cooldownPeriod: 300
+      fallback:
+        failureThreshold: 3
+        replicas: 2
+      maxReplicaCount: 5
+      minReplicaCount: 2
+      pollingInterval: 30
+      scaleTargetRef:
+        apiVersion: apps/v1
+        kind: Deployment
+        name: example-app
