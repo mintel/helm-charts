@@ -49,7 +49,7 @@ spec:
 # container port. Healthchecks can be on a different port to the main application port, so we allow this to be specified
 # as well.
 {{- $publicALB := false }}
-{{- if and .Values.ingress.enabled .Values.ingress.alb.enabled (eq .Values.ingress.alb.scheme "internet-facing") }}
+{{- if and .Values.ingress.enabled (eq .Values.ingress.alb.scheme "internet-facing") }}
 {{- $publicALB = true }}
 {{- end }}
 {{- range .Values.ingress.extraIngresses }}
@@ -101,7 +101,7 @@ spec:
 # container port. Healthchecks can be on a different port to the main application port, so we allow this to be specified
 # as well.
 {{- $privateALB := false }}
-{{- if and .Values.ingress.enabled .Values.ingress.alb.enabled (or (eq .Values.ingress.alb.scheme "internal") (eq .Values.ingress.alb.scheme "api")) }}
+{{- if and .Values.ingress.enabled (or (eq .Values.ingress.alb.scheme "internal") (eq .Values.ingress.alb.scheme "api")) }}
 {{- $privateALB = true }}
 {{- end }}
 {{- range .Values.ingress.extraIngresses }}

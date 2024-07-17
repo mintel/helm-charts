@@ -50,18 +50,8 @@ metadata:
     {{- toYaml . | nindent 4 }}
     {{- end }}
 
-    {{- if (eq $ingressClass "haproxy" ) }}
-      {{- include "mintel_common.ingress.haproxy_annotations" $ingressData | nindent 4 }}
-    {{- else if .alb.enabled }}
-      {{- $albData := dict "Release" $.Release "Chart" $.Chart "Values" $.Values "alb" .alb "defaultHost" .defaultHost }}
-      {{- include "mintel_common.ingress.alb_annotations" $albData | nindent 4 }}
-    {{- end }}
-
-    {{- if (and .blackbox .blackbox.enabled) }}
-    prometheus.io/probe: "true"
-    prometheus.io/probepath: {{ .blackbox.probePath }}
-    prometheus.io/probescheme: {{ .blackbox.probeScheme }}
-    {{- end }}
+    {{- $albData := dict "Release" $.Release "Chart" $.Chart "Values" $.Values "alb" .alb "defaultHost" .defaultHost }}
+     {{- include "mintel_common.ingress.alb_annotations" $albData | nindent 4 }}
 spec:
   ingressClassName: {{ $ingressClass }}
   rules:

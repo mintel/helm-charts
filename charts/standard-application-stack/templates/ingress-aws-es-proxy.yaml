@@ -13,7 +13,7 @@ metadata:
   annotations:
     {{ include "mintel_common.commonAnnotations" . | nindent 4 }}
     # alb annotations
-    {{- if (and $.Values.opensearch.awsEsProxy.ingress.alb $.Values.opensearch.awsEsProxy.ingress.alb.enabled) }}
+    {{- if $.Values.opensearch.awsEsProxy.ingress.enabled }}
     {{- $albData := dict "Release" $.Release "Chart" $.Chart "Values" $.Values "alb" $.Values.opensearch.awsEsProxy.ingress.alb "defaultHost" $.Values.opensearch.awsEsProxy.ingress.defaultHost }}
     {{- include "mintel_common.ingress.alb_annotations" $albData | nindent 4 }}
     {{- end }}

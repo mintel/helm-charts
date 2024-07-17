@@ -14,72 +14,6 @@ Check ALB NetworkPolicy created if enabled:
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
         name: example-app
-      name: allow-aws-alb-to-example-app
-      namespace: test-namespace
-    spec:
-      ingress:
-        - from:
-            - ipBlock:
-                cidr: ${AWS_PUBLIC_SUBNET_CIDR_BLOCKS_0}
-            - ipBlock:
-                cidr: ${AWS_PUBLIC_SUBNET_CIDR_BLOCKS_1}
-            - ipBlock:
-                cidr: ${AWS_PUBLIC_SUBNET_CIDR_BLOCKS_2}
-          ports:
-            - port: 8000
-              protocol: TCP
-      podSelector:
-        matchLabels:
-          app.kubernetes.io/part-of: null
-Check ALB NetworkPolicy created if enabled in extraIngresses:
-  1: |
-    apiVersion: networking.k8s.io/v1
-    kind: NetworkPolicy
-    metadata:
-      annotations:
-        app.mintel.com/placeholder: placeholder
-      labels:
-        app.kubernetes.io/component: app
-        app.kubernetes.io/managed-by: Helm
-        app.kubernetes.io/name: example-app
-        app.mintel.com/application: example-app
-        app.mintel.com/component: example-app
-        app.mintel.com/env: qa
-        app.mintel.com/region: ${CLUSTER_REGION}
-        name: example-app
-      name: allow-aws-alb-to-example-app
-      namespace: test-namespace
-    spec:
-      ingress:
-        - from:
-            - ipBlock:
-                cidr: ${AWS_PUBLIC_SUBNET_CIDR_BLOCKS_0}
-            - ipBlock:
-                cidr: ${AWS_PUBLIC_SUBNET_CIDR_BLOCKS_1}
-            - ipBlock:
-                cidr: ${AWS_PUBLIC_SUBNET_CIDR_BLOCKS_2}
-          ports:
-            - port: 8000
-              protocol: TCP
-      podSelector:
-        matchLabels:
-          app.kubernetes.io/part-of: null
-Check ALB NetworkPolicy created if internal alb enabled in extraIngresses:
-  1: |
-    apiVersion: networking.k8s.io/v1
-    kind: NetworkPolicy
-    metadata:
-      annotations:
-        app.mintel.com/placeholder: placeholder
-      labels:
-        app.kubernetes.io/component: app
-        app.kubernetes.io/managed-by: Helm
-        app.kubernetes.io/name: example-app
-        app.mintel.com/application: example-app
-        app.mintel.com/component: example-app
-        app.mintel.com/env: qa
-        app.mintel.com/region: ${CLUSTER_REGION}
-        name: example-app
       name: allow-aws-alb-internal-to-example-app
       namespace: test-namespace
     spec:
@@ -97,7 +31,7 @@ Check ALB NetworkPolicy created if internal alb enabled in extraIngresses:
       podSelector:
         matchLabels:
           app.kubernetes.io/part-of: null
-Check ALB NetworkPolicy created if internal alb selected:
+Check ALB NetworkPolicy created if internal alb enabled in extraIngresses:
   1: |
     apiVersion: networking.k8s.io/v1
     kind: NetworkPolicy

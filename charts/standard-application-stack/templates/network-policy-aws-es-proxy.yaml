@@ -1,7 +1,6 @@
 {{- if (and .Values.opensearch .Values.opensearch.enabled) }}
 {{- if (and .Values.opensearch.awsEsProxy .Values.opensearch.awsEsProxy.enabled) }}
 {{- if (and .Values.opensearch.awsEsProxy.ingress .Values.opensearch.awsEsProxy.ingress.enabled) }}
-{{- if (and .Values.opensearch.awsEsProxy.ingress.alb .Values.opensearch.awsEsProxy.ingress.alb.enabled) }}
 # We generate this network policy if routing through the public or
 # internal ALB to allow Ingress traffic and healthchecks
 #
@@ -56,7 +55,6 @@ spec:
         - port: {{ . }}
           protocol: TCP
       {{- end }}
-{{- end }}
 {{- end }}
 {{- end }}
 {{- end }}

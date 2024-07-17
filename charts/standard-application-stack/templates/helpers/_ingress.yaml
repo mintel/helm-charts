@@ -2,14 +2,12 @@
 
 {{/* Output ingressClassName */}}
 {{- define "mintel_common.ingress.className" -}}
-{{- if (and .Values.ingress.alb .ingress.alb.enabled) -}}
+{{- if .Values.ingress.alb -}}
   {{- if eq .ingress.alb.scheme "internet-facing" -}}
   alb-public-apps-default
   {{- else if or (eq .ingress.alb.scheme "internal") (eq .ingress.alb.scheme "api") -}}
   alb-internal-apps-default
   {{- end -}}
-{{- else -}}
-haproxy
 {{- end -}}
 {{- end -}}
 
@@ -71,30 +69,6 @@ HTTP
 {{- end -}}
 {{- end -}}
 
-{{- define "mintel_common.ingress.haproxy_annotations" -}}
-{{- with .ingress.serverTimeoutSeconds | default .Values.ingress.serverTimeoutSeconds }}
-ingress.kubernetes.io/timeout-server: {{ . }}s
-{{- end }}
-ingress.kubernetes.io/rewrite-target: /
-{{- if or (and .Values.metrics .Values.metrics.enabled) .Values.ingress.setXForwardedForHeaders .ingress.setXForwardedForHeaders .Values.ingress.setNoCacheHeaders .ingress.setNoCacheHeaders }}
-ingress.kubernetes.io/config-backend: |
-{{- end }}
-{{- if (and .Values.metrics .Values.metrics.enabled) }}
-  acl k8s-monitoring-endpoints path {{ include "mintel_common.ingressDenyEndpoints" . }}
-  http-request deny if k8s-monitoring-endpoints
-{{- end }}
-{{- if (or .Values.ingress.setXForwardedForHeaders .ingress.setXForwardedForHeaders) }}
-  acl client-ip-header-exists req.hdr(X-True-Client-IP-BAPqs7Hn0l) -m found
-  http-request set-header X-Forwarded-For %[req.hdr_ip(X-True-Client-IP-BAPqs7Hn0l)] if client-ip-header-exists
-  http-request set-header X-Forwarded-For %[src] if !client-ip-header-exists
-{{- end }}
-{{- if (or .Values.ingress.setNoCacheHeaders .ingress.setNoCacheHeaders) }}
-  http-response set-header Cache-Control no-cache,no-store,max-age="0"
-  http-response set-header Expires -1
-  http-response set-header Pragma no-cache
-{{- end }}
-{{- end }}
-
 {{- define "mintel_common.ingress.alb_annotations" -}}
 alb.ingress.kubernetes.io/backend-protocol-version: {{ include "mintel_common.ingress.alb.backendProtocolVersion" .alb | quote }}
 alb.ingress.kubernetes.io/backend-protocol: {{ include "mintel_common.ingress.alb.backendProtocol" .alb | quote }}
@@ -138,25 +112,6 @@ external-dns.alpha.kubernetes.io/ttl: "60"
         {{- end }}
         {{ if $port | kindIs "int" }}number{{else}}name{{end}}: {{ $port }}
         {{- end }}
-{{- end -}}
-
-{{/* Outputs space separated list of endpoints to deny at ingress */}}
-{{- define "mintel_common.ingressDenyEndpoints" -}}
-{{- $endpoints := list }}
-{{- $endpoints = append $endpoints ( .Values.metrics.path | default "/metrics" ) }}
-{{- if (ne .Values.ingress.allowLivenessUrl true) }}
-{{- $livenessEndpoint := .Values.liveness.path | default "/healthz" }}
-{{- if (ne $livenessEndpoint .Values.ingress.blackbox.probePath) }}
-{{- $endpoints = append $endpoints $livenessEndpoint }}
-{{- end }}
-{{- end }}
-{{- if (ne .Values.ingress.allowReadinessUrl true) }}
-{{- $readinessEndpoint := .Values.readiness.path | default "/readiness" }}
-{{- if (ne $readinessEndpoint .Values.ingress.blackbox.probePath) }}
-{{- $endpoints = append $endpoints $readinessEndpoint }}
-{{- end }}
-{{- end }}
-{{- $endpoints | sortAlpha | uniq | compact | join " " }}
 {{- end -}}
 
 {{/* Create a fully qualified app name, but with ability to override it for ingress */}}

@@ -6,6 +6,18 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
+## [v7.0.0] - 2024-07-17
+### Added
+- Always add `/external-health-check` to the oauth2-proxy skip-auth-regex
+
+### Fixed
+- Fixed keda test case (was failing on latest version of `helm-unittest` plugin)
+
+### Removed
+- Remove support for `ingress.alb.enabled` (since this is the only ingress option, we only use `ingress.enabled`)
+- Remove support for blackbox-exporter probes
+- Remove support for haproxy ingress (not used and supported some blackbox-exporter logic too)
+
 ## [v6.4.0] - 2024-03-21
 ### Added
 - Added `enableDoNotDisrupt` flag to CronJobs and Jobs. Sets the `karpenter.sh/do-not-disrupt` annotation.
