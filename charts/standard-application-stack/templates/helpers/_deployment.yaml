@@ -13,7 +13,7 @@ Note, this cannot be used in conjunction with a custom lifecycle rule.
 */}}
 {{- define "mintel_common.deployment.lifecycle" -}}
 {{- with .Values.ingress }}
-{{- if (and .enabled (and .alb.enabled .alb.preStopDelay.enabled )) }}
+{{- if (and .enabled .alb.preStopDelay.enabled ) }}
 lifecycle:
   preStop:
     exec:

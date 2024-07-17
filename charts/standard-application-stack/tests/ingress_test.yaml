@@ -21,7 +21,6 @@ tests:
     set:
       global.clusterEnv: qa
       ingress.enabled: true
-      ingress.alb.enabled: true
       port: 8080
     asserts:
       - matchSnapshot: {} # Check for regressions and unexpected changes.
@@ -34,7 +33,6 @@ tests:
     set:
       global.clusterEnv: qa
       ingress.enabled: true
-      ingress.alb.enabled: true
       ingress.alb.healthcheck.port: 9999
       port: 8080
     asserts:
@@ -48,7 +46,6 @@ tests:
     set:
       global.clusterEnv: qa
       ingress.enabled: true
-      ingress.alb.enabled: true
       oauthProxy.enabled: true
     asserts:
       - matchSnapshot: {} # Check for regressions and unexpected changes.
@@ -61,7 +58,6 @@ tests:
     set:
       global.clusterEnv: qa
       ingress.enabled: true
-      ingress.alb.enabled: true
       ingress.alb.backendProtocolVersion: GRPC
     asserts:
       - matchSnapshot: {} # Check for regressions and unexpected changes.
@@ -80,7 +76,6 @@ tests:
     set:
       global.clusterEnv: qa
       ingress.enabled: true
-      ingress.alb.enabled: true
       ingress.alb.backendProtocolVersion: GRPC
       ingress.alb.healthcheck.successCodes: "0"
       ingress.alb.healthcheck.path: /grpc.health.v1.Readiness/Check
@@ -101,7 +96,6 @@ tests:
     set:
       global.clusterEnv: qa
       ingress.enabled: true
-      ingress.alb.enabled: true
       ingress.alb.backendProtocolVersion: HTTP2
     asserts:
       - matchSnapshot: {} # Check for regressions and unexpected changes.
@@ -421,8 +415,6 @@ tests:
       ingress.extraIngresses:
         - ingressNameSuffix: ops-media
           defaultHost: ops-media.mintel.com
-          alb:
-            enabled: false
           pathBasedRouting:
             - targetService: mock-service
               targetPort: mock-port
@@ -471,16 +463,12 @@ tests:
           path: spec.ingressClassName
           value: alb-public-apps-default
         documentIndex: 1
-      - isNull:
-          path: metadata.annotations["alb.ingress.kubernetes.io/backend-protocol"]
-        documentIndex: 1
 
   - it: adds default qa api-gateway ingress
     template: ingress.yaml
     set:
       global.clusterEnv: qa
       ingress.enabled: true
-      ingress.alb.enabled: true
       ingress.alb.scheme: api
     asserts:
       - matchSnapshot: {} # Check for regressions and unexpected changes.
@@ -516,7 +504,6 @@ tests:
     set:
       global.clusterEnv: prod
       ingress.enabled: true
-      ingress.alb.enabled: true
       ingress.defaultHost: example.com
       ingress.extraIngresses:
       - alb:

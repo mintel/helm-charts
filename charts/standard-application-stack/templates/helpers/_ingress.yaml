@@ -2,14 +2,12 @@
 
 {{/* Output ingressClassName */}}
 {{- define "mintel_common.ingress.className" -}}
-{{- if (and .Values.ingress.alb .ingress.alb.enabled) -}}
+{{- if .Values.ingress.alb -}}
   {{- if eq .ingress.alb.scheme "internet-facing" -}}
   alb-public-apps-default
   {{- else if or (eq .ingress.alb.scheme "internal") (eq .ingress.alb.scheme "api") -}}
   alb-internal-apps-default
   {{- end -}}
-{{- else -}}
-alb-public-apps-default
 {{- end -}}
 {{- end -}}
 

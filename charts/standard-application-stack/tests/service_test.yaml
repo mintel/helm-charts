@@ -119,7 +119,6 @@ tests:
       global.owner: my-team
       global.clusterEnv: qa
       ingress.enabled: true
-      ingress.alb.enabled: true
     asserts:
       - matchSnapshot: {} # Check for regressions and unexpected changes.
       - isKind:
@@ -128,27 +127,10 @@ tests:
           path: metadata.annotations["alb.ingress.kubernetes.io/tags"]
           value: Owner=my-team
 
-  - it: Check ALB annotation not set when ALB Ingress is disabled
-    set:
-      global.name: test-app
-      global.owner: my-team
-      ingress.enabled: true
-      ingress.alb.enabled: false
-      # Add annotations to allow for isNull check
-      service.annotations:
-        k: v
-    asserts:
-      - matchSnapshot: {} # Check for regressions and unexpected changes.
-      - isKind:
-          of: Service
-      - isNull:
-          path: metadata.annotations["alb.ingress.kubernetes.io/tags"]
-
   - it: Check ALB annotation not set when when Owner missing
     set:
       global.name: test-app
       ingress.enabled: true
-      ingress.alb.enabled: false
       # Add annotations to allow for isNull check
       service.annotations:
         k: v

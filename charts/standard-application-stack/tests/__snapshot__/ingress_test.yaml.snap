@@ -1274,7 +1274,23 @@ allows extraIngresses to override default values:
     kind: Ingress
     metadata:
       annotations:
+        alb.ingress.kubernetes.io/backend-protocol: HTTP
+        alb.ingress.kubernetes.io/backend-protocol-version: HTTP1
+        alb.ingress.kubernetes.io/healthcheck-interval-seconds: "15"
+        alb.ingress.kubernetes.io/healthcheck-path: /readiness
+        alb.ingress.kubernetes.io/healthcheck-port: "8000"
+        alb.ingress.kubernetes.io/healthcheck-protocol: HTTP
+        alb.ingress.kubernetes.io/healthcheck-timeout-seconds: "5"
+        alb.ingress.kubernetes.io/healthy-threshold-count: "2"
+        alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
+        alb.ingress.kubernetes.io/ssl-redirect: "443"
+        alb.ingress.kubernetes.io/success-codes: "200"
+        alb.ingress.kubernetes.io/target-group-attributes: deregistration_delay.timeout_seconds=5,load_balancing.algorithm.type=least_outstanding_requests
+        alb.ingress.kubernetes.io/target-type: ip
+        alb.ingress.kubernetes.io/unhealthy-threshold-count: "2"
         app.mintel.com/placeholder: placeholder
+        external-dns.alpha.kubernetes.io/hostname: ops-media.mintel.com
+        external-dns.alpha.kubernetes.io/ttl: "60"
       labels:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm

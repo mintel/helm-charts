@@ -533,7 +533,6 @@ ingress:
   # -- Optional ingress Tls Hosts Yaml that doesn't fit standard pattern
   specificTlsHostsYaml: {}
   alb:
-    enabled: true
     # -- Public, private or api-specific alb (internet-facing / internal / api)
     scheme: internet-facing
     # -- Application Version (HTTP / HTTPS)
@@ -1267,7 +1266,6 @@ opensearch:
       path: /_dashboards
       extraAnnotations: {}
       alb:
-        enabled: true
         # -- Public or private alb (internet-facing / internal)
         scheme: internet-facing
         # -- Application Version (HTTP / HTTPS)

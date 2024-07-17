@@ -88,7 +88,6 @@ tests:
       opensearch.enabled: true
       opensearch.awsEsProxy.enabled: true
       opensearch.awsEsProxy.ingress.enabled: true
-      opensearch.awsEsProxy.ingress.alb.enabled: true
       opensearch.awsEsProxy.ingress.alb.okta.enabled: true
     asserts:
       - matchSnapshot: {} # Check for regressions and unexpected changes.
@@ -119,7 +118,6 @@ tests:
       opensearch.enabled: true
       opensearch.awsEsProxy.enabled: true
       opensearch.awsEsProxy.ingress.enabled: true
-      opensearch.awsEsProxy.ingress.alb.enabled: true
       opensearch.awsEsProxy.ingress.alb.okta.enabled: true
     asserts:
       - matchSnapshot: {} # Check for regressions and unexpected changes.
