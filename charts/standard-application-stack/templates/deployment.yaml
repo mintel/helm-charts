@@ -144,8 +144,6 @@ spec:
                 matchLabels: {{ include "mintel_common.selectorLabels" . | nindent 18 }}
               topologyKey: kubernetes.io/hostname
             {{- end }}
-            - matchLabelKeys:
-              - pod-template-hash
         {{- end }}
         {{- if (or (eq .Values.affinity.podAntiAffinity.zone "soft") (eq .Values.affinity.podAntiAffinity.node "soft")) }}
           preferredDuringSchedulingIgnoredDuringExecution:

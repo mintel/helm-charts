@@ -500,6 +500,8 @@ topologySpreadConstraints:
       matchLabels: {{ include "mintel_common.selectorLabels" . | nindent 8 }}
     maxSkew: {{ .Values.topologySpreadConstraints.zone.maxSkew | default 1 }}
     topologyKey: topology.kubernetes.io/zone
+    matchLabelKeys:
+      - pod-template-hash
     whenUnsatisfiable: {{ .Values.topologySpreadConstraints.zone.whenUnsatisfiable | default "DoNotSchedule" }}
   {{- end }}
   {{- if or (and (not (kindIs "bool" .Values.topologySpreadConstraints.node.enabled)) (or (eq .Values.global.clusterEnv "logs") (eq .Values.global.clusterEnv "prod"))) (and .Values.topologySpreadConstraints.node .Values.topologySpreadConstraints.node.enabled) }}
@@ -507,6 +509,8 @@ topologySpreadConstraints:
       matchLabels: {{ include "mintel_common.selectorLabels" . | nindent 8 }}
     maxSkew: {{ .Values.topologySpreadConstraints.node.maxSkew | default 1 }}
     topologyKey: kubernetes.io/hostname
+    matchLabelKeys:
+      - pod-template-hash
     whenUnsatisfiable: {{ .Values.topologySpreadConstraints.node.whenUnsatisfiable | default "DoNotSchedule" }}
   {{- end }}
 {{- end }}
