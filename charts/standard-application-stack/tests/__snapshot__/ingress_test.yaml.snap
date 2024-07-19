@@ -450,6 +450,8 @@ Check EXTRA_ALLOWED_HOSTS env var extraHosts with extraIngresses:
                 matchLabels:
                   app.kubernetes.io/component: app
                   app.kubernetes.io/name: example-app
+              matchLabelKeys:
+                - pod-template-hash
               maxSkew: 1
               topologyKey: topology.kubernetes.io/zone
               whenUnsatisfiable: DoNotSchedule

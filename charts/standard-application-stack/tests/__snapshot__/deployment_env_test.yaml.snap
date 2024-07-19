@@ -90,6 +90,8 @@ Check celery does not pull in `main.env` values:
                 matchLabels:
                   app.kubernetes.io/component: celery
                   app.kubernetes.io/name: example-app-celery
+              matchLabelKeys:
+                - pod-template-hash
               maxSkew: 1
               topologyKey: topology.kubernetes.io/zone
               whenUnsatisfiable: DoNotSchedule
@@ -205,6 +207,8 @@ Check default env behavior:
                 matchLabels:
                   app.kubernetes.io/component: app
                   app.kubernetes.io/name: example-app
+              matchLabelKeys:
+                - pod-template-hash
               maxSkew: 1
               topologyKey: topology.kubernetes.io/zone
               whenUnsatisfiable: DoNotSchedule
@@ -322,6 +326,8 @@ Check main container combines default env and `main.env` values:
                 matchLabels:
                   app.kubernetes.io/component: app
                   app.kubernetes.io/name: example-app
+              matchLabelKeys:
+                - pod-template-hash
               maxSkew: 1
               topologyKey: topology.kubernetes.io/zone
               whenUnsatisfiable: DoNotSchedule

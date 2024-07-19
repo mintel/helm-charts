@@ -289,6 +289,8 @@ Check combined template defaults:
                 matchLabels:
                   app.kubernetes.io/component: app
                   app.kubernetes.io/name: test-app
+              matchLabelKeys:
+                - pod-template-hash
               maxSkew: 1
               topologyKey: topology.kubernetes.io/zone
               whenUnsatisfiable: DoNotSchedule
@@ -296,6 +298,8 @@ Check combined template defaults:
                 matchLabels:
                   app.kubernetes.io/component: app
                   app.kubernetes.io/name: test-app
+              matchLabelKeys:
+                - pod-template-hash
               maxSkew: 1
               topologyKey: kubernetes.io/hostname
               whenUnsatisfiable: DoNotSchedule
@@ -456,6 +460,8 @@ Check combined template with extra ports and monitors:
                 matchLabels:
                   app.kubernetes.io/component: app
                   app.kubernetes.io/name: test-app
+              matchLabelKeys:
+                - pod-template-hash
               maxSkew: 1
               topologyKey: topology.kubernetes.io/zone
               whenUnsatisfiable: DoNotSchedule
@@ -463,6 +469,8 @@ Check combined template with extra ports and monitors:
                 matchLabels:
                   app.kubernetes.io/component: app
                   app.kubernetes.io/name: test-app
+              matchLabelKeys:
+                - pod-template-hash
               maxSkew: 1
               topologyKey: kubernetes.io/hostname
               whenUnsatisfiable: DoNotSchedule
