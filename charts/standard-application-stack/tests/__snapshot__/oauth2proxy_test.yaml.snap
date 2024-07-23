@@ -165,6 +165,8 @@ Check default container args:
                 matchLabels:
                   app.kubernetes.io/component: app
                   app.kubernetes.io/name: test-app
+              matchLabelKeys:
+                - pod-template-hash
               maxSkew: 1
               topologyKey: topology.kubernetes.io/zone
               whenUnsatisfiable: DoNotSchedule
@@ -336,6 +338,8 @@ Check setting skip-auth-regex from extra passed in values:
                 matchLabels:
                   app.kubernetes.io/component: app
                   app.kubernetes.io/name: test-app
+              matchLabelKeys:
+                - pod-template-hash
               maxSkew: 1
               topologyKey: topology.kubernetes.io/zone
               whenUnsatisfiable: DoNotSchedule
@@ -507,6 +511,8 @@ Check setting skip-auth-regex from extra passed in values when they already cont
                 matchLabels:
                   app.kubernetes.io/component: app
                   app.kubernetes.io/name: test-app
+              matchLabelKeys:
+                - pod-template-hash
               maxSkew: 1
               topologyKey: topology.kubernetes.io/zone
               whenUnsatisfiable: DoNotSchedule
@@ -677,6 +683,8 @@ Check setting skip-auth-regex from overridden health-check values:
                 matchLabels:
                   app.kubernetes.io/component: app
                   app.kubernetes.io/name: test-app
+              matchLabelKeys:
+                - pod-template-hash
               maxSkew: 1
               topologyKey: topology.kubernetes.io/zone
               whenUnsatisfiable: DoNotSchedule
@@ -847,6 +855,8 @@ Check sidecar present if enabled:
                 matchLabels:
                   app.kubernetes.io/component: app
                   app.kubernetes.io/name: test-app
+              matchLabelKeys:
+                - pod-template-hash
               maxSkew: 1
               topologyKey: topology.kubernetes.io/zone
               whenUnsatisfiable: DoNotSchedule

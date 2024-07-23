@@ -110,6 +110,8 @@ Check default label behavior:
                 matchLabels:
                   app.kubernetes.io/component: app
                   app.kubernetes.io/name: app
+              matchLabelKeys:
+                - pod-template-hash
               maxSkew: 1
               topologyKey: topology.kubernetes.io/zone
               whenUnsatisfiable: DoNotSchedule
@@ -225,6 +227,8 @@ Check empty application and component labels both default to name:
                 matchLabels:
                   app.kubernetes.io/component: app
                   app.kubernetes.io/name: app
+              matchLabelKeys:
+                - pod-template-hash
               maxSkew: 1
               topologyKey: topology.kubernetes.io/zone
               whenUnsatisfiable: DoNotSchedule

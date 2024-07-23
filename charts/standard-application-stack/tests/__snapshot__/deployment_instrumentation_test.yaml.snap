@@ -128,6 +128,8 @@ Check custom python otel extraEnv vars are added:
                 matchLabels:
                   app.kubernetes.io/component: app
                   app.kubernetes.io/name: test-app
+              matchLabelKeys:
+                - pod-template-hash
               maxSkew: 1
               topologyKey: topology.kubernetes.io/zone
               whenUnsatisfiable: DoNotSchedule
@@ -261,6 +263,8 @@ Check custom sampler settings:
                 matchLabels:
                   app.kubernetes.io/component: app
                   app.kubernetes.io/name: test-app
+              matchLabelKeys:
+                - pod-template-hash
               maxSkew: 1
               topologyKey: topology.kubernetes.io/zone
               whenUnsatisfiable: DoNotSchedule
@@ -392,6 +396,8 @@ Check default python otel envars are added:
                 matchLabels:
                   app.kubernetes.io/component: app
                   app.kubernetes.io/name: test-app
+              matchLabelKeys:
+                - pod-template-hash
               maxSkew: 1
               topologyKey: topology.kubernetes.io/zone
               whenUnsatisfiable: DoNotSchedule
@@ -525,6 +531,8 @@ Check global otel extraEnv vars are added:
                 matchLabels:
                   app.kubernetes.io/component: app
                   app.kubernetes.io/name: test-app
+              matchLabelKeys:
+                - pod-template-hash
               maxSkew: 1
               topologyKey: topology.kubernetes.io/zone
               whenUnsatisfiable: DoNotSchedule

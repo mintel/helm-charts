@@ -121,6 +121,8 @@ Check AWS ALB lifecycle rule applied:
                 matchLabels:
                   app.kubernetes.io/component: app
                   app.kubernetes.io/name: example-app
+              matchLabelKeys:
+                - pod-template-hash
               maxSkew: 1
               topologyKey: topology.kubernetes.io/zone
               whenUnsatisfiable: DoNotSchedule
@@ -247,6 +249,8 @@ Check AWS ALB lifecycle rules applied with custom delay:
                 matchLabels:
                   app.kubernetes.io/component: app
                   app.kubernetes.io/name: example-app
+              matchLabelKeys:
+                - pod-template-hash
               maxSkew: 1
               topologyKey: topology.kubernetes.io/zone
               whenUnsatisfiable: DoNotSchedule
@@ -365,6 +369,8 @@ Check lifecycle rules:
                 matchLabels:
                   app.kubernetes.io/component: app
                   app.kubernetes.io/name: example-app
+              matchLabelKeys:
+                - pod-template-hash
               maxSkew: 1
               topologyKey: topology.kubernetes.io/zone
               whenUnsatisfiable: DoNotSchedule
