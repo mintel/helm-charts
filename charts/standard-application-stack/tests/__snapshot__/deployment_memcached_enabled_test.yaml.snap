@@ -106,8 +106,6 @@ Check Memcached envfrom secretRef is present:
                 matchLabels:
                   app.kubernetes.io/component: app
                   app.kubernetes.io/name: test-app
-              matchLabelKeys:
-                - pod-template-hash
               maxSkew: 1
               topologyKey: topology.kubernetes.io/zone
               whenUnsatisfiable: DoNotSchedule
@@ -328,8 +326,6 @@ Check Memcached secretName Override:
                 matchLabels:
                   app.kubernetes.io/component: app
                   app.kubernetes.io/name: test-app
-              matchLabelKeys:
-                - pod-template-hash
               maxSkew: 1
               topologyKey: topology.kubernetes.io/zone
               whenUnsatisfiable: DoNotSchedule
