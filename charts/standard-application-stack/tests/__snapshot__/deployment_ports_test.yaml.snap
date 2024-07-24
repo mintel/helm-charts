@@ -63,7 +63,6 @@ Check container extraPorts:
                   path: /healthz
                   port: http
                   scheme: HTTP
-                initialDelaySeconds: 0
                 periodSeconds: 10
                 timeoutSeconds: 1
               name: main
@@ -79,7 +78,6 @@ Check container extraPorts:
                   path: /readiness
                   port: http
                   scheme: HTTP
-                initialDelaySeconds: 0
                 periodSeconds: 10
                 timeoutSeconds: 1
               resources:
@@ -182,7 +180,6 @@ Check container extraPorts are validated:
                   path: /healthz
                   port: http
                   scheme: HTTP
-                initialDelaySeconds: 0
                 periodSeconds: 10
                 timeoutSeconds: 1
               name: main
@@ -200,7 +197,6 @@ Check container extraPorts are validated:
                   path: /readiness
                   port: http
                   scheme: HTTP
-                initialDelaySeconds: 0
                 periodSeconds: 10
                 timeoutSeconds: 1
               resources:
@@ -303,7 +299,6 @@ Check container extraPorts protocol:
                   path: /healthz
                   port: http
                   scheme: HTTP
-                initialDelaySeconds: 0
                 periodSeconds: 10
                 timeoutSeconds: 1
               name: main
@@ -320,7 +315,6 @@ Check container extraPorts protocol:
                   path: /readiness
                   port: http
                   scheme: HTTP
-                initialDelaySeconds: 0
                 periodSeconds: 10
                 timeoutSeconds: 1
               resources:
@@ -423,7 +417,6 @@ Check default container main port:
                   path: /healthz
                   port: http
                   scheme: HTTP
-                initialDelaySeconds: 0
                 periodSeconds: 10
                 timeoutSeconds: 1
               name: main
@@ -435,7 +428,6 @@ Check default container main port:
                   path: /readiness
                   port: http
                   scheme: HTTP
-                initialDelaySeconds: 0
                 periodSeconds: 10
                 timeoutSeconds: 1
               resources:
@@ -538,7 +530,6 @@ Check overridden container main port:
                   path: /healthz
                   port: http
                   scheme: HTTP
-                initialDelaySeconds: 0
                 periodSeconds: 10
                 timeoutSeconds: 1
               name: main
@@ -550,7 +541,6 @@ Check overridden container main port:
                   path: /readiness
                   port: http
                   scheme: HTTP
-                initialDelaySeconds: 0
                 periodSeconds: 10
                 timeoutSeconds: 1
               resources:

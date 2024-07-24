@@ -63,7 +63,6 @@ Check default container args:
                   path: /healthz
                   port: http
                   scheme: HTTP
-                initialDelaySeconds: 0
                 periodSeconds: 10
                 timeoutSeconds: 1
               name: main
@@ -75,7 +74,6 @@ Check default container args:
                   path: /readiness
                   port: http
                   scheme: HTTP
-                initialDelaySeconds: 0
                 periodSeconds: 10
                 timeoutSeconds: 1
               resources:
@@ -235,7 +233,6 @@ Check setting skip-auth-regex from extra passed in values:
                   path: /healthz
                   port: http
                   scheme: HTTP
-                initialDelaySeconds: 0
                 periodSeconds: 10
                 timeoutSeconds: 1
               name: main
@@ -247,7 +244,6 @@ Check setting skip-auth-regex from extra passed in values:
                   path: /readiness
                   port: http
                   scheme: HTTP
-                initialDelaySeconds: 0
                 periodSeconds: 10
                 timeoutSeconds: 1
               resources:
@@ -408,7 +404,6 @@ Check setting skip-auth-regex from extra passed in values when they already cont
                   path: /healthz
                   port: http
                   scheme: HTTP
-                initialDelaySeconds: 0
                 periodSeconds: 10
                 timeoutSeconds: 1
               name: main
@@ -420,7 +415,6 @@ Check setting skip-auth-regex from extra passed in values when they already cont
                   path: /readiness
                   port: http
                   scheme: HTTP
-                initialDelaySeconds: 0
                 periodSeconds: 10
                 timeoutSeconds: 1
               resources:
@@ -581,7 +575,6 @@ Check setting skip-auth-regex from overridden health-check values:
                   path: /healthz-overridden
                   port: http
                   scheme: HTTP
-                initialDelaySeconds: 0
                 periodSeconds: 10
                 timeoutSeconds: 1
               name: main
@@ -593,7 +586,6 @@ Check setting skip-auth-regex from overridden health-check values:
                   path: /readiness-overridden
                   port: http
                   scheme: HTTP
-                initialDelaySeconds: 0
                 periodSeconds: 10
                 timeoutSeconds: 1
               resources:
@@ -753,7 +745,6 @@ Check sidecar present if enabled:
                   path: /healthz
                   port: http
                   scheme: HTTP
-                initialDelaySeconds: 0
                 periodSeconds: 10
                 timeoutSeconds: 1
               name: main
@@ -765,7 +756,6 @@ Check sidecar present if enabled:
                   path: /readiness
                   port: http
                   scheme: HTTP
-                initialDelaySeconds: 0
                 periodSeconds: 10
                 timeoutSeconds: 1
               resources:
