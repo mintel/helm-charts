@@ -287,7 +287,9 @@ spec:
               port: {{ .Values.liveness.port | default "http" }}
               scheme: {{ .Values.liveness.scheme | default "HTTP" }}
             {{- end }}
-            initialDelaySeconds: {{ .Values.liveness.initialDelaySeconds | default 0 }}
+            {{- if .Values.liveness.initialDelaySeconds }}
+            initialDelaySeconds: {{ .Values.liveness.initialDelaySeconds }}
+            {{- end }}
             timeoutSeconds: {{ .Values.liveness.timeoutSeconds | default 1 }}
             periodSeconds: {{ .Values.liveness.periodSeconds | default 10 }}
           startupProbe:
@@ -325,7 +327,9 @@ spec:
               port: {{ .Values.readiness.port | default "http" }}
               scheme: {{ .Values.readiness.scheme | default "HTTP" }}
             {{- end }}
-            initialDelaySeconds: {{ .Values.readiness.initialDelaySeconds | default 0 }}
+            {{- if .Values.readiness.initialDelaySeconds }}
+            initialDelaySeconds: {{ .Values.readiness.initialDelaySeconds }}
+            {{- end }}
             timeoutSeconds: {{ .Values.readiness.timeoutSeconds | default 1 }}
             periodSeconds: {{ .Values.readiness.periodSeconds | default 10 }}
           {{- end }}
