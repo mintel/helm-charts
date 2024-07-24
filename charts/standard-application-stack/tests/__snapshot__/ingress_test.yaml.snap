@@ -405,7 +405,6 @@ Check EXTRA_ALLOWED_HOSTS env var extraHosts with extraIngresses:
                   path: /healthz
                   port: http
                   scheme: HTTP
-                initialDelaySeconds: 0
                 periodSeconds: 10
                 timeoutSeconds: 1
               name: main
@@ -417,7 +416,6 @@ Check EXTRA_ALLOWED_HOSTS env var extraHosts with extraIngresses:
                   path: /readiness
                   port: http
                   scheme: HTTP
-                initialDelaySeconds: 0
                 periodSeconds: 10
                 timeoutSeconds: 1
               resources:

@@ -58,7 +58,6 @@ Check stateful set is rendered with volumeClaimTemplates:
                   path: /healthz
                   port: http
                   scheme: HTTP
-                initialDelaySeconds: 0
                 periodSeconds: 10
                 timeoutSeconds: 1
               name: main
@@ -70,7 +69,6 @@ Check stateful set is rendered with volumeClaimTemplates:
                   path: /readiness
                   port: http
                   scheme: HTTP
-                initialDelaySeconds: 0
                 periodSeconds: 10
                 timeoutSeconds: 1
               resources:

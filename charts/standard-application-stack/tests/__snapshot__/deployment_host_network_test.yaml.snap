@@ -63,7 +63,6 @@ Has a pod template that uses the host network:
                   path: /healthz
                   port: http
                   scheme: HTTP
-                initialDelaySeconds: 0
                 periodSeconds: 10
                 timeoutSeconds: 1
               name: main
@@ -75,7 +74,6 @@ Has a pod template that uses the host network:
                   path: /readiness
                   port: http
                   scheme: HTTP
-                initialDelaySeconds: 0
                 periodSeconds: 10
                 timeoutSeconds: 1
               resources:

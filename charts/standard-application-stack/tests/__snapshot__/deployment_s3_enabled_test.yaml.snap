@@ -63,7 +63,6 @@ Check S3 envfrom secretRef is present:
                   path: /healthz
                   port: http
                   scheme: HTTP
-                initialDelaySeconds: 0
                 periodSeconds: 10
                 timeoutSeconds: 1
               name: main
@@ -75,7 +74,6 @@ Check S3 envfrom secretRef is present:
                   path: /readiness
                   port: http
                   scheme: HTTP
-                initialDelaySeconds: 0
                 periodSeconds: 10
                 timeoutSeconds: 1
               resources:
@@ -184,7 +182,6 @@ Check S3 envfrom secretRef is present for local environment:
                   path: /healthz
                   port: http
                   scheme: HTTP
-                initialDelaySeconds: 0
                 periodSeconds: 10
                 timeoutSeconds: 1
               name: main
@@ -196,7 +193,6 @@ Check S3 envfrom secretRef is present for local environment:
                   path: /readiness
                   port: http
                   scheme: HTTP
-                initialDelaySeconds: 0
                 periodSeconds: 10
                 timeoutSeconds: 1
               resources:
@@ -296,7 +292,6 @@ Check S3 envfrom secretRef is present for multiple instances of TF Cloud helm ch
                   path: /healthz
                   port: http
                   scheme: HTTP
-                initialDelaySeconds: 0
                 periodSeconds: 10
                 timeoutSeconds: 1
               name: main
@@ -308,7 +303,6 @@ Check S3 envfrom secretRef is present for multiple instances of TF Cloud helm ch
                   path: /readiness
                   port: http
                   scheme: HTTP
-                initialDelaySeconds: 0
                 periodSeconds: 10
                 timeoutSeconds: 1
               resources:
@@ -412,7 +406,6 @@ Check S3 secretName Override:
                   path: /healthz
                   port: http
                   scheme: HTTP
-                initialDelaySeconds: 0
                 periodSeconds: 10
                 timeoutSeconds: 1
               name: main
@@ -424,7 +417,6 @@ Check S3 secretName Override:
                   path: /readiness
                   port: http
                   scheme: HTTP
-                initialDelaySeconds: 0
                 periodSeconds: 10
                 timeoutSeconds: 1
               resources:
@@ -538,7 +530,6 @@ Check S3 stakater secret reloader annotation contains correct secrets for multip
                   path: /healthz
                   port: http
                   scheme: HTTP
-                initialDelaySeconds: 0
                 periodSeconds: 10
                 timeoutSeconds: 1
               name: main
@@ -550,7 +541,6 @@ Check S3 stakater secret reloader annotation contains correct secrets for multip
                   path: /readiness
                   port: http
                   scheme: HTTP
-                initialDelaySeconds: 0
                 periodSeconds: 10
                 timeoutSeconds: 1
               resources:
