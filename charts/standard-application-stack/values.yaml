@@ -629,10 +629,14 @@ topologySpreadConstraints:
   zone:
     enabled: true
     maxSkew: 1
+    matchlabelkeys:
+      enabled: false
   node:
     # -- Set this to true/false to override the default behaviour (enabled for prod only)
     enabled:
     maxSkew: 1
+    matchlabelkeys:
+      enabled: false
   # -- Specify custom topologySpreadConstraints yaml
   specificYaml:
 

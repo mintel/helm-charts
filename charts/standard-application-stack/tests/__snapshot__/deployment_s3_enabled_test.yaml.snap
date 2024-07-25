@@ -106,8 +106,6 @@ Check S3 envfrom secretRef is present:
                 matchLabels:
                   app.kubernetes.io/component: app
                   app.kubernetes.io/name: test-app
-              matchLabelKeys:
-                - pod-template-hash
               maxSkew: 1
               topologyKey: topology.kubernetes.io/zone
               whenUnsatisfiable: DoNotSchedule
@@ -336,8 +334,6 @@ Check S3 envfrom secretRef is present for multiple instances of TF Cloud helm ch
                   app.kubernetes.io/component: app
                   app.kubernetes.io/name: test-app
                   app.kubernetes.io/part-of: test-project
-              matchLabelKeys:
-                - pod-template-hash
               maxSkew: 1
               topologyKey: topology.kubernetes.io/zone
               whenUnsatisfiable: DoNotSchedule
@@ -449,8 +445,6 @@ Check S3 secretName Override:
                 matchLabels:
                   app.kubernetes.io/component: app
                   app.kubernetes.io/name: test-app
-              matchLabelKeys:
-                - pod-template-hash
               maxSkew: 1
               topologyKey: topology.kubernetes.io/zone
               whenUnsatisfiable: DoNotSchedule
@@ -574,8 +568,6 @@ Check S3 stakater secret reloader annotation contains correct secrets for multip
                   app.kubernetes.io/component: app
                   app.kubernetes.io/name: test-app
                   app.kubernetes.io/part-of: test-project
-              matchLabelKeys:
-                - pod-template-hash
               maxSkew: 1
               topologyKey: topology.kubernetes.io/zone
               whenUnsatisfiable: DoNotSchedule

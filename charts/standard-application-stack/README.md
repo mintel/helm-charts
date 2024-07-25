@@ -1,6 +1,6 @@
 # standard-application-stack
 
-![Version: 7.2.0](https://img.shields.io/badge/Version-7.2.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 7.3.0](https://img.shields.io/badge/Version-7.3.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A generic chart to support most common application requirements
 
@@ -345,9 +345,11 @@ A generic chart to support most common application requirements
 | terminationGracePeriodSeconds | int | `30` | Configure terminationGracePeriodSeconds ref: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/ |
 | topologySpreadConstraints.enabled | bool | `true` |  |
 | topologySpreadConstraints.node.enabled | string | `nil` | Set this to true/false to override the default behaviour (enabled for prod only) |
+| topologySpreadConstraints.node.matchlabelkeys.enabled | bool | `false` |  |
 | topologySpreadConstraints.node.maxSkew | int | `1` |  |
 | topologySpreadConstraints.specificYaml | string | `nil` | Specify custom topologySpreadConstraints yaml |
 | topologySpreadConstraints.zone.enabled | bool | `true` |  |
+| topologySpreadConstraints.zone.matchlabelkeys.enabled | bool | `false` |  |
 | topologySpreadConstraints.zone.maxSkew | int | `1` |  |
 | useHostNetwork | bool | `false` | If true, use the host network for the main deployment. |
 | verticalPodAutoscaler | object | `{"autoscalingEnabled":false,"containerPolicies":null,"enabled":true,"evictionRequirements":null,"instances":{},"minReplicas":1}` | Configuration for creating a VerticalPodAutoscaler for this app. Currently only supports recommendations-only mode. |

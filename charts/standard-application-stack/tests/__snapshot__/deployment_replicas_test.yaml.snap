@@ -107,8 +107,6 @@ Check allowSingleReplica doesn't alter strategy:
                 matchLabels:
                   app.kubernetes.io/component: app
                   app.kubernetes.io/name: example-app
-              matchLabelKeys:
-                - pod-template-hash
               maxSkew: 1
               topologyKey: topology.kubernetes.io/zone
               whenUnsatisfiable: DoNotSchedule
@@ -221,8 +219,6 @@ Check allowSingleReplica set annotations:
                 matchLabels:
                   app.kubernetes.io/component: app
                   app.kubernetes.io/name: example-app
-              matchLabelKeys:
-                - pod-template-hash
               maxSkew: 1
               topologyKey: topology.kubernetes.io/zone
               whenUnsatisfiable: DoNotSchedule
@@ -333,8 +329,6 @@ Check replicas unset when autoscaling is enabled:
                 matchLabels:
                   app.kubernetes.io/component: app
                   app.kubernetes.io/name: example-app
-              matchLabelKeys:
-                - pod-template-hash
               maxSkew: 1
               topologyKey: topology.kubernetes.io/zone
               whenUnsatisfiable: DoNotSchedule
@@ -444,8 +438,6 @@ Check singleReplicaOnly applied:
                 matchLabels:
                   app.kubernetes.io/component: app
                   app.kubernetes.io/name: example-app
-              matchLabelKeys:
-                - pod-template-hash
               maxSkew: 1
               topologyKey: topology.kubernetes.io/zone
               whenUnsatisfiable: DoNotSchedule
@@ -555,8 +547,6 @@ Check singleReplicaOnly ignore replicas value:
                 matchLabels:
                   app.kubernetes.io/component: app
                   app.kubernetes.io/name: example-app
-              matchLabelKeys:
-                - pod-template-hash
               maxSkew: 1
               topologyKey: topology.kubernetes.io/zone
               whenUnsatisfiable: DoNotSchedule
