@@ -138,6 +138,10 @@ app.mintel.com/terraform-allow-destroy: {{ (include "mintel_common.terraform_clo
     {{- if ( eq .Global.clusterEnv "dev") }}
     {{- $_ := set $defaults "point_in_time_recovery_enabled" false }}
     {{- end }}
+    {{/* deletion_protection */}}
+    {{- if ( not ( has .Global.clusterEnv (list "prod" "logs"))) }}
+    {{- $_ := set $defaults "deletion_protection_enabled" false }}
+    {{- end }}
 {{- end }}
 {{/* Opensearch */}}
 {{- if ( eq .ResourceType "opensearch")}}

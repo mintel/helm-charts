@@ -1,6 +1,6 @@
 # terraform-cloud
 
-![Version: 1.11.0](https://img.shields.io/badge/Version-1.11.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.0](https://img.shields.io/badge/AppVersion-2.0.0-informational?style=flat-square)
+![Version: 1.12.0](https://img.shields.io/badge/Version-1.12.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.0](https://img.shields.io/badge/AppVersion-2.0.0-informational?style=flat-square)
 
 A Helm chart for provisioning resources using Terraform Cloud
 
@@ -57,11 +57,11 @@ A Helm chart for provisioning resources using Terraform Cloud
 | datasync.terraform.module.version | string | `"0.2.1"` | Module version |
 | dynamodb.enabled | bool | `false` | Set to true to create a DynamoDB instance |
 | dynamodb.outputSecret | bool | `true` | Set to true to create an AWS secret manager external secret with outputs |
-| dynamodb.terraform | object | `{"defaultVars":{},"instances":{},"module":{"source":"app.terraform.io/Mintel/dynamodb/aws","version":"1.2.0"}}` | Set ArgoCD syncWave for this resource (default -40) syncWave: -40 |
+| dynamodb.terraform | object | `{"defaultVars":{},"instances":{},"module":{"source":"app.terraform.io/Mintel/dynamodb/aws","version":"1.3.0"}}` | Set ArgoCD syncWave for this resource (default -40) syncWave: -40 |
 | dynamodb.terraform.defaultVars | object | `{}` | Vars to be applied to all instances defined below |
 | dynamodb.terraform.instances | object | `{}` | A map of instance names => variable key/value pairs to be sent to the terraform module. The values in `defaultVars` will be applied to every instance if not explicitly defined here. |
 | dynamodb.terraform.module.source | string | `"app.terraform.io/Mintel/dynamodb/aws"` | Registry path of the Terraform module used to create the resource (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/dynamodb/aws) |
-| dynamodb.terraform.module.version | string | `"1.2.0"` | Module version |
+| dynamodb.terraform.module.version | string | `"1.3.0"` | Module version |
 | extraIAM.enabled | bool | `false` | Set to true to create an IAM Role or user aside from IRSA for the application |
 | extraIAM.outputSecret | bool | `true` | Set to true to create an AWS secret manager external secret with outputs |
 | extraIAM.terraform | object | `{"defaultVars":{},"instances":{},"module":{"source":"app.terraform.io/Mintel/app-iam/aws","version":"2.5.1"}}` | Set ArgoCD syncWave for this resource (default -20) syncWave: -20 |
