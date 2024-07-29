@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Added dynamodb deletion_protection_enabled defaults
 
+### Changed
+- Bump `dynamodb` module version to `1.3.0`
+
 ## [v1.11.0] - 2024-07-03
 ### Changed
 - Bump `redis` module version to `1.2.1`
