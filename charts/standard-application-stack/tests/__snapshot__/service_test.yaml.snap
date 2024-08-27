@@ -4,13 +4,13 @@ Check ALB annotation can be set when enabled:
     kind: Service
     metadata:
       annotations:
-        alb.ingress.kubernetes.io/tags: Owner=my-team
+        alb.ingress.kubernetes.io/tags: Owner=my-team,Application=my-app
         app.mintel.com/placeholder: placeholder
       labels:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: test-app
-        app.mintel.com/application: test-app
+        app.mintel.com/application: my-app
         app.mintel.com/component: test-app
         app.mintel.com/env: qa
         app.mintel.com/owner: my-team
@@ -27,7 +27,66 @@ Check ALB annotation can be set when enabled:
         app.kubernetes.io/component: app
         app.kubernetes.io/name: test-app
       type: ClusterIP
-Check ALB annotation not set when when Owner missing:
+Check ALB annotation can set Application without Owner:
+  1: |
+    apiVersion: v1
+    kind: Service
+    metadata:
+      annotations:
+        alb.ingress.kubernetes.io/tags: Application=my-app
+        app.mintel.com/placeholder: placeholder
+        k: v
+      labels:
+        app.kubernetes.io/component: app
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: test-app
+        app.mintel.com/application: my-app
+        app.mintel.com/component: test-app
+        app.mintel.com/env: local
+        app.mintel.com/region: local
+        name: test-app
+      name: test-app
+      namespace: test-namespace
+    spec:
+      ports:
+        - name: main-http
+          port: 8000
+          targetPort: 8000
+      selector:
+        app.kubernetes.io/component: app
+        app.kubernetes.io/name: test-app
+      type: ClusterIP
+Check ALB annotation can set Owner without Application:
+  1: |
+    apiVersion: v1
+    kind: Service
+    metadata:
+      annotations:
+        alb.ingress.kubernetes.io/tags: Owner=my-team
+        app.mintel.com/placeholder: placeholder
+        k: v
+      labels:
+        app.kubernetes.io/component: app
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: test-app
+        app.mintel.com/application: test-app
+        app.mintel.com/component: test-app
+        app.mintel.com/env: local
+        app.mintel.com/owner: my-team
+        app.mintel.com/region: local
+        name: test-app
+      name: test-app
+      namespace: test-namespace
+    spec:
+      ports:
+        - name: main-http
+          port: 8000
+          targetPort: 8000
+      selector:
+        app.kubernetes.io/component: app
+        app.kubernetes.io/name: test-app
+      type: ClusterIP
+Check ALB annotation not set when Owner and Application missing:
   1: |
     apiVersion: v1
     kind: Service

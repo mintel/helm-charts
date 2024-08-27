@@ -10,8 +10,17 @@ metadata:
     {{- if .Values.service.annotations }}
     {{ toYaml .Values.service.annotations | nindent 4 }}
     {{- end }}
-    {{- if (and .Values.global.owner .Values.ingress.enabled ) }}
-    'alb.ingress.kubernetes.io/tags': 'Owner={{ .Values.global.owner }}'
+    {{- if .Values.ingress.enabled }}
+    {{ $alb_tags := list }}
+    {{- if .Values.global.owner }}
+    {{ $alb_tags = append $alb_tags (printf "Owner=%s" .Values.global.owner) }}
+    {{- end }}
+    {{- if .Values.global.application }}
+    {{ $alb_tags = append $alb_tags (printf "Application=%s" .Values.global.application ) }}
+    {{- end }}
+    {{- if $alb_tags }}
+    'alb.ingress.kubernetes.io/tags':  "{{ join "," $alb_tags }}"
+    {{- end }}
     {{- end }}
     {{- if .Values.nlb.enabled }}
     {{ include "mintel_common.nlb.annotations" . | nindent 4 }}
