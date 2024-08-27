@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [v7.4.0] - 2024-08-27
 ### Added
-- Set the `Application` annotation on the Service resource. This propogates to the AWS TargetGroup as a tag.
+- Set the `Application` ALB annotation tag on the Service resource. This propagates to the AWS TargetGroup as a tag.
 
 ## [v7.3.0] - 2024-07-24
 ### Changed
