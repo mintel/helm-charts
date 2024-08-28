@@ -65,7 +65,7 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- if .Values.global.owner }}
 app.mintel.com/owner: {{ .Values.global.owner }}
 {{- end }}
-app.mintel.com/application: {{ .Values.global.application | default .Values.global.name }}
+app.mintel.com/application: {{ include "mintel_common.application" . }}
 app.mintel.com/component: {{ .Values.global.component | default .Values.global.name }}
 app.mintel.com/env: {{ .Values.global.clusterEnv }}
 {{- if (eq .Values.global.clusterEnv "local") }}
@@ -123,6 +123,13 @@ app.kubernetes.io/component: app
 - app.mintel.com/component
 - app.mintel.com/owner
 - app.mintel.com/ignore_alerts
+{{- end -}}
+
+{{/*
+Return the Application name
+*/}}
+{{- define "mintel_common.application" -}}
+{{ .Values.global.application | default .Values.global.name }}
 {{- end -}}
 
 {{/*

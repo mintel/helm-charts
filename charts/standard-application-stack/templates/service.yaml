@@ -16,7 +16,8 @@ metadata:
     {{ $alb_tags = append $alb_tags (printf "Owner=%s" .Values.global.owner) }}
     {{- end }}
     {{- if .Values.global.application }}
-    {{ $alb_tags = append $alb_tags (printf "Application=%s" .Values.global.application ) }}
+    {{ $alb_tags = append $alb_tags (printf "Application=%s" (include "mintel_common.application" .)) }}
+
     {{- end }}
     {{- if $alb_tags }}
     'alb.ingress.kubernetes.io/tags':  "{{ join "," $alb_tags }}"

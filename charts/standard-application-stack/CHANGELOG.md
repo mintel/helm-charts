@@ -5,9 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+
+## [v7.4.1] - 2024-08-28
+### Fixed
+- If `application` is not specified default to `name` (this aligns with logic elsewhere in the toolchain)
+
 ## [v7.4.0] - 2024-08-27
 ### Added
-- Set the `Application` ALB annotation tag on the Service resource. This propagates to the AWS TargetGroup as a tag.
+- Set the `Application` ALB annotation tag on the Service resource. This propagates to the AWS TargetGroup as a tag
 
 ## [v7.3.0] - 2024-07-24
 ### Changed
