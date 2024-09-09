@@ -65,6 +65,7 @@ Check additional ServiceMonitor resources:
         - app.kubernetes.io/part-of
         - app.kubernetes.io/component
         - app.kubernetes.io/instance
+        - app.mintel.com/application
         - app.mintel.com/owner
       selector:
         matchLabels:
@@ -114,6 +115,7 @@ Check additional ServiceMonitor resources:
         - app.kubernetes.io/part-of
         - app.kubernetes.io/component
         - app.kubernetes.io/instance
+        - app.mintel.com/application
         - app.mintel.com/owner
       selector:
         matchLabels:
@@ -163,6 +165,7 @@ Check additional ServiceMonitor resources:
         - app.kubernetes.io/part-of
         - app.kubernetes.io/component
         - app.kubernetes.io/instance
+        - app.mintel.com/application
         - app.mintel.com/owner
       selector:
         matchLabels:
@@ -220,6 +223,7 @@ Check basic-auth:
         - app.kubernetes.io/part-of
         - app.kubernetes.io/component
         - app.kubernetes.io/instance
+        - app.mintel.com/application
         - app.mintel.com/owner
       selector:
         matchLabels:
@@ -387,6 +391,7 @@ Check combined template defaults:
         - app.kubernetes.io/part-of
         - app.kubernetes.io/component
         - app.kubernetes.io/instance
+        - app.mintel.com/application
         - app.mintel.com/owner
       selector:
         matchLabels:
@@ -584,6 +589,7 @@ Check combined template with extra ports and monitors:
         - app.kubernetes.io/part-of
         - app.kubernetes.io/component
         - app.kubernetes.io/instance
+        - app.mintel.com/application
         - app.mintel.com/owner
       selector:
         matchLabels:
@@ -633,6 +639,7 @@ Check combined template with extra ports and monitors:
         - app.kubernetes.io/part-of
         - app.kubernetes.io/component
         - app.kubernetes.io/instance
+        - app.mintel.com/application
         - app.mintel.com/owner
       selector:
         matchLabels:
@@ -682,6 +689,7 @@ Check combined template with extra ports and monitors:
         - app.kubernetes.io/part-of
         - app.kubernetes.io/component
         - app.kubernetes.io/instance
+        - app.mintel.com/application
         - app.mintel.com/owner
       selector:
         matchLabels:
@@ -764,6 +772,7 @@ Check default endpoints:
         - app.kubernetes.io/part-of
         - app.kubernetes.io/component
         - app.kubernetes.io/instance
+        - app.mintel.com/application
         - app.mintel.com/owner
       selector:
         matchLabels:
@@ -814,6 +823,7 @@ Check default targetLabels:
         - app.kubernetes.io/part-of
         - app.kubernetes.io/component
         - app.kubernetes.io/instance
+        - app.mintel.com/application
         - app.mintel.com/owner
       selector:
         matchLabels:
@@ -864,6 +874,7 @@ Check metric overrides:
         - app.kubernetes.io/part-of
         - app.kubernetes.io/component
         - app.kubernetes.io/instance
+        - app.mintel.com/application
         - app.mintel.com/owner
       selector:
         matchLabels:
@@ -914,6 +925,7 @@ Check name, namespace and labels:
         - app.kubernetes.io/part-of
         - app.kubernetes.io/component
         - app.kubernetes.io/instance
+        - app.mintel.com/application
         - app.mintel.com/owner
       selector:
         matchLabels:
