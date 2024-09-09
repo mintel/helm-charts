@@ -114,6 +114,7 @@ app.kubernetes.io/component: app
 - app.kubernetes.io/part-of
 - app.kubernetes.io/component
 - app.kubernetes.io/instance
+- app.mintel.com/application
 - app.mintel.com/owner
 {{- end -}}
 
