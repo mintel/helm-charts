@@ -38,7 +38,7 @@
       {{- if not (hasKey $instanceConfig "aws_region") }}
         {{- $_ := set $instanceConfig "aws_region" $global.clusterRegion }}
       {{ end }}
-      {{- if and (not (hasKey $instanceConfig "eks_cluster_name")) (not (eq $resourceType "lambda")) }}
+      {{- if and (not (hasKey $instanceConfig "eks_cluster_name")) (not (eq $resourceType "lambda" "s3ReplicationRules" "s3MultiRegionAccessPoint")) }}
         {{- $_ := set $instanceConfig "eks_cluster_name" $global.clusterName }}
       {{ end }}
       # Add MintelEventBus tag to defaults if enabled

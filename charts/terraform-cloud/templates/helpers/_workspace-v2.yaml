@@ -28,6 +28,8 @@ metadata:
     {{- end }}
     {{- if (has $resourceType (list "irsa" "extraIAM" "datasync" )) }}
     argocd.argoproj.io/sync-wave: "{{ coalesce $instanceCfg.syncWave $resourceCfg.syncWave -20 }}"
+    {{- else if (has $resourceType (list "s3ReplicationRules" "s3MultiRegionAccessPoint" )) }}
+    argocd.argoproj.io/sync-wave: "{{ coalesce $instanceCfg.syncWave $resourceCfg.syncWave -35 }}"
     {{- else }}
     argocd.argoproj.io/sync-wave: "{{ coalesce $instanceCfg.syncWave $resourceCfg.syncWave -40 }}"
     {{- end }}
@@ -105,7 +107,7 @@ spec:
   {{- $global := $.Values.global }}
   {{- $resourceType := . }}
   {{- $resourceConfig := (get $.Values .) }}
-  {{- if (and $resourceConfig.enabled (has $resourceType (list "opensearch" "s3" "dynamodb" "sns" "sqs")))}}
+  {{- if (and $resourceConfig.enabled (has $resourceType (list "opensearch" "s3" "s3MultiRegionAccessPoint" "dynamodb" "sns" "sqs")))}}
   {{- range $instanceName, $instanceCfg := $resourceConfig.terraform.instances | default ( dict "default" dict ) }}
       # Set instance.name via helper
       {{- $instanceDict := dict "Global" $global "InstanceCfg" $instanceCfg "InstanceName" $instanceName "ResourceType" $resourceType }}
