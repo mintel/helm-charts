@@ -14,13 +14,13 @@ We truncate at 63 chars because sometimes Kubernetes name fields are limited to 
 
 {{/* Supported resources */}}
 {{- define "mintel_common.terraformCloudResources" -}}
-{{- $terraformCloudResources := (list "activeMQ" "apiGatewayHttp" "auroraMySql" "auroraPostgresql" "cmsBackup" "datasync" "dynamodb" "extraIAM" "lambda" "mariadb" "memcached" "opensearch" "postgresql" "redis" "s3" "sns" "sqs" "sshKeyPairSecret" "staticWebsite" "stepFunctionEks") -}}
+{{- $terraformCloudResources := (list "activeMQ" "apiGatewayHttp" "auroraMySql" "auroraPostgresql" "cmsBackup" "datasync" "dynamodb" "extraIAM" "lambda" "mariadb" "memcached" "opensearch" "postgresql" "redis" "s3" "s3ReplicationRules" "s3MultiRegionAccessPoint" "sns" "sqs" "sshKeyPairSecret" "staticWebsite" "stepFunctionEks") -}}
 {{ $terraformCloudResources | sortAlpha | uniq | compact | join "," }}
 {{- end -}}
 
 {{/* Supported resources that require IRSA */}}
 {{- define "mintel_common.terraformCloudIRSAResources" -}}
-{{- $terraformCloudIRSAResources := (list "opensearch" "s3" "dynamodb" "sns" "sqs") -}}
+{{- $terraformCloudIRSAResources := (list "opensearch" "s3" "s3MultiRegionAccessPoint" "dynamodb" "sns" "sqs") -}}
 {{ $terraformCloudIRSAResources | sortAlpha | uniq | compact | join "," }}
 {{- end -}}
 

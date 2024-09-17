@@ -744,6 +744,80 @@ s3:
     # `defaultVars` will be applied to every instance if not explicitly defined here.
     instances: {}
 
+s3ReplicationRules:
+  # -- Set to true to create replication rules for one or more S3 buckets
+  enabled: false
+  # -- Set ArgoCD syncWave for this resource (default -35)
+  syncWave: -35
+  terraform:
+    ### Set Terraform version for this module to overwrite global.TerraformVersion
+    terraformVersion: 1.8.1
+    module:
+      # -- Registry path of the Terraform module used to create the resource
+      # (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/s3-replication-rules/aws)
+      source: app.terraform.io/Mintel/s3-replication-rules/aws//modules/entrypoint
+      # -- Module version
+      version: "0.1.0"
+    # -- Vars to be applied to all instances defined below
+    defaultVars:
+      {}
+      ### Override the generated workspace name, for example if the generated name is above the char limit
+      # workspaceNameOverride: string
+      ### Comma-separated list of tags to add to workspace. Default: "env:<environment>,owner:<owner>,mod:<module>"
+      # workspaceTags: string
+      ### Set to true allows destroy runs on the workspace. Default: false in prod/logs, true in non-prod
+      # workspaceAllowDestroy: bool
+      ### Define either change will be applied automatically(auto) or require an operator to confirm(manual). Default: auto
+      # workspaceApplyMethod: auto
+      ### Specify whether or not to execute a Destroy run when the object is deleted from the Kubernetes. Default: true
+      # moduleDestroyOnDeletion: false
+      ### Determines team ownership of the workspace. Default: Values.global.owner
+      # workspaceOwner: string
+      ### Use to map keys from AWS secret manager secrets to new key names. Map values should be in the form <new key>:<module secret key>
+      # outputSecretMap: {}
+      ### Automatically set to true in prod and false in dev and qa. Override this only if you know what you're doing.
+      # enable_versioning: bool
+    # -- A map of instance names => variable key/value pairs to be sent to the terraform module. The values in
+    # `defaultVars` will be applied to every instance if not explicitly defined here.
+    instances: {}
+
+s3MultiRegionAccessPoint:
+  # -- Set to true to create an S3 bucket
+  enabled: false
+  # -- Set ArgoCD syncWave for this resource (default -35)
+  syncWave: -35
+  terraform:
+    ### Set Terraform version for this module to overwrite global.TerraformVersion
+    terraformVersion: 1.8.1
+    module:
+      # -- Registry path of the Terraform module used to create the resource
+      # (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/s3-multi-region-access-point/aws)
+      source: app.terraform.io/Mintel/s3-multi-region-access-point/aws//modules/entrypoint
+      # -- Module version
+      version: "0.1.0"
+    # -- Vars to be applied to all instances defined below
+    defaultVars:
+      {}
+      ### Override the generated workspace name, for example if the generated name is above the char limit
+      # workspaceNameOverride: string
+      ### Comma-separated list of tags to add to workspace. Default: "env:<environment>,owner:<owner>,mod:<module>"
+      # workspaceTags: string
+      ### Set to true allows destroy runs on the workspace. Default: false in prod/logs, true in non-prod
+      # workspaceAllowDestroy: bool
+      ### Define either change will be applied automatically(auto) or require an operator to confirm(manual). Default: auto
+      # workspaceApplyMethod: auto
+      ### Specify whether or not to execute a Destroy run when the object is deleted from the Kubernetes. Default: true
+      # moduleDestroyOnDeletion: false
+      ### Determines team ownership of the workspace. Default: Values.global.owner
+      # workspaceOwner: string
+      ### Use to map keys from AWS secret manager secrets to new key names. Map values should be in the form <new key>:<module secret key>
+      # outputSecretMap: {}
+      ### Automatically set to true in prod and false in dev and qa. Override this only if you know what you're doing.
+      # enable_versioning: bool
+    # -- A map of instance names => variable key/value pairs to be sent to the terraform module. The values in
+    # `defaultVars` will be applied to every instance if not explicitly defined here.
+    instances: {}
+
 sns:
   # -- Set to true to create an SNS resource
   enabled: false

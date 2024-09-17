@@ -27,6 +27,8 @@ metadata:
     {{- end }}
     {{- if (has $resourceType (list "irsa" "extraIAM" "datasync" )) }}
     argocd.argoproj.io/sync-wave: "{{ coalesce $instanceCfg.syncWave $resourceCfg.syncWave -20 }}"
+    {{- else if (has $resourceType (list "s3ReplicationRules" "s3MultiRegionAccessPoint" )) }}
+    argocd.argoproj.io/sync-wave: "{{ coalesce $instanceCfg.syncWave $resourceCfg.syncWave -35 }}"
     {{- else }}
     argocd.argoproj.io/sync-wave: "{{ coalesce $instanceCfg.syncWave $resourceCfg.syncWave -40 }}"
     {{- end }}
