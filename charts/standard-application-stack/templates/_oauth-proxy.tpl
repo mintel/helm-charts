@@ -73,7 +73,6 @@
     {{- toYaml .proxiedService.oauthProxy.resources | nindent 4 }}
     {{- else }}
     limits:
-      cpu: 200m
       memory: 128Mi
     requests:
       cpu: 100m

@@ -355,7 +355,6 @@ readiness:
 resources:
   # -- The resource limits for the container
   limits: {}
-  #    cpu: 1000m
   #    memory: 2Gi
   # -- The requested resources for the container
   requests: {}
@@ -716,7 +715,6 @@ oauthProxy:
   #  resources:
   # -- The resource limits for the container
   #    limits: {}
-  #    cpu: 200m
   #    memory: 128Mi
   # -- The requested resources for the container
   #    requests: {}
@@ -769,7 +767,6 @@ celery:
   resources:
     # -- The resource limits for the container
     limits: {}
-    #    cpu: 1000m
     #    memory: 2Gi
     # -- The requested resources for the container
     requests: {}
@@ -843,7 +840,6 @@ celeryBeat:
   resources:
     # -- The resource limits for the container
     limits: {}
-    #    cpu: 1000m
     #    memory: 2Gi
     # -- The requested resources for the container
     requests: {}
@@ -917,7 +913,6 @@ cronjobs:
     #   extraInitContainers: {}
     #   resources:
     #     limits:
-    #       cpu: 1000m
     #       memory: 2Gi
     #     requests:
     #       cpu: 1000m
@@ -1027,7 +1022,6 @@ mariadb:
     #    image: {}
     resources:
       limits:
-        cpu: 300m
         memory: 128Mi
       requests:
         cpu: 100m
@@ -1037,7 +1031,6 @@ mariadb:
     #    image: {}
     resources:
       limits:
-        cpu: 300m
         memory: 128Mi
       requests:
         cpu: 100m
@@ -1096,7 +1089,6 @@ postgresql:
     #    image: {}
     resources:
       limits:
-        cpu: 300m
         memory: 128Mi
       requests:
         cpu: 100m
@@ -1106,7 +1098,6 @@ postgresql:
     #    image: {}
     resources:
       limits:
-        cpu: 300m
         memory: 128Mi
       requests:
         cpu: 100m
@@ -1185,7 +1176,6 @@ gitSyncSidecar:
 
   resources:
     limits:
-      cpu: 200m
       memory: 200Mi
     requests:
       cpu: 50m
@@ -1195,7 +1185,6 @@ filebeatSidecar:
   enabled: false
   resources:
     limits:
-      cpu: 200m
       memory: 200Mi
     requests:
       cpu: 100m
@@ -1213,7 +1202,6 @@ filebeatSidecar:
     enabled: true
     resources:
       limits:
-        cpu: 200m
         memory: 200Mi
       requests:
         cpu: 100m
@@ -1247,7 +1235,6 @@ opensearch:
     # ref: http://kubernetes.io/docs/user-guide/compute-resources
     resources:
       limits:
-        cpu: 200m
         memory: 128Mi
       requests:
         cpu: 100m

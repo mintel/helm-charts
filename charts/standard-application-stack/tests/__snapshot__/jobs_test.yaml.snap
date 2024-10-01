@@ -46,7 +46,6 @@ Check all .job.* values can be set correctly, without overriding from main deplo
               name: main
               resources:
                 limits:
-                  cpu: 1000m
                   memory: 2Gi
                 requests:
                   cpu: 1000m
@@ -119,7 +118,6 @@ Check all overrides/additions from main deployment work if enabled:
               name: main
               resources:
                 limits:
-                  cpu: 1000m
                   memory: 2Gi
                 requests:
                   cpu: 1000m
@@ -208,7 +206,6 @@ Check default values are correct with minimal configuration:
               name: main
               resources:
                 limits:
-                  cpu: 1000m
                   memory: 2Gi
                 requests:
                   cpu: 1000m
