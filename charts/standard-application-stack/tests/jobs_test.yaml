@@ -14,7 +14,6 @@ tests:
         - name: testJobName
           resources:
             limits:
-              cpu: 1000m
               memory: 2Gi
             requests:
               cpu: 1000m
@@ -75,7 +74,6 @@ tests:
               image: someimage
           resources:
             limits:
-              cpu: 1000m
               memory: 2Gi
             requests:
               cpu: 1000m
@@ -139,7 +137,6 @@ tests:
           path: spec.template.spec.containers[0].resources
           value:
             limits:
-              cpu: 1000m
               memory: 2Gi
             requests:
               cpu: 1000m
@@ -178,7 +175,6 @@ tests:
                 name: another-secret-ref
           resources:
             limits:
-              cpu: 1000m
               memory: 2Gi
             requests:
               cpu: 1000m

@@ -138,7 +138,6 @@ Check default container args:
                   scheme: HTTP
               resources:
                 limits:
-                  cpu: 200m
                   memory: 128Mi
                 requests:
                   cpu: 100m
@@ -307,7 +306,6 @@ Check setting skip-auth-regex from extra passed in values:
                   scheme: HTTP
               resources:
                 limits:
-                  cpu: 200m
                   memory: 128Mi
                 requests:
                   cpu: 100m
@@ -476,7 +474,6 @@ Check setting skip-auth-regex from extra passed in values when they already cont
                   scheme: HTTP
               resources:
                 limits:
-                  cpu: 200m
                   memory: 128Mi
                 requests:
                   cpu: 100m
@@ -644,7 +641,6 @@ Check setting skip-auth-regex from overridden health-check values:
                   scheme: HTTP
               resources:
                 limits:
-                  cpu: 200m
                   memory: 128Mi
                 requests:
                   cpu: 100m
@@ -812,7 +808,6 @@ Check sidecar present if enabled:
                   scheme: HTTP
               resources:
                 limits:
-                  cpu: 200m
                   memory: 128Mi
                 requests:
                   cpu: 100m
