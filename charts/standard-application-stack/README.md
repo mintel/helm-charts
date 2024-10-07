@@ -1,6 +1,6 @@
 # standard-application-stack
 
-![Version: 7.5.1](https://img.shields.io/badge/Version-7.5.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 7.5.2](https://img.shields.io/badge/Version-7.5.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A generic chart to support most common application requirements
 
@@ -93,10 +93,10 @@ A generic chart to support most common application requirements
 | filebeatSidecar.enabled | bool | `false` |  |
 | filebeatSidecar.metrics.enabled | bool | `true` |  |
 | filebeatSidecar.metrics.resources.limits.memory | string | `"200Mi"` |  |
-| filebeatSidecar.metrics.resources.requests.cpu | string | `"100m"` |  |
+| filebeatSidecar.metrics.resources.requests.cpu | string | `"10m"` |  |
 | filebeatSidecar.metrics.resources.requests.memory | string | `"100Mi"` |  |
 | filebeatSidecar.resources.limits.memory | string | `"200Mi"` |  |
-| filebeatSidecar.resources.requests.cpu | string | `"100m"` |  |
+| filebeatSidecar.resources.requests.cpu | string | `"10m"` |  |
 | filebeatSidecar.resources.requests.memory | string | `"100Mi"` |  |
 | gitSyncSidecar | object | `{"branch":"main","enabled":false,"resources":{"limits":{"memory":"200Mi"},"requests":{"cpu":"50m","memory":"50Mi"}},"root":"/data/git-sync"}` | Helper to sync a local directory with Git ref: https://github.com/kubernetes/git-sync |
 | gitSyncSidecar.branch | string | `"main"` | The git branch to check out |
@@ -197,13 +197,13 @@ A generic chart to support most common application requirements
 | main | object | `{"env":[]}` | Optional environment variables injected into the 'main' container of the app-deployment |
 | mariadb.client.enabled | bool | `true` |  |
 | mariadb.client.resources.limits.memory | string | `"128Mi"` |  |
-| mariadb.client.resources.requests.cpu | string | `"100m"` |  |
+| mariadb.client.resources.requests.cpu | string | `"10m"` |  |
 | mariadb.client.resources.requests.memory | string | `"64Mi"` |  |
 | mariadb.enabled | bool | `false` |  |
 | mariadb.extraUsers | object | `{"enabled":false,"job":{"logLevel":"INFO"},"users":[]}` | set up extra users for a database and table that already exist |
 | mariadb.metrics.enabled | bool | `false` |  |
 | mariadb.metrics.resources.limits.memory | string | `"128Mi"` |  |
-| mariadb.metrics.resources.requests.cpu | string | `"100m"` |  |
+| mariadb.metrics.resources.requests.cpu | string | `"10m"` |  |
 | mariadb.metrics.resources.requests.memory | string | `"64Mi"` |  |
 | mariadb.outputSecret | bool | `true` | set outputSecret to true to allow TF Cloud chart create ExternalSecrets |
 | memcached.enabled | bool | `false` |  |
@@ -239,8 +239,8 @@ A generic chart to support most common application requirements
 | oauthProxy.skipAuthRegexes | list | `[]` | Optional: list of URL endpoints to bypass oauth-proxy for Health check and readiness urls are skipped automatically |
 | oauthProxy.type | string | `"portal"` | Identifies oauth-proxy as auth'ing with a mintel portal instance |
 | oauthProxy.userIdClaim | string | `""` | Optional: Claim contains the user ID |
-| opensearch | object | `{"awsEsProxy":{"enabled":false,"ingress":{"alb":{"backendProtocol":"HTTP","backendProtocolVersion":"HTTP1","healthcheck":{"healthyThresholdCount":2,"intervalSeconds":15,"path":"/_cluster/health","protocol":"HTTP","timeoutSeconds":5,"unhealthyThresholdCount":2},"okta":{"authOnUnauthenticated":"authenticate","enabled":false,"extraRedirectPaths":[],"groups":"","ingressName":"","redirectPath":"","users":""},"preStopDelay":{"delaySeconds":15,"enabled":true},"scheme":"internet-facing","targetGroupAttributes":{"deregistration_delay.timeout_seconds":5,"load_balancing.algorithm.type":"least_outstanding_requests"}},"enabled":false,"extraAnnotations":{},"path":"/_dashboards"},"port":9200,"resources":{"limits":{"memory":"128Mi"},"requests":{"cpu":"100m","memory":"64Mi"}},"securityContext":{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"runAsNonRoot":true,"runAsUser":65534,"seccompProfile":{"type":"RuntimeDefault"}}},"enabled":false,"outputSecret":true,"secretRefreshIntervalOverride":"","secretStoreRefOverride":""}` | Configures AWS Opensearch deployment/connections |
-| opensearch.awsEsProxy | object | `{"enabled":false,"ingress":{"alb":{"backendProtocol":"HTTP","backendProtocolVersion":"HTTP1","healthcheck":{"healthyThresholdCount":2,"intervalSeconds":15,"path":"/_cluster/health","protocol":"HTTP","timeoutSeconds":5,"unhealthyThresholdCount":2},"okta":{"authOnUnauthenticated":"authenticate","enabled":false,"extraRedirectPaths":[],"groups":"","ingressName":"","redirectPath":"","users":""},"preStopDelay":{"delaySeconds":15,"enabled":true},"scheme":"internet-facing","targetGroupAttributes":{"deregistration_delay.timeout_seconds":5,"load_balancing.algorithm.type":"least_outstanding_requests"}},"enabled":false,"extraAnnotations":{},"path":"/_dashboards"},"port":9200,"resources":{"limits":{"memory":"128Mi"},"requests":{"cpu":"100m","memory":"64Mi"}},"securityContext":{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"runAsNonRoot":true,"runAsUser":65534,"seccompProfile":{"type":"RuntimeDefault"}}}` | Configures aws-es-proxy to enable external access to opensearch |
+| opensearch | object | `{"awsEsProxy":{"enabled":false,"ingress":{"alb":{"backendProtocol":"HTTP","backendProtocolVersion":"HTTP1","healthcheck":{"healthyThresholdCount":2,"intervalSeconds":15,"path":"/_cluster/health","protocol":"HTTP","timeoutSeconds":5,"unhealthyThresholdCount":2},"okta":{"authOnUnauthenticated":"authenticate","enabled":false,"extraRedirectPaths":[],"groups":"","ingressName":"","redirectPath":"","users":""},"preStopDelay":{"delaySeconds":15,"enabled":true},"scheme":"internet-facing","targetGroupAttributes":{"deregistration_delay.timeout_seconds":5,"load_balancing.algorithm.type":"least_outstanding_requests"}},"enabled":false,"extraAnnotations":{},"path":"/_dashboards"},"port":9200,"resources":{"limits":{"memory":"128Mi"},"requests":{"cpu":"10m","memory":"64Mi"}},"securityContext":{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"runAsNonRoot":true,"runAsUser":65534,"seccompProfile":{"type":"RuntimeDefault"}}},"enabled":false,"outputSecret":true,"secretRefreshIntervalOverride":"","secretStoreRefOverride":""}` | Configures AWS Opensearch deployment/connections |
+| opensearch.awsEsProxy | object | `{"enabled":false,"ingress":{"alb":{"backendProtocol":"HTTP","backendProtocolVersion":"HTTP1","healthcheck":{"healthyThresholdCount":2,"intervalSeconds":15,"path":"/_cluster/health","protocol":"HTTP","timeoutSeconds":5,"unhealthyThresholdCount":2},"okta":{"authOnUnauthenticated":"authenticate","enabled":false,"extraRedirectPaths":[],"groups":"","ingressName":"","redirectPath":"","users":""},"preStopDelay":{"delaySeconds":15,"enabled":true},"scheme":"internet-facing","targetGroupAttributes":{"deregistration_delay.timeout_seconds":5,"load_balancing.algorithm.type":"least_outstanding_requests"}},"enabled":false,"extraAnnotations":{},"path":"/_dashboards"},"port":9200,"resources":{"limits":{"memory":"128Mi"},"requests":{"cpu":"10m","memory":"64Mi"}},"securityContext":{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"runAsNonRoot":true,"runAsUser":65534,"seccompProfile":{"type":"RuntimeDefault"}}}` | Configures aws-es-proxy to enable external access to opensearch |
 | opensearch.awsEsProxy.enabled | bool | `false` | Set to true to add an aws-es-proxy deployment in front of opensearch |
 | opensearch.awsEsProxy.ingress.alb.backendProtocol | string | `"HTTP"` | Application Version (HTTP / HTTPS) |
 | opensearch.awsEsProxy.ingress.alb.backendProtocolVersion | string | `"HTTP1"` | Application Protocol Version (HTTP1 / HTTP2 / GRPC) |
@@ -263,7 +263,7 @@ A generic chart to support most common application requirements
 | opensearch.awsEsProxy.ingress.alb.targetGroupAttributes | object | `{"deregistration_delay.timeout_seconds":5,"load_balancing.algorithm.type":"least_outstanding_requests"}` | Target group attributes (see: https://docs.aws.amazon.com/elasticloadbalancing/latest/application/load-balancer-target-groups.html#target-group-attributes) |
 | opensearch.awsEsProxy.ingress.path | string | `"/_dashboards"` | Path for the Ingress |
 | opensearch.awsEsProxy.port | int | `9200` | Port for aws-es-proxy to listen on |
-| opensearch.awsEsProxy.resources | object | `{"limits":{"memory":"128Mi"},"requests":{"cpu":"100m","memory":"64Mi"}}` | Container resource requests and limits for aws-es-proxy sidecar ref: http://kubernetes.io/docs/user-guide/compute-resources |
+| opensearch.awsEsProxy.resources | object | `{"limits":{"memory":"128Mi"},"requests":{"cpu":"10m","memory":"64Mi"}}` | Container resource requests and limits for aws-es-proxy sidecar ref: http://kubernetes.io/docs/user-guide/compute-resources |
 | opensearch.awsEsProxy.securityContext | object | `{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"runAsNonRoot":true,"runAsUser":65534,"seccompProfile":{"type":"RuntimeDefault"}}` | Ingress for aws-es-proxy |
 | opensearch.enabled | bool | `false` | Set to true if deployment makes use of AWS opensearch |
 | opensearch.outputSecret | bool | `true` | set outputSecret to true to allow TF Cloud chart create ExternalSecrets |
@@ -287,7 +287,7 @@ A generic chart to support most common application requirements
 | port | int | `8000` | Set port to null to skip adding container Ports |
 | postgresql.client.enabled | bool | `true` |  |
 | postgresql.client.resources.limits.memory | string | `"128Mi"` |  |
-| postgresql.client.resources.requests.cpu | string | `"100m"` |  |
+| postgresql.client.resources.requests.cpu | string | `"10m"` |  |
 | postgresql.client.resources.requests.memory | string | `"64Mi"` |  |
 | postgresql.enabled | bool | `false` |  |
 | postgresql.extraUsers.enabled | bool | `false` |  |
@@ -296,7 +296,7 @@ A generic chart to support most common application requirements
 | postgresql.image.tag | string | `"13.5.0-debian-10-r52"` |  |
 | postgresql.metrics.enabled | bool | `false` |  |
 | postgresql.metrics.resources.limits.memory | string | `"128Mi"` |  |
-| postgresql.metrics.resources.requests.cpu | string | `"100m"` |  |
+| postgresql.metrics.resources.requests.cpu | string | `"10m"` |  |
 | postgresql.metrics.resources.requests.memory | string | `"64M"` |  |
 | postgresql.outputSecret | bool | `true` | set outputSecret to true to allow TF Cloud chart create ExternalSecrets |
 | postgresql.postgresqlDatabase | string | `"postgres"` |  |
