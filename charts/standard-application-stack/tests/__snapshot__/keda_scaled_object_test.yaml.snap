@@ -3,6 +3,8 @@ Check utilization takes precedence over average value when both specified:
     apiVersion: keda.sh/v1alpha1
     kind: ScaledObject
     metadata:
+      annotations:
+        argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
       labels:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
@@ -41,6 +43,8 @@ Creates a ScaledObject for a Deployment:
     apiVersion: keda.sh/v1alpha1
     kind: ScaledObject
     metadata:
+      annotations:
+        argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
       labels:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
@@ -70,6 +74,8 @@ Creates a ScaledObject for a StatefulSet:
     apiVersion: keda.sh/v1alpha1
     kind: ScaledObject
     metadata:
+      annotations:
+        argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
       labels:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
@@ -99,6 +105,8 @@ Creates a ScaledObject for a custom scaleTargetRef:
     apiVersion: keda.sh/v1alpha1
     kind: ScaledObject
     metadata:
+      annotations:
+        argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
       labels:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
@@ -128,6 +136,8 @@ Creates a ScaledObject with advanced settings:
     apiVersion: keda.sh/v1alpha1
     kind: ScaledObject
     metadata:
+      annotations:
+        argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
       labels:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
@@ -167,6 +177,8 @@ Creates a ScaledObject with both targetCPUAverageValue and targetMemoryAverageVa
     apiVersion: keda.sh/v1alpha1
     kind: ScaledObject
     metadata:
+      annotations:
+        argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
       labels:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
@@ -205,6 +217,8 @@ Creates a ScaledObject with both targetCPUAverageValue trigger:
     apiVersion: keda.sh/v1alpha1
     kind: ScaledObject
     metadata:
+      annotations:
+        argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
       labels:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
@@ -239,6 +253,8 @@ Creates a ScaledObject with both targetCPUUtilizationPercentage and targetMemory
     apiVersion: keda.sh/v1alpha1
     kind: ScaledObject
     metadata:
+      annotations:
+        argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
       labels:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
@@ -277,6 +293,8 @@ Creates a ScaledObject with custom triggers:
     apiVersion: keda.sh/v1alpha1
     kind: ScaledObject
     metadata:
+      annotations:
+        argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
       labels:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
@@ -317,6 +335,8 @@ Creates a ScaledObject with default fallback based on minReplicaCount:
     apiVersion: keda.sh/v1alpha1
     kind: ScaledObject
     metadata:
+      annotations:
+        argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
       labels:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
@@ -346,6 +366,8 @@ Creates a ScaledObject with explicit fallback settings:
     apiVersion: keda.sh/v1alpha1
     kind: ScaledObject
     metadata:
+      annotations:
+        argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
       labels:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
@@ -375,6 +397,8 @@ Creates a ScaledObject with targetCPUUtilizationPercentage trigger:
     apiVersion: keda.sh/v1alpha1
     kind: ScaledObject
     metadata:
+      annotations:
+        argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
       labels:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
@@ -409,6 +433,8 @@ Creates a ScaledObject with targetMemoryAverageValue trigger:
     apiVersion: keda.sh/v1alpha1
     kind: ScaledObject
     metadata:
+      annotations:
+        argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
       labels:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
@@ -443,6 +469,8 @@ Creates a ScaledObject with targetMemoryUtilizationPercentage trigger:
     apiVersion: keda.sh/v1alpha1
     kind: ScaledObject
     metadata:
+      annotations:
+        argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
       labels:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm

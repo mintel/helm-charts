@@ -6,6 +6,8 @@ metadata:
   name: {{ include "mintel_common.fullname" . }}
   namespace: {{ .Release.Namespace }}
   labels: {{ include "mintel_common.labels" . | nindent 4 }}
+  annotations:
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
   {{- with .Values.autoscaling }}
   cooldownPeriod: {{ include "mintel_common.keda.scaledObject.cooldownPeriod" .}}

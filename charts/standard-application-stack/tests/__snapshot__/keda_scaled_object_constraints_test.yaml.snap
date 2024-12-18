@@ -3,6 +3,8 @@ Check idleReplicaCount is equal to 0 when enableZeroReplicas is set:
     apiVersion: keda.sh/v1alpha1
     kind: ScaledObject
     metadata:
+      annotations:
+        argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
       labels:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
@@ -33,6 +35,8 @@ Check trigger vars automatically populated:
     apiVersion: keda.sh/v1alpha1
     kind: ScaledObject
     metadata:
+      annotations:
+        argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
       labels:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
@@ -80,6 +84,8 @@ Check trigger vars can be overriden:
     apiVersion: keda.sh/v1alpha1
     kind: ScaledObject
     metadata:
+      annotations:
+        argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
       labels:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
@@ -127,6 +133,8 @@ Creates a ScaledObject with constrained settings:
     apiVersion: keda.sh/v1alpha1
     kind: ScaledObject
     metadata:
+      annotations:
+        argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
       labels:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
@@ -156,6 +164,8 @@ Creates a ScaledObject with non-constrained settings:
     apiVersion: keda.sh/v1alpha1
     kind: ScaledObject
     metadata:
+      annotations:
+        argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
       labels:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
@@ -185,6 +195,8 @@ Ensure minReplicaCount cannot be greater than 10:
     apiVersion: keda.sh/v1alpha1
     kind: ScaledObject
     metadata:
+      annotations:
+        argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
       labels:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
