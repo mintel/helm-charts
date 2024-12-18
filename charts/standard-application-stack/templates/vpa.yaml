@@ -10,6 +10,7 @@ metadata:
   name: {{ if $.Values.statefulset }}statefulset{{ else }}deployment{{ end }}-{{ include "mintel_common.fullname" $app }}
   namespace: {{ $.Release.Namespace }}
   annotations: {{ include "mintel_common.commonAnnotations" $app | nindent 4 }}
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
   labels: {{ include "mintel_common.labels" $app | nindent 4 }}
 spec:
   targetRef:
@@ -45,6 +46,7 @@ metadata:
   name: cronjob-{{ include "mintel_common.fullname" $app }}
   namespace: {{ $.Release.Namespace }}
   annotations: {{ include "mintel_common.commonAnnotations" $app | nindent 4 }}
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
   labels: {{ include "mintel_common.labels" $app | nindent 4 }}
 spec:
   targetRef:
@@ -74,6 +76,7 @@ metadata:
   name: deployment-{{ include "mintel_common.fullname" $app }}
   namespace: {{ $.Release.Namespace }}
   annotations: {{ include "mintel_common.commonAnnotations" $app | nindent 4 }}
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
   labels: {{ include "mintel_common.labels" $app | nindent 4 }}
 spec:
   targetRef:
@@ -103,6 +106,7 @@ metadata:
   name: deployment-{{ include "mintel_common.fullname" $app }}
   namespace: {{ $.Release.Namespace }}
   annotations: {{ include "mintel_common.commonAnnotations" $app | nindent 4 }}
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
   labels: {{ include "mintel_common.labels" $app | nindent 4 }}
 spec:
   targetRef:
@@ -132,6 +136,7 @@ metadata:
   name: deployment-{{ include "mintel_common.fullname" $app }}
   namespace: {{ $.Release.Namespace }}
   annotations: {{ include "mintel_common.commonAnnotations" $app | nindent 4 }}
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
   labels: {{ include "mintel_common.labels" $app | nindent 4 }}
 spec:
   targetRef:
@@ -161,6 +166,7 @@ metadata:
   name: deployment-{{ include "mintel_common.fullname" $app }}
   namespace: {{ $.Release.Namespace }}
   annotations: {{ include "mintel_common.commonAnnotations" $app | nindent 4 }}
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
   labels: {{ include "mintel_common.labels" $app | nindent 4 }}
 spec:
   targetRef:
@@ -190,6 +196,7 @@ metadata:
   name: deployment-{{ include "mintel_common.fullname" $app }}
   namespace: {{ $.Release.Namespace }}
   annotations: {{ include "mintel_common.commonAnnotations" $app | nindent 4 }}
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
   labels: {{ include "mintel_common.labels" $app | nindent 4 }}
 spec:
   targetRef:
@@ -219,6 +226,7 @@ metadata:
   name: deployment-{{ include "mintel_common.fullname" $app }}
   namespace: {{ $.Release.Namespace }}
   annotations: {{ include "mintel_common.commonAnnotations" $app | nindent 4 }}
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
   labels: {{ include "mintel_common.labels" $app | nindent 4 }}
 spec:
   targetRef:
@@ -248,6 +256,7 @@ metadata:
   name: deployment-{{ include "mintel_common.fullname" $app }}
   namespace: {{ $.Release.Namespace }}
   annotations: {{ include "mintel_common.commonAnnotations" $app | nindent 4 }}
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
   labels: {{ include "mintel_common.labels" $app | nindent 4 }}
 spec:
   targetRef:
@@ -277,6 +286,7 @@ metadata:
   name: deployment-{{ include "mintel_common.fullname" $app }}
   namespace: {{ $.Release.Namespace }}
   annotations: {{ include "mintel_common.commonAnnotations" $app | nindent 4 }}
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
   labels: {{ include "mintel_common.labels" $app | nindent 4 }}
 spec:
   targetRef:

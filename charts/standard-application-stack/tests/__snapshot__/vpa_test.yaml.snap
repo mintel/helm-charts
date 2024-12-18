@@ -5,6 +5,7 @@ Can have per-VerticalPodAutoscaler overrides:
     metadata:
       annotations:
         app.mintel.com/placeholder: placeholder
+        argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
       labels:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
@@ -31,6 +32,7 @@ Can set container policies:
     metadata:
       annotations:
         app.mintel.com/placeholder: placeholder
+        argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
       labels:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
@@ -66,6 +68,7 @@ Creates a VerticalPodAutoscaler for a Deployment:
     metadata:
       annotations:
         app.mintel.com/placeholder: placeholder
+        argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
       labels:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
@@ -92,6 +95,7 @@ Creates a VerticalPodAutoscaler for a StatefulSet:
     metadata:
       annotations:
         app.mintel.com/placeholder: placeholder
+        argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
       labels:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
@@ -118,6 +122,7 @@ Creates a VerticalPodAutoscaler for aws-es-proxy:
     metadata:
       annotations:
         app.mintel.com/placeholder: placeholder
+        argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
       labels:
         app.kubernetes.io/component: aws-es-proxy
         app.kubernetes.io/managed-by: Helm
@@ -144,6 +149,7 @@ Creates a VerticalPodAutoscaler for celery:
     metadata:
       annotations:
         app.mintel.com/placeholder: placeholder
+        argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
       labels:
         app.kubernetes.io/component: celery
         app.kubernetes.io/managed-by: Helm
@@ -170,6 +176,7 @@ Creates a VerticalPodAutoscaler for celery-beat:
     metadata:
       annotations:
         app.mintel.com/placeholder: placeholder
+        argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
       labels:
         app.kubernetes.io/component: celery-beat
         app.kubernetes.io/managed-by: Helm
@@ -196,6 +203,7 @@ Creates a VerticalPodAutoscaler for celery-exporter:
     metadata:
       annotations:
         app.mintel.com/placeholder: placeholder
+        argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
       labels:
         app.kubernetes.io/component: celery-exporter
         app.kubernetes.io/managed-by: Helm
@@ -222,6 +230,7 @@ Creates a VerticalPodAutoscaler for mysqlclient:
     metadata:
       annotations:
         app.mintel.com/placeholder: placeholder
+        argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
       labels:
         app.kubernetes.io/component: mysqlclient
         app.kubernetes.io/managed-by: Helm
@@ -248,6 +257,7 @@ Creates a VerticalPodAutoscaler for mysqldexporter:
     metadata:
       annotations:
         app.mintel.com/placeholder: placeholder
+        argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
       labels:
         app.kubernetes.io/component: mysqldexporter
         app.kubernetes.io/managed-by: Helm
@@ -274,6 +284,7 @@ Creates a VerticalPodAutoscaler for postgresqlclient:
     metadata:
       annotations:
         app.mintel.com/placeholder: placeholder
+        argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
       labels:
         app.kubernetes.io/component: postgresqlclient
         app.kubernetes.io/managed-by: Helm
@@ -300,6 +311,7 @@ Creates a VerticalPodAutoscaler for postgresqlexporter:
     metadata:
       annotations:
         app.mintel.com/placeholder: placeholder
+        argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
       labels:
         app.kubernetes.io/component: postgresqlexporter
         app.kubernetes.io/managed-by: Helm
@@ -326,6 +338,7 @@ Creates a VerticalPodAutoscaler with autoscaling enabled:
     metadata:
       annotations:
         app.mintel.com/placeholder: placeholder
+        argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
       labels:
         app.kubernetes.io/component: app
         app.kubernetes.io/managed-by: Helm
@@ -352,6 +365,7 @@ Only creates VerticalPodAutoscaler for CronJobs if cronjobsOnly is true:
     metadata:
       annotations:
         app.mintel.com/placeholder: placeholder
+        argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
       labels:
         app.kubernetes.io/component: daily
         app.kubernetes.io/managed-by: Helm
