@@ -32,7 +32,7 @@ spec:
       {{- end }}
       containers:
         - name: main
-          image: {{ .Values.mariadb.client.image | default "index.docker.io/mintel/k8s-mysqlclient:0.6.0" }}
+          image: {{ .Values.mariadb.client.image | default "551844124467.dkr.ecr.${CLUSTER_REGION}.amazonaws.com/gitlab/mintel/satoshi/tools/k8s-mysqlclient:v0.7.0" }}
           imagePullPolicy: {{ .Values.image.pullPolicy | default "IfNotPresent" }}
           env:
             - name: KUBERNETES_POD_NAMESPACE
