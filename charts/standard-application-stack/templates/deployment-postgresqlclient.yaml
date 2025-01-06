@@ -32,7 +32,7 @@ spec:
       {{- end }}
       containers:
         - name: main
-          image: {{ .Values.postgresql.client.image | default "index.docker.io/mintel/k8s-postgresclient:0.1.1" }}
+          image: {{ .Values.postgresql.client.image | default "551844124467.dkr.ecr.${CLUSTER_REGION}.amazonaws.com/gitlab/mintel/satoshi/tools/k8s-postgresclient:v0.2.0" }}
           imagePullPolicy: {{ .Values.image.pullPolicy | default "IfNotPresent" }}
           env:
             - name: KUBERNETES_POD_NAMESPACE
