@@ -186,7 +186,7 @@ Check awsEsProxy deployment is created if enabled:
               envFrom:
                 - secretRef:
                     name: example-app-opensearch
-              image: 551844124467.dkr.ecr.${CLUSTER_REGION}.amazonaws.com/gitlab/mintel/satoshi/tools/aws-es-proxy:v0.1.0
+              image: 551844124467.dkr.ecr.${CLUSTER_REGION}.amazonaws.com/gitlab/mintel/satoshi/tools/aws-es-proxy:v0.2.0
               imagePullPolicy: IfNotPresent
               livenessProbe:
                 tcpSocket:
@@ -215,7 +215,7 @@ Check awsEsProxy deployment is created if enabled:
                   drop:
                     - ALL
                 runAsNonRoot: true
-                runAsUser: 65534
+                runAsUser: 1000
                 seccompProfile:
                   type: RuntimeDefault
               startupProbe:

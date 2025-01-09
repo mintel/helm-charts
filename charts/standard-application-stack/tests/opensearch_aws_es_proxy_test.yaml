@@ -23,7 +23,7 @@ tests:
           value: example-app-aws-es-proxy
       - equal:
           path: spec.template.spec.containers[0].image
-          value: 551844124467.dkr.ecr.${CLUSTER_REGION}.amazonaws.com/gitlab/mintel/satoshi/tools/aws-es-proxy:v0.1.0
+          value: 551844124467.dkr.ecr.${CLUSTER_REGION}.amazonaws.com/gitlab/mintel/satoshi/tools/aws-es-proxy:v0.2.0
 
   - it: Check awsEsProxy service is created if enabled
     template: service-aws-es-proxy.yaml
