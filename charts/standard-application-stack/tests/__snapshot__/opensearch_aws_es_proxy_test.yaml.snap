@@ -186,7 +186,7 @@ Check awsEsProxy deployment is created if enabled:
               envFrom:
                 - secretRef:
                     name: example-app-opensearch
-              image: index.docker.io/mintel/aws-es-proxy:v1.3.0_mintel.0.1.0
+              image: 551844124467.dkr.ecr.${CLUSTER_REGION}.amazonaws.com/gitlab/mintel/satoshi/tools/aws-es-proxy:v0.1.0
               imagePullPolicy: IfNotPresent
               livenessProbe:
                 tcpSocket:
