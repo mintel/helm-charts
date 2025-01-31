@@ -1,6 +1,9 @@
 suite: Test Pod Disruption Budgets
 templates:
   - pdbs.yaml
+capabilities:
+  majorVersion: 1
+  minorVersion: 31
 release:
   namespace: test-namespace
 tests:
