@@ -225,9 +225,6 @@ Check awsEsProxy deployment is created if enabled:
                   port: http
                   scheme: HTTP
                 periodSeconds: 5
-          imagePullSecrets:
-            - name: image-pull-gitlab
-            - name: image-pull-docker-hub
           securityContext:
             runAsNonRoot: true
             runAsUser: 1000

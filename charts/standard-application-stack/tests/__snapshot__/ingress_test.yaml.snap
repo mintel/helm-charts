@@ -435,9 +435,6 @@ Check EXTRA_ALLOWED_HOSTS env var extraHosts with extraIngresses:
                   port: http
                   scheme: HTTP
                 periodSeconds: 5
-          imagePullSecrets:
-            - name: image-pull-gitlab
-            - name: image-pull-docker-hub
           securityContext:
             runAsNonRoot: true
             runAsUser: 1000

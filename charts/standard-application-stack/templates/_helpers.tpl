@@ -251,21 +251,13 @@ Create a default s3 external secret name.
 Return the proper Docker Image Registry Secret Names
 */}}
 {{- define "mintel_common.imagePullSecrets" -}}
+{{- $names := concat (.Values | merge (dict) | dig "global" "imagePullSecrets" (list)) (.Values | merge (dict) | dig "imagePullSecrets" (list)) | compact | uniq -}}
+{{- if $names -}}
 imagePullSecrets:
-{{- if .Values.global }}
-{{- with .Values.global.imagePullSecrets }}
-{{- range . }}
+{{- range $names }}
   - name: {{ . }}
 {{- end }}
 {{- end }}
-{{- end }}
-{{- with .Values.image.pullSecrets }}
-{{- range . }}
-  - name: {{ . }}
-{{- end }}
-{{- end }}
-  - name: image-pull-gitlab
-  - name: image-pull-docker-hub
 {{- end -}}
 
 {{/*

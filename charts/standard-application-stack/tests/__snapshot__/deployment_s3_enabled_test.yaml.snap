@@ -93,9 +93,6 @@ Check S3 envfrom secretRef is present:
                   port: http
                   scheme: HTTP
                 periodSeconds: 5
-          imagePullSecrets:
-            - name: image-pull-gitlab
-            - name: image-pull-docker-hub
           securityContext:
             runAsNonRoot: true
             runAsUser: 1000
@@ -210,9 +207,6 @@ Check S3 envfrom secretRef is present for local environment:
                   port: http
                   scheme: HTTP
                 periodSeconds: 5
-          imagePullSecrets:
-            - name: image-pull-gitlab
-            - name: image-pull-docker-hub
           securityContext:
             runAsNonRoot: true
             runAsUser: 1000
@@ -320,9 +314,6 @@ Check S3 envfrom secretRef is present for multiple instances of TF Cloud helm ch
                   port: http
                   scheme: HTTP
                 periodSeconds: 5
-          imagePullSecrets:
-            - name: image-pull-gitlab
-            - name: image-pull-docker-hub
           securityContext:
             runAsNonRoot: true
             runAsUser: 1000
@@ -432,9 +423,6 @@ Check S3 secretName Override:
                   port: http
                   scheme: HTTP
                 periodSeconds: 5
-          imagePullSecrets:
-            - name: image-pull-gitlab
-            - name: image-pull-docker-hub
           securityContext:
             runAsNonRoot: true
             runAsUser: 1000
@@ -554,9 +542,6 @@ Check S3 stakater secret reloader annotation contains correct secrets for multip
                   port: http
                   scheme: HTTP
                 periodSeconds: 5
-          imagePullSecrets:
-            - name: image-pull-gitlab
-            - name: image-pull-docker-hub
           securityContext:
             runAsNonRoot: true
             runAsUser: 1000

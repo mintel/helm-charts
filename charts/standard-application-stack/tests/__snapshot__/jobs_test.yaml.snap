@@ -57,9 +57,6 @@ Check all .job.* values can be set correctly, without overriding from main deplo
                     - ALL
                 runAsNonRoot: true
                 runAsUser: 1000
-          imagePullSecrets:
-            - name: image-pull-gitlab
-            - name: image-pull-docker-hub
           initContainers:
             - image: someimage
               name: test-container
@@ -129,9 +126,6 @@ Check all overrides/additions from main deployment work if enabled:
                     - ALL
                 runAsNonRoot: true
                 runAsUser: 1000
-          imagePullSecrets:
-            - name: image-pull-gitlab
-            - name: image-pull-docker-hub
           restartPolicy: Never
           securityContext:
             runAsNonRoot: true
@@ -217,9 +211,6 @@ Check default values are correct with minimal configuration:
                     - ALL
                 runAsNonRoot: true
                 runAsUser: 1000
-          imagePullSecrets:
-            - name: image-pull-gitlab
-            - name: image-pull-docker-hub
           restartPolicy: Never
           serviceAccountName: testGlobalName-testJobName
       ttlSecondsAfterFinished: 60
@@ -261,9 +252,6 @@ Checks that RBAC is set up correctly for kubelock:
               image: registry.example.com/test/image/repo:someTag
               imagePullPolicy: IfNotPresent
               name: main
-          imagePullSecrets:
-            - name: image-pull-gitlab
-            - name: image-pull-docker-hub
           restartPolicy: Never
           serviceAccountName: testGlobalName-testJobName
       ttlSecondsAfterFinished: 60
