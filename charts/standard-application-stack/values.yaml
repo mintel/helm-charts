@@ -211,7 +211,7 @@ securityContext:
 podDisruptionBudget:
   enabled: true
   minAvailable: 50%
-  #maxUnavailable: 50%
+  # maxUnavailable: 50%
   # -- Controls how Pod Disruption Budgets apply to pods that are unhealthy.
   #    The default is to allow them to be terminated.
   unhealthyPodEvictionPolicy: AlwaysAllow
