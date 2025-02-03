@@ -1,6 +1,6 @@
 # standard-application-stack
 
-![Version: 7.8.0](https://img.shields.io/badge/Version-7.8.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 7.9.0](https://img.shields.io/badge/Version-7.9.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A generic chart to support most common application requirements
 
@@ -30,7 +30,7 @@ A generic chart to support most common application requirements
 | allowSingleReplica | bool | `false` | Explicitly allow the number of replicas to equal 1 Useful for backend event based services where we may only want a single replica but still want rolling updates etc |
 | args | list | `[]` | Optional arguments to the container |
 | autoscaling | object | `{"advanced":{},"cooldownPeriod":300,"enableZeroReplicas":false,"enabled":false,"fallback":{"failureThreshold":3},"maxReplicaCount":5,"minReplicaCount":2,"pollingInterval":30,"scaleTargetRef":{"apiVersion":"apps/v1","envSourceContainerName":"","kind":"Deployment"},"triggers":{}}` | Handle autoscaling via https://keda.sh Creates a ScaledObject for the workload ref: https://keda.sh/docs/2.8/concepts/scaling-deployments/ |
-| celery | object | `{"args":["celery"],"enabled":false,"liveness":{"enabled":false},"metrics":{"enabled":true,"port":"metrics"},"podDisruptionBudget":{"enabled":true,"minAvailable":"50%"},"readiness":{"enabled":false},"replicas":2,"resources":{"limits":{},"requests":{}},"startup":{"failureThreshold":60,"methodOverride":{},"periodSeconds":5}}` | Configure celery deployment Defaults to same image as main deployment but with the "celery" argument |
+| celery | object | `{"args":["celery"],"enabled":false,"liveness":{"enabled":false},"metrics":{"enabled":true,"port":"metrics"},"podDisruptionBudget":{"enabled":true,"minAvailable":"50%","unhealthyPodEvictionPolicy":"AlwaysAllow"},"readiness":{"enabled":false},"replicas":2,"resources":{"limits":{},"requests":{}},"startup":{"failureThreshold":60,"methodOverride":{},"periodSeconds":5}}` | Configure celery deployment Defaults to same image as main deployment but with the "celery" argument |
 | celery.args | list | `["celery"]` | Arguments to the celery container |
 | celery.enabled | bool | `false` | Set to true to enable a celery deployment |
 | celery.liveness | object | `{"enabled":false}` | Configure extra options for liveness probe ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes |
@@ -38,7 +38,8 @@ A generic chart to support most common application requirements
 | celery.metrics | object | `{"enabled":true,"port":"metrics"}` | Prometheus Exporter / Metrics |
 | celery.metrics.enabled | bool | `true` | Enable Prometheus to access application metrics endpoints |
 | celery.metrics.port | string | `"metrics"` | Port to collect celery metrics |
-| celery.podDisruptionBudget | object | `{"enabled":true,"minAvailable":"50%"}` | Pod Disruption Budget ref: https://kubernetes.io/docs/tasks/run-application/configure-pdb/ |
+| celery.podDisruptionBudget | object | `{"enabled":true,"minAvailable":"50%","unhealthyPodEvictionPolicy":"AlwaysAllow"}` | Pod Disruption Budget ref: https://kubernetes.io/docs/tasks/run-application/configure-pdb/ |
+| celery.podDisruptionBudget.unhealthyPodEvictionPolicy | string | `"AlwaysAllow"` | Controls how Pod Disruption Budgets apply to pods that are unhealthy.    The default is to allow them to be terminated. |
 | celery.readiness | object | `{"enabled":false}` | Configure extra options for readiness probe ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes |
 | celery.readiness.enabled | bool | `false` | Enable readiness probe |
 | celery.replicas | int | `2` | Desired number of replicas for celery deployment |
@@ -282,7 +283,8 @@ A generic chart to support most common application requirements
 | otel.sampler.type | string | `"parentbased_always_on"` | Configures OTEL_TRACES_SAMPLER |
 | persistentVolumes | string | `nil` | A list of persistent volume claims to be added to the pod |
 | podAnnotations | object | `{}` | Additional annotations to apply to the pod |
-| podDisruptionBudget | object | `{"enabled":true,"minAvailable":"50%"}` | Pod Disruption Budget ref: https://kubernetes.io/docs/tasks/run-application/configure-pdb/ |
+| podDisruptionBudget | object | `{"enabled":true,"minAvailable":"50%","unhealthyPodEvictionPolicy":"AlwaysAllow"}` | Pod Disruption Budget ref: https://kubernetes.io/docs/tasks/run-application/configure-pdb/ |
+| podDisruptionBudget.unhealthyPodEvictionPolicy | string | `"AlwaysAllow"` | Controls how Pod Disruption Budgets apply to pods that are unhealthy.    The default is to allow them to be terminated. |
 | podSecurityContext | object | `{"runAsNonRoot":true,"runAsUser":1000}` | Pod Security context for the container ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/ |
 | port | int | `8000` | Set port to null to skip adding container Ports |
 | postgresql.client.enabled | bool | `true` |  |

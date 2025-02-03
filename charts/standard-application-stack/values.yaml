@@ -211,7 +211,10 @@ securityContext:
 podDisruptionBudget:
   enabled: true
   minAvailable: 50%
-#  maxUnavailable: 50%
+  # maxUnavailable: 50%
+  # -- Controls how Pod Disruption Budgets apply to pods that are unhealthy.
+  #    The default is to allow them to be terminated.
+  unhealthyPodEvictionPolicy: AlwaysAllow
 
 # -- Kubernetes svc configutarion
 service:
@@ -821,6 +824,9 @@ celery:
   podDisruptionBudget:
     enabled: true
     minAvailable: 50%
+    # -- Controls how Pod Disruption Budgets apply to pods that are unhealthy.
+    #    The default is to allow them to be terminated.
+    unhealthyPodEvictionPolicy: AlwaysAllow
 
 # -- Configure celerybeat deployment
 # Defaults to same image as main deployment but with the "celerybeat" argument

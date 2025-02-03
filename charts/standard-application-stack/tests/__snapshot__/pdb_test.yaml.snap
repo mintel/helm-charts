@@ -22,6 +22,7 @@ Creates a PDB when autoscaling is disabled and autoscaling.minReplicaCount is se
         matchLabels:
           app.kubernetes.io/component: app
           app.kubernetes.io/name: example-app
+      unhealthyPodEvictionPolicy: AlwaysAllow
 Creates a PDB when replicas > 1:
   1: |
     apiVersion: policy/v1
@@ -46,3 +47,4 @@ Creates a PDB when replicas > 1:
         matchLabels:
           app.kubernetes.io/component: app
           app.kubernetes.io/name: example-app
+      unhealthyPodEvictionPolicy: AlwaysAllow
