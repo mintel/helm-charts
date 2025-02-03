@@ -113,9 +113,6 @@ Check custom python otel extraEnv vars are added:
                   port: http
                   scheme: HTTP
                 periodSeconds: 5
-          imagePullSecrets:
-            - name: image-pull-gitlab
-            - name: image-pull-docker-hub
           securityContext:
             runAsNonRoot: true
             runAsUser: 1000
@@ -244,9 +241,6 @@ Check custom sampler settings:
                   port: http
                   scheme: HTTP
                 periodSeconds: 5
-          imagePullSecrets:
-            - name: image-pull-gitlab
-            - name: image-pull-docker-hub
           securityContext:
             runAsNonRoot: true
             runAsUser: 1000
@@ -373,9 +367,6 @@ Check default python otel envars are added:
                   port: http
                   scheme: HTTP
                 periodSeconds: 5
-          imagePullSecrets:
-            - name: image-pull-gitlab
-            - name: image-pull-docker-hub
           securityContext:
             runAsNonRoot: true
             runAsUser: 1000
@@ -504,9 +495,6 @@ Check global otel extraEnv vars are added:
                   port: http
                   scheme: HTTP
                 periodSeconds: 5
-          imagePullSecrets:
-            - name: image-pull-gitlab
-            - name: image-pull-docker-hub
           securityContext:
             runAsNonRoot: true
             runAsUser: 1000

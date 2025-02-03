@@ -58,9 +58,6 @@ Check CronJob Default Overrides:
                         - ALL
                     runAsNonRoot: true
                     runAsUser: 1000
-              imagePullSecrets:
-                - name: image-pull-gitlab
-                - name: image-pull-docker-hub
               restartPolicy: OnFailure
               securityContext:
                 runAsNonRoot: true
@@ -131,9 +128,6 @@ Check CronJob Defaults:
                         - ALL
                     runAsNonRoot: true
                     runAsUser: 1000
-              imagePullSecrets:
-                - name: image-pull-gitlab
-                - name: image-pull-docker-hub
               restartPolicy: Never
               securityContext:
                 runAsNonRoot: true
@@ -204,9 +198,6 @@ Check CronJob Job Overrides:
                         - ALL
                     runAsNonRoot: true
                     runAsUser: 1000
-              imagePullSecrets:
-                - name: image-pull-gitlab
-                - name: image-pull-docker-hub
               restartPolicy: OnFailure
               securityContext:
                 runAsNonRoot: true
@@ -277,9 +268,6 @@ Check CronJob ttlSecondsAfterFinished zero value:
                         - ALL
                     runAsNonRoot: true
                     runAsUser: 1000
-              imagePullSecrets:
-                - name: image-pull-gitlab
-                - name: image-pull-docker-hub
               restartPolicy: Never
               securityContext:
                 runAsNonRoot: true
@@ -349,9 +337,6 @@ CronJob can have a timezone:
                         - ALL
                     runAsNonRoot: true
                     runAsUser: 1000
-              imagePullSecrets:
-                - name: image-pull-gitlab
-                - name: image-pull-docker-hub
               restartPolicy: Never
               securityContext:
                 runAsNonRoot: true

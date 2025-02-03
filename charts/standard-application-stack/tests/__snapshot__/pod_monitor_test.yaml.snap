@@ -278,9 +278,6 @@ Check combined template defaults:
                   port: http
                   scheme: HTTP
                 periodSeconds: 5
-          imagePullSecrets:
-            - name: image-pull-gitlab
-            - name: image-pull-docker-hub
           securityContext:
             runAsNonRoot: true
             runAsUser: 1000
@@ -444,9 +441,6 @@ Check combined template with extra ports and monitors:
                   port: http
                   scheme: HTTP
                 periodSeconds: 5
-          imagePullSecrets:
-            - name: image-pull-gitlab
-            - name: image-pull-docker-hub
           securityContext:
             runAsNonRoot: true
             runAsUser: 1000

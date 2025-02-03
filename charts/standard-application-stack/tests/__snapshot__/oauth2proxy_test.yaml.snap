@@ -149,9 +149,6 @@ Check default container args:
                     - ALL
                 runAsNonRoot: true
                 runAsUser: 1000
-          imagePullSecrets:
-            - name: image-pull-gitlab
-            - name: image-pull-docker-hub
           securityContext:
             runAsNonRoot: true
             runAsUser: 1000
@@ -317,9 +314,6 @@ Check setting skip-auth-regex from extra passed in values:
                     - ALL
                 runAsNonRoot: true
                 runAsUser: 1000
-          imagePullSecrets:
-            - name: image-pull-gitlab
-            - name: image-pull-docker-hub
           securityContext:
             runAsNonRoot: true
             runAsUser: 1000
@@ -485,9 +479,6 @@ Check setting skip-auth-regex from extra passed in values when they already cont
                     - ALL
                 runAsNonRoot: true
                 runAsUser: 1000
-          imagePullSecrets:
-            - name: image-pull-gitlab
-            - name: image-pull-docker-hub
           securityContext:
             runAsNonRoot: true
             runAsUser: 1000
@@ -652,9 +643,6 @@ Check setting skip-auth-regex from overridden health-check values:
                     - ALL
                 runAsNonRoot: true
                 runAsUser: 1000
-          imagePullSecrets:
-            - name: image-pull-gitlab
-            - name: image-pull-docker-hub
           securityContext:
             runAsNonRoot: true
             runAsUser: 1000
@@ -819,9 +807,6 @@ Check sidecar present if enabled:
                     - ALL
                 runAsNonRoot: true
                 runAsUser: 1000
-          imagePullSecrets:
-            - name: image-pull-gitlab
-            - name: image-pull-docker-hub
           securityContext:
             runAsNonRoot: true
             runAsUser: 1000
