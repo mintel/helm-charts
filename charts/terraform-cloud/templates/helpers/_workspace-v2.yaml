@@ -67,6 +67,11 @@ spec:
   runTriggers:
   {{ include "mintel_common.terraform_cloud.irsaRunTriggers_v2" $| indent 4 }}
   {{- end }}
+  environmentVariables:
+    - name: TF_AWS_DEFAULT_TAGS_TerraformCloudWorkspace
+      value: {{ $instanceCfg.workspaceNameOverride | default (include "mintel_common.terraform_cloud.workspaceName" $workspaceDict) | trim | quote }}
+      hcl: false
+      sensitive: false
   terraformVariables:
   {{- $instanceCfgCopy := omit $instanceCfg "workspaceNameOverride" }}
   {{- $instanceCfgCopy = omit $instanceCfgCopy "workspaceAllowDestroy" }}

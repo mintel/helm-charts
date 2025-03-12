@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v1.15.1] - 2025-03-12
+### Added
+- Add environment variable to set AWS default tag `TerraformCloudWorkspace`
+
 ## [v1.15.0] - 2024-09-17
 ### Added
 - INFRA-36982: Support for S3 multi-region access point and replication rules modules.
