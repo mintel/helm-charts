@@ -21,6 +21,11 @@ Test tags:
         id: ""
       allowDestroyPlan: true
       applyMethod: auto
+      environmentVariables:
+        - hcl: false
+          name: TF_AWS_DEFAULT_TAGS_TerraformCloudWorkspace
+          sensitive: false
+          value: prod-eu-west-1-cluster1-test-namespace-mntl-test-app-s3
       executionMode: agent
       name: prod-eu-west-1-cluster1-test-namespace-mntl-test-app-s3
       organization: Mintel
@@ -139,6 +144,11 @@ Test tags with env/allow-destroy flags changed:
         id: ""
       allowDestroyPlan: false
       applyMethod: auto
+      environmentVariables:
+        - hcl: false
+          name: TF_AWS_DEFAULT_TAGS_TerraformCloudWorkspace
+          sensitive: false
+          value: logs-eu-west-1-cluster1-test-namespace-mntl-test-app-s3
       executionMode: agent
       name: logs-eu-west-1-cluster1-test-namespace-mntl-test-app-s3
       organization: Mintel
@@ -257,6 +267,11 @@ Test teamAccess can be configured:
         id: ""
       allowDestroyPlan: false
       applyMethod: auto
+      environmentVariables:
+        - hcl: false
+          name: TF_AWS_DEFAULT_TAGS_TerraformCloudWorkspace
+          sensitive: false
+          value: logs-eu-west-1-cluster1-test-namespace-mntl-test-app-s3
       executionMode: agent
       name: logs-eu-west-1-cluster1-test-namespace-mntl-test-app-s3
       organization: Mintel
@@ -382,6 +397,11 @@ Test workspace allow destroy env:
         id: ""
       allowDestroyPlan: false
       applyMethod: auto
+      environmentVariables:
+        - hcl: false
+          name: TF_AWS_DEFAULT_TAGS_TerraformCloudWorkspace
+          sensitive: false
+          value: prod-eu-west-1-cluster1-test-namespace-mntl-test-app-s3
       executionMode: agent
       name: prod-eu-west-1-cluster1-test-namespace-mntl-test-app-s3
       organization: Mintel
@@ -500,6 +520,11 @@ Test workspace allow destroy env global-override:
         id: ""
       allowDestroyPlan: true
       applyMethod: auto
+      environmentVariables:
+        - hcl: false
+          name: TF_AWS_DEFAULT_TAGS_TerraformCloudWorkspace
+          sensitive: false
+          value: prod-eu-west-1-cluster1-test-namespace-mntl-test-app-s3
       executionMode: agent
       name: prod-eu-west-1-cluster1-test-namespace-mntl-test-app-s3
       organization: Mintel
@@ -618,6 +643,11 @@ Test workspace allow destroy env resource-override:
         id: ""
       allowDestroyPlan: true
       applyMethod: auto
+      environmentVariables:
+        - hcl: false
+          name: TF_AWS_DEFAULT_TAGS_TerraformCloudWorkspace
+          sensitive: false
+          value: prod-eu-west-1-cluster1-test-namespace-mntl-test-app-s3
       executionMode: agent
       name: prod-eu-west-1-cluster1-test-namespace-mntl-test-app-s3
       organization: Mintel
@@ -736,6 +766,11 @@ Test workspace defaults:
         id: test-agent-pool
       allowDestroyPlan: true
       applyMethod: auto
+      environmentVariables:
+        - hcl: false
+          name: TF_AWS_DEFAULT_TAGS_TerraformCloudWorkspace
+          sensitive: false
+          value: dev-eu-west-1-cluster1-test-namespace-mntl-test-workspace-s3
       executionMode: agent
       name: dev-eu-west-1-cluster1-test-namespace-mntl-test-workspace-s3
       organization: Mintel
@@ -859,6 +894,11 @@ Test workspace defaults in prod-like environment (logs):
         id: test-agent-pool
       allowDestroyPlan: false
       applyMethod: auto
+      environmentVariables:
+        - hcl: false
+          name: TF_AWS_DEFAULT_TAGS_TerraformCloudWorkspace
+          sensitive: false
+          value: logs-eu-west-1-cluster1-test-namespace-mntl-test-workspace-s3
       executionMode: remote
       name: logs-eu-west-1-cluster1-test-namespace-mntl-test-workspace-s3
       organization: Mintel
@@ -977,6 +1017,11 @@ Test workspace defaults in prod-like environment (prod):
         id: test-agent-pool
       allowDestroyPlan: false
       applyMethod: auto
+      environmentVariables:
+        - hcl: false
+          name: TF_AWS_DEFAULT_TAGS_TerraformCloudWorkspace
+          sensitive: false
+          value: prod-eu-west-1-cluster1-test-namespace-mntl-test-workspace-s3
       executionMode: remote
       name: prod-eu-west-1-cluster1-test-namespace-mntl-test-workspace-s3
       organization: Mintel
@@ -1095,6 +1140,11 @@ Test workspace instance overrides:
         id: test-agent-pool
       allowDestroyPlan: true
       applyMethod: auto
+      environmentVariables:
+        - hcl: false
+          name: TF_AWS_DEFAULT_TAGS_TerraformCloudWorkspace
+          sensitive: false
+          value: dev-eu-west-1-cluster1-test-namespace-mntl-test-bucket-s3
       executionMode: remote
       name: dev-eu-west-1-cluster1-test-namespace-mntl-test-bucket-s3
       organization: Mintel
@@ -1217,6 +1267,11 @@ Test workspace instance overrides:
         id: test-agent-pool
       allowDestroyPlan: true
       applyMethod: auto
+      environmentVariables:
+        - hcl: false
+          name: TF_AWS_DEFAULT_TAGS_TerraformCloudWorkspace
+          sensitive: false
+          value: dev-eu-west-1-cluster1-test-namespace-mntl-test-bucket-another-s3
       executionMode: remote
       name: dev-eu-west-1-cluster1-test-namespace-mntl-test-bucket-another-s3
       organization: Mintel
@@ -1340,6 +1395,11 @@ Test workspace overrides:
         id: test-agent-pool
       allowDestroyPlan: true
       applyMethod: auto
+      environmentVariables:
+        - hcl: false
+          name: TF_AWS_DEFAULT_TAGS_TerraformCloudWorkspace
+          sensitive: false
+          value: dev-eu-west-1-cluster1-test-namespace-mntl-test-workspace-s3
       executionMode: remote
       name: dev-eu-west-1-cluster1-test-namespace-mntl-test-workspace-s3
       organization: Mintel
@@ -1463,6 +1523,11 @@ Test workspace overrides at global-config level:
         id: test-agent-pool
       allowDestroyPlan: true
       applyMethod: manual
+      environmentVariables:
+        - hcl: false
+          name: TF_AWS_DEFAULT_TAGS_TerraformCloudWorkspace
+          sensitive: false
+          value: prod-eu-west-1-cluster1-test-namespace-mntl-test-workspace-s3
       executionMode: remote
       name: prod-eu-west-1-cluster1-test-namespace-mntl-test-workspace-s3
       organization: Mintel
@@ -1581,6 +1646,11 @@ Test workspace overrides at resource-config level:
         id: test-agent-pool
       allowDestroyPlan: true
       applyMethod: manual
+      environmentVariables:
+        - hcl: false
+          name: TF_AWS_DEFAULT_TAGS_TerraformCloudWorkspace
+          sensitive: false
+          value: prod-eu-west-1-cluster1-test-namespace-mntl-test-workspace-s3
       executionMode: remote
       name: prod-eu-west-1-cluster1-test-namespace-mntl-test-workspace-s3
       organization: Mintel

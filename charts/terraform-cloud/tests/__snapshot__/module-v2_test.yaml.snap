@@ -21,6 +21,11 @@ Test module defaults:
         id: test-agent-pool
       allowDestroyPlan: true
       applyMethod: auto
+      environmentVariables:
+        - hcl: false
+          name: TF_AWS_DEFAULT_TAGS_TerraformCloudWorkspace
+          sensitive: false
+          value: dev-eu-west-1-cluster1-test-namespace-mntl-test-workspace-s3
       executionMode: agent
       name: dev-eu-west-1-cluster1-test-namespace-mntl-test-workspace-s3
       organization: Mintel
@@ -144,6 +149,11 @@ Test module overrides:
         id: test-agent-pool
       allowDestroyPlan: true
       applyMethod: auto
+      environmentVariables:
+        - hcl: false
+          name: TF_AWS_DEFAULT_TAGS_TerraformCloudWorkspace
+          sensitive: false
+          value: dev-eu-west-1-cluster1-test-namespace-mntl-test-workspace-s3
       executionMode: agent
       name: dev-eu-west-1-cluster1-test-namespace-mntl-test-workspace-s3
       organization: Mintel
@@ -267,6 +277,11 @@ Test module restartedAt disabled:
         id: test-agent-pool
       allowDestroyPlan: true
       applyMethod: auto
+      environmentVariables:
+        - hcl: false
+          name: TF_AWS_DEFAULT_TAGS_TerraformCloudWorkspace
+          sensitive: false
+          value: dev-eu-west-1-cluster1-test-namespace-mntl-test-workspace-s3
       executionMode: agent
       name: dev-eu-west-1-cluster1-test-namespace-mntl-test-workspace-s3
       organization: Mintel

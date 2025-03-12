@@ -21,6 +21,11 @@ IRSA created explicitly:
         id: ""
       allowDestroyPlan: true
       applyMethod: auto
+      environmentVariables:
+        - hcl: false
+          name: TF_AWS_DEFAULT_TAGS_TerraformCloudWorkspace
+          sensitive: false
+          value: dev-eu-west-1-cluster1-test-namespace-test-app-irsa
       executionMode: agent
       name: dev-eu-west-1-cluster1-test-namespace-test-app-irsa
       notifications:
@@ -148,6 +153,11 @@ IRSA created for Dev S3 module workspace:
         id: ""
       allowDestroyPlan: true
       applyMethod: auto
+      environmentVariables:
+        - hcl: false
+          name: TF_AWS_DEFAULT_TAGS_TerraformCloudWorkspace
+          sensitive: false
+          value: dev-eu-west-1-cluster1-test-namespace-test-app-irsa
       executionMode: agent
       name: dev-eu-west-1-cluster1-test-namespace-test-app-irsa
       notifications:
@@ -276,6 +286,11 @@ IRSA created with default (0) syncWave:
         id: ""
       allowDestroyPlan: true
       applyMethod: auto
+      environmentVariables:
+        - hcl: false
+          name: TF_AWS_DEFAULT_TAGS_TerraformCloudWorkspace
+          sensitive: false
+          value: dev-eu-west-1-cluster1-test-namespace-test-app-irsa
       executionMode: agent
       name: dev-eu-west-1-cluster1-test-namespace-test-app-irsa
       notifications:
@@ -403,6 +418,11 @@ IRSA created with modified syncWave:
         id: ""
       allowDestroyPlan: true
       applyMethod: auto
+      environmentVariables:
+        - hcl: false
+          name: TF_AWS_DEFAULT_TAGS_TerraformCloudWorkspace
+          sensitive: false
+          value: dev-eu-west-1-cluster1-test-namespace-test-app-irsa
       executionMode: agent
       name: dev-eu-west-1-cluster1-test-namespace-test-app-irsa
       notifications:
