@@ -91,6 +91,13 @@ A Helm chart for provisioning resources using Terraform Cloud
 | irsa.terraform.module.version | string | `"2.5.1"` | Module version |
 | irsa.terraform.notifications | list | `[{"enabled":true,"name":"tfcloud-auto-approver","token":"${TFCLOUD_AUTO_APPROVER_SIGNATURE_KEY}","triggers":["run:needs_attention"],"type":"generic","url":"${TFCLOUD_AUTO_APPROVER_URL}"}]` | Configure Terraform Cloud notifications. This should not be changed unless you really know what you're doing. |
 | irsa.terraform.vars | object | See below | Vars to be applied to all instances defined below |
+| kinesis-firehose.enabled | bool | `false` | Set to true to create a Kinesis Firehose delivery stream |
+| kinesis-firehose.outputSecret | bool | `true` | Set to true to create an AWS secret manager external secret with outputs |
+| kinesis-firehose.terraform | object | `{"defaultVars":null,"instances":{},"module":{"source":"app.terraform.io/Mintel/kinesis-firehose/aws//modules/entrypoint","version":"0.0.1"},"terraformVersion":"1.4.3"}` | Set ArgoCD syncWave for this resource (default -40) syncWave: -40 |
+| kinesis-firehose.terraform.defaultVars | string | See below | Vars to be applied to all instances defined below |
+| kinesis-firehose.terraform.instances | object | `{}` | A map of instance names => variable key/value pairs to be sent to the terraform module. The values in `defaultVars` will be applied to every instance if not explicitly defined here. |
+| kinesis-firehose.terraform.module.source | string | `"app.terraform.io/Mintel/kinesis-firehose/aws//modules/entrypoint"` | Registry path of the Terraform module used to create the resource (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/kinesis-firehose/aws) |
+| kinesis-firehose.terraform.module.version | string | `"0.0.1"` | Module version |
 | lambda.enabled | bool | `false` | Set to true to create a Lambda function |
 | lambda.terraform | object | `{"defaultVars":null,"instances":{},"module":{"source":"app.terraform.io/Mintel/lambda/aws","version":"5.0.1"},"terraformVersion":"1.4.3"}` | Set ArgoCD syncWave for this resource (default -40) syncWave: -40 |
 | lambda.terraform.defaultVars | string | See below | Vars to be applied to all instances defined below |
