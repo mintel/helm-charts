@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v1.16.0] - 2025-04-14
+### Added
+- AAdded support for `kinesis-firehose` workspaces
+
 ## [v1.15.1] - 2025-03-12
 ### Added
 - Add environment variable to set AWS default tag `TerraformCloudWorkspace`
