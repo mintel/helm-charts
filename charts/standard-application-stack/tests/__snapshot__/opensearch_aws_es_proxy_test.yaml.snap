@@ -78,59 +78,6 @@ Check awsEsProxy NetworkPolicy is created if enabled:
       podSelector:
         matchLabels:
           app.kubernetes.io/part-of: null
-Check awsEsProxy aws-load-balancer-controller okta role binding is created if enabled:
-  1: |
-    apiVersion: rbac.authorization.k8s.io/v1
-    kind: RoleBinding
-    metadata:
-      annotations:
-        app.mintel.com/placeholder: placeholder
-      labels:
-        app.kubernetes.io/component: app
-        app.kubernetes.io/managed-by: Helm
-        app.kubernetes.io/name: example-app
-        app.mintel.com/application: example-app
-        app.mintel.com/component: example-app
-        app.mintel.com/env: qa
-        app.mintel.com/region: ${CLUSTER_REGION}
-        name: example-app
-      name: example-app-alb-controller-role
-      namespace: test-namespace
-    roleRef:
-      apiGroup: rbac.authorization.k8s.io
-      kind: Role
-      name: example-app-alb-controller-role
-    subjects:
-      - kind: ServiceAccount
-        name: aws-load-balancer-controller
-        namespace: ingress-controller
-Check awsEsProxy aws-load-balancer-controller okta role is created if enabled:
-  1: |
-    apiVersion: rbac.authorization.k8s.io/v1
-    kind: Role
-    metadata:
-      annotations:
-        app.mintel.com/placeholder: placeholder
-      labels:
-        app.kubernetes.io/component: app
-        app.kubernetes.io/managed-by: Helm
-        app.kubernetes.io/name: example-app
-        app.mintel.com/application: example-app
-        app.mintel.com/component: example-app
-        app.mintel.com/env: qa
-        app.mintel.com/region: ${CLUSTER_REGION}
-        name: example-app
-      name: example-app-alb-controller-role
-      namespace: test-namespace
-    rules:
-      - apiGroups:
-          - ""
-        resources:
-          - secrets
-        verbs:
-          - get
-          - list
-          - watch
 Check awsEsProxy deployment is created if enabled:
   1: |
     apiVersion: apps/v1
