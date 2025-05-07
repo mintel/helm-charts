@@ -8,7 +8,7 @@ name:        string        # The name of the role. Defaults to global name if no
 annotations: dict          # Any extra custom annotations.
 argo:        dict          # Standard argo object (as processed by mintel_common.argoAnnotations).
 rules:       list(string)  # A list of keywords that determine which rules get added to the role.
-                           # Example: list "kubelock" "aws-load-balancer-controller-okta"
+                           # Example: list "kubelock"
 
 */}}
 {{- define "mintel_common.role" -}}
@@ -46,15 +46,5 @@ rules:
   - list
   - create
   - update
-{{- end -}}
-{{ if (has "aws-load-balancer-controller-okta" $config.rules) }}
-- apiGroups:
-  - ""
-  resources:
-  - secrets
-  verbs:
-  - get
-  - list
-  - watch
 {{- end -}}
 {{- end -}}

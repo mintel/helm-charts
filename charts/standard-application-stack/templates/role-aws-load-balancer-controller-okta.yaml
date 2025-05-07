@@ -1,8 +1,0 @@
-{{- if (or (and .Values.ingress.alb.okta .Values.ingress.alb.okta.enabled) (and .Values.opensearch.awsEsProxy.ingress.alb.okta .Values.opensearch.awsEsProxy.ingress.alb.okta.enabled)) }}
-{{- $roleData := dict "Release" $.Release "Chart" $.Chart "Values" $.Values "component" .name }}
-
----
-{{- $roleConfig := dict "name" (include "mintel_common.okta.alb_controller_role_name" $roleData) "rules" (list "aws-load-balancer-controller-okta") -}}
-{{- include "mintel_common.role" (list $ $roleConfig) }}
-
-{{- end }}

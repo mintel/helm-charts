@@ -548,23 +548,15 @@ ingress:
     apiAppName: ''
     apiTargetService: ''
 
-    # -- Enable and configure authentication using okta
+    # -- Enable and configure authentication using oidc
     # aws-load-balancer-controller must be installed on the cluster for Okta integration to work
-    okta:
+    oidc:
       enabled: false
-      # -- (required) Name of the ingress
-      ingressName: ''
-      # -- Comma separated list of Okta Users that have access to the Ingress URI. e.g. 'user1,user2,user3'
-      users: ''
-      # -- Comma separated list of Okta Groups that have access to the Ingress URI. e.g. 'group1,group2,group3'
-      groups: ''
-      # -- The path that is appended to the Ingress URI for OAuth authentication. Defaults to '/oauth2/idpresponse/'
-      redirectPath: ''
-      # -- The extra paths appended to the Ingress URI for OAuth authentication (for apps which require additional auth endpoints)
-      extraRedirectPaths: []
-      # -- Specifies the behavior if the user is not authenticated.
-      #    Possible values are 'authenticate' (defalt value, and used in most cases), 'allow', or 'deny'
-      authOnUnauthenticated: 'authenticate'
+      entraPasswordCredential:
+        enabled: true
+        appUniqueName: ''
+      secretName: null
+      onUnauthorized: 'authenticate'
 
     preStopDelay:
       # -- Enable an additional delay when the container is shutdown of delaySeconds.
@@ -1273,24 +1265,6 @@ opensearch:
         targetGroupAttributes:
           "deregistration_delay.timeout_seconds": 5
           "load_balancing.algorithm.type": least_outstanding_requests
-
-        # -- Enable and configure authentication using okta
-        # aws-load-balancer-controller must be installed on the cluster for Okta integration to work
-        okta:
-          enabled: false
-          # -- (required) Name of the ingress
-          ingressName: ''
-          # -- Comma separated list of Okta Users that have access to the Ingress URI. e.g. 'user1,user2,user3'
-          users: ''
-          # -- Comma separated list of Okta Groups that have access to the Ingress URI. e.g. 'group1,group2,group3'
-          groups: ''
-          # -- The path that is appended to the Ingress URI for OAuth authentication. Defaults to '/oauth2/idpresponse/'
-          redirectPath: ''
-          # -- The extra paths appended to the Ingress URI for OAuth authentication (for apps which require additional auth endpoints)
-          extraRedirectPaths: []
-          # -- Specifies the behavior if the user is not authenticated.
-          #    Possible values are 'authenticate' (defalt value, and used in most cases), 'allow', or 'deny'
-          authOnUnauthenticated: 'authenticate'
 
         preStopDelay:
           # -- Enable an additional delay when the container is shutdown of delaySeconds.
