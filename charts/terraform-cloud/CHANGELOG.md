@@ -5,9 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v1.16.1] - 2025-05-13
+### Fixed
+- Added `kinesis-firehose` to supported resources list for terraform cloud helm chart
+
 ## [v1.16.0] - 2025-04-14
 ### Added
-- AAdded support for `kinesis-firehose` workspaces
+- Added support for `kinesis-firehose` workspaces
 
 ## [v1.15.1] - 2025-03-12
 ### Added
