@@ -77,6 +77,7 @@ A generic chart to support most common application requirements
 | elasticsearch.enabled | bool | `false` |  |
 | elasticsearch.secretRefreshIntervalOverride | string | `""` | Optional: ExternalSecret refreshInterval override |
 | elasticsearch.secretStoreRefOverride | string | `""` | Optional: override the SecretStoreRef of the ExternalSecret |
+| entra | object | `{"description":"","displayName":"","enabled":false,"owners":[],"redirectURIs":[],"uniqueName":""}` | Configure entra Application and Password Credentials |
 | env | list | `[]` | Optional environment variables injected into container(s) NOTE: This is used across multiple deployments. |
 | envFrom | list | `[]` | Optional environment variables injected into the container using envFrom (secrets/configmaps) |
 | eventBus | object | `{"accountId":"","enabled":false,"interactiveApp":false,"maxWorkers":1,"region":"us-east-2","serviceName":""}` | Configure connection to the Event Bus |
@@ -122,7 +123,7 @@ A generic chart to support most common application requirements
 | image.repository | string | `"test"` | Docker repository |
 | image.tag | string | `"v0.0.0"` | Container image tag |
 | imagePullSecrets | list | `[]` | Optional array of imagePullSecrets ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/ |
-| ingress | object | `{"alb":{"apiAppName":"","apiTargetService":"","backendProtocol":"HTTP","backendProtocolVersion":"HTTP1","healthcheck":{"healthyThresholdCount":2,"intervalSeconds":15,"protocol":"HTTP","timeoutSeconds":5,"unhealthyThresholdCount":2},"oidc":{"enabled":false,"entraPasswordCredential":{"appUniqueName":"","enabled":true},"onUnauthorized":"authenticate","secretName":null},"preStopDelay":{"delaySeconds":15,"enabled":true},"scheme":"internet-facing","targetGroupAttributes":{"deregistration_delay.timeout_seconds":5,"load_balancing.algorithm.type":"least_outstanding_requests"}},"allowFrontendAccess":false,"allowLivenessUrl":false,"allowReadinessUrl":false,"enabled":false,"extraAnnotations":{},"extraHosts":[],"extraIngresses":[],"specificRulesHostsYaml":{},"specificTlsHostsYaml":{},"tls":true}` | Configure the ingress resource that allows you to access the application from public-internet ref: http://kubernetes.io/docs/user-guide/ingress/ |
+| ingress | object | `{"alb":{"apiAppName":"","apiTargetService":"","backendProtocol":"HTTP","backendProtocolVersion":"HTTP1","healthcheck":{"healthyThresholdCount":2,"intervalSeconds":15,"protocol":"HTTP","timeoutSeconds":5,"unhealthyThresholdCount":2},"preStopDelay":{"delaySeconds":15,"enabled":true},"scheme":"internet-facing","targetGroupAttributes":{"deregistration_delay.timeout_seconds":5,"load_balancing.algorithm.type":"least_outstanding_requests"}},"allowFrontendAccess":false,"allowLivenessUrl":false,"allowReadinessUrl":false,"enabled":false,"extraAnnotations":{},"extraHosts":[],"extraIngresses":[],"specificRulesHostsYaml":{},"specificTlsHostsYaml":{},"tls":true}` | Configure the ingress resource that allows you to access the application from public-internet ref: http://kubernetes.io/docs/user-guide/ingress/ |
 | ingress.alb.backendProtocol | string | `"HTTP"` | Application Version (HTTP / HTTPS) |
 | ingress.alb.backendProtocolVersion | string | `"HTTP1"` | Application Protocol Version (HTTP1 / HTTP2 / GRPC) |
 | ingress.alb.healthcheck.healthyThresholdCount | int | `2` | Success threshold |
@@ -130,7 +131,6 @@ A generic chart to support most common application requirements
 | ingress.alb.healthcheck.protocol | string | `"HTTP"` | Healthcheck protocol |
 | ingress.alb.healthcheck.timeoutSeconds | int | `5` | Timeout seconds |
 | ingress.alb.healthcheck.unhealthyThresholdCount | int | `2` | Failure threshold |
-| ingress.alb.oidc | object | `{"enabled":false,"entraPasswordCredential":{"appUniqueName":"","enabled":true},"onUnauthorized":"authenticate","secretName":null}` | Enable and configure authentication using oidc aws-load-balancer-controller must be installed on the cluster for Okta integration to work |
 | ingress.alb.preStopDelay.delaySeconds | int | `15` | The delay (sleep) to wait for. IMPORTANT: The terminationGracePeriodSeconds must be greater than this. |
 | ingress.alb.preStopDelay.enabled | bool | `true` | Enable an additional delay when the container is shutdown of delaySeconds. This allows ALB to fully de-register the pod (allows zero-downtime rollouts) |
 | ingress.alb.scheme | string | `"internet-facing"` | Public, private or api-specific alb (internet-facing / internal / api) |
