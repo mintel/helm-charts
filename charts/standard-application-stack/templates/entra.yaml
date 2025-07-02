@@ -62,10 +62,16 @@ metadata:
   namespace: {{ .Release.Namespace }}
   labels: {{ include "mintel_common.labels" . | nindent 4 }}
 spec:
-  description: {{ .Values.entra.description }}
-  displayName: {{ .Values.entra.displayName }}
+  description: {{ required "entra.description is required" .Values.entra.description }}
+  displayName: {{ required "entra.displayName is required" .Values.entra.displayName }}
   groupMembershipClaims:
+  {{- if .Values.entra.groupMembershipClaims}}
+  {{- range .Values.entra.groupMembershipClaims }}
+  - {{ . }}
+  {{- end }}
+  {{- else }}
   - None
+  {{- end }}
   {{- if .Values.entra.owners }}
   owners:
   {{- range .Values.entra.owners }}
@@ -82,7 +88,7 @@ spec:
     - id: 14dad69e-099b-42c9-810b-d002981feec1
       type: Scope
     resourceAppID: 00000003-0000-0000-c000-000000000000
-  uniqueName: {{ .Values.entra.uniqueName }}
+  uniqueName: {{ required "entra.uniqueName is required" .Values.entra.uniqueName }}
   {{- if .Values.entra.redirectURIs }}
   web:
     redirectURIs:

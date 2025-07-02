@@ -656,12 +656,22 @@ affinity:
 
 # -- Configure entra Application and Password Credentials
 entra:
+  # -- Set to true to configure Entra resources
   enabled: false
+  # -- Required: Unique name of the application
   uniqueName: ""
+  # -- Required: DisplayName of the application
   displayName: ""
+  # -- Required: Description of the application
   description: ""
+  # -- Optional: A list of redirectURIs
   redirectURIs: []
+  # -- Optional: A list owner group-ids
   owners: []
+  # -- Optional: A list groupMembershipClaims (defaults to ["None"])
+  groupMembershipClaims: []
+  # -- Optional: A list of additional requiredResourceAccess settings
+  extraRequiredResourceAccess: []
 
 # -- Configure connection to the Event Bus
 eventBus:

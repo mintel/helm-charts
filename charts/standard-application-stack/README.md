@@ -77,7 +77,15 @@ A generic chart to support most common application requirements
 | elasticsearch.enabled | bool | `false` |  |
 | elasticsearch.secretRefreshIntervalOverride | string | `""` | Optional: ExternalSecret refreshInterval override |
 | elasticsearch.secretStoreRefOverride | string | `""` | Optional: override the SecretStoreRef of the ExternalSecret |
-| entra | object | `{"description":"","displayName":"","enabled":false,"owners":[],"redirectURIs":[],"uniqueName":""}` | Configure entra Application and Password Credentials |
+| entra | object | `{"description":"","displayName":"","enabled":false,"extraRequiredResourceAccess":[],"groupMembershipClaims":[],"owners":[],"redirectURIs":[],"uniqueName":""}` | Configure entra Application and Password Credentials |
+| entra.description | string | `""` | Required: Description of the application |
+| entra.displayName | string | `""` | Required: DisplayName of the application |
+| entra.enabled | bool | `false` | Set to true to configure Entra resources |
+| entra.extraRequiredResourceAccess | list | `[]` | Optional: A list of additional requiredResourceAccess settings |
+| entra.groupMembershipClaims | list | `[]` | Optional: A list groupMembershipClaims (defaults to ["None"]) |
+| entra.owners | list | `[]` | Optional: A list owner group-ids |
+| entra.redirectURIs | list | `[]` | Optional: A list of redirectURIs |
+| entra.uniqueName | string | `""` | Required: Unique name of the application |
 | env | list | `[]` | Optional environment variables injected into container(s) NOTE: This is used across multiple deployments. |
 | envFrom | list | `[]` | Optional environment variables injected into the container using envFrom (secrets/configmaps) |
 | eventBus | object | `{"accountId":"","enabled":false,"interactiveApp":false,"maxWorkers":1,"region":"us-east-2","serviceName":""}` | Configure connection to the Event Bus |
