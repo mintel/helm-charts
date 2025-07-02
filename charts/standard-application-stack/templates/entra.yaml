@@ -1,0 +1,72 @@
+{{- if .Values.entra.enabled }}
+apiVersion: entraid.mintel.cloud/v1alpha1
+kind: PasswordCredential
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+  name: {{ include "mintel_common.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels: {{ include "mintel_common.labels" . | nindent 4 }}
+spec:
+  application:
+    uniqueName: {{ .Values.entra.uniqueName }}
+  displayName: ${CLUSTER_NAME}
+  outputSecret:
+    name: {{ include "mintel_common.fullname" .}}-ingress-oidc-credentials
+---
+{{- if and .Values.global.clusterEnv (eq .Values.global.clusterEnv "prod") -}}
+apiVersion: entraid.mintel.cloud/v1alpha1
+kind: Application
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+  name: {{ include "mintel_common.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels: {{ include "mintel_common.labels" . | nindent 4 }}
+spec:
+  description: {{ .Values.entra.description }}
+  displayName: {{ .Values.entra.displayName }}
+  groupMembershipClaims:
+  - None
+  {{- if .Values.entra.owners }}
+  owners:
+  {{- range .Values.entra.owners }}
+  - group:
+      id: {{ . }}
+  {{- end }}
+  {{- end }}
+  requiredResourceAccess:
+  - resourceAccess:
+    - id: 64a6cdd6-aab1-4aaf-94b8-3cc8405e90d0
+      type: Scope
+    - id: 37f7f235-527c-4136-accd-4a02d197296e
+      type: Scope
+    - id: 14dad69e-099b-42c9-810b-d002981feec1
+      type: Scope
+    resourceAppID: 00000003-0000-0000-c000-000000000000
+  uniqueName: {{ .Values.entra.uniqueName }}
+  {{- if .Values.entra.redirectURIs }}
+  web:
+    redirectURIs:
+    {{- range .Values.entra.redirectURIs }}
+    - {{ . }}
+    {{- end }}
+  {{- end }}
+---
+apiVersion: entraid.mintel.cloud/v1alpha1
+kind: ServicePrincipal
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+  name: {{ include "mintel_common.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels: {{ include "mintel_common.labels" . | nindent 4 }}
+spec:
+  appRoleAssignmentRequired: true
+  application:
+    applicationRef:
+      name: {{ include "mintel_common.fullname" . }}
+  featureTags:
+    visibleToUsers: true
+{{- end }}
+{{- end }}
