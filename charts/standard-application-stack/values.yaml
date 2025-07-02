@@ -670,8 +670,8 @@ entra:
   owners: []
   # -- Optional: A list groupMembershipClaims (defaults to ["None"])
   groupMembershipClaims: []
-  # -- Optional: A list of additional requiredResourceAccess settings
-  extraRequiredResourceAccess: []
+  # -- Optional: A list of additional ResourceAccess settings (for Microsoft Graph only)
+  extraResourceAccess: []
 
 # -- Configure connection to the Event Bus
 eventBus:

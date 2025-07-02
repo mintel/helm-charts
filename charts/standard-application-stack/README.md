@@ -77,11 +77,11 @@ A generic chart to support most common application requirements
 | elasticsearch.enabled | bool | `false` |  |
 | elasticsearch.secretRefreshIntervalOverride | string | `""` | Optional: ExternalSecret refreshInterval override |
 | elasticsearch.secretStoreRefOverride | string | `""` | Optional: override the SecretStoreRef of the ExternalSecret |
-| entra | object | `{"description":"","displayName":"","enabled":false,"extraRequiredResourceAccess":[],"groupMembershipClaims":[],"owners":[],"redirectURIs":[],"uniqueName":""}` | Configure entra Application and Password Credentials |
+| entra | object | `{"description":"","displayName":"","enabled":false,"extraResourceAccess":[],"groupMembershipClaims":[],"owners":[],"redirectURIs":[],"uniqueName":""}` | Configure entra Application and Password Credentials |
 | entra.description | string | `""` | Required: Description of the application |
 | entra.displayName | string | `""` | Required: DisplayName of the application |
 | entra.enabled | bool | `false` | Set to true to configure Entra resources |
-| entra.extraRequiredResourceAccess | list | `[]` | Optional: A list of additional requiredResourceAccess settings |
+| entra.extraResourceAccess | list | `[]` | Optional: A list of additional ResourceAccess settings (for Microsoft Graph only) |
 | entra.groupMembershipClaims | list | `[]` | Optional: A list groupMembershipClaims (defaults to ["None"]) |
 | entra.owners | list | `[]` | Optional: A list owner group-ids |
 | entra.redirectURIs | list | `[]` | Optional: A list of redirectURIs |
