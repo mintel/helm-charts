@@ -1,0 +1,68 @@
+suite: Test Entra env-vars injected into Deployment
+templates:
+  - deployment.yaml
+release:
+  namespace: test-namespace
+tests:
+  - it: Check entra client-secrets are added
+    set:
+      global.clusterEnv: qa
+      global.name: test-app
+      entra.enabled: true
+      entra.includeClientSecretsInWorkload: true
+    asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
+      - isKind:
+          of: Deployment
+      - equal:
+          path: metadata.namespace
+          value: test-namespace
+      - hasDocuments:
+          count: 1
+      - equal:
+          path: spec.template.spec.containers[0].env
+          value:
+            - name: KUBERNETES_POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: APP_ENVIRONMENT
+              value: qa
+            - name: RUNTIME_ENVIRONMENT
+              value: kubernetes
+            - name: AZURE_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  key: clientId
+                  name: test-app-ingress-oidc-credentials
+            - name: AZURE_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  key: clientSecret
+                  name: test-app-ingress-oidc-credentials
+  - it: Check entra client-secrets are excluded when not enabled
+    set:
+      global.clusterEnv: qa
+      global.name: test-app
+      entra.enabled: true
+      entra.includeClientSecretsInWorkload: false
+    asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
+      - isKind:
+          of: Deployment
+      - equal:
+          path: metadata.namespace
+          value: test-namespace
+      - hasDocuments:
+          count: 1
+      - equal:
+          path: spec.template.spec.containers[0].env
+          value:
+            - name: KUBERNETES_POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: APP_ENVIRONMENT
+              value: qa
+            - name: RUNTIME_ENVIRONMENT
+              value: kubernetes
