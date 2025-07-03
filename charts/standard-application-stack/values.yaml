@@ -657,9 +657,9 @@ entra:
   enabled: false
   # -- Optional: If true, include Entra (AZURE_) client-secrets as env-vars in main workload
   includeClientSecretsInWorkload: false
-  # -- Required: Unique name of the application
+  # -- Required: Unique Name of the application
   uniqueName: ""
-  # -- Required: DisplayName of the application
+  # -- Required: Display Name of the application
   displayName: ""
   # -- Required: Description of the application
   description: ""
