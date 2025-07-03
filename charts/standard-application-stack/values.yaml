@@ -658,6 +658,8 @@ affinity:
 entra:
   # -- Set to true to configure Entra resources
   enabled: false
+  # -- Optional: If true, include Entra (AZURE_) client-secrets as env-vars in main workload
+  includeClientSecretsInWorkload: false
   # -- Required: Unique name of the application
   uniqueName: ""
   # -- Required: DisplayName of the application
