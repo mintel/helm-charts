@@ -77,12 +77,13 @@ A generic chart to support most common application requirements
 | elasticsearch.enabled | bool | `false` |  |
 | elasticsearch.secretRefreshIntervalOverride | string | `""` | Optional: ExternalSecret refreshInterval override |
 | elasticsearch.secretStoreRefOverride | string | `""` | Optional: override the SecretStoreRef of the ExternalSecret |
-| entra | object | `{"description":"","displayName":"","enabled":false,"extraResourceAccess":[],"groupMembershipClaims":[],"owners":[],"redirectURIs":[],"uniqueName":""}` | Configure entra Application and Password Credentials |
+| entra | object | `{"description":"","displayName":"","enabled":false,"extraResourceAccess":[],"groupMembershipClaims":[],"includeClientSecretsInWorkload":false,"owners":[],"redirectURIs":[],"uniqueName":""}` | Configure entra Application and Password Credentials |
 | entra.description | string | `""` | Required: Description of the application |
 | entra.displayName | string | `""` | Required: DisplayName of the application |
 | entra.enabled | bool | `false` | Set to true to configure Entra resources |
 | entra.extraResourceAccess | list | `[]` | Optional: A list of additional ResourceAccess settings (for Microsoft Graph only) |
 | entra.groupMembershipClaims | list | `[]` | Optional: A list groupMembershipClaims (defaults to ["None"]) |
+| entra.includeClientSecretsInWorkload | bool | `false` | Optional: If true, include Entra (AZURE_) client-secrets as env-vars in main workload |
 | entra.owners | list | `[]` | Optional: A list owner group-ids |
 | entra.redirectURIs | list | `[]` | Optional: A list of redirectURIs |
 | entra.uniqueName | string | `""` | Required: Unique name of the application |
