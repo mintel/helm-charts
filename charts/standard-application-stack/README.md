@@ -79,14 +79,14 @@ A generic chart to support most common application requirements
 | elasticsearch.secretStoreRefOverride | string | `""` | Optional: override the SecretStoreRef of the ExternalSecret |
 | entra | object | `{"description":"","displayName":"","enabled":false,"extraResourceAccess":[],"groupMembershipClaims":[],"includeClientSecretsInWorkload":false,"owners":[],"redirectURIs":[],"uniqueName":""}` | Configure entra Application and Password Credentials |
 | entra.description | string | `""` | Required: Description of the application |
-| entra.displayName | string | `""` | Required: DisplayName of the application |
+| entra.displayName | string | `""` | Required: Display Name of the application |
 | entra.enabled | bool | `false` | Set to true to configure Entra resources |
 | entra.extraResourceAccess | list | `[]` | Optional: A list of additional ResourceAccess settings (for Microsoft Graph only) |
 | entra.groupMembershipClaims | list | `[]` | Optional: A list groupMembershipClaims (defaults to ["None"]) |
 | entra.includeClientSecretsInWorkload | bool | `false` | Optional: If true, include Entra (AZURE_) client-secrets as env-vars in main workload |
 | entra.owners | list | `[]` | Optional: A list owner group-ids |
 | entra.redirectURIs | list | `[]` | Optional: A list of redirectURIs |
-| entra.uniqueName | string | `""` | Required: Unique name of the application |
+| entra.uniqueName | string | `""` | Required: Unique Name of the application |
 | env | list | `[]` | Optional environment variables injected into container(s) NOTE: This is used across multiple deployments. |
 | envFrom | list | `[]` | Optional environment variables injected into the container using envFrom (secrets/configmaps) |
 | eventBus | object | `{"accountId":"","enabled":false,"interactiveApp":false,"maxWorkers":1,"region":"us-east-2","serviceName":""}` | Configure connection to the Event Bus |
