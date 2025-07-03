@@ -1,0 +1,25 @@
+{{- if .Values.entra.enabled }}
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: {{ include "mintel_common.fullname" . }}-alb-controller-secret
+  namespace: {{ .Release.Namespace }}
+  labels: {{ include "mintel_common.labels" . | nindent 4 }}
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - secrets
+  verbs:
+  - list
+- apiGroups:
+  - ""
+  resourceNames:
+  - {{ include "mintel_common.fullname" . }}-ingress-oidc-credentials
+  resources:
+  - secrets
+  verbs:
+  - get
+  - watch
+---
+{{- end }}

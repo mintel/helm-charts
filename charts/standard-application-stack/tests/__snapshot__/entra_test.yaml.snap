@@ -1,0 +1,47 @@
+Renders with optional fields (owners, groupMembershipClaims, redirectURIs, extraResourceAccess) in prod:
+  1: |
+    apiVersion: entraid.mintel.cloud/v1alpha1
+    kind: Application
+    metadata:
+      annotations:
+        argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+      labels:
+        app.kubernetes.io/component: app
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: test-app
+        app.mintel.com/application: test-app
+        app.mintel.com/component: test-app
+        app.mintel.com/env: prod
+        app.mintel.com/region: ${CLUSTER_REGION}
+        name: test-app
+      name: test-app
+      namespace: test-namespace
+    spec:
+      description: Test description
+      displayName: Test Entra App
+      groupMembershipClaims:
+        - SecurityGroup
+        - All
+      owners:
+        - group:
+            id: owner-group-id-1
+        - group:
+            id: owner-group-id-2
+      requiredResourceAccess:
+        - resourceAccess:
+            - id: 64a6cdd6-aab1-4aaf-94b8-3cc8405e90d0
+              type: Scope
+            - id: 37f7f235-527c-4136-accd-4a02d197296e
+              type: Scope
+            - id: 14dad69e-099b-42c9-810b-d002981feec1
+              type: Scope
+            - id: extra-id-1
+              type: Scope
+            - id: extra-id-2
+              type: Role
+          resourceAppID: 00000003-0000-0000-c000-000000000000
+      uniqueName: test-entra-app
+      web:
+        redirectURIs:
+          - https://example.com/callback
+          - https://example.com/other

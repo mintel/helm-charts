@@ -198,6 +198,7 @@ spec:
             {{- include "mintel_common.extraHostsEnv" . | nindent 12 }}
             {{- include "mintel_common.eventBusEnv" . | nindent 12 }}
             {{- include "mintel_common.instrumentation.env" . | nindent 12 }}
+            {{- include "mintel_common.entra.env" . | nindent 12 }}
             {{- with .Values.env }}
             {{- toYaml . | nindent 12 }}
             {{- end }}

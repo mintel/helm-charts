@@ -1,0 +1,19 @@
+{{- if .Values.entra.enabled }}
+{{- if and .Values.global.clusterEnv (eq .Values.global.clusterEnv "prod") -}}
+apiVersion: entraid.mintel.cloud/v1alpha1
+kind: ServicePrincipal
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+  name: {{ include "mintel_common.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels: {{ include "mintel_common.labels" . | nindent 4 }}
+spec:
+  appRoleAssignmentRequired: true
+  application:
+    applicationRef:
+      name: {{ include "mintel_common.fullname" . }}
+  featureTags:
+    visibleToUsers: true
+{{- end }}
+{{- end }}

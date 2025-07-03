@@ -548,16 +548,6 @@ ingress:
     apiAppName: ''
     apiTargetService: ''
 
-    # -- Enable and configure authentication using oidc
-    # aws-load-balancer-controller must be installed on the cluster for Okta integration to work
-    oidc:
-      enabled: false
-      entraPasswordCredential:
-        enabled: true
-        appUniqueName: ''
-      secretName: null
-      onUnauthorized: 'authenticate'
-
     preStopDelay:
       # -- Enable an additional delay when the container is shutdown of delaySeconds.
       # This allows ALB to fully de-register the pod (allows zero-downtime rollouts)
@@ -660,6 +650,27 @@ affinity:
   #              - portal-web
   #          topologyKey: topology.kubernetes.io/zone
   #        weight: 100
+
+# -- Configure entra Application and Password Credentials
+entra:
+  # -- Set to true to configure Entra resources
+  enabled: false
+  # -- Optional: If true, include Entra (AZURE_) client-secrets as env-vars in main workload
+  includeClientSecretsInWorkload: false
+  # -- Required: Unique Name of the application
+  uniqueName: ""
+  # -- Required: Display Name of the application
+  displayName: ""
+  # -- Required: Description of the application
+  description: ""
+  # -- Optional: A list of redirectURIs
+  redirectURIs: []
+  # -- Optional: A list owner group-ids
+  owners: []
+  # -- Optional: A list groupMembershipClaims (defaults to ["None"])
+  groupMembershipClaims: []
+  # -- Optional: A list of additional ResourceAccess settings (for Microsoft Graph only)
+  extraResourceAccess: []
 
 # -- Configure connection to the Event Bus
 eventBus:

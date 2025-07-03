@@ -564,3 +564,18 @@ topologySpreadConstraints:
 {{- end }}
 {{- $tfSecretList | sortAlpha | uniq | compact | join "," -}}
 {{- end -}}
+
+{{- define "mintel_common.entra.env" -}}
+{{- if (and .Values.entra.enabled .Values.entra.includeClientSecretsInWorkload) }}
+- name: AZURE_CLIENT_ID
+  valueFrom:
+    secretKeyRef:
+      name: {{ include "mintel_common.fullname" .}}-ingress-oidc-credentials
+      key: clientId
+- name: AZURE_CLIENT_SECRET
+  valueFrom:
+    secretKeyRef:
+      name: {{ include "mintel_common.fullname" .}}-ingress-oidc-credentials
+      key: clientSecret
+{{ end }}
+{{ end }}
