@@ -651,9 +651,6 @@ affinity:
   #          topologyKey: topology.kubernetes.io/zone
   #        weight: 100
 
-
-
-
 # -- Configure entra Application and Password Credentials
 entra:
   # -- Set to true to configure Entra resources
