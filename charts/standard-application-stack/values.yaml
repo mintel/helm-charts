@@ -657,8 +657,10 @@ entra:
   enabled: false
   # -- Optional: If true, include Entra (AZURE_) client-secrets as env-vars in main workload
   includeClientSecretsInWorkload: false
-  # -- Required: Unique Name of the application
-  uniqueName: ""
+  # -- Optional: If true (default), ServicePrincipal will require app role assignment. Set to false to disable.
+  appRoleAssignmentRequired: true
+  # -- Optional: If true (default), ServicePrincipal will be visible to users. Set to false to disable.
+  visibleToUsers: true
   # -- Required: Display Name of the application
   displayName: ""
   # -- Required: Description of the application
@@ -769,7 +771,6 @@ celery:
   # -- Optional environment variables injected into the container
   #  env: []
   # -- Container resource requests and limits
-  # ref: http://kubernetes.io/docs/user-guide/compute-resources
   resources:
     # -- The resource limits for the container
     limits: {}
@@ -845,7 +846,6 @@ celeryBeat:
   # -- Optional environment variables injected into the container
   #  env: []
   # -- Container resource requests and limits
-  # ref: http://kubernetes.io/docs/user-guide/compute-resources
   resources:
     # -- The resource limits for the container
     limits: {}

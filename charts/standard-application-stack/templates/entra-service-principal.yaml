@@ -9,11 +9,11 @@ metadata:
   namespace: {{ .Release.Namespace }}
   labels: {{ include "mintel_common.labels" . | nindent 4 }}
 spec:
-  appRoleAssignmentRequired: true
+  appRoleAssignmentRequired: {{ .Values.entra.appRoleAssignmentRequired }}
   application:
     applicationRef:
       name: {{ include "mintel_common.fullname" . }}
   featureTags:
-    visibleToUsers: true
+    visibleToUsers: {{ .Values.entra.visibleToUsers }}
 {{- end }}
 {{- end }}
