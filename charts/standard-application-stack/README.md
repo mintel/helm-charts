@@ -1,6 +1,6 @@
 # standard-application-stack
 
-![Version: 10.0.0](https://img.shields.io/badge/Version-10.0.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 10.1.0](https://img.shields.io/badge/Version-10.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A generic chart to support most common application requirements
 
@@ -43,7 +43,7 @@ A generic chart to support most common application requirements
 | celery.readiness | object | `{"enabled":false}` | Configure extra options for readiness probe ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes |
 | celery.readiness.enabled | bool | `false` | Enable readiness probe |
 | celery.replicas | int | `2` | Desired number of replicas for celery deployment |
-| celery.resources | object | `{"limits":{},"requests":{}}` | Container resource requests and limits ref: http://kubernetes.io/docs/user-guide/compute-resources |
+| celery.resources | object | `{"limits":{},"requests":{}}` | Container resource requests and limits |
 | celery.resources.limits | object | `{}` | The resource limits for the container |
 | celery.resources.requests | object | `{}` | The requested resources for the container |
 | celery.startup | object | `{"failureThreshold":60,"methodOverride":{},"periodSeconds":5}` | Configure extra options for the start-up probe that is enabled when celery.liveness.enabled is set to true |
@@ -57,7 +57,7 @@ A generic chart to support most common application requirements
 | celeryBeat.liveness.enabled | bool | `false` | Enable liveness probe |
 | celeryBeat.readiness | object | `{"enabled":false}` | Configure extra options for readiness probe ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes |
 | celeryBeat.readiness.enabled | bool | `false` | Enable readiness probe |
-| celeryBeat.resources | object | `{"limits":{},"requests":{}}` | Container resource requests and limits ref: http://kubernetes.io/docs/user-guide/compute-resources |
+| celeryBeat.resources | object | `{"limits":{},"requests":{}}` | Container resource requests and limits |
 | celeryBeat.resources.limits | object | `{}` | The resource limits for the container |
 | celeryBeat.resources.requests | object | `{}` | The requested resources for the container |
 | command | list | `["/app/docker-entrypoint.sh"]` | Optional command to the container |
@@ -77,7 +77,8 @@ A generic chart to support most common application requirements
 | elasticsearch.enabled | bool | `false` |  |
 | elasticsearch.secretRefreshIntervalOverride | string | `""` | Optional: ExternalSecret refreshInterval override |
 | elasticsearch.secretStoreRefOverride | string | `""` | Optional: override the SecretStoreRef of the ExternalSecret |
-| entra | object | `{"description":"","displayName":"","enabled":false,"extraResourceAccess":[],"groupMembershipClaims":[],"includeClientSecretsInWorkload":false,"owners":[],"redirectURIs":[],"uniqueName":""}` | Configure entra Application and Password Credentials |
+| entra | object | `{"appRoleAssignmentRequired":true,"description":"","displayName":"","enabled":false,"extraResourceAccess":[],"groupMembershipClaims":[],"includeClientSecretsInWorkload":false,"owners":[],"redirectURIs":[],"visibleToUsers":true}` | Configure entra Application and Password Credentials |
+| entra.appRoleAssignmentRequired | bool | `true` | Optional: If true (default), ServicePrincipal will require app role assignment. Set to false to disable. |
 | entra.description | string | `""` | Required: Description of the application |
 | entra.displayName | string | `""` | Required: Display Name of the application |
 | entra.enabled | bool | `false` | Set to true to configure Entra resources |
@@ -86,7 +87,7 @@ A generic chart to support most common application requirements
 | entra.includeClientSecretsInWorkload | bool | `false` | Optional: If true, include Entra (AZURE_) client-secrets as env-vars in main workload |
 | entra.owners | list | `[]` | Optional: A list owner group-ids |
 | entra.redirectURIs | list | `[]` | Optional: A list of redirectURIs |
-| entra.uniqueName | string | `""` | Required: Unique Name of the application |
+| entra.visibleToUsers | bool | `true` | Optional: If true (default), ServicePrincipal will be visible to users. Set to false to disable. |
 | env | list | `[]` | Optional environment variables injected into container(s) NOTE: This is used across multiple deployments. |
 | envFrom | list | `[]` | Optional environment variables injected into the container using envFrom (secrets/configmaps) |
 | eventBus | object | `{"accountId":"","enabled":false,"interactiveApp":false,"maxWorkers":1,"region":"us-east-2","serviceName":""}` | Configure connection to the Event Bus |
