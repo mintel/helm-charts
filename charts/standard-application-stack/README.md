@@ -1,6 +1,6 @@
 # standard-application-stack
 
-![Version: 10.1.0](https://img.shields.io/badge/Version-10.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 10.2.0](https://img.shields.io/badge/Version-10.2.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A generic chart to support most common application requirements
 
@@ -77,8 +77,9 @@ A generic chart to support most common application requirements
 | elasticsearch.enabled | bool | `false` |  |
 | elasticsearch.secretRefreshIntervalOverride | string | `""` | Optional: ExternalSecret refreshInterval override |
 | elasticsearch.secretStoreRefOverride | string | `""` | Optional: override the SecretStoreRef of the ExternalSecret |
-| entra | object | `{"appRoleAssignmentRequired":true,"description":"","displayName":"","enabled":false,"extraResourceAccess":[],"groupMembershipClaims":[],"includeClientSecretsInWorkload":false,"owners":[],"redirectURIs":[],"visibleToUsers":true}` | Configure entra Application and Password Credentials |
+| entra | object | `{"appRoleAssignmentRequired":true,"createIngressRBAC":true,"description":"","displayName":"","enabled":false,"extraResourceAccess":[],"groupMembershipClaims":[],"includeClientSecretsInWorkload":false,"owners":[],"redirectURIs":[],"visibleToUsers":true}` | Configure entra Application and Password Credentials |
 | entra.appRoleAssignmentRequired | bool | `true` | Optional: If true (default), ServicePrincipal will require app role assignment. Set to false to disable. |
+| entra.createIngressRBAC | bool | `true` | Optional: If true, create the role/role-bindings to allow the ingress-controller to read Entra client-secrets |
 | entra.description | string | `""` | Required: Description of the application |
 | entra.displayName | string | `""` | Required: Display Name of the application |
 | entra.enabled | bool | `false` | Set to true to configure Entra resources |
