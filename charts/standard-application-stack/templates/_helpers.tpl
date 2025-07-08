@@ -571,7 +571,7 @@ topologySpreadConstraints:
   valueFrom:
     secretKeyRef:
       name: {{ include "mintel_common.fullname" .}}-ingress-oidc-credentials
-      key: clientId
+      key: clientID
 - name: AZURE_CLIENT_SECRET
   valueFrom:
     secretKeyRef:

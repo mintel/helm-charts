@@ -33,7 +33,7 @@ tests:
             - name: AZURE_CLIENT_ID
               valueFrom:
                 secretKeyRef:
-                  key: clientId
+                  key: clientID
                   name: test-app-ingress-oidc-credentials
             - name: AZURE_CLIENT_SECRET
               valueFrom:
