@@ -574,9 +574,6 @@ ingress:
       # -- Success threshold
       healthyThresholdCount: 2
 
-    # -- Whether to create extra ALB Role and RoleBinding (for ENTRA integration)
-    createExtraAlbRoleAndBinding: true
-
 # -- If true, use the host network for the main deployment.
 useHostNetwork: false
 
