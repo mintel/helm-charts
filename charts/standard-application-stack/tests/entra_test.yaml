@@ -185,3 +185,47 @@ tests:
               type: Scope
             - id: extra-id-2
               type: Role
+
+  - it: Does not render ALB Role when createIngressRBAC is false
+    template: entra-alb-role.yaml
+    set:
+      global.name: test-app
+      global.clusterEnv: dev
+      entra.enabled: true
+      entra.createIngressRBAC: false
+    asserts:
+      - hasDocuments:
+          count: 0
+
+  - it: Does not render ALB RoleBinding when createIngressRBAC is false
+    template: entra-alb-rolebinding.yaml
+    set:
+      global.name: test-app
+      global.clusterEnv: dev
+      entra.enabled: true
+      entra.createIngressRBAC: false
+    asserts:
+      - hasDocuments:
+          count: 0
+
+  - it: Does not render ALB Role when entra.enabled is false
+    template: entra-alb-role.yaml
+    set:
+      global.name: test-app
+      global.clusterEnv: dev
+      entra.enabled: false
+      entra.createIngressRBAC: true
+    asserts:
+      - hasDocuments:
+          count: 0
+
+  - it: Does not render ALB RoleBinding when entra.enabled is false
+    template: entra-alb-rolebinding.yaml
+    set:
+      global.name: test-app
+      global.clusterEnv: dev
+      entra.enabled: false
+      entra.createIngressRBAC: true
+    asserts:
+      - hasDocuments:
+          count: 0

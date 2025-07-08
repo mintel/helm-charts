@@ -1,6 +1,6 @@
 # standard-application-stack
 
-![Version: 10.1.0](https://img.shields.io/badge/Version-10.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 10.2.0](https://img.shields.io/badge/Version-10.2.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A generic chart to support most common application requirements
 
@@ -77,8 +77,9 @@ A generic chart to support most common application requirements
 | elasticsearch.enabled | bool | `false` |  |
 | elasticsearch.secretRefreshIntervalOverride | string | `""` | Optional: ExternalSecret refreshInterval override |
 | elasticsearch.secretStoreRefOverride | string | `""` | Optional: override the SecretStoreRef of the ExternalSecret |
-| entra | object | `{"appRoleAssignmentRequired":true,"description":"","displayName":"","enabled":false,"extraResourceAccess":[],"groupMembershipClaims":[],"includeClientSecretsInWorkload":false,"owners":[],"redirectURIs":[],"visibleToUsers":true}` | Configure entra Application and Password Credentials |
+| entra | object | `{"appRoleAssignmentRequired":true,"createIngressRBAC":true,"description":"","displayName":"","enabled":false,"extraResourceAccess":[],"groupMembershipClaims":[],"includeClientSecretsInWorkload":false,"owners":[],"redirectURIs":[],"visibleToUsers":true}` | Configure entra Application and Password Credentials |
 | entra.appRoleAssignmentRequired | bool | `true` | Optional: If true (default), ServicePrincipal will require app role assignment. Set to false to disable. |
+| entra.createIngressRBAC | bool | `true` | Optional: If true, create the role/role-bindings to allow the ingress-controller to read Entra client-secrets |
 | entra.description | string | `""` | Required: Description of the application |
 | entra.displayName | string | `""` | Required: Display Name of the application |
 | entra.enabled | bool | `false` | Set to true to configure Entra resources |
@@ -133,9 +134,10 @@ A generic chart to support most common application requirements
 | image.repository | string | `"test"` | Docker repository |
 | image.tag | string | `"v0.0.0"` | Container image tag |
 | imagePullSecrets | list | `[]` | Optional array of imagePullSecrets ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/ |
-| ingress | object | `{"alb":{"apiAppName":"","apiTargetService":"","backendProtocol":"HTTP","backendProtocolVersion":"HTTP1","healthcheck":{"healthyThresholdCount":2,"intervalSeconds":15,"protocol":"HTTP","timeoutSeconds":5,"unhealthyThresholdCount":2},"preStopDelay":{"delaySeconds":15,"enabled":true},"scheme":"internet-facing","targetGroupAttributes":{"deregistration_delay.timeout_seconds":5,"load_balancing.algorithm.type":"least_outstanding_requests"}},"allowFrontendAccess":false,"allowLivenessUrl":false,"allowReadinessUrl":false,"enabled":false,"extraAnnotations":{},"extraHosts":[],"extraIngresses":[],"specificRulesHostsYaml":{},"specificTlsHostsYaml":{},"tls":true}` | Configure the ingress resource that allows you to access the application from public-internet ref: http://kubernetes.io/docs/user-guide/ingress/ |
+| ingress | object | `{"alb":{"apiAppName":"","apiTargetService":"","backendProtocol":"HTTP","backendProtocolVersion":"HTTP1","createExtraAlbRoleAndBinding":true,"healthcheck":{"healthyThresholdCount":2,"intervalSeconds":15,"protocol":"HTTP","timeoutSeconds":5,"unhealthyThresholdCount":2},"preStopDelay":{"delaySeconds":15,"enabled":true},"scheme":"internet-facing","targetGroupAttributes":{"deregistration_delay.timeout_seconds":5,"load_balancing.algorithm.type":"least_outstanding_requests"}},"allowFrontendAccess":false,"allowLivenessUrl":false,"allowReadinessUrl":false,"enabled":false,"extraAnnotations":{},"extraHosts":[],"extraIngresses":[],"specificRulesHostsYaml":{},"specificTlsHostsYaml":{},"tls":true}` | Configure the ingress resource that allows you to access the application from public-internet ref: http://kubernetes.io/docs/user-guide/ingress/ |
 | ingress.alb.backendProtocol | string | `"HTTP"` | Application Version (HTTP / HTTPS) |
 | ingress.alb.backendProtocolVersion | string | `"HTTP1"` | Application Protocol Version (HTTP1 / HTTP2 / GRPC) |
+| ingress.alb.createExtraAlbRoleAndBinding | bool | `true` | Whether to create extra ALB Role and RoleBinding (for ENTRA integration) |
 | ingress.alb.healthcheck.healthyThresholdCount | int | `2` | Success threshold |
 | ingress.alb.healthcheck.intervalSeconds | int | `15` | Period seconds |
 | ingress.alb.healthcheck.protocol | string | `"HTTP"` | Healthcheck protocol |

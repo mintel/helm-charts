@@ -574,6 +574,9 @@ ingress:
       # -- Success threshold
       healthyThresholdCount: 2
 
+    # -- Whether to create extra ALB Role and RoleBinding (for ENTRA integration)
+    createExtraAlbRoleAndBinding: true
+
 # -- If true, use the host network for the main deployment.
 useHostNetwork: false
 
@@ -673,6 +676,8 @@ entra:
   groupMembershipClaims: []
   # -- Optional: A list of additional ResourceAccess settings (for Microsoft Graph only)
   extraResourceAccess: []
+    # -- Optional: If true, create the role/role-bindings to allow the ingress-controller to read Entra client-secrets
+  createIngressRBAC: true
 
 # -- Configure connection to the Event Bus
 eventBus:
