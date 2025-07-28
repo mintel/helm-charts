@@ -42,10 +42,14 @@ spec:
       serviceAccountName: {{ $jobName }}
       {{- end }}
       restartPolicy: {{ .restartPolicy }}
+      {{- with .volumes }}
+      volumes:
+        {{- toYaml . | nindent 12 }}
+      {{- end }}
       {{- with .extraInitContainers }}
       initContainers:
       {{- toYaml . | nindent 12 }}
-      {{- end }}
+      {{- end }}      
       containers:
         - name: main
           image: {{ .image | default (include "mintel_common.image" $) }}
@@ -94,7 +98,9 @@ spec:
           {{- end }}
           resources: {{- toYaml . | nindent 12 }}
           {{- end }}
-
+          {{- with .volumeMounts }}
+          volumeMounts: {{- toYaml . | nindent 16 }}
+          {{- end }}
 
 {{- if $serviceAccountEnabled }}
 ---

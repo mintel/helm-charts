@@ -1,4 +1,4 @@
-{{- if (eq .Values.cronjobsOnly false) }}
+{{- if (or (eq .Values.cronjobsOnly false) (eq .Values.jobsOnly false)) }}
 ---
 {{- if .Values.statefulset }}
 apiVersion: {{ include "common.capabilities.statefulset.apiVersion" . }}
