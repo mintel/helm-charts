@@ -71,7 +71,7 @@ A generic chart to support most common application requirements
 | cronjobs.defaults.timezone | string | `nil` | CronJob schedule will run relative to this timezone. ref: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones |
 | cronjobs.defaults.ttlSecondsAfterFinished | int | `60` | If this field is set, ttlSecondsAfterFinished after the Job finishes, it is eligible to be automatically deleted. ref: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.20/#cronjob-v1beta1-batch |
 | cronjobs.jobs | list | `[]` | List of Cronjob configurations to be defined |
-| cronjobsOnly | bool | `false` | Only show cronjobs and relevant resources (i.e. if set to `true`, hide the main deployment resource) |
+| cronjobsOnly | bool | `false` | Only show Cronjobs and relevant resources (i.e. if set to `true`, hide the main deployment resource) |
 | dynamodb.enabled | bool | `false` |  |
 | dynamodb.outputSecret | bool | `true` | set outputSecret to true to allow TF Cloud chart create ExternalSecrets |
 | elasticsearch.enabled | bool | `false` |  |
@@ -179,6 +179,7 @@ A generic chart to support most common application requirements
 | jobDefaults.restartPolicy | string | `"Never"` | Whether the pod should be restarted on failure ref: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#restart-policy) |
 | jobDefaults.ttlSecondsAfterFinished | int | `60` | If this field is set, ttlSecondsAfterFinished after the Job finishes, it is eligible to be automatically deleted. ref: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.20/#cronjob-v1beta1-batch |
 | jobs | list | `[]` | Define and configure jobs Add a map for each job in this list. Refer to `$.Values.jobDefaults` for a list of supported values (and the defaults that will be applied to all jobs below). |
+| jobsOnly | bool | `false` | Only show Jobs and relevant resources (i.e. if set to `true`, hide the main deployment resource) |
 | kibana.elasticsearchHosts | string | `""` |  |
 | kibana.enabled | bool | `false` |  |
 | kubelock | object | `{"enabled":false}` | Configure the use of kubelock ref: https://github.com/mintel/kubelock |

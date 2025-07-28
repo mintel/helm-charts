@@ -49,7 +49,7 @@ spec:
       {{- with .extraInitContainers }}
       initContainers:
       {{- toYaml . | nindent 12 }}
-      {{- end }}      
+      {{- end }}
       containers:
         - name: main
           image: {{ .image | default (include "mintel_common.image" $) }}
