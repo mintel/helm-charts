@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v11.0.0] - 2025-07-29
+### Added
+- Added `Values.onlyJobs` boolean to only deploy the `Job` resource (similar to `cronjobsOnly`)
+- Added `Values.jobs.serviceAccountName` option to override the `serviceAccountName` if required
+
+### Changed
+- When using `jobs` the previous `serviceAccountName` defaulted to the job-name. It now defaults to the main application `serviceAccountName`
+
 ## [v10.2.1] - 2025-07-04
 ### Fixed
 - Fix secret reference to Entra `clientID` in deployment
