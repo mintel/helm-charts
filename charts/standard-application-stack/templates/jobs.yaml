@@ -39,7 +39,7 @@ spec:
         {{- end }}
       {{- end }}
       {{- if (and $.Values.serviceAccount (or $.Values.serviceAccount.create $.Values.serviceAccount.name)) }}
-      serviceAccountName: {{ .serviceAccountName | default $.Values.serviceAccount.name | default (include "mintel_common.fullname" $) }}
+      serviceAccountName: {{ $jobName }}
       {{- end }}
       restartPolicy: {{ .restartPolicy }}
       {{- with .volumes }}
