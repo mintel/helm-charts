@@ -252,7 +252,7 @@ tests:
       - documentIndex: 0
         equal:
           path: spec.template.spec.serviceAccountName
-          value: testGlobalName-testJobName
+          value: testGlobalName
       # Test that a ServiceAccount unique to the Job gets created
       - documentIndex: 1
         isKind:
