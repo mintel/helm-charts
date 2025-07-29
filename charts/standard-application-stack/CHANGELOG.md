@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [v10.3.0] - 2025-07-29
 ### Added
-- Added `Values.onlyJobs` boolean to only deploy the `Job` resource (similar to `cronjobsOnly`)
+- Added `Values.jobsOnly` boolean to only deploy the `Job` resource (similar to `cronjobsOnly`)
 - Added support for `Job` volume/volumeMounts
 
 ## [v10.2.1] - 2025-07-04
