@@ -1,5 +1,5 @@
 {{- if eq ((include "mintel_common.pdb.createPDB" .) | trim) "true" }}
-{{- if eq .Values.cronjobsOnly false }}
+{{- if (and (eq .Values.cronjobsOnly false) (eq .Values.jobsOnly false)) }}
 ---
 apiVersion: {{ include "common.capabilities.policy.apiVersion" . }}
 kind: PodDisruptionBudget

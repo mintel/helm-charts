@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v10.3.0] - 2025-07-29
+### Added
+- Added `Values.jobsOnly` boolean to only deploy the `Job` resource (similar to `cronjobsOnly`)
+- Added support for `Job` volume/volumeMounts
+
 ## [v10.2.1] - 2025-07-04
 ### Fixed
 - Fix secret reference to Entra `clientID` in deployment

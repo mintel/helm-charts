@@ -126,11 +126,19 @@ Check all overrides/additions from main deployment work if enabled:
                     - ALL
                 runAsNonRoot: true
                 runAsUser: 1000
+              volumeMounts:
+                - mountPath: /scripts
+                  name: entrypoint
           restartPolicy: Never
           securityContext:
             runAsNonRoot: true
             runAsUser: 1000
           serviceAccountName: testGlobalName-testJobName
+          volumes:
+            - configMap:
+                defaultMode: 511
+                name: entrypoint-config
+              name: entrypoint
       ttlSecondsAfterFinished: 120
   2: |
     apiVersion: external-secrets.io/v1beta1

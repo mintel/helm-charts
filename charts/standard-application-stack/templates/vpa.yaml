@@ -1,7 +1,7 @@
 {{- if (ne .Values.global.clusterEnv "local") }}
 
 {{- with $config := .Values.verticalPodAutoscaler.instances.workload | default dict | mustMergeOverwrite (mustDeepCopy .Values.verticalPodAutoscaler) }}
-{{- if (and $config.enabled (not $.Values.cronjobsOnly)) }}
+{{- if (and $config.enabled (and (eq $.Values.cronjobsOnly false) (eq $.Values.jobsOnly false))) }}
 {{- $app := dict "Release" $.Release "Chart" $.Chart "Values" $.Values "component" $.name }}
 ---
 apiVersion: {{ include "common.capabilities.verticalPodAutoscaler.apiVersion" $ }}

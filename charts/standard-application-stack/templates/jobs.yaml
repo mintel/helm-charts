@@ -42,6 +42,10 @@ spec:
       serviceAccountName: {{ $jobName }}
       {{- end }}
       restartPolicy: {{ .restartPolicy }}
+      {{- with .volumes }}
+      volumes:
+        {{- toYaml . | nindent 12 }}
+      {{- end }}
       {{- with .extraInitContainers }}
       initContainers:
       {{- toYaml . | nindent 12 }}
@@ -94,7 +98,9 @@ spec:
           {{- end }}
           resources: {{- toYaml . | nindent 12 }}
           {{- end }}
-
+          {{- with .volumeMounts }}
+          volumeMounts: {{- toYaml . | nindent 16 }}
+          {{- end }}
 
 {{- if $serviceAccountEnabled }}
 ---
