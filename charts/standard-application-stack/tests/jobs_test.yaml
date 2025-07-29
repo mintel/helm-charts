@@ -167,6 +167,14 @@ tests:
           includeAppSecret: true
           includeBasePodSecurityContext: true
           ttlSecondsAfterFinished: 120
+          volumeMounts:
+            - mountPath: /scripts
+              name: entrypoint
+          volumes:
+            - name: entrypoint
+              configMap:
+                name: entrypoint-config
+                defaultMode: 511
           env:
             - name: TEST_VAR_3
               value: baz
@@ -215,6 +223,20 @@ tests:
       - equal:
           path: spec.ttlSecondsAfterFinished
           value: 120
+        documentIndex: 0
+      - contains:
+          path: spec.template.spec.volumes
+          content:
+            configMap:
+              defaultMode: 511
+              name: entrypoint-config
+            name: entrypoint
+        documentIndex: 0
+      - contains:
+          path: spec.template.spec.containers[0].volumeMounts
+          content:
+            mountPath: /scripts
+            name: entrypoint
         documentIndex: 0
       # Check that additional ExternalSecret gets created and that it's referenced correctly in the Job
       - isKind:
