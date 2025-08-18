@@ -673,8 +673,10 @@ entra:
   groupMembershipClaims: []
   # -- Optional: A list of additional ResourceAccess settings (for Microsoft Graph only)
   extraResourceAccess: []
-    # -- Optional: If true, create the role/role-bindings to allow the ingress-controller to read Entra client-secrets
+  # -- Optional: If true, create the role/role-bindings to allow the ingress-controller to read Entra client-secrets
   createIngressRBAC: true
+  # - Deploy Application resources into development environment only
+  developmentMode: false
 
 # -- Configure connection to the Event Bus
 eventBus:

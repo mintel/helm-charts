@@ -1,4 +1,4 @@
-{{- if and .Values.entra.createIngressRBAC .Values.entra.enabled }}
+{{- if .Values.entra.enabled }}
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:

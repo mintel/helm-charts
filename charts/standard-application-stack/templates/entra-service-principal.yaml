@@ -1,5 +1,5 @@
 {{- if .Values.entra.enabled }}
-{{- if and .Values.global.clusterEnv (eq .Values.global.clusterEnv "prod") -}}
+{{- if and .Values.global.clusterEnv (or .Values.entra.developmentMode (eq .Values.global.clusterEnv "prod")) -}}
 apiVersion: entraid.mintel.cloud/v1alpha1
 kind: ServicePrincipal
 metadata:
