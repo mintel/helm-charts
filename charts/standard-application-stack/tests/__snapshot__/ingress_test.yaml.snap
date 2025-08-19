@@ -556,7 +556,7 @@ Check extraHosts:
                       number: 8000
                 path: /
                 pathType: Prefix
-Check extraHosts cannot render empty host rule:
+Check extraHosts do not render hosts with an empty value:
   1: |
     apiVersion: networking.k8s.io/v1
     kind: Ingress
