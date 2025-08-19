@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v10.4.0] - 2025-08-19
+### Added
+- Added `Values.entra.developmentMode` boolean to aid new application development against Entra auth
+
 ## [v10.3.0] - 2025-07-29
 ### Added
 - Added `Values.jobsOnly` boolean to only deploy the `Job` resource (similar to `cronjobsOnly`)
