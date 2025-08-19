@@ -66,7 +66,7 @@ spec:
             {{- include "mintel_common.ingress.ingressPath" $ingressData | nindent 10 }}
           {{- end }}
     {{- range .extraHosts }}
-    {{- if (or (not $.Values.oauthProxy.enabled) (ne $.Values.oauthProxy.ingressHost .name)) }}
+    {{- if ( and .name (or (not $.Values.oauthProxy.enabled) (ne $.Values.oauthProxy.ingressHost .name))) }}
     - host: {{ .name }}
       http:
         paths:
@@ -91,7 +91,6 @@ spec:
                 port:
                   number: 4180
     {{- end }}
-
     {{- with .specificRulesHostsYaml }}
     {{- toYaml . | nindent 4 }}
     {{- end }}

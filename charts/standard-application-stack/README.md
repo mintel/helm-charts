@@ -1,6 +1,6 @@
 # standard-application-stack
 
-![Version: 10.4.0](https://img.shields.io/badge/Version-10.4.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 10.4.1](https://img.shields.io/badge/Version-10.4.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A generic chart to support most common application requirements
 
