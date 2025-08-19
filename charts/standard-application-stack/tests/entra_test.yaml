@@ -120,7 +120,6 @@ tests:
       - isKind:
           of: ServicePrincipal
 
-
   - it: Renders ServicePrincipal with appRoleAssignmentRequired set to false
     template: entra-service-principal.yaml
     set:
