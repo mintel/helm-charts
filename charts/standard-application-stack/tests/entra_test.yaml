@@ -60,6 +60,20 @@ tests:
       - isKind:
           of: Application
 
+  - it: Renders Application when entra enabled and developmentMode enabled and not prod
+    template: entra-application.yaml
+    set:
+      global.name: test-app
+      global.clusterEnv: dev
+      entra.enabled: true
+      entra.uniqueName: test-entra-app
+      entra.displayName: Test Entra App
+      entra.description: Test description
+      entra.developmentMode: true
+    asserts:
+      - isKind:
+          of: Application
+
   - it: Does not render ServicePrincipal when not prod
     template: entra-service-principal.yaml
     set:
@@ -91,6 +105,21 @@ tests:
       - equal:
           path: spec.featureTags.visibleToUsers
           value: true
+
+  - it: Render ServicePrincipal when entra enabled and developmentMode enabled and not prod
+    template: entra-service-principal.yaml
+    set:
+      global.name: test-app
+      global.clusterEnv: dev
+      entra.enabled: true
+      entra.uniqueName: test-entra-app
+      entra.displayName: Test Entra App
+      entra.description: Test description
+      entra.developmentMode: true
+    asserts:
+      - isKind:
+          of: ServicePrincipal
+
 
   - it: Renders ServicePrincipal with appRoleAssignmentRequired set to false
     template: entra-service-principal.yaml

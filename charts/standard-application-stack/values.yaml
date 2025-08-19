@@ -675,7 +675,7 @@ entra:
   extraResourceAccess: []
   # -- Optional: If true, create the role/role-bindings to allow the ingress-controller to read Entra client-secrets
   createIngressRBAC: true
-  # - Deploy Application resources into development environment only
+  # - Deploy Application and ServicePrincipal resources when developmentMode is true
   developmentMode: false
 
 # -- Configure connection to the Event Bus
