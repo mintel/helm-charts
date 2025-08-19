@@ -329,6 +329,25 @@ tests:
           count: 1
         template: deployment.yaml
 
+
+  - it: Check extraHosts do not render hosts with an empty value
+    template: ingress.yaml
+    set:
+      global.name: AppyMcAppface
+      global.clusterEnv: qa
+      ingress.enabled: true
+      ingress.defaultHost: test.default.com
+      ingress.extraHosts:
+        - name:
+    asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
+      - equal:
+          path: spec.rules[0].host
+          value: test.default.com
+      - lengthEqual:
+          path: spec.rules
+          count: 1
+
   - it: Check ingress name override
     template: ingress.yaml
     set:
