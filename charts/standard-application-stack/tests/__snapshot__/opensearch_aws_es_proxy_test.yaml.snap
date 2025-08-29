@@ -29,6 +29,7 @@ Check awsEsProxy Ingress is created if enabled:
         app.mintel.com/component: example-app
         app.mintel.com/env: local
         app.mintel.com/region: local
+        backstage.io/component: example-app
         name: example-app-aws-es-proxy
       name: example-app-aws-es-proxy
       namespace: test-namespace
@@ -60,6 +61,7 @@ Check awsEsProxy NetworkPolicy is created if enabled:
         app.mintel.com/component: example-app
         app.mintel.com/env: local
         app.mintel.com/region: local
+        backstage.io/component: example-app
         name: example-app
       name: allow-aws-alb-to-example-app-opensearch
       namespace: test-namespace
@@ -97,6 +99,7 @@ Check awsEsProxy deployment is created if enabled:
         app.mintel.com/component: example-app
         app.mintel.com/env: local
         app.mintel.com/region: local
+        backstage.io/component: example-app
         name: example-app-aws-es-proxy
       name: example-app-aws-es-proxy
       namespace: test-namespace
@@ -118,6 +121,7 @@ Check awsEsProxy deployment is created if enabled:
             app.mintel.com/component: example-app
             app.mintel.com/env: local
             app.mintel.com/region: local
+            backstage.io/component: example-app
             name: example-app-aws-es-proxy
         spec:
           containers:
@@ -191,6 +195,7 @@ Check awsEsProxy service is created if enabled:
         app.mintel.com/component: example-app
         app.mintel.com/env: local
         app.mintel.com/region: local
+        backstage.io/component: example-app
         name: example-app-aws-es-proxy
       name: example-app-aws-es-proxy
       namespace: test-namespace

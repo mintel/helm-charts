@@ -14,6 +14,7 @@ Check stateful set is rendered with volumeClaimTemplates:
         app.mintel.com/component: test-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
+        backstage.io/component: test-app
         name: test-app
       name: test-app
       namespace: test-namespace
@@ -34,6 +35,7 @@ Check stateful set is rendered with volumeClaimTemplates:
             app.mintel.com/component: test-app
             app.mintel.com/env: qa
             app.mintel.com/region: ${CLUSTER_REGION}
+            backstage.io/component: test-app
             name: test-app
         spec:
           containers:

@@ -65,6 +65,7 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- if .Values.global.owner }}
 app.mintel.com/owner: {{ .Values.global.owner }}
 {{- end }}
+backstage.io/component: {{ .Values.global.backstage.component | default .Values.global.name }}
 app.mintel.com/application: {{ .Values.global.application | default .Values.global.name }}
 app.mintel.com/component: {{ .Values.global.component | default .Values.global.name }}
 app.mintel.com/env: {{ .Values.global.clusterEnv }}
@@ -116,6 +117,7 @@ app.kubernetes.io/component: app
 - app.kubernetes.io/instance
 - app.mintel.com/application
 - app.mintel.com/owner
+- backstage.io/component
 {{- end -}}
 
 {{/* Target Labels */}}
@@ -124,6 +126,7 @@ app.kubernetes.io/component: app
 - app.mintel.com/component
 - app.mintel.com/owner
 - app.mintel.com/ignore_alerts
+- backstage.io/component
 {{- end -}}
 
 {{/*

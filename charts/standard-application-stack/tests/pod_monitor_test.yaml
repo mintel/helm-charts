@@ -48,6 +48,7 @@ tests:
             - app.kubernetes.io/instance
             - app.mintel.com/application
             - app.mintel.com/owner
+            - backstage.io/component
   - it: Check default endpoints
     template: pod-monitor.yaml
     set:

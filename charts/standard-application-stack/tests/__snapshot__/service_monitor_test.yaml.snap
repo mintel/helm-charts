@@ -13,6 +13,7 @@ Check Service defaults:
         app.mintel.com/component: test-app
         app.mintel.com/env: prod
         app.mintel.com/region: ${CLUSTER_REGION}
+        backstage.io/component: test-app
         name: test-app
       name: test-app
       namespace: test-namespace
@@ -41,6 +42,7 @@ Check additional ServiceMonitor resources:
         app.mintel.com/component: test-app
         app.mintel.com/env: prod
         app.mintel.com/region: ${CLUSTER_REGION}
+        backstage.io/component: test-app
         k8s-app: test-app
         name: test-app
       name: test-app
@@ -67,6 +69,7 @@ Check additional ServiceMonitor resources:
         - app.kubernetes.io/instance
         - app.mintel.com/application
         - app.mintel.com/owner
+        - backstage.io/component
       selector:
         matchLabels:
           app.kubernetes.io/component: app
@@ -76,6 +79,7 @@ Check additional ServiceMonitor resources:
         - app.mintel.com/component
         - app.mintel.com/owner
         - app.mintel.com/ignore_alerts
+        - backstage.io/component
   2: |
     apiVersion: monitoring.coreos.com/v1
     kind: ServiceMonitor
@@ -91,6 +95,7 @@ Check additional ServiceMonitor resources:
         app.mintel.com/component: test-app
         app.mintel.com/env: prod
         app.mintel.com/region: ${CLUSTER_REGION}
+        backstage.io/component: test-app
         k8s-app: test-app-metrics-2
         name: test-app-metrics-2
       name: test-app-metrics-2
@@ -117,6 +122,7 @@ Check additional ServiceMonitor resources:
         - app.kubernetes.io/instance
         - app.mintel.com/application
         - app.mintel.com/owner
+        - backstage.io/component
       selector:
         matchLabels:
           app.kubernetes.io/component: metrics-2
@@ -126,6 +132,7 @@ Check additional ServiceMonitor resources:
         - app.mintel.com/component
         - app.mintel.com/owner
         - app.mintel.com/ignore_alerts
+        - backstage.io/component
   3: |
     apiVersion: monitoring.coreos.com/v1
     kind: ServiceMonitor
@@ -141,6 +148,7 @@ Check additional ServiceMonitor resources:
         app.mintel.com/component: test-app
         app.mintel.com/env: prod
         app.mintel.com/region: ${CLUSTER_REGION}
+        backstage.io/component: test-app
         k8s-app: test-app-metrics-3
         name: test-app-metrics-3
       name: test-app-metrics-3
@@ -167,6 +175,7 @@ Check additional ServiceMonitor resources:
         - app.kubernetes.io/instance
         - app.mintel.com/application
         - app.mintel.com/owner
+        - backstage.io/component
       selector:
         matchLabels:
           app.kubernetes.io/component: metrics-3
@@ -176,6 +185,7 @@ Check additional ServiceMonitor resources:
         - app.mintel.com/component
         - app.mintel.com/owner
         - app.mintel.com/ignore_alerts
+        - backstage.io/component
 Check basic-auth:
   1: |
     apiVersion: monitoring.coreos.com/v1
@@ -192,6 +202,7 @@ Check basic-auth:
         app.mintel.com/component: test-app
         app.mintel.com/env: prod
         app.mintel.com/region: ${CLUSTER_REGION}
+        backstage.io/component: test-app
         k8s-app: test-app
         name: test-app
       name: test-app
@@ -225,6 +236,7 @@ Check basic-auth:
         - app.kubernetes.io/instance
         - app.mintel.com/application
         - app.mintel.com/owner
+        - backstage.io/component
       selector:
         matchLabels:
           app.kubernetes.io/component: app
@@ -234,6 +246,7 @@ Check basic-auth:
         - app.mintel.com/component
         - app.mintel.com/owner
         - app.mintel.com/ignore_alerts
+        - backstage.io/component
 Check combined template defaults:
   1: |
     apiVersion: apps/v1
@@ -250,6 +263,7 @@ Check combined template defaults:
         app.mintel.com/component: test-app
         app.mintel.com/env: prod
         app.mintel.com/region: ${CLUSTER_REGION}
+        backstage.io/component: test-app
         name: test-app
       name: test-app
       namespace: test-namespace
@@ -275,6 +289,7 @@ Check combined template defaults:
             app.mintel.com/component: test-app
             app.mintel.com/env: prod
             app.mintel.com/region: ${CLUSTER_REGION}
+            backstage.io/component: test-app
             name: test-app
         spec:
           containers:
@@ -364,6 +379,7 @@ Check combined template defaults:
         app.mintel.com/component: test-app
         app.mintel.com/env: prod
         app.mintel.com/region: ${CLUSTER_REGION}
+        backstage.io/component: test-app
         k8s-app: test-app
         name: test-app
       name: test-app
@@ -390,6 +406,7 @@ Check combined template defaults:
         - app.kubernetes.io/instance
         - app.mintel.com/application
         - app.mintel.com/owner
+        - backstage.io/component
       selector:
         matchLabels:
           app.kubernetes.io/component: app
@@ -399,6 +416,7 @@ Check combined template defaults:
         - app.mintel.com/component
         - app.mintel.com/owner
         - app.mintel.com/ignore_alerts
+        - backstage.io/component
   3: |
     apiVersion: v1
     kind: Service
@@ -413,6 +431,7 @@ Check combined template defaults:
         app.mintel.com/component: test-app
         app.mintel.com/env: prod
         app.mintel.com/region: ${CLUSTER_REGION}
+        backstage.io/component: test-app
         name: test-app
       name: test-app
       namespace: test-namespace
@@ -441,6 +460,7 @@ Check combined template with extra ports and monitors:
         app.mintel.com/component: test-app
         app.mintel.com/env: prod
         app.mintel.com/region: ${CLUSTER_REGION}
+        backstage.io/component: test-app
         name: test-app
       name: test-app
       namespace: test-namespace
@@ -466,6 +486,7 @@ Check combined template with extra ports and monitors:
             app.mintel.com/component: test-app
             app.mintel.com/env: prod
             app.mintel.com/region: ${CLUSTER_REGION}
+            backstage.io/component: test-app
             name: test-app
         spec:
           containers:
@@ -559,6 +580,7 @@ Check combined template with extra ports and monitors:
         app.mintel.com/component: test-app
         app.mintel.com/env: prod
         app.mintel.com/region: ${CLUSTER_REGION}
+        backstage.io/component: test-app
         k8s-app: test-app
         name: test-app
       name: test-app
@@ -585,6 +607,7 @@ Check combined template with extra ports and monitors:
         - app.kubernetes.io/instance
         - app.mintel.com/application
         - app.mintel.com/owner
+        - backstage.io/component
       selector:
         matchLabels:
           app.kubernetes.io/component: app
@@ -594,6 +617,7 @@ Check combined template with extra ports and monitors:
         - app.mintel.com/component
         - app.mintel.com/owner
         - app.mintel.com/ignore_alerts
+        - backstage.io/component
   3: |
     apiVersion: monitoring.coreos.com/v1
     kind: ServiceMonitor
@@ -609,6 +633,7 @@ Check combined template with extra ports and monitors:
         app.mintel.com/component: test-app
         app.mintel.com/env: prod
         app.mintel.com/region: ${CLUSTER_REGION}
+        backstage.io/component: test-app
         k8s-app: test-app-metrics-2
         name: test-app-metrics-2
       name: test-app-metrics-2
@@ -635,6 +660,7 @@ Check combined template with extra ports and monitors:
         - app.kubernetes.io/instance
         - app.mintel.com/application
         - app.mintel.com/owner
+        - backstage.io/component
       selector:
         matchLabels:
           app.kubernetes.io/component: metrics-2
@@ -644,6 +670,7 @@ Check combined template with extra ports and monitors:
         - app.mintel.com/component
         - app.mintel.com/owner
         - app.mintel.com/ignore_alerts
+        - backstage.io/component
   4: |
     apiVersion: monitoring.coreos.com/v1
     kind: ServiceMonitor
@@ -659,6 +686,7 @@ Check combined template with extra ports and monitors:
         app.mintel.com/component: test-app
         app.mintel.com/env: prod
         app.mintel.com/region: ${CLUSTER_REGION}
+        backstage.io/component: test-app
         k8s-app: test-app-metrics-3
         name: test-app-metrics-3
       name: test-app-metrics-3
@@ -685,6 +713,7 @@ Check combined template with extra ports and monitors:
         - app.kubernetes.io/instance
         - app.mintel.com/application
         - app.mintel.com/owner
+        - backstage.io/component
       selector:
         matchLabels:
           app.kubernetes.io/component: metrics-3
@@ -694,6 +723,7 @@ Check combined template with extra ports and monitors:
         - app.mintel.com/component
         - app.mintel.com/owner
         - app.mintel.com/ignore_alerts
+        - backstage.io/component
   5: |
     apiVersion: v1
     kind: Service
@@ -708,6 +738,7 @@ Check combined template with extra ports and monitors:
         app.mintel.com/component: test-app
         app.mintel.com/env: prod
         app.mintel.com/region: ${CLUSTER_REGION}
+        backstage.io/component: test-app
         name: test-app
       name: test-app
       namespace: test-namespace
@@ -742,6 +773,7 @@ Check default endpoints:
         app.mintel.com/component: test-app
         app.mintel.com/env: prod
         app.mintel.com/region: ${CLUSTER_REGION}
+        backstage.io/component: test-app
         k8s-app: test-app
         name: test-app
       name: test-app
@@ -768,6 +800,7 @@ Check default endpoints:
         - app.kubernetes.io/instance
         - app.mintel.com/application
         - app.mintel.com/owner
+        - backstage.io/component
       selector:
         matchLabels:
           app.kubernetes.io/component: app
@@ -777,6 +810,7 @@ Check default endpoints:
         - app.mintel.com/component
         - app.mintel.com/owner
         - app.mintel.com/ignore_alerts
+        - backstage.io/component
 Check default targetLabels:
   1: |
     apiVersion: monitoring.coreos.com/v1
@@ -793,6 +827,7 @@ Check default targetLabels:
         app.mintel.com/component: test-app
         app.mintel.com/env: prod
         app.mintel.com/region: ${CLUSTER_REGION}
+        backstage.io/component: test-app
         k8s-app: test-app
         name: test-app
       name: test-app
@@ -819,6 +854,7 @@ Check default targetLabels:
         - app.kubernetes.io/instance
         - app.mintel.com/application
         - app.mintel.com/owner
+        - backstage.io/component
       selector:
         matchLabels:
           app.kubernetes.io/component: app
@@ -828,6 +864,7 @@ Check default targetLabels:
         - app.mintel.com/component
         - app.mintel.com/owner
         - app.mintel.com/ignore_alerts
+        - backstage.io/component
 Check metric overrides:
   1: |
     apiVersion: monitoring.coreos.com/v1
@@ -844,6 +881,7 @@ Check metric overrides:
         app.mintel.com/component: test-app
         app.mintel.com/env: prod
         app.mintel.com/region: ${CLUSTER_REGION}
+        backstage.io/component: test-app
         k8s-app: test-app
         name: test-app
       name: test-app
@@ -870,6 +908,7 @@ Check metric overrides:
         - app.kubernetes.io/instance
         - app.mintel.com/application
         - app.mintel.com/owner
+        - backstage.io/component
       selector:
         matchLabels:
           app.kubernetes.io/component: app
@@ -879,6 +918,7 @@ Check metric overrides:
         - app.mintel.com/component
         - app.mintel.com/owner
         - app.mintel.com/ignore_alerts
+        - backstage.io/component
 Check name, namespace and labels:
   1: |
     apiVersion: monitoring.coreos.com/v1
@@ -895,6 +935,7 @@ Check name, namespace and labels:
         app.mintel.com/component: test-app
         app.mintel.com/env: prod
         app.mintel.com/region: ${CLUSTER_REGION}
+        backstage.io/component: test-app
         k8s-app: test-app
         name: test-app
       name: test-app
@@ -921,6 +962,7 @@ Check name, namespace and labels:
         - app.kubernetes.io/instance
         - app.mintel.com/application
         - app.mintel.com/owner
+        - backstage.io/component
       selector:
         matchLabels:
           app.kubernetes.io/component: app
@@ -930,3 +972,4 @@ Check name, namespace and labels:
         - app.mintel.com/component
         - app.mintel.com/owner
         - app.mintel.com/ignore_alerts
+        - backstage.io/component

@@ -16,6 +16,7 @@ Check all .job.* values can be set correctly, without overriding from main deplo
         app.mintel.com/component: testGlobalName
         app.mintel.com/env: testClusterEnv
         app.mintel.com/region: ${CLUSTER_REGION}
+        backstage.io/component: testGlobalName
         name: testGlobalName-testJobName
       name: testGlobalName-testJobName
       namespace: testNamespace
@@ -80,6 +81,7 @@ Check all overrides/additions from main deployment work if enabled:
         app.mintel.com/component: testGlobalName
         app.mintel.com/env: testClusterEnv
         app.mintel.com/region: ${CLUSTER_REGION}
+        backstage.io/component: testGlobalName
         name: testGlobalName-testJobName
       name: testGlobalName-testJobName
       namespace: testNamespace
@@ -155,6 +157,7 @@ Check all overrides/additions from main deployment work if enabled:
         app.mintel.com/component: testGlobalName
         app.mintel.com/env: testClusterEnv
         app.mintel.com/region: ${CLUSTER_REGION}
+        backstage.io/component: testGlobalName
         name: testGlobalName
       name: testGlobalName-testJobName-app
       namespace: testNamespace
@@ -183,6 +186,7 @@ Check default values are correct with minimal configuration:
         app.mintel.com/component: testGlobalName
         app.mintel.com/env: testClusterEnv
         app.mintel.com/region: ${CLUSTER_REGION}
+        backstage.io/component: testGlobalName
         name: testGlobalName-testJobName
       name: testGlobalName-testJobName
       namespace: testNamespace
@@ -237,6 +241,7 @@ Checks that RBAC is set up correctly for kubelock:
         app.mintel.com/component: testGlobalName
         app.mintel.com/env: testClusterEnv
         app.mintel.com/region: ${CLUSTER_REGION}
+        backstage.io/component: testGlobalName
         name: testGlobalName-testJobName
       name: testGlobalName-testJobName
       namespace: testNamespace
@@ -278,6 +283,7 @@ Checks that RBAC is set up correctly for kubelock:
         app.mintel.com/component: testGlobalName
         app.mintel.com/env: testClusterEnv
         app.mintel.com/region: ${CLUSTER_REGION}
+        backstage.io/component: testGlobalName
         name: testGlobalName
       name: testGlobalName-testJobName
       namespace: testNamespace
@@ -295,6 +301,7 @@ Checks that RBAC is set up correctly for kubelock:
         app.mintel.com/component: testGlobalName
         app.mintel.com/env: testClusterEnv
         app.mintel.com/region: ${CLUSTER_REGION}
+        backstage.io/component: testGlobalName
         name: testGlobalName
       name: testGlobalName-testJobName
       namespace: testNamespace
@@ -331,6 +338,7 @@ Checks that RBAC is set up correctly for kubelock:
         app.mintel.com/component: testGlobalName
         app.mintel.com/env: testClusterEnv
         app.mintel.com/region: ${CLUSTER_REGION}
+        backstage.io/component: testGlobalName
         name: testGlobalName
       name: testGlobalName-testJobName
       namespace: testNamespace

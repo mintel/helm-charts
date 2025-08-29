@@ -14,6 +14,7 @@ Check custom python otel extraEnv vars are added:
         app.mintel.com/component: test-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
+        backstage.io/component: test-app
         name: test-app
       name: test-app
       namespace: test-namespace
@@ -39,6 +40,7 @@ Check custom python otel extraEnv vars are added:
             app.mintel.com/component: test-app
             app.mintel.com/env: qa
             app.mintel.com/region: ${CLUSTER_REGION}
+            backstage.io/component: test-app
             name: test-app
         spec:
           containers:
@@ -142,6 +144,7 @@ Check custom sampler settings:
         app.mintel.com/component: test-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
+        backstage.io/component: test-app
         name: test-app
       name: test-app
       namespace: test-namespace
@@ -167,6 +170,7 @@ Check custom sampler settings:
             app.mintel.com/component: test-app
             app.mintel.com/env: qa
             app.mintel.com/region: ${CLUSTER_REGION}
+            backstage.io/component: test-app
             name: test-app
         spec:
           containers:
@@ -270,6 +274,7 @@ Check default python otel envars are added:
         app.mintel.com/component: test-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
+        backstage.io/component: test-app
         name: test-app
       name: test-app
       namespace: test-namespace
@@ -295,6 +300,7 @@ Check default python otel envars are added:
             app.mintel.com/component: test-app
             app.mintel.com/env: qa
             app.mintel.com/region: ${CLUSTER_REGION}
+            backstage.io/component: test-app
             name: test-app
         spec:
           containers:
@@ -396,6 +402,7 @@ Check global otel extraEnv vars are added:
         app.mintel.com/component: test-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
+        backstage.io/component: test-app
         name: test-app
       name: test-app
       namespace: test-namespace
@@ -421,6 +428,7 @@ Check global otel extraEnv vars are added:
             app.mintel.com/component: test-app
             app.mintel.com/env: qa
             app.mintel.com/region: ${CLUSTER_REGION}
+            backstage.io/component: test-app
             name: test-app
         spec:
           containers:

@@ -9,6 +9,7 @@ tests:
       global.owner: sre
       global.application: application-name
       global.component: component-name
+      global.backstage.component: component-name
       global.clusterEnv: qa
     asserts:
       - matchSnapshot: {} # Check for regressions and unexpected changes.
@@ -26,6 +27,9 @@ tests:
           value: application-name
       - equal:
           path: metadata.labels["app.mintel.com/component"]
+          value: component-name
+      - equal:
+          path: metadata.labels["backstage.io/component"]
           value: component-name
   - it: Check empty application and component labels both default to name
     template: deployment.yaml
@@ -45,5 +49,8 @@ tests:
           path: metadata.labels["app.mintel.com/application"]
           value: app
       - equal:
-          path: metadata.labels["app.mintel.com/application"]
+          path: metadata.labels["app.mintel.com/component"]
+          value: app
+      - equal:
+          path: metadata.labels["backstage.io/component"]
           value: app

@@ -47,6 +47,7 @@ tests:
             - app.mintel.com/component
             - app.mintel.com/owner
             - app.mintel.com/ignore_alerts
+            - backstage.io/component
       - equal:
           path: spec.podTargetLabels
           value:
@@ -56,6 +57,7 @@ tests:
             - app.kubernetes.io/instance
             - app.mintel.com/application
             - app.mintel.com/owner
+            - backstage.io/component
   - it: Check default endpoints
     template: service-monitor.yaml
     set:

@@ -13,6 +13,7 @@ Check ALB NetworkPolicy created if enabled:
         app.mintel.com/component: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
+        backstage.io/component: example-app
         name: example-app
       name: allow-aws-alb-internal-to-example-app
       namespace: test-namespace
@@ -46,6 +47,7 @@ Check ALB NetworkPolicy created if internal alb enabled in extraIngresses:
         app.mintel.com/component: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
+        backstage.io/component: example-app
         name: example-app
       name: allow-aws-alb-internal-to-example-app
       namespace: test-namespace
@@ -79,6 +81,7 @@ Check ALB NetworkPolicy ports are unique:
         app.mintel.com/component: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
+        backstage.io/component: example-app
         name: example-app
       name: allow-aws-alb-to-example-app
       namespace: test-namespace
@@ -112,6 +115,7 @@ Check ALB NetworkPolicy ports set for default conatiner:
         app.mintel.com/component: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
+        backstage.io/component: example-app
         name: example-app
       name: allow-aws-alb-to-example-app
       namespace: test-namespace
@@ -145,6 +149,7 @@ Check ALB NetworkPolicy ports set with oauth2proxy:
         app.mintel.com/component: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
+        backstage.io/component: example-app
         name: example-app
       name: allow-aws-alb-to-example-app
       namespace: test-namespace
@@ -178,6 +183,7 @@ Check ALB NetworkPolicy ports set with oauth2proxy and healthcheck:
         app.mintel.com/component: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
+        backstage.io/component: example-app
         name: example-app
       name: allow-aws-alb-to-example-app
       namespace: test-namespace

@@ -14,6 +14,7 @@ Check default container args:
         app.mintel.com/component: test-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
+        backstage.io/component: test-app
         name: test-app
       name: test-app
       namespace: test-namespace
@@ -39,6 +40,7 @@ Check default container args:
             app.mintel.com/component: test-app
             app.mintel.com/env: qa
             app.mintel.com/region: ${CLUSTER_REGION}
+            backstage.io/component: test-app
             name: test-app
         spec:
           containers:
@@ -178,6 +180,7 @@ Check setting skip-auth-regex from extra passed in values:
         app.mintel.com/component: test-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
+        backstage.io/component: test-app
         name: test-app
       name: test-app
       namespace: test-namespace
@@ -203,6 +206,7 @@ Check setting skip-auth-regex from extra passed in values:
             app.mintel.com/component: test-app
             app.mintel.com/env: qa
             app.mintel.com/region: ${CLUSTER_REGION}
+            backstage.io/component: test-app
             name: test-app
         spec:
           containers:
@@ -343,6 +347,7 @@ Check setting skip-auth-regex from extra passed in values when they already cont
         app.mintel.com/component: test-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
+        backstage.io/component: test-app
         name: test-app
       name: test-app
       namespace: test-namespace
@@ -368,6 +373,7 @@ Check setting skip-auth-regex from extra passed in values when they already cont
             app.mintel.com/component: test-app
             app.mintel.com/env: qa
             app.mintel.com/region: ${CLUSTER_REGION}
+            backstage.io/component: test-app
             name: test-app
         spec:
           containers:
@@ -508,6 +514,7 @@ Check setting skip-auth-regex from overridden health-check values:
         app.mintel.com/component: test-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
+        backstage.io/component: test-app
         name: test-app
       name: test-app
       namespace: test-namespace
@@ -533,6 +540,7 @@ Check setting skip-auth-regex from overridden health-check values:
             app.mintel.com/component: test-app
             app.mintel.com/env: qa
             app.mintel.com/region: ${CLUSTER_REGION}
+            backstage.io/component: test-app
             name: test-app
         spec:
           containers:
@@ -672,6 +680,7 @@ Check sidecar present if enabled:
         app.mintel.com/component: test-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
+        backstage.io/component: test-app
         name: test-app
       name: test-app
       namespace: test-namespace
@@ -697,6 +706,7 @@ Check sidecar present if enabled:
             app.mintel.com/component: test-app
             app.mintel.com/env: qa
             app.mintel.com/region: ${CLUSTER_REGION}
+            backstage.io/component: test-app
             name: test-app
         spec:
           containers:

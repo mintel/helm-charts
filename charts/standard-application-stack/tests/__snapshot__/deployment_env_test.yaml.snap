@@ -16,6 +16,7 @@ Check celery does not pull in `main.env` values:
         app.mintel.com/component: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
+        backstage.io/component: example-app
         name: example-app-celery
       name: example-app-celery
       namespace: test-namespace
@@ -41,6 +42,7 @@ Check celery does not pull in `main.env` values:
             app.mintel.com/component: example-app
             app.mintel.com/env: qa
             app.mintel.com/region: ${CLUSTER_REGION}
+            backstage.io/component: example-app
             name: example-app-celery
         spec:
           containers:
@@ -106,6 +108,7 @@ Check default env behavior:
         app.mintel.com/component: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
+        backstage.io/component: example-app
         name: example-app
       name: example-app
       namespace: test-namespace
@@ -131,6 +134,7 @@ Check default env behavior:
             app.mintel.com/component: example-app
             app.mintel.com/env: qa
             app.mintel.com/region: ${CLUSTER_REGION}
+            backstage.io/component: example-app
             name: example-app
         spec:
           containers:
@@ -216,6 +220,7 @@ Check main container combines default env and `main.env` values:
         app.mintel.com/component: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
+        backstage.io/component: example-app
         name: example-app
       name: example-app
       namespace: test-namespace
@@ -241,6 +246,7 @@ Check main container combines default env and `main.env` values:
             app.mintel.com/component: example-app
             app.mintel.com/env: qa
             app.mintel.com/region: ${CLUSTER_REGION}
+            backstage.io/component: example-app
             name: example-app
         spec:
           containers:

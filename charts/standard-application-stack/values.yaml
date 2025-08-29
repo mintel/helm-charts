@@ -9,10 +9,15 @@ global:
   # Labels for alerting and reporting
   # -- Team which "owns" the application
   owner: ""
-  # -- Name of the application (defaults to global.name)
+  # -- Deprecated: Name of the application (defaults to global.name)
   application: ""
-  # -- Component of the application (defaults to global.name)
+  # -- Deprecated: Component of the application (defaults to global.name)
   component: ""
+
+  backstage:
+    # -- Backstage component (defaults to global.name)
+    component: ""
+
   # -- Top level application each deployment is a part of
   partOf: ""
   # -- Additional labels to apply to all resources

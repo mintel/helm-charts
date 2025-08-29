@@ -13,6 +13,7 @@ Check CronJob Default Overrides:
         app.mintel.com/component: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
+        backstage.io/component: example-app
         name: example-app-daily
       name: example-app-daily
       namespace: test-namespace
@@ -30,6 +31,7 @@ Check CronJob Default Overrides:
                 app.mintel.com/component: example-app
                 app.mintel.com/env: qa
                 app.mintel.com/region: ${CLUSTER_REGION}
+                backstage.io/component: example-app
                 name: example-app-daily
             spec:
               containers:
@@ -81,6 +83,7 @@ Check CronJob Defaults:
         app.mintel.com/component: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
+        backstage.io/component: example-app
         name: example-app-daily
       name: example-app-daily
       namespace: test-namespace
@@ -100,6 +103,7 @@ Check CronJob Defaults:
                 app.mintel.com/component: example-app
                 app.mintel.com/env: qa
                 app.mintel.com/region: ${CLUSTER_REGION}
+                backstage.io/component: example-app
                 name: example-app-daily
             spec:
               containers:
@@ -151,6 +155,7 @@ Check CronJob Job Overrides:
         app.mintel.com/component: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
+        backstage.io/component: example-app
         name: example-app-daily
       name: example-app-daily
       namespace: test-namespace
@@ -170,6 +175,7 @@ Check CronJob Job Overrides:
                 app.mintel.com/component: example-app
                 app.mintel.com/env: qa
                 app.mintel.com/region: ${CLUSTER_REGION}
+                backstage.io/component: example-app
                 name: example-app-daily
             spec:
               containers:
@@ -221,6 +227,7 @@ Check CronJob ttlSecondsAfterFinished zero value:
         app.mintel.com/component: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
+        backstage.io/component: example-app
         name: example-app-daily
       name: example-app-daily
       namespace: test-namespace
@@ -240,6 +247,7 @@ Check CronJob ttlSecondsAfterFinished zero value:
                 app.mintel.com/component: example-app
                 app.mintel.com/env: qa
                 app.mintel.com/region: ${CLUSTER_REGION}
+                backstage.io/component: example-app
                 name: example-app-daily
             spec:
               containers:
@@ -290,6 +298,7 @@ CronJob can have a timezone:
         app.mintel.com/component: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
+        backstage.io/component: example-app
         name: example-app-daily
       name: example-app-daily
       namespace: test-namespace
@@ -309,6 +318,7 @@ CronJob can have a timezone:
                 app.mintel.com/component: example-app
                 app.mintel.com/env: qa
                 app.mintel.com/region: ${CLUSTER_REGION}
+                backstage.io/component: example-app
                 name: example-app-daily
             spec:
               containers:

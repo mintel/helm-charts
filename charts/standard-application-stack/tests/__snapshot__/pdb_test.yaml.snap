@@ -13,6 +13,7 @@ Creates a PDB when autoscaling is disabled and autoscaling.minReplicaCount is se
         app.mintel.com/component: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
+        backstage.io/component: example-app
         name: example-app
       name: example-app
       namespace: test-namespace
@@ -38,6 +39,7 @@ Creates a PDB when replicas > 1:
         app.mintel.com/component: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
+        backstage.io/component: example-app
         name: example-app
       name: example-app
       namespace: test-namespace

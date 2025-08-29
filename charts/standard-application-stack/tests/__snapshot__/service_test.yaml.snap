@@ -15,6 +15,7 @@ Check ALB annotation can be set when enabled:
         app.mintel.com/env: qa
         app.mintel.com/owner: my-team
         app.mintel.com/region: ${CLUSTER_REGION}
+        backstage.io/component: test-app
         name: test-app
       name: test-app
       namespace: test-namespace
@@ -44,6 +45,7 @@ Check ALB annotation can set Application without Owner:
         app.mintel.com/component: test-app
         app.mintel.com/env: local
         app.mintel.com/region: local
+        backstage.io/component: test-app
         name: test-app
       name: test-app
       namespace: test-namespace
@@ -74,6 +76,7 @@ Check ALB annotation can set Owner without Application:
         app.mintel.com/env: local
         app.mintel.com/owner: my-team
         app.mintel.com/region: local
+        backstage.io/component: test-app
         name: test-app
       name: test-app
       namespace: test-namespace
@@ -102,6 +105,7 @@ Check ALB annotation not set when Owner and Application missing:
         app.mintel.com/component: test-app
         app.mintel.com/env: local
         app.mintel.com/region: local
+        backstage.io/component: test-app
         name: test-app
       name: test-app
       namespace: test-namespace
@@ -129,6 +133,7 @@ Check default port set:
         app.mintel.com/component: test-app
         app.mintel.com/env: local
         app.mintel.com/region: local
+        backstage.io/component: test-app
         name: test-app
       name: test-app
       namespace: test-namespace
@@ -156,6 +161,7 @@ Check extraPorts:
         app.mintel.com/component: test-app
         app.mintel.com/env: local
         app.mintel.com/region: local
+        backstage.io/component: test-app
         name: test-app
       name: test-app
       namespace: test-namespace
@@ -195,6 +201,7 @@ Check name, namespace and labels:
         app.mintel.com/component: test-app
         app.mintel.com/env: local
         app.mintel.com/region: local
+        backstage.io/component: test-app
         name: test-app
       name: test-app
       namespace: test-namespace
@@ -222,6 +229,7 @@ Check port and targetPort can be set from Service:
         app.mintel.com/component: test-app
         app.mintel.com/env: local
         app.mintel.com/region: local
+        backstage.io/component: test-app
         name: test-app
       name: test-app
       namespace: test-namespace
@@ -249,6 +257,7 @@ Check port can be overridden:
         app.mintel.com/component: test-app
         app.mintel.com/env: local
         app.mintel.com/region: local
+        backstage.io/component: test-app
         name: test-app
       name: test-app
       namespace: test-namespace

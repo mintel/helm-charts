@@ -15,6 +15,7 @@ Check default label behavior:
         app.mintel.com/env: qa
         app.mintel.com/owner: sre
         app.mintel.com/region: ${CLUSTER_REGION}
+        backstage.io/component: component-name
         name: app
       name: app
       namespace: test-namespace
@@ -41,6 +42,7 @@ Check default label behavior:
             app.mintel.com/env: qa
             app.mintel.com/owner: sre
             app.mintel.com/region: ${CLUSTER_REGION}
+            backstage.io/component: component-name
             name: app
         spec:
           containers:
@@ -125,6 +127,7 @@ Check empty application and component labels both default to name:
         app.mintel.com/env: qa
         app.mintel.com/owner: sre
         app.mintel.com/region: ${CLUSTER_REGION}
+        backstage.io/component: app
         name: app
       name: app
       namespace: test-namespace
@@ -151,6 +154,7 @@ Check empty application and component labels both default to name:
             app.mintel.com/env: qa
             app.mintel.com/owner: sre
             app.mintel.com/region: ${CLUSTER_REGION}
+            backstage.io/component: app
             name: app
         spec:
           containers:

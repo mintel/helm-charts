@@ -13,6 +13,7 @@ Check idleReplicaCount is equal to 0 when enableZeroReplicas is set:
         app.mintel.com/component: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
+        backstage.io/component: example-app
         name: example-app
       name: example-app
       namespace: test-namespace
@@ -45,6 +46,7 @@ Check trigger vars automatically populated:
         app.mintel.com/component: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: eu-west-2
+        backstage.io/component: example-app
         name: example-app
       name: example-app
       namespace: test-namespace
@@ -94,6 +96,7 @@ Check trigger vars can be overriden:
         app.mintel.com/component: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: eu-west-2
+        backstage.io/component: example-app
         name: example-app
       name: example-app
       namespace: test-namespace
@@ -143,6 +146,7 @@ Creates a ScaledObject with constrained settings:
         app.mintel.com/component: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
+        backstage.io/component: example-app
         name: example-app
       name: example-app
       namespace: test-namespace
@@ -174,6 +178,7 @@ Creates a ScaledObject with non-constrained settings:
         app.mintel.com/component: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
+        backstage.io/component: example-app
         name: example-app
       name: example-app
       namespace: test-namespace
@@ -205,6 +210,7 @@ Ensure minReplicaCount cannot be greater than 10:
         app.mintel.com/component: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
+        backstage.io/component: example-app
         name: example-app
       name: example-app
       namespace: test-namespace

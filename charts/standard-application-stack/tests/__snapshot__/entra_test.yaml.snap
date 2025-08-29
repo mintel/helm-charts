@@ -13,6 +13,7 @@ Renders with optional fields (owners, groupMembershipClaims, redirectURIs, extra
         app.mintel.com/component: test-app
         app.mintel.com/env: prod
         app.mintel.com/region: ${CLUSTER_REGION}
+        backstage.io/component: test-app
         name: test-app
       name: test-app
       namespace: test-namespace

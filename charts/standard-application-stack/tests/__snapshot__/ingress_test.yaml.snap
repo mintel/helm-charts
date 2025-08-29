@@ -29,6 +29,7 @@ Check ALB HTTP2 default settings:
         app.mintel.com/component: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
+        backstage.io/component: example-app
         name: example-app
       name: example-app
       namespace: test-namespace
@@ -76,6 +77,7 @@ Check ALB className set by default:
         app.mintel.com/component: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
+        backstage.io/component: example-app
         name: example-app
       name: example-app
       namespace: test-namespace
@@ -123,6 +125,7 @@ Check ALB custom health-check port:
         app.mintel.com/component: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
+        backstage.io/component: example-app
         name: example-app
       name: example-app
       namespace: test-namespace
@@ -170,6 +173,7 @@ Check ALB default health-check port:
         app.mintel.com/component: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
+        backstage.io/component: example-app
         name: example-app
       name: example-app
       namespace: test-namespace
@@ -217,6 +221,7 @@ Check ALB gRPC custom settings:
         app.mintel.com/component: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
+        backstage.io/component: example-app
         name: example-app
       name: example-app
       namespace: test-namespace
@@ -264,6 +269,7 @@ Check ALB gRPC default settings:
         app.mintel.com/component: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
+        backstage.io/component: example-app
         name: example-app
       name: example-app
       namespace: test-namespace
@@ -311,6 +317,7 @@ Check ALB health-check port with oauthProxy enabled:
         app.mintel.com/component: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
+        backstage.io/component: example-app
         name: example-app
       name: example-app
       namespace: test-namespace
@@ -343,6 +350,7 @@ Check EXTRA_ALLOWED_HOSTS env var extraHosts with extraIngresses:
         app.mintel.com/component: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
+        backstage.io/component: example-app
         name: example-app
         tier: frontend
       name: example-app
@@ -369,6 +377,7 @@ Check EXTRA_ALLOWED_HOSTS env var extraHosts with extraIngresses:
             app.mintel.com/component: example-app
             app.mintel.com/env: qa
             app.mintel.com/region: ${CLUSTER_REGION}
+            backstage.io/component: example-app
             name: example-app
             tier: frontend
         spec:
@@ -479,6 +488,7 @@ Check TLS set if ingressTLSSecrets is not empty:
         app.mintel.com/component: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
+        backstage.io/component: example-app
         name: example-app
       name: example-app
       namespace: test-namespace
@@ -530,6 +540,7 @@ Check extraHosts:
         app.mintel.com/component: AppyMcAppface
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
+        backstage.io/component: AppyMcAppface
         name: AppyMcAppface
       name: AppyMcAppface
       namespace: test-namespace
@@ -587,6 +598,7 @@ Check extraHosts do not render hosts with an empty value:
         app.mintel.com/component: AppyMcAppface
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
+        backstage.io/component: AppyMcAppface
         name: AppyMcAppface
       name: AppyMcAppface
       namespace: test-namespace
@@ -634,6 +646,7 @@ Check extraHosts with TLS:
         app.mintel.com/component: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
+        backstage.io/component: example-app
         name: example-app
       name: example-app
       namespace: test-namespace
@@ -696,6 +709,7 @@ Check extraHosts with TLS and oauthProxy.ingressHost (different):
         app.mintel.com/component: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
+        backstage.io/component: example-app
         name: example-app
       name: example-app
       namespace: test-namespace
@@ -769,6 +783,7 @@ Check extraHosts with TLS and oauthProxy.ingressHost (same as extra host):
         app.mintel.com/component: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
+        backstage.io/component: example-app
         name: example-app
       name: example-app
       namespace: test-namespace
@@ -832,6 +847,7 @@ Check extraHosts with oauthProxy.ingressHost (different):
         app.mintel.com/component: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
+        backstage.io/component: example-app
         name: example-app
       name: example-app
       namespace: test-namespace
@@ -899,6 +915,7 @@ Check extraHosts with oauthProxy.ingressHost (same as extra host):
         app.mintel.com/component: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
+        backstage.io/component: example-app
         name: example-app
       name: example-app
       namespace: test-namespace
@@ -956,6 +973,7 @@ Check ingress name override:
         app.mintel.com/component: ingress-override
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
+        backstage.io/component: ingress-override
         name: ingress-override
       name: ingress-override
       namespace: test-namespace
@@ -1003,6 +1021,7 @@ Check ingress name suffix setting:
         app.mintel.com/component: example-app-suffix
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
+        backstage.io/component: example-app-suffix
         name: example-app-suffix
       name: example-app-suffix
       namespace: test-namespace
@@ -1050,6 +1069,7 @@ Check no TLS set if ingressTLSSecrets and specificTlsHostsYaml is empty:
         app.mintel.com/component: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
+        backstage.io/component: example-app
         name: example-app
       name: example-app
       namespace: test-namespace
@@ -1097,6 +1117,7 @@ Default ingress with path based routing:
         app.mintel.com/component: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
+        backstage.io/component: example-app
         name: example-app
       name: example-app
       namespace: test-namespace
@@ -1153,6 +1174,7 @@ adds default qa api-gateway ingress:
         app.mintel.com/component: example-app-api-gw
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
+        backstage.io/component: example-app-api-gw
         name: example-app-api-gw
       name: example-app-api-gw
       namespace: test-namespace
@@ -1200,6 +1222,7 @@ adds prod api-gateway ingress as an extraIngress with custom fields:
         app.mintel.com/component: example-app
         app.mintel.com/env: prod
         app.mintel.com/region: ${CLUSTER_REGION}
+        backstage.io/component: example-app
         name: example-app
       name: example-app
       namespace: test-namespace
@@ -1248,6 +1271,7 @@ adds prod api-gateway ingress as an extraIngress with custom fields:
         app.mintel.com/component: example-app-api-gw
         app.mintel.com/env: prod
         app.mintel.com/region: ${CLUSTER_REGION}
+        backstage.io/component: example-app-api-gw
         name: example-app-api-gw
       name: example-app-api-gw
       namespace: test-namespace
@@ -1295,6 +1319,7 @@ allows extraIngresses to override default values:
         app.mintel.com/component: image-service-media
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
+        backstage.io/component: image-service-media
         name: image-service-media
       name: image-service-media
       namespace: test-namespace
@@ -1341,6 +1366,7 @@ allows extraIngresses to override default values:
         app.mintel.com/component: image-service-ops-media
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
+        backstage.io/component: image-service-ops-media
         name: image-service-ops-media
       name: image-service-ops-media
       namespace: test-namespace

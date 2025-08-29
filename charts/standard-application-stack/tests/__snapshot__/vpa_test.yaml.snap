@@ -14,6 +14,7 @@ Can have per-VerticalPodAutoscaler overrides:
         app.mintel.com/component: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
+        backstage.io/component: example-app
         name: example-app
       name: deployment-example-app
       namespace: test-namespace
@@ -41,6 +42,7 @@ Can set container policies:
         app.mintel.com/component: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
+        backstage.io/component: example-app
         name: example-app
       name: deployment-example-app
       namespace: test-namespace
@@ -77,6 +79,7 @@ Creates a VerticalPodAutoscaler for a Deployment:
         app.mintel.com/component: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
+        backstage.io/component: example-app
         name: example-app
       name: deployment-example-app
       namespace: test-namespace
@@ -104,6 +107,7 @@ Creates a VerticalPodAutoscaler for a StatefulSet:
         app.mintel.com/component: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
+        backstage.io/component: example-app
         name: example-app
       name: statefulset-example-app
       namespace: test-namespace
@@ -131,6 +135,7 @@ Creates a VerticalPodAutoscaler for aws-es-proxy:
         app.mintel.com/component: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
+        backstage.io/component: example-app
         name: example-app-aws-es-proxy
       name: deployment-example-app-aws-es-proxy
       namespace: test-namespace
@@ -158,6 +163,7 @@ Creates a VerticalPodAutoscaler for celery:
         app.mintel.com/component: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
+        backstage.io/component: example-app
         name: example-app-celery
       name: deployment-example-app-celery
       namespace: test-namespace
@@ -185,6 +191,7 @@ Creates a VerticalPodAutoscaler for celery-beat:
         app.mintel.com/component: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
+        backstage.io/component: example-app
         name: example-app-celery-beat
       name: deployment-example-app-celery-beat
       namespace: test-namespace
@@ -212,6 +219,7 @@ Creates a VerticalPodAutoscaler for celery-exporter:
         app.mintel.com/component: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
+        backstage.io/component: example-app
         name: example-app-celery-exporter
       name: deployment-example-app-celery-exporter
       namespace: test-namespace
@@ -239,6 +247,7 @@ Creates a VerticalPodAutoscaler for mysqlclient:
         app.mintel.com/component: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
+        backstage.io/component: example-app
         name: example-app-mysqlclient
       name: deployment-example-app-mysqlclient
       namespace: test-namespace
@@ -266,6 +275,7 @@ Creates a VerticalPodAutoscaler for mysqldexporter:
         app.mintel.com/component: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
+        backstage.io/component: example-app
         name: example-app-mysqldexporter
       name: deployment-example-app-mysqldexporter
       namespace: test-namespace
@@ -293,6 +303,7 @@ Creates a VerticalPodAutoscaler for postgresqlclient:
         app.mintel.com/component: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
+        backstage.io/component: example-app
         name: example-app-postgresqlclient
       name: deployment-example-app-postgresqlclient
       namespace: test-namespace
@@ -320,6 +331,7 @@ Creates a VerticalPodAutoscaler for postgresqlexporter:
         app.mintel.com/component: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
+        backstage.io/component: example-app
         name: example-app-postgresqlexporter
       name: deployment-example-app-postgresqlexporter
       namespace: test-namespace
@@ -347,6 +359,7 @@ Creates a VerticalPodAutoscaler with autoscaling enabled:
         app.mintel.com/component: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
+        backstage.io/component: example-app
         name: example-app
       name: deployment-example-app
       namespace: test-namespace
@@ -374,6 +387,7 @@ Only creates VerticalPodAutoscaler for CronJobs if cronjobsOnly is true:
         app.mintel.com/component: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
+        backstage.io/component: example-app
         name: example-app-daily
       name: cronjob-example-app-daily
       namespace: test-namespace

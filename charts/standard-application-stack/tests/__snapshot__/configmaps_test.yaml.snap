@@ -14,6 +14,7 @@ Empty configmap:
         app.mintel.com/component: test-app
         app.mintel.com/env: local
         app.mintel.com/region: local
+        backstage.io/component: test-app
         name: test-app-config
       name: test-app-config
       namespace: test-namespace
@@ -38,6 +39,7 @@ Mixed singleline and  multiline data entries:
         app.mintel.com/component: test-app
         app.mintel.com/env: local
         app.mintel.com/region: local
+        backstage.io/component: test-app
         name: test-app-config
       name: test-app-config
       namespace: test-namespace
@@ -61,6 +63,7 @@ Single multiline data entry:
         app.mintel.com/component: test-app
         app.mintel.com/env: local
         app.mintel.com/region: local
+        backstage.io/component: test-app
         name: test-app-config
       name: test-app-config
       namespace: test-namespace
@@ -81,6 +84,7 @@ Single singleline data entry:
         app.mintel.com/component: test-app
         app.mintel.com/env: local
         app.mintel.com/region: local
+        backstage.io/component: test-app
         name: test-app-config
       name: test-app-config
       namespace: test-namespace
@@ -103,6 +107,7 @@ ensures ArgoCD annotations are populated:
         app.mintel.com/component: example-app
         app.mintel.com/env: test
         app.mintel.com/region: ${CLUSTER_REGION}
+        backstage.io/component: example-app
         name: example-app-config
       name: example-app-config
       namespace: test-namespace

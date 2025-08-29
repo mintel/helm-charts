@@ -15,6 +15,7 @@ Check allowSingleReplica doesn't alter strategy:
         app.mintel.com/component: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
+        backstage.io/component: example-app
         name: example-app
       name: example-app
       namespace: test-namespace
@@ -40,6 +41,7 @@ Check allowSingleReplica doesn't alter strategy:
             app.mintel.com/component: example-app
             app.mintel.com/env: qa
             app.mintel.com/region: ${CLUSTER_REGION}
+            backstage.io/component: example-app
             name: example-app
         spec:
           containers:
@@ -124,6 +126,7 @@ Check allowSingleReplica set annotations:
         app.mintel.com/component: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
+        backstage.io/component: example-app
         name: example-app
       name: example-app
       namespace: test-namespace
@@ -149,6 +152,7 @@ Check allowSingleReplica set annotations:
             app.mintel.com/component: example-app
             app.mintel.com/env: qa
             app.mintel.com/region: ${CLUSTER_REGION}
+            backstage.io/component: example-app
             name: example-app
         spec:
           containers:
@@ -232,6 +236,7 @@ Check replicas unset when autoscaling is enabled:
         app.mintel.com/component: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
+        backstage.io/component: example-app
         name: example-app
       name: example-app
       namespace: test-namespace
@@ -256,6 +261,7 @@ Check replicas unset when autoscaling is enabled:
             app.mintel.com/component: example-app
             app.mintel.com/env: qa
             app.mintel.com/region: ${CLUSTER_REGION}
+            backstage.io/component: example-app
             name: example-app
         spec:
           containers:
@@ -340,6 +346,7 @@ Check singleReplicaOnly applied:
         app.mintel.com/component: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
+        backstage.io/component: example-app
         name: example-app
       name: example-app
       namespace: test-namespace
@@ -362,6 +369,7 @@ Check singleReplicaOnly applied:
             app.mintel.com/component: example-app
             app.mintel.com/env: qa
             app.mintel.com/region: ${CLUSTER_REGION}
+            backstage.io/component: example-app
             name: example-app
         spec:
           containers:
@@ -446,6 +454,7 @@ Check singleReplicaOnly ignore replicas value:
         app.mintel.com/component: example-app
         app.mintel.com/env: qa
         app.mintel.com/region: ${CLUSTER_REGION}
+        backstage.io/component: example-app
         name: example-app
       name: example-app
       namespace: test-namespace
@@ -468,6 +477,7 @@ Check singleReplicaOnly ignore replicas value:
             app.mintel.com/component: example-app
             app.mintel.com/env: qa
             app.mintel.com/region: ${CLUSTER_REGION}
+            backstage.io/component: example-app
             name: example-app
         spec:
           containers:
