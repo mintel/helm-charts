@@ -13,6 +13,9 @@ global:
   owner: ""
   # -- Top level application each deployment is a part of
   partOf: ""
+  # -- Top level backstage-component that the deployment is part of (defaults to name)
+  backstage:
+    component: ""
   # -- Additional labels to apply to all resources
   clusterDomain: "127.0.0.1.nip.io"
   # -- Environment (local, dev, qa, prod)

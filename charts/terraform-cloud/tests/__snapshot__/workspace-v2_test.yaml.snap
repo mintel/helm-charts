@@ -1,3 +1,132 @@
+Test backstage.io/component tag can be overidden:
+  1: |
+    apiVersion: app.terraform.io/v1alpha2
+    kind: Workspace
+    metadata:
+      annotations:
+        app.mintel.com/altManifestFileSuffix: mntl-test-app-s3
+        app.mintel.com/placeholder: placeholder
+        argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+        argocd.argoproj.io/sync-wave: "-40"
+      labels:
+        app.kubernetes.io/name: mntl-test-app-s3
+        app.mintel.com/env: dev
+        app.mintel.com/owner: sre
+        app.mintel.com/region: eu-west-1
+        name: mntl-test-app-s3
+      name: dev-eu-west-1-cluster1-test-namespace-mntl-test-app-s3
+      namespace: test-namespace
+    spec:
+      agentPool:
+        id: ""
+      allowDestroyPlan: true
+      applyMethod: auto
+      environmentVariables:
+        - hcl: false
+          name: TF_AWS_DEFAULT_TAGS_TerraformCloudWorkspace
+          sensitive: false
+          value: dev-eu-west-1-cluster1-test-namespace-mntl-test-app-s3
+      executionMode: agent
+      name: dev-eu-west-1-cluster1-test-namespace-mntl-test-app-s3
+      organization: Mintel
+      sshKey:
+        name: mintel-ssh
+      tags:
+        - env:dev
+        - owner:sre
+        - mod:s3
+        - allow-destroy:true
+        - kubernetes-managed
+      terraformVariables:
+        - hcl: false
+          name: aws_account_name
+          sensitive: false
+          value: dev
+        - hcl: false
+          name: aws_region
+          sensitive: false
+          value: eu-west-1
+        - hcl: false
+          name: eks_cluster_name
+          sensitive: false
+          value: cluster1
+        - hcl: false
+          name: enable_versioning
+          sensitive: false
+          value: "false"
+        - hcl: false
+          name: name
+          sensitive: false
+          value: mntl-test-app
+        - hcl: false
+          name: output_secret_name
+          sensitive: false
+          value: test-namespace/mntl-test-app/s3
+        - hcl: true
+          name: secret_tags
+          sensitive: false
+          value: '{access-project = "test-namespace-ops"}'
+        - hcl: true
+          name: tags
+          sensitive: false
+          value: |-
+            {
+              Application = "test-app"
+              Component = "test-app"
+              Owner = "sre"
+              Project = "test-project"
+              backstage.io/component = "test-app-override"
+            }
+        - hcl: false
+          name: tfcloud_agent
+          sensitive: false
+          value: "true"
+      terraformVersion: 1.3.10
+      token:
+        secretKeyRef:
+          key: token
+          name: terraformrc
+  2: |
+    apiVersion: app.terraform.io/v1alpha2
+    kind: Module
+    metadata:
+      annotations:
+        app.mintel.com/altManifestFileSuffix: mntl-test-app-s3
+        app.mintel.com/placeholder: placeholder
+        argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+        argocd.argoproj.io/sync-wave: "-40"
+      labels:
+        app.kubernetes.io/name: mntl-test-app-s3
+        app.mintel.com/env: dev
+        app.mintel.com/owner: sre
+        app.mintel.com/region: eu-west-1
+        name: mntl-test-app-s3
+      name: dev-eu-west-1-cluster1-test-namespace-mntl-test-app-s3
+      namespace: test-namespace
+    spec:
+      destroyOnDeletion: true
+      module:
+        source: app.terraform.io/Mintel/private-s3-bucket/aws
+        version: 3.0.2
+      name: operator
+      organization: Mintel
+      restartedAt: e28064ca9275773798102e6e223627ac92cb8ddf243a9bb5ffcd8a2bc41774f8
+      token:
+        secretKeyRef:
+          key: token
+          name: terraformrc
+      variables:
+        - name: aws_account_name
+        - name: aws_region
+        - name: eks_cluster_name
+        - name: enable_versioning
+        - name: name
+        - name: output_secret_name
+        - name: secret_tags
+        - name: tags
+        - name: tfcloud_agent
+      workspace:
+        name: dev-eu-west-1-cluster1-test-namespace-mntl-test-app-s3
 Test tags:
   1: |
     apiVersion: app.terraform.io/v1alpha2
@@ -71,6 +200,7 @@ Test tags:
               Component = "test-app"
               Owner = "sre"
               Project = "test-project"
+              backstage.io/component = "test-app"
             }
         - hcl: false
           name: tfcloud_agent
@@ -105,7 +235,7 @@ Test tags:
         version: 3.0.2
       name: operator
       organization: Mintel
-      restartedAt: 6c781edcb3060b66cf8e41e49cb262104c2381bd331c01105f22327bc4ebf08f
+      restartedAt: 99e5dc40275ddb90f2c2dfa7b910edec9c4a528daf6b5aba75cae5b6e083fbc1
       token:
         secretKeyRef:
           key: token
@@ -194,6 +324,7 @@ Test tags with env/allow-destroy flags changed:
               Component = "test-app"
               Owner = "sre"
               Project = "test-project"
+              backstage.io/component = "test-app"
             }
         - hcl: false
           name: tfcloud_agent
@@ -228,7 +359,7 @@ Test tags with env/allow-destroy flags changed:
         version: 3.0.2
       name: operator
       organization: Mintel
-      restartedAt: 1b8273d8b2a6e386e56efb1eaaa6f57401e219eddfdb01819449687fb3476b2e
+      restartedAt: 0f975eb550c4a89f63172c34bb32c6694a8bf8a19f761f0492e74b22bf8eb38f
       token:
         secretKeyRef:
           key: token
@@ -324,6 +455,7 @@ Test teamAccess can be configured:
               Component = "test-app"
               Owner = "sre"
               Project = "test-project"
+              backstage.io/component = "test-app"
             }
         - hcl: false
           name: tfcloud_agent
@@ -358,7 +490,7 @@ Test teamAccess can be configured:
         version: 3.0.2
       name: operator
       organization: Mintel
-      restartedAt: 1b8273d8b2a6e386e56efb1eaaa6f57401e219eddfdb01819449687fb3476b2e
+      restartedAt: 0f975eb550c4a89f63172c34bb32c6694a8bf8a19f761f0492e74b22bf8eb38f
       token:
         secretKeyRef:
           key: token
@@ -447,6 +579,7 @@ Test workspace allow destroy env:
               Component = "test-app"
               Owner = "sre"
               Project = "test-project"
+              backstage.io/component = "test-app"
             }
         - hcl: false
           name: tfcloud_agent
@@ -481,7 +614,7 @@ Test workspace allow destroy env:
         version: 3.0.2
       name: operator
       organization: Mintel
-      restartedAt: 6c781edcb3060b66cf8e41e49cb262104c2381bd331c01105f22327bc4ebf08f
+      restartedAt: 99e5dc40275ddb90f2c2dfa7b910edec9c4a528daf6b5aba75cae5b6e083fbc1
       token:
         secretKeyRef:
           key: token
@@ -570,6 +703,7 @@ Test workspace allow destroy env global-override:
               Component = "test-app"
               Owner = "sre"
               Project = "test-project"
+              backstage.io/component = "test-app"
             }
         - hcl: false
           name: tfcloud_agent
@@ -604,7 +738,7 @@ Test workspace allow destroy env global-override:
         version: 3.0.2
       name: operator
       organization: Mintel
-      restartedAt: 6c781edcb3060b66cf8e41e49cb262104c2381bd331c01105f22327bc4ebf08f
+      restartedAt: 99e5dc40275ddb90f2c2dfa7b910edec9c4a528daf6b5aba75cae5b6e083fbc1
       token:
         secretKeyRef:
           key: token
@@ -693,6 +827,7 @@ Test workspace allow destroy env resource-override:
               Component = "test-app"
               Owner = "sre"
               Project = "test-project"
+              backstage.io/component = "test-app"
             }
         - hcl: false
           name: tfcloud_agent
@@ -727,7 +862,7 @@ Test workspace allow destroy env resource-override:
         version: 3.0.2
       name: operator
       organization: Mintel
-      restartedAt: de30324b0e070c6adeb8c406bbeb5fa1212a68b7e389ae32d15fc423ef027293
+      restartedAt: 72ac1adc61c0362f206edbb4bfe8f37c9759eebf94b224b5488e51895a6baebe
       token:
         secretKeyRef:
           key: token
@@ -820,6 +955,7 @@ Test workspace defaults:
               Component = "mntl-test-workspace"
               Owner = "sre"
               Project = "test-project"
+              backstage.io/component = "mntl-test-workspace"
             }
         - hcl: false
           name: tfcloud_agent
@@ -854,7 +990,7 @@ Test workspace defaults:
         version: 3.0.2
       name: operator
       organization: Mintel
-      restartedAt: 3c1404dc864aba34232dc34880ae567e3b6d92bfa68885c7104fe44dedec924b
+      restartedAt: fdbef9d1687038bf53acf2160fd4f030f87d3ac8b0fbbda98eaa5a1815ca8ea7
       token:
         secretKeyRef:
           key: token
@@ -944,6 +1080,7 @@ Test workspace defaults in prod-like environment (logs):
               Component = "mntl-test-workspace"
               Owner = "sre"
               Project = "test-project"
+              backstage.io/component = "mntl-test-workspace"
             }
         - hcl: false
           name: tfcloud_agent
@@ -978,7 +1115,7 @@ Test workspace defaults in prod-like environment (logs):
         version: 3.0.2
       name: operator
       organization: Mintel
-      restartedAt: e04defbc4d25286cbf2872afacb2e563a52d79c27bd0bc2862ea7d8e6c442ba3
+      restartedAt: 0279807d7d7b509afe8d8bddfd1078f13a2bc9b06ac987bf76da8f390b4acbf8
       token:
         secretKeyRef:
           key: token
@@ -1067,6 +1204,7 @@ Test workspace defaults in prod-like environment (prod):
               Component = "mntl-test-workspace"
               Owner = "sre"
               Project = "test-project"
+              backstage.io/component = "mntl-test-workspace"
             }
         - hcl: false
           name: tfcloud_agent
@@ -1101,7 +1239,7 @@ Test workspace defaults in prod-like environment (prod):
         version: 3.0.2
       name: operator
       organization: Mintel
-      restartedAt: 2866f1e5d7f6db683ef1bba053adef8766e39314187bc830bc6d97e9a68e73a5
+      restartedAt: a24eac908ad3b5dec83bb9ace67412eba8ce96ec4058243d2af328f2f931d90a
       token:
         secretKeyRef:
           key: token
@@ -1194,6 +1332,7 @@ Test workspace instance overrides:
               Component = "mntl-test-workspace"
               Owner = "sre"
               Project = "test-project"
+              backstage.io/component = "mntl-test-workspace"
             }
         - hcl: false
           name: tfcloud_agent
@@ -1228,7 +1367,7 @@ Test workspace instance overrides:
         version: 3.0.2
       name: operator
       organization: Mintel
-      restartedAt: 28445a52cf0063a11cbf2152bfbbb2c64a0c4810ac3ddf88c889c6456b4ee1ad
+      restartedAt: d8cde27cae909d372a9c646782be59ae03a30b41a07b730a198816947093aeb5
       token:
         secretKeyRef:
           key: token
@@ -1321,6 +1460,7 @@ Test workspace instance overrides:
               Component = "mntl-test-workspace"
               Owner = "sre"
               Project = "test-project"
+              backstage.io/component = "mntl-test-workspace"
             }
         - hcl: false
           name: tfcloud_agent
@@ -1355,7 +1495,7 @@ Test workspace instance overrides:
         version: 3.0.2
       name: operator
       organization: Mintel
-      restartedAt: 440e5c2917e867e923be925e70e6b10a8b4cb15763758164b3f5424019eb7bbc
+      restartedAt: 3f634f5fd4393adc320236cd9932147e58cda8bfe46202f1ce048570e0d44eb2
       token:
         secretKeyRef:
           key: token
@@ -1449,6 +1589,7 @@ Test workspace overrides:
               Component = "mntl-test-workspace"
               Owner = "sre"
               Project = "test-project"
+              backstage.io/component = "mntl-test-workspace"
             }
         - hcl: false
           name: tfcloud_agent
@@ -1483,7 +1624,7 @@ Test workspace overrides:
         version: 3.0.2
       name: operator
       organization: Mintel
-      restartedAt: 3c1404dc864aba34232dc34880ae567e3b6d92bfa68885c7104fe44dedec924b
+      restartedAt: fdbef9d1687038bf53acf2160fd4f030f87d3ac8b0fbbda98eaa5a1815ca8ea7
       token:
         secretKeyRef:
           key: token
@@ -1573,6 +1714,7 @@ Test workspace overrides at global-config level:
               Component = "mntl-test-workspace"
               Owner = "sre"
               Project = "test-project"
+              backstage.io/component = "mntl-test-workspace"
             }
         - hcl: false
           name: tfcloud_agent
@@ -1607,7 +1749,7 @@ Test workspace overrides at global-config level:
         version: 3.0.2
       name: operator
       organization: Mintel
-      restartedAt: 2866f1e5d7f6db683ef1bba053adef8766e39314187bc830bc6d97e9a68e73a5
+      restartedAt: a24eac908ad3b5dec83bb9ace67412eba8ce96ec4058243d2af328f2f931d90a
       token:
         secretKeyRef:
           key: token
@@ -1696,6 +1838,7 @@ Test workspace overrides at resource-config level:
               Component = "mntl-test-workspace"
               Owner = "sre"
               Project = "test-project"
+              backstage.io/component = "mntl-test-workspace"
             }
         - hcl: false
           name: tfcloud_agent
@@ -1730,7 +1873,7 @@ Test workspace overrides at resource-config level:
         version: 3.0.2
       name: operator
       organization: Mintel
-      restartedAt: b867126e587da27fc212b062254934d2da9b74242cc83fc6d73a53a7dcd9cef5
+      restartedAt: 794cdc7cf7e839f75fecdaa69bf878a0eb05278e560e5279a48d1d2edd15dc44
       token:
         secretKeyRef:
           key: token

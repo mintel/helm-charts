@@ -80,6 +80,7 @@ IRSA created explicitly:
               Component = "test-app"
               Owner = "sre"
               Project = "test-project"
+              backstage.io/component = "test-app"
             }
         - hcl: false
           name: tfcloud_agent
@@ -114,7 +115,7 @@ IRSA created explicitly:
         version: 2.5.1
       name: operator
       organization: Mintel
-      restartedAt: 77a938f5e67a5feb8645c0a50b19f7d68df333783aaca14c710f173c1f1d88bf
+      restartedAt: 529c58cc66a4e87e36ab0df851ccca987ecca9b74a2f054f0c37bab40773f492
       token:
         secretKeyRef:
           key: token
@@ -213,6 +214,7 @@ IRSA created for Dev S3 module workspace:
               Component = "test-app"
               Owner = "sre"
               Project = "test-project"
+              backstage.io/component = "test-app"
             }
         - hcl: false
           name: tfcloud_agent
@@ -247,7 +249,7 @@ IRSA created for Dev S3 module workspace:
         version: 2.5.1
       name: operator
       organization: Mintel
-      restartedAt: 77a938f5e67a5feb8645c0a50b19f7d68df333783aaca14c710f173c1f1d88bf
+      restartedAt: 529c58cc66a4e87e36ab0df851ccca987ecca9b74a2f054f0c37bab40773f492
       token:
         secretKeyRef:
           key: token
@@ -345,6 +347,7 @@ IRSA created with default (0) syncWave:
               Component = "test-app"
               Owner = "sre"
               Project = "test-project"
+              backstage.io/component = "test-app"
             }
         - hcl: false
           name: tfcloud_agent
@@ -379,7 +382,7 @@ IRSA created with default (0) syncWave:
         version: 2.5.1
       name: operator
       organization: Mintel
-      restartedAt: 77a938f5e67a5feb8645c0a50b19f7d68df333783aaca14c710f173c1f1d88bf
+      restartedAt: 529c58cc66a4e87e36ab0df851ccca987ecca9b74a2f054f0c37bab40773f492
       token:
         secretKeyRef:
           key: token
@@ -477,6 +480,7 @@ IRSA created with modified syncWave:
               Component = "test-app"
               Owner = "sre"
               Project = "test-project"
+              backstage.io/component = "test-app"
             }
         - hcl: false
           name: tfcloud_agent
@@ -511,7 +515,141 @@ IRSA created with modified syncWave:
         version: 2.5.1
       name: operator
       organization: Mintel
-      restartedAt: 77a938f5e67a5feb8645c0a50b19f7d68df333783aaca14c710f173c1f1d88bf
+      restartedAt: 529c58cc66a4e87e36ab0df851ccca987ecca9b74a2f054f0c37bab40773f492
+      token:
+        secretKeyRef:
+          key: token
+          name: terraformrc
+      variables:
+        - name: aws_account_name
+        - name: aws_region
+        - name: eks_cluster_name
+        - name: k8s_namespace
+        - name: k8s_service_account_name
+        - name: name
+        - name: tags
+        - name: tfcloud_agent
+      workspace:
+        name: dev-eu-west-1-cluster1-test-namespace-test-app-irsa
+Test backstage.io/component tag can be overidden:
+  1: |
+    apiVersion: app.terraform.io/v1alpha2
+    kind: Workspace
+    metadata:
+      annotations:
+        app.mintel.com/altManifestFileSuffix: test-app-irsa
+        app.mintel.com/placeholder: placeholder
+        argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+        argocd.argoproj.io/sync-wave: "-20"
+      labels:
+        app.kubernetes.io/name: test-app-irsa
+        app.mintel.com/env: dev
+        app.mintel.com/owner: sre
+        app.mintel.com/region: eu-west-1
+        name: test-app-irsa
+      name: dev-eu-west-1-cluster1-test-namespace-test-app-irsa
+      namespace: test-namespace
+    spec:
+      agentPool:
+        id: ""
+      allowDestroyPlan: true
+      applyMethod: auto
+      environmentVariables:
+        - hcl: false
+          name: TF_AWS_DEFAULT_TAGS_TerraformCloudWorkspace
+          sensitive: false
+          value: dev-eu-west-1-cluster1-test-namespace-test-app-irsa
+      executionMode: agent
+      name: dev-eu-west-1-cluster1-test-namespace-test-app-irsa
+      notifications:
+        - enabled: true
+          name: tfcloud-auto-approver
+          token: ${TFCLOUD_AUTO_APPROVER_SIGNATURE_KEY}
+          triggers:
+            - run:needs_attention
+          type: generic
+          url: ${TFCLOUD_AUTO_APPROVER_URL}
+      organization: Mintel
+      runTriggers:
+        - name: dev-eu-west-1-cluster1-test-namespace-mntl-test-app-s3
+      sshKey:
+        name: mintel-ssh
+      tags:
+        - env:dev
+        - owner:sre
+        - mod:irsa
+        - allow-destroy:true
+        - kubernetes-managed
+      terraformVariables:
+        - hcl: false
+          name: aws_account_name
+          sensitive: false
+          value: dev
+        - hcl: false
+          name: aws_region
+          sensitive: false
+          value: eu-west-1
+        - hcl: false
+          name: eks_cluster_name
+          sensitive: false
+          value: cluster1
+        - hcl: false
+          name: k8s_namespace
+          sensitive: false
+          value: test-namespace
+        - hcl: false
+          name: k8s_service_account_name
+          sensitive: false
+          value: test-app
+        - hcl: false
+          name: name
+          sensitive: false
+          value: test-app
+        - hcl: true
+          name: tags
+          sensitive: false
+          value: |-
+            {
+              Application = "test-app"
+              Component = "test-app"
+              Owner = "sre"
+              Project = "test-project"
+              backstage.io/component = "test-app-override"
+            }
+        - hcl: false
+          name: tfcloud_agent
+          sensitive: false
+          value: "true"
+      terraformVersion: 1.3.10
+      token:
+        secretKeyRef:
+          key: token
+          name: terraformrc
+  2: |
+    apiVersion: app.terraform.io/v1alpha2
+    kind: Module
+    metadata:
+      annotations:
+        app.mintel.com/altManifestFileSuffix: test-app-irsa
+        app.mintel.com/placeholder: placeholder
+        argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+        argocd.argoproj.io/sync-wave: "-20"
+      labels:
+        app.kubernetes.io/name: test-app-irsa
+        app.mintel.com/env: dev
+        app.mintel.com/owner: sre
+        app.mintel.com/region: eu-west-1
+        name: test-app-irsa
+      name: dev-eu-west-1-cluster1-test-namespace-test-app-irsa
+      namespace: test-namespace
+    spec:
+      destroyOnDeletion: true
+      module:
+        source: app.terraform.io/Mintel/app-iam/aws
+        version: 2.5.1
+      name: operator
+      organization: Mintel
+      restartedAt: 71f54b2799245e4a0ceb80879ffdffacfbc5428804de9baaa27249df00dc7dfc
       token:
         secretKeyRef:
           key: token

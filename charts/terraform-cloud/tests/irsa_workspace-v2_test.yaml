@@ -93,6 +93,7 @@ tests:
                   Component = "test-app"
                   Owner = "sre"
                   Project = "test-project"
+                  backstage.io/component = "test-app"
                 }
         documentIndex: 0
   - it: IRSA created explicitly
@@ -177,3 +178,43 @@ tests:
           path: metadata.annotations["argocd.argoproj.io/sync-wave"]
           value: "0"
         documentIndex: 0
+  - it: Test backstage.io/component tag can be overidden
+    set:
+      global.name: test-app
+      global.clusterEnv: dev
+      global.clusterName: cluster1
+      global.clusterRegion: eu-west-1
+      global.owner: sre
+      global.partOf: test-project
+      global.backstage.component: test-app-override
+      s3.enabled: true
+      irsa.enabled: true
+    asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
+      - isKind:
+          of: Workspace
+        documentIndex: 0
+      - equal:
+          path: metadata.namespace
+          value: test-namespace
+        documentIndex: 0
+      - equal:
+          path: metadata.name
+          value: dev-eu-west-1-cluster1-test-namespace-test-app-irsa
+        documentIndex: 0
+      - contains:
+          path: spec.terraformVariables
+          content:
+            hcl: true
+            name: tags
+            sensitive: false
+            value: |-
+                {
+                  Application = "test-app"
+                  Component = "test-app"
+                  Owner = "sre"
+                  Project = "test-project"
+                  backstage.io/component = "test-app-override"
+                }
+        documentIndex: 0
+

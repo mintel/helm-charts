@@ -75,6 +75,7 @@ Test module defaults:
               Component = "mntl-test-workspace"
               Owner = "sre"
               Project = "test-project"
+              backstage.io/component = "mntl-test-workspace"
             }
         - hcl: false
           name: tfcloud_agent
@@ -109,7 +110,7 @@ Test module defaults:
         version: 3.0.2
       name: operator
       organization: Mintel
-      restartedAt: 3c1404dc864aba34232dc34880ae567e3b6d92bfa68885c7104fe44dedec924b
+      restartedAt: fdbef9d1687038bf53acf2160fd4f030f87d3ac8b0fbbda98eaa5a1815ca8ea7
       token:
         secretKeyRef:
           key: token
@@ -203,6 +204,7 @@ Test module overrides:
               Component = "mntl-test-workspace"
               Owner = "sre"
               Project = "test-project"
+              backstage.io/component = "mntl-test-workspace"
             }
         - hcl: false
           name: tfcloud_agent
@@ -331,6 +333,7 @@ Test module restartedAt disabled:
               Component = "mntl-test-workspace"
               Owner = "sre"
               Project = "test-project"
+              backstage.io/component = "mntl-test-workspace"
             }
         - hcl: false
           name: tfcloud_agent
