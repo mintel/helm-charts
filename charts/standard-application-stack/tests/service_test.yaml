@@ -173,3 +173,22 @@ tests:
       - equal:
           path: metadata.annotations["alb.ingress.kubernetes.io/tags"]
           value: Owner=my-team
+
+  - it: Check ALB annotation uses backstage.component if set
+    set:
+      global.name: test-app
+      ingress.enabled: true
+      global.backstage.component: my-component
+      global.application: test-app  # should be ignored
+      global.owner: my-team # should be ignored
+
+      # Add annotations to allow for isNull check
+      service.annotations:
+        k: v
+    asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
+      - isKind:
+          of: Service
+      - equal:
+          path: metadata.annotations["alb.ingress.kubernetes.io/tags"]
+          value: backstage.io/component=my-component
