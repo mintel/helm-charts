@@ -12,11 +12,15 @@ metadata:
     {{- end }}
     {{- if .Values.ingress.enabled }}
     {{ $alb_tags := list }}
+    {{- if and .Values.global.backstage .Values.global.backstage.component }}
+    {{ $alb_tags = append $alb_tags (printf "backstage.io/component=%s" .Values.global.backstage.component) }}
+    {{- else }}
     {{- if .Values.global.owner }}
     {{ $alb_tags = append $alb_tags (printf "Owner=%s" .Values.global.owner) }}
     {{- end }}
     {{- if .Values.global.application }}
     {{ $alb_tags = append $alb_tags (printf "Application=%s" .Values.global.application ) }}
+    {{- end }}
     {{- end }}
     {{- if $alb_tags }}
     'alb.ingress.kubernetes.io/tags':  "{{ join "," $alb_tags }}"
