@@ -1,6 +1,6 @@
 # terraform-cloud
 
-![Version: 1.16.1](https://img.shields.io/badge/Version-1.16.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.0](https://img.shields.io/badge/AppVersion-2.0.0-informational?style=flat-square)
+![Version: 1.17.0](https://img.shields.io/badge/Version-1.17.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.0](https://img.shields.io/badge/AppVersion-2.0.0-informational?style=flat-square)
 
 A Helm chart for provisioning resources using Terraform Cloud
 
@@ -69,6 +69,7 @@ A Helm chart for provisioning resources using Terraform Cloud
 | extraIAM.terraform.instances | object | `{}` | A map of instance names => variable key/value pairs to be sent to the terraform module. The values in `defaultVars` will be applied to every instance if not explicitly defined here. |
 | extraIAM.terraform.module.source | string | `"app.terraform.io/Mintel/app-iam/aws"` | Registry path of the Terraform module used to create the resource (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/app-iam/aws) |
 | extraIAM.terraform.module.version | string | `"2.5.1"` | Module version |
+| global.backstage | object | `{"component":""}` | Backstage Component |
 | global.clusterDomain | string | `"127.0.0.1.nip.io"` | Additional labels to apply to all resources |
 | global.clusterEnv | string | `"local"` | Environment (local, dev, qa, prod) |
 | global.clusterName | string | `""` | Kubernetes cluster name |

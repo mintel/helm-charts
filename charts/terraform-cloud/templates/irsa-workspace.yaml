@@ -10,7 +10,7 @@
   {{- $tfVersion := $irsa.terraform.terraformVersion }}
   {{- $irsaConfig := $irsa.terraform.vars }}
   {{- $notifications := $irsa.terraform.notifications }}
-  {{- $defaultTags := dict "Owner" $global.owner "Project" $global.partOf "Application" ($global.application | default $global.name) "Component" ($global.component | default $global.name) }}
+  {{- $defaultTags := dict "backstage.io/component" $global.backstage.component "Owner" $global.owner "Project" $global.partOf "Application" ($global.application | default $global.name) "Component" ($global.component | default $global.name) }}
   {{- if not (hasKey $irsaConfig "name") }}
     {{- $_ := set $irsaConfig "name" (.Values.irsa.nameOverride | default $global.name) }}
   {{- end }}

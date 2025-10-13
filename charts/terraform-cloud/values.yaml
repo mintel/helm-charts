@@ -21,6 +21,10 @@ global:
   clusterName: ""
   # -- Kubernetes cluster region
   clusterRegion: ""
+  # -- Backstage Component
+  backstage:
+    component: ""
+
   terraform:
     # -- Name of our Terraform Cloud org
     organization: Mintel

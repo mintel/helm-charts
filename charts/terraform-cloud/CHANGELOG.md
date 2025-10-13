@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v1.17.0] - 2025-10-13
+### Added
+- Added support for `backstage.component` being set on `Workspace` resources
+
 ## [v1.16.1] - 2025-05-13
 ### Fixed
 - Added `kinesis-firehose` to supported resources list for terraform cloud helm chart
