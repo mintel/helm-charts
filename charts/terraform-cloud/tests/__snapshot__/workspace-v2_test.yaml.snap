@@ -121,6 +121,496 @@ Test tags:
         - name: tfcloud_agent
       workspace:
         name: prod-eu-west-1-cluster1-test-namespace-mntl-test-app-s3
+Test tags in terraformVariables (include backstage.component):
+  1: |
+    apiVersion: app.terraform.io/v1alpha2
+    kind: Workspace
+    metadata:
+      annotations:
+        app.mintel.com/altManifestFileSuffix: mntl-test-app-s3
+        app.mintel.com/placeholder: placeholder
+        argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+        argocd.argoproj.io/sync-wave: "-40"
+      labels:
+        app.kubernetes.io/name: mntl-test-app-s3
+        app.mintel.com/env: logs
+        app.mintel.com/owner: sre
+        app.mintel.com/region: eu-west-1
+        name: mntl-test-app-s3
+      name: logs-eu-west-1-cluster1-test-namespace-mntl-test-app-s3
+      namespace: test-namespace
+    spec:
+      agentPool:
+        id: ""
+      allowDestroyPlan: false
+      applyMethod: auto
+      environmentVariables:
+        - hcl: false
+          name: TF_AWS_DEFAULT_TAGS_TerraformCloudWorkspace
+          sensitive: false
+          value: logs-eu-west-1-cluster1-test-namespace-mntl-test-app-s3
+      executionMode: agent
+      name: logs-eu-west-1-cluster1-test-namespace-mntl-test-app-s3
+      organization: Mintel
+      sshKey:
+        name: mintel-ssh
+      tags:
+        - env:logs
+        - owner:sre
+        - mod:s3
+        - allow-destroy:false
+        - kubernetes-managed
+      terraformVariables:
+        - hcl: false
+          name: aws_account_name
+          sensitive: false
+          value: logs
+        - hcl: false
+          name: aws_region
+          sensitive: false
+          value: eu-west-1
+        - hcl: false
+          name: eks_cluster_name
+          sensitive: false
+          value: cluster1
+        - hcl: false
+          name: name
+          sensitive: false
+          value: mntl-test-app
+        - hcl: false
+          name: output_secret_name
+          sensitive: false
+          value: test-namespace/mntl-test-app/s3
+        - hcl: true
+          name: secret_tags
+          sensitive: false
+          value: '{access-project = "test-namespace-ops"}'
+        - hcl: true
+          name: tags
+          sensitive: false
+          value: |-
+            {
+              Application = "test-app"
+              Component = "test-app"
+              Owner = "sre"
+              Project = "test-project"
+              backstage.io/component = "test-component"
+            }
+        - hcl: false
+          name: tfcloud_agent
+          sensitive: false
+          value: "true"
+      terraformVersion: 1.3.10
+      token:
+        secretKeyRef:
+          key: token
+          name: terraformrc
+  2: |
+    apiVersion: app.terraform.io/v1alpha2
+    kind: Module
+    metadata:
+      annotations:
+        app.mintel.com/altManifestFileSuffix: mntl-test-app-s3
+        app.mintel.com/placeholder: placeholder
+        argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+        argocd.argoproj.io/sync-wave: "-40"
+      labels:
+        app.kubernetes.io/name: mntl-test-app-s3
+        app.mintel.com/env: logs
+        app.mintel.com/owner: sre
+        app.mintel.com/region: eu-west-1
+        name: mntl-test-app-s3
+      name: logs-eu-west-1-cluster1-test-namespace-mntl-test-app-s3
+      namespace: test-namespace
+    spec:
+      destroyOnDeletion: true
+      module:
+        source: app.terraform.io/Mintel/private-s3-bucket/aws
+        version: 3.0.2
+      name: operator
+      organization: Mintel
+      restartedAt: d70af222e7b865ec5ee8c4facccca9d436e019432bec86347cc3801e111237ea
+      token:
+        secretKeyRef:
+          key: token
+          name: terraformrc
+      variables:
+        - name: aws_account_name
+        - name: aws_region
+        - name: eks_cluster_name
+        - name: name
+        - name: output_secret_name
+        - name: secret_tags
+        - name: tags
+        - name: tfcloud_agent
+      workspace:
+        name: logs-eu-west-1-cluster1-test-namespace-mntl-test-app-s3
+Test tags in terraformVariables (no backstage via flag):
+  1: |
+    apiVersion: app.terraform.io/v1alpha2
+    kind: Workspace
+    metadata:
+      annotations:
+        app.mintel.com/altManifestFileSuffix: mntl-test-app-s3
+        app.mintel.com/placeholder: placeholder
+        argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+        argocd.argoproj.io/sync-wave: "-40"
+      labels:
+        app.kubernetes.io/name: mntl-test-app-s3
+        app.mintel.com/env: logs
+        app.mintel.com/owner: sre
+        app.mintel.com/region: eu-west-1
+        name: mntl-test-app-s3
+      name: logs-eu-west-1-cluster1-test-namespace-mntl-test-app-s3
+      namespace: test-namespace
+    spec:
+      agentPool:
+        id: ""
+      allowDestroyPlan: false
+      applyMethod: auto
+      environmentVariables:
+        - hcl: false
+          name: TF_AWS_DEFAULT_TAGS_TerraformCloudWorkspace
+          sensitive: false
+          value: logs-eu-west-1-cluster1-test-namespace-mntl-test-app-s3
+      executionMode: agent
+      name: logs-eu-west-1-cluster1-test-namespace-mntl-test-app-s3
+      organization: Mintel
+      sshKey:
+        name: mintel-ssh
+      tags:
+        - env:logs
+        - owner:sre
+        - mod:s3
+        - allow-destroy:false
+        - kubernetes-managed
+      terraformVariables:
+        - hcl: false
+          name: aws_account_name
+          sensitive: false
+          value: logs
+        - hcl: false
+          name: aws_region
+          sensitive: false
+          value: eu-west-1
+        - hcl: false
+          name: eks_cluster_name
+          sensitive: false
+          value: cluster1
+        - hcl: false
+          name: name
+          sensitive: false
+          value: mntl-test-app
+        - hcl: false
+          name: output_secret_name
+          sensitive: false
+          value: test-namespace/mntl-test-app/s3
+        - hcl: true
+          name: secret_tags
+          sensitive: false
+          value: '{access-project = "test-namespace-ops"}'
+        - hcl: true
+          name: tags
+          sensitive: false
+          value: |-
+            {
+              Application = "test-app"
+              Component = "test-app"
+              Owner = "sre"
+              Project = "test-project"
+            }
+        - hcl: false
+          name: tfcloud_agent
+          sensitive: false
+          value: "true"
+      terraformVersion: 1.3.10
+      token:
+        secretKeyRef:
+          key: token
+          name: terraformrc
+  2: |
+    apiVersion: app.terraform.io/v1alpha2
+    kind: Module
+    metadata:
+      annotations:
+        app.mintel.com/altManifestFileSuffix: mntl-test-app-s3
+        app.mintel.com/placeholder: placeholder
+        argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+        argocd.argoproj.io/sync-wave: "-40"
+      labels:
+        app.kubernetes.io/name: mntl-test-app-s3
+        app.mintel.com/env: logs
+        app.mintel.com/owner: sre
+        app.mintel.com/region: eu-west-1
+        name: mntl-test-app-s3
+      name: logs-eu-west-1-cluster1-test-namespace-mntl-test-app-s3
+      namespace: test-namespace
+    spec:
+      destroyOnDeletion: true
+      module:
+        source: app.terraform.io/Mintel/private-s3-bucket/aws
+        version: 3.0.2
+      name: operator
+      organization: Mintel
+      restartedAt: 1b8273d8b2a6e386e56efb1eaaa6f57401e219eddfdb01819449687fb3476b2e
+      token:
+        secretKeyRef:
+          key: token
+          name: terraformrc
+      variables:
+        - name: aws_account_name
+        - name: aws_region
+        - name: eks_cluster_name
+        - name: name
+        - name: output_secret_name
+        - name: secret_tags
+        - name: tags
+        - name: tfcloud_agent
+      workspace:
+        name: logs-eu-west-1-cluster1-test-namespace-mntl-test-app-s3
+Test tags in terraformVariables (no backstage.component):
+  1: |
+    apiVersion: app.terraform.io/v1alpha2
+    kind: Workspace
+    metadata:
+      annotations:
+        app.mintel.com/altManifestFileSuffix: mntl-test-app-s3
+        app.mintel.com/placeholder: placeholder
+        argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+        argocd.argoproj.io/sync-wave: "-40"
+      labels:
+        app.kubernetes.io/name: mntl-test-app-s3
+        app.mintel.com/env: logs
+        app.mintel.com/owner: sre
+        app.mintel.com/region: eu-west-1
+        name: mntl-test-app-s3
+      name: logs-eu-west-1-cluster1-test-namespace-mntl-test-app-s3
+      namespace: test-namespace
+    spec:
+      agentPool:
+        id: ""
+      allowDestroyPlan: false
+      applyMethod: auto
+      environmentVariables:
+        - hcl: false
+          name: TF_AWS_DEFAULT_TAGS_TerraformCloudWorkspace
+          sensitive: false
+          value: logs-eu-west-1-cluster1-test-namespace-mntl-test-app-s3
+      executionMode: agent
+      name: logs-eu-west-1-cluster1-test-namespace-mntl-test-app-s3
+      organization: Mintel
+      sshKey:
+        name: mintel-ssh
+      tags:
+        - env:logs
+        - owner:sre
+        - mod:s3
+        - allow-destroy:false
+        - kubernetes-managed
+      terraformVariables:
+        - hcl: false
+          name: aws_account_name
+          sensitive: false
+          value: logs
+        - hcl: false
+          name: aws_region
+          sensitive: false
+          value: eu-west-1
+        - hcl: false
+          name: eks_cluster_name
+          sensitive: false
+          value: cluster1
+        - hcl: false
+          name: name
+          sensitive: false
+          value: mntl-test-app
+        - hcl: false
+          name: output_secret_name
+          sensitive: false
+          value: test-namespace/mntl-test-app/s3
+        - hcl: true
+          name: secret_tags
+          sensitive: false
+          value: '{access-project = "test-namespace-ops"}'
+        - hcl: true
+          name: tags
+          sensitive: false
+          value: |-
+            {
+              Application = "test-app"
+              Component = "test-app"
+              Owner = "sre"
+              Project = "test-project"
+            }
+        - hcl: false
+          name: tfcloud_agent
+          sensitive: false
+          value: "true"
+      terraformVersion: 1.3.10
+      token:
+        secretKeyRef:
+          key: token
+          name: terraformrc
+  2: |
+    apiVersion: app.terraform.io/v1alpha2
+    kind: Module
+    metadata:
+      annotations:
+        app.mintel.com/altManifestFileSuffix: mntl-test-app-s3
+        app.mintel.com/placeholder: placeholder
+        argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+        argocd.argoproj.io/sync-wave: "-40"
+      labels:
+        app.kubernetes.io/name: mntl-test-app-s3
+        app.mintel.com/env: logs
+        app.mintel.com/owner: sre
+        app.mintel.com/region: eu-west-1
+        name: mntl-test-app-s3
+      name: logs-eu-west-1-cluster1-test-namespace-mntl-test-app-s3
+      namespace: test-namespace
+    spec:
+      destroyOnDeletion: true
+      module:
+        source: app.terraform.io/Mintel/private-s3-bucket/aws
+        version: 3.0.2
+      name: operator
+      organization: Mintel
+      restartedAt: 1b8273d8b2a6e386e56efb1eaaa6f57401e219eddfdb01819449687fb3476b2e
+      token:
+        secretKeyRef:
+          key: token
+          name: terraformrc
+      variables:
+        - name: aws_account_name
+        - name: aws_region
+        - name: eks_cluster_name
+        - name: name
+        - name: output_secret_name
+        - name: secret_tags
+        - name: tags
+        - name: tfcloud_agent
+      workspace:
+        name: logs-eu-west-1-cluster1-test-namespace-mntl-test-app-s3
+Test tags in terraformVariables (no deprecated):
+  1: |
+    apiVersion: app.terraform.io/v1alpha2
+    kind: Workspace
+    metadata:
+      annotations:
+        app.mintel.com/altManifestFileSuffix: mntl-test-app-s3
+        app.mintel.com/placeholder: placeholder
+        argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+        argocd.argoproj.io/sync-wave: "-40"
+      labels:
+        app.kubernetes.io/name: mntl-test-app-s3
+        app.mintel.com/env: logs
+        app.mintel.com/owner: sre
+        app.mintel.com/region: eu-west-1
+        name: mntl-test-app-s3
+      name: logs-eu-west-1-cluster1-test-namespace-mntl-test-app-s3
+      namespace: test-namespace
+    spec:
+      agentPool:
+        id: ""
+      allowDestroyPlan: false
+      applyMethod: auto
+      environmentVariables:
+        - hcl: false
+          name: TF_AWS_DEFAULT_TAGS_TerraformCloudWorkspace
+          sensitive: false
+          value: logs-eu-west-1-cluster1-test-namespace-mntl-test-app-s3
+      executionMode: agent
+      name: logs-eu-west-1-cluster1-test-namespace-mntl-test-app-s3
+      organization: Mintel
+      sshKey:
+        name: mintel-ssh
+      tags:
+        - env:logs
+        - owner:sre
+        - mod:s3
+        - allow-destroy:false
+        - kubernetes-managed
+      terraformVariables:
+        - hcl: false
+          name: aws_account_name
+          sensitive: false
+          value: logs
+        - hcl: false
+          name: aws_region
+          sensitive: false
+          value: eu-west-1
+        - hcl: false
+          name: eks_cluster_name
+          sensitive: false
+          value: cluster1
+        - hcl: false
+          name: name
+          sensitive: false
+          value: mntl-test-app
+        - hcl: false
+          name: output_secret_name
+          sensitive: false
+          value: test-namespace/mntl-test-app/s3
+        - hcl: true
+          name: secret_tags
+          sensitive: false
+          value: '{access-project = "test-namespace-ops"}'
+        - hcl: true
+          name: tags
+          sensitive: false
+          value: |-
+            {
+              backstage.io/component = "test-component"
+            }
+        - hcl: false
+          name: tfcloud_agent
+          sensitive: false
+          value: "true"
+      terraformVersion: 1.3.10
+      token:
+        secretKeyRef:
+          key: token
+          name: terraformrc
+  2: |
+    apiVersion: app.terraform.io/v1alpha2
+    kind: Module
+    metadata:
+      annotations:
+        app.mintel.com/altManifestFileSuffix: mntl-test-app-s3
+        app.mintel.com/placeholder: placeholder
+        argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+        argocd.argoproj.io/sync-wave: "-40"
+      labels:
+        app.kubernetes.io/name: mntl-test-app-s3
+        app.mintel.com/env: logs
+        app.mintel.com/owner: sre
+        app.mintel.com/region: eu-west-1
+        name: mntl-test-app-s3
+      name: logs-eu-west-1-cluster1-test-namespace-mntl-test-app-s3
+      namespace: test-namespace
+    spec:
+      destroyOnDeletion: true
+      module:
+        source: app.terraform.io/Mintel/private-s3-bucket/aws
+        version: 3.0.2
+      name: operator
+      organization: Mintel
+      restartedAt: 4f43f2fd5f3d20102249584da7288f9ef7d6aa77ec8bbc1827711b5e601d23be
+      token:
+        secretKeyRef:
+          key: token
+          name: terraformrc
+      variables:
+        - name: aws_account_name
+        - name: aws_region
+        - name: eks_cluster_name
+        - name: name
+        - name: output_secret_name
+        - name: secret_tags
+        - name: tags
+        - name: tfcloud_agent
+      workspace:
+        name: logs-eu-west-1-cluster1-test-namespace-mntl-test-app-s3
 Test tags with env/allow-destroy flags changed:
   1: |
     apiVersion: app.terraform.io/v1alpha2

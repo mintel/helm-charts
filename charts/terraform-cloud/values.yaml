@@ -24,6 +24,11 @@ global:
   # -- Backstage Component
   backstage:
     component: ""
+  tags:
+    # -- Include the "backstage.io/component" tag in default tags
+    addBackstageComponentTag: true
+    # -- Include deprecated default tags (Owner, Project, Application, Component)
+    addDeprecatedTags: true
 
   terraform:
     # -- Name of our Terraform Cloud org

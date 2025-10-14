@@ -77,6 +77,8 @@ A Helm chart for provisioning resources using Terraform Cloud
 | global.name | string | `"example-app"` | Name of the application |
 | global.owner | string | `""` | Team which "owns" the application |
 | global.partOf | string | `""` | Top level application each deployment is a part of |
+| global.tags.addBackstageComponentTag | bool | `true` | Include the "backstage.io/component" tag in default tags |
+| global.tags.addDeprecatedTags | bool | `true` | Include deprecated default tags (Owner, Project, Application, Component) |
 | global.terraform.agentPoolID | string | `""` | ID of the Terraform Cloud Agent Pool to use for the run. Passed in from cluster-env-jsonnet |
 | global.terraform.defaultApplyMethod | string | `"auto"` | Default which apply method Workspaces should use. |
 | global.terraform.enableRestartedAt | bool | `true` | Adds the restartedAt value (see restartedAt). Ensures that any configuration changes (i.e. input vars) result in the operator attempting a new plan/apply |

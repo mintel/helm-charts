@@ -3,7 +3,7 @@
 {{- range include "mintel_common.terraformCloudResources" $ | split "," }}
   {{- $global := $.Values.global }}
   # define default tags
-  {{- $defaultTags := dict "backstage.io/component" $global.backstage.component "Owner" $global.owner "Project" $global.partOf "Application" ($global.application | default $global.name) "Component" ($global.component | default $global.name) }}
+  {{- $defaultTags := (fromYaml (include "mintel_common.terraform_cloud.defaultTags" (list $))) }}
   # Get the config for the current resource in the loop (e.g. resourceType = "memcached", resourceConfig = everything
   # inside the memcached dict in values.yaml)
   {{- $resourceType := . }}
