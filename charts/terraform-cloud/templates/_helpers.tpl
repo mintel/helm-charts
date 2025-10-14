@@ -19,7 +19,7 @@ We truncate at 63 chars because sometimes Kubernetes name fields are limited to 
 {{- $tags := dict -}}
 {{- $cfg := (default (dict) (get $global.terraform "tags")) -}}
 {{- $addBackstage := ternary $cfg.addBackstageComponentTag true (hasKey $cfg "addBackstageComponentTag") -}}
-{{- $addRemaining := ternary $cfg.addDeprecatedTags false (hasKey $cfg "addDeprecatedTags") -}}
+{{- $addRemaining := ternary $cfg.addDeprecatedTags true (hasKey $cfg "addDeprecatedTags") -}}
 {{- if and $addBackstage $global.backstage.component }}
 {{- /* Quote the key so downstream HCL uses "backstage.io/component" */ -}}
 {{- $_ := set $tags "\"backstage.io/component\"" $global.backstage.component -}}
