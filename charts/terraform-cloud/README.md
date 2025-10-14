@@ -77,8 +77,6 @@ A Helm chart for provisioning resources using Terraform Cloud
 | global.name | string | `"example-app"` | Name of the application |
 | global.owner | string | `""` | Team which "owns" the application |
 | global.partOf | string | `""` | Top level application each deployment is a part of |
-| global.tags.addBackstageComponentTag | bool | `true` | Include the "backstage.io/component" tag in default tags |
-| global.tags.addDeprecatedTags | bool | `true` | Include deprecated default tags (Owner, Project, Application, Component) |
 | global.terraform.agentPoolID | string | `""` | ID of the Terraform Cloud Agent Pool to use for the run. Passed in from cluster-env-jsonnet |
 | global.terraform.defaultApplyMethod | string | `"auto"` | Default which apply method Workspaces should use. |
 | global.terraform.enableRestartedAt | bool | `true` | Adds the restartedAt value (see restartedAt). Ensures that any configuration changes (i.e. input vars) result in the operator attempting a new plan/apply |
@@ -87,6 +85,9 @@ A Helm chart for provisioning resources using Terraform Cloud
 | global.terraform.irsa | bool | `true` | Set to true as part of tf cloud migrations. When true, standard-application-stack sets the service account eks annotation to match the new IAM roles created by the app-iam module |
 | global.terraform.organization | string | `"Mintel"` | Name of our Terraform Cloud org |
 | global.terraform.secretsMountPath | string | `"/tmp/secrets"` | Where secrets are mounted inside the Terraform Operator container |
+| global.terraform.tags | object | `{"addBackstageComponentTag":true,"addDeprecatedTags":true}` | teamAccess configuration for the workspace teamAccess: [] |
+| global.terraform.tags.addBackstageComponentTag | bool | `true` | Include the "backstage.io/component" tag in default tags |
+| global.terraform.tags.addDeprecatedTags | bool | `true` | Include deprecated default tags (Owner, Project, Application, Component) |
 | global.terraform.terraformVersion | string | `"1.3.10"` | Global Terraform version for all modules |
 | irsa.enabled | bool | `false` | Set to true to explicitly instantiate this module if there's need to access resources created elsewhere |
 | irsa.terraform | object | `{"module":{"source":"app.terraform.io/Mintel/app-iam/aws","version":"2.5.1"},"notifications":[{"enabled":true,"name":"tfcloud-auto-approver","token":"${TFCLOUD_AUTO_APPROVER_SIGNATURE_KEY}","triggers":["run:needs_attention"],"type":"generic","url":"${TFCLOUD_AUTO_APPROVER_URL}"}],"vars":{}}` | Set ArgoCD syncWave for this resource (default -20) syncWave: -20 |

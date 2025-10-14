@@ -190,11 +190,11 @@ Test tags in terraformVariables (include backstage.component):
           sensitive: false
           value: |-
             {
+              "backstage.io/component" = "test-component"
               Application = "test-app"
               Component = "test-app"
               Owner = "sre"
               Project = "test-project"
-              backstage.io/component = "test-component"
             }
         - hcl: false
           name: tfcloud_agent
@@ -229,7 +229,7 @@ Test tags in terraformVariables (include backstage.component):
         version: 3.0.2
       name: operator
       organization: Mintel
-      restartedAt: d70af222e7b865ec5ee8c4facccca9d436e019432bec86347cc3801e111237ea
+      restartedAt: 57cde1bd001261eaf2f5b874a586beac9c859c5383fe705c6c038cb8308f186c
       token:
         secretKeyRef:
           key: token
@@ -560,7 +560,7 @@ Test tags in terraformVariables (no deprecated):
           sensitive: false
           value: |-
             {
-              backstage.io/component = "test-component"
+              "backstage.io/component" = "test-component"
             }
         - hcl: false
           name: tfcloud_agent
@@ -595,7 +595,7 @@ Test tags in terraformVariables (no deprecated):
         version: 3.0.2
       name: operator
       organization: Mintel
-      restartedAt: 4f43f2fd5f3d20102249584da7288f9ef7d6aa77ec8bbc1827711b5e601d23be
+      restartedAt: 3b09406c081aa2844cac55d66c8b48f778da38d25857d964a084c35664114b13
       token:
         secretKeyRef:
           key: token

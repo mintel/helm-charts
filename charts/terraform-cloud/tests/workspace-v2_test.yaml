@@ -395,11 +395,11 @@ tests:
             sensitive: false
             value: |-
                 {
+                  "backstage.io/component" = "test-component"
                   Application = "test-app"
                   Component = "test-app"
                   Owner = "sre"
                   Project = "test-project"
-                  backstage.io/component = "test-component"
                 }
         documentIndex: 0
 
@@ -412,7 +412,7 @@ tests:
       global.owner: sre
       global.partOf: test-project
       global.backstage.component: test-component
-      global.tags.addDeprecatedTags: false
+      global.terraform.tags.addDeprecatedTags: false
       s3:
         enabled: true
     asserts:
@@ -426,7 +426,7 @@ tests:
             sensitive: false
             value: |-
                 {
-                  backstage.io/component = "test-component"
+                  "backstage.io/component" = "test-component"
                 }
         documentIndex: 0
 
@@ -439,8 +439,8 @@ tests:
       global.owner: sre
       global.partOf: test-project
       global.backstage.component: test-component
-      global.tags.addBackstageComponentTag: false
-      global.tags.addDeprecatedTags: true
+      global.terraform.tags.addBackstageComponentTag: false
+      global.terraform.tags.addDeprecatedTags: true
       s3:
         enabled: true
     asserts:
