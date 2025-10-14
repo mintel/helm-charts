@@ -343,3 +343,119 @@ tests:
               team:
                 name: test-app-team
         documentIndex: 0
+
+
+  - it: Test tags in terraformVariables (no backstage.component)
+    set:
+      global.name: test-app
+      global.clusterEnv: logs
+      global.clusterName: cluster1
+      global.clusterRegion: eu-west-1
+      global.owner: sre
+      global.partOf: test-project
+      s3:
+        enabled: true
+    asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
+
+      - contains:
+          path: spec.terraformVariables
+          content:
+            hcl: true
+            name: tags
+            sensitive: false
+            value: |-
+                {
+                  Application = "test-app"
+                  Component = "test-app"
+                  Owner = "sre"
+                  Project = "test-project"
+                }
+        documentIndex: 0
+
+  - it: Test tags in terraformVariables (include backstage.component)
+    set:
+      global.name: test-app
+      global.clusterEnv: logs
+      global.clusterName: cluster1
+      global.clusterRegion: eu-west-1
+      global.owner: sre
+      global.partOf: test-project
+      global.backstage.component: test-component
+      s3:
+        enabled: true
+    asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
+
+      - contains:
+          path: spec.terraformVariables
+          content:
+            hcl: true
+            name: tags
+            sensitive: false
+            value: |-
+                {
+                  "backstage.io/component" = "test-component"
+                  Application = "test-app"
+                  Component = "test-app"
+                  Owner = "sre"
+                  Project = "test-project"
+                }
+        documentIndex: 0
+
+  - it: Test tags in terraformVariables (no deprecated)
+    set:
+      global.name: test-app
+      global.clusterEnv: logs
+      global.clusterName: cluster1
+      global.clusterRegion: eu-west-1
+      global.owner: sre
+      global.partOf: test-project
+      global.backstage.component: test-component
+      global.terraform.tags.addDeprecatedTags: false
+      s3:
+        enabled: true
+    asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
+
+      - contains:
+          path: spec.terraformVariables
+          content:
+            hcl: true
+            name: tags
+            sensitive: false
+            value: |-
+                {
+                  "backstage.io/component" = "test-component"
+                }
+        documentIndex: 0
+
+  - it: Test tags in terraformVariables (no backstage via flag)
+    set:
+      global.name: test-app
+      global.clusterEnv: logs
+      global.clusterName: cluster1
+      global.clusterRegion: eu-west-1
+      global.owner: sre
+      global.partOf: test-project
+      global.backstage.component: test-component
+      global.terraform.tags.addBackstageComponentTag: false
+      global.terraform.tags.addDeprecatedTags: true
+      s3:
+        enabled: true
+    asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
+      - contains:
+          path: spec.terraformVariables
+          content:
+            hcl: true
+            name: tags
+            sensitive: false
+            value: |-
+                {
+                  Application = "test-app"
+                  Component = "test-app"
+                  Owner = "sre"
+                  Project = "test-project"
+                }
+        documentIndex: 0

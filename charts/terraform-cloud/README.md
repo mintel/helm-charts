@@ -1,6 +1,6 @@
 # terraform-cloud
 
-![Version: 1.16.1](https://img.shields.io/badge/Version-1.16.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.0](https://img.shields.io/badge/AppVersion-2.0.0-informational?style=flat-square)
+![Version: 1.17.0](https://img.shields.io/badge/Version-1.17.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.0](https://img.shields.io/badge/AppVersion-2.0.0-informational?style=flat-square)
 
 A Helm chart for provisioning resources using Terraform Cloud
 
@@ -69,6 +69,7 @@ A Helm chart for provisioning resources using Terraform Cloud
 | extraIAM.terraform.instances | object | `{}` | A map of instance names => variable key/value pairs to be sent to the terraform module. The values in `defaultVars` will be applied to every instance if not explicitly defined here. |
 | extraIAM.terraform.module.source | string | `"app.terraform.io/Mintel/app-iam/aws"` | Registry path of the Terraform module used to create the resource (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/app-iam/aws) |
 | extraIAM.terraform.module.version | string | `"2.5.1"` | Module version |
+| global.backstage | object | `{"component":""}` | Backstage Component |
 | global.clusterDomain | string | `"127.0.0.1.nip.io"` | Additional labels to apply to all resources |
 | global.clusterEnv | string | `"local"` | Environment (local, dev, qa, prod) |
 | global.clusterName | string | `""` | Kubernetes cluster name |
@@ -84,6 +85,9 @@ A Helm chart for provisioning resources using Terraform Cloud
 | global.terraform.irsa | bool | `true` | Set to true as part of tf cloud migrations. When true, standard-application-stack sets the service account eks annotation to match the new IAM roles created by the app-iam module |
 | global.terraform.organization | string | `"Mintel"` | Name of our Terraform Cloud org |
 | global.terraform.secretsMountPath | string | `"/tmp/secrets"` | Where secrets are mounted inside the Terraform Operator container |
+| global.terraform.tags | object | `{"addBackstageComponentTag":true,"addDeprecatedTags":true}` | teamAccess configuration for the workspace teamAccess: [] |
+| global.terraform.tags.addBackstageComponentTag | bool | `true` | Include the "backstage.io/component" tag in default tags |
+| global.terraform.tags.addDeprecatedTags | bool | `true` | Include deprecated default tags (Owner, Project, Application, Component) |
 | global.terraform.terraformVersion | string | `"1.3.10"` | Global Terraform version for all modules |
 | irsa.enabled | bool | `false` | Set to true to explicitly instantiate this module if there's need to access resources created elsewhere |
 | irsa.terraform | object | `{"module":{"source":"app.terraform.io/Mintel/app-iam/aws","version":"2.5.1"},"notifications":[{"enabled":true,"name":"tfcloud-auto-approver","token":"${TFCLOUD_AUTO_APPROVER_SIGNATURE_KEY}","triggers":["run:needs_attention"],"type":"generic","url":"${TFCLOUD_AUTO_APPROVER_URL}"}],"vars":{}}` | Set ArgoCD syncWave for this resource (default -20) syncWave: -20 |

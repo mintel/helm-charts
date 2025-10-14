@@ -12,6 +12,27 @@ We truncate at 63 chars because sometimes Kubernetes name fields are limited to 
 {{- end -}}
 {{- end -}}
 
+{{/* Default AWS resource tags map (configurable) */}}
+{{- define "mintel_common.terraform_cloud.defaultTags" -}}
+{{- $ := index . 0 -}}
+{{- $global := $.Values.global -}}
+{{- $tags := dict -}}
+{{- $cfg := (default (dict) (get $global.terraform "tags")) -}}
+{{- $addBackstage := ternary $cfg.addBackstageComponentTag true (hasKey $cfg "addBackstageComponentTag") -}}
+{{- $addRemaining := ternary $cfg.addDeprecatedTags true (hasKey $cfg "addDeprecatedTags") -}}
+{{- if and $addBackstage $global.backstage.component }}
+{{- /* Quote the key so downstream HCL uses "backstage.io/component" */ -}}
+{{- $_ := set $tags "\"backstage.io/component\"" $global.backstage.component -}}
+{{- end -}}
+{{- if $addRemaining -}}
+{{- $_ := set $tags "Owner" $global.owner -}}
+{{- $_ := set $tags "Project" $global.partOf -}}
+{{- $_ := set $tags "Application" (default $global.name $global.application) -}}
+{{- $_ := set $tags "Component" (default $global.name $global.component) -}}
+{{- end -}}
+{{- toYaml $tags -}}
+{{- end -}}
+
 {{/* Supported resources */}}
 {{- define "mintel_common.terraformCloudResources" -}}
 {{- $terraformCloudResources := (list "activeMQ" "apiGatewayHttp" "auroraMySql" "auroraPostgresql" "cmsBackup" "datasync" "dynamodb" "extraIAM" "kinesis-firehose" "lambda" "mariadb" "memcached" "opensearch" "postgresql" "redis" "s3" "s3ReplicationRules" "s3MultiRegionAccessPoint" "sns" "sqs" "sshKeyPairSecret" "staticWebsite" "stepFunctionEks") -}}
