@@ -152,6 +152,15 @@ autoscaling:
   # ref: https://keda.sh/docs/2.8/concepts/scaling-deployments/#advanced
   advanced: {}
 
+  # Mimir configuration to override Prometheus trigger settings
+  mimir:
+    # -- Enable Mimir integration for KEDA prometheus triggers
+    enabled: true
+    # -- Mimir server address (e.g. https://mimir.monitoring.svc:8080)
+    serverAddress: ""
+    # -- Optional custom headers to send to Mimir
+    customHeaders: ""
+
   # ref: https://keda.sh/docs/2.8/concepts/scaling-deployments/#triggers
   # Includes helpers around cpu/memory (see `custom` field for upstream trigger support)
   triggers: {}
