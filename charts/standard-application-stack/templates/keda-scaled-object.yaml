@@ -61,6 +61,14 @@ spec:
     - type: {{ .type }}
       metadata:
       {{- $metadata := .metadata | default dict }}
+      {{- /* If Mimir is enabled and serverAddress is set, and type is prometheus, override metadata */ -}}
+      {{- if and (eq "prometheus" .type) $.Values.autoscaling $.Values.autoscaling.mimir $.Values.autoscaling.mimir.enabled $.Values.autoscaling.mimir.serverAddress }}
+        {{- $override := dict "serverAddress" $.Values.autoscaling.mimir.serverAddress "authModes" "basic" }}
+        {{- if $.Values.autoscaling.mimir.customHeaders }}
+          {{- $_ := set $override "customHeaders" $.Values.autoscaling.mimir.customHeaders }}
+        {{- end }}
+        {{- $metadata = mustMergeOverwrite (mustDeepCopy $metadata) $override }}
+      {{- end }}
       {{- if and (not (hasKey $metadata  "serverAddress"))  (eq "prometheus" .type) }}
         serverAddress: 'http://prometheus-k8s.monitoring.svc:9090'
       {{- end }}
@@ -72,8 +80,14 @@ spec:
       {{- end }}
       {{- range $k, $v := $metadata }}
         {{ $k | quote }}: {{ $v | quote }}
+      {{- end }}
+      {{- /* Add authenticationRef for prometheus when using Mimir */ -}}
+      {{- if and (eq "prometheus" .type) $.Values.autoscaling $.Values.autoscaling.mimir $.Values.autoscaling.mimir.enabled $.Values.autoscaling.mimir.serverAddress }}
+      authenticationRef:
+        name: mimir
+        kind: ClusterTriggerAuthentication
     {{- end }}
-  {{- end }}
+    {{- end }}
   {{- end }}
 {{- end }}
 {{- end }}

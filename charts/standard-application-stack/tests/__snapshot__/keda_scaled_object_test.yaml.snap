@@ -131,6 +131,48 @@ Creates a ScaledObject for a custom scaleTargetRef:
         apiVersion: apps/v2
         kind: CustomResource
         name: example-app
+Creates a ScaledObject with Mimir configuration for prometheus triggers:
+  1: |
+    apiVersion: keda.sh/v1alpha1
+    kind: ScaledObject
+    metadata:
+      annotations:
+        argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+      labels:
+        app.kubernetes.io/component: app
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: example-app
+        app.mintel.com/application: example-app
+        app.mintel.com/component: example-app
+        app.mintel.com/env: qa
+        app.mintel.com/region: ${CLUSTER_REGION}
+        name: example-app
+      name: example-app
+      namespace: test-namespace
+    spec:
+      advanced: {}
+      cooldownPeriod: 300
+      fallback:
+        failureThreshold: 3
+        replicas: 2
+      maxReplicaCount: 5
+      minReplicaCount: 2
+      pollingInterval: 30
+      scaleTargetRef:
+        apiVersion: apps/v1
+        kind: Deployment
+        name: example-app
+      triggers:
+        - authenticationRef:
+            kind: ClusterTriggerAuthentication
+            name: mimir
+          metadata:
+            authModes: basic
+            customHeaders: 'X-Scope-OrgID: tenant-1'
+            query: sum(rate(http_requests_total{service="podinfo-http"}[1m]))
+            serverAddress: https://mimir.monitoring.svc:8080
+            threshold: "5"
+          type: prometheus
 Creates a ScaledObject with advanced settings:
   1: |
     apiVersion: keda.sh/v1alpha1
