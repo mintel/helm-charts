@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [v11.0.0] - 2025-11-07
 ### Changed
-- Add support for using Mimir (by default) via the prometheu scaler.
+- Add support for using Mimir (by default) via the prometheus scaler.
 
 ## [v10.5.0] - 2025-08-19
 ### Added
