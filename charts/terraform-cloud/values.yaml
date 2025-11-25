@@ -392,6 +392,41 @@ extraIAM:
     # `defaultVars` will be applied to every instance if not explicitly defined here.
     instances: {}
 
+glue:
+  # -- Set to true to create a Glue integration
+  enabled: false
+  # -- Set to true to create an AWS secret manager external secret with outputs
+  outputSecret: true
+  # -- Set ArgoCD syncWave for this resource (default -40)
+  # syncWave: -40
+  terraform:
+    terraformVersion: 1.4.3
+    module:
+      # -- Registry path of the Terraform module used to create the resource
+      # (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/glue/aws)
+      source: app.terraform.io/Mintel/glue/aws//modules/entrypoint
+      # -- Module version
+      version: 1.3.0
+    # -- Vars to be applied to all instances defined below
+    # @default -- See below
+    defaultVars:
+      ### Boolean which when set to true disables destroy runs on the workspace and vice-versa. It serves as a form of
+      ### deletion protection. It defaults to false in prod and logs and true elsewhere
+      # workspaceAllowDestroy: false
+      ### Specify whether or not to execute a Destroy run when the object is deleted from the Kubernetes. Default: true
+      # moduleDestroyOnDeletion: false
+      ### Override the generated workspace name, for example if the generated name is above the char limit
+      # workspaceNameOverride: string
+      ### Comma-separated list of tags to add to workspace. Default: "env:<environment>,owner:<owner>,mod:<module>"
+      # workspaceTags: string
+      ### Determines team ownership of the workspace. Default: Values.global.owner
+      # workspaceOwner: string
+      ### Use to map keys from AWS secret manager secrets to new key names. Map values should be in the form <new key>:<module secret key>
+      # outputSecretMap: {}
+    # -- A map of instance names => variable key/value pairs to be sent to the terraform module. The values in
+    # `defaultVars` will be applied to every instance if not explicitly defined here.
+    instances: {}
+
 irsa:
   # -- Set to true to explicitly instantiate this module if there's need to access resources created elsewhere
   enabled: false
