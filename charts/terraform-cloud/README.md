@@ -1,6 +1,6 @@
 # terraform-cloud
 
-![Version: 1.18.0](https://img.shields.io/badge/Version-1.18.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.0](https://img.shields.io/badge/AppVersion-2.0.0-informational?style=flat-square)
+![Version: 1.18.1](https://img.shields.io/badge/Version-1.18.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.0](https://img.shields.io/badge/AppVersion-2.0.0-informational?style=flat-square)
 
 A Helm chart for provisioning resources using Terraform Cloud
 
@@ -91,11 +91,11 @@ A Helm chart for provisioning resources using Terraform Cloud
 | global.terraform.terraformVersion | string | `"1.3.10"` | Global Terraform version for all modules |
 | glue.enabled | bool | `false` | Set to true to create a Glue integration |
 | glue.outputSecret | bool | `true` | Set to true to create an AWS secret manager external secret with outputs |
-| glue.terraform | object | `{"defaultVars":null,"instances":{},"module":{"source":"app.terraform.io/Mintel/glue/aws//modules/entrypoint","version":"1.3.0"},"terraformVersion":"1.4.3"}` | Set ArgoCD syncWave for this resource (default -40) syncWave: -40 |
+| glue.terraform | object | `{"defaultVars":null,"instances":{},"module":{"source":"app.terraform.io/Mintel/glue/aws//modules/entrypoint","version":"1.3.1"},"terraformVersion":"1.4.3"}` | Set ArgoCD syncWave for this resource (default -40) syncWave: -40 |
 | glue.terraform.defaultVars | string | See below | Vars to be applied to all instances defined below |
 | glue.terraform.instances | object | `{}` | A map of instance names => variable key/value pairs to be sent to the terraform module. The values in `defaultVars` will be applied to every instance if not explicitly defined here. |
 | glue.terraform.module.source | string | `"app.terraform.io/Mintel/glue/aws//modules/entrypoint"` | Registry path of the Terraform module used to create the resource (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/glue/aws) |
-| glue.terraform.module.version | string | `"1.3.0"` | Module version |
+| glue.terraform.module.version | string | `"1.3.1"` | Module version |
 | irsa.enabled | bool | `false` | Set to true to explicitly instantiate this module if there's need to access resources created elsewhere |
 | irsa.terraform | object | `{"module":{"source":"app.terraform.io/Mintel/app-iam/aws","version":"2.5.1"},"notifications":[{"enabled":true,"name":"tfcloud-auto-approver","token":"${TFCLOUD_AUTO_APPROVER_SIGNATURE_KEY}","triggers":["run:needs_attention"],"type":"generic","url":"${TFCLOUD_AUTO_APPROVER_URL}"}],"vars":{}}` | Set ArgoCD syncWave for this resource (default -20) syncWave: -20 |
 | irsa.terraform.module.source | string | `"app.terraform.io/Mintel/app-iam/aws"` | Registry path of the Terraform module used to create the resource (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/app-iam/aws) |
