@@ -1,0 +1,292 @@
+renders both global and celery-specific volumeMounts:
+  1: |
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      annotations:
+        app.mintel.com/opa-skip-liveness-probe-check.main: "true"
+        app.mintel.com/opa-skip-readiness-probe-check.main: "true"
+        app.mintel.com/placeholder: placeholder
+        secret.reloader.stakater.com/reload: example-app-app
+      labels:
+        app.kubernetes.io/component: celery
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: example-app-celery
+        app.mintel.com/application: example-app
+        app.mintel.com/component: example-app
+        app.mintel.com/env: qa
+        app.mintel.com/region: ${CLUSTER_REGION}
+        name: example-app-celery
+      name: example-app-celery
+      namespace: test-namespace
+    spec:
+      minReadySeconds: 10
+      replicas: 2
+      selector:
+        matchLabels:
+          app.kubernetes.io/component: celery
+          app.kubernetes.io/name: example-app-celery
+      strategy:
+        rollingUpdate:
+          maxSurge: 15%
+          maxUnavailable: 10%
+        type: RollingUpdate
+      template:
+        metadata:
+          labels:
+            app.kubernetes.io/component: celery
+            app.kubernetes.io/managed-by: Helm
+            app.kubernetes.io/name: example-app-celery
+            app.mintel.com/application: example-app
+            app.mintel.com/component: example-app
+            app.mintel.com/env: qa
+            app.mintel.com/region: ${CLUSTER_REGION}
+            name: example-app-celery
+        spec:
+          containers:
+            - args:
+                - celery
+              command:
+                - /app/docker-entrypoint.sh
+              env:
+                - name: KUBERNETES_POD_NAMESPACE
+                  valueFrom:
+                    fieldRef:
+                      fieldPath: metadata.namespace
+                - name: APP_ENVIRONMENT
+                  value: qa
+                - name: RUNTIME_ENVIRONMENT
+                  value: kubernetes
+              envFrom:
+                - secretRef:
+                    name: example-app-app
+              image: registry.gitlab.com/test:v0.0.0
+              imagePullPolicy: IfNotPresent
+              name: main
+              ports:
+                - containerPort: 8000
+                  name: http
+              resources:
+                limits: {}
+                requests: {}
+              securityContext:
+                allowPrivilegeEscalation: false
+                capabilities:
+                  drop:
+                    - ALL
+                runAsNonRoot: true
+                runAsUser: 1000
+              volumeMounts:
+                - mountPath: /shared-config
+                  name: shared-config
+                - mountPath: /celery-config
+                  name: celery-config
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 1000
+          serviceAccountName: example-app
+          topologySpreadConstraints:
+            - labelSelector:
+                matchLabels:
+                  app.kubernetes.io/component: celery
+                  app.kubernetes.io/name: example-app-celery
+              maxSkew: 1
+              topologyKey: topology.kubernetes.io/zone
+              whenUnsatisfiable: DoNotSchedule
+          volumes:
+            - emptyDir: {}
+              name: shared-config
+            - emptyDir: {}
+              name: celery-config
+renders celery-specific volumeMounts:
+  1: |
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      annotations:
+        app.mintel.com/opa-skip-liveness-probe-check.main: "true"
+        app.mintel.com/opa-skip-readiness-probe-check.main: "true"
+        app.mintel.com/placeholder: placeholder
+        secret.reloader.stakater.com/reload: example-app-app
+      labels:
+        app.kubernetes.io/component: celery
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: example-app-celery
+        app.mintel.com/application: example-app
+        app.mintel.com/component: example-app
+        app.mintel.com/env: qa
+        app.mintel.com/region: ${CLUSTER_REGION}
+        name: example-app-celery
+      name: example-app-celery
+      namespace: test-namespace
+    spec:
+      minReadySeconds: 10
+      replicas: 2
+      selector:
+        matchLabels:
+          app.kubernetes.io/component: celery
+          app.kubernetes.io/name: example-app-celery
+      strategy:
+        rollingUpdate:
+          maxSurge: 15%
+          maxUnavailable: 10%
+        type: RollingUpdate
+      template:
+        metadata:
+          labels:
+            app.kubernetes.io/component: celery
+            app.kubernetes.io/managed-by: Helm
+            app.kubernetes.io/name: example-app-celery
+            app.mintel.com/application: example-app
+            app.mintel.com/component: example-app
+            app.mintel.com/env: qa
+            app.mintel.com/region: ${CLUSTER_REGION}
+            name: example-app-celery
+        spec:
+          containers:
+            - args:
+                - celery
+              command:
+                - /app/docker-entrypoint.sh
+              env:
+                - name: KUBERNETES_POD_NAMESPACE
+                  valueFrom:
+                    fieldRef:
+                      fieldPath: metadata.namespace
+                - name: APP_ENVIRONMENT
+                  value: qa
+                - name: RUNTIME_ENVIRONMENT
+                  value: kubernetes
+              envFrom:
+                - secretRef:
+                    name: example-app-app
+              image: registry.gitlab.com/test:v0.0.0
+              imagePullPolicy: IfNotPresent
+              name: main
+              ports:
+                - containerPort: 8000
+                  name: http
+              resources:
+                limits: {}
+                requests: {}
+              securityContext:
+                allowPrivilegeEscalation: false
+                capabilities:
+                  drop:
+                    - ALL
+                runAsNonRoot: true
+                runAsUser: 1000
+              volumeMounts:
+                - mountPath: /celery-config
+                  name: celery-config
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 1000
+          serviceAccountName: example-app
+          topologySpreadConstraints:
+            - labelSelector:
+                matchLabels:
+                  app.kubernetes.io/component: celery
+                  app.kubernetes.io/name: example-app-celery
+              maxSkew: 1
+              topologyKey: topology.kubernetes.io/zone
+              whenUnsatisfiable: DoNotSchedule
+          volumes:
+            - emptyDir: {}
+              name: celery-config
+renders global volumeMounts in celery deployment:
+  1: |
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      annotations:
+        app.mintel.com/opa-skip-liveness-probe-check.main: "true"
+        app.mintel.com/opa-skip-readiness-probe-check.main: "true"
+        app.mintel.com/placeholder: placeholder
+        secret.reloader.stakater.com/reload: example-app-app
+      labels:
+        app.kubernetes.io/component: celery
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: example-app-celery
+        app.mintel.com/application: example-app
+        app.mintel.com/component: example-app
+        app.mintel.com/env: qa
+        app.mintel.com/region: ${CLUSTER_REGION}
+        name: example-app-celery
+      name: example-app-celery
+      namespace: test-namespace
+    spec:
+      minReadySeconds: 10
+      replicas: 2
+      selector:
+        matchLabels:
+          app.kubernetes.io/component: celery
+          app.kubernetes.io/name: example-app-celery
+      strategy:
+        rollingUpdate:
+          maxSurge: 15%
+          maxUnavailable: 10%
+        type: RollingUpdate
+      template:
+        metadata:
+          labels:
+            app.kubernetes.io/component: celery
+            app.kubernetes.io/managed-by: Helm
+            app.kubernetes.io/name: example-app-celery
+            app.mintel.com/application: example-app
+            app.mintel.com/component: example-app
+            app.mintel.com/env: qa
+            app.mintel.com/region: ${CLUSTER_REGION}
+            name: example-app-celery
+        spec:
+          containers:
+            - args:
+                - celery
+              command:
+                - /app/docker-entrypoint.sh
+              env:
+                - name: KUBERNETES_POD_NAMESPACE
+                  valueFrom:
+                    fieldRef:
+                      fieldPath: metadata.namespace
+                - name: APP_ENVIRONMENT
+                  value: qa
+                - name: RUNTIME_ENVIRONMENT
+                  value: kubernetes
+              envFrom:
+                - secretRef:
+                    name: example-app-app
+              image: registry.gitlab.com/test:v0.0.0
+              imagePullPolicy: IfNotPresent
+              name: main
+              ports:
+                - containerPort: 8000
+                  name: http
+              resources:
+                limits: {}
+                requests: {}
+              securityContext:
+                allowPrivilegeEscalation: false
+                capabilities:
+                  drop:
+                    - ALL
+                runAsNonRoot: true
+                runAsUser: 1000
+              volumeMounts:
+                - mountPath: /config
+                  name: config-volume
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 1000
+          serviceAccountName: example-app
+          topologySpreadConstraints:
+            - labelSelector:
+                matchLabels:
+                  app.kubernetes.io/component: celery
+                  app.kubernetes.io/name: example-app-celery
+              maxSkew: 1
+              topologyKey: topology.kubernetes.io/zone
+              whenUnsatisfiable: DoNotSchedule
+          volumes:
+            - emptyDir: {}
+              name: config-volume
