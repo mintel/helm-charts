@@ -1,0 +1,72 @@
+suite: Test Celery Deployment VolumeMounts
+templates:
+  - deployment-celery.yaml
+release:
+  namespace: test-namespace
+tests:
+  - it: renders global volumeMounts in celery deployment
+    set:
+      global.clusterEnv: qa
+      celery:
+        enabled: true
+      volumeMounts:
+        - name: config-volume
+          mountPath: /config
+      volumes:
+        - name: config-volume
+          emptyDir: {}
+    asserts:
+      - matchSnapshot: {}
+      - contains:
+          path: spec.template.spec.containers[0].volumeMounts
+          content:
+            name: config-volume
+            mountPath: /config
+
+  - it: renders celery-specific volumeMounts
+    set:
+      global.clusterEnv: qa
+      celery:
+        enabled: true
+        volumeMounts:
+          - name: celery-config
+            mountPath: /celery-config
+      volumes:
+        - name: celery-config
+          emptyDir: {}
+    asserts:
+      - matchSnapshot: {}
+      - contains:
+          path: spec.template.spec.containers[0].volumeMounts
+          content:
+            name: celery-config
+            mountPath: /celery-config
+
+  - it: renders both global and celery-specific volumeMounts
+    set:
+      global.clusterEnv: qa
+      celery:
+        enabled: true
+        volumeMounts:
+          - name: celery-config
+            mountPath: /celery-config
+      volumeMounts:
+        - name: shared-config
+          mountPath: /shared-config
+      volumes:
+        - name: shared-config
+          emptyDir: {}
+        - name: celery-config
+          emptyDir: {}
+    asserts:
+      - matchSnapshot: {}
+      - contains:
+          path: spec.template.spec.containers[0].volumeMounts
+          content:
+            name: shared-config
+            mountPath: /shared-config
+      - contains:
+          path: spec.template.spec.containers[0].volumeMounts
+          content:
+            name: celery-config
+            mountPath: /celery-config

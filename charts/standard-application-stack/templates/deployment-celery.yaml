@@ -248,10 +248,10 @@ spec:
           {{- if (or .Values.volumeMounts .Values.celery.volumeMounts) }}
           volumeMounts:
             {{- with .Values.volumeMounts }}
-            {{- toYaml .Values.volumeMounts | nindent 12 }}
+            {{- toYaml . | nindent 12 }}
             {{- end }}
             {{- with .Values.celery.volumeMounts }}
-            {{- toYaml .Values.celery.volumeMounts | nindent 12 }}
+            {{- toYaml . | nindent 12 }}
             {{- end }}
           {{- end }}
         {{- if (and .Values.filebeatSidecar .Values.filebeatSidecar.enabled) }}
