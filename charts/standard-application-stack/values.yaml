@@ -900,7 +900,8 @@ cronjobs:
 
     # -- If this field is set, ttlSecondsAfterFinished after the Job finishes, it is eligible to be automatically deleted.
     # ref: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.20/#cronjob-v1beta1-batch
-    ttlSecondsAfterFinished: 60
+    # This needs to be greater than the associated KubeJobFailed 'for' value
+    ttlSecondsAfterFinished: 600
 
     # -- CronJob schedule will run relative to this timezone.
     # ref: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
@@ -918,7 +919,7 @@ cronjobs:
     #   restartPolicy: Never
     #   schedule: "0 0 * * *"
     #   timezone: null # See: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
-    #   ttlSecondsAfterFinished: 60
+    #   ttlSecondsAfterFinished: 600
     #   image: ''
     #   command:
     #     - '/bin/sh'
@@ -973,7 +974,9 @@ jobDefaults:
   restartPolicy: Never
   # -- If this field is set, ttlSecondsAfterFinished after the Job finishes, it is eligible to be automatically deleted.
   # ref: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.20/#cronjob-v1beta1-batch
-  ttlSecondsAfterFinished: 60
+  #
+  # This needs to be greater than the associated KubeJobFailed 'for' value
+  ttlSecondsAfterFinished: 600
   kubelock:
     enabled: false
   irsa:

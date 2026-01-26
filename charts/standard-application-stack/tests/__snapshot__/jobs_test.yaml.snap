@@ -221,7 +221,7 @@ Check default values are correct with minimal configuration:
                 runAsUser: 1000
           restartPolicy: Never
           serviceAccountName: testGlobalName-testJobName
-      ttlSecondsAfterFinished: 60
+      ttlSecondsAfterFinished: 600
 Checks that RBAC is set up correctly for kubelock:
   1: |
     apiVersion: batch/v1
@@ -262,7 +262,7 @@ Checks that RBAC is set up correctly for kubelock:
               name: main
           restartPolicy: Never
           serviceAccountName: testGlobalName-testJobName
-      ttlSecondsAfterFinished: 60
+      ttlSecondsAfterFinished: 600
   2: |
     apiVersion: v1
     automountServiceAccountToken: true

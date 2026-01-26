@@ -133,7 +133,7 @@ Check CronJob Defaults:
                 runAsNonRoot: true
                 runAsUser: 1000
               serviceAccountName: example-app
-          ttlSecondsAfterFinished: 60
+          ttlSecondsAfterFinished: 600
       schedule: 0 0 * * *
       suspend: false
 Check CronJob Job Overrides:
@@ -342,7 +342,7 @@ CronJob can have a timezone:
                 runAsNonRoot: true
                 runAsUser: 1000
               serviceAccountName: example-app
-          ttlSecondsAfterFinished: 60
+          ttlSecondsAfterFinished: 600
       schedule: 0 1 * * *
       suspend: false
       timeZone: America/Chicago

@@ -42,7 +42,7 @@ tests:
           value: false
       - equal:
           path: spec.jobTemplate.spec.ttlSecondsAfterFinished
-          value: 60
+          value: 600
       - equal:
           path: spec.jobTemplate.spec.template.metadata.annotations["karpenter.sh/do-not-disrupt"]
           value: "true"
