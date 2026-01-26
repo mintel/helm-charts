@@ -374,3 +374,25 @@ tests:
       - equal:
           path: spec.backoffLimit
           value: 5
+  - it: Check Job backoffLimit can be set to 0
+    set:
+      global.clusterEnv: testClusterEnv
+      global.name: testGlobalName
+      image.registry: registry.example.com
+      image.repository: test/image/repo
+      jobs:
+        - name: testJobName
+          backoffLimit: 0
+          resources:
+            limits:
+              memory: 2Gi
+            requests:
+              cpu: 1000m
+              memory: 2Gi
+    asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
+      - isKind:
+          of: Job
+      - equal:
+          path: spec.backoffLimit
+          value: 0

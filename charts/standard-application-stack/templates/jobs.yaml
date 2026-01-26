@@ -21,8 +21,11 @@ spec:
   {{- if (gt $ttl 0) }}
   ttlSecondsAfterFinished: {{ $ttl}}
   {{- end }}
-  {{- $backoffLimit := .backoffLimit | default $.Values.jobDefaults.backoffLimit }}
-  {{- if $backoffLimit }}
+  {{- $backoffLimit := .backoffLimit }}
+  {{- if eq $backoffLimit nil }}
+  {{- $backoffLimit = $.Values.jobDefaults.backoffLimit }}
+  {{- end }}
+  {{- if ne $backoffLimit nil }}
   backoffLimit: {{ $backoffLimit | int }}
   {{- end }}
   template:

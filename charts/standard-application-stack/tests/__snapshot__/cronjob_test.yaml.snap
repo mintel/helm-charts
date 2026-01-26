@@ -277,6 +277,77 @@ Check CronJob backoffLimit can be overridden per job:
           ttlSecondsAfterFinished: 600
       schedule: 0 1 * * *
       suspend: false
+Check CronJob backoffLimit can be set to 0:
+  1: |
+    apiVersion: batch/v1
+    kind: CronJob
+    metadata:
+      annotations:
+        app.mintel.com/placeholder: placeholder
+      labels:
+        app.kubernetes.io/component: daily
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: example-app-daily
+        app.mintel.com/application: example-app
+        app.mintel.com/component: example-app
+        app.mintel.com/env: qa
+        app.mintel.com/region: ${CLUSTER_REGION}
+        name: example-app-daily
+      name: example-app-daily
+      namespace: test-namespace
+    spec:
+      concurrencyPolicy: Forbid
+      jobTemplate:
+        spec:
+          backoffLimit: 0
+          template:
+            metadata:
+              annotations:
+                karpenter.sh/do-not-disrupt: "true"
+              labels:
+                app.kubernetes.io/component: daily
+                app.kubernetes.io/managed-by: Helm
+                app.kubernetes.io/name: example-app-daily
+                app.mintel.com/application: example-app
+                app.mintel.com/component: example-app
+                app.mintel.com/env: qa
+                app.mintel.com/region: ${CLUSTER_REGION}
+                name: example-app-daily
+            spec:
+              containers:
+                - args:
+                    - -c
+                    - /app/docker-entrypoint.sh
+                  command:
+                    - /bin/sh
+                  env:
+                    - name: KUBERNETES_POD_NAMESPACE
+                      valueFrom:
+                        fieldRef:
+                          fieldPath: metadata.namespace
+                    - name: APP_ENVIRONMENT
+                      value: qa
+                    - name: RUNTIME_ENVIRONMENT
+                      value: kubernetes
+                  envFrom: null
+                  image: registry.gitlab.com/test:v0.0.0
+                  imagePullPolicy: IfNotPresent
+                  name: main
+                  securityContext:
+                    allowPrivilegeEscalation: false
+                    capabilities:
+                      drop:
+                        - ALL
+                    runAsNonRoot: true
+                    runAsUser: 1000
+              restartPolicy: Never
+              securityContext:
+                runAsNonRoot: true
+                runAsUser: 1000
+              serviceAccountName: example-app
+          ttlSecondsAfterFinished: 600
+      schedule: 0 1 * * *
+      suspend: false
 Check CronJob backoffLimit can be set via defaults:
   1: |
     apiVersion: batch/v1

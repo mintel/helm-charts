@@ -26,8 +26,11 @@ spec:
       {{- if (gt $ttl 0) }}
       ttlSecondsAfterFinished: {{ $ttl}}
       {{- end }}
-      {{- $backoffLimit := .backoffLimit | default $.Values.cronjobs.defaults.backoffLimit }}
-      {{- if $backoffLimit }}
+      {{- $backoffLimit := .backoffLimit }}
+      {{- if eq $backoffLimit nil }}
+      {{- $backoffLimit = $.Values.cronjobs.defaults.backoffLimit }}
+      {{- end }}
+      {{- if ne $backoffLimit nil }}
       backoffLimit: {{ $backoffLimit | int }}
       {{- end }}
       template:

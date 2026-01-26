@@ -255,3 +255,23 @@ tests:
       - equal:
           path: spec.jobTemplate.spec.backoffLimit
           value: 5
+  - it: Check CronJob backoffLimit can be set to 0
+    set:
+      global.clusterEnv: qa
+      cronjobsOnly: true
+      cronjobs.jobs:
+        - name: daily
+          schedule: "0 1 * * *"
+          backoffLimit: 0
+          image: ""
+          command: [/bin/sh]
+          args:
+            - "-c"
+            - "/app/docker-entrypoint.sh"
+    asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
+      - isKind:
+          of: CronJob
+      - equal:
+          path: spec.jobTemplate.spec.backoffLimit
+          value: 0
