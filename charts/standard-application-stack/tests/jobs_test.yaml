@@ -35,7 +35,7 @@ tests:
           value: registry.example.com/test/image/repo:v0.0.0
       - equal:
           path: spec.ttlSecondsAfterFinished
-          value: 60
+          value: 600
       - equal:
           path: spec.template.metadata.annotations["karpenter.sh/do-not-disrupt"]
           value: "true"
@@ -307,3 +307,70 @@ tests:
         equal:
           path: subjects[0].name
           value: testGlobalName-testJobName
+  - it: Check Job backoffLimit is not set by default
+    set:
+      global.clusterEnv: testClusterEnv
+      global.name: testGlobalName
+      image.registry: registry.example.com
+      image.repository: test/image/repo
+      jobs:
+        - name: testJobName
+          resources:
+            limits:
+              memory: 2Gi
+            requests:
+              cpu: 1000m
+              memory: 2Gi
+    asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
+      - isKind:
+          of: Job
+      - isNull:
+          path: spec.backoffLimit
+  - it: Check Job backoffLimit can be set via jobDefaults
+    set:
+      global.clusterEnv: testClusterEnv
+      global.name: testGlobalName
+      image.registry: registry.example.com
+      image.repository: test/image/repo
+      jobDefaults:
+        backoffLimit: 3
+      jobs:
+        - name: testJobName
+          resources:
+            limits:
+              memory: 2Gi
+            requests:
+              cpu: 1000m
+              memory: 2Gi
+    asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
+      - isKind:
+          of: Job
+      - equal:
+          path: spec.backoffLimit
+          value: 3
+  - it: Check Job backoffLimit can be overridden per job
+    set:
+      global.clusterEnv: testClusterEnv
+      global.name: testGlobalName
+      image.registry: registry.example.com
+      image.repository: test/image/repo
+      jobDefaults:
+        backoffLimit: 3
+      jobs:
+        - name: testJobName
+          backoffLimit: 5
+          resources:
+            limits:
+              memory: 2Gi
+            requests:
+              cpu: 1000m
+              memory: 2Gi
+    asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
+      - isKind:
+          of: Job
+      - equal:
+          path: spec.backoffLimit
+          value: 5

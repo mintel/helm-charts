@@ -26,6 +26,10 @@ spec:
       {{- if (gt $ttl 0) }}
       ttlSecondsAfterFinished: {{ $ttl}}
       {{- end }}
+      {{- $backoffLimit := .backoffLimit | default $.Values.cronjobs.defaults.backoffLimit }}
+      {{- if $backoffLimit }}
+      backoffLimit: {{ $backoffLimit | int }}
+      {{- end }}
       template:
         metadata:
           labels: {{ include "mintel_common.labels" $data | nindent 12 }}

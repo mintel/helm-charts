@@ -17,9 +17,13 @@ metadata:
     {{- end }}
   namespace: {{ $.Release.Namespace }}
 spec:
-  {{- $ttl := (.ttlSecondsAfterFinished | default 60) | int }}
+  {{- $ttl := (.ttlSecondsAfterFinished | default 600) | int }}
   {{- if (gt $ttl 0) }}
   ttlSecondsAfterFinished: {{ $ttl}}
+  {{- end }}
+  {{- $backoffLimit := .backoffLimit | default $.Values.jobDefaults.backoffLimit }}
+  {{- if $backoffLimit }}
+  backoffLimit: {{ $backoffLimit | int }}
   {{- end }}
   template:
     {{- if (.enableDoNotDisrupt) }}

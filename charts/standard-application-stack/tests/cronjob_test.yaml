@@ -42,7 +42,7 @@ tests:
           value: false
       - equal:
           path: spec.jobTemplate.spec.ttlSecondsAfterFinished
-          value: 60
+          value: 600
       - equal:
           path: spec.jobTemplate.spec.template.metadata.annotations["karpenter.sh/do-not-disrupt"]
           value: "true"
@@ -194,3 +194,64 @@ tests:
       - equal:
           path: spec.timeZone
           value: "America/Chicago"
+  - it: Check CronJob backoffLimit is not set by default
+    set:
+      global.clusterEnv: qa
+      cronjobsOnly: true
+      cronjobs.jobs:
+        - name: daily
+          schedule: "0 1 * * *"
+          image: ""
+          command: [/bin/sh]
+          args:
+            - "-c"
+            - "/app/docker-entrypoint.sh"
+    asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
+      - isKind:
+          of: CronJob
+      - isNull:
+          path: spec.jobTemplate.spec.backoffLimit
+  - it: Check CronJob backoffLimit can be set via defaults
+    set:
+      global.clusterEnv: qa
+      cronjobsOnly: true
+      cronjobs.defaults:
+        backoffLimit: 3
+      cronjobs.jobs:
+        - name: daily
+          schedule: "0 1 * * *"
+          image: ""
+          command: [/bin/sh]
+          args:
+            - "-c"
+            - "/app/docker-entrypoint.sh"
+    asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
+      - isKind:
+          of: CronJob
+      - equal:
+          path: spec.jobTemplate.spec.backoffLimit
+          value: 3
+  - it: Check CronJob backoffLimit can be overridden per job
+    set:
+      global.clusterEnv: qa
+      cronjobsOnly: true
+      cronjobs.defaults:
+        backoffLimit: 3
+      cronjobs.jobs:
+        - name: daily
+          schedule: "0 1 * * *"
+          backoffLimit: 5
+          image: ""
+          command: [/bin/sh]
+          args:
+            - "-c"
+            - "/app/docker-entrypoint.sh"
+    asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
+      - isKind:
+          of: CronJob
+      - equal:
+          path: spec.jobTemplate.spec.backoffLimit
+          value: 5

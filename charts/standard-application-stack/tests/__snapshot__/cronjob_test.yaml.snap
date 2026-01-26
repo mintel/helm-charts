@@ -133,7 +133,7 @@ Check CronJob Defaults:
                 runAsNonRoot: true
                 runAsUser: 1000
               serviceAccountName: example-app
-          ttlSecondsAfterFinished: 60
+          ttlSecondsAfterFinished: 600
       schedule: 0 0 * * *
       suspend: false
 Check CronJob Job Overrides:
@@ -206,6 +206,218 @@ Check CronJob Job Overrides:
           ttlSecondsAfterFinished: 120
       schedule: 0 1 * * *
       suspend: true
+Check CronJob backoffLimit can be overridden per job:
+  1: |
+    apiVersion: batch/v1
+    kind: CronJob
+    metadata:
+      annotations:
+        app.mintel.com/placeholder: placeholder
+      labels:
+        app.kubernetes.io/component: daily
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: example-app-daily
+        app.mintel.com/application: example-app
+        app.mintel.com/component: example-app
+        app.mintel.com/env: qa
+        app.mintel.com/region: ${CLUSTER_REGION}
+        name: example-app-daily
+      name: example-app-daily
+      namespace: test-namespace
+    spec:
+      concurrencyPolicy: Forbid
+      jobTemplate:
+        spec:
+          backoffLimit: 5
+          template:
+            metadata:
+              annotations:
+                karpenter.sh/do-not-disrupt: "true"
+              labels:
+                app.kubernetes.io/component: daily
+                app.kubernetes.io/managed-by: Helm
+                app.kubernetes.io/name: example-app-daily
+                app.mintel.com/application: example-app
+                app.mintel.com/component: example-app
+                app.mintel.com/env: qa
+                app.mintel.com/region: ${CLUSTER_REGION}
+                name: example-app-daily
+            spec:
+              containers:
+                - args:
+                    - -c
+                    - /app/docker-entrypoint.sh
+                  command:
+                    - /bin/sh
+                  env:
+                    - name: KUBERNETES_POD_NAMESPACE
+                      valueFrom:
+                        fieldRef:
+                          fieldPath: metadata.namespace
+                    - name: APP_ENVIRONMENT
+                      value: qa
+                    - name: RUNTIME_ENVIRONMENT
+                      value: kubernetes
+                  envFrom: null
+                  image: registry.gitlab.com/test:v0.0.0
+                  imagePullPolicy: IfNotPresent
+                  name: main
+                  securityContext:
+                    allowPrivilegeEscalation: false
+                    capabilities:
+                      drop:
+                        - ALL
+                    runAsNonRoot: true
+                    runAsUser: 1000
+              restartPolicy: Never
+              securityContext:
+                runAsNonRoot: true
+                runAsUser: 1000
+              serviceAccountName: example-app
+          ttlSecondsAfterFinished: 600
+      schedule: 0 1 * * *
+      suspend: false
+Check CronJob backoffLimit can be set via defaults:
+  1: |
+    apiVersion: batch/v1
+    kind: CronJob
+    metadata:
+      annotations:
+        app.mintel.com/placeholder: placeholder
+      labels:
+        app.kubernetes.io/component: daily
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: example-app-daily
+        app.mintel.com/application: example-app
+        app.mintel.com/component: example-app
+        app.mintel.com/env: qa
+        app.mintel.com/region: ${CLUSTER_REGION}
+        name: example-app-daily
+      name: example-app-daily
+      namespace: test-namespace
+    spec:
+      concurrencyPolicy: Forbid
+      jobTemplate:
+        spec:
+          backoffLimit: 3
+          template:
+            metadata:
+              annotations:
+                karpenter.sh/do-not-disrupt: "true"
+              labels:
+                app.kubernetes.io/component: daily
+                app.kubernetes.io/managed-by: Helm
+                app.kubernetes.io/name: example-app-daily
+                app.mintel.com/application: example-app
+                app.mintel.com/component: example-app
+                app.mintel.com/env: qa
+                app.mintel.com/region: ${CLUSTER_REGION}
+                name: example-app-daily
+            spec:
+              containers:
+                - args:
+                    - -c
+                    - /app/docker-entrypoint.sh
+                  command:
+                    - /bin/sh
+                  env:
+                    - name: KUBERNETES_POD_NAMESPACE
+                      valueFrom:
+                        fieldRef:
+                          fieldPath: metadata.namespace
+                    - name: APP_ENVIRONMENT
+                      value: qa
+                    - name: RUNTIME_ENVIRONMENT
+                      value: kubernetes
+                  envFrom: null
+                  image: registry.gitlab.com/test:v0.0.0
+                  imagePullPolicy: IfNotPresent
+                  name: main
+                  securityContext:
+                    allowPrivilegeEscalation: false
+                    capabilities:
+                      drop:
+                        - ALL
+                    runAsNonRoot: true
+                    runAsUser: 1000
+              restartPolicy: Never
+              securityContext:
+                runAsNonRoot: true
+                runAsUser: 1000
+              serviceAccountName: example-app
+          ttlSecondsAfterFinished: 600
+      schedule: 0 1 * * *
+      suspend: false
+Check CronJob backoffLimit is not set by default:
+  1: |
+    apiVersion: batch/v1
+    kind: CronJob
+    metadata:
+      annotations:
+        app.mintel.com/placeholder: placeholder
+      labels:
+        app.kubernetes.io/component: daily
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: example-app-daily
+        app.mintel.com/application: example-app
+        app.mintel.com/component: example-app
+        app.mintel.com/env: qa
+        app.mintel.com/region: ${CLUSTER_REGION}
+        name: example-app-daily
+      name: example-app-daily
+      namespace: test-namespace
+    spec:
+      concurrencyPolicy: Forbid
+      jobTemplate:
+        spec:
+          template:
+            metadata:
+              annotations:
+                karpenter.sh/do-not-disrupt: "true"
+              labels:
+                app.kubernetes.io/component: daily
+                app.kubernetes.io/managed-by: Helm
+                app.kubernetes.io/name: example-app-daily
+                app.mintel.com/application: example-app
+                app.mintel.com/component: example-app
+                app.mintel.com/env: qa
+                app.mintel.com/region: ${CLUSTER_REGION}
+                name: example-app-daily
+            spec:
+              containers:
+                - args:
+                    - -c
+                    - /app/docker-entrypoint.sh
+                  command:
+                    - /bin/sh
+                  env:
+                    - name: KUBERNETES_POD_NAMESPACE
+                      valueFrom:
+                        fieldRef:
+                          fieldPath: metadata.namespace
+                    - name: APP_ENVIRONMENT
+                      value: qa
+                    - name: RUNTIME_ENVIRONMENT
+                      value: kubernetes
+                  envFrom: null
+                  image: registry.gitlab.com/test:v0.0.0
+                  imagePullPolicy: IfNotPresent
+                  name: main
+                  securityContext:
+                    allowPrivilegeEscalation: false
+                    capabilities:
+                      drop:
+                        - ALL
+                    runAsNonRoot: true
+                    runAsUser: 1000
+              restartPolicy: Never
+              securityContext:
+                runAsNonRoot: true
+                runAsUser: 1000
+              serviceAccountName: example-app
+          ttlSecondsAfterFinished: 600
+      schedule: 0 1 * * *
+      suspend: false
 Check CronJob ttlSecondsAfterFinished zero value:
   1: |
     apiVersion: batch/v1
@@ -342,7 +554,7 @@ CronJob can have a timezone:
                 runAsNonRoot: true
                 runAsUser: 1000
               serviceAccountName: example-app
-          ttlSecondsAfterFinished: 60
+          ttlSecondsAfterFinished: 600
       schedule: 0 1 * * *
       suspend: false
       timeZone: America/Chicago
