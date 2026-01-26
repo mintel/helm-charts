@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+
+## [v11.1.0] - 2026-01-26
+### Changed
+- Update the default value of `ttlSecondsAfterFinished` to 5 minutes. This *must* be greater then the related `KubeJobFailed` alert check.
+- Added support for custom `backoffLimit` configuration in CronJobs and Jobs. The Kubernetes default (6) is used if not specified. Can be configured via `cronjobs.defaults.backoffLimit`, `cronjobs.jobs[].backoffLimit`, `jobDefaults.backoffLimit`, or per-job in `jobs[].backoffLimit`.
+
 ## [v11.0.2] - 2026-01-06
 ### Changed
 - Updated helm and helm-docs versions so the unittest plugin would work again.

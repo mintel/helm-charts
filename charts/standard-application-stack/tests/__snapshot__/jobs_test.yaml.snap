@@ -1,3 +1,222 @@
+Check Job backoffLimit can be overridden per job:
+  1: |
+    apiVersion: batch/v1
+    kind: Job
+    metadata:
+      annotations:
+        app.mintel.com/placeholder: placeholder
+      labels:
+        app.kubernetes.io/component: testJobName
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: testGlobalName-testJobName
+        app.mintel.com/application: testGlobalName
+        app.mintel.com/component: testGlobalName
+        app.mintel.com/env: testClusterEnv
+        app.mintel.com/region: ${CLUSTER_REGION}
+        name: testGlobalName-testJobName
+      name: testGlobalName-testJobName
+      namespace: testNamespace
+    spec:
+      backoffLimit: 5
+      template:
+        metadata:
+          annotations:
+            karpenter.sh/do-not-disrupt: "true"
+        spec:
+          containers:
+            - env:
+                - name: KUBERNETES_POD_NAMESPACE
+                  valueFrom:
+                    fieldRef:
+                      fieldPath: metadata.namespace
+                - name: APP_ENVIRONMENT
+                  value: testClusterEnv
+                - name: RUNTIME_ENVIRONMENT
+                  value: kubernetes
+              envFrom: null
+              image: registry.example.com/test/image/repo:v0.0.0
+              imagePullPolicy: IfNotPresent
+              name: main
+              resources:
+                limits:
+                  memory: 2Gi
+                requests:
+                  cpu: 1000m
+                  memory: 2Gi
+              securityContext:
+                allowPrivilegeEscalation: false
+                capabilities:
+                  drop:
+                    - ALL
+                runAsNonRoot: true
+                runAsUser: 1000
+          restartPolicy: Never
+          serviceAccountName: testGlobalName-testJobName
+      ttlSecondsAfterFinished: 600
+Check Job backoffLimit can be set to 0:
+  1: |
+    apiVersion: batch/v1
+    kind: Job
+    metadata:
+      annotations:
+        app.mintel.com/placeholder: placeholder
+      labels:
+        app.kubernetes.io/component: testJobName
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: testGlobalName-testJobName
+        app.mintel.com/application: testGlobalName
+        app.mintel.com/component: testGlobalName
+        app.mintel.com/env: testClusterEnv
+        app.mintel.com/region: ${CLUSTER_REGION}
+        name: testGlobalName-testJobName
+      name: testGlobalName-testJobName
+      namespace: testNamespace
+    spec:
+      backoffLimit: 0
+      template:
+        metadata:
+          annotations:
+            karpenter.sh/do-not-disrupt: "true"
+        spec:
+          containers:
+            - env:
+                - name: KUBERNETES_POD_NAMESPACE
+                  valueFrom:
+                    fieldRef:
+                      fieldPath: metadata.namespace
+                - name: APP_ENVIRONMENT
+                  value: testClusterEnv
+                - name: RUNTIME_ENVIRONMENT
+                  value: kubernetes
+              envFrom: null
+              image: registry.example.com/test/image/repo:v0.0.0
+              imagePullPolicy: IfNotPresent
+              name: main
+              resources:
+                limits:
+                  memory: 2Gi
+                requests:
+                  cpu: 1000m
+                  memory: 2Gi
+              securityContext:
+                allowPrivilegeEscalation: false
+                capabilities:
+                  drop:
+                    - ALL
+                runAsNonRoot: true
+                runAsUser: 1000
+          restartPolicy: Never
+          serviceAccountName: testGlobalName-testJobName
+      ttlSecondsAfterFinished: 600
+Check Job backoffLimit can be set via jobDefaults:
+  1: |
+    apiVersion: batch/v1
+    kind: Job
+    metadata:
+      annotations:
+        app.mintel.com/placeholder: placeholder
+      labels:
+        app.kubernetes.io/component: testJobName
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: testGlobalName-testJobName
+        app.mintel.com/application: testGlobalName
+        app.mintel.com/component: testGlobalName
+        app.mintel.com/env: testClusterEnv
+        app.mintel.com/region: ${CLUSTER_REGION}
+        name: testGlobalName-testJobName
+      name: testGlobalName-testJobName
+      namespace: testNamespace
+    spec:
+      backoffLimit: 3
+      template:
+        metadata:
+          annotations:
+            karpenter.sh/do-not-disrupt: "true"
+        spec:
+          containers:
+            - env:
+                - name: KUBERNETES_POD_NAMESPACE
+                  valueFrom:
+                    fieldRef:
+                      fieldPath: metadata.namespace
+                - name: APP_ENVIRONMENT
+                  value: testClusterEnv
+                - name: RUNTIME_ENVIRONMENT
+                  value: kubernetes
+              envFrom: null
+              image: registry.example.com/test/image/repo:v0.0.0
+              imagePullPolicy: IfNotPresent
+              name: main
+              resources:
+                limits:
+                  memory: 2Gi
+                requests:
+                  cpu: 1000m
+                  memory: 2Gi
+              securityContext:
+                allowPrivilegeEscalation: false
+                capabilities:
+                  drop:
+                    - ALL
+                runAsNonRoot: true
+                runAsUser: 1000
+          restartPolicy: Never
+          serviceAccountName: testGlobalName-testJobName
+      ttlSecondsAfterFinished: 600
+Check Job backoffLimit is not set by default:
+  1: |
+    apiVersion: batch/v1
+    kind: Job
+    metadata:
+      annotations:
+        app.mintel.com/placeholder: placeholder
+      labels:
+        app.kubernetes.io/component: testJobName
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: testGlobalName-testJobName
+        app.mintel.com/application: testGlobalName
+        app.mintel.com/component: testGlobalName
+        app.mintel.com/env: testClusterEnv
+        app.mintel.com/region: ${CLUSTER_REGION}
+        name: testGlobalName-testJobName
+      name: testGlobalName-testJobName
+      namespace: testNamespace
+    spec:
+      template:
+        metadata:
+          annotations:
+            karpenter.sh/do-not-disrupt: "true"
+        spec:
+          containers:
+            - env:
+                - name: KUBERNETES_POD_NAMESPACE
+                  valueFrom:
+                    fieldRef:
+                      fieldPath: metadata.namespace
+                - name: APP_ENVIRONMENT
+                  value: testClusterEnv
+                - name: RUNTIME_ENVIRONMENT
+                  value: kubernetes
+              envFrom: null
+              image: registry.example.com/test/image/repo:v0.0.0
+              imagePullPolicy: IfNotPresent
+              name: main
+              resources:
+                limits:
+                  memory: 2Gi
+                requests:
+                  cpu: 1000m
+                  memory: 2Gi
+              securityContext:
+                allowPrivilegeEscalation: false
+                capabilities:
+                  drop:
+                    - ALL
+                runAsNonRoot: true
+                runAsUser: 1000
+          restartPolicy: Never
+          serviceAccountName: testGlobalName-testJobName
+      ttlSecondsAfterFinished: 600
 Check all .job.* values can be set correctly, without overriding from main deployment:
   1: |
     apiVersion: batch/v1
@@ -221,7 +440,7 @@ Check default values are correct with minimal configuration:
                 runAsUser: 1000
           restartPolicy: Never
           serviceAccountName: testGlobalName-testJobName
-      ttlSecondsAfterFinished: 60
+      ttlSecondsAfterFinished: 600
 Checks that RBAC is set up correctly for kubelock:
   1: |
     apiVersion: batch/v1
@@ -262,7 +481,7 @@ Checks that RBAC is set up correctly for kubelock:
               name: main
           restartPolicy: Never
           serviceAccountName: testGlobalName-testJobName
-      ttlSecondsAfterFinished: 60
+      ttlSecondsAfterFinished: 600
   2: |
     apiVersion: v1
     automountServiceAccountToken: true
