@@ -165,11 +165,12 @@ A Helm chart for provisioning resources using Terraform Cloud
 | s3.terraform.module.source | string | `"app.terraform.io/Mintel/private-s3-bucket/aws"` | Registry path of the Terraform module used to create the resource (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/private-s3-bucket/aws) |
 | s3.terraform.module.version | string | `"3.0.2"` | Module version |
 | s3MultiRegionAccessPoint.enabled | bool | `false` | Set to true to create an S3 bucket |
+| s3MultiRegionAccessPoint.outputSecret | bool | `true` | Set to true to create an AWS secret manager external secret with outputs |
 | s3MultiRegionAccessPoint.syncWave | int | `-35` | Set ArgoCD syncWave for this resource (default -35) |
 | s3MultiRegionAccessPoint.terraform.defaultVars | object | `{}` | Vars to be applied to all instances defined below |
 | s3MultiRegionAccessPoint.terraform.instances | object | `{}` | A map of instance names => variable key/value pairs to be sent to the terraform module. The values in `defaultVars` will be applied to every instance if not explicitly defined here. |
 | s3MultiRegionAccessPoint.terraform.module.source | string | `"app.terraform.io/Mintel/s3-multi-region-access-point/aws//modules/entrypoint"` | Registry path of the Terraform module used to create the resource (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/s3-multi-region-access-point/aws) |
-| s3MultiRegionAccessPoint.terraform.module.version | string | `"0.1.0"` | Module version |
+| s3MultiRegionAccessPoint.terraform.module.version | string | `"0.2.0"` | Module version |
 | s3MultiRegionAccessPoint.terraform.terraformVersion | string | `"1.8.1"` |  |
 | s3ReplicationRules.enabled | bool | `false` | Set to true to create replication rules for one or more S3 buckets |
 | s3ReplicationRules.syncWave | int | `-35` | Set ArgoCD syncWave for this resource (default -35) |
