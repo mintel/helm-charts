@@ -252,11 +252,14 @@ spec:
             - secretRef:
                 name: {{ .Values.s3.secretNameOverride | default (include "mintel_common.defaultS3SecretName" .) }}
               {{- end }}
+              {{- if (and .Values.s3MultiRegionAccessPoint .Values.s3MultiRegionAccessPoint.enabled) }}
+            - secretRef:
+                name: {{ .Values.s3MultiRegionAccessPoint.secretNameOverride | default (include "mintel_common.defaultS3MultiRegionAccessPointSecretName" .) }}
+              {{- end }}
               {{- if (and .Values.sqs .Values.sqs.enabled) }}
             - secretRef:
                 name: {{ .Values.sqs.secretNameOverride | default (include "mintel_common.defaultSqsSecretName" .) }}
               {{- end }}
-            {{- end }}
             {{- range .Values.extraSecrets }}
             {{- if (or (ne (hasKey . "includeInMain") true) .includeInMain) }}
             - secretRef:
