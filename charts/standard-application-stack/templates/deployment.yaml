@@ -260,6 +260,7 @@ spec:
             - secretRef:
                 name: {{ .Values.sqs.secretNameOverride | default (include "mintel_common.defaultSqsSecretName" .) }}
               {{- end }}
+            {{- end }}
             {{- range .Values.extraSecrets }}
             {{- if (or (ne (hasKey . "includeInMain") true) .includeInMain) }}
             - secretRef:
@@ -446,7 +447,7 @@ spec:
           volumeMounts:
             - mountPath: {{ .Values.gitSyncSidecar.root }}
               name: {{ include "mintel_common.fullname" . }}-git-sync
-      {{- end }}
+        {{- end }}
       {{- if or (and .Values.filebeatSidecar .Values.filebeatSidecar.enabled) (and .Values.gitSyncSidecar .Values.gitSyncSidecar.enabled) (.Values.volumes) }}
       volumes:
         {{- if not .Values.statefulset }}
