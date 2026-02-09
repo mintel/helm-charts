@@ -318,6 +318,8 @@ A generic chart to support most common application requirements
 | resources.requests | object | `{}` | The requested resources for the container |
 | s3.enabled | bool | `false` |  |
 | s3.outputSecret | bool | `true` | set outputSecret to true to allow TF Cloud chart create ExternalSecrets |
+| s3MultiRegionAccessPoint.enabled | bool | `false` |  |
+| s3MultiRegionAccessPoint.outputSecret | bool | `true` | set outputSecret to true to allow TF Cloud chart create ExternalSecrets |
 | securityContext | object | `{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"runAsNonRoot":true,"runAsUser":1000}` | Security context for the container ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/ |
 | service | object | `{"annotations":{},"enabled":true,"labels":{},"type":"ClusterIP"}` | Kubernetes svc configutarion |
 | service.annotations | object | `{}` | Annotations to add to service |

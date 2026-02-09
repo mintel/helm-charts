@@ -248,6 +248,14 @@ Create a default s3 external secret name.
 {{- end -}}
 
 {{/*
+Create a default S3 Multi Region Access Point external secret name.
+*/}}
+{{- define "mintel_common.defaultS3MultiRegionAccessPointSecretName" -}}
+{{- $fullname := include "mintel_common.fullname" . }}
+{{- printf "%s-s3-multi-region-access-point" $fullname }}
+{{- end -}}
+
+{{/*
 Return the proper Docker Image Registry Secret Names
 */}}
 {{- define "mintel_common.imagePullSecrets" -}}
