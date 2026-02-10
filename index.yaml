@@ -205,6 +205,70 @@ entries:
     version: 0.0.1
   standard-application-stack:
   - apiVersion: v2
+    created: "2026-02-10T15:12:43.139254461Z"
+    dependencies:
+    - condition: (and redis.enabled (eq global.clusterEnv "local"))
+      name: redis
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - localRedis
+      version: 16.11.2
+    - condition: (and mariadb.enabled (eq global.clusterEnv "local"))
+      name: mariadb
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - localMariadb
+      version: 11.0.10
+    - condition: (and postgresql.enabled (eq global.clusterEnv "local"))
+      name: postgresql
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - localPostgresql
+      version: 11.6.3
+    - condition: (and mailhog.enabled (eq global.clusterEnv "local"))
+      name: mailhog
+      repository: https://codecentric.github.io/helm-charts
+      tags:
+      - localMailhog
+      version: 4.1.0
+    - condition: (and kibana.enabled (eq global.clusterEnv "local"))
+      name: kibana
+      repository: https://helm.elastic.co
+      tags:
+      - localKibana
+      version: 7.5.2
+    - condition: (and elasticsearch.enabled (eq global.clusterEnv "local"))
+      name: elasticsearch
+      repository: https://helm.elastic.co
+      tags:
+      - localElasticsearch
+      version: 7.5.2
+    - condition: (and opensearch.enabled (eq global.clusterEnv "local"))
+      name: opensearch
+      repository: https://opensearch-project.github.io/helm-charts
+      tags:
+      - localOpensearch
+      version: 1.4.2
+    - condition: (and opensearch.enabled (eq global.clusterEnv "local"))
+      name: opensearch-dashboards
+      repository: https://opensearch-project.github.io/helm-charts
+      tags:
+      - localOpensearch
+      version: 1.0.8
+    - condition: (and localstack.enabled (eq global.clusterEnv "local"))
+      name: localstack
+      repository: https://localstack.github.io/helm-charts
+      tags:
+      - localLocalstack
+      version: 0.3.5
+    description: A generic chart to support most common application requirements
+    digest: 5bd49aa3227af9288b3d6142769212f60fe6a4ca236e335d50c03f1d6348b662
+    name: standard-application-stack
+    type: application
+    urls:
+    - https://github.com/mintel/helm-charts/releases/download/standard-application-stack-11.2.0/standard-application-stack-11.2.0.tgz
+    version: 11.2.0
+  - apiVersion: v2
     created: "2026-01-26T14:50:40.95823676Z"
     dependencies:
     - condition: (and redis.enabled (eq global.clusterEnv "local"))
@@ -14165,6 +14229,16 @@ entries:
   terraform-cloud:
   - apiVersion: v2
     appVersion: 2.0.0
+    created: "2026-02-10T15:12:43.441524026Z"
+    description: A Helm chart for provisioning resources using Terraform Cloud
+    digest: 79eab10a5f9b7e9964b3d5c377bccadafa29debae451d8795c77ac7133a9b2f5
+    name: terraform-cloud
+    type: application
+    urls:
+    - https://github.com/mintel/helm-charts/releases/download/terraform-cloud-1.20.0/terraform-cloud-1.20.0.tgz
+    version: 1.20.0
+  - apiVersion: v2
+    appVersion: 2.0.0
     created: "2026-01-06T10:33:01.536491149Z"
     description: A Helm chart for provisioning resources using Terraform Cloud
     digest: fa7581e5ea6ebb3624df5602de520c3660728d82cdef185f3458cd591f3fe69a
@@ -15254,4 +15328,4 @@ entries:
     urls:
     - https://github.com/mintel/helm-charts/releases/download/testchart-0.1.1/testchart-0.1.1.tgz
     version: 0.1.1
-generated: "2026-01-26T14:50:40.959098989Z"
+generated: "2026-02-10T15:12:43.442580226Z"
