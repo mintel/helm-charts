@@ -252,6 +252,10 @@ spec:
             - secretRef:
                 name: {{ .Values.s3.secretNameOverride | default (include "mintel_common.defaultS3SecretName" .) }}
               {{- end }}
+              {{- if (and .Values.s3MultiRegionAccessPoint .Values.s3MultiRegionAccessPoint.enabled) }}
+            - secretRef:
+                name: {{ .Values.s3MultiRegionAccessPoint.secretNameOverride | default (include "mintel_common.defaultS3MultiRegionAccessPointSecretName" .) }}
+              {{- end }}
               {{- if (and .Values.sqs .Values.sqs.enabled) }}
             - secretRef:
                 name: {{ .Values.sqs.secretNameOverride | default (include "mintel_common.defaultSqsSecretName" .) }}
@@ -443,7 +447,7 @@ spec:
           volumeMounts:
             - mountPath: {{ .Values.gitSyncSidecar.root }}
               name: {{ include "mintel_common.fullname" . }}-git-sync
-      {{- end }}
+        {{- end }}
       {{- if or (and .Values.filebeatSidecar .Values.filebeatSidecar.enabled) (and .Values.gitSyncSidecar .Values.gitSyncSidecar.enabled) (.Values.volumes) }}
       volumes:
         {{- if not .Values.statefulset }}

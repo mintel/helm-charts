@@ -865,6 +865,8 @@ s3ReplicationRules:
 s3MultiRegionAccessPoint:
   # -- Set to true to create an S3 bucket
   enabled: false
+  # -- Set to true to create an AWS secret manager external secret with outputs
+  outputSecret: true
   # -- Set ArgoCD syncWave for this resource (default -35)
   syncWave: -35
   terraform:
@@ -875,7 +877,7 @@ s3MultiRegionAccessPoint:
       # (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/s3-multi-region-access-point/aws)
       source: app.terraform.io/Mintel/s3-multi-region-access-point/aws//modules/entrypoint
       # -- Module version
-      version: "0.1.0"
+      version: "0.2.1"
     # -- Vars to be applied to all instances defined below
     defaultVars:
       {}

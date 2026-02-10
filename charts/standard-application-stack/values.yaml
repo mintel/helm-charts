@@ -1188,6 +1188,15 @@ s3:
   #  secretRefreshIntervalOverride: ""
   #  secretStoreRefOverride: ""
 
+s3MultiRegionAccessPoint:
+  enabled: false
+  # -- set outputSecret to true to allow TF Cloud chart create ExternalSecrets
+  outputSecret: true
+  #  secretNameOverride: ""
+  #  secretPathOverride: ""
+  #  secretRefreshIntervalOverride: ""
+  #  secretStoreRefOverride: ""
+
 sqs:
   enabled: false
   # -- set outputSecret to true to allow TF Cloud chart create ExternalSecrets
