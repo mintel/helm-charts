@@ -81,5 +81,6 @@
   {{- with .proxiedService.oauthProxy.securityContext | default $.Values.securityContext }}
   securityContext: {{- toYaml . | nindent 4 }}
   {{- end }}
+  {{- include "mintel_common.deployment.lifecycle" . | nindent 2 }}
 {{- end }}
 {{- end -}}
