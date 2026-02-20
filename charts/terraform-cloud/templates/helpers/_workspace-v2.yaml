@@ -112,7 +112,7 @@ spec:
   {{- $global := $.Values.global }}
   {{- $resourceType := . }}
   {{- $resourceConfig := (get $.Values .) }}
-  {{- if (and $resourceConfig.enabled (has $resourceType (list "opensearch" "s3" "s3MultiRegionAccessPoint" "dynamodb" "sns" "sqs")))}}
+  {{- if (and $resourceConfig.enabled (has $resourceType (list "opensearch" "s3" "dynamodb" "sns" "sqs")))}}
   {{- range $instanceName, $instanceCfg := $resourceConfig.terraform.instances | default ( dict "default" dict ) }}
       # Set instance.name via helper
       {{- $instanceDict := dict "Global" $global "InstanceCfg" $instanceCfg "InstanceName" $instanceName "ResourceType" $resourceType }}
