@@ -64,8 +64,11 @@ spec:
   {{- end }}
   terraformVersion: {{ $tfVersion | default $global.terraform.terraformVersion | quote }}
   {{- if (has $resourceType (list "irsa" "extraIAM" )) }}
+  {{- $runTriggers := include "mintel_common.terraform_cloud.irsaRunTriggers_v2" $ | trim }}
+  {{- if $runTriggers }}
   runTriggers:
-  {{ include "mintel_common.terraform_cloud.irsaRunTriggers_v2" $| indent 4 }}
+{{ $runTriggers | indent 4 }}
+  {{- end }}
   {{- end }}
   environmentVariables:
     - name: TF_AWS_DEFAULT_TAGS_TerraformCloudWorkspace
