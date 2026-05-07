@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v1.21.1] - 2026-05-06
+### Changed
+- Updated app-iam module version to 3.1.0
+
 ## [v1.21.0] - 2026-02-19
 ### Changed
 - Removed S3 Multi-Region Access Point workspaces from IRSA run triggers in the Helm chart. IRSA workspaces will now run via variable changes instead.
