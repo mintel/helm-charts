@@ -37,7 +37,6 @@ IRSA created explicitly:
           type: generic
           url: ${TFCLOUD_AUTO_APPROVER_URL}
       organization: Mintel
-      runTriggers: null
       sshKey:
         name: mintel-ssh
       tags:
@@ -302,7 +301,6 @@ IRSA created with default (0) syncWave:
           type: generic
           url: ${TFCLOUD_AUTO_APPROVER_URL}
       organization: Mintel
-      runTriggers: null
       sshKey:
         name: mintel-ssh
       tags:
@@ -434,7 +432,6 @@ IRSA created with modified syncWave:
           type: generic
           url: ${TFCLOUD_AUTO_APPROVER_URL}
       organization: Mintel
-      runTriggers: null
       sshKey:
         name: mintel-ssh
       tags:
