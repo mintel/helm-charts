@@ -1,6 +1,6 @@
 # terraform-cloud
 
-![Version: 1.21.2](https://img.shields.io/badge/Version-1.21.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.0](https://img.shields.io/badge/AppVersion-2.0.0-informational?style=flat-square)
+![Version: 1.21.3](https://img.shields.io/badge/Version-1.21.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.0](https://img.shields.io/badge/AppVersion-2.0.0-informational?style=flat-square)
 
 A Helm chart for provisioning resources using Terraform Cloud
 
@@ -64,11 +64,11 @@ A Helm chart for provisioning resources using Terraform Cloud
 | dynamodb.terraform.module.version | string | `"1.3.0"` | Module version |
 | extraIAM.enabled | bool | `false` | Set to true to create an IAM Role or user aside from IRSA for the application |
 | extraIAM.outputSecret | bool | `true` | Set to true to create an AWS secret manager external secret with outputs |
-| extraIAM.terraform | object | `{"defaultVars":{},"instances":{},"module":{"source":"app.terraform.io/Mintel/app-iam/aws","version":"3.1.0"}}` | Set ArgoCD syncWave for this resource (default -20) syncWave: -20 |
+| extraIAM.terraform | object | `{"defaultVars":{},"instances":{},"module":{"source":"app.terraform.io/Mintel/app-iam/aws","version":"3.4.0"}}` | Set ArgoCD syncWave for this resource (default -20) syncWave: -20 |
 | extraIAM.terraform.defaultVars | object | `{}` | Vars to be applied to all instances defined below |
 | extraIAM.terraform.instances | object | `{}` | A map of instance names => variable key/value pairs to be sent to the terraform module. The values in `defaultVars` will be applied to every instance if not explicitly defined here. |
 | extraIAM.terraform.module.source | string | `"app.terraform.io/Mintel/app-iam/aws"` | Registry path of the Terraform module used to create the resource (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/app-iam/aws) |
-| extraIAM.terraform.module.version | string | `"3.1.0"` | Module version |
+| extraIAM.terraform.module.version | string | `"3.4.0"` | Module version |
 | global.backstage | object | `{"component":""}` | Backstage Component |
 | global.clusterDomain | string | `"127.0.0.1.nip.io"` | Additional labels to apply to all resources |
 | global.clusterEnv | string | `"local"` | Environment (local, dev, qa, prod) |
@@ -97,9 +97,9 @@ A Helm chart for provisioning resources using Terraform Cloud
 | glue.terraform.module.source | string | `"app.terraform.io/Mintel/glue/aws//modules/entrypoint"` | Registry path of the Terraform module used to create the resource (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/glue/aws) |
 | glue.terraform.module.version | string | `"1.3.1"` | Module version |
 | irsa.enabled | bool | `false` | Set to true to explicitly instantiate this module if there's need to access resources created elsewhere |
-| irsa.terraform | object | `{"module":{"source":"app.terraform.io/Mintel/app-iam/aws","version":"3.1.0"},"notifications":[{"enabled":true,"name":"tfcloud-auto-approver","token":"${TFCLOUD_AUTO_APPROVER_SIGNATURE_KEY}","triggers":["run:needs_attention"],"type":"generic","url":"${TFCLOUD_AUTO_APPROVER_URL}"}],"vars":{}}` | Set ArgoCD syncWave for this resource (default -20) syncWave: -20 |
+| irsa.terraform | object | `{"module":{"source":"app.terraform.io/Mintel/app-iam/aws","version":"3.4.0"},"notifications":[{"enabled":true,"name":"tfcloud-auto-approver","token":"${TFCLOUD_AUTO_APPROVER_SIGNATURE_KEY}","triggers":["run:needs_attention"],"type":"generic","url":"${TFCLOUD_AUTO_APPROVER_URL}"}],"vars":{}}` | Set ArgoCD syncWave for this resource (default -20) syncWave: -20 |
 | irsa.terraform.module.source | string | `"app.terraform.io/Mintel/app-iam/aws"` | Registry path of the Terraform module used to create the resource (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/app-iam/aws) |
-| irsa.terraform.module.version | string | `"3.1.0"` | Module version |
+| irsa.terraform.module.version | string | `"3.4.0"` | Module version |
 | irsa.terraform.notifications | list | `[{"enabled":true,"name":"tfcloud-auto-approver","token":"${TFCLOUD_AUTO_APPROVER_SIGNATURE_KEY}","triggers":["run:needs_attention"],"type":"generic","url":"${TFCLOUD_AUTO_APPROVER_URL}"}]` | Configure Terraform Cloud notifications. This should not be changed unless you really know what you're doing. |
 | irsa.terraform.vars | object | See below | Vars to be applied to all instances defined below |
 | kinesis-firehose.enabled | bool | `false` | Set to true to create a Kinesis Firehose delivery stream |
