@@ -97,9 +97,9 @@ A Helm chart for provisioning resources using Terraform Cloud
 | glue.terraform.module.source | string | `"app.terraform.io/Mintel/glue/aws//modules/entrypoint"` | Registry path of the Terraform module used to create the resource (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/glue/aws) |
 | glue.terraform.module.version | string | `"1.3.1"` | Module version |
 | irsa.enabled | bool | `false` | Set to true to explicitly instantiate this module if there's need to access resources created elsewhere |
-| irsa.terraform | object | `{"module":{"source":"app.terraform.io/Mintel/app-iam/aws","version":"3.1.0"},"notifications":[{"enabled":true,"name":"tfcloud-auto-approver","token":"${TFCLOUD_AUTO_APPROVER_SIGNATURE_KEY}","triggers":["run:needs_attention"],"type":"generic","url":"${TFCLOUD_AUTO_APPROVER_URL}"}],"vars":{}}` | Set ArgoCD syncWave for this resource (default -20) syncWave: -20 |
+| irsa.terraform | object | `{"module":{"source":"app.terraform.io/Mintel/app-iam/aws","version":"3.4.0"},"notifications":[{"enabled":true,"name":"tfcloud-auto-approver","token":"${TFCLOUD_AUTO_APPROVER_SIGNATURE_KEY}","triggers":["run:needs_attention"],"type":"generic","url":"${TFCLOUD_AUTO_APPROVER_URL}"}],"vars":{}}` | Set ArgoCD syncWave for this resource (default -20) syncWave: -20 |
 | irsa.terraform.module.source | string | `"app.terraform.io/Mintel/app-iam/aws"` | Registry path of the Terraform module used to create the resource (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/app-iam/aws) |
-| irsa.terraform.module.version | string | `"3.1.0"` | Module version |
+| irsa.terraform.module.version | string | `"3.4.0"` | Module version |
 | irsa.terraform.notifications | list | `[{"enabled":true,"name":"tfcloud-auto-approver","token":"${TFCLOUD_AUTO_APPROVER_SIGNATURE_KEY}","triggers":["run:needs_attention"],"type":"generic","url":"${TFCLOUD_AUTO_APPROVER_URL}"}]` | Configure Terraform Cloud notifications. This should not be changed unless you really know what you're doing. |
 | irsa.terraform.vars | object | See below | Vars to be applied to all instances defined below |
 | kinesis-firehose.enabled | bool | `false` | Set to true to create a Kinesis Firehose delivery stream |
