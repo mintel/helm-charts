@@ -5,6 +5,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v1.21.4] - 2026-05-22
+### Added
+- `values.schema.json` providing permissive type validation for declared
+  values. Unknown keys are still allowed so consumers and the dynamic
+  `defaultVars` / `instances` / IRSA `vars` pass-throughs aren't constrained.
+- Documented previously-undeclared values in `values.yaml`: `nameOverride`,
+  `jobs`, `global.application`, `global.component`, `global.additionalLabels`,
+  and `irsa.nameOverride`. All are optional with safe defaults; no behavior
+  change for existing consumers.
+
+### Fixed
+- `postgresql.terraform.defaultVars.enable_deletion_protection` example comment
+  in `values.yaml` was missing its `: bool` type hint; aligned with the
+  matching comment in the other database modules.
+- Moved the `irsa.nameOverride` documentation out from under
+  `irsa.terraform`, where it was misleading — the template reads
+  `.Values.irsa.nameOverride` (top-level on the `irsa` block).
+
 ## [v1.21.3] - 2026-05-12
 ### Changed
 - Updated app-iam module version to 3.4.0

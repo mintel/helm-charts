@@ -1,0 +1,220 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "terraform-cloud Helm chart values",
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["global"],
+  "properties": {
+    "nameOverride": {
+      "type": "string",
+      "description": "Override the chart's generated fullname. Defaults to global.name."
+    },
+    "jobs": {
+      "type": "array",
+      "description": "Auxiliary jobs/workers. Each entry's `name` is used to build a `<global.name>-<name>` IRSA service account.",
+      "items": {
+        "type": "object",
+        "additionalProperties": true,
+        "required": ["name"],
+        "properties": {
+          "name": { "type": "string" }
+        }
+      }
+    },
+    "global": { "$ref": "#/$defs/global" },
+    "irsa": { "$ref": "#/$defs/irsaResource" },
+    "activeMQ": { "$ref": "#/$defs/resource" },
+    "apiGatewayHttp": { "$ref": "#/$defs/resource" },
+    "auroraMySql": { "$ref": "#/$defs/resource" },
+    "auroraPostgresql": { "$ref": "#/$defs/resource" },
+    "cmsBackup": { "$ref": "#/$defs/resource" },
+    "datasync": { "$ref": "#/$defs/resource" },
+    "dynamodb": { "$ref": "#/$defs/resource" },
+    "extraIAM": { "$ref": "#/$defs/resource" },
+    "glue": { "$ref": "#/$defs/resource" },
+    "kinesis-firehose": { "$ref": "#/$defs/resource" },
+    "lambda": { "$ref": "#/$defs/resource" },
+    "mariadb": { "$ref": "#/$defs/resource" },
+    "memcached": { "$ref": "#/$defs/resource" },
+    "opensearch": { "$ref": "#/$defs/resource" },
+    "postgresql": { "$ref": "#/$defs/resource" },
+    "redis": { "$ref": "#/$defs/resource" },
+    "s3": { "$ref": "#/$defs/resource" },
+    "s3ReplicationRules": { "$ref": "#/$defs/resource" },
+    "s3MultiRegionAccessPoint": { "$ref": "#/$defs/resource" },
+    "sns": { "$ref": "#/$defs/resourceWithEventBus" },
+    "sqs": { "$ref": "#/$defs/resourceWithEventBus" },
+    "sshKeyPairSecret": { "$ref": "#/$defs/resource" },
+    "staticWebsite": { "$ref": "#/$defs/resource" },
+    "stepFunctionEks": { "$ref": "#/$defs/resource" }
+  },
+  "$defs": {
+    "global": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "name",
+        "owner",
+        "partOf",
+        "clusterDomain",
+        "clusterEnv",
+        "clusterRegion",
+        "terraform"
+      ],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "owner": { "type": "string" },
+        "partOf": { "type": "string" },
+        "clusterDomain": { "type": "string" },
+        "clusterEnv": { "type": "string" },
+        "clusterName": { "type": "string" },
+        "clusterRegion": { "type": "string" },
+        "application": { "type": "string" },
+        "component": { "type": "string" },
+        "additionalLabels": {
+          "type": "object",
+          "additionalProperties": { "type": "string" }
+        },
+        "backstage": {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "component": { "type": "string" }
+          }
+        },
+        "terraform": { "$ref": "#/$defs/globalTerraform" }
+      }
+    },
+    "globalTerraform": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "organization": { "type": "string" },
+        "secretsMountPath": { "type": "string" },
+        "terraformVersion": { "type": "string" },
+        "externalSecrets": { "type": "boolean" },
+        "irsa": { "type": "boolean" },
+        "agentPoolID": { "type": "string" },
+        "executionMode": {
+          "type": "string",
+          "enum": ["agent", "remote", "local"]
+        },
+        "restartedAt": { "type": "string" },
+        "enableRestartedAt": { "type": "boolean" },
+        "defaultWorkspaceAllowDestroy": { "type": "boolean" },
+        "defaultApplyMethod": {
+          "type": "string",
+          "enum": ["auto", "manual"]
+        },
+        "teamAccess": {
+          "type": "array",
+          "items": { "type": "object" }
+        },
+        "tags": {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "addBackstageComponentTag": { "type": "boolean" },
+            "addDeprecatedTags": { "type": "boolean" }
+          }
+        }
+      }
+    },
+    "resource": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["enabled"],
+      "properties": {
+        "enabled": { "type": "boolean" },
+        "outputSecret": { "type": "boolean" },
+        "syncWave": { "type": ["integer", "string"] },
+        "terraform": { "$ref": "#/$defs/resourceTerraform" }
+      }
+    },
+    "resourceWithEventBus": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["enabled"],
+      "properties": {
+        "enabled": { "type": "boolean" },
+        "outputSecret": { "type": "boolean" },
+        "syncWave": { "type": ["integer", "string"] },
+        "eventBus": {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "enabled": { "type": "boolean" }
+          }
+        },
+        "terraform": { "$ref": "#/$defs/resourceTerraform" }
+      }
+    },
+    "resourceTerraform": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "terraformVersion": { "type": "string" },
+        "module": { "$ref": "#/$defs/module" },
+        "defaultVars": {
+          "description": "Free-form variables passed through to the Terraform module. Keys are module-defined.",
+          "type": ["object", "null"]
+        },
+        "instances": {
+          "description": "Map of instance name -> variable overrides. Keys are user-defined; values are free-form.",
+          "type": ["object", "null"],
+          "additionalProperties": { "type": ["object", "null"] }
+        }
+      }
+    },
+    "module": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["source", "version"],
+      "properties": {
+        "source": { "type": "string" },
+        "version": { "type": "string" }
+      }
+    },
+    "irsaResource": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["enabled"],
+      "properties": {
+        "enabled": { "type": "boolean" },
+        "nameOverride": { "type": "string" },
+        "syncWave": { "type": ["integer", "string"] },
+        "terraform": {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "terraformVersion": { "type": "string" },
+            "module": { "$ref": "#/$defs/module" },
+            "vars": {
+              "description": "Free-form variables passed through to the app-iam module. IRSA uses `vars` rather than `defaultVars` for historical reasons.",
+              "type": ["object", "null"]
+            },
+            "notifications": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": true,
+                "required": ["name", "enabled", "type"],
+                "properties": {
+                  "name": { "type": "string" },
+                  "enabled": { "type": "boolean" },
+                  "type": { "type": "string" },
+                  "url": { "type": "string" },
+                  "token": { "type": "string" },
+                  "triggers": {
+                    "type": "array",
+                    "items": { "type": "string" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
