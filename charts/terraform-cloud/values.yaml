@@ -2,6 +2,18 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
+# -- Override the chart's generated `fullname`. When unset, `global.name` is used.
+nameOverride: ""
+
+# -- List of auxiliary job/worker definitions consumed by the IRSA workspace to
+# build `k8s_extra_service_accounts`. Each entry needs a `name`; the chart
+# constructs the service account as `<global.name>-<name>`.
+# Example:
+#   jobs:
+#     - name: worker
+#     - name: scheduler
+jobs: []
+
 ###
 ## Global
 ###
@@ -21,6 +33,12 @@ global:
   clusterName: ""
   # -- Kubernetes cluster region
   clusterRegion: ""
+  # -- Override for the deprecated `Application` AWS tag. Defaults to `global.name` when unset.
+  application: ""
+  # -- Override for the deprecated `Component` AWS tag. Defaults to `global.name` when unset.
+  component: ""
+  # -- Extra labels merged into the common label set rendered on every resource.
+  additionalLabels: {}
   # -- Backstage Component
   backstage:
     component: ""
@@ -430,13 +448,13 @@ glue:
 irsa:
   # -- Set to true to explicitly instantiate this module if there's need to access resources created elsewhere
   enabled: false
+  # -- Override the generated IRSA workspace name (skips the default which is `global.name`).
+  nameOverride: ""
   # -- Set ArgoCD syncWave for this resource (default -20)
   # syncWave: -20
   terraform:
     ### Set Terraform version for this module to overwrite global.TerraformVersion
     # terraformVersion:
-    ### Set override to stop IRSA from ending in global.name
-    # nameOverride:
     # @default -- -
     module:
       # -- Registry path of the Terraform module used to create the resource
@@ -738,7 +756,7 @@ postgresql:
       ### Automatically set to 14 in prod, 7 in qa and 0 in dev. Override this only if you know what you're doing.
       # backup_retention_period: number
       ### Automatically set to true in prod and qa but false in dev. Override this only if you know what you're doing.
-      # enable_deletion_protection
+      # enable_deletion_protection: bool
     # -- A map of instance names => variable key/value pairs to be sent to the terraform module. The values in
     # `defaultVars` will be applied to every instance if not explicitly defined here.
     instances: {}
