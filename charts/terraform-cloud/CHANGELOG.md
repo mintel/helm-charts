@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v1.22.0] - 2026-05-22
+### Added
+- `global.terraform.projectName` value, with per-resource (`<resource>.terraform.defaultVars.projectName`) and per-instance (`<resource>.terraform.instances.<name>.projectName`) overrides. When set, the rendered Workspace CR includes `spec.project.name` so the Terraform Cloud Operator places the workspace in the named HCP Terraform project. The project must already exist in the TFC organization. When unset, workspaces continue to land in the org's Default Project.
+
 ## [v1.21.3] - 2026-05-12
 ### Changed
 - Updated app-iam module version to 3.4.0

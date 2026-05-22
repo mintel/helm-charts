@@ -1,0 +1,128 @@
+suite: Test Workspace project assignment
+templates:
+  - workspace.yaml
+  - irsa-workspace.yaml
+release:
+  namespace: test-namespace
+tests:
+  - it: No spec.project rendered when projectName is unset
+    template: workspace.yaml
+    set:
+      global.name: test-app
+      global.clusterEnv: dev
+      global.clusterName: cluster1
+      global.clusterRegion: eu-west-1
+      global.owner: sre
+      global.partOf: test-project
+      s3.enabled: true
+    asserts:
+      - matchSnapshot: {}
+      - notExists:
+          path: spec.project
+        documentIndex: 0
+
+  - it: global.terraform.projectName sets spec.project.name on every workspace
+    template: workspace.yaml
+    set:
+      global.name: test-app
+      global.clusterEnv: dev
+      global.clusterName: cluster1
+      global.clusterRegion: eu-west-1
+      global.owner: sre
+      global.partOf: test-project
+      global.terraform.projectName: my-tfc-project
+      s3.enabled: true
+    asserts:
+      - matchSnapshot: {}
+      - equal:
+          path: spec.project.name
+          value: my-tfc-project
+        documentIndex: 0
+
+  - it: resource-level defaultVars.projectName overrides global
+    template: workspace.yaml
+    set:
+      global.name: test-app
+      global.clusterEnv: dev
+      global.clusterName: cluster1
+      global.clusterRegion: eu-west-1
+      global.owner: sre
+      global.partOf: test-project
+      global.terraform.projectName: global-project
+      s3:
+        enabled: true
+        terraform:
+          defaultVars:
+            projectName: s3-project
+    asserts:
+      - matchSnapshot: {}
+      - equal:
+          path: spec.project.name
+          value: s3-project
+        documentIndex: 0
+
+  - it: instance-level projectName overrides resource and global
+    template: workspace.yaml
+    set:
+      global.name: test-app
+      global.clusterEnv: dev
+      global.clusterName: cluster1
+      global.clusterRegion: eu-west-1
+      global.owner: sre
+      global.partOf: test-project
+      global.terraform.projectName: global-project
+      s3:
+        enabled: true
+        terraform:
+          defaultVars:
+            projectName: s3-project
+          instances:
+            bucket-a: {}
+            bucket-b:
+              projectName: bucket-b-project
+    asserts:
+      - matchSnapshot: {}
+      - equal:
+          path: spec.project.name
+          value: s3-project
+        documentIndex: 0
+      - equal:
+          path: spec.project.name
+          value: bucket-b-project
+        documentIndex: 2
+
+  - it: projectName is not emitted as a Terraform variable
+    template: workspace.yaml
+    set:
+      global.name: test-app
+      global.clusterEnv: dev
+      global.clusterName: cluster1
+      global.clusterRegion: eu-west-1
+      global.owner: sre
+      global.partOf: test-project
+      global.terraform.projectName: my-tfc-project
+      s3.enabled: true
+    asserts:
+      - notContains:
+          path: spec.terraformVariables
+          content:
+            name: projectName
+        documentIndex: 0
+
+  - it: IRSA workspace inherits the global projectName
+    template: irsa-workspace.yaml
+    set:
+      global.name: test-app
+      global.clusterEnv: dev
+      global.clusterName: cluster1
+      global.clusterRegion: eu-west-1
+      global.owner: sre
+      global.partOf: test-project
+      global.terraform.projectName: my-tfc-project
+      s3.enabled: true
+    asserts:
+      - matchSnapshot: {}
+      - equal:
+          path: spec.project.name
+          value: my-tfc-project
+        documentIndex: 0

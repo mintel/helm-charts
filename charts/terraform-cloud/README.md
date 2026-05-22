@@ -1,6 +1,6 @@
 # terraform-cloud
 
-![Version: 1.21.3](https://img.shields.io/badge/Version-1.21.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.0](https://img.shields.io/badge/AppVersion-2.0.0-informational?style=flat-square)
+![Version: 1.22.0](https://img.shields.io/badge/Version-1.22.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.0](https://img.shields.io/badge/AppVersion-2.0.0-informational?style=flat-square)
 
 A Helm chart for provisioning resources using Terraform Cloud
 
@@ -84,8 +84,8 @@ A Helm chart for provisioning resources using Terraform Cloud
 | global.terraform.externalSecrets | bool | `true` | Set to true as part of tf cloud migrations. When true, it stops standard-application-stack from creating AWS related external secrets and passes that responsibility to the terraform-cloud chart |
 | global.terraform.irsa | bool | `true` | Set to true as part of tf cloud migrations. When true, standard-application-stack sets the service account eks annotation to match the new IAM roles created by the app-iam module |
 | global.terraform.organization | string | `"Mintel"` | Name of our Terraform Cloud org |
+| global.terraform.projectName | string | `""` | Optional. HCP Terraform Project name to assign every Workspace this chart renders. The project must already exist in the TFC organization. When empty, workspaces land in the org's Default Project. Can be overridden per-resource via `<resource>.terraform.defaultVars.projectName`, or per-instance via `<resource>.terraform.instances.<name>.projectName`. |
 | global.terraform.secretsMountPath | string | `"/tmp/secrets"` | Where secrets are mounted inside the Terraform Operator container |
-| global.terraform.tags | object | `{"addBackstageComponentTag":true,"addDeprecatedTags":true}` | teamAccess configuration for the workspace teamAccess: [] |
 | global.terraform.tags.addBackstageComponentTag | bool | `true` | Include the "backstage.io/component" tag in default tags |
 | global.terraform.tags.addDeprecatedTags | bool | `true` | Include deprecated default tags (Owner, Project, Application, Component) |
 | global.terraform.terraformVersion | string | `"1.3.10"` | Global Terraform version for all modules |
