@@ -1,6 +1,6 @@
 # standard-application-stack
 
-![Version: 11.3.0](https://img.shields.io/badge/Version-11.3.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 11.3.1](https://img.shields.io/badge/Version-11.3.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A generic chart to support most common application requirements
 
@@ -286,7 +286,6 @@ A generic chart to support most common application requirements
 | otel.sampler.arg | string | `""` | Configures OTEL_TRACES_SAMPLER_ARG |
 | otel.sampler.type | string | `"parentbased_always_on"` | Configures OTEL_TRACES_SAMPLER |
 | persistentVolumes | string | `nil` | A list of persistent volume claims to be added to the pod |
-| podAnnotations | object | `{}` | Additional annotations to apply to the pod |
 | podDisruptionBudget | object | `{"enabled":true,"minAvailable":"50%","unhealthyPodEvictionPolicy":"AlwaysAllow"}` | Pod Disruption Budget ref: https://kubernetes.io/docs/tasks/run-application/configure-pdb/ |
 | podDisruptionBudget.unhealthyPodEvictionPolicy | string | `"AlwaysAllow"` | Controls how Pod Disruption Budgets apply to pods that are unhealthy.    The default is to allow them to be terminated. |
 | podSecurityContext | object | `{"runAsNonRoot":true,"runAsUser":1000}` | Pod Security context for the container ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/ |

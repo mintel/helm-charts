@@ -194,9 +194,6 @@ autoscaling:
 # -- Optional name of PriorityClass to run pods with
 priorityClassName: ""
 
-# -- Additional annotations to apply to the pod
-podAnnotations: {}
-
 # -- Pod Security context for the container
 # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
 podSecurityContext:
