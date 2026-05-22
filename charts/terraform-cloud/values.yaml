@@ -56,6 +56,12 @@ global:
     defaultApplyMethod: auto
     # -- teamAccess configuration for the workspace
     # teamAccess: []
+    # -- Optional. HCP Terraform Project name to assign every Workspace this chart renders.
+    # The project must already exist in the TFC organization. When empty, workspaces land in
+    # the org's Default Project. Can be overridden per-resource via
+    # `<resource>.terraform.defaultVars.projectName`, or per-instance via
+    # `<resource>.terraform.instances.<name>.projectName`.
+    projectName: ""
     tags:
       # -- Include the "backstage.io/component" tag in default tags
       addBackstageComponentTag: true

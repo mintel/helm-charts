@@ -42,6 +42,11 @@ spec:
   allowDestroyPlan: {{ (include "mintel_common.terraform_cloud.allow_destroy" $workspaceDict) }}
   executionMode: {{ $global.terraform.executionMode | quote }}
   organization: {{ $global.terraform.organization | quote }}
+  {{- $projectName := coalesce $instanceCfg.projectName $global.terraform.projectName "" }}
+  {{- if $projectName }}
+  project:
+    name: {{ $projectName | quote }}
+  {{- end }}
   token:
     secretKeyRef:
       name: terraformrc
@@ -85,6 +90,7 @@ spec:
   {{- $instanceCfgCopy = omit $instanceCfgCopy "workspaceAllowDestroyPlan" }}
   {{- $instanceCfgCopy = omit $instanceCfgCopy "workspaceApplyMethod" }}
   {{- $instanceCfgCopy = omit $instanceCfgCopy "moduleDestroyOnDeletion" }}
+  {{- $instanceCfgCopy = omit $instanceCfgCopy "projectName" }}
 
   {{- range $varKey, $varVal := $instanceCfgCopy }}
     {{- if kindIs "map" $varVal }}
