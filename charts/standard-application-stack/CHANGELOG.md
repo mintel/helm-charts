@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v11.3.1] - 2026-05-22
+### Added
+- `values.schema.json`: permissive JSON schema for `values.yaml`, enabling IDE autocompletion and basic type validation in `helm template` / `helm install`. Unknown keys remain accepted; numeric clamping for `autoscaling.*` continues to happen at render time rather than schema-validation time.
+
+### Removed
+- Removed unused `podAnnotations` value from `values.yaml`. It was declared but never referenced by any template, so removal has no effect on rendered manifests.
+
 ## [v11.3.0] - 2026-02-19
 ### Added
 - Add preStop hook `mintel_common.deployment.lifecycle` to auth-proxy container
