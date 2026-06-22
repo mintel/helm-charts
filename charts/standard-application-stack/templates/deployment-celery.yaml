@@ -117,6 +117,12 @@ spec:
         {{- end }}
         {{- end }}
       {{- end }}
+      {{- $kubelockInject := include "mintel_common.kubelock.injectBinaryEnabled" .Values.kubelock | trim -}}
+      {{- if eq $kubelockInject "true" }}
+      initContainers:
+      {{- $kubelockVolumeName := include "mintel_common.kubelock.volumeName" (include "mintel_common.fullname" .) }}
+      {{- include "mintel_common.kubelock.initContainer" (dict "kubelock" .Values.kubelock "volumeName" $kubelockVolumeName) | nindent 8 }}
+      {{- end }}
       containers:
         - name: main
           image: {{ .Values.celery.image | default (include "mintel_common.image" .) }}
@@ -245,8 +251,12 @@ spec:
           {{- with .Values.celery.resources }}
           resources: {{- toYaml . | nindent 12 }}
           {{- end }}
-          {{- if (or .Values.volumeMounts .Values.celery.volumeMounts) }}
+          {{- if or .Values.volumeMounts .Values.celery.volumeMounts (eq $kubelockInject "true") }}
           volumeMounts:
+            {{- if eq $kubelockInject "true" }}
+            {{- $kubelockVolumeName := include "mintel_common.kubelock.volumeName" (include "mintel_common.fullname" .) }}
+            {{- include "mintel_common.kubelock.volumeMount" (dict "volumeName" $kubelockVolumeName) | nindent 12 }}
+            {{- end }}
             {{- with .Values.volumeMounts }}
             {{- toYaml . | nindent 12 }}
             {{- end }}
@@ -309,7 +319,7 @@ spec:
           {{- end }}
         {{- end }}
         {{- end }}
-      {{- if (or .Values.volumes (and .Values.filebeatSidecar .Values.filebeatSidecar.enabled)) }}
+      {{- if or .Values.volumes (and .Values.filebeatSidecar .Values.filebeatSidecar.enabled) (eq $kubelockInject "true") }}
       volumes:
         {{- with .Values.volumes }}
         {{- toYaml . | nindent 8 }}
@@ -318,6 +328,10 @@ spec:
         - configMap:
             name: {{ include "mintel_common.fullname" . }}-filebeat
           name: {{ include "mintel_common.fullname" . }}-filebeat
+        {{- end }}
+        {{- if eq $kubelockInject "true" }}
+        {{- $kubelockVolumeName := include "mintel_common.kubelock.volumeName" (include "mintel_common.fullname" .) }}
+        {{- include "mintel_common.kubelock.volume" (dict "volumeName" $kubelockVolumeName) | nindent 8 }}
         {{- end }}
       {{- end }}
 {{- end }}

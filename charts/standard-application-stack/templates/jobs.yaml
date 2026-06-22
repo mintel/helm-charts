@@ -2,7 +2,9 @@
 {{- $data := dict "Release" $.Release "Chart" $.Chart "Values" $.Values "component" .name }}
 {{- $job := mergeOverwrite $.Values.jobDefaults . }}
 {{- with $job }}
+{{- $kubelock := mergeOverwrite (deepCopy $.Values.kubelock) .kubelock -}}
 {{- $serviceAccountEnabled := or .kubelock.enabled .irsa.enabled }}
+{{- $kubelockInject := include "mintel_common.kubelock.injectBinaryEnabled" $kubelock | trim -}}
 {{- $jobName := (include "mintel_common.fullname" $data) -}}
 ---
 apiVersion: {{ include "common.capabilities.job.apiVersion" $ }}
@@ -48,15 +50,25 @@ spec:
       {{- if (and $.Values.serviceAccount (or $.Values.serviceAccount.create $.Values.serviceAccount.name)) }}
       serviceAccountName: {{ $jobName }}
       {{- end }}
-      restartPolicy: {{ .restartPolicy }}
-      {{- with .volumes }}
+      {{- if or .volumes (eq $kubelockInject "true") }}
       volumes:
+        {{- if eq $kubelockInject "true" }}
+        {{- include "mintel_common.kubelock.volume" (dict "volumeName" (include "mintel_common.kubelock.volumeName" $jobName)) | nindent 12 }}
+        {{- end }}
+        {{- with .volumes }}
         {{- toYaml . | nindent 12 }}
+        {{- end }}
       {{- end }}
-      {{- with .extraInitContainers }}
+      {{- if or .extraInitContainers (eq $kubelockInject "true") }}
       initContainers:
-      {{- toYaml . | nindent 12 }}
+        {{- if eq $kubelockInject "true" }}
+        {{- include "mintel_common.kubelock.initContainer" (dict "kubelock" $kubelock "volumeName" (include "mintel_common.kubelock.volumeName" $jobName)) | nindent 12 }}
+        {{- end }}
+        {{- with .extraInitContainers }}
+        {{- toYaml . | nindent 12 }}
+        {{- end }}
       {{- end }}
+      restartPolicy: {{ .restartPolicy }}
       containers:
         - name: main
           image: {{ .image | default (include "mintel_common.image" $) }}
@@ -105,8 +117,14 @@ spec:
           {{- end }}
           resources: {{- toYaml . | nindent 12 }}
           {{- end }}
-          {{- with .volumeMounts }}
-          volumeMounts: {{- toYaml . | nindent 16 }}
+          {{- if or .volumeMounts (eq $kubelockInject "true") }}
+          volumeMounts:
+            {{- if eq $kubelockInject "true" }}
+            {{- include "mintel_common.kubelock.volumeMount" (dict "volumeName" (include "mintel_common.kubelock.volumeName" $jobName)) | nindent 16 }}
+            {{- end }}
+            {{- with .volumeMounts }}
+            {{- toYaml . | nindent 16 }}
+            {{- end }}
           {{- end }}
 
 {{- if $serviceAccountEnabled }}

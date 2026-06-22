@@ -764,6 +764,21 @@ oauthProxy:
 kubelock:
   # -- Set to true to enable release-level kubelock RBAC and KUBELOCK_* env vars
   enabled: false
+  # -- Inject the kubelock binary via an init container instead of bundling it in the app image.
+  # Requires kubelock.enabled. Mounts the binary at /usr/local/bin/kubelock (overwriting any existing file).
+  injectBinary: false
+  # -- Kubelock container image used by the injectBinary init container.
+  image:
+    registry: 551844124467.dkr.ecr.${CLUSTER_REGION}.amazonaws.com
+    repository: gitlab/mintel/satoshi/tools/kubelock
+    tag: v0.4.1
+    pullPolicy: IfNotPresent
+    # -- Optional full image override (registry/repository:tag)
+    # fullname: ""
+  # -- Optional resources for the kubelock injectBinary init container
+  # resources: {}
+  # -- Optional securityContext for the kubelock injectBinary init container
+  # securityContext: {}
   # -- Lease lock name (defaults to the release fullname). Must match kubelock --name / KUBELOCK_NAME.
   #  nameOverride: ""
 
@@ -993,6 +1008,13 @@ jobDefaults:
   # in templates/jobs.yaml (not the release-level kubelock templates above).
   kubelock:
     enabled: false
+    # -- Inject the kubelock binary via an init container (see Values.kubelock.injectBinary).
+    injectBinary: false
+    # -- Kubelock image for injectBinary (defaults to Values.kubelock.image when unset).
+    # image:
+    #   registry: 551844124467.dkr.ecr.${CLUSTER_REGION}.amazonaws.com
+    #   repository: gitlab/mintel/satoshi/tools/kubelock
+    #   tag: v0.4.1
     # -- Lease lock name for this job (defaults to the job fullname).
     #  nameOverride: ""
   irsa:
