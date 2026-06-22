@@ -8,7 +8,8 @@ name:        string        # The name of the role. Defaults to global name if no
 annotations: dict          # Any extra custom annotations.
 argo:        dict          # Standard argo object (as processed by mintel_common.argoAnnotations).
 rules:       list(string)  # A list of keywords that determine which rules get added to the role.
-                           # Example: list "kubelock"
+                           # Example: list "kubelock" (used by per-job kubelock in jobs.yaml;
+                           # release workloads use kubelock-role.yaml instead)
 
 */}}
 {{- define "mintel_common.role" -}}
@@ -28,23 +29,6 @@ metadata:
     {{ end }}
 rules:
 {{ if (has "kubelock" $config.rules) }}
-- apiGroups:
-  - coordination.k8s.io
-  resources:
-  - leases
-  verbs:
-  - get
-  - list
-  - create
-  - update
-- apiGroups:
-  - ""
-  resources:
-  - endpoints
-  verbs:
-  - get
-  - list
-  - create
-  - update
+{{ include "mintel_common.kubelockRoleRules" ($config.kubelockLeaseName | default (include "mintel_common.fullname" $)) | nindent 0 }}
 {{- end -}}
 {{- end -}}

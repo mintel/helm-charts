@@ -1,0 +1,35 @@
+{{/* vim: set filetype=mustache: */}}
+
+{{/*
+RBAC rules for kubelock leader election.
+
+Shared by both kubelock Role creation paths:
+  - Release-level: templates/kubelock-role.yaml (Values.kubelock.enabled)
+  - Per-job: templates/jobs.yaml via mintel_common.role (jobs[].kubelock.enabled)
+
+Expects the lock name (KUBELOCK_NAME / kubelock --name):
+  - leases: new kubelock (gitlab.com/mintel/satoshi/tools/kubelock), scoped via resourceNames
+  - endpoints: legacy kubelock (mintel/kubelock), unscoped for backward compatibility
+*/}}
+{{- define "mintel_common.kubelockRoleRules" -}}
+- apiGroups:
+  - coordination.k8s.io
+  resources:
+  - leases
+  resourceNames:
+  - {{ . | quote }}
+  verbs:
+  - get
+  - list
+  - create
+  - update
+- apiGroups:
+  - ""
+  resources:
+  - endpoints
+  verbs:
+  - get
+  - list
+  - create
+  - update
+{{- end -}}

@@ -757,11 +757,14 @@ oauthProxy:
   #    - name: OAUTH_PROXY_COOKIE_SECRET
   #      value: test_value
 
-# -- Configure the use of kubelock
-# ref: https://github.com/mintel/kubelock
+# -- Configure kubelock for the main release workload (deployment, celery, etc.).
+# Creates RBAC via templates/kubelock-role.yaml and sets KUBELOCK_* env vars via
+# mintel_common.defaultEnv. For Jobs, use jobDefaults.kubelock / jobs[].kubelock instead.
+# ref: https://gitlab.com/mintel/satoshi/tools/kubelock
 kubelock:
-  # -- Set to true to enable kubelock
+  # -- Set to true to enable release-level kubelock RBAC and KUBELOCK_* env vars
   enabled: false
+  # -- Lease lock name (defaults to the release fullname). Must match kubelock --name / KUBELOCK_NAME.
   #  nameOverride: ""
 
 # -- Configure celery deployment
@@ -986,8 +989,12 @@ jobDefaults:
   # ref: https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/job-v1/#JobSpec
   # Only set if you want to override the Kubernetes default (6). If not set, Kubernetes default applies.
   backoffLimit: null
+  # -- Enable kubelock for Jobs: creates per-job ServiceAccount, Role, and RoleBinding
+  # in templates/jobs.yaml (not the release-level kubelock templates above).
   kubelock:
     enabled: false
+    # -- Lease lock name for this job (defaults to the job fullname).
+    #  nameOverride: ""
   irsa:
     enabled: false
   # -- Any annotations you wish to add to the Job

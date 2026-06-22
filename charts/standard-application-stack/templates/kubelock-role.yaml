@@ -1,6 +1,20 @@
+{{/*
+Kubelock RBAC for the release ServiceAccount (templates/service-accounts.yaml).
+
+Enabled by Values.kubelock.enabled when Values.serviceAccount.create is true.
+Grants Lease access for long-running workloads (deployment, celery, etc.) that
+receive KUBELOCK_* env vars from mintel_common.defaultEnv.
+
+Jobs use a separate per-job path in templates/jobs.yaml when
+jobs[].kubelock.enabled (or jobDefaults.kubelock.enabled) is set.
+
+Rules: helpers/_kubelock.yaml (mintel_common.kubelockRoleRules).
+Companion: kubelock-role-binding.yaml
+*/}}
 {{- if (and .Values.serviceAccount .Values.serviceAccount.create) }}
 
 {{- if (and .Values.kubelock .Values.kubelock.enabled) }}
+{{- $leaseName := .Values.kubelock.nameOverride | default (include "mintel_common.fullname" .) }}
 ---
 apiVersion: {{ include "common.capabilities.rbac.apiVersion" . }}
 kind: Role
@@ -10,24 +24,7 @@ metadata:
   annotations: {{ include "mintel_common.commonAnnotations" . | nindent 4 }}
   labels: {{ include "mintel_common.labels" . | nindent 4 }}
 rules:
-- apiGroups:
-  - coordination.k8s.io
-  resources:
-  - leases
-  verbs:
-  - get
-  - list
-  - create
-  - update
-- apiGroups:
-  - ""
-  resources:
-  - endpoints
-  verbs:
-  - get
-  - list
-  - create
-  - update
+{{ include "mintel_common.kubelockRoleRules" $leaseName | nindent 2 }}
 {{- end }}
 
 {{- end }}

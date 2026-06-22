@@ -522,6 +522,8 @@ Checks that RBAC is set up correctly for kubelock:
           - coordination.k8s.io
         resources:
           - leases
+        resourceNames:
+          - testGlobalName-testJobName
         verbs:
           - get
           - list
