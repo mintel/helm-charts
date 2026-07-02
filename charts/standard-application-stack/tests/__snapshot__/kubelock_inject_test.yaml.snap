@@ -109,6 +109,21 @@ Injects kubelock binary into the main deployment when enabled:
               image: 551844124467.dkr.ecr.${CLUSTER_REGION}.amazonaws.com/gitlab/mintel/satoshi/tools/kubelock:v0.4.1
               imagePullPolicy: IfNotPresent
               name: kubelock-binary
+              resources:
+                limits:
+                  memory: 64Mi
+                requests:
+                  cpu: 10m
+                  memory: 32Mi
+              securityContext:
+                allowPrivilegeEscalation: false
+                capabilities:
+                  drop:
+                    - ALL
+                runAsNonRoot: true
+                runAsUser: 1000
+                seccompProfile:
+                  type: RuntimeDefault
               volumeMounts:
                 - mountPath: /kubelock-bin
                   name: testGlobalName-kubelock-bin

@@ -32,6 +32,21 @@ tests:
             volumeMounts:
               - name: testGlobalName-kubelock-bin
                 mountPath: /kubelock-bin
+            resources:
+              limits:
+                memory: 64Mi
+              requests:
+                cpu: 10m
+                memory: 32Mi
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                  - ALL
+              runAsNonRoot: true
+              runAsUser: 1000
+              seccompProfile:
+                type: RuntimeDefault
       - contains:
           path: spec.template.spec.containers[0].volumeMounts
           content:
@@ -75,6 +90,12 @@ tests:
       - equal:
           path: spec.template.spec.initContainers[0].name
           value: kubelock-binary
+      - equal:
+          path: spec.template.spec.initContainers[0].securityContext.allowPrivilegeEscalation
+          value: false
+      - contains:
+          path: spec.template.spec.initContainers[0].securityContext.capabilities.drop
+          content: ALL
       - contains:
           path: spec.template.spec.containers[0].volumeMounts
           content:
@@ -100,6 +121,10 @@ tests:
         equal:
           path: spec.template.spec.initContainers[0].name
           value: kubelock-binary
+      - documentIndex: 0
+        equal:
+          path: spec.template.spec.initContainers[0].securityContext.allowPrivilegeEscalation
+          value: false
       - documentIndex: 0
         contains:
           path: spec.template.spec.containers[0].volumeMounts

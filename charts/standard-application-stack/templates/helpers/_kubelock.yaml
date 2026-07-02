@@ -102,10 +102,6 @@ The kubelock image must include /bin/sh (busybox-based builds support injectBina
   volumeMounts:
     - name: {{ .volumeName }}
       mountPath: /kubelock-bin
-  {{- with .kubelock.resources }}
-  resources: {{- toYaml . | nindent 4 }}
-  {{- end }}
-  {{- with .kubelock.securityContext }}
-  securityContext: {{- toYaml . | nindent 4 }}
-  {{- end }}
+  resources: {{- toYaml .kubelock.resources | nindent 4 }}
+  securityContext: {{- toYaml .kubelock.securityContext | nindent 4 }}
 {{- end -}}

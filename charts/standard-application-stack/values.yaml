@@ -775,10 +775,23 @@ kubelock:
     pullPolicy: IfNotPresent
     # -- Optional full image override (registry/repository:tag)
     # fullname: ""
-  # -- Optional resources for the kubelock injectBinary init container
-  # resources: {}
-  # -- Optional securityContext for the kubelock injectBinary init container
-  # securityContext: {}
+  # -- Resources for the kubelock injectBinary init container
+  resources:
+    limits:
+      memory: 64Mi
+    requests:
+      cpu: 10m
+      memory: 32Mi
+  # -- securityContext for the kubelock injectBinary init container
+  securityContext:
+    allowPrivilegeEscalation: false
+    capabilities:
+      drop:
+        - ALL
+    runAsNonRoot: true
+    runAsUser: 1000
+    seccompProfile:
+      type: RuntimeDefault
   # -- Lease lock name (defaults to the release fullname). Must match kubelock --name / KUBELOCK_NAME.
   #  nameOverride: ""
 
