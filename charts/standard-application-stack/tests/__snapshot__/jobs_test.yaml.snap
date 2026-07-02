@@ -520,10 +520,10 @@ Checks that RBAC is set up correctly for kubelock:
     rules:
       - apiGroups:
           - coordination.k8s.io
-        resources:
-          - leases
         resourceNames:
           - testGlobalName-testJobName
+        resources:
+          - leases
         verbs:
           - get
           - list

@@ -24,6 +24,14 @@ tests:
           content:
             name: kubelock-binary
             image: 551844124467.dkr.ecr.${CLUSTER_REGION}.amazonaws.com/gitlab/mintel/satoshi/tools/kubelock:v0.4.1
+            imagePullPolicy: IfNotPresent
+            command:
+              - /bin/sh
+              - -ec
+              - cp /usr/local/bin/kubelock /kubelock-bin/kubelock && chmod 755 /kubelock-bin/kubelock
+            volumeMounts:
+              - name: testGlobalName-kubelock-bin
+                mountPath: /kubelock-bin
       - contains:
           path: spec.template.spec.containers[0].volumeMounts
           content:
@@ -64,13 +72,15 @@ tests:
       kubelock.enabled: true
       kubelock.injectBinary: true
     asserts:
-      - contains:
+      - equal:
           path: spec.template.spec.initContainers[0].name
-          content: kubelock-binary
+          value: kubelock-binary
       - contains:
           path: spec.template.spec.containers[0].volumeMounts
           content:
             mountPath: /usr/local/bin/kubelock
+            subPath: kubelock
+            name: testGlobalName-kubelock-bin
 
   - it: Injects kubelock binary into jobs when enabled
     template: jobs.yaml
@@ -87,12 +97,13 @@ tests:
             injectBinary: true
     asserts:
       - documentIndex: 0
-        contains:
+        equal:
           path: spec.template.spec.initContainers[0].name
-          content: kubelock-binary
+          value: kubelock-binary
       - documentIndex: 0
         contains:
           path: spec.template.spec.containers[0].volumeMounts
           content:
             mountPath: /usr/local/bin/kubelock
+            subPath: kubelock
             name: testGlobalName-testJobName-kubelock-bin
