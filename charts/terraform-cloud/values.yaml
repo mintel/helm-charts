@@ -279,7 +279,7 @@ bedrock:
     instances: {}
     # Example:
     # instances:
-    #   "my-guardrail":
+    #   "my-bedrock-config":
     #     output_secret_name: "my-app/bedrock-guardrails"
     #     secret_tags:
     #       MyTag: "MyValue"
