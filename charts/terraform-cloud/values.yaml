@@ -241,6 +241,96 @@ auroraPostgresql:
     # `defaultVars` will be applied to every instance if not explicitly defined here.
     instances: {}
 
+bedrock:
+  # -- Set to true to create AWS Bedrock Guardrails and AgentCore Memories
+  enabled: false
+  # -- Set to true to create an AWS secret manager external secret with outputs
+  outputSecret: true
+  # -- Set ArgoCD syncWave for this resource (default -40)
+  # syncWave: -40
+  terraform:
+    ### Set Terraform version for this module to overwrite global.TerraformVersion
+    terraformVersion: "1.5"
+    module:
+      # -- Registry path of the Terraform module used to create the resource
+      # (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/bedrock/aws)
+      source: app.terraform.io/Mintel/bedrock/aws
+      # -- Module version
+      version: "1.3.1"
+    # -- Vars to be applied to all instances defined below
+    defaultVars:
+      {}
+      ### Override the generated workspace name, for example if the generated name is above the char limit
+      # workspaceNameOverride: string
+      ### Comma-separated list of tags to add to workspace. Default: "env:<environment>,owner:<owner>,mod:<module>"
+      # workspaceTags: string
+      ### Set to true allows destroy runs on the workspace. Default: false in prod/logs, true in non-prod
+      # workspaceAllowDestroy: bool
+      ### Define either change will be applied automatically(auto) or require an operator to confirm(manual). Default: auto
+      # workspaceApplyMethod: auto
+      ### Specify whether or not to execute a Destroy run when the object is deleted from the Kubernetes. Default: true
+      # moduleDestroyOnDeletion: false
+      ### Determines team ownership of the workspace. Default: Values.global.owner
+      # workspaceOwner: string
+      ### Use to map keys from AWS secret manager secrets to new key names. Map values should be in the form <new key>:<module secret key>
+      # outputSecretMap: {}
+    # -- A map of instance names => variable key/value pairs to be sent to the terraform module. The values in
+    # `defaultVars` will be applied to every instance if not explicitly defined here.
+    instances: {}
+    # Example:
+    # instances:
+    #   "my-guardrail":
+    #     output_secret_name: "my-app/bedrock-guardrails"
+    #     secret_tags:
+    #       MyTag: "MyValue"
+    #     guardrails:
+    #       "content-filter":
+    #         name: "content-filter-guardrail"
+    #         blocked_input_messaging: "Sorry, I cannot process this request."
+    #         blocked_outputs_messaging: "Sorry, I cannot provide this response."
+    #         description: "Guardrail for content filtering"
+    #         content_policy_config:
+    #           - type: "SEXUAL"
+    #             input_enabled: true
+    #             input_modalities: ["TEXT"]
+    #             input_strength: "HIGH"
+    #             output_enabled: true
+    #             output_modalities: ["TEXT"]
+    #             output_strength: "HIGH"
+    #           - type: "VIOLENCE"
+    #             input_enabled: true
+    #             input_modalities: ["TEXT"]
+    #             input_strength: "MEDIUM"
+    #             output_enabled: true
+    #             output_modalities: ["TEXT"]
+    #             output_strength: "MEDIUM"
+    #         topic_policy_config:
+    #           - name: "competitors"
+    #             type: "DENY"
+    #             examples:
+    #               - "Tell me about Competitor A"
+    #               - "Compare us with Competitor B"
+    #             definition: "Any discussion of competitors or competitive analysis"
+    #             tier_name: "DEFAULT"
+    #         word_policy_config:
+    #           managed_word_lists_config:
+    #             - type: "PROFANITY"
+    #               input_enabled: true
+    #               input_action: "BLOCK"
+    #               output_enabled: true
+    #               output_action: "BLOCK"
+    #         guardrail_description: "Initial version"
+    #         skip_destroy: false
+    #     agentcore_memories:
+    #       "conversation-memory":
+    #         name: "conversation_memory"
+    #         memory_execution_role_arn: "arn:aws:iam::123456789012:role/bedrock-memory-role"
+    #         event_expiry_duration: 30
+    #         description: "Memory store for conversation history"
+    #         encryption_key_arn: ""
+    #         tags: {}
+
+
 cmsBackup:
   # -- Set to true to create a Step Function to backup an Alfresco CMS
   enabled: false
