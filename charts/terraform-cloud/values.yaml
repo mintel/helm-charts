@@ -250,7 +250,7 @@ bedrock:
   # syncWave: -40
   terraform:
     ### Set Terraform version for this module to overwrite global.TerraformVersion
-    terraformVersion: "1.5"
+    terraformVersion: "1.5.0"
     module:
       # -- Registry path of the Terraform module used to create the resource
       # (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/bedrock/aws)
