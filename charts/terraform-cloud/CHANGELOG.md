@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v1.22.4] - 2026-07-15
+### Changed
+- Updated the Bedrock module to version 1.3.3 to support entrypoints.
+
 ## [v1.22.3] - 2026-07-14
 ### Fixed
 - Updated the terraform version for bedrock module to 1.5.0
