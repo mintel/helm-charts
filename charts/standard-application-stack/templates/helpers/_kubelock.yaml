@@ -52,7 +52,7 @@ Return the kubelock container image. Expects a kubelock values dict.
 {{- else -}}
 {{- $registry := .image.registry | default "551844124467.dkr.ecr.${CLUSTER_REGION}.amazonaws.com" -}}
 {{- $repository := .image.repository | default "gitlab/mintel/satoshi/tools/kubelock" -}}
-{{- $tag := .image.tag | default "v0.4.1" | toString -}}
+{{- $tag := .image.tag | default "v0.5.0" | toString -}}
 {{- printf "%s/%s:%s" $registry $repository $tag -}}
 {{- end -}}
 {{- end -}}

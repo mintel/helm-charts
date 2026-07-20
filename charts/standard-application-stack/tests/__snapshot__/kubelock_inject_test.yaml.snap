@@ -106,7 +106,7 @@ Injects kubelock binary into the main deployment when enabled:
                 - /bin/sh
                 - -ec
                 - cp /usr/local/bin/kubelock /kubelock-bin/kubelock && chmod 755 /kubelock-bin/kubelock
-              image: 551844124467.dkr.ecr.${CLUSTER_REGION}.amazonaws.com/gitlab/mintel/satoshi/tools/kubelock:v0.4.1
+              image: 551844124467.dkr.ecr.${CLUSTER_REGION}.amazonaws.com/gitlab/mintel/satoshi/tools/kubelock:v0.5.0
               imagePullPolicy: IfNotPresent
               name: kubelock-binary
               resources:

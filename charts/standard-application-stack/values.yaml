@@ -1027,7 +1027,7 @@ jobDefaults:
     # image:
     #   registry: 551844124467.dkr.ecr.${CLUSTER_REGION}.amazonaws.com
     #   repository: gitlab/mintel/satoshi/tools/kubelock
-    #   tag: v0.4.1
+    #   tag: v0.5.0
     # -- Lease lock name for this job (defaults to the job fullname).
     #  nameOverride: ""
   irsa:
