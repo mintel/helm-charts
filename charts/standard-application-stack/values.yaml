@@ -757,15 +757,17 @@ oauthProxy:
   #    - name: OAUTH_PROXY_COOKIE_SECRET
   #      value: test_value
 
-# -- Configure kubelock for the main release workload (deployment, celery, etc.).
+# -- Configure kubelock for the main release workload (deployment, celery, cronjobs, etc.).
 # Creates RBAC via templates/kubelock-role.yaml and sets KUBELOCK_* env vars via
-# mintel_common.defaultEnv. For Jobs, use jobDefaults.kubelock / jobs[].kubelock instead.
+# mintel_common.defaultEnv. CronJobs inherit these settings (optional per-job override via
+# cronjobs.jobs[].kubelock). For Jobs, use jobDefaults.kubelock / jobs[].kubelock instead.
 # ref: https://gitlab.com/mintel/satoshi/tools/kubelock
 kubelock:
   # -- Set to true to enable release-level kubelock RBAC and KUBELOCK_* env vars
   enabled: false
   # -- Inject the kubelock binary via an init container instead of bundling it in the app image.
   # Requires kubelock.enabled. Mounts the binary at /usr/local/bin/kubelock (overwriting any existing file).
+  # Applies to deployment, celery, and cronjobs (and Jobs when jobs[].kubelock.enabled is true).
   injectBinary: false
   # -- Kubelock container image used by the injectBinary init container.
   image:
@@ -1021,8 +1023,9 @@ jobDefaults:
   # in templates/jobs.yaml (not the release-level kubelock templates above).
   kubelock:
     enabled: false
-    # -- Inject the kubelock binary via an init container (see Values.kubelock.injectBinary).
-    injectBinary: false
+    # -- Inject the kubelock binary via an init container.
+    # Leave unset to inherit Values.kubelock.injectBinary; set true/false to override per job.
+    # injectBinary: false
     # -- Kubelock image for injectBinary (defaults to Values.kubelock.image when unset).
     # image:
     #   registry: 551844124467.dkr.ecr.${CLUSTER_REGION}.amazonaws.com

@@ -1,10 +1,14 @@
 {{- range .Values.cronjobs.jobs }}
 ---
 {{- $data := dict "Release" $.Release "Chart" $.Chart "Values" $.Values "component" .name }}
+{{- $cronjobName := include "mintel_common.fullname" $data -}}
+{{- $kubelock := mergeOverwrite (deepCopy $.Values.kubelock) (.kubelock | default dict) -}}
+{{- $kubelockInject := include "mintel_common.kubelock.injectBinaryEnabled" $kubelock | trim -}}
+{{- $kubelockVolumeName := include "mintel_common.kubelock.volumeName" $cronjobName -}}
 apiVersion: {{ include "common.capabilities.cronjob.apiVersion" $ }}
 kind: CronJob
 metadata:
-  name: {{ include "mintel_common.fullname" $data }}
+  name: {{ $cronjobName }}
   labels: {{ include "mintel_common.labels" $data | nindent 4 }}
   annotations:
     {{- include "mintel_common.commonAnnotations" $ | nindent 4 }}
@@ -49,13 +53,23 @@ spec:
           serviceAccountName: {{ $.Values.serviceAccount.name | default (include "mintel_common.fullname" $) }}
           {{- end }}
           restartPolicy: {{ .restartPolicy | default $.Values.cronjobs.defaults.restartPolicy }}
-          {{- with .extraInitContainers }}
+          {{- if or .extraInitContainers (eq $kubelockInject "true") }}
           initContainers:
-          {{- toYaml . | nindent 12 }}
-          {{- end }}
-          {{- with $.Values.cronjobs.volumes }}
-          volumes:
+            {{- if eq $kubelockInject "true" }}
+            {{- include "mintel_common.kubelock.initContainer" (dict "kubelock" $kubelock "volumeName" $kubelockVolumeName) | nindent 12 }}
+            {{- end }}
+            {{- with .extraInitContainers }}
             {{- toYaml . | nindent 12 }}
+            {{- end }}
+          {{- end }}
+          {{- if or $.Values.cronjobs.volumes (eq $kubelockInject "true") }}
+          volumes:
+            {{- if eq $kubelockInject "true" }}
+            {{- include "mintel_common.kubelock.volume" (dict "volumeName" $kubelockVolumeName) | nindent 12 }}
+            {{- end }}
+            {{- with $.Values.cronjobs.volumes }}
+            {{- toYaml . | nindent 12 }}
+            {{- end }}
           {{- end }}
           containers:
             - name: main
@@ -180,7 +194,13 @@ spec:
               {{- with .securityContext | default $.Values.securityContext }}
               securityContext: {{- toYaml . | nindent 16 }}
               {{- end }}
-              {{- with $.Values.cronjobs.volumeMounts }}
-              volumeMounts: {{- toYaml . | nindent 16 }}
+              {{- if or $.Values.cronjobs.volumeMounts (eq $kubelockInject "true") }}
+              volumeMounts:
+                {{- if eq $kubelockInject "true" }}
+                {{- include "mintel_common.kubelock.volumeMount" (dict "volumeName" $kubelockVolumeName) | nindent 16 }}
+                {{- end }}
+                {{- with $.Values.cronjobs.volumeMounts }}
+                {{- toYaml . | nindent 16 }}
+                {{- end }}
               {{- end }}
 {{- end }}

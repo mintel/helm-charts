@@ -3,6 +3,7 @@ templates:
   - deployment.yaml
   - deployment-celery.yaml
   - jobs.yaml
+  - cronjobs.yaml
 release:
   namespace: testNamespace
 tests:
@@ -132,3 +133,60 @@ tests:
             mountPath: /usr/local/bin/kubelock
             subPath: kubelock
             name: testGlobalName-testJobName-kubelock-bin
+
+  - it: Injects kubelock binary into cronjobs when enabled
+    template: cronjobs.yaml
+    set:
+      global.name: testGlobalName
+      global.clusterEnv: testClusterEnv
+      image.registry: registry.example.com
+      image.repository: test/image/repo
+      image.tag: someTag
+      kubelock.enabled: true
+      kubelock.injectBinary: true
+      cronjobs.jobs:
+        - name: daily
+          schedule: "0 0 * * *"
+          command: [/bin/sh]
+          args: ["-c", "echo ok"]
+    asserts:
+      - equal:
+          path: spec.jobTemplate.spec.template.spec.initContainers[0].name
+          value: kubelock-binary
+      - equal:
+          path: spec.jobTemplate.spec.template.spec.initContainers[0].securityContext.allowPrivilegeEscalation
+          value: false
+      - contains:
+          path: spec.jobTemplate.spec.template.spec.containers[0].volumeMounts
+          content:
+            mountPath: /usr/local/bin/kubelock
+            subPath: kubelock
+            name: testGlobalName-daily-kubelock-bin
+      - contains:
+          path: spec.jobTemplate.spec.template.spec.volumes
+          content:
+            name: testGlobalName-daily-kubelock-bin
+            emptyDir: {}
+
+  - it: Allows a cronjob to opt out of kubelock binary injection
+    template: cronjobs.yaml
+    set:
+      global.name: testGlobalName
+      global.clusterEnv: testClusterEnv
+      image.registry: registry.example.com
+      image.repository: test/image/repo
+      image.tag: someTag
+      kubelock.enabled: true
+      kubelock.injectBinary: true
+      cronjobs.jobs:
+        - name: daily
+          schedule: "0 0 * * *"
+          command: [/bin/sh]
+          args: ["-c", "echo ok"]
+          kubelock:
+            injectBinary: false
+    asserts:
+      - notExists:
+          path: spec.jobTemplate.spec.template.spec.initContainers
+      - notExists:
+          path: spec.jobTemplate.spec.template.spec.containers[0].volumeMounts
