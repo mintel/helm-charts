@@ -7,17 +7,19 @@ Shared by both kubelock Role creation paths:
   - Release-level: templates/kubelock-role.yaml (Values.kubelock.enabled)
   - Per-job: templates/jobs.yaml via mintel_common.role (jobs[].kubelock.enabled)
 
-Expects the lock name (KUBELOCK_NAME / kubelock --name):
-  - leases: new kubelock (gitlab.com/mintel/satoshi/tools/kubelock), scoped via resourceNames
-  - endpoints: legacy kubelock (mintel/kubelock), unscoped for backward compatibility
+Rules:
+  - leases: new kubelock (gitlab.com/mintel/satoshi/tools/kubelock)
+  - endpoints: legacy kubelock (mintel/kubelock), retained for backward compatibility
+
+Note: resourceNames is intentionally omitted. Kubernetes RBAC does not support
+resourceNames with the create verb, and create must be allowed for first-time
+Lease acquisition.
 */}}
 {{- define "mintel_common.kubelockRoleRules" -}}
 - apiGroups:
   - coordination.k8s.io
   resources:
   - leases
-  resourceNames:
-  - {{ . | quote }}
   verbs:
   - get
   - list

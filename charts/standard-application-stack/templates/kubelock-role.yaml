@@ -14,7 +14,6 @@ Companion: kubelock-role-binding.yaml
 {{- if (and .Values.serviceAccount .Values.serviceAccount.create) }}
 
 {{- if (and .Values.kubelock .Values.kubelock.enabled) }}
-{{- $leaseName := .Values.kubelock.nameOverride | default (include "mintel_common.fullname" .) }}
 ---
 apiVersion: {{ include "common.capabilities.rbac.apiVersion" . }}
 kind: Role
@@ -24,7 +23,7 @@ metadata:
   annotations: {{ include "mintel_common.commonAnnotations" . | nindent 4 }}
   labels: {{ include "mintel_common.labels" . | nindent 4 }}
 rules:
-{{ include "mintel_common.kubelockRoleRules" $leaseName | nindent 2 }}
+{{ include "mintel_common.kubelockRoleRules" . | nindent 2 }}
 {{- end }}
 
 {{- end }}

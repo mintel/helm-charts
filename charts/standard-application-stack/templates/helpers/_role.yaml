@@ -29,6 +29,6 @@ metadata:
     {{ end }}
 rules:
 {{ if (has "kubelock" $config.rules) }}
-{{ include "mintel_common.kubelockRoleRules" ($config.kubelockLeaseName | default (include "mintel_common.fullname" $)) | nindent 0 }}
+{{ include "mintel_common.kubelockRoleRules" $ | nindent 0 }}
 {{- end -}}
 {{- end -}}

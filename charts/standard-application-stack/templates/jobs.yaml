@@ -137,8 +137,7 @@ spec:
      Release workloads use templates/kubelock-role.yaml (Values.kubelock.enabled) instead. */}}
 {{- if .kubelock.enabled }}
 ---
-{{- $leaseName := .kubelock.nameOverride | default $jobName -}}
-{{- $roleConfig := dict "name" $jobName "argo" .argo "rules" (list "kubelock") "kubelockLeaseName" $leaseName -}}
+{{- $roleConfig := dict "name" $jobName "argo" .argo "rules" (list "kubelock") -}}
 {{- include "mintel_common.role" (list $ $roleConfig) }}
 ---
 {{- $roleBindingConfig := dict "name" $jobName "argo" .argo "roleName" $jobName "serviceAccountName" $jobName -}}

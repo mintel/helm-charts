@@ -771,7 +771,7 @@ kubelock:
   image:
     registry: 551844124467.dkr.ecr.${CLUSTER_REGION}.amazonaws.com
     repository: gitlab/mintel/satoshi/tools/kubelock
-    tag: v0.4.1
+    tag: v0.5.0
     pullPolicy: IfNotPresent
     # -- Optional full image override (registry/repository:tag)
     # fullname: ""
