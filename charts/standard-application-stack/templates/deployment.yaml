@@ -166,9 +166,16 @@ spec:
         {{- end }}
         {{- end }}
       {{- end }}
-      {{- with .Values.extraInitContainers }}
+      {{- $kubelockInject := include "mintel_common.kubelock.injectBinaryEnabled" .Values.kubelock | trim -}}
+      {{- if or (eq $kubelockInject "true") .Values.extraInitContainers }}
       initContainers:
+      {{- if eq $kubelockInject "true" }}
+      {{- $kubelockVolumeName := include "mintel_common.kubelock.volumeName" (include "mintel_common.fullname" .) }}
+      {{- include "mintel_common.kubelock.initContainer" (dict "kubelock" .Values.kubelock "volumeName" $kubelockVolumeName) | nindent 8 }}
+      {{- end }}
+      {{- with .Values.extraInitContainers }}
       {{- toYaml . | nindent 8 }}
+      {{- end }}
       {{- end }}
       {{- if .Values.useHostNetwork }}
       hostNetwork: true
@@ -345,9 +352,16 @@ spec:
           resources: {{- toYaml . | nindent 12 }}
           {{- end }}
           {{- include "mintel_common.deployment.lifecycle" . | nindent 10 }}
-          {{- if .Values.volumeMounts }}
+          {{- $kubelockInject := include "mintel_common.kubelock.injectBinaryEnabled" .Values.kubelock | trim -}}
+          {{- if or .Values.volumeMounts (eq $kubelockInject "true") }}
           volumeMounts:
-            {{- toYaml .Values.volumeMounts | nindent 12 }}
+          {{- if eq $kubelockInject "true" }}
+          {{- $kubelockVolumeName := include "mintel_common.kubelock.volumeName" (include "mintel_common.fullname" .) }}
+          {{- include "mintel_common.kubelock.volumeMount" (dict "volumeName" $kubelockVolumeName) | nindent 12 }}
+          {{- end }}
+          {{- with .Values.volumeMounts }}
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
           {{- end }}
         {{- if (and .Values.filebeatSidecar .Values.filebeatSidecar.enabled) }}
         - name: filebeat
@@ -448,7 +462,7 @@ spec:
             - mountPath: {{ .Values.gitSyncSidecar.root }}
               name: {{ include "mintel_common.fullname" . }}-git-sync
         {{- end }}
-      {{- if or (and .Values.filebeatSidecar .Values.filebeatSidecar.enabled) (and .Values.gitSyncSidecar .Values.gitSyncSidecar.enabled) (.Values.volumes) }}
+      {{- if or (and .Values.filebeatSidecar .Values.filebeatSidecar.enabled) (and .Values.gitSyncSidecar .Values.gitSyncSidecar.enabled) (.Values.volumes) (eq (include "mintel_common.kubelock.injectBinaryEnabled" .Values.kubelock | trim) "true") }}
       volumes:
         {{- if not .Values.statefulset }}
         {{- if .Values.persistentVolumes }}
@@ -470,6 +484,10 @@ spec:
         {{- if (and .Values.gitSyncSidecar .Values.gitSyncSidecar.enabled) }}
         - name: {{ include "mintel_common.fullname" . }}-git-sync
           emptyDir: {}
+        {{- end }}
+        {{- if eq (include "mintel_common.kubelock.injectBinaryEnabled" .Values.kubelock | trim) "true" }}
+        {{- $kubelockVolumeName := include "mintel_common.kubelock.volumeName" (include "mintel_common.fullname" .) }}
+        {{- include "mintel_common.kubelock.volume" (dict "volumeName" $kubelockVolumeName) | nindent 8 }}
         {{- end }}
       {{- end }}
 {{- end }}

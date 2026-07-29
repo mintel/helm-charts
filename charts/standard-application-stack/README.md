@@ -1,6 +1,6 @@
 # standard-application-stack
 
-![Version: 11.3.0](https://img.shields.io/badge/Version-11.3.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 11.4.0](https://img.shields.io/badge/Version-11.4.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A generic chart to support most common application requirements
 
@@ -177,6 +177,7 @@ A generic chart to support most common application requirements
 | jobDefaults.includeAppSecret | bool | `false` | Whether you want the secrets used by the main app workload to be available to the Job |
 | jobDefaults.includeBaseEnv | bool | `false` | Whether you want the environment variables used by the main app workload to be available to the Job |
 | jobDefaults.includeBasePodSecurityContext | bool | `false` | Whether you want the securityContext used by the main app workload to be the same in the Job |
+| jobDefaults.kubelock | object | `{"enabled":false}` | Enable kubelock for Jobs: creates per-job ServiceAccount, Role, and RoleBinding in templates/jobs.yaml (not the release-level kubelock templates above). |
 | jobDefaults.labels | object | `{}` | Any labels you wish to add to the Job. |
 | jobDefaults.name | string | `nil` | REQUIRED FOR ALL JOBS. The name of the job. |
 | jobDefaults.podSecurityContext | object | `{}` | Add podSecurityContext config to the Job. |
@@ -187,8 +188,12 @@ A generic chart to support most common application requirements
 | jobsOnly | bool | `false` | Only show Jobs and relevant resources (i.e. if set to `true`, hide the main deployment resource) |
 | kibana.elasticsearchHosts | string | `""` |  |
 | kibana.enabled | bool | `false` |  |
-| kubelock | object | `{"enabled":false}` | Configure the use of kubelock ref: https://github.com/mintel/kubelock |
-| kubelock.enabled | bool | `false` | Set to true to enable kubelock |
+| kubelock | object | `{"enabled":false,"image":{"pullPolicy":"IfNotPresent","registry":"551844124467.dkr.ecr.${CLUSTER_REGION}.amazonaws.com","repository":"gitlab/mintel/satoshi/tools/kubelock","tag":"v0.5.0"},"injectBinary":false,"resources":{"limits":{"memory":"64Mi"},"requests":{"cpu":"10m","memory":"32Mi"}},"securityContext":{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"runAsNonRoot":true,"runAsUser":1000,"seccompProfile":{"type":"RuntimeDefault"}}}` | Configure kubelock for the main release workload (deployment, celery, cronjobs, etc.). Creates RBAC via templates/kubelock-role.yaml and sets KUBELOCK_* env vars via mintel_common.defaultEnv. CronJobs inherit these settings (optional per-job override via cronjobs.jobs[].kubelock). For Jobs, use jobDefaults.kubelock / jobs[].kubelock instead. ref: https://gitlab.com/mintel/satoshi/tools/kubelock |
+| kubelock.enabled | bool | `false` | Set to true to enable release-level kubelock RBAC and KUBELOCK_* env vars |
+| kubelock.image | object | `{"pullPolicy":"IfNotPresent","registry":"551844124467.dkr.ecr.${CLUSTER_REGION}.amazonaws.com","repository":"gitlab/mintel/satoshi/tools/kubelock","tag":"v0.5.0"}` | Kubelock container image used by the injectBinary init container. |
+| kubelock.injectBinary | bool | `false` | Inject the kubelock binary via an init container instead of bundling it in the app image. Requires kubelock.enabled. Mounts the binary at /usr/local/bin/kubelock (overwriting any existing file). Applies to deployment, celery, and cronjobs (and Jobs when jobs[].kubelock.enabled is true). |
+| kubelock.resources | object | `{"limits":{"memory":"64Mi"},"requests":{"cpu":"10m","memory":"32Mi"}}` | Resources for the kubelock injectBinary init container |
+| kubelock.securityContext | object | `{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"runAsNonRoot":true,"runAsUser":1000,"seccompProfile":{"type":"RuntimeDefault"}}` | securityContext for the kubelock injectBinary init container |
 | liveness | object | `{"enabled":true,"startup":{"failureThreshold":60,"periodSeconds":5}}` | Configure extra options for liveness probe ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes |
 | liveness.enabled | bool | `true` | Enable liveness probe |
 | liveness.startup | object | `{"failureThreshold":60,"periodSeconds":5}` | Configure startup probe ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/#define-startup-probes |

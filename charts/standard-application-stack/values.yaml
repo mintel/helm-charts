@@ -757,11 +757,44 @@ oauthProxy:
   #    - name: OAUTH_PROXY_COOKIE_SECRET
   #      value: test_value
 
-# -- Configure the use of kubelock
-# ref: https://github.com/mintel/kubelock
+# -- Configure kubelock for the main release workload (deployment, celery, cronjobs, etc.).
+# Creates RBAC via templates/kubelock-role.yaml and sets KUBELOCK_* env vars via
+# mintel_common.defaultEnv. CronJobs inherit these settings (optional per-job override via
+# cronjobs.jobs[].kubelock). For Jobs, use jobDefaults.kubelock / jobs[].kubelock instead.
+# ref: https://gitlab.com/mintel/satoshi/tools/kubelock
 kubelock:
-  # -- Set to true to enable kubelock
+  # -- Set to true to enable release-level kubelock RBAC and KUBELOCK_* env vars
   enabled: false
+  # -- Inject the kubelock binary via an init container instead of bundling it in the app image.
+  # Requires kubelock.enabled. Mounts the binary at /usr/local/bin/kubelock (overwriting any existing file).
+  # Applies to deployment, celery, and cronjobs (and Jobs when jobs[].kubelock.enabled is true).
+  injectBinary: false
+  # -- Kubelock container image used by the injectBinary init container.
+  image:
+    registry: 551844124467.dkr.ecr.${CLUSTER_REGION}.amazonaws.com
+    repository: gitlab/mintel/satoshi/tools/kubelock
+    tag: v0.5.0
+    pullPolicy: IfNotPresent
+    # -- Optional full image override (registry/repository:tag)
+    # fullname: ""
+  # -- Resources for the kubelock injectBinary init container
+  resources:
+    limits:
+      memory: 64Mi
+    requests:
+      cpu: 10m
+      memory: 32Mi
+  # -- securityContext for the kubelock injectBinary init container
+  securityContext:
+    allowPrivilegeEscalation: false
+    capabilities:
+      drop:
+        - ALL
+    runAsNonRoot: true
+    runAsUser: 1000
+    seccompProfile:
+      type: RuntimeDefault
+  # -- Lease lock name (defaults to the release fullname). Must match kubelock --name / KUBELOCK_NAME.
   #  nameOverride: ""
 
 # -- Configure celery deployment
@@ -986,8 +1019,20 @@ jobDefaults:
   # ref: https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/job-v1/#JobSpec
   # Only set if you want to override the Kubernetes default (6). If not set, Kubernetes default applies.
   backoffLimit: null
+  # -- Enable kubelock for Jobs: creates per-job ServiceAccount, Role, and RoleBinding
+  # in templates/jobs.yaml (not the release-level kubelock templates above).
   kubelock:
     enabled: false
+    # -- Inject the kubelock binary via an init container.
+    # Leave unset to inherit Values.kubelock.injectBinary; set true/false to override per job.
+    # injectBinary: false
+    # -- Kubelock image for injectBinary (defaults to Values.kubelock.image when unset).
+    # image:
+    #   registry: 551844124467.dkr.ecr.${CLUSTER_REGION}.amazonaws.com
+    #   repository: gitlab/mintel/satoshi/tools/kubelock
+    #   tag: v0.5.0
+    # -- Lease lock name for this job (defaults to the job fullname).
+    #  nameOverride: ""
   irsa:
     enabled: false
   # -- Any annotations you wish to add to the Job

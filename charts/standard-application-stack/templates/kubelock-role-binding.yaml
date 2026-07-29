@@ -1,3 +1,7 @@
+{{/*
+Binds the release kubelock Role (kubelock-role.yaml) to the main ServiceAccount
+(Values.serviceAccount). Created when Values.kubelock.enabled is true.
+*/}}
 {{- if (and .Values.serviceAccount .Values.serviceAccount.create) }}
 
 {{- if (and .Values.kubelock .Values.kubelock.enabled) }}

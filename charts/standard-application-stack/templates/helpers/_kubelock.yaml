@@ -1,0 +1,109 @@
+{{/* vim: set filetype=mustache: */}}
+
+{{/*
+RBAC rules for kubelock leader election.
+
+Shared by both kubelock Role creation paths:
+  - Release-level: templates/kubelock-role.yaml (Values.kubelock.enabled)
+  - Per-job: templates/jobs.yaml via mintel_common.role (jobs[].kubelock.enabled)
+
+Rules:
+  - leases: new kubelock (gitlab.com/mintel/satoshi/tools/kubelock)
+  - endpoints: legacy kubelock (mintel/kubelock), retained for backward compatibility
+
+Note: resourceNames is intentionally omitted. Kubernetes RBAC does not support
+resourceNames with the create verb, and create must be allowed for first-time
+Lease acquisition.
+*/}}
+{{- define "mintel_common.kubelockRoleRules" -}}
+- apiGroups:
+  - coordination.k8s.io
+  resources:
+  - leases
+  verbs:
+  - get
+  - list
+  - create
+  - update
+- apiGroups:
+  - ""
+  resources:
+  - endpoints
+  verbs:
+  - get
+  - list
+  - create
+  - update
+{{- end -}}
+
+{{/*
+Return true when kubelock binary injection is enabled. Expects a kubelock values dict.
+*/}}
+{{- define "mintel_common.kubelock.injectBinaryEnabled" -}}
+{{- and .enabled .injectBinary -}}
+{{- end -}}
+
+{{/*
+Return the kubelock container image. Expects a kubelock values dict.
+*/}}
+{{- define "mintel_common.kubelock.image" -}}
+{{- if .image.fullname -}}
+{{- .image.fullname -}}
+{{- else -}}
+{{- $registry := .image.registry | default "551844124467.dkr.ecr.${CLUSTER_REGION}.amazonaws.com" -}}
+{{- $repository := .image.repository | default "gitlab/mintel/satoshi/tools/kubelock" -}}
+{{- $tag := .image.tag | default "v0.5.0" | toString -}}
+{{- printf "%s/%s:%s" $registry $repository $tag -}}
+{{- end -}}
+{{- end -}}
+
+{{/*
+Return the kubelock image pull policy. Expects a kubelock values dict.
+*/}}
+{{- define "mintel_common.kubelock.imagePullPolicy" -}}
+{{- .image.pullPolicy | default "IfNotPresent" -}}
+{{- end -}}
+
+{{/*
+Shared emptyDir volume name for kubelock binary injection. Expects the workload name prefix.
+*/}}
+{{- define "mintel_common.kubelock.volumeName" -}}
+{{- printf "%s-kubelock-bin" . -}}
+{{- end -}}
+
+{{/*
+emptyDir volume for kubelock binary injection. Expects dict with key "volumeName".
+*/}}
+{{- define "mintel_common.kubelock.volume" -}}
+- name: {{ .volumeName }}
+  emptyDir: {}
+{{- end -}}
+
+{{/*
+Main-container volumeMount for an injected kubelock binary. Expects dict with key "volumeName".
+*/}}
+{{- define "mintel_common.kubelock.volumeMount" -}}
+- name: {{ .volumeName }}
+  mountPath: /usr/local/bin/kubelock
+  subPath: kubelock
+{{- end -}}
+
+{{/*
+Init container that copies the kubelock binary into the shared emptyDir volume.
+Expects dict with keys "kubelock" (values dict) and "volumeName".
+The kubelock image must include /bin/sh (busybox-based builds support injectBinary).
+*/}}
+{{- define "mintel_common.kubelock.initContainer" -}}
+- name: kubelock-binary
+  image: {{ include "mintel_common.kubelock.image" .kubelock }}
+  imagePullPolicy: {{ include "mintel_common.kubelock.imagePullPolicy" .kubelock }}
+  command:
+    - /bin/sh
+    - -ec
+    - cp /usr/local/bin/kubelock /kubelock-bin/kubelock && chmod 755 /kubelock-bin/kubelock
+  volumeMounts:
+    - name: {{ .volumeName }}
+      mountPath: /kubelock-bin
+  resources: {{- toYaml .kubelock.resources | nindent 4 }}
+  securityContext: {{- toYaml .kubelock.securityContext | nindent 4 }}
+{{- end -}}
