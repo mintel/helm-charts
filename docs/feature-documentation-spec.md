@@ -23,7 +23,7 @@ Always cross-reference these companion sources:
 |--------|---------|
 | [charts/standard-application-stack/values.yaml](../charts/standard-application-stack/values.yaml) | Defaults, types, and inline descriptions for app workload values |
 | [charts/terraform-cloud/values.yaml](../charts/terraform-cloud/values.yaml) | Defaults, types, and inline descriptions for Terraform Cloud resource values |
-| [.cursor/plans/values_and_effects_report_9aa4cfcc.plan.md](../.cursor/plans/values_and_effects_report_9aa4cfcc.plan.md) | Per-key effects tables complementing this feature-oriented view |
+| [values-and-effects.md](values-and-effects.md) | Per-key effects tables and conditional manifest cheat-sheets |
 
 Both charts consume the same `global` values object when deployed via Tanka. When enabling a backend with `global.terraform.externalSecrets: true`, set values consistently on **both** charts (terraform-cloud creates secrets for most backends; standard-application-stack injects secret refs). Note the **elasticsearch** exception: SAS still creates that ExternalSecret itself (see section 5.2).
 
