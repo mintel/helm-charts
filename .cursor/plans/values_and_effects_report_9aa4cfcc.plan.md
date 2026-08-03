@@ -1,13 +1,13 @@
 ---
 name: Values and effects report
-overview: A report of every values.yaml key in both charts (terraform-cloud and standard-application-stack), what changing each value affects, and how the same values feed both charts for CUE porting and feature parity. Includes a feature-oriented documentation spec with variables and logic for each feature.
+overview: A report of every values.yaml key in both charts (terraform-cloud and standard-application-stack), what changing each value affects, and how the same values feed both charts for Jsonnet/Tanka values authoring and feature reference. Includes a feature-oriented documentation spec with variables and logic for each feature.
 todos: []
 isProject: false
 ---
 
-# Values and Effects Report: Helm Charts → CUE Feature Parity
+# Values and Effects Report: Helm Charts
 
-This report documents all values in both charts' `values.yaml` files and what changing each value affects, so a CUE-based replacement can achieve full feature parity when the same values are passed into both charts and manifests are rendered into a single folder.
+This report documents all values in both charts' `values.yaml` files and what changing each value affects. The same values object is passed into both charts when deploying via Tanka/Jsonnet, and all manifests are rendered into a single folder.
 
 **Section 6** defines a **feature-oriented documentation spec**: a comprehensive list of user-facing features to document, with the variables and logic to describe for each. The full detailed spec is in [docs/feature-documentation-spec.md](docs/feature-documentation-spec.md).
 
@@ -18,7 +18,7 @@ This report documents all values in both charts' `values.yaml` files and what ch
 - **Same values**: A Tanka-based repo passes the **same** values into both charts and writes all manifests to one folder.
 - **terraform-cloud** ([charts/terraform-cloud/values.yaml](charts/terraform-cloud/values.yaml)): Renders Terraform Cloud Workspace/Module CRs and (when `global.terraform.externalSecrets` is true) ExternalSecrets for workspace outputs and optional IRSA output.
 - **standard-application-stack** ([charts/standard-application-stack/values.yaml](charts/standard-application-stack/values.yaml)): Renders Kubernetes app workload (Deployments/StatefulSets, Services, Ingress, Jobs, CronJobs, RBAC, secrets, monitors, etc.).
-- **Shared `global`**: Both charts consume `global` (e.g. `name`, `owner`, `partOf`, `clusterEnv`, `clusterRegion`, `clusterName`). Terraform-cloud also uses `global.terraform.*` and `global.backstage`; standard-application-stack uses `global.application`, `global.component`, `global.cloudProvider`, `global.terraform.externalSecrets` / `irsa`, `global.additionalLabels`, `global.runtimeEnvironment`, `global.ingressTLSSecrets`. For CUE, define one shared `global` schema and have both chart outputs consume it.
+- **Shared `global`**: Both charts consume `global` (e.g. `name`, `owner`, `partOf`, `clusterEnv`, `clusterRegion`, `clusterName`). Terraform-cloud also uses `global.terraform.*` and `global.backstage`; standard-application-stack uses `global.application`, `global.component`, `global.cloudProvider`, `global.terraform.externalSecrets` / `irsa`, `global.additionalLabels`, `global.runtimeEnvironment`, `global.ingressTLSSecrets`. Define one shared `global` object in Jsonnet and pass it to both charts.
 
 ```mermaid
 flowchart LR
@@ -221,15 +221,15 @@ For each key in `terraformCloudResources`: **activeMQ**, **apiGatewayHttp**, **a
 
 ---
 
-## 4. CUE implementation checklist for feature parity
+## 4. Values authoring checklist
 
-- **Single source of values**: One CUE schema matching both values.yaml structures; same values feed both output pipelines.
+- **Single source of values**: One Jsonnet values object matching both `values.yaml` structures; same values feed both charts.
 - **Shared `global`**: One `global` definition used by both charts.
-- **Conditionals**: Replicate every gate (externalSecrets, irsa, cronjobsOnly, jobsOnly, per-resource enabled, clusterEnv local vs non-local).
-- **terraform-cloud**: Workspace + Module per instance when enabled; ExternalSecrets when externalSecrets and outputSecret; IRSA when irsa.enabled or IRSA resource enabled.
-- **standard-application-stack**: Emit each manifest type when condition is true; omit `replicas` when autoscaling; respect externalSecrets for backend secrets.
-- **Naming/labels**: fullname, selector labels, common labels consistent with both charts.
-- **Annotations**: OPA (opa-allow-single-replica, opa-skip-*-probe-check, opa-skip-security-context-check), Karpenter (do-not-disrupt), Stakater reloader, ArgoCD sync-options where templates set them.
+- **Conditionals**: Respect every gate (externalSecrets, irsa, cronjobsOnly, jobsOnly, per-resource enabled, clusterEnv local vs non-local).
+- **terraform-cloud**: Enable resource blocks with `.<resource>.enabled`; set `outputSecret` when secrets are needed; enable IRSA when `irsa.enabled` or an IRSA-requiring resource is enabled.
+- **standard-application-stack**: Set matching backend `.enabled` flags for secret injection; do not set `replicas` when relying on autoscaling; set `global.terraform.externalSecrets` consistently across both charts.
+- **Naming/labels**: Use `global.name`, `nameOverride`, `partOf`, and `component` consistently (see feature doc section 11).
+- **Cross-feature constraints**: See [docs/feature-documentation-spec.md](docs/feature-documentation-spec.md) for interactions (e.g. autoscaling vs replicas, ALB preStop vs lifecycle, oauth proxy vs ingress ports).
 
 ---
 
@@ -251,11 +251,11 @@ The full **feature-oriented** documentation spec with implementation-level detai
 
 It covers 11 sections:
 
-1. Workload basics (replicas, Deployment vs StatefulSet, image, command/env, resources, probes, security context, strategy, volumes, cronjobsOnly/jobsOnly)
-2. Service and networking (Service, ingress direct public access, ingress API gateway, allowFrontendAccess, NLB, network policy)
+1. Workload basics (replicas, Deployment vs StatefulSet, image, command/env, resources, probes, security context, strategy, volumes, cronjobsOnly/jobsOnly, pod metadata, lifecycle, celery)
+2. Service and networking (Service, ingress, API gateway, allowFrontendAccess, NLB, network policy, OAuth proxy)
 3. Scaling and resilience (KEDA, PDB, VPA, topology spread and affinity)
 4. Identity and RBAC (Service account, IRSA, Roles/ClusterRoles, Kubelock)
-5. Secrets and backends (main External Secret, Terraform-managed secrets, MariaDB, PostgreSQL, Redis, S3, S3 MRAP, DynamoDB, SQS, OpenSearch, OAuth proxy)
+5. Secrets and backends (main External Secret, Terraform-managed secrets, MariaDB, PostgreSQL, Redis, S3, S3 MRAP, DynamoDB, SQS, OpenSearch)
 6. Scheduled and one-off workloads (CronJobs, Jobs, hiding main deployment)
 7. Observability (ServiceMonitor/PodMonitor, OpenTelemetry)
 8. Sidecars and local dev (Filebeat, git-sync, Localstack, Mailhog, Event Bus)
@@ -263,4 +263,4 @@ It covers 11 sections:
 10. Terraform Cloud (enabling resource types, output secrets, IRSA, global settings)
 11. Naming and labels
 
-**How to use:** For each feature in that doc, implement the same variables, conditions, annotations, and field behavior in CUE (or write a feature doc from the spec).
+**How to use:** For each feature in that doc, set the listed value paths in your Jsonnet values object. Cross-check defaults and types in the chart `values.yaml` files. Use this report for per-key effects tables.

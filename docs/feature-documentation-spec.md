@@ -1,8 +1,30 @@
 # Feature-oriented documentation spec
 
-This document is the **comprehensive list of features to be documented** for CUE porting or a feature reference. For each feature it describes: **(1) all variables (value paths) involved**, and **(2) full implementation logic**—conditions, what is rendered or omitted, annotations, null/omitted fields, defaults, constraints, and interactions with other features.
+This document is a **feature reference for configuring Helm values** in the `standard-application-stack` and `terraform-cloud` charts. It is intended for:
 
-**How to use:** Treat each feature as a spec for a "feature doc" or for CUE: implement the same conditions, annotations, and field behavior so output matches Helm.
+- **Humans** configuring or reviewing application deployments
+- **LLM agents** (e.g. a Jsonnet values-authoring skill) that need to know which values to set, valid combinations, and cross-feature constraints
+
+For each feature the doc describes:
+
+1. **Variables** — value paths involved (see companion files for defaults and types)
+2. **Configure** — common intents and what to set (where piloted or added)
+3. **Constraints and interactions** — gates, conflicts, and dependencies between values
+4. **Chart behavior** — short summary of affected manifests (not a template reimplementation guide)
+
+**How to use:** When configuring a feature, set the listed value paths in your Jsonnet/Tanka values object. Cross-check defaults and types in the chart `values.yaml` files. Use the constraints section to avoid combinations that silently no-op or conflict.
+
+## Related references
+
+Always cross-reference these companion sources:
+
+| Source | Purpose |
+|--------|---------|
+| [charts/standard-application-stack/values.yaml](../charts/standard-application-stack/values.yaml) | Defaults, types, and inline descriptions for app workload values |
+| [charts/terraform-cloud/values.yaml](../charts/terraform-cloud/values.yaml) | Defaults, types, and inline descriptions for Terraform Cloud resource values |
+| [.cursor/plans/values_and_effects_report_9aa4cfcc.plan.md](../.cursor/plans/values_and_effects_report_9aa4cfcc.plan.md) | Per-key effects tables complementing this feature-oriented view |
+
+Both charts consume the same `global` values object when deployed via Tanka. When enabling a backend with `global.terraform.externalSecrets: true`, set values consistently on **both** charts (terraform-cloud creates secrets; standard-application-stack injects secret refs).
 
 ---
 
@@ -10,27 +32,35 @@ This document is the **comprehensive list of features to be documented** for CUE
 
 ### 1.1 Changing the number of replicas
 
+<!-- feature: workload.replicas -->
+
 **Variables:** `replicas`, `singleReplicaOnly`, `allowSingleReplica`, `autoscaling.enabled`, `autoscaling.minReplicaCount`, `autoscaling.maxReplicaCount`
 
-**Logic (implementation detail):**
+**Configure:**
 
-- **When `autoscaling.enabled` is true (and `global.clusterEnv` is not `"local"`):**
-  - The Deployment/StatefulSet **spec does not include a `replicas` field at all** (the block `{{- if not .Values.autoscaling.enabled }} … replicas: … {{- end }}` is skipped). Scaling is controlled entirely by the KEDA ScaledObject; the workload’s replica count is managed by KEDA/HPA.
-  - A ScaledObject is rendered targeting the Deployment or StatefulSet (see “Enabling autoscaling (KEDA)” for constraints on min/max).
-- **When `autoscaling.enabled` is false:**
-  - If `singleReplicaOnly` is true: `spec.replicas: 1` is set (and `replicas` value is ignored).
-  - Otherwise: `spec.replicas: {{ .Values.replicas }}` is set.
-- **Annotations:**
-  - If **either** `singleReplicaOnly` or `allowSingleReplica` is true, the Deployment/StatefulSet **metadata.annotations** include `app.mintel.com/opa-allow-single-replica: "true"`. This is applied regardless of autoscaling; it tells OPA that a single replica is allowed for this workload.
-- **Strategy:**
-  - If `singleReplicaOnly` is true: `spec.strategy.type: Recreate` is forced (no rolling update).
-  - Otherwise: strategy comes from `strategy` (default RollingUpdate with optional maxSurge/maxUnavailable).
-- **PDB (Pod Disruption Budget):** Created only when `podDisruptionBudget.enabled` is true **and** either: (a) autoscaling is enabled and `autoscaling.minReplicaCount` > 1, or (b) autoscaling is disabled and `replicas` > 1. So with `singleReplicaOnly` (replicas 1) or with autoscaling and `minReplicaCount` 1, no main PDB is created.
-- **Topology spread constraints:** Rendered only when: `global.clusterEnv` != `"local"`, **and** `replicas` > 1 (the helper uses `Values.replicas`, not minReplicaCount), **and** it is **not** the case that both `autoscaling.enabled` and `autoscaling.enableZeroReplicas` are true. So with enableZeroReplicas, topology spread is skipped (pods are treated as short-lived).
+- **Fixed replica count:** Set `replicas` (default `2`). Keep `autoscaling.enabled: false`.
+- **Scale with KEDA:** Set `autoscaling.enabled: true` and configure `autoscaling.minReplicaCount` / `autoscaling.maxReplicaCount`. Do not rely on `replicas` for scaling.
+- **Exactly one replica (no rolling updates):** Set `singleReplicaOnly: true` (ignores `replicas`).
+- **One replica with rolling updates allowed:** Set `replicas: 1` and `allowSingleReplica: true`.
+
+**Constraints and interactions:**
+
+- When `autoscaling.enabled` is true and `global.clusterEnv` is not `"local"`, the workload `replicas` value is ignored; KEDA controls scale via a ScaledObject (see section 3.1).
+- When `singleReplicaOnly` is true, `strategy.type` is forced to `Recreate` (see section 1.8).
+- When **either** `singleReplicaOnly` or `allowSingleReplica` is true, the workload gets OPA annotation `app.mintel.com/opa-allow-single-replica: "true"`.
+- Main PDB is created only when `podDisruptionBudget.enabled` is true **and** replica count is > 1 (uses `autoscaling.minReplicaCount` when autoscaling is enabled, else `replicas`).
+- Topology spread is rendered only when `global.clusterEnv` != `"local"`, `replicas` > 1, and not (`autoscaling.enabled` and `autoscaling.enableZeroReplicas`). Note: topology spread uses `Values.replicas`, not `minReplicaCount`.
+
+**Chart behavior:**
+
+- Deployment/StatefulSet replica count, ScaledObject (when autoscaling), PDB, topology spread constraints
+- Sources: `templates/deployment.yaml`, `templates/keda-scaled-object.yaml`, `templates/pdbs.yaml`
 
 ---
 
 ### 1.2 Choosing Deployment vs StatefulSet
+
+<!-- feature: workload.deployment-statefulset -->
 
 **Variables:** `statefulset`, `persistentVolumes`
 
@@ -146,18 +176,108 @@ This document is the **comprehensive list of features to be documented** for CUE
 
 ### 1.11 Running with only CronJobs or only Jobs
 
+<!-- feature: workload.cronjobs-only-jobs-only -->
+
 **Variables:** `cronjobsOnly`, `jobsOnly`
 
-**Logic (implementation detail):**
+**Configure:**
 
-- When **either** is true: the main Deployment/StatefulSet template is not rendered (wrapped in `{{- if (and (eq .Values.cronjobsOnly false) (eq .Values.jobsOnly false)) }}`).
-- Service, main PDB, main VPA, and main ServiceMonitor are also gated by the same condition (no main workload, no main service, no main PDB/VPA/monitor).
+- **CronJobs only (no main workload):** Set `cronjobsOnly: true` and configure `cronjobs.jobs`.
+- **One-off Jobs only (no main workload):** Set `jobsOnly: true` and configure `jobs` / `jobDefaults`.
+
+**Constraints and interactions:**
+
+- When **either** is true, the main Deployment/StatefulSet, Service, main PDB, main VPA, and main ServiceMonitor are not rendered.
+- See also section 6.3 (cross-reference only).
+
+**Chart behavior:**
+
+- Suppresses main workload and its dependent resources; CronJobs and/or Jobs still render per their own configuration.
+
+---
+
+### 1.12 Configuring pod metadata and extra ports
+
+<!-- feature: workload.pod-metadata -->
+
+**Variables:** `podAnnotations`, `priorityClassName`, `useHostNetwork`, `extraPorts`, `port`
+
+**Configure:**
+
+- **Extra container ports:** Set `extraPorts` (list of `name`, `containerPort`, optional `protocol`). Requires `port` to be set (non-null) on the main container.
+- **Pod priority:** Set `priorityClassName` to an existing PriorityClass name (non-local clusters only).
+- **Host network:** Set `useHostNetwork: true` to attach the pod to the node network namespace.
+- **Custom pod annotations:** `podAnnotations` is defined in `values.yaml` but is **not currently wired** into deployment templates; do not rely on it until chart support is added.
+
+**Constraints and interactions:**
+
+- `extraPorts` are added to both the main container and the Service when `service.enabled` is true.
+- `priorityClassName` is only applied when `global.clusterEnv` != `"local"`.
+
+**Chart behavior:**
+
+- Main Deployment/StatefulSet pod spec and Service port list.
+
+---
+
+### 1.13 Configuring lifecycle hooks and ALB preStop delay
+
+<!-- feature: workload.lifecycle -->
+
+**Variables:** `lifecycle`, `ingress.enabled`, `ingress.alb.preStopDelay.enabled`, `ingress.alb.preStopDelay.delaySeconds`, `terminationGracePeriodSeconds`
+
+**Configure:**
+
+- **ALB zero-downtime rollouts (default):** With `ingress.enabled: true`, `ingress.alb.preStopDelay.enabled` defaults to `true` and adds a `preStop` sleep of `ingress.alb.preStopDelay.delaySeconds` (default `15`) before container shutdown.
+- **Custom lifecycle hooks:** Set `lifecycle` (e.g. `preStop`, `postStart`) when ALB preStop delay is **not** active.
+- **Grace period:** Set `terminationGracePeriodSeconds` (default `30`); must be **greater than** `ingress.alb.preStopDelay.delaySeconds` when preStop delay is enabled.
+
+**Constraints and interactions:**
+
+- ALB preStop delay and custom `lifecycle` are **mutually exclusive**: when `ingress.enabled` and `ingress.alb.preStopDelay.enabled` are both true, the chart emits the ALB preStop hook and ignores `lifecycle`.
+- When `ingress.enabled` is false, only `lifecycle` from values is used (if set).
+- OAuth proxy sidecar uses the same lifecycle helper (see section 2.7).
+
+**Chart behavior:**
+
+- Main container `lifecycle` block on Deployment/StatefulSet.
+- Sources: `templates/helpers/_deployment.yaml`
+
+---
+
+### 1.14 Celery and Celery Beat workloads
+
+<!-- feature: workload.celery -->
+
+**Variables:** `celery.enabled`, `celery.replicas`, `celery.image`, `celery.command`, `celery.args`, `celery.env`, `celery.resources`, `celery.liveness`, `celery.readiness`, `celery.startup`, `celery.metrics`, `celery.podDisruptionBudget`, `celeryBeat.enabled`, `celeryBeat.image`, `celeryBeat.command`, `celeryBeat.args`, `celeryBeat.env`, `celeryBeat.resources`, `celeryBeat.liveness`, `celeryBeat.readiness`, `celeryBeat.podSecurityContext`
+
+**Configure:**
+
+- **Celery workers:** Set `celery.enabled: true`, `celery.replicas`, and optionally override `celery.args` (default `["celery"]`), `celery.resources`, probes, and `celery.env`.
+- **Celery Beat scheduler:** Set `celery.enabled: true`, `celeryBeat.enabled: true`, and optionally override `celeryBeat.args` (default `["celerybeat"]`).
+- **Celery metrics:** `celery.metrics.enabled` (default `true`) exposes a metrics port; requires `redis.enabled` for the celery-exporter VPA/PodMonitor path.
+- **Celery PDB:** `celery.podDisruptionBudget.enabled` (default `true`) with `minAvailable` (default `50%`).
+
+**Constraints and interactions:**
+
+- Celery uses the main `image` by default; does **not** inherit `main.env` (only `celery.env` and shared defaultEnv helpers).
+- Celery Beat requires `celery.enabled: true`.
+- OPA probe-skip annotations are applied when celery/celery-beat liveness or readiness is disabled.
+- Celery PDB is created when `celery.enabled`, `celery.replicas` > 1, and `celery.podDisruptionBudget.enabled`.
+- VPA instances: `verticalPodAutoscaler.instances.celery`, `.celery-beat`, `.celery-exporter` (see section 3.3).
+- Celery deployments are independent of `cronjobsOnly` / `jobsOnly` (main workload hidden, celery still renders if enabled).
+
+**Chart behavior:**
+
+- `deployment-celery.yaml`, `deployment-celery-beat.yaml`, celery PDB, celery ServiceMonitor/PodMonitor, celery VPA instances.
 
 ---
 
 ## 2. Service and networking
 
 ### 2.1 Enabling or disabling the Service
+
+<!-- feature: networking.service -->
 
 **Variables:** `service.enabled`, `service.type`, `service.annotations`, `service.labels`, `port`
 
@@ -172,6 +292,8 @@ This document is the **comprehensive list of features to be documented** for CUE
 
 ### 2.2 Configuring an ingress for direct public access
 
+<!-- feature: networking.ingress -->
+
 **Variables:** `ingress.enabled`, `ingress.tls`, `ingress.defaultHost`, `ingress.extraHosts`, `ingress.extraIngresses`, `ingress.extraAnnotations`, `ingress.allowLivenessUrl`, `ingress.allowReadinessUrl`, `ingress.alb` (scheme, backendProtocol, backendProtocolVersion, targetGroupAttributes, preStopDelay, healthcheck)
 
 **Logic (implementation detail):**
@@ -181,7 +303,7 @@ This document is the **comprehensive list of features to be documented** for CUE
 - **Rules:** Default rule host is that defaultHost; path defaults to `/` with pathType Prefix; backend service/port: when oauthProxy enabled, port 4180; else `Values.port`. `pathBasedRouting` can override paths per ingress; `extraHosts` add additional host rules (with optional pathBasedRouting per host). When oauthProxy.ingressHost is set, an extra host rule is added for that host to port 4180.
 - **TLS:** When `ingress.tls` is true and (`global.ingressTLSSecrets` or `specificTlsHostsYaml`) is set, TLS block is generated; hosts are matched to TLS secrets by suffix (e.g. defaultHost and extraHosts names matched to keys in ingressTLSSecrets).
 - **Deployment labels:** When `ingress.enabled` is true **or** `ingress.allowFrontendAccess` is true, the Deployment/StatefulSet (and its pod template) get label `tier: frontend`.
-- **ALB healthcheck:** Default path is `/readiness` (or GRPC health path when backendProtocolVersion is GRPC); default port from oauthProxy (4180) or opensearch awsEsProxy ingress port or `Values.port`. preStopDelay (lifecycle preStop) is used for zero-downtime rollouts when configured.
+- **ALB healthcheck:** Default path is `/readiness` (or GRPC health path when backendProtocolVersion is GRPC); default port from oauthProxy (4180, see section 2.7) or opensearch awsEsProxy ingress port or `Values.port`. preStopDelay (lifecycle preStop, see section 1.13) is used for zero-downtime rollouts when configured.
 
 ---
 
@@ -226,22 +348,64 @@ This document is the **comprehensive list of features to be documented** for CUE
 
 ---
 
+### 2.7 OAuth proxy sidecar
+
+<!-- feature: networking.oauth-proxy -->
+
+**Variables:** `oauthProxy.enabled`, `oauthProxy.image`, `oauthProxy.ingressHost`, `oauthProxy.issuerUrl`, `oauthProxy.emailDomain`, `oauthProxy.allowedGroups`, `oauthProxy.type`, `oauthProxy.scope`, `oauthProxy.secretSuffix`, `oauthProxy.secretNameOverride`, `oauthProxy.secretRefreshIntervalOverride`, `oauthProxy.secretStoreRefOverride`, `oauthProxy.skipAuthRegexes`, `oauthProxy.resources`, `oauthProxy.userIdClaim`, `oauthProxy.env`, `oauthProxy.localSecretValues`
+
+**Configure:**
+
+- **Enable auth proxy:** Set `oauthProxy.enabled: true`. Sidecar listens on port `4180` (auth) and `9090` (metrics).
+- **Redirect URL host:** Set `oauthProxy.ingressHost` or rely on `ingress.defaultHost` for the OAuth callback URL.
+- **Access control:** Set `oauthProxy.emailDomain`, `oauthProxy.allowedGroups`, and/or `oauthProxy.skipAuthRegexes` for path bypass rules (liveness/readiness paths are skipped automatically).
+- **Local dev:** Use `oauthProxy.localSecretValues` when `global.clusterEnv` is `"local"`.
+
+**Constraints and interactions:**
+
+- Sidecar is **not rendered** when `global.clusterEnv` is `"local"`.
+- When enabled, Ingress backends route to port `4180` instead of the app port; Service exposes auth-proxy and metrics ports.
+- `oauthProxy.ingressHost` adds an extra Ingress host rule when set and different from other hosts.
+- NetworkPolicy allows traffic to port `4180` when oauth proxy is enabled.
+- OAuth secret is included in Stakater reloader annotation list; secret name defaults to `{fullname}-oauth`.
+- See section 5.3 for ExternalSecret creation (when standard-application-stack manages backend secrets).
+
+**Chart behavior:**
+
+- OAuth proxy sidecar on main Deployment, Ingress rule changes, Service ports, NetworkPolicy, ServiceMonitor/PodMonitor metrics endpoint.
+- Sources: `templates/_oauth-proxy.tpl`, `templates/deployment.yaml`, `templates/ingress.yaml`, `templates/service.yaml`
+
+---
+
 ## 3. Scaling and resilience
 
 ### 3.1 Enabling autoscaling (KEDA)
 
-**Variables:** `autoscaling.enabled`, `autoscaling.pollingInterval`, `autoscaling.cooldownPeriod`, `autoscaling.minReplicaCount`, `autoscaling.maxReplicaCount`, `autoscaling.enableZeroReplicas`, `autoscaling.scaleTargetRef`, `autoscaling.fallback`, `autoscaling.triggers`, `autoscaling.mimir`
+<!-- feature: scaling.keda -->
 
-**Logic (implementation detail):**
+**Variables:** `autoscaling.enabled`, `autoscaling.pollingInterval`, `autoscaling.cooldownPeriod`, `autoscaling.minReplicaCount`, `autoscaling.maxReplicaCount`, `autoscaling.enableZeroReplicas`, `autoscaling.scaleTargetRef`, `autoscaling.fallback`, `autoscaling.triggers`, `autoscaling.mimir`, `statefulset`
+
+**Configure:**
+
+- **Enable KEDA scaling:** Set `autoscaling.enabled: true` and configure `autoscaling.minReplicaCount` / `autoscaling.maxReplicaCount`. Do not rely on `replicas` (see section 1.1).
+- **Scale to zero:** Set `autoscaling.enableZeroReplicas: true` (sets `idleReplicaCount: 0` on the ScaledObject).
+- **CPU/memory triggers:** Set `autoscaling.triggers` fields such as `targetCPUUtilizationPercentage` or `targetMemoryUtilizationPercentage`.
+- **Custom triggers:** Add entries to `autoscaling.triggers.custom` (Prometheus, AWS SQS/SNS, etc.).
+- **Mimir/Prometheus:** Configure `autoscaling.mimir` when using Prometheus triggers against Mimir.
+
+**Constraints and interactions:**
 
 - ScaledObject is rendered only when `autoscaling.enabled` is true **and** `global.clusterEnv` != `"local"`.
-- **Replicas on Deployment/StatefulSet:** When autoscaling is enabled, the `replicas` field is **omitted** from the workload spec (see 1.1).
-- **ScaledObject spec:** scaleTargetRef points to the Deployment or StatefulSet (kind chosen by `statefulset`); name is fullname. Optional `scaleTargetRef.envSourceContainerName` passed through.
-- **Constraints (helpers):** `cooldownPeriod` is clamped to at least 60. `pollingInterval` at least 10. `maxReplicaCount`: if > 30 becomes 30, else max(1, maxReplicaCount). `minReplicaCount`: if > 10 becomes 2, else max(1, minReplicaCount).
-- **idleReplicaCount:** When `enableZeroReplicas` is true, `idleReplicaCount: 0` is set on the ScaledObject.
-- **fallback.replicas:** Defaults to minReplicaCount when not set (`fallback.replicas | default (include "mintel_common.keda.scaledObject.minReplicaCount" .)`).
-- **Triggers:** targetCPUUtilizationPercentage / targetCPUAverageValue and targetMemory* map to KEDA cpu/memory triggers. `triggers.custom` list is rendered; for Prometheus type, if Mimir is enabled and serverAddress is set, metadata is overridden (serverAddress, authModes basic, optional customHeaders) and authenticationRef to mimir ClusterTriggerAuthentication is added. For aws-* trigger types, identityOwner and awsRegion get defaults when not in metadata.
-- **Annotation:** ScaledObject has `argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true`.
+- Chart clamps values: `cooldownPeriod` ≥ 60, `pollingInterval` ≥ 10, `maxReplicaCount` capped at 30, `minReplicaCount` capped at 10 (values above 10 become 2).
+- `autoscaling.fallback.replicas` defaults to `minReplicaCount` when unset.
+- `scaleTargetRef.kind` is `StatefulSet` when `statefulset: true`, else `Deployment`.
+- Topology spread is skipped when both `autoscaling.enabled` and `enableZeroReplicas` are true (see section 1.1).
+- For Prometheus triggers with Mimir enabled, the chart overrides server address and adds authentication ref.
+
+**Chart behavior:**
+
+- KEDA ScaledObject targeting the main workload; workload `replicas` field omitted when autoscaling is active.
+- Sources: `templates/keda-scaled-object.yaml`
 
 ---
 
@@ -314,6 +478,8 @@ This document is the **comprehensive list of features to be documented** for CUE
 
 ### 5.1 Main app External Secret
 
+<!-- feature: secrets.external-secret -->
+
 **Variables:** `externalSecret.enabled`, `externalSecret.nameOverride`, `pathOverride`, `secretRefreshIntervalOverride`, `secretStoreRefOverride`, `localValues`, `extraSecrets`
 
 **Logic (implementation detail):**
@@ -324,21 +490,36 @@ This document is the **comprehensive list of features to be documented** for CUE
 
 ### 5.2 Using Terraform-managed backend secrets
 
-**Variables:** `global.terraform.externalSecrets`
+<!-- feature: secrets.terraform-external-secrets -->
 
-**Logic (implementation detail):**
+**Variables:** `global.terraform.externalSecrets`, plus per-backend `enabled` and `outputSecret` on both charts
 
-- When `global.terraform.externalSecrets` is true, standard-application-stack **does not** create ExternalSecrets for backend resources (mariadb, postgresql, redis, s3, dynamodb, elasticsearch, opensearch, etc.); terraform-cloud chart creates those. standard-application-stack still injects secret refs into the Deployment (and optional client/exporter workloads) so pods mount the secrets that terraform-cloud’s ExternalSecrets have created.
+**Configure:**
+
+- **Terraform Cloud manages backend secrets:** Set `global.terraform.externalSecrets: true` on the shared values object passed to **both** charts.
+- **Enable a backend:** Set `.<backend>.enabled: true` (e.g. `mariadb.enabled`, `s3.enabled`) and `.<backend>.outputSecret: true` on the terraform-cloud chart side.
+- **App still needs backend access:** On standard-application-stack, set the same backend `.enabled: true` so env/volumeMounts inject secret refs (chart does not create ExternalSecrets for backends when `externalSecrets` is true).
+
+**Constraints and interactions:**
+
+- When `global.terraform.externalSecrets` is true, standard-application-stack **does not** create ExternalSecrets for backend resources (mariadb, postgresql, redis, s3, dynamodb, elasticsearch, opensearch, etc.); terraform-cloud chart creates those.
+- standard-application-stack still injects secret refs into the Deployment (and optional client/exporter workloads) so pods mount the secrets that terraform-cloud's ExternalSecrets have created.
+- Both charts must receive consistent `global` and backend `enabled` flags.
+
+**Chart behavior:**
+
+- terraform-cloud: `workspace-output-secret.yaml` ExternalSecrets per enabled resource with `outputSecret: true`.
+- standard-application-stack: secret refs in Deployment env/volumeMounts only (no backend ExternalSecrets).
 
 ---
 
-### 5.3 MariaDB / PostgreSQL / Redis / S3 / DynamoDB / SQS / Elasticsearch / OpenSearch / OAuth proxy
+### 5.3 MariaDB / PostgreSQL / Redis / S3 / DynamoDB / SQS / Elasticsearch / OpenSearch
 
-**Variables:** Per-backend: `enabled`, `outputSecret`, overrides (secretNameOverride, pathOverride, secretRefreshIntervalOverride, secretStoreRefOverride), and backend-specific (e.g. mariadb.client, mariadb.metrics, mariadb.extraUsers; opensearch.awsEsProxy; oauthProxy.*).
+**Variables:** Per-backend: `enabled`, `outputSecret`, overrides (secretNameOverride, pathOverride, secretRefreshIntervalOverride, secretStoreRefOverride), and backend-specific (e.g. mariadb.client, mariadb.metrics, mariadb.extraUsers; opensearch.awsEsProxy).
 
 **Logic (implementation detail):**
 
-- Each backend’s ExternalSecret (when standard-application-stack creates it) is gated on: `externalSecret.enabled`, **not** `global.terraform.externalSecrets`, and (for non-local) the appropriate backend `.enabled` and path/secretStoreRef. In local env, some backends may use localValues or be skipped. Deployment env/volumeMounts reference the secret name (fullname-based or override). MariaDB/PostgreSQL: client and metrics deployments when enabled; extraUsers enables mariadb-py-dba or postgresql-py-dba Job. OpenSearch: when awsEsProxy enabled, proxy Deployment/Service/Ingress/NetworkPolicy and VPA are created; proxy has OPA annotations (opa-allow-single-replica, opa-skip-readiness-probe-check, opa-skip-security-context-check). OAuth proxy: sidecar container, redirect URL from ingressHost or defaultHost, ingress/nlb/network-policy and Service ports (4180, 9090) when enabled.
+- Each backend's ExternalSecret (when standard-application-stack creates it) is gated on: `externalSecret.enabled`, **not** `global.terraform.externalSecrets`, and (for non-local) the appropriate backend `.enabled` and path/secretStoreRef. In local env, some backends may use localValues or be skipped. Deployment env/volumeMounts reference the secret name (fullname-based or override). MariaDB/PostgreSQL: client and metrics deployments when enabled; extraUsers enables mariadb-py-dba or postgresql-py-dba Job. OpenSearch: when awsEsProxy enabled, proxy Deployment/Service/Ingress/NetworkPolicy and VPA are created; proxy has OPA annotations (opa-allow-single-replica, opa-skip-readiness-probe-check, opa-skip-security-context-check). For OAuth proxy configuration see section 2.7.
 
 ---
 
@@ -366,11 +547,11 @@ This document is the **comprehensive list of features to be documented** for CUE
 
 ### 6.3 Hiding the main deployment
 
+<!-- feature: workloads.hide-main-deployment -->
+
 **Variables:** `cronjobsOnly`, `jobsOnly`
 
-**Logic (implementation detail):**
-
-- When either is true, main Deployment/StatefulSet, Service, main PDB, main VPA, and main ServiceMonitor are not rendered (same condition as in 1.11).
+See section 1.11 for full configuration, constraints, and chart behavior. This section exists as a cross-reference from the scheduled/one-off workloads chapter.
 
 ---
 
@@ -454,6 +635,8 @@ This document is the **comprehensive list of features to be documented** for CUE
 
 ### 10.1 Enabling a Terraform Cloud resource type
 
+<!-- feature: terraform-cloud.resource -->
+
 **Variables:** Per resource: `enabled`, `terraform.module.source`, `terraform.module.version`, `terraform.terraformVersion`, `terraform.defaultVars`, `terraform.instances`, `syncWave`, `outputSecret`, `eventBus.enabled` (SNS/SQS)
 
 **Logic (implementation detail):**
@@ -495,6 +678,8 @@ This document is the **comprehensive list of features to be documented** for CUE
 ## 11. Naming and labels
 
 ### 11.1 Application name and fullname
+
+<!-- feature: naming.fullname -->
 
 **Variables:** `global.name`, `nameOverride`, `partOf`, `component` (root and global), `global.application`, `global.component`, `global.owner`, `global.partOf`, `global.additionalLabels`, `additionalLabels`
 
