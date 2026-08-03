@@ -7,10 +7,11 @@ This document is a **feature reference for configuring Helm values** in the `sta
 
 For each feature the doc describes:
 
-1. **Variables** — value paths involved (see companion files for defaults and types)
-2. **Configure** — common intents and what to set (where piloted or added)
-3. **Constraints and interactions** — gates, conflicts, and dependencies between values
-4. **Chart behavior** — short summary of affected manifests (not a template reimplementation guide)
+- **Summary** — what the feature is for, in plain language
+- **Variables** — value paths involved (see companion files for defaults and types)
+- **Configure** — common intents and what to set (where piloted or added)
+- **Constraints and interactions** — gates, conflicts, and dependencies between values
+- **Chart behavior** — short summary of affected manifests (not a template reimplementation guide)
 
 **How to use:** When configuring a feature, set the listed value paths in your Jsonnet/Tanka values object. Cross-check defaults and types in the chart `values.yaml` files. Use the constraints section to avoid combinations that silently no-op or conflict.
 
@@ -30,9 +31,13 @@ Both charts consume the same `global` values object when deployed via Tanka. Whe
 
 ## 1. Workload basics
 
+Core configuration for the main application container: how it runs, what image it uses, how many copies exist, and how updates are rolled out.
+
 ### 1.1 Changing the number of replicas
 
 <!-- feature: workload.replicas -->
+
+**Summary:** Control how many pod replicas run for the main workload — fixed count, autoscaling via KEDA, or special single-replica modes for stateful or singleton apps.
 
 **Variables:** `replicas`, `singleReplicaOnly`, `allowSingleReplica`, `autoscaling.enabled`, `autoscaling.minReplicaCount`, `autoscaling.maxReplicaCount`
 
@@ -62,6 +67,8 @@ Both charts consume the same `global` values object when deployed via Tanka. Whe
 
 <!-- feature: workload.deployment-statefulset -->
 
+**Summary:** Choose between a stateless Deployment (default) and a StatefulSet for workloads that need stable network identity or persistent storage via volume claim templates.
+
 **Variables:** `statefulset`, `persistentVolumes`
 
 **Logic (implementation detail):**
@@ -82,6 +89,8 @@ Both charts consume the same `global` values object when deployed via Tanka. Whe
 
 ### 1.3 Setting the container image and pull policy
 
+**Summary:** Specify which container image the workload runs and how Kubernetes pulls it, including registry credentials when needed.
+
 **Variables:** `image.registry`, `image.repository`, `image.tag`, `image.pullPolicy`, `imagePullSecrets`
 
 **Logic (implementation detail):**
@@ -95,6 +104,8 @@ Both charts consume the same `global` values object when deployed via Tanka. Whe
 
 ### 1.4 Setting container command, args, and env
 
+**Summary:** Configure how the application process starts and what environment variables and secret/configmap refs it receives.
+
 **Variables:** `command`, `args`, `env`, `main.env`, `envFrom`
 
 **Logic (implementation detail):**
@@ -107,6 +118,8 @@ Both charts consume the same `global` values object when deployed via Tanka. Whe
 
 ### 1.5 Configuring resource requests and limits
 
+**Summary:** Set CPU and memory requests and limits so the scheduler can place pods and enforce resource boundaries.
+
 **Variables:** `resources` (limits, requests)
 
 **Logic (implementation detail):**
@@ -117,6 +130,8 @@ Both charts consume the same `global` values object when deployed via Tanka. Whe
 ---
 
 ### 1.6 Configuring liveness and readiness probes
+
+**Summary:** Tell Kubernetes how to check whether the app is alive and ready to receive traffic, with OPA bypass annotations when probes are intentionally disabled.
 
 **Variables:** `liveness` (enabled, methodOverride, path, port, scheme, initialDelaySeconds, periodSeconds, timeoutSeconds, failureThreshold, successThreshold, startup), `readiness` (same), `terminationGracePeriodSeconds`
 
@@ -131,6 +146,8 @@ Both charts consume the same `global` values object when deployed via Tanka. Whe
 
 ### 1.7 Configuring security context
 
+**Summary:** Harden the pod and container with security settings (user, capabilities, seccomp) at pod or per-container level.
+
 **Variables:** `securityContext`, `podSecurityContext`
 
 **Logic (implementation detail):**
@@ -141,6 +158,8 @@ Both charts consume the same `global` values object when deployed via Tanka. Whe
 ---
 
 ### 1.8 Configuring rollout strategy
+
+**Summary:** Control how pod updates are applied during deployments — rolling updates with surge/unavailable limits, or recreate for single-replica workloads.
 
 **Variables:** `strategy.type`, `strategy.maxSurge`, `strategy.maxUnavailable`, `minReadySeconds`
 
@@ -155,6 +174,8 @@ Both charts consume the same `global` values object when deployed via Tanka. Whe
 
 ### 1.9 Adding init containers and extra containers
 
+**Summary:** Extend the pod with additional init or sidecar containers beyond the chart's built-in sidecars (e.g. custom tooling or oauth2-proxy via `extraContainers`).
+
 **Variables:** `extraInitContainers`, `extraContainers`
 
 **Logic (implementation detail):**
@@ -165,6 +186,8 @@ Both charts consume the same `global` values object when deployed via Tanka. Whe
 ---
 
 ### 1.10 Adding volumes and mounts
+
+**Summary:** Attach ephemeral volumes, config volumes, and persistent storage to the main workload pod.
 
 **Variables:** `volumes`, `volumeMounts`, `persistentVolumes`
 
@@ -177,6 +200,8 @@ Both charts consume the same `global` values object when deployed via Tanka. Whe
 ### 1.11 Running with only CronJobs or only Jobs
 
 <!-- feature: workload.cronjobs-only-jobs-only -->
+
+**Summary:** Deploy scheduled or one-off work without a long-running main application — useful for batch-only or scheduler-only services.
 
 **Variables:** `cronjobsOnly`, `jobsOnly`
 
@@ -199,6 +224,8 @@ Both charts consume the same `global` values object when deployed via Tanka. Whe
 ### 1.12 Configuring pod metadata and extra ports
 
 <!-- feature: workload.pod-metadata -->
+
+**Summary:** Tune pod scheduling priority, expose additional ports, or use host networking — optional pod-level settings beyond the main container port.
 
 **Variables:** `podAnnotations`, `priorityClassName`, `useHostNetwork`, `extraPorts`, `port`
 
@@ -224,6 +251,8 @@ Both charts consume the same `global` values object when deployed via Tanka. Whe
 
 <!-- feature: workload.lifecycle -->
 
+**Summary:** Gracefully drain traffic before shutdown — either via ALB-aware preStop delay (default with ingress) or custom lifecycle hooks.
+
 **Variables:** `lifecycle`, `ingress.enabled`, `ingress.alb.preStopDelay.enabled`, `ingress.alb.preStopDelay.delaySeconds`, `terminationGracePeriodSeconds`
 
 **Configure:**
@@ -248,6 +277,8 @@ Both charts consume the same `global` values object when deployed via Tanka. Whe
 ### 1.14 Celery and Celery Beat workloads
 
 <!-- feature: workload.celery -->
+
+**Summary:** Run Celery worker and beat scheduler deployments alongside the main app for asynchronous task processing (typically with Redis).
 
 **Variables:** `celery.enabled`, `celery.replicas`, `celery.image`, `celery.command`, `celery.args`, `celery.env`, `celery.resources`, `celery.liveness`, `celery.readiness`, `celery.startup`, `celery.metrics`, `celery.podDisruptionBudget`, `celeryBeat.enabled`, `celeryBeat.image`, `celeryBeat.command`, `celeryBeat.args`, `celeryBeat.env`, `celeryBeat.resources`, `celeryBeat.liveness`, `celeryBeat.readiness`, `celeryBeat.podSecurityContext`
 
@@ -275,9 +306,13 @@ Both charts consume the same `global` values object when deployed via Tanka. Whe
 
 ## 2. Service and networking
 
+How the application is exposed and who can reach it: in-cluster Services, Ingress/ALB, NLB, network policies, and authentication in front of the app.
+
 ### 2.1 Enabling or disabling the Service
 
 <!-- feature: networking.service -->
+
+**Summary:** Create (or skip) the Kubernetes Service that routes traffic to the app pods inside the cluster.
 
 **Variables:** `service.enabled`, `service.type`, `service.annotations`, `service.labels`, `port`
 
@@ -294,6 +329,8 @@ Both charts consume the same `global` values object when deployed via Tanka. Whe
 
 <!-- feature: networking.ingress -->
 
+**Summary:** Expose the app on a public or internal hostname via AWS ALB Ingress, with TLS, health checks, and optional multi-ingress or extra host rules.
+
 **Variables:** `ingress.enabled`, `ingress.tls`, `ingress.defaultHost`, `ingress.extraHosts`, `ingress.extraIngresses`, `ingress.extraAnnotations`, `ingress.allowLivenessUrl`, `ingress.allowReadinessUrl`, `ingress.alb` (scheme, backendProtocol, backendProtocolVersion, targetGroupAttributes, preStopDelay, healthcheck)
 
 **Logic (implementation detail):**
@@ -309,6 +346,8 @@ Both charts consume the same `global` values object when deployed via Tanka. Whe
 
 ### 2.3 Configuring an ingress for API gateway (path-based routing)
 
+**Summary:** Route API Gateway traffic to the app using ALB conditions on the `x-app-path` header when `ingress.alb.scheme` is `"api"`.
+
 **Variables:** `ingress.alb.apiAppName`, `ingress.alb.apiTargetService`
 
 **Logic (implementation detail):**
@@ -320,6 +359,8 @@ Both charts consume the same `global` values object when deployed via Tanka. Whe
 
 ### 2.4 Setting frontend tier without ingress
 
+**Summary:** Mark the workload as a frontend tier (for policy/routing labels) even when no Ingress resource is created.
+
 **Variables:** `ingress.allowFrontendAccess`
 
 **Logic (implementation detail):**
@@ -330,6 +371,8 @@ Both charts consume the same `global` values object when deployed via Tanka. Whe
 
 ### 2.5 Exposing the app via a Network Load Balancer
 
+**Summary:** Expose the app with an AWS NLB (TCP load balancer) instead of or in addition to ALB Ingress — useful for non-HTTP or L4 traffic.
+
 **Variables:** `nlb.enabled`, `nlb.scheme`, `nlb.targetType`, `nlb.healthcheck`, `nlb.defaultHost`
 
 **Logic (implementation detail):**
@@ -339,6 +382,8 @@ Both charts consume the same `global` values object when deployed via Tanka. Whe
 ---
 
 ### 2.6 Configuring network policy
+
+**Summary:** Restrict which pods can connect to the app, defaulting to same-`part-of` group members with optional extra peers.
 
 **Variables:** `networkPolicy.enabled`, `networkPolicy.additionalAllowFroms`
 
@@ -351,6 +396,8 @@ Both charts consume the same `global` values object when deployed via Tanka. Whe
 ### 2.7 OAuth proxy sidecar
 
 <!-- feature: networking.oauth-proxy -->
+
+**Summary:** Add an oauth2-proxy sidecar in front of the app so users authenticate via OIDC (e.g. Mintel portal) before reaching the application.
 
 **Variables:** `oauthProxy.enabled`, `oauthProxy.image`, `oauthProxy.ingressHost`, `oauthProxy.issuerUrl`, `oauthProxy.emailDomain`, `oauthProxy.allowedGroups`, `oauthProxy.type`, `oauthProxy.scope`, `oauthProxy.secretSuffix`, `oauthProxy.secretNameOverride`, `oauthProxy.secretRefreshIntervalOverride`, `oauthProxy.secretStoreRefOverride`, `oauthProxy.skipAuthRegexes`, `oauthProxy.resources`, `oauthProxy.userIdClaim`, `oauthProxy.env`, `oauthProxy.localSecretValues`
 
@@ -379,9 +426,13 @@ Both charts consume the same `global` values object when deployed via Tanka. Whe
 
 ## 3. Scaling and resilience
 
+Keep the app available under load and during cluster maintenance: autoscaling, disruption budgets, resource right-sizing, and pod placement.
+
 ### 3.1 Enabling autoscaling (KEDA)
 
 <!-- feature: scaling.keda -->
+
+**Summary:** Automatically scale replica count based on CPU, memory, queue depth, or custom metrics using KEDA ScaledObjects.
 
 **Variables:** `autoscaling.enabled`, `autoscaling.pollingInterval`, `autoscaling.cooldownPeriod`, `autoscaling.minReplicaCount`, `autoscaling.maxReplicaCount`, `autoscaling.enableZeroReplicas`, `autoscaling.scaleTargetRef`, `autoscaling.fallback`, `autoscaling.triggers`, `autoscaling.mimir`, `statefulset`
 
@@ -411,6 +462,8 @@ Both charts consume the same `global` values object when deployed via Tanka. Whe
 
 ### 3.2 Configuring Pod Disruption Budget
 
+**Summary:** Limit how many pods can be unavailable during voluntary disruptions (node drains, cluster upgrades) so the service stays up.
+
 **Variables:** `podDisruptionBudget.enabled`, `podDisruptionBudget.minAvailable`, `podDisruptionBudget.maxUnavailable`, `podDisruptionBudget.unhealthyPodEvictionPolicy`
 
 **Logic (implementation detail):**
@@ -423,6 +476,8 @@ Both charts consume the same `global` values object when deployed via Tanka. Whe
 
 ### 3.3 Configuring Vertical Pod Autoscaler
 
+**Summary:** Let VPA recommend or adjust container CPU/memory requests over time, per workload instance (main app, celery, DB clients, etc.).
+
 **Variables:** `verticalPodAutoscaler.enabled`, `verticalPodAutoscaler.autoscalingEnabled`, `verticalPodAutoscaler.minReplicas`, `verticalPodAutoscaler.containerPolicies`, `verticalPodAutoscaler.evictionRequirements`, `verticalPodAutoscaler.instances`
 
 **Logic (implementation detail):**
@@ -432,6 +487,8 @@ Both charts consume the same `global` values object when deployed via Tanka. Whe
 ---
 
 ### 3.4 Configuring topology spread and affinity
+
+**Summary:** Spread pods across zones/nodes and apply anti-affinity rules to improve availability and reduce correlated failure.
 
 **Variables:** `topologySpreadConstraints` (enabled, zone, node, specificYaml), `affinity` (enabled, podAntiAffinity, specificYaml)
 
@@ -444,7 +501,11 @@ Both charts consume the same `global` values object when deployed via Tanka. Whe
 
 ## 4. Identity and RBAC
 
+Kubernetes identity for the app: service accounts, IAM roles (IRSA), custom RBAC, and distributed locking for jobs.
+
 ### 4.1 Service account and IRSA
+
+**Summary:** Create a ServiceAccount for the workload and optionally attach an AWS IAM role via EKS IRSA for cloud API access.
 
 **Variables:** `serviceAccount.create`, `serviceAccount.name`, `serviceAccount.annotations`, `serviceAccount.irsa` (enabled, nameOverride), `global.terraform.irsa`
 
@@ -456,6 +517,8 @@ Both charts consume the same `global` values object when deployed via Tanka. Whe
 
 ### 4.2 Roles and ClusterRoles
 
+**Summary:** Grant the app's ServiceAccount additional Kubernetes API permissions via Role/ClusterRole bindings.
+
 **Variables:** `serviceAccount.roles`, `serviceAccount.clusterRoles`
 
 **Logic (implementation detail):**
@@ -465,6 +528,8 @@ Both charts consume the same `global` values object when deployed via Tanka. Whe
 ---
 
 ### 4.3 Kubelock
+
+**Summary:** Enable distributed locking so only one pod or job runs a critical section at a time (leader election pattern).
 
 **Variables:** `kubelock.enabled`, `kubelock.nameOverride`
 
@@ -476,9 +541,13 @@ Both charts consume the same `global` values object when deployed via Tanka. Whe
 
 ## 5. Secrets and backends (standard-application-stack)
 
+How the app gets credentials and connects to databases, caches, object storage, search, and other managed backends.
+
 ### 5.1 Main app External Secret
 
 <!-- feature: secrets.external-secret -->
+
+**Summary:** Sync the application's own secrets from AWS Secrets Manager (or local values in dev) into the cluster for the main workload.
 
 **Variables:** `externalSecret.enabled`, `externalSecret.nameOverride`, `pathOverride`, `secretRefreshIntervalOverride`, `secretStoreRefOverride`, `localValues`, `extraSecrets`
 
@@ -491,6 +560,8 @@ Both charts consume the same `global` values object when deployed via Tanka. Whe
 ### 5.2 Using Terraform-managed backend secrets
 
 <!-- feature: secrets.terraform-external-secrets -->
+
+**Summary:** Split secret ownership: Terraform Cloud provisions backend infrastructure and creates ExternalSecrets; the app chart only mounts the resulting secrets.
 
 **Variables:** `global.terraform.externalSecrets`, plus per-backend `enabled` and `outputSecret` on both charts
 
@@ -515,6 +586,8 @@ Both charts consume the same `global` values object when deployed via Tanka. Whe
 
 ### 5.3 MariaDB / PostgreSQL / Redis / S3 / DynamoDB / SQS / Elasticsearch / OpenSearch
 
+**Summary:** Wire the app to common AWS and data backends — connection secrets, optional client/metrics side deployments, and OpenSearch proxy when needed.
+
 **Variables:** Per-backend: `enabled`, `outputSecret`, overrides (secretNameOverride, pathOverride, secretRefreshIntervalOverride, secretStoreRefOverride), and backend-specific (e.g. mariadb.client, mariadb.metrics, mariadb.extraUsers; opensearch.awsEsProxy).
 
 **Logic (implementation detail):**
@@ -525,7 +598,11 @@ Both charts consume the same `global` values object when deployed via Tanka. Whe
 
 ## 6. Scheduled and one-off workloads
 
+Run tasks on a schedule (CronJobs) or as ad-hoc batch runs (Jobs) instead of or alongside the main deployment.
+
 ### 6.1 CronJobs
+
+**Summary:** Define recurring scheduled tasks (e.g. nightly reports, periodic syncs) with shared defaults and per-job overrides.
 
 **Variables:** `cronjobs.jobs`, `cronjobs.defaults` (concurrencyPolicy, restartPolicy, suspend, ttlSecondsAfterFinished, timezone, enableDoNotDisrupt, backoffLimit)
 
@@ -536,6 +613,8 @@ Both charts consume the same `global` values object when deployed via Tanka. Whe
 ---
 
 ### 6.2 One-off Jobs
+
+**Summary:** Run discrete batch or migration tasks to completion, with optional Argo hooks, kubelock, and per-job service accounts.
 
 **Variables:** `jobs`, `jobDefaults` (name, command, args, env, envFrom, image, resources, includeAppSecret, includeBaseEnv, includeBasePodSecurityContext, enableDoNotDisrupt, restartPolicy, ttlSecondsAfterFinished, backoffLimit, kubelock, irsa, argo, extraInitContainers)
 
@@ -549,6 +628,8 @@ Both charts consume the same `global` values object when deployed via Tanka. Whe
 
 <!-- feature: workloads.hide-main-deployment -->
 
+**Summary:** Cross-reference for running only CronJobs or Jobs without a long-running main app (see section 1.11).
+
 **Variables:** `cronjobsOnly`, `jobsOnly`
 
 See section 1.11 for full configuration, constraints, and chart behavior. This section exists as a cross-reference from the scheduled/one-off workloads chapter.
@@ -557,7 +638,11 @@ See section 1.11 for full configuration, constraints, and chart behavior. This s
 
 ## 7. Observability and instrumentation
 
+Metrics and distributed tracing so platform and application teams can monitor health and debug issues.
+
 ### 7.1 Prometheus metrics (ServiceMonitor / PodMonitor)
+
+**Summary:** Scrape application Prometheus metrics via ServiceMonitor (with Service) or PodMonitor (without Service).
 
 **Variables:** `metrics.enabled`, `metrics.interval`, `metrics.path`, `metrics.port`, `metrics.timeout`, `metrics.scheme`, `metrics.basicAuth`, `metrics.additionalMonitors`
 
@@ -569,6 +654,8 @@ See section 1.11 for full configuration, constraints, and chart behavior. This s
 
 ### 7.2 OpenTelemetry
 
+**Summary:** Inject OpenTelemetry environment variables so the app exports traces to a configured collector endpoint.
+
 **Variables:** `otel.exporter.endpoint`, `otel.sampler`, `otel.extraEnv`, `otel.python.*`, `otel.java.*`
 
 **Logic (implementation detail):**
@@ -579,7 +666,11 @@ See section 1.11 for full configuration, constraints, and chart behavior. This s
 
 ## 8. Sidecars and local dev
 
+Optional sidecars for logging and config sync, plus local-development helpers (Localstack, Mailhog, Event Bus).
+
 ### 8.1 Filebeat sidecar
+
+**Summary:** Ship container logs to Elasticsearch via a Filebeat sidecar, with optional beat-exporter metrics.
 
 **Variables:** `filebeatSidecar.enabled`, resources, configmap, `filebeatSidecar.metrics`
 
@@ -591,6 +682,8 @@ See section 1.11 for full configuration, constraints, and chart behavior. This s
 
 ### 8.2 Git-sync sidecar
 
+**Summary:** Clone or sync a Git repository into a volume at pod start for config or content that lives outside the image.
+
 **Variables:** `gitSyncSidecar.enabled`, `repo`, `branch`, `root`, `dest`, resources`
 
 **Logic (implementation detail):**
@@ -600,6 +693,8 @@ See section 1.11 for full configuration, constraints, and chart behavior. This s
 ---
 
 ### 8.3 Localstack / Mailhog / Event Bus
+
+**Summary:** Inject environment configuration for local AWS emulation, email testing, and Event Bus integration during development.
 
 **Variables:** `localstack.enabled`, `mailhog.enabled`, `eventBus.enabled` (+ eventBus accountId, region, serviceName, maxWorkers, interactiveApp)
 
@@ -611,7 +706,11 @@ See section 1.11 for full configuration, constraints, and chart behavior. This s
 
 ## 9. Entra and ConfigMaps
 
+Azure AD (Entra) app registration for SSO and application ConfigMaps with automatic reload on change.
+
 ### 9.1 Entra (Azure AD) Application and Service Principal
+
+**Summary:** Register the app in Entra ID for OAuth/SSO, optionally exposing client secrets to the workload or ingress RBAC.
 
 **Variables:** `entra.enabled`, `displayName`, `description`, `redirectURIs`, `owners`, `groupMembershipClaims`, `extraResourceAccess`, `appRoleAssignmentRequired`, `visibleToUsers`, `createIngressRBAC`, `developmentMode`, `includeClientSecretsInWorkload`
 
@@ -623,6 +722,8 @@ See section 1.11 for full configuration, constraints, and chart behavior. This s
 
 ### 9.2 ConfigMaps
 
+**Summary:** Create ConfigMaps from values and wire them into the deployment with Stakater reloader for rolling restarts on config changes.
+
 **Variables:** `configMaps` (name, create, argo, configs)
 
 **Logic (implementation detail):**
@@ -633,9 +734,13 @@ See section 1.11 for full configuration, constraints, and chart behavior. This s
 
 ## 10. Terraform Cloud (infrastructure as code)
 
+Provision and manage AWS (and related) infrastructure via Terraform Cloud workspaces, with outputs synced back to Kubernetes secrets.
+
 ### 10.1 Enabling a Terraform Cloud resource type
 
 <!-- feature: terraform-cloud.resource -->
+
+**Summary:** Turn on a backend or infrastructure resource (RDS, S3, Redis, etc.) by creating Terraform Cloud Workspace and Module CRs per instance.
 
 **Variables:** Per resource: `enabled`, `terraform.module.source`, `terraform.module.version`, `terraform.terraformVersion`, `terraform.defaultVars`, `terraform.instances`, `syncWave`, `outputSecret`, `eventBus.enabled` (SNS/SQS)
 
@@ -647,6 +752,8 @@ See section 1.11 for full configuration, constraints, and chart behavior. This s
 
 ### 10.2 Outputting workspace outputs to Kubernetes secrets
 
+**Summary:** Sync Terraform workspace outputs into Kubernetes secrets via ExternalSecrets so the app can consume connection details and credentials.
+
 **Variables:** `global.terraform.externalSecrets`, `.<resource>.outputSecret`, `.<resource>.terraform.instances` (and defaultVars for outputSecretMap)
 
 **Logic (implementation detail):**
@@ -656,6 +763,8 @@ See section 1.11 for full configuration, constraints, and chart behavior. This s
 ---
 
 ### 10.3 IRSA via Terraform Cloud
+
+**Summary:** Provision the IAM role and policies the app's ServiceAccount needs, including extra roles for one-off Jobs when configured.
 
 **Variables:** `irsa.enabled`, `irsa.terraform.*` (module, vars, notifications, nameOverride), `irsa.terraform.vars.output_secret_name`, `jobs`, `s3MultiRegionAccessPoint.enabled` + instances
 
@@ -667,6 +776,8 @@ See section 1.11 for full configuration, constraints, and chart behavior. This s
 
 ### 10.4 Global Terraform settings
 
+**Summary:** Shared Terraform Cloud org settings applied to all workspaces: agent pool, Terraform version, tags, destroy policy, and apply method.
+
 **Variables:** `global.terraform.organization`, `agentPoolID`, `executionMode`, `terraformVersion`, `enableRestartedAt`, `restartedAt`, `defaultWorkspaceAllowDestroy`, `defaultApplyMethod`, `teamAccess`, `tags` (addBackstageComponentTag, addDeprecatedTags)
 
 **Logic (implementation detail):**
@@ -677,9 +788,13 @@ See section 1.11 for full configuration, constraints, and chart behavior. This s
 
 ## 11. Naming and labels
 
+Consistent resource names and labels across both charts for discovery, alerting, ownership, and selector matching.
+
 ### 11.1 Application name and fullname
 
 <!-- feature: naming.fullname -->
+
+**Summary:** Control how the release is named and labelled (`fullname`, owner, part-of, component) so resources are identifiable and consistently grouped.
 
 **Variables:** `global.name`, `nameOverride`, `partOf`, `component` (root and global), `global.application`, `global.component`, `global.owner`, `global.partOf`, `global.additionalLabels`, `additionalLabels`
 
