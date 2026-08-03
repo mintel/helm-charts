@@ -25,7 +25,7 @@ Always cross-reference these companion sources:
 | [charts/terraform-cloud/values.yaml](../charts/terraform-cloud/values.yaml) | Defaults, types, and inline descriptions for Terraform Cloud resource values |
 | [.cursor/plans/values_and_effects_report_9aa4cfcc.plan.md](../.cursor/plans/values_and_effects_report_9aa4cfcc.plan.md) | Per-key effects tables complementing this feature-oriented view |
 
-Both charts consume the same `global` values object when deployed via Tanka. When enabling a backend with `global.terraform.externalSecrets: true`, set values consistently on **both** charts (terraform-cloud creates secrets; standard-application-stack injects secret refs).
+Both charts consume the same `global` values object when deployed via Tanka. When enabling a backend with `global.terraform.externalSecrets: true`, set values consistently on **both** charts (terraform-cloud creates secrets for most backends; standard-application-stack injects secret refs). Note the **elasticsearch** exception: SAS still creates that ExternalSecret itself (see section 5.2).
 
 ---
 
@@ -50,11 +50,11 @@ Core configuration for the main application container: how it runs, what image i
 
 **Constraints and interactions:**
 
-- When `autoscaling.enabled` is true and `global.clusterEnv` is not `"local"`, the workload `replicas` value is ignored; KEDA controls scale via a ScaledObject (see section 3.1).
+- When `autoscaling.enabled` is true, the workload `replicas` field is omitted from the Deployment/StatefulSet (regardless of `clusterEnv`). The KEDA ScaledObject that actually scales the workload is rendered only when `global.clusterEnv` != `"local"` (see section 3.1). Local + autoscaling therefore leaves no `replicas` field and no ScaledObject.
 - When `singleReplicaOnly` is true, `strategy.type` is forced to `Recreate` (see section 1.8).
 - When **either** `singleReplicaOnly` or `allowSingleReplica` is true, the workload gets OPA annotation `app.mintel.com/opa-allow-single-replica: "true"`.
 - Main PDB is created only when `podDisruptionBudget.enabled` is true **and** replica count is > 1 (uses `autoscaling.minReplicaCount` when autoscaling is enabled, else `replicas`).
-- Topology spread is rendered only when `global.clusterEnv` != `"local"`, `replicas` > 1, and not (`autoscaling.enabled` and `autoscaling.enableZeroReplicas`). Note: topology spread uses `Values.replicas`, not `minReplicaCount`.
+- Topology spread is rendered only when `global.clusterEnv` != `"local"`, `topologySpreadConstraints.enabled` is true, `replicas` > 1, and not (`autoscaling.enabled` and `autoscaling.enableZeroReplicas`). Note: topology spread (and celery affinity/topology) uses root `Values.replicas`, not `minReplicaCount` or `celery.replicas`.
 
 **Chart behavior:**
 
@@ -110,7 +110,7 @@ Core configuration for the main application container: how it runs, what image i
 
 **Logic (implementation detail):**
 
-- Main container: `command` and `args` from root values; env from merge of `env` and `main.env`; `envFrom` for secret/configmap refs. Same pattern for celery/celery-beat with optional overrides.
+- Main container: `command` and `args` from root values; env from merge of `env` and `main.env`; `envFrom` for secret/configmap refs. Celery/celery-beat use root `env` plus their own `celery.env` / `celeryBeat.env` (they do **not** get `main.env`); see section 1.14.
 - CronJobs: per-job `command`, `args`, `env`; optional `includeBaseEnv`, `includeMailhogEnv`, `includeRedisEnv`, etc. (see defaultEnv/localDevEnv helpers).
 - Jobs: merged `jobDefaults` + job; `command`, `args`, `env`, `envFrom`; `includeBaseEnv` pulls in main workload env.
 
@@ -231,14 +231,14 @@ Core configuration for the main application container: how it runs, what image i
 
 **Configure:**
 
-- **Extra container ports:** Set `extraPorts` (list of `name`, `containerPort`, optional `protocol`). Requires `port` to be set (non-null) on the main container.
+- **Extra container ports:** Set `extraPorts` (list of `name`, `containerPort`, optional `protocol`). On the main container, `extraPorts` are only rendered when `port` is set (non-null); the Service still ranges `extraPorts` independently when `service.enabled` is true.
 - **Pod priority:** Set `priorityClassName` to an existing PriorityClass name (non-local clusters only).
 - **Host network:** Set `useHostNetwork: true` to attach the pod to the node network namespace.
 - **Custom pod annotations:** `podAnnotations` is defined in `values.yaml` but is **not currently wired** into deployment templates; do not rely on it until chart support is added.
 
 **Constraints and interactions:**
 
-- `extraPorts` are added to both the main container and the Service when `service.enabled` is true.
+- `extraPorts` appear on the Service when `service.enabled` is true (even if `port` is null).
 - `priorityClassName` is only applied when `global.clusterEnv` != `"local"`.
 
 **Chart behavior:**
@@ -264,7 +264,7 @@ Core configuration for the main application container: how it runs, what image i
 **Constraints and interactions:**
 
 - ALB preStop delay and custom `lifecycle` are **mutually exclusive**: when `ingress.enabled` and `ingress.alb.preStopDelay.enabled` are both true, the chart emits the ALB preStop hook and ignores `lifecycle`.
-- When `ingress.enabled` is false, only `lifecycle` from values is used (if set).
+- When `ingress.enabled` is false, only `lifecycle` from values is used (if set). The lifecycle helper is wrapped in `with .Values.ingress`, so if the `ingress` key were absent entirely, custom `lifecycle` would also not render.
 - OAuth proxy sidecar uses the same lifecycle helper (see section 2.7).
 
 **Chart behavior:**
@@ -286,17 +286,18 @@ Core configuration for the main application container: how it runs, what image i
 
 - **Celery workers:** Set `celery.enabled: true`, `celery.replicas`, and optionally override `celery.args` (default `["celery"]`), `celery.resources`, probes, and `celery.env`.
 - **Celery Beat scheduler:** Set `celery.enabled: true`, `celeryBeat.enabled: true`, and optionally override `celeryBeat.args` (default `["celerybeat"]`).
-- **Celery metrics:** `celery.metrics.enabled` (default `true`) exposes a metrics port; requires `redis.enabled` for the celery-exporter VPA/PodMonitor path.
+- **Celery metrics:** `celery.metrics.enabled` (default `true`) exposes a metrics port. The celery-exporter Deployment (and its VPA/PodMonitor) also requires `redis.enabled`.
 - **Celery PDB:** `celery.podDisruptionBudget.enabled` (default `true`) with `minAvailable` (default `50%`).
 
 **Constraints and interactions:**
 
-- Celery uses the main `image` by default; does **not** inherit `main.env` (only `celery.env` and shared defaultEnv helpers).
+- Celery uses the main `image` by default; does **not** inherit `main.env`. It **does** inherit root `Values.env` plus shared helpers (`defaultEnv`, redis/mailhog/localstack/eventBus/elasticsearch/opensearch env when those features are enabled).
 - Celery Beat requires `celery.enabled: true`.
 - OPA probe-skip annotations are applied when celery/celery-beat liveness or readiness is disabled.
 - Celery PDB is created when `celery.enabled`, `celery.replicas` > 1, and `celery.podDisruptionBudget.enabled`.
 - VPA instances: `verticalPodAutoscaler.instances.celery`, `.celery-beat`, `.celery-exporter` (see section 3.3).
 - Celery deployments are independent of `cronjobsOnly` / `jobsOnly` (main workload hidden, celery still renders if enabled).
+- Celery topology spread / affinity conditions key off **main** `Values.replicas`, not `celery.replicas`.
 
 **Chart behavior:**
 
@@ -319,7 +320,7 @@ How the application is exposed and who can reach it: in-cluster Services, Ingres
 **Logic (implementation detail):**
 
 - Service is rendered only when `service.enabled` is true **and** `cronjobsOnly` and `jobsOnly` are both false.
-- When service is disabled and metrics are enabled: no Service is created; PodMonitor is used instead of ServiceMonitor (service-monitor.yaml is gated on `service.enabled`).
+- When service is disabled and metrics are enabled: no Service is created; PodMonitor is used instead of ServiceMonitor (service-monitor.yaml is gated on `service.enabled`). PodMonitor also requires `global.clusterEnv` != `"local"` and `metrics.enabled`.
 - Port: `service.port` and `service.targetPort` default to `Values.port` when not set.
 - When `ingress.enabled` is true, Service gets ALB tags annotation (`alb.ingress.kubernetes.io/tags`) from backstage.component or else Owner/Application. When `nlb.enabled` is true, Service gets NLB annotations and `type: LoadBalancer`, `loadBalancerClass: service.k8s.aws/nlb`.
 
@@ -389,7 +390,7 @@ How the application is exposed and who can reach it: in-cluster Services, Ingres
 
 **Logic (implementation detail):**
 
-- NetworkPolicy is rendered only when `global.clusterEnv` != `"local"` and `networkPolicy.enabled` is true. Default policy allows ingress from pods in the same `app.kubernetes.io/part-of` group; `additionalAllowFroms` add extra peer rules (by name/selector and optional ports).
+- NetworkPolicy is rendered only when `global.clusterEnv` != `"local"` and `networkPolicy.enabled` is true. Default policy allows ingress from pods in the same `app.kubernetes.io/part-of` group; `additionalAllowFroms` add extra peer rules (by name/selector and optional ports). Additional ALB-oriented NetworkPolicies (when ingress is enabled) may also allow traffic to the oauth-proxy port when oauthProxy is enabled.
 
 ---
 
@@ -403,19 +404,19 @@ How the application is exposed and who can reach it: in-cluster Services, Ingres
 
 **Configure:**
 
-- **Enable auth proxy:** Set `oauthProxy.enabled: true`. Sidecar listens on port `4180` (auth) and `9090` (metrics).
+- **Enable auth proxy:** Set `oauthProxy.enabled: true`. Sidecar listens on port `4180` (auth) and `9090` (metrics). Sidecar is only rendered when `global.clusterEnv` != `"local"`.
 - **Redirect URL host:** Set `oauthProxy.ingressHost` or rely on `ingress.defaultHost` for the OAuth callback URL.
 - **Access control:** Set `oauthProxy.emailDomain`, `oauthProxy.allowedGroups`, and/or `oauthProxy.skipAuthRegexes` for path bypass rules (liveness/readiness paths are skipped automatically).
-- **Local dev:** Use `oauthProxy.localSecretValues` when `global.clusterEnv` is `"local"`.
+- **Local secrets:** Use `oauthProxy.localSecretValues` to create a local Secret; this still works in `local` even though the sidecar itself is not rendered.
 
 **Constraints and interactions:**
 
-- Sidecar is **not rendered** when `global.clusterEnv` is `"local"`.
-- When enabled, Ingress backends route to port `4180` instead of the app port; Service exposes auth-proxy and metrics ports.
-- `oauthProxy.ingressHost` adds an extra Ingress host rule when set and different from other hosts.
-- NetworkPolicy allows traffic to port `4180` when oauth proxy is enabled.
+- Sidecar is **not rendered** when `global.clusterEnv` is `"local"`. Avoid enabling oauthProxy in local unless you intentionally only want the Secret: Ingress still targets port `4180` and the Service still exposes `4180`/`9090` when `oauthProxy.enabled` is true.
+- When enabled (non-local), Ingress backends route to port `4180` instead of the app port; Service exposes auth-proxy and metrics ports.
+- `oauthProxy.ingressHost` adds an extra Ingress host rule whenever it is set (and oauthProxy is enabled). ExtraHosts entries whose name equals `ingressHost` are skipped to avoid duplicates.
+- Some ALB-oriented NetworkPolicies allow traffic to port `4180` when oauth proxy is enabled (not a standalone rule from `networkPolicy.enabled` alone).
 - OAuth secret is included in Stakater reloader annotation list; secret name defaults to `{fullname}-oauth`.
-- See section 5.3 for ExternalSecret creation (when standard-application-stack manages backend secrets).
+- See section 5.3 for ExternalSecret creation (when standard-application-stack manages oauth secrets).
 
 **Chart behavior:**
 
@@ -447,11 +448,12 @@ Keep the app available under load and during cluster maintenance: autoscaling, d
 **Constraints and interactions:**
 
 - ScaledObject is rendered only when `autoscaling.enabled` is true **and** `global.clusterEnv` != `"local"`.
-- Chart clamps values: `cooldownPeriod` ≥ 60, `pollingInterval` ≥ 10, `maxReplicaCount` capped at 30, `minReplicaCount` capped at 10 (values above 10 become 2).
-- `autoscaling.fallback.replicas` defaults to `minReplicaCount` when unset.
+- The workload `replicas` field is omitted whenever `autoscaling.enabled` is true (including in `local`, where no ScaledObject is created either — see section 1.1).
+- Chart clamps values: `cooldownPeriod` ≥ 60, `pollingInterval` ≥ 10, `maxReplicaCount` capped at 30 (floored at 1). `minReplicaCount` floored at 1; values **above 10 are hard-reset to 2** (not clamped to 10).
+- `autoscaling.fallback.replicas` defaults to the (clamped) `minReplicaCount` when unset.
 - `scaleTargetRef.kind` is `StatefulSet` when `statefulset: true`, else `Deployment`.
 - Topology spread is skipped when both `autoscaling.enabled` and `enableZeroReplicas` are true (see section 1.1).
-- For Prometheus triggers with Mimir enabled, the chart overrides server address and adds authentication ref.
+- For Prometheus triggers with Mimir enabled and `serverAddress` set, the chart overrides server address / auth and adds an authenticationRef.
 
 **Chart behavior:**
 
@@ -482,7 +484,7 @@ Keep the app available under load and during cluster maintenance: autoscaling, d
 
 **Logic (implementation detail):**
 
-- VPA manifests are rendered when `global.clusterEnv` != `"local"` and not (cronjobsOnly or jobsOnly). Each VPA (main workload, statefulset, aws-es-proxy, celery, celery-beat, celery-exporter, mysqlclient, mysqldexporter, postgresqlclient, postgresqlexporter) is gated by its own condition (e.g. opensearch.awsEsProxy enabled for aws-es-proxy). Config for each is `verticalPodAutoscaler.instances.<name> | default dict | mustMergeOverwrite (mustDeepCopy .Values.verticalPodAutoscaler)` so instance keys override the default verticalPodAutoscaler spec.
+- VPA file is rendered only when `global.clusterEnv` != `"local"`. The **main workload** VPA is additionally gated by not (`cronjobsOnly` or `jobsOnly`). Other VPA targets (celery, celery-beat, celery-exporter, aws-es-proxy, mysqlclient, mysqldexporter, postgresqlclient, postgresqlexporter) use their own feature gates (e.g. `celery.enabled`, `opensearch.awsEsProxy.enabled`) and are **not** suppressed by cronjobsOnly/jobsOnly. Config for each is `verticalPodAutoscaler.instances.<name> | default dict | mustMergeOverwrite (mustDeepCopy .Values.verticalPodAutoscaler)` so instance keys override the default verticalPodAutoscaler spec. Main workload instance key is `instances.workload`.
 
 ---
 
@@ -494,8 +496,8 @@ Keep the app available under load and during cluster maintenance: autoscaling, d
 
 **Logic (implementation detail):**
 
-- **Topology spread:** Rendered only when not local, `replicas` > 1, and not (autoscaling.enabled and enableZeroReplicas). If `topologySpreadConstraints.specificYaml` is set, it is emitted as-is. Zone spread uses topologyKey `topology.kubernetes.io/zone`; node spread uses `kubernetes.io/hostname`. Node spread is also enabled when `topologySpreadConstraints.node.enabled` is not a bool and clusterEnv is logs or prod (default prod/logs get node spread). whenUnsatisfiable defaults to DoNotSchedule; matchLabelKeys can be enabled for zone/node.
-- **Affinity:** Rendered on Deployment when `affinity.enabled` is true **and** `replicas` > 1. Pod anti-affinity (zone/node, hard/soft) and optional `affinity.specificYaml` are applied. Celery deployment uses the same condition (replicas > 1 and affinity.enabled).
+- **Topology spread:** Rendered only when not local, `topologySpreadConstraints.enabled` is true, `replicas` > 1, and not (autoscaling.enabled and enableZeroReplicas). If `topologySpreadConstraints.specificYaml` is set, it is emitted as-is. Zone spread uses topologyKey `topology.kubernetes.io/zone`; node spread uses `kubernetes.io/hostname`. Node spread is also enabled when `topologySpreadConstraints.node.enabled` is not a bool and clusterEnv is logs or prod (default prod/logs get node spread). whenUnsatisfiable defaults to DoNotSchedule; matchLabelKeys can be enabled for zone/node.
+- **Affinity:** Rendered on Deployment when `affinity.enabled` is true **and** root `replicas` > 1. Pod anti-affinity (zone/node, hard/soft) and optional `affinity.specificYaml` are applied. Celery deployment uses the same condition keyed off **main** `Values.replicas` (not `celery.replicas`) and `affinity.enabled`.
 
 ---
 
@@ -507,11 +509,13 @@ Kubernetes identity for the app: service accounts, IAM roles (IRSA), custom RBAC
 
 **Summary:** Create a ServiceAccount for the workload and optionally attach an AWS IAM role via EKS IRSA for cloud API access.
 
-**Variables:** `serviceAccount.create`, `serviceAccount.name`, `serviceAccount.annotations`, `serviceAccount.irsa` (enabled, nameOverride), `global.terraform.irsa`
+**Variables:** `serviceAccount.create`, `serviceAccount.name`, `serviceAccount.annotations`, `serviceAccount.irsa.enabled`, `serviceAccount.irsa.nameOverride`, `global.terraform.irsa`
 
 **Logic (implementation detail):**
 
-- When `serviceAccount.create` is true (or `serviceAccount.name` is set): ServiceAccount is created with that name or fullname. Annotations come from `serviceAccount.annotations`. When `global.terraform.irsa` is true, the EKS IRSA annotation (role-arn) is typically supplied by terraform-cloud output; `serviceAccount.irsa.nameOverride` overrides the last component of the role-arn. Pods use `serviceAccountName` from the ServiceAccount name. Jobs/CronJobs and py-dba jobs use the same ServiceAccount when serviceAccount.create/name is set.
+- When `serviceAccount.create` is true: a ServiceAccount is created (name from `serviceAccount.name` or fullname). Setting `serviceAccount.name` alone does **not** create an SA — pods only reference that existing name.
+- Annotations come from `serviceAccount.annotations`. When `serviceAccount.irsa.enabled` is true and `global.clusterEnv` != `"local"`, SAS **hardcodes** the `eks.amazonaws.com/role-arn` annotation. `global.terraform.irsa` only switches the role name prefix (`app-iam-{cluster}-{ns}-{name}` vs `{cluster}-{ns}-{name}`); it does not pull the ARN from a terraform-cloud ExternalSecret. `serviceAccount.irsa.nameOverride` overrides the last path component of that role name.
+- Pods use `serviceAccountName` from the ServiceAccount name. CronJobs and py-dba jobs use the same main ServiceAccount when serviceAccount.create/name is set. Jobs use a **job-specific** SA name (fullname with job component); see section 6.2.
 
 ---
 
@@ -535,7 +539,7 @@ Kubernetes identity for the app: service accounts, IAM roles (IRSA), custom RBAC
 
 **Logic (implementation detail):**
 
-- Kubelock Role and RoleBinding are rendered when `serviceAccount.create` is true **and** `kubelock.enabled` is true. Jobs get kubelock-related env when `jobDefaults.kubelock.enabled` (or per-job kubelock.enabled) is true; Jobs that need kubelock use a distinct ServiceAccount name (fullname per job) so the RoleBinding can target them.
+- Kubelock Role and RoleBinding are rendered when `serviceAccount.create` is true **and** `kubelock.enabled` is true. Jobs get kubelock-related env when `jobDefaults.kubelock.enabled` (or per-job kubelock.enabled) is true; Jobs that need kubelock create/use a distinct ServiceAccount name (fullname per job) so the RoleBinding can target them (see section 6.2).
 
 ---
 
@@ -573,14 +577,15 @@ How the app gets credentials and connects to databases, caches, object storage, 
 
 **Constraints and interactions:**
 
-- When `global.terraform.externalSecrets` is true, standard-application-stack **does not** create ExternalSecrets for backend resources (mariadb, postgresql, redis, s3, dynamodb, elasticsearch, opensearch, etc.); terraform-cloud chart creates those.
+- When `global.terraform.externalSecrets` is true, standard-application-stack **does not** create ExternalSecrets for most terraform-cloud backends (mariadb, postgresql, redis, s3, dynamodb, opensearch, etc.); terraform-cloud chart creates those. **Exception: elasticsearch** — SAS still creates its elasticsearch ExternalSecret/Secret when `elasticsearch.enabled`, regardless of `global.terraform.externalSecrets`.
+- Non-backend secrets managed by SAS (main app ExternalSecret, oauthProxy, etc.) are unaffected by this flag.
 - standard-application-stack still injects secret refs into the Deployment (and optional client/exporter workloads) so pods mount the secrets that terraform-cloud's ExternalSecrets have created.
 - Both charts must receive consistent `global` and backend `enabled` flags.
 
 **Chart behavior:**
 
 - terraform-cloud: `workspace-output-secret.yaml` ExternalSecrets per enabled resource with `outputSecret: true`.
-- standard-application-stack: secret refs in Deployment env/volumeMounts only (no backend ExternalSecrets).
+- standard-application-stack: secret refs in Deployment env/volumeMounts; no ExternalSecrets for the gated backends listed above (elasticsearch still created by SAS).
 
 ---
 
@@ -592,7 +597,9 @@ How the app gets credentials and connects to databases, caches, object storage, 
 
 **Logic (implementation detail):**
 
-- Each backend's ExternalSecret (when standard-application-stack creates it) is gated on: `externalSecret.enabled`, **not** `global.terraform.externalSecrets`, and (for non-local) the appropriate backend `.enabled` and path/secretStoreRef. In local env, some backends may use localValues or be skipped. Deployment env/volumeMounts reference the secret name (fullname-based or override). MariaDB/PostgreSQL: client and metrics deployments when enabled; extraUsers enables mariadb-py-dba or postgresql-py-dba Job. OpenSearch: when awsEsProxy enabled, proxy Deployment/Service/Ingress/NetworkPolicy and VPA are created; proxy has OPA annotations (opa-allow-single-replica, opa-skip-readiness-probe-check, opa-skip-security-context-check). For OAuth proxy configuration see section 2.7.
+- Most backend ExternalSecrets (mariadb, postgresql, redis, s3, dynamodb, opensearch, …) are gated on: **not** `global.terraform.externalSecrets`, the appropriate backend `.enabled`, and non-local env. They are **not** gated on `externalSecret.enabled` (that flag controls the main app ExternalSecret in section 5.1).
+- **elasticsearch** is an exception: SAS creates its ExternalSecret/Secret when `elasticsearch.enabled` (non-local ExternalSecret / local Secret), even if `global.terraform.externalSecrets` is true.
+- In local env, some backends may use localValues or be skipped. Deployment env/volumeMounts reference the secret name (fullname-based or override). MariaDB/PostgreSQL: client and metrics deployments when enabled; extraUsers enables mariadb-py-dba or postgresql-py-dba Job. OpenSearch: when awsEsProxy enabled, proxy Deployment/Service/Ingress/NetworkPolicy and VPA are created; proxy has OPA annotations (opa-allow-single-replica, opa-skip-readiness-probe-check, opa-skip-security-context-check). For OAuth proxy configuration see section 2.7.
 
 ---
 
@@ -620,7 +627,8 @@ Run tasks on a schedule (CronJobs) or as ad-hoc batch runs (Jobs) instead of or 
 
 **Logic (implementation detail):**
 
-- One Job per entry in `jobs`; each is merged with `jobDefaults` via mergeOverwrite. **Annotation:** When the merged job’s `enableDoNotDisrupt` is true, the pod **template.metadata.annotations** include `karpenter.sh/do-not-disrupt: "true"`. So this can be set per job or via jobDefaults. Argo hook/syncWave from job.argo; serviceAccountName is set to the job fullname when ServiceAccount is created (for RoleBinding to job-specific SA when kubelock/irsa enabled).
+- One Job per entry in `jobs`; each is merged with `jobDefaults` via mergeOverwrite. **Annotation:** When the merged job’s `enableDoNotDisrupt` is true, the pod **template.metadata.annotations** include `karpenter.sh/do-not-disrupt: "true"`. So this can be set per job or via jobDefaults. Argo hook/syncWave from job.argo.
+- **ServiceAccount:** When main `serviceAccount.create` or `serviceAccount.name` is set, the Job sets `serviceAccountName` to the **job fullname** (fullname with job component). A matching per-job ServiceAccount is only created when the merged job has `kubelock.enabled` or `irsa.enabled`. Without those, the Job may reference an SA that was never created — prefer enabling job kubelock/irsa, or ensure the SA exists elsewhere.
 
 ---
 
@@ -648,7 +656,7 @@ Metrics and distributed tracing so platform and application teams can monitor he
 
 **Logic (implementation detail):**
 
-- ServiceMonitor is rendered when: `service.enabled`, not cronjobsOnly/jobsOnly, `global.clusterEnv` != `"local"`, and `metrics.enabled`. PodMonitor is used when service is disabled and metrics enabled (pod-monitor.yaml). additionalMonitors produce extra monitor manifests. Interval/path/port/timeout/scheme and basicAuth (secretName, usernameKey, passwordKey) are passed to the monitor spec.
+- ServiceMonitor is rendered when: `service.enabled`, not cronjobsOnly/jobsOnly, `global.clusterEnv` != `"local"`, and `metrics.enabled`. PodMonitor is used when `service.enabled` is false, `metrics.enabled`, and `global.clusterEnv` != `"local"` (pod-monitor.yaml). PodMonitor is **not** gated on cronjobsOnly/jobsOnly. additionalMonitors produce extra monitor manifests. Interval/path/port/timeout/scheme and basicAuth (secretName, usernameKey, passwordKey) are passed to the monitor spec.
 
 ---
 
@@ -660,13 +668,13 @@ Metrics and distributed tracing so platform and application teams can monitor he
 
 **Logic (implementation detail):**
 
-- OTEL env vars are injected into the main Deployment (and optionally celery) via helper _instrumentation.yaml; exporter endpoint, sampler type/arg, and language-specific (python/java) vars are set so the app can send traces to the configured endpoint.
+- OTEL env vars are injected into the **main** Deployment via helper `_instrumentation.yaml`; exporter endpoint, sampler type/arg, and language-specific (python/java) vars are set so the app can send traces to the configured endpoint. Celery deployments do **not** receive these OTEL env vars.
 
 ---
 
 ## 8. Sidecars and local dev
 
-Optional sidecars for logging and config sync, plus local-development helpers (Localstack, Mailhog, Event Bus).
+Optional sidecars for logging and config sync, plus Localstack/Mailhog (local-only) and Event Bus env injection.
 
 ### 8.1 Filebeat sidecar
 
@@ -676,7 +684,7 @@ Optional sidecars for logging and config sync, plus local-development helpers (L
 
 **Logic (implementation detail):**
 
-- When enabled, an extra container is added to the main pod; when filebeatSidecar.metrics enabled, beat-exporter ports (9479) are added to the Service and PodMonitor may be created. Deployment gets OPA annotations to skip readiness/liveness for filebeat and beat-exporter when applicable. ConfigMap for filebeat config is created when configmap is provided.
+- When enabled, an extra container is added to the main pod; when filebeatSidecar.metrics enabled, beat-exporter ports (9479) are added to the Service and PodMonitor may be created. Deployment gets OPA annotations to skip readiness/liveness for filebeat and beat-exporter when applicable. A ConfigMap for filebeat config is always rendered when the sidecar is enabled — `configmap` is required (template fails via `required()` if missing).
 
 ---
 
@@ -684,23 +692,23 @@ Optional sidecars for logging and config sync, plus local-development helpers (L
 
 **Summary:** Clone or sync a Git repository into a volume at pod start for config or content that lives outside the image.
 
-**Variables:** `gitSyncSidecar.enabled`, `repo`, `branch`, `root`, `dest`, resources`
+**Variables:** `gitSyncSidecar.enabled`, `repo`, `branch`, `root`, `dest`, `resources`
 
 **Logic (implementation detail):**
 
-- When enabled, an init container (or sidecar) runs git-sync with args from repo, branch, root, dest; a volume is mounted at `root`. Deployment gets `app.mintel.com/opa-skip-readiness-probe-check.git-sync: "true"`.
+- When enabled, a **sidecar container** (not an init container) runs git-sync with args from repo, branch, root, dest; a volume is mounted at `root`. Deployment gets `app.mintel.com/opa-skip-readiness-probe-check.git-sync: "true"`.
 
 ---
 
 ### 8.3 Localstack / Mailhog / Event Bus
 
-**Summary:** Inject environment configuration for local AWS emulation, email testing, and Event Bus integration during development.
+**Summary:** Inject environment configuration for Localstack and Mailhog (local-only helpers) and for Event Bus integration (any clusterEnv when enabled).
 
 **Variables:** `localstack.enabled`, `mailhog.enabled`, `eventBus.enabled` (+ eventBus accountId, region, serviceName, maxWorkers, interactiveApp)
 
 **Logic (implementation detail):**
 
-- Env vars for localstack (and optional configmap-localstack when local env), mailhog, and event bus are injected via defaultEnv/localDevEnv helpers so the main container (and optionally cronjobs/jobs via include*Env) can reach these services.
+- Env vars for localstack (and optional configmap-localstack when local env) and mailhog are injected via defaultEnv/localDevEnv helpers and are **local-gated**. Event Bus env is injected when `eventBus.enabled` regardless of `clusterEnv`. Main container (and optionally cronjobs/jobs via include*Env) can consume these.
 
 ---
 
@@ -716,7 +724,7 @@ Azure AD (Entra) app registration for SSO and application ConfigMaps with automa
 
 **Logic (implementation detail):**
 
-- When `entra.enabled`: Entra Application, ServicePrincipal, and PasswordCredentials CRs are created. Application and ServicePrincipal CRs are only rendered when clusterEnv is set and (developmentMode is true or clusterEnv is prod). When `createIngressRBAC` is true, a Role and RoleBinding are created so the ingress controller can read the Entra client secret. When `includeClientSecretsInWorkload` is true, AZURE_* client secret env vars are added to the main workload (via secretList/env).
+- When `entra.enabled`: Entra Application, ServicePrincipal, and PasswordCredentials CRs may be created. Application and ServicePrincipal CRs are only rendered when clusterEnv is set and (`developmentMode` is true or `clusterEnv` is prod). PasswordCredentials can still be created more broadly when enabled. When `createIngressRBAC` is true, a Role and RoleBinding are created so the ingress controller can read the Entra client secret. When `includeClientSecretsInWorkload` is true, AZURE_* client secret env vars are added to the main workload (via secretList/env).
 
 ---
 
@@ -746,7 +754,10 @@ Provision and manage AWS (and related) infrastructure via Terraform Cloud worksp
 
 **Logic (implementation detail):**
 
-- For each resource type in terraformCloudResources (e.g. activeMQ, s3, mariadb, dynamodb, irsa, …): when `.<resource>.enabled` is true, workspace.yaml renders one Workspace CR and one Module CR per instance (from `terraform.instances` map or a default instance). defaultVars are merged with instance vars. global.terraform provides organization, agentPoolID, executionMode, terraformVersion, defaultApplyMethod, defaultWorkspaceAllowDestroy, enableRestartedAt, restartedAt, teamAccess, tags. allow_destroy default: from instance workspaceAllowDestroy, else global defaultWorkspaceAllowDestroy, else false for prod/logs and true otherwise. defaultVarValues helper injects env-based defaults (e.g. RDS backup/multi_az/deletion_protection; DynamoDB point_in_time_recovery; OpenSearch instance_count/zone_awareness; Redis replication_group_size; S3 enable_versioning). Workspace annotations include app.mintel.com/terraform-allow-destroy, terraform-cloud-tags, terraform-owner. outputSecret and syncWave control ExternalSecret rendering and Argo sync wave.
+- For each resource type in terraformCloudResources (e.g. activeMQ, s3, mariadb, dynamodb, … — note `irsa` is handled separately in section 10.3): when `.<resource>.enabled` is true, workspace.yaml renders one Workspace CR and one Module CR per instance (from `terraform.instances` map, or a single `"default"` instance when the map is empty). `defaultVars` are merged with instance vars. `global.terraform` provides organization, agentPoolID, executionMode, terraformVersion, defaultApplyMethod, defaultWorkspaceAllowDestroy, enableRestartedAt, restartedAt, teamAccess, tags.
+- **allow_destroy** default: from instance `workspaceAllowDestroy`, else global `defaultWorkspaceAllowDestroy`, else false for prod/logs and true otherwise. Some resources hardcode false in their defaultVars (e.g. apiGatewayHttp).
+- **defaultVarValues** injects env-based defaults (examples: RDS backup retention / multi_az / deletion_protection behaviour by env; DynamoDB point_in_time_recovery and deletion_protection; OpenSearch instance_count / zone_awareness / availability_zone_count; Redis replication_group_size and multi_az/failover; S3 enable_versioning). Treat the helper as the source of truth for exact defaults.
+- Workspace annotations used in practice include Argo sync-wave/sync-options and altManifestFileSuffix (not the unused `tfCloudOperatorExtentionAnnotations` helper). Destroy policy is expressed via `spec.allowDestroyPlan` and the `allow-destroy:` tag. `syncWave` controls Workspace/Module Argo sync wave; ExternalSecrets hardcode sync-wave `-20` (see 10.2). `outputSecret` gates TF `output_secret_name` and ExternalSecret emission.
 
 ---
 
@@ -758,7 +769,7 @@ Provision and manage AWS (and related) infrastructure via Terraform Cloud worksp
 
 **Logic (implementation detail):**
 
-- workspace-output-secret.yaml is rendered only when `global.terraform.externalSecrets` is true. For each resource type where `.<resource>.enabled` and `.<resource>.outputSecret` are true, ExternalSecret(s) are emitted for that resource’s outputs (one per instance or default). outputSecretMap on the instance/defaultVars remaps secret keys. IRSA ExternalSecret is created when `irsa.terraform.vars.output_secret_name` is set.
+- workspace-output-secret.yaml is rendered only when `global.terraform.externalSecrets` is true. For each resource type where `.<resource>.enabled` and `.<resource>.outputSecret` are true, ExternalSecret(s) are emitted for that resource’s outputs (one per instance or default). `outputSecretMap` on the instance/defaultVars remaps secret keys. IRSA ExternalSecret is created when `irsa.terraform.vars.output_secret_name` is set (still under the outer `externalSecrets` gate; does not require `irsa.enabled`). ExternalSecrets use a hardcoded Argo sync-wave of `-20`.
 
 ---
 
@@ -766,11 +777,11 @@ Provision and manage AWS (and related) infrastructure via Terraform Cloud worksp
 
 **Summary:** Provision the IAM role and policies the app's ServiceAccount needs, including extra roles for one-off Jobs when configured.
 
-**Variables:** `irsa.enabled`, `irsa.terraform.*` (module, vars, notifications, nameOverride), `irsa.terraform.vars.output_secret_name`, `jobs`, `s3MultiRegionAccessPoint.enabled` + instances
+**Variables:** `irsa.enabled`, `irsa.nameOverride`, `irsa.terraform.*` (module, vars, notifications), `irsa.terraform.vars.output_secret_name`, `jobs`, `s3MultiRegionAccessPoint.enabled` + instances
 
 **Logic (implementation detail):**
 
-- irsa-workspace.yaml is rendered when `irsa.enabled` is true **or** helper `mintel_common.terraform_cloud.irsaRequired` returns true (any of opensearch, s3, s3MultiRegionAccessPoint, dynamodb, sns, sqs has `.enabled`). IRSA Workspace and Module CRs are created; vars include k8s_service_account_name and optional k8s_extra_service_accounts built from `jobs` (fullname + job name). When s3MultiRegionAccessPoint is enabled, vars get lookup_multi_region_access_points from s3MultiRegionAccessPoint.terraform.instances. When output_secret_name is set and externalSecrets is true, one ExternalSecret for IRSA output is created.
+- irsa-workspace.yaml is rendered when `irsa.enabled` is true **or** helper `mintel_common.terraform_cloud.irsaRequired` returns true (any of opensearch, s3, s3MultiRegionAccessPoint, dynamodb, sns, sqs has `.enabled`). IRSA Workspace and Module CRs are created; vars include `k8s_service_account_name` and optional `k8s_extra_service_accounts` built from `jobs` as `{global.name}-{job.name}` (not `mintel_common.fullname`, so this diverges if `nameOverride` is set). `irsa.nameOverride` (root of `irsa`, not under `terraform`) overrides the IRSA resource name. When s3MultiRegionAccessPoint is enabled, vars get `lookup_multi_region_access_points` from s3MultiRegionAccessPoint.terraform.instances. When `output_secret_name` is set and externalSecrets is true, one ExternalSecret for IRSA output is created.
 
 ---
 
@@ -800,6 +811,7 @@ Consistent resource names and labels across both charts for discovery, alerting,
 
 **Logic (implementation detail):**
 
-- **fullname:** If `nameOverride` is set, it is used (truncated to 63 chars). Else if a component is in context (e.g. celery, job name), `{global.name}-{component}` with Chart name suffix trimmed. Else `global.name`. Used for resource names and selectors.
-- **Selector labels:** `app.kubernetes.io/name`: fullname; `app.kubernetes.io/part-of`: partOf or global.partOf; `app.kubernetes.io/component`: component or global.component or "app".
-- **Common labels:** app.mintel.com/owner, application (default global.name), component (default global.name), env (clusterEnv), region (clusterRegion or "${CLUSTER_REGION}" non-local), plus global.additionalLabels and root additionalLabels. Both charts consume the same global for consistency.
+- **fullname** (same algorithm in both charts): If `nameOverride` is set, it is used (truncated to 63 chars). Else if a component is in context (e.g. celery, job name), `{global.name}-{component}` with Chart name suffix trimmed. Else `global.name`. Used for resource names and selectors.
+- **Selector labels (standard-application-stack):** `app.kubernetes.io/name`: fullname; `app.kubernetes.io/part-of`: partOf or global.partOf; `app.kubernetes.io/component`: context component, else root `Values.component`, else `"app"` (**not** `global.component`).
+- **Common labels (standard-application-stack):** app.mintel.com/owner, application (default global.name), component (default global.name), env (clusterEnv), region (clusterRegion or `"${CLUSTER_REGION}"` non-local), plus `global.additionalLabels` and root `additionalLabels`.
+- **terraform-cloud labels:** thinner set — owner, env, region, plus `global.additionalLabels` only (no selectorLabels helper, no application/component/part-of labels). Both charts share the same `global` values object; they do **not** share identical label helpers.
