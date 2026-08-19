@@ -109,7 +109,7 @@ IRSA created explicitly:
     spec:
       destroyOnDeletion: true
       module:
-        source: app.terraform.io/Mintel/app-iam/aws
+        source: app.terraform.io/Mintel/app-iam/aws//modules/entrypoint
         version: 3.4.1
       name: operator
       organization: Mintel
@@ -242,7 +242,7 @@ IRSA created for Dev S3 module workspace:
     spec:
       destroyOnDeletion: true
       module:
-        source: app.terraform.io/Mintel/app-iam/aws
+        source: app.terraform.io/Mintel/app-iam/aws//modules/entrypoint
         version: 3.4.1
       name: operator
       organization: Mintel
@@ -373,7 +373,7 @@ IRSA created with default (0) syncWave:
     spec:
       destroyOnDeletion: true
       module:
-        source: app.terraform.io/Mintel/app-iam/aws
+        source: app.terraform.io/Mintel/app-iam/aws//modules/entrypoint
         version: 3.4.1
       name: operator
       organization: Mintel
@@ -504,7 +504,7 @@ IRSA created with modified syncWave:
     spec:
       destroyOnDeletion: true
       module:
-        source: app.terraform.io/Mintel/app-iam/aws
+        source: app.terraform.io/Mintel/app-iam/aws//modules/entrypoint
         version: 3.4.1
       name: operator
       organization: Mintel

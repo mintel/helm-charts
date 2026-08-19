@@ -7,8 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [v1.23.1] - 2026-08-19
 ### Fixed
-- Point IRSA and extraIAM app-iam source at `//modules/entrypoint` (required since app-iam v3)
-
+- Point IRSA and extraIAM app-iam source at `//modules/entrypoint`
 ## [v1.23.0] - 2026-07-21
 ### Changed
 - Updated app-iam module version to 3.4.1
