@@ -26,6 +26,10 @@ Test tags:
           name: TF_AWS_DEFAULT_TAGS_TerraformCloudWorkspace
           sensitive: false
           value: prod-eu-west-1-cluster1-test-namespace-mntl-test-app-s3
+        - hcl: false
+          name: TF_AWS_IGNORE_TAGS_KEYS
+          sensitive: false
+          value: backstage.io/system,backstage.io/owner,backstage.io/domain
       executionMode: agent
       name: prod-eu-west-1-cluster1-test-namespace-mntl-test-app-s3
       organization: Mintel
@@ -149,6 +153,10 @@ Test tags in terraformVariables (include backstage.component):
           name: TF_AWS_DEFAULT_TAGS_TerraformCloudWorkspace
           sensitive: false
           value: logs-eu-west-1-cluster1-test-namespace-mntl-test-app-s3
+        - hcl: false
+          name: TF_AWS_IGNORE_TAGS_KEYS
+          sensitive: false
+          value: backstage.io/system,backstage.io/owner,backstage.io/domain
       executionMode: agent
       name: logs-eu-west-1-cluster1-test-namespace-mntl-test-app-s3
       organization: Mintel
@@ -273,6 +281,10 @@ Test tags in terraformVariables (no backstage via flag):
           name: TF_AWS_DEFAULT_TAGS_TerraformCloudWorkspace
           sensitive: false
           value: logs-eu-west-1-cluster1-test-namespace-mntl-test-app-s3
+        - hcl: false
+          name: TF_AWS_IGNORE_TAGS_KEYS
+          sensitive: false
+          value: backstage.io/system,backstage.io/owner,backstage.io/domain
       executionMode: agent
       name: logs-eu-west-1-cluster1-test-namespace-mntl-test-app-s3
       organization: Mintel
@@ -396,6 +408,10 @@ Test tags in terraformVariables (no backstage.component):
           name: TF_AWS_DEFAULT_TAGS_TerraformCloudWorkspace
           sensitive: false
           value: logs-eu-west-1-cluster1-test-namespace-mntl-test-app-s3
+        - hcl: false
+          name: TF_AWS_IGNORE_TAGS_KEYS
+          sensitive: false
+          value: backstage.io/system,backstage.io/owner,backstage.io/domain
       executionMode: agent
       name: logs-eu-west-1-cluster1-test-namespace-mntl-test-app-s3
       organization: Mintel
@@ -519,6 +535,10 @@ Test tags in terraformVariables (no deprecated):
           name: TF_AWS_DEFAULT_TAGS_TerraformCloudWorkspace
           sensitive: false
           value: logs-eu-west-1-cluster1-test-namespace-mntl-test-app-s3
+        - hcl: false
+          name: TF_AWS_IGNORE_TAGS_KEYS
+          sensitive: false
+          value: backstage.io/system,backstage.io/owner,backstage.io/domain
       executionMode: agent
       name: logs-eu-west-1-cluster1-test-namespace-mntl-test-app-s3
       organization: Mintel
@@ -639,6 +659,10 @@ Test tags with env/allow-destroy flags changed:
           name: TF_AWS_DEFAULT_TAGS_TerraformCloudWorkspace
           sensitive: false
           value: logs-eu-west-1-cluster1-test-namespace-mntl-test-app-s3
+        - hcl: false
+          name: TF_AWS_IGNORE_TAGS_KEYS
+          sensitive: false
+          value: backstage.io/system,backstage.io/owner,backstage.io/domain
       executionMode: agent
       name: logs-eu-west-1-cluster1-test-namespace-mntl-test-app-s3
       organization: Mintel
@@ -762,6 +786,10 @@ Test teamAccess can be configured:
           name: TF_AWS_DEFAULT_TAGS_TerraformCloudWorkspace
           sensitive: false
           value: logs-eu-west-1-cluster1-test-namespace-mntl-test-app-s3
+        - hcl: false
+          name: TF_AWS_IGNORE_TAGS_KEYS
+          sensitive: false
+          value: backstage.io/system,backstage.io/owner,backstage.io/domain
       executionMode: agent
       name: logs-eu-west-1-cluster1-test-namespace-mntl-test-app-s3
       organization: Mintel
@@ -892,6 +920,10 @@ Test workspace allow destroy env:
           name: TF_AWS_DEFAULT_TAGS_TerraformCloudWorkspace
           sensitive: false
           value: prod-eu-west-1-cluster1-test-namespace-mntl-test-app-s3
+        - hcl: false
+          name: TF_AWS_IGNORE_TAGS_KEYS
+          sensitive: false
+          value: backstage.io/system,backstage.io/owner,backstage.io/domain
       executionMode: agent
       name: prod-eu-west-1-cluster1-test-namespace-mntl-test-app-s3
       organization: Mintel
@@ -1015,6 +1047,10 @@ Test workspace allow destroy env global-override:
           name: TF_AWS_DEFAULT_TAGS_TerraformCloudWorkspace
           sensitive: false
           value: prod-eu-west-1-cluster1-test-namespace-mntl-test-app-s3
+        - hcl: false
+          name: TF_AWS_IGNORE_TAGS_KEYS
+          sensitive: false
+          value: backstage.io/system,backstage.io/owner,backstage.io/domain
       executionMode: agent
       name: prod-eu-west-1-cluster1-test-namespace-mntl-test-app-s3
       organization: Mintel
@@ -1138,6 +1174,10 @@ Test workspace allow destroy env resource-override:
           name: TF_AWS_DEFAULT_TAGS_TerraformCloudWorkspace
           sensitive: false
           value: prod-eu-west-1-cluster1-test-namespace-mntl-test-app-s3
+        - hcl: false
+          name: TF_AWS_IGNORE_TAGS_KEYS
+          sensitive: false
+          value: backstage.io/system,backstage.io/owner,backstage.io/domain
       executionMode: agent
       name: prod-eu-west-1-cluster1-test-namespace-mntl-test-app-s3
       organization: Mintel
@@ -1261,6 +1301,10 @@ Test workspace defaults:
           name: TF_AWS_DEFAULT_TAGS_TerraformCloudWorkspace
           sensitive: false
           value: dev-eu-west-1-cluster1-test-namespace-mntl-test-workspace-s3
+        - hcl: false
+          name: TF_AWS_IGNORE_TAGS_KEYS
+          sensitive: false
+          value: backstage.io/system,backstage.io/owner,backstage.io/domain
       executionMode: agent
       name: dev-eu-west-1-cluster1-test-namespace-mntl-test-workspace-s3
       organization: Mintel
@@ -1389,6 +1433,10 @@ Test workspace defaults in prod-like environment (logs):
           name: TF_AWS_DEFAULT_TAGS_TerraformCloudWorkspace
           sensitive: false
           value: logs-eu-west-1-cluster1-test-namespace-mntl-test-workspace-s3
+        - hcl: false
+          name: TF_AWS_IGNORE_TAGS_KEYS
+          sensitive: false
+          value: backstage.io/system,backstage.io/owner,backstage.io/domain
       executionMode: remote
       name: logs-eu-west-1-cluster1-test-namespace-mntl-test-workspace-s3
       organization: Mintel
@@ -1512,6 +1560,10 @@ Test workspace defaults in prod-like environment (prod):
           name: TF_AWS_DEFAULT_TAGS_TerraformCloudWorkspace
           sensitive: false
           value: prod-eu-west-1-cluster1-test-namespace-mntl-test-workspace-s3
+        - hcl: false
+          name: TF_AWS_IGNORE_TAGS_KEYS
+          sensitive: false
+          value: backstage.io/system,backstage.io/owner,backstage.io/domain
       executionMode: remote
       name: prod-eu-west-1-cluster1-test-namespace-mntl-test-workspace-s3
       organization: Mintel
@@ -1635,6 +1687,10 @@ Test workspace instance overrides:
           name: TF_AWS_DEFAULT_TAGS_TerraformCloudWorkspace
           sensitive: false
           value: dev-eu-west-1-cluster1-test-namespace-mntl-test-bucket-s3
+        - hcl: false
+          name: TF_AWS_IGNORE_TAGS_KEYS
+          sensitive: false
+          value: backstage.io/system,backstage.io/owner,backstage.io/domain
       executionMode: remote
       name: dev-eu-west-1-cluster1-test-namespace-mntl-test-bucket-s3
       organization: Mintel
@@ -1762,6 +1818,10 @@ Test workspace instance overrides:
           name: TF_AWS_DEFAULT_TAGS_TerraformCloudWorkspace
           sensitive: false
           value: dev-eu-west-1-cluster1-test-namespace-mntl-test-bucket-another-s3
+        - hcl: false
+          name: TF_AWS_IGNORE_TAGS_KEYS
+          sensitive: false
+          value: backstage.io/system,backstage.io/owner,backstage.io/domain
       executionMode: remote
       name: dev-eu-west-1-cluster1-test-namespace-mntl-test-bucket-another-s3
       organization: Mintel
@@ -1890,6 +1950,10 @@ Test workspace overrides:
           name: TF_AWS_DEFAULT_TAGS_TerraformCloudWorkspace
           sensitive: false
           value: dev-eu-west-1-cluster1-test-namespace-mntl-test-workspace-s3
+        - hcl: false
+          name: TF_AWS_IGNORE_TAGS_KEYS
+          sensitive: false
+          value: backstage.io/system,backstage.io/owner,backstage.io/domain
       executionMode: remote
       name: dev-eu-west-1-cluster1-test-namespace-mntl-test-workspace-s3
       organization: Mintel
@@ -2018,6 +2082,10 @@ Test workspace overrides at global-config level:
           name: TF_AWS_DEFAULT_TAGS_TerraformCloudWorkspace
           sensitive: false
           value: prod-eu-west-1-cluster1-test-namespace-mntl-test-workspace-s3
+        - hcl: false
+          name: TF_AWS_IGNORE_TAGS_KEYS
+          sensitive: false
+          value: backstage.io/system,backstage.io/owner,backstage.io/domain
       executionMode: remote
       name: prod-eu-west-1-cluster1-test-namespace-mntl-test-workspace-s3
       organization: Mintel
@@ -2141,6 +2209,10 @@ Test workspace overrides at resource-config level:
           name: TF_AWS_DEFAULT_TAGS_TerraformCloudWorkspace
           sensitive: false
           value: prod-eu-west-1-cluster1-test-namespace-mntl-test-workspace-s3
+        - hcl: false
+          name: TF_AWS_IGNORE_TAGS_KEYS
+          sensitive: false
+          value: backstage.io/system,backstage.io/owner,backstage.io/domain
       executionMode: remote
       name: prod-eu-west-1-cluster1-test-namespace-mntl-test-workspace-s3
       organization: Mintel

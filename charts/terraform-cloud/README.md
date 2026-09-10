@@ -1,6 +1,6 @@
 # terraform-cloud
 
-![Version: 1.23.1](https://img.shields.io/badge/Version-1.23.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.0](https://img.shields.io/badge/AppVersion-2.0.0-informational?style=flat-square)
+![Version: 1.24.0](https://img.shields.io/badge/Version-1.24.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.0](https://img.shields.io/badge/AppVersion-2.0.0-informational?style=flat-square)
 
 A Helm chart for provisioning resources using Terraform Cloud
 
@@ -89,6 +89,7 @@ A Helm chart for provisioning resources using Terraform Cloud
 | global.terraform.enableRestartedAt | bool | `true` | Adds the restartedAt value (see restartedAt). Ensures that any configuration changes (i.e. input vars) result in the operator attempting a new plan/apply |
 | global.terraform.executionMode | string | `"agent"` | Define where the Terraform code will be executed. |
 | global.terraform.externalSecrets | bool | `true` | Set to true as part of tf cloud migrations. When true, it stops standard-application-stack from creating AWS related external secrets and passes that responsibility to the terraform-cloud chart |
+| global.terraform.ignoreTagsKeys | list | `["backstage.io/system","backstage.io/owner","backstage.io/domain"]` | AWS tag keys Terraform will not manage (TF_AWS_IGNORE_TAGS_KEYS). Never add backstage.io/component |
 | global.terraform.irsa | bool | `true` | Set to true as part of tf cloud migrations. When true, standard-application-stack sets the service account eks annotation to match the new IAM roles created by the app-iam module |
 | global.terraform.organization | string | `"Mintel"` | Name of our Terraform Cloud org |
 | global.terraform.secretsMountPath | string | `"/tmp/secrets"` | Where secrets are mounted inside the Terraform Operator container |
