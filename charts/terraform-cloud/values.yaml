@@ -61,11 +61,6 @@ global:
       addBackstageComponentTag: true
       # -- Include deprecated default tags (Owner, Project, Application, Component)
       addDeprecatedTags: true
-    # -- AWS tag keys Terraform will not manage (TF_AWS_IGNORE_TAGS_KEYS). Never add backstage.io/component
-    ignoreTagsKeys:
-      - backstage.io/system
-      - backstage.io/owner
-      - backstage.io/domain
 ###
 ## Resources
 ###

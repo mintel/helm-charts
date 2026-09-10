@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [v1.24.0] - 2026-09-10
 ### Added
-- Set `TF_AWS_IGNORE_TAGS_KEYS` on Workspaces from `global.terraform.ignoreTagsKeys`, so Terraform keeps tags written by Backstage
+- Set `TF_AWS_IGNORE_TAGS_KEYS` on Workspaces, so Terraform keeps the `backstage.io/system`, `owner` and `domain` tags set outside Terraform
 
 ## [v1.23.1] - 2026-08-19
 ### Fixed

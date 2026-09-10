@@ -89,7 +89,6 @@ A Helm chart for provisioning resources using Terraform Cloud
 | global.terraform.enableRestartedAt | bool | `true` | Adds the restartedAt value (see restartedAt). Ensures that any configuration changes (i.e. input vars) result in the operator attempting a new plan/apply |
 | global.terraform.executionMode | string | `"agent"` | Define where the Terraform code will be executed. |
 | global.terraform.externalSecrets | bool | `true` | Set to true as part of tf cloud migrations. When true, it stops standard-application-stack from creating AWS related external secrets and passes that responsibility to the terraform-cloud chart |
-| global.terraform.ignoreTagsKeys | list | `["backstage.io/system","backstage.io/owner","backstage.io/domain"]` | AWS tag keys Terraform will not manage (TF_AWS_IGNORE_TAGS_KEYS). Never add backstage.io/component |
 | global.terraform.irsa | bool | `true` | Set to true as part of tf cloud migrations. When true, standard-application-stack sets the service account eks annotation to match the new IAM roles created by the app-iam module |
 | global.terraform.organization | string | `"Mintel"` | Name of our Terraform Cloud org |
 | global.terraform.secretsMountPath | string | `"/tmp/secrets"` | Where secrets are mounted inside the Terraform Operator container |

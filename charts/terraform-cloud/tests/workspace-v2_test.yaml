@@ -460,7 +460,7 @@ tests:
                 }
         documentIndex: 0
 
-  - it: Test ignore tags env var (default)
+  - it: Test ignore tags env var
     set:
       s3:
         enabled: true
@@ -473,26 +473,3 @@ tests:
             hcl: false
             sensitive: false
         documentIndex: 0
-
-  - it: Test ignore tags env var (empty list)
-    set:
-      global.terraform.ignoreTagsKeys: []
-      s3:
-        enabled: true
-    asserts:
-      - notContains:
-          path: spec.environmentVariables
-          content:
-            name: TF_AWS_IGNORE_TAGS_KEYS
-          any: true
-        documentIndex: 0
-
-  - it: Test ignore tags env var rejects backstage.io/component
-    set:
-      global.terraform.ignoreTagsKeys:
-        - backstage.io/component
-      s3:
-        enabled: true
-    asserts:
-      - failedTemplate:
-          errorMessage: global.terraform.ignoreTagsKeys must not contain backstage.io/component or backstage.io/
