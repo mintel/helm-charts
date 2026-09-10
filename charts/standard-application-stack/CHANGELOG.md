@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v11.4.1] - 2026-09-09
+### Fixed
+- Include `envFrom` `secretRef` names in Stakater Reloader annotations so deployments that consume shared secrets restart when those secrets change.
+
 ## [v11.4.0] - 2026-06-22
 ### Added
 - Optional kubelock binary injection via `kubelock.injectBinary` (default: `false`). When enabled with `kubelock.enabled`, an init container copies the kubelock binary from `kubelock.image` into a shared volume mounted at `/usr/local/bin/kubelock` on the main container (deployment, celery, jobs, and cronjobs). Default image tag is `v0.4.1`.

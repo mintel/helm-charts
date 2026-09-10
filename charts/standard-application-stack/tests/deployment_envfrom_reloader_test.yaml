@@ -1,0 +1,48 @@
+suite: Test envFrom secret reloader annotations
+templates:
+  - deployment.yaml
+release:
+  namespace: test-namespace
+tests:
+  - it: Includes envFrom secretRef names in Stakater Reloader annotation
+    set:
+      global.clusterEnv: qa
+      global.name: test-worker
+      externalSecret.enabled: false
+      envFrom:
+        - secretRef:
+            name: shared-app
+        - secretRef:
+            name: shared-mariadb
+        - configMapRef:
+            name: ignored-configmap
+    asserts:
+      - matchSnapshot: {}
+      - isKind:
+          of: Deployment
+      - equal:
+          path: metadata.annotations["secret.reloader.stakater.com/reload"]
+          value: shared-app,shared-mariadb
+      - equal:
+          path: spec.template.spec.containers[0].envFrom[0].secretRef.name
+          value: shared-app
+      - equal:
+          path: spec.template.spec.containers[0].envFrom[1].secretRef.name
+          value: shared-mariadb
+  - it: Merges envFrom secretRef names with chart-managed secrets
+    set:
+      global.clusterEnv: qa
+      global.name: test-worker
+      externalSecret.enabled: false
+      extraSecrets:
+        - name: gail-solr
+      envFrom:
+        - secretRef:
+            name: shared-app
+        - secretRef:
+            name: shared-mariadb
+    asserts:
+      - matchSnapshot: {}
+      - equal:
+          path: metadata.annotations["secret.reloader.stakater.com/reload"]
+          value: shared-app,shared-mariadb,test-worker-gail-solr

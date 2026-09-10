@@ -320,6 +320,11 @@ Build comma separated list of secrets
 {{- $secretList = append $secretList (.nameOverride | default (printf "%s-%s" (include "mintel_common.fullname" $) .name) ) -}}
 {{- end }}
 {{- end }}
+{{- range .Values.envFrom }}
+{{- if and .secretRef .secretRef.name }}
+{{- $secretList = append $secretList .secretRef.name -}}
+{{- end }}
+{{- end }}
 {{- $secretList | sortAlpha | uniq | compact | join "," -}}
 {{- end -}}
 
