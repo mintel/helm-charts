@@ -321,7 +321,7 @@ Build comma separated list of secrets
 {{- end }}
 {{- end }}
 {{- range .Values.envFrom }}
-{{- if and .secretRef .secretRef.name }}
+{{- if (and .secretRef .secretRef.name) }}
 {{- $secretList = append $secretList .secretRef.name -}}
 {{- end }}
 {{- end }}
