@@ -459,3 +459,17 @@ tests:
                   Project = "test-project"
                 }
         documentIndex: 0
+
+  - it: Test ignore tags env var
+    set:
+      s3:
+        enabled: true
+    asserts:
+      - contains:
+          path: spec.environmentVariables
+          content:
+            name: TF_AWS_IGNORE_TAGS_KEYS
+            value: backstage.io/system,backstage.io/owner,backstage.io/domain
+            hcl: false
+            sensitive: false
+        documentIndex: 0

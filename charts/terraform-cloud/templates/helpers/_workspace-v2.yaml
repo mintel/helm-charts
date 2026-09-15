@@ -75,6 +75,11 @@ spec:
       value: {{ $instanceCfg.workspaceNameOverride | default (include "mintel_common.terraform_cloud.workspaceName" $workspaceDict) | trim | quote }}
       hcl: false
       sensitive: false
+    {{- /* Tags set outside Terraform; Terraform must not remove them. Keep backstage.io/component out: Terraform must still set it */}}
+    - name: TF_AWS_IGNORE_TAGS_KEYS
+      value: "backstage.io/system,backstage.io/owner,backstage.io/domain"
+      hcl: false
+      sensitive: false
   terraformVariables:
   {{- $instanceCfgCopy := omit $instanceCfg "workspaceNameOverride" }}
   {{- $instanceCfgCopy = omit $instanceCfgCopy "workspaceAllowDestroy" }}

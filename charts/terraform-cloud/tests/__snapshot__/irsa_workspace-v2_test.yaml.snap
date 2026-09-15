@@ -26,6 +26,10 @@ IRSA created explicitly:
           name: TF_AWS_DEFAULT_TAGS_TerraformCloudWorkspace
           sensitive: false
           value: dev-eu-west-1-cluster1-test-namespace-test-app-irsa
+        - hcl: false
+          name: TF_AWS_IGNORE_TAGS_KEYS
+          sensitive: false
+          value: backstage.io/system,backstage.io/owner,backstage.io/domain
       executionMode: agent
       name: dev-eu-west-1-cluster1-test-namespace-test-app-irsa
       notifications:
@@ -157,6 +161,10 @@ IRSA created for Dev S3 module workspace:
           name: TF_AWS_DEFAULT_TAGS_TerraformCloudWorkspace
           sensitive: false
           value: dev-eu-west-1-cluster1-test-namespace-test-app-irsa
+        - hcl: false
+          name: TF_AWS_IGNORE_TAGS_KEYS
+          sensitive: false
+          value: backstage.io/system,backstage.io/owner,backstage.io/domain
       executionMode: agent
       name: dev-eu-west-1-cluster1-test-namespace-test-app-irsa
       notifications:
@@ -290,6 +298,10 @@ IRSA created with default (0) syncWave:
           name: TF_AWS_DEFAULT_TAGS_TerraformCloudWorkspace
           sensitive: false
           value: dev-eu-west-1-cluster1-test-namespace-test-app-irsa
+        - hcl: false
+          name: TF_AWS_IGNORE_TAGS_KEYS
+          sensitive: false
+          value: backstage.io/system,backstage.io/owner,backstage.io/domain
       executionMode: agent
       name: dev-eu-west-1-cluster1-test-namespace-test-app-irsa
       notifications:
@@ -421,6 +433,10 @@ IRSA created with modified syncWave:
           name: TF_AWS_DEFAULT_TAGS_TerraformCloudWorkspace
           sensitive: false
           value: dev-eu-west-1-cluster1-test-namespace-test-app-irsa
+        - hcl: false
+          name: TF_AWS_IGNORE_TAGS_KEYS
+          sensitive: false
+          value: backstage.io/system,backstage.io/owner,backstage.io/domain
       executionMode: agent
       name: dev-eu-west-1-cluster1-test-namespace-test-app-irsa
       notifications:
