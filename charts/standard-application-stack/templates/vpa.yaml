@@ -306,4 +306,33 @@ spec:
 {{- end }}
 {{- end }}
 
+{{- with $config := (get .Values.verticalPodAutoscaler.instances "redisclient") | default dict | mustMergeOverwrite (mustDeepCopy .Values.verticalPodAutoscaler) }}
+{{- if (and $config.enabled $.Values.redis $.Values.redis.enabled $.Values.redis.client $.Values.redis.client.enabled) }}
+{{- $app := dict "Release" $.Release "Chart" $.Chart "Values" $.Values "component" "redisclient" }}
+---
+apiVersion: {{ include "common.capabilities.verticalPodAutoscaler.apiVersion" $ }}
+kind: VerticalPodAutoscaler
+metadata:
+  name: deployment-{{ include "mintel_common.fullname" $app }}
+  namespace: {{ $.Release.Namespace }}
+  annotations: {{ include "mintel_common.commonAnnotations" $app | nindent 4 }}
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+  labels: {{ include "mintel_common.labels" $app | nindent 4 }}
+spec:
+  targetRef:
+    apiVersion: {{ include "common.capabilities.deployment.apiVersion" $ }}
+    kind: Deployment
+    name: {{ include "mintel_common.fullname" $app }}
+  updatePolicy:
+    updateMode: {{ if $config.autoscalingEnabled }}"Auto"{{ else }}"Off"{{ end }}
+    minReplicas: {{ $config.minReplicas }}
+    {{- with $config.evictionRequirements }}
+    evictionRequirements: {{ toYaml . | nindent 6 }}
+    {{- end }}
+  {{- with $config.containerPolicies }}
+  resourcePolicy:
+    containerPolicies: {{ toYaml . | nindent 6 }}
+  {{- end }}
+{{- end }}
+{{- end }}
 {{- end }}

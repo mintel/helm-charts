@@ -1,0 +1,56 @@
+{{- if (and .Values.redis .Values.redis.enabled) }}
+{{- if (and .Values.redis.client .Values.redis.client.enabled) }}
+{{- $data := dict "Release" .Release "Chart" .Chart "Values" .Values "component" "redisclient" }}
+apiVersion: {{ include "common.capabilities.deployment.apiVersion" . }}
+kind: Deployment
+metadata:
+  name: {{ include "mintel_common.fullname" $data }}
+  namespace: {{ .Release.Namespace }}
+  annotations:
+    {{ include "mintel_common.commonAnnotations" . | nindent 4 }}
+    secret.reloader.stakater.com/reload: {{ .Values.redis.secretNameOverride | default (include "mintel_common.defaultRedisSecretName" .) }}
+    app.mintel.com/opa-allow-single-replica: "true"
+    app.mintel.com/opa-skip-liveness-probe-check.main: "true"
+    app.mintel.com/opa-skip-readiness-probe-check.main: "true"
+  labels: {{ include "mintel_common.labels" $data | nindent 4 }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels: {{ include "mintel_common.selectorLabels" $data | nindent 6 }}
+  strategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels: {{ include "mintel_common.labels" $data | nindent 8 }}
+    spec:
+      {{- include "mintel_common.imagePullSecrets" . | nindent 6 }}
+      {{- with .Values.redis.client.podSecurityContext | default $.Values.podSecurityContext }}
+      securityContext: {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- if (and .Values.serviceAccount (or .Values.serviceAccount.create .Values.serviceAccount.name)) }}
+      serviceAccountName: {{ .Values.serviceAccount.name | default (include "mintel_common.fullname" .) }}
+      {{- end }}
+      containers:
+        - name: main
+          image: {{ .Values.redis.client.image | default "551844124467.dkr.ecr.${CLUSTER_REGION}.amazonaws.com/gitlab/mintel/satoshi/tools/k8s-redisclient:v0.1.0" }}
+          imagePullPolicy: {{ .Values.image.pullPolicy | default "IfNotPresent" }}
+          env:
+            - name: KUBERNETES_POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            {{- include "mintel_common.redisEnv" . | nindent 12 }}
+          envFrom:
+            - secretRef:
+                name: {{ .Values.redis.secretNameOverride | default (include "mintel_common.defaultRedisSecretName" .) }}
+          ports:
+            - containerPort: 6379
+              name: redis
+          {{- with .Values.redis.client.resources }}
+          resources: {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.redis.client.securityContext | default $.Values.securityContext }}
+          securityContext: {{- toYaml . | nindent 12 }}
+          {{- end }}
+{{- end }}
+{{- end }}

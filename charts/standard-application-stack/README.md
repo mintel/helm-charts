@@ -1,6 +1,6 @@
 # standard-application-stack
 
-![Version: 11.4.1](https://img.shields.io/badge/Version-11.4.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 11.5.0](https://img.shields.io/badge/Version-11.5.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A generic chart to support most common application requirements
 
@@ -313,6 +313,10 @@ A generic chart to support most common application requirements
 | postgresql.postgresqlDatabase | string | `"postgres"` |  |
 | priorityClassName | string | `""` | Optional name of PriorityClass to run pods with |
 | readiness | object | `{"enabled":true}` | Configure extra options for readiness probe ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes |
+| redis.client.enabled | bool | `true` |  |
+| redis.client.resources.limits.memory | string | `"128Mi"` |  |
+| redis.client.resources.requests.cpu | string | `"10m"` |  |
+| redis.client.resources.requests.memory | string | `"64Mi"` |  |
 | redis.enabled | bool | `false` |  |
 | redis.outputSecret | bool | `true` | set outputSecret to true to allow TF Cloud chart create ExternalSecrets |
 | redis.replica.replicaCount | int | `0` |  |
