@@ -483,6 +483,43 @@ tests:
           of: VerticalPodAutoscaler
       - hasDocuments:
           count: 1
+  - it: Creates a VerticalPodAutoscaler for redisclient
+    set:
+      global.clusterEnv: qa
+      verticalPodAutoscaler.enabled: true
+      cronjobsOnly: false
+      redis.enabled: true
+      redis.client.enabled: true
+    templates:
+      - vpa.yaml
+    documentSelector:
+      path: metadata.name
+      value: deployment-example-app-redisclient
+    asserts:
+      - matchSnapshot: {} # Check for regressions and unexpected changes.
+      - isKind:
+          of: VerticalPodAutoscaler
+      - equal:
+          path: metadata.namespace
+          value: test-namespace
+      - equal:
+          path: metadata.name
+          value: deployment-example-app-redisclient
+      - equal:
+          path: spec.targetRef.apiVersion
+          value: apps/v1
+      - equal:
+          path: spec.targetRef.kind
+          value: Deployment
+      - equal:
+          path: spec.targetRef.name
+          value: example-app-redisclient
+      - equal:
+          path: spec.updatePolicy.updateMode
+          value: Off
+      - equal:
+          path: spec.updatePolicy.minReplicas
+          value: 1
 
   - it: Can set container policies
     set:
@@ -496,6 +533,7 @@ tests:
           maxAllowed:
             cpu: '1'
             memory: '1Gi'
+
     asserts:
       - matchSnapshot: {} # Check for regressions and unexpected changes.
       - isKind:

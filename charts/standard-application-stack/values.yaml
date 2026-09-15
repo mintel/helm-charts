@@ -1223,6 +1223,15 @@ redis:
     replicaCount: 0
   tls:
     enabled: false
+  client:
+    enabled: true
+    #    image: {}
+    resources:
+      limits:
+        memory: 128Mi
+      requests:
+        cpu: 10m
+        memory: 64Mi
 
 s3:
   enabled: false
@@ -1441,3 +1450,4 @@ verticalPodAutoscaler:
     # mysqldexporter:
     # postgresqlexporter:
     # postgresqlclient:
+    # redisclient:
