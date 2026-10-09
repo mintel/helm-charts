@@ -4,8 +4,6 @@
 
 A Helm chart for provisioning resources using Terraform Cloud
 
-Direct Bedrock model inference via IRSA (`bedrock_model_ids`, `enable_bedrock_model_inference`, or `inline_policy` granting `bedrock:InvokeModel*`) is restricted (INFRA-50365). Non-allowlisted `(k8s_namespace, name)` pairs fail at helm template / `make tanka/generate`. Use the [Satoshi LLM proxy](https://mintel.atlassian.net/wiki/spaces/INFRA/pages/6130401281/How+to+use+the+Satoshi+LLM+proxy).
-
 ## Values
 
 | Key | Type | Default | Description |
