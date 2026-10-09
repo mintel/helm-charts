@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v1.24.0] - 2026-10-08
+### Added
+- INFRA-50365: Fail IRSA rendering when non-allowlisted apps set `bedrock_model_ids`, `enable_bedrock_model_inference`, or grant `bedrock:InvokeModel*` via `inline_policy`. Surfaces the restriction at `make tanka/generate` before TFC Sentinel (`restrict_app_iam_bedrock`). Allowlist is keyed on `k8s_namespace/name` (matching Sentinel).
+
 ## [v1.23.1] - 2026-08-19
 ### Fixed
 - Point IRSA and extraIAM app-iam source at `//modules/entrypoint`

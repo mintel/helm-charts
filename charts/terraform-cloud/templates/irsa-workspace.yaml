@@ -46,6 +46,59 @@
   {{- if (not (hasKey $irsaConfig "k8s_namespace")) }}
     {{- $_ := set $irsaConfig "k8s_namespace" $.Release.Namespace }}
   {{- end }}
+  # INFRA-50365: block direct Bedrock inference grants early (tanka/generate / helm template).
+  # Allowlist keys are "k8s_namespace/name" — keep in sync with Sentinel
+  # restrict_app_iam_bedrock (policies-general). Use the Satoshi LLM proxy instead:
+  # https://mintel.atlassian.net/wiki/spaces/INFRA/pages/6130401281/How+to+use+the+Satoshi+LLM+proxy
+  {{- $allowedBedrockInferenceApps := dict
+        "ai-platform/llm-proxy-apps" true
+        "ai-platform/llm-proxy-localdev" true
+        "compere/compere-researcher-orchestrator" true
+        "compere/mcp-mgl-chart-generator" true
+        "clients/generative-answer-service" true
+        "sourcebot/sourcebot" true
+  }}
+  {{- $irsaName := $irsaConfig.name }}
+  {{- if kindIs "map" $irsaName }}
+    {{- $irsaName = $irsaName.value }}
+  {{- end }}
+  {{- $irsaNamespace := index $irsaConfig "k8s_namespace" }}
+  {{- if kindIs "map" $irsaNamespace }}
+    {{- $irsaNamespace = $irsaNamespace.value }}
+  {{- end }}
+  {{- $allowKey := printf "%s/%s" $irsaNamespace $irsaName }}
+  {{- if not (hasKey $allowedBedrockInferenceApps $allowKey) }}
+    {{- $bedrockRemediation := "Direct Bedrock inference is restricted (INFRA-50365). Do not set bedrock_model_ids, enable_bedrock_model_inference, or grant bedrock:InvokeModel* on IRSA. Use the Satoshi LLM proxy: https://mintel.atlassian.net/wiki/spaces/INFRA/pages/6130401281/How+to+use+the+Satoshi+LLM+proxy" }}
+    {{- if hasKey $irsaConfig "enable_bedrock_model_inference" }}
+      {{- $enableInference := index $irsaConfig "enable_bedrock_model_inference" }}
+      {{- if kindIs "map" $enableInference }}
+        {{- $enableInference = $enableInference.value }}
+      {{- end }}
+      {{- if or (eq $enableInference true) (eq ($enableInference | toString) "true") }}
+        {{- fail (printf "irsa %q/%q: enable_bedrock_model_inference is true. %s" $irsaNamespace $irsaName $bedrockRemediation) }}
+      {{- end }}
+    {{- end }}
+    {{- if hasKey $irsaConfig "bedrock_model_ids" }}
+      {{- $modelIds := index $irsaConfig "bedrock_model_ids" }}
+      {{- if kindIs "map" $modelIds }}
+        {{- $modelIds = $modelIds.value }}
+      {{- end }}
+      {{- $modelIdsStr := $modelIds | toString | trimAll " \n\t" }}
+      {{- if and (ne $modelIdsStr "") (ne $modelIdsStr "[]") (ne $modelIdsStr "{}") }}
+        {{- fail (printf "irsa %q/%q: bedrock_model_ids is non-empty. %s" $irsaNamespace $irsaName $bedrockRemediation) }}
+      {{- end }}
+    {{- end }}
+    {{- if hasKey $irsaConfig "inline_policy" }}
+      {{- $inlinePolicy := index $irsaConfig "inline_policy" }}
+      {{- if kindIs "map" $inlinePolicy }}
+        {{- $inlinePolicy = $inlinePolicy.value }}
+      {{- end }}
+      {{- $inlinePolicyLower := $inlinePolicy | toString | lower }}
+      {{- if or (contains "bedrock:invokemodel" $inlinePolicyLower) (contains "bedrock:*" $inlinePolicyLower) (contains "bedrock:invoke*" $inlinePolicyLower) (contains "actions = [\"*\"]" $inlinePolicyLower) (contains "actions = \"*\"" $inlinePolicyLower) }}
+        {{- fail (printf "irsa %q/%q: inline_policy grants bedrock:InvokeModel*. %s" $irsaNamespace $irsaName $bedrockRemediation) }}
+      {{- end }}
+    {{- end }}
+  {{- end }}
   # You cannot find multi-region access points by tag using "aws_resourcegroupstaggingapi_resources" in the app-iam
   # module (this is how we do it for other resources) so we need to pass the access point names into the app-iam module
   # as a separate var so it can find them using the "aws_s3control_multi_region_access_point" data resource.
