@@ -177,3 +177,85 @@ tests:
           path: metadata.annotations["argocd.argoproj.io/sync-wave"]
           value: "0"
         documentIndex: 0
+  - it: fails when non-allowlisted app sets enable_bedrock_model_inference
+    set:
+      global.name: test-app
+      global.clusterEnv: dev
+      global.clusterName: cluster1
+      global.clusterRegion: eu-west-1
+      global.owner: sre
+      global.partOf: test-project
+      irsa.enabled: true
+      irsa.terraform.vars.enable_bedrock_model_inference: true
+    asserts:
+      - failedTemplate:
+          errorPattern: "Direct Bedrock inference is restricted \\(INFRA-50365\\)"
+  - it: fails when non-allowlisted app sets bedrock_model_ids
+    set:
+      global.name: test-app
+      global.clusterEnv: dev
+      global.clusterName: cluster1
+      global.clusterRegion: eu-west-1
+      global.owner: sre
+      global.partOf: test-project
+      irsa.enabled: true
+      irsa.terraform.vars.bedrock_model_ids:
+        hcl: true
+        value: |
+          ["anthropic.claude-opus-4-6-v1"]
+    asserts:
+      - failedTemplate:
+          errorPattern: "Direct Bedrock inference is restricted \\(INFRA-50365\\)"
+  - it: fails when non-allowlisted app grants InvokeModel via inline_policy
+    set:
+      global.name: test-app
+      global.clusterEnv: dev
+      global.clusterName: cluster1
+      global.clusterRegion: eu-west-1
+      global.owner: sre
+      global.partOf: test-project
+      irsa.enabled: true
+      irsa.terraform.vars.inline_policy:
+        hcl: true
+        value: |
+          {
+            "AllowBedrockInvokeModel" = {
+              effect = "Allow",
+              actions = ["bedrock:InvokeModel"],
+              resources = ["*"]
+            }
+          }
+    asserts:
+      - failedTemplate:
+          errorPattern: "Direct Bedrock inference is restricted \\(INFRA-50365\\)"
+  - it: allowlisted llm-proxy-apps may enable_bedrock_model_inference
+    release:
+      namespace: ai-platform
+    set:
+      global.name: llm-proxy-apps
+      global.clusterEnv: dev
+      global.clusterName: cluster1
+      global.clusterRegion: eu-west-1
+      global.owner: infrastructure
+      global.partOf: ai-platform
+      irsa.enabled: true
+      irsa.terraform.vars.enable_bedrock_model_inference: true
+    asserts:
+      - isKind:
+          of: Workspace
+        documentIndex: 0
+      - hasDocuments:
+          count: 2
+  - it: fails when allowlisted name is used in a different namespace
+    set:
+      global.name: sourcebot
+      global.clusterEnv: dev
+      global.clusterName: cluster1
+      global.clusterRegion: eu-west-1
+      global.owner: sre
+      global.partOf: test-project
+      irsa.enabled: true
+      irsa.terraform.vars.enable_bedrock_model_inference: true
+    asserts:
+      - failedTemplate:
+          errorPattern: "Direct Bedrock inference is restricted \\(INFRA-50365\\)"
