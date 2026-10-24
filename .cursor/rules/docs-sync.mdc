@@ -1,0 +1,45 @@
+---
+description: Keep docs/, chart metadata, README, and tests in sync with chart changes
+alwaysApply: true
+---
+
+# Chart changes: docs, release files, and tests
+
+When you modify `standard-application-stack` or `terraform-cloud` behavior, values, defaults, gates, constraints, or rendered manifests, update everything below in the **same change** — not only templates or `values.yaml`.
+
+## Docs (`docs/`)
+
+| Change type | Update |
+|-------------|--------|
+| New/changed value path, default, gate, or template effect | `docs/values-and-effects.md` |
+| New feature, configure recipe, constraint, or interaction | `docs/feature-documentation-spec.md` |
+| Renamed/removed value or feature | Both docs — remove stale entries |
+
+Follow existing section structure in `docs/feature-documentation-spec.md` (`<!-- feature: <id> -->`, Summary, Variables, Configure, Constraints, Chart behavior). For defaults and types, prefer `values.yaml` comments; do not duplicate full defaults in docs.
+
+Docs updates are **not** required for formatting-only edits, refactors with identical rendered output, or snapshot updates that only reflect an already-documented change.
+
+## `standard-application-stack` release files
+
+When this chart changes (anything that would warrant a changelog entry):
+
+1. **`charts/standard-application-stack/CHANGELOG.md`** — Add an entry under a new version section (Keep a Changelog). Describe what changed for chart consumers.
+2. **`charts/standard-application-stack/Chart.yaml`** — Set `version` to match the new CHANGELOG version.
+3. **`charts/standard-application-stack/README.md`** — Regenerate via helm-docs after `values.yaml` changes: `pre-commit run helm-docs --files charts/standard-application-stack/README.md` (or `pre-commit run -a`). Do not hand-edit the values table; update `values.yaml` descriptions/defaults and regenerate.
+
+## Tests (`standard-application-stack`)
+
+Add or update helm-unittest tests **only for behavior you changed on the current branch**:
+
+- New template logic, gates, defaults, or manifest shape → add cases in `charts/standard-application-stack/tests/` (or extend an existing suite). Always include `matchSnapshot` for manifest changes.
+- Snapshot diffs from your change → review and update with `helm unittest ./charts/standard-application-stack --strict --update-snapshot`.
+- **Do not** add tests for unrelated chart behavior that was not part of this branch's changes (no backfilling coverage for pre-existing gaps).
+
+Run before finishing: `helm unittest ./charts/standard-application-stack --strict`.
+
+## Before finishing
+
+1. Read relevant existing doc sections, CHANGELOG style, and nearby test suites before editing.
+2. Every new/changed value or gate appears in `values-and-effects.md` or a feature section.
+3. SAS chart changes include CHANGELOG + Chart.yaml version + regenerated README when `values.yaml` or consumer-facing behavior changed.
+4. Tests cover only what this branch changed.
