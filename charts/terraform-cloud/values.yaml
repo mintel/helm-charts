@@ -256,7 +256,7 @@ bedrock:
       # (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/bedrock/aws)
       source: app.terraform.io/Mintel/bedrock/aws//modules/entrypoint
       # -- Module version
-      version: "1.3.4"
+      version: "1.4.0"
     # -- Vars to be applied to all instances defined below
     defaultVars:
       {}
@@ -311,16 +311,15 @@ bedrock:
     #               - "Tell me about Competitor A"
     #               - "Compare us with Competitor B"
     #             definition: "Any discussion of competitors or competitive analysis"
-    #             tier_name: "DEFAULT"
-    #         word_policy_config:
-    #           managed_word_lists_config:
-    #             - type: "PROFANITY"
-    #               input_enabled: true
-    #               input_action: "BLOCK"
-    #               output_enabled: true
-    #               output_action: "BLOCK"
-    #         guardrail_description: "Initial version"
-    #         skip_destroy: false
+    #             tier_name: "CLASSIC"
+    #         managed_word_lists_config:
+    #           - type: "PROFANITY"
+    #             input_enabled: true
+    #             input_action: "BLOCK"
+    #             output_enabled: true
+    #             output_action: "BLOCK"
+    #         # Optional: keep this guardrail on DRAFT (no version published) — e.g. dev
+    #         publish_version: false
     #     agentcore_memories:
     #       "conversation-memory":
     #         name: "conversation_memory"
