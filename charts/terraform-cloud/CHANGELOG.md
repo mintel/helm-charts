@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v1.25.0] - 2026-10-26
+### Changed
+- Updated the Bedrock module to version 1.4.0. A guardrail config change now publishes a new numbered guardrail version and the `<key>_guardrail_version` secret value follows it. `guardrails[].skip_destroy` now defaults to `true`, so replaced versions are kept in AWS and must be pruned out of band (see the module README; the 20-versions-per-guardrail Region quota still applies). New optional `guardrails[].publish_version` (default `true`) skips publishing for guardrails that should stay on `DRAFT`.
+- Fixed `guardrails[].custom_words_config` items taking `text` instead of `type` (non-empty lists failed at plan in earlier 1.x releases). The Terraform version for the Bedrock module stays 1.5.0.
+
+### Fixed
+- Removed the stale `word_policy_config` wrapper, `guardrail_description` and `skip_destroy` from the Bedrock example in `values.yaml`. Changed the example topic `tier_name` to `CLASSIC`.
+
 ## [v1.24.0] - 2026-10-08
 ### Added
 - INFRA-50365: Fail IRSA rendering when non-allowlisted apps set `bedrock_model_ids`, `enable_bedrock_model_inference`, or grant `bedrock:InvokeModel*` via `inline_policy`. Surfaces the restriction at `make tanka/generate` before TFC Sentinel (`restrict_app_iam_bedrock`). Allowlist is keyed on `k8s_namespace/name` (matching Sentinel).
