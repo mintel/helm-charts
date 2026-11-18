@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v1.26.0] - 2026-11-18
+### Added
+- INFRA-53711: Set `enforce_multi_az = true` by default for OpenSearch in `prod` and `logs`. Plan fails if `zone_awareness_enabled`, `availability_zone_count` (2 or 3) or `instance_count >= availability_zone_count` is not met.
+
+### Changed
+- INFRA-53711: Updated the OpenSearch module to version 2.1.1. Non-prod single-AZ defaults (`availability_zone_count: 1`, `zone_awareness_enabled: false`) now work without a dummy AZ count.
+
 ## [v1.25.0] - 2026-10-26
 ### Changed
 - Updated the Bedrock module to version 1.4.0. A guardrail config change now publishes a new numbered guardrail version and the `<key>_guardrail_version` secret value follows it. `guardrails[].skip_destroy` now defaults to `true`, so replaced versions are kept in AWS and must be pruned out of band (see the module README; the 20-versions-per-guardrail Region quota still applies). New optional `guardrails[].publish_version` (default `true`) skips publishing for guardrails that should stay on `DRAFT`.

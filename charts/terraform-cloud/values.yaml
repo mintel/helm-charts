@@ -764,7 +764,7 @@ opensearch:
       # (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/opensearch/aws)
       source: app.terraform.io/Mintel/opensearch/aws
       # -- Module version
-      version: "1.6.0"
+      version: "2.1.1"
     # -- Vars to be applied to all instances defined below
     defaultVars:
       ### Override the generated workspace name, for example if the generated name is above the char limit
@@ -787,6 +787,8 @@ opensearch:
       # availability_zone_count: number
       ### Automatically set to true in prod and false in dev and qa. Override this only if you know what you're doing.
       # zone_awareness_enabled: bool
+      ### Automatically set to true in prod/logs. Requires zone_awareness_enabled + AZ count 2|3 + instance_count >= AZ count.
+      # enforce_multi_az: bool
     # -- A map of instance names => variable key/value pairs to be sent to the terraform module. The values in
     # `defaultVars` will be applied to every instance if not explicitly defined here.
     instances: {}

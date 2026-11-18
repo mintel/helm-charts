@@ -167,7 +167,9 @@ app.mintel.com/terraform-allow-destroy: {{ (include "mintel_common.terraform_clo
 {{/* Opensearch */}}
 {{- if ( eq .ResourceType "opensearch")}}
     {{/* instance count, zone_awareness_enabled and multi-az */}}
-    {{- if ( not ( has .Global.clusterEnv (list "prod" "logs"))) }}
+    {{- if ( has .Global.clusterEnv (list "prod" "logs")) }}
+    {{- $_ := set $defaults "enforce_multi_az" true }}
+    {{- else }}
     {{- $_ := set $defaults "instance_count" 1 }}
     {{- $_ := set $defaults "availability_zone_count" 1 }}
     {{- $_ := set $defaults "zone_awareness_enabled" false }}
