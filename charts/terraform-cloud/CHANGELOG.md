@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v1.27.0] - 2026-11-25
+### Changed
+- INFRA-53807: Updated the Lambda module from 8.0.1 to 8.5.0, which adds `eventbridge_rules`. This also brings in the 8.1.0 to 8.4.2 changes: a per-function concurrent executions alarm, DynamoDB stream triggers and their IAM permissions, provisioned concurrency and image alias support.
+- INFRA-52824: Updated the Glue module from 1.3.1 to 1.4.0, which adds optional Glue ETL jobs and a GitLab CI OIDC role. It requires the AWS provider `>= 6.0`.
+
 ## [v1.26.0] - 2026-11-18
 ### Added
 - INFRA-53711: Set `enforce_multi_az = true` by default for OpenSearch in `prod` and `logs`. Plan fails if `zone_awareness_enabled`, `availability_zone_count` (2 or 3) or `instance_count >= availability_zone_count` is not met.

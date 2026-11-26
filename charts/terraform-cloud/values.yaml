@@ -495,7 +495,7 @@ glue:
       # (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/glue/aws)
       source: app.terraform.io/Mintel/glue/aws//modules/entrypoint
       # -- Module version
-      version: 1.3.1
+      version: 1.4.0
     # -- Vars to be applied to all instances defined below
     # @default -- See below
     defaultVars:
@@ -512,6 +512,16 @@ glue:
       # workspaceOwner: string
       ### Use to map keys from AWS secret manager secrets to new key names. Map values should be in the form <new key>:<module secret key>
       # outputSecretMap: {}
+      ### Glue ETL jobs to create. glue_version is required on each job
+      # glue_jobs: { hcl: true, value: '{}' }
+      ### S3 bucket ARNs the Glue job role can read
+      # job_read_bucket_arns: { hcl: true, value: '[]' }
+      ### S3 bucket ARNs the Glue job role can read and write
+      # job_readwrite_bucket_arns: { hcl: true, value: '[]' }
+      ### Name of the Glue job IAM role. Default: glue-job
+      # job_role_name: string
+      ### Set to create a GitLab CI OIDC role for this project
+      # gitlab_project: string
     # -- A map of instance names => variable key/value pairs to be sent to the terraform module. The values in
     # `defaultVars` will be applied to every instance if not explicitly defined here.
     instances: {}
@@ -612,7 +622,7 @@ lambda:
       # (https://app.terraform.io/app/Mintel/registry/modules/private/Mintel/lambda/aws)
       source: app.terraform.io/Mintel/lambda/aws
       # -- Module version
-      version: 8.0.1
+      version: 8.5.0
     # -- Vars to be applied to all instances defined below
     # @default -- See below
     defaultVars:
@@ -632,6 +642,9 @@ lambda:
       ### The maximum amount of time, in seconds, your Lambda function will be allowed to run. Must be between 1 and 900
       ### seconds. Default: 3
       # timeout: number
+      ### EventBridge rules to create and attach to the function. Each key is the rule name, which must be unique in
+      ### the account and region. Set schedule_expression and/or event_pattern on each rule
+      # eventbridge_rules: { hcl: true, value: '{ my-schedule = { description = "Hourly run", schedule_expression = "rate(1 hour)" } }' }
       ### The directory inside the container from which your function will be run (typically this is set in the built
       ### image but you can override here if required)
       # working_directory: string
